@@ -23,3 +23,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /.idea/
+
+# installed assets and localization
+
+src/assets/*
+!src/assets/local/
+!src/assets/local/*
+!src/assets/local/**
+
+src/translations/*
+!src/translations/local/
+!src/translations/local/*
+!src/translations/local/**
