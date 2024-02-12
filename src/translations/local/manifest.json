@@ -1,0 +1,8 @@
+{
+    "title": "local",
+    "description": "contains web only translations",
+    "descriptor": "local",
+    "author": "CatOfJupit3r",
+    "version": "0.0.1",
+    "source": "local"
+}
