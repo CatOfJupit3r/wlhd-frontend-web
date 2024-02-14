@@ -1,20 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import imageSrc from '../assets/local/cat_eat.gif';
 
 const Header: React.FC = () => {
     return (
         <header>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    {/* Add more navigation links as needed */}
-                </ul>
-            </nav>
+            <div>
+                <img src={imageSrc} alt="cat" style={{
+                    height: "20vw",
+                    width: "100vw"
+                }}/>
+            </div>
         </header>
     );
 };

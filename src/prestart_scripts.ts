@@ -14,19 +14,18 @@ async function updateTranslations(): Promise<void> {
 
 async function cleanDLC(): Promise<void> {
     if (CLEAN_DLC) {
-        // Perform cleaning of DLC
         console.log('Cleaning DLC...');
-        // Your cleaning logic goes here
+        // Perform cleaning of DLC
         console.log('DLC cleaned successfully.');
     }
 }
 
-async function main(): Promise<void> {
+function main() {
     if (UPDATE_ON_LAUNCH) {
-        await updateTranslations();
+        updateTranslations();
     }
 
-    await cleanDLC();
+    cleanDLC();
 }
 
-export default main;
+main()
