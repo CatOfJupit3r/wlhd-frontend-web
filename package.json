@@ -1,5 +1,8 @@
 {
   "name": "walenholde-frontend-web",
+  "browser": {
+    "fs": false
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +15,7 @@
     "@types/react-dom": "^18.2.19",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.7",
+    "fs": "^0.0.1-security",
     "i18next": "^23.8.2",
     "i18next-browser-languagedetector": "^7.2.0",
     "react": "^18.2.0",
