@@ -26,10 +26,10 @@ yarn-error.log*
 
 # installed assets and localization
 
-src/assets/*
-!src/assets/local/
-!src/assets/local/*
-!src/assets/local/**
+public/assets/*
+!public/assets/local/
+!public/assets/local/*
+!public/assets/local/**
 
 src/translations/*
 !src/translations/local/
