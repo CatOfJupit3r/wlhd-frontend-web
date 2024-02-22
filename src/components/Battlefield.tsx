@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 
 
-const buildEmptyBoard = () => {
-    let board = []
-    for (let i = 0; i < 6; i++) {
-        let row = []
-        for (let j = 0; j < 6; j++) {
-            row.push(null)
-        }
-        board.push(row)
-    }
-    return board
-}
+// const buildEmptyBoard = () => {
+//     let board = []
+//     for (let i = 0; i < 6; i++) {
+//         let row = []
+//         for (let j = 0; j < 6; j++) {
+//             row.push(null)
+//         }
+//         board.push(row)
+//     }
+//     return board
+// }
 
 const Battlefield = () => {
     /*
@@ -22,12 +22,13 @@ const Battlefield = () => {
     *
     *  */
 
+    // eslint-disable-next-line
     const [sizeTile, setSizeTile] = useState(64)
     const dimensionsTile = {
         width: sizeTile,
         height: sizeTile
     } // dimensions of the game board
-    const battlefield = buildEmptyBoard() // game board;
+    // const battlefield = buildEmptyBoard() // game board;
     const tileImageSrc = "assets/Walenholde-builtins-package/connector.png"
 
     const drawBoard = () => {
@@ -41,7 +42,6 @@ const Battlefield = () => {
             }
             const row = <div style={{
                 display: "flex",
-                flexDirection: "row",
             }}>{rowImgs}</div>
             board.push(row)
         }
@@ -51,10 +51,10 @@ const Battlefield = () => {
     const battlefieldStyle = {
         border: "1px solid black",
         display: "grid",
-        width: sizeTile * 8, // Adjusted to the actual size of the game board
-        height: sizeTile * 9, // Adjusted to the actual size of the game board
-        gridGap: 0, // Remove the gap between grid items
-        flexGrow: 0,
+        width: "fit-content",
+        height: "fit-content",
+        maxWidth: sizeTile * 8, // Adjusted to the actual size of the game board
+        maxHeight: sizeTile * 9, // Adjusted to the actual size of the game board
     }
 
     return (
