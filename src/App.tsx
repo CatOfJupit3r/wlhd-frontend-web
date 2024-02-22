@@ -5,6 +5,8 @@ import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { useTranslation } from "react-i18next";
 import MainLayout from "./layouts/MainLayout";
+import GameRoomPage from "./pages/GameRoomPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     const { t }  = useTranslation()
@@ -15,6 +17,8 @@ function App() {
                     <Route path={"/"} element={<MainLayout/>}>
                         <Route index element={<HomePage/>}/>
                         <Route path="about" element={<AboutPage/>}/>
+                        <Route path="game" element={<GameRoomPage/>}/>
+                        <Route path="login" element={<LoginPage/>}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>

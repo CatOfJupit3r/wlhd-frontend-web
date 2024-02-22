@@ -10,4 +10,15 @@ After this, socket will listen for commands from server:
 
  */
 
-export {}
+import React from 'react';
+import Battlefield from "../components/Battlefield";
+
+const GameRoomPage = () => {
+    return (
+        <div>
+            <Battlefield />
+        </div>
+    );
+};
+
+export default GameRoomPage;

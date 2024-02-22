@@ -25,7 +25,7 @@ const NicknameEnter: React.FC = () => {
     const submit = () => (
         nicknameCheck()
             ?
-            (() => {setIsSubmitted(true); navigate("/login?=" + nickname)})()
+            (() => {setIsSubmitted(true); navigate("/login?nickname=" + nickname)})()
             :
             null
     )
