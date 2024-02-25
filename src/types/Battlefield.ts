@@ -17,6 +17,6 @@ export interface ParsedBattlefield {
     battlefield: JSX.Element[][];
     columns: JSX.Element[];
     lines: JSX.Element[];
-    connectors: JSX.Element;
-    separators: JSX.Element;
+    connectors: (key: string) => JSX.Element;
+    separators: (key: string) => JSX.Element;
 }

@@ -11,7 +11,7 @@ After this, socket will listen for commands from server:
  */
 
 import React from 'react';
-import Battlefield from "../components/Battlefield";
+import Battlefield from "../components/Battlefield/Battlefield";
 
 const GameRoomPage = () => {
     return (
