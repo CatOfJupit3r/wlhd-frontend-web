@@ -1,5 +1,3 @@
-import exp from "node:constants";
-
 export interface Battlefield {
     battlefield: string[][];
     game_descriptors: {
@@ -15,8 +13,8 @@ export interface Battlefield {
 
 export interface ParsedBattlefield {
     battlefield: JSX.Element[][];
-    columns: JSX.Element[];
-    lines: JSX.Element[];
+    columns: (key: string) => JSX.Element[];
+    lines: (key: string) => JSX.Element[];
     connectors: (key: string) => JSX.Element;
     separators: (key: string) => JSX.Element;
 }

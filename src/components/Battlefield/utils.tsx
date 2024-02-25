@@ -18,7 +18,7 @@ const splitDescriptor = (full_descriptor: string): [string, string] => {
 }
 
 
-const generateJSXTile = (dlc: string, descriptor: string, id: string, key: number, onClick?: Function) => {
+const generateJSXTile = (dlc: string, descriptor: string, id: string, key: string, onClick?: Function) => {
     return <img
         src={generateAssetPath(dlc, descriptor)}
         onClick={onClick ? (event) => onClick(event): undefined}
@@ -34,7 +34,7 @@ const generateJSXTile = (dlc: string, descriptor: string, id: string, key: numbe
     />
 }
 
-const generateJSX = (dlc: string, descriptor: string, id: string, key: string | number) => {
+const generateJSX = (dlc: string, descriptor: string, id: string, key: string) => {
     return <img
         src={generateAssetPath(dlc, descriptor)}
         alt={descriptor !== "tile" ? dlc + "::" + descriptor : undefined}
@@ -49,14 +49,20 @@ const generateJSX = (dlc: string, descriptor: string, id: string, key: string | 
     />
 }
 
-export const parseBattlefield = (data: BattlefieldInterface, onClickTile: Function): ParsedBattlefield => {
+
+const onClickTile = (event: React.MouseEvent<HTMLImageElement>) => {
+    console.log(event.currentTarget.id)
+}
+
+export const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield => {
     const battlefield = data.battlefield
     const game_descriptors = data.game_descriptors
-    const columns: JSX.Element[] = game_descriptors.columns.map((descriptor, index) => {
-        return generateJSX(...splitDescriptor(descriptor), `column_${index}`, index)
+
+    const columns = (key: string) => game_descriptors.columns.map((descriptor, index) => {
+        return generateJSX(...splitDescriptor(descriptor), `column_${index}`, `column-${index}-${key}`)
     })
-    const lines = game_descriptors.lines.map((descriptor, index) => {
-        return generateJSX(...splitDescriptor(descriptor), `line_${index}`, index)
+    const lines = (key: string) => game_descriptors.lines.map((descriptor, index) => {
+        return generateJSX(...splitDescriptor(descriptor), `line_${index}`, `line-${index}-${key}`)
     })
     const [connectors, separators] = [game_descriptors.connectors, game_descriptors.separators].map((descriptor, index) => {
         return (key: string) => generateJSX(...splitDescriptor(descriptor), index === 0 ? "connector" : "separator", key)
@@ -69,8 +75,8 @@ export const parseBattlefield = (data: BattlefieldInterface, onClickTile: Functi
             const alias = battlefield[i][j]
             const full_descriptor = field_components[alias]
             let [dlc, descriptor] = splitDescriptor(full_descriptor)
-            const tile_id = `${i + 1}/${j + 1}`
-            row.push(generateJSXTile(dlc, descriptor, tile_id, i * 10 + j, onClickTile))
+            const tile_id = `${i}/${j}`
+            row.push(generateJSXTile(dlc, descriptor, tile_id, `${i + 1}/${j + 1}`, onClickTile))
         }
         battlefieldJSX.push(row)
     }
@@ -81,4 +87,58 @@ export const parseBattlefield = (data: BattlefieldInterface, onClickTile: Functi
         connectors: connectors,
         separators: separators
     }
+}
+
+export const parsedToJSX = (parsed: ParsedBattlefield) => {
+    const {battlefield, columns, lines, connectors, separators} = parsed
+
+    const numberOfRows = battlefield.length
+    const allyRowIndexes = Array.from({length: Math.floor(numberOfRows / 2)}, (_, i) => i)
+    const enemyRows = Array.from({length: Math.floor(numberOfRows / 2)}, (_, i) => i + Math.floor(numberOfRows / 2))
+
+    let rendered: Array<JSX.Element> = []
+
+    const columnHelpRow = (key: string) => {
+        rendered.push(<div
+            key={`column-help-${key}`}
+            style={{
+                display: "flex",
+            }}>
+            {connectors(`column-connector-${key}`)}
+            {columns(key)}
+            {connectors(`column-connector-${key + 1}`)}
+        </div>)
+    }
+
+    const displayRows = (rows: number[], side_type: string) => {
+        const right_lines = lines(`${side_type}_right`)
+        const left_lines = lines(`${side_type}_left`)
+        for (let i of rows) {
+            rendered.push(<div style={{
+                display: "flex",
+            }} key={`entity-row-${i}`}>
+                {right_lines[i]}
+                {battlefield[i]}
+                {left_lines[i]}
+            </div>)
+        }
+    }
+
+    const displaySeparators = () => {
+        rendered.push(<div style={{
+            display: "flex",
+        }} key={"separator-row"}>
+            {connectors('1')}
+            {[...Array(columns('0').length)].map((_, index) => separators(`separator-${index}`))}
+            {connectors('2')}
+        </div>)
+    }
+
+    columnHelpRow("1")
+    displayRows(allyRowIndexes, "ally")
+    displaySeparators()
+    displayRows(enemyRows, "enemy")
+    columnHelpRow("2")
+
+    return rendered
 }
