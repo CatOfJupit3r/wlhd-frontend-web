@@ -4,7 +4,6 @@ import './styles/index.css';
 import App from './App';
 
 import './i18n'
-// import './prestart_scripts'
 
 
 const root = ReactDOM.createRoot(

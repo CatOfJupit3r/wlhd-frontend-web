@@ -1,4 +1,4 @@
-import {IMAGE_SIZE} from "../config/constants";
+import {IMAGE_SIZE} from "../config/configs";
 
 export async function importAsset(
     path: string,

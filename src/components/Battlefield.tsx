@@ -1,65 +1,106 @@
-import React, {useState} from 'react';
+import React from 'react';
+import example from "../data/example_bf.json"
+import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../types/Battlefield";
+import {INVALID_ASSET_PATH, IMAGE_SIZE} from "../config/configs";
 
 
-// const buildEmptyBoard = () => {
-//     let board = []
-//     for (let i = 0; i < 6; i++) {
-//         let row = []
-//         for (let j = 0; j < 6; j++) {
-//             row.push(null)
-//         }
-//         board.push(row)
-//     }
-//     return board
-// }
+
+const onTileClick = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    console.log(event.currentTarget.id)
+}
+
+
+const generateAssetPath = (dlc: string, descriptor: string) => {
+    return `assets/${dlc}/${descriptor}.png`;
+};
+
+const splitDescriptor = (full_descriptor: string): [string, string] => {
+    if (!full_descriptor.includes("::")) {
+        // If the descriptor does not have specified a dlc, we assume it is a builtins asset
+        return ["builtins", full_descriptor]
+    }
+    return full_descriptor.split("::").length === 2 ?
+        full_descriptor.split("::") as [string, string]
+        :
+        ["builtins", "invalid"]
+}
+
+const generateJSX = (dlc: string, descriptor: string, id: string, key: number, onClick?: Function) => {
+    return <img
+        src={generateAssetPath(dlc, descriptor)}
+        onClick={onClick ? (event) => onClick(event) : onTileClick}
+        alt={descriptor !== "tile" ? dlc+"::" + descriptor : undefined}
+        style={{
+            width: IMAGE_SIZE,
+            height: IMAGE_SIZE,
+            backgroundImage: "url('assets/builtins/tile.png')",
+            backgroundSize: "cover"
+        }}
+        onError={(event) => {
+            event.currentTarget.src = INVALID_ASSET_PATH
+            event.currentTarget.alt = "invalid"
+        }
+        }
+        id={id}
+        key={key}
+    />
+}
+
+
+const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield => {
+    const battlefield = data.battlefield
+    const game_descriptors = data.game_descriptors
+    const columns: JSX.Element[] = game_descriptors.columns.map((descriptor, index) => {
+        return generateJSX(...splitDescriptor(descriptor), `column_${index}`, index)
+    })
+    const lines = game_descriptors.lines.map((descriptor, index) => {
+        return generateJSX(...splitDescriptor(descriptor), `line_${index}`, index)
+    })
+    const [connectors, separators] = [game_descriptors.connectors, game_descriptors.separators].map((descriptor, index) => {
+        return generateJSX(...splitDescriptor(descriptor), index === 0 ? "connector": "separator", index)
+    })
+    const field_components = game_descriptors.field_components
+    const battlefieldJSX: JSX.Element[][] = Array<Array<JSX.Element>>()
+    for (let i = 0; i < battlefield.length; i++) {
+        const row = []
+        for (let j = 0; j < battlefield[i].length; j++) {
+            const alias = battlefield[i][j]
+            const full_descriptor = field_components[alias]
+            let [dlc, descriptor] = splitDescriptor(full_descriptor)
+            const tile_id = `${i+1}/${j+1}`
+            row.push(generateJSX(dlc, descriptor, tile_id, i * battlefield[i].length + j))
+        }
+        battlefieldJSX.push(row)
+    }
+    return {
+        battlefield: battlefieldJSX,
+        columns: columns,
+        lines: lines,
+        connectors: connectors,
+        separators: separators
+    }
+}
+
 
 const Battlefield = () => {
-    /*
-    * Battlefield components contains visual representation of the game board
-    * (For now) It only displays the images of the game board, which are not interactive
-    * The Battlefield is 6x6 grid, however, it is displayed as 9x8 grid
-    * 6x6 represent the game board, while remaining 3x2 are cosmetic and help user better understand the game board
-    *
-    *  */
-
-    // eslint-disable-next-line
-    const [sizeTile, setSizeTile] = useState(64)
-    const dimensionsTile = {
-        width: sizeTile,
-        height: sizeTile
-    } // dimensions of the game board
-    // const battlefield = buildEmptyBoard() // game board;
-    const tileImageSrc = "assets/Walenholde-builtins-package/connector.png"
-
-    const drawBoard = () => {
-        let board = []
-        for (let i = 0; i < 6; i++) {
-            const rowImgs = []
-            for (let j = 0; j < 6; j++) {
-                rowImgs.push(
-                    <img src={tileImageSrc} alt={"tile"} style={dimensionsTile}/>
-                )
-            }
-            const row = <div style={{
-                display: "flex",
-            }}>{rowImgs}</div>
-            board.push(row)
-        }
-        return board
-    }
-
     const battlefieldStyle = {
         border: "1px solid black",
         display: "grid",
         width: "fit-content",
         height: "fit-content",
-        maxWidth: sizeTile * 8, // Adjusted to the actual size of the game board
-        maxHeight: sizeTile * 9, // Adjusted to the actual size of the game board
+        maxWidth: IMAGE_SIZE * 8, // Adjusted to the actual size of the game board
+        maxHeight: IMAGE_SIZE * 9, // Adjusted to the actual size of the game board
     }
+
+    const {battlefield, columns, lines, connectors, separators} = parseBattlefield(example)
+
+    const battlefieldToRender = battlefield.map((row, index) => {
+        return <div key={index} style={{display: "flex"}}>{row}</div>
+    })
 
     return (
         <div style={battlefieldStyle}>
-            {drawBoard()}
+            {battlefieldToRender}
         </div>
     );
 };

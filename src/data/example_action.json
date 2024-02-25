@@ -1,0 +1,484 @@
+{
+    "actions" : [
+        {
+            "descriptor" : "builtins::item",
+            "co-descriptor" : null,
+            "available" : false,
+            "requires" : [
+                "builtins::item"
+            ],
+            "builtins::item" : []
+        },
+        {
+            "descriptor" : "builtins::attack",
+            "co-descriptor" : null,
+            "available" : true,
+            "requires" : [
+                "builtins::weapon"
+            ],
+            "builtins::weapon" : [
+                {
+                    "id" : "f739876e-2647-4f4d-a39b-af2dad8e64a1",
+                    "descriptor" : "nyrzamaer::aridnik_blades",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        3,
+                        4
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ]
+        },
+        {
+            "descriptor" : "builtins::spell",
+            "co-descriptor" : null,
+            "available" : false,
+            "requires" : [
+                "builtins::spell"
+            ],
+            "builtins::spell" : [
+                {
+                    "id" : "1589a5c6-8ba6-4468-b1a5-517333f1f88b",
+                    "descriptor" : "nyrzamaer::charge_atomicity",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "773ac3bf-c680-4cb6-8de6-4e4d6fcd130a",
+                    "descriptor" : "nyrzamaer::flare",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "8bac12e9-0c69-4520-a9c5-0008fc94b2bf",
+                    "descriptor" : "nyrzamaer::electrical_love",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "7e689485-599a-4d3a-9b16-996b212cf27d",
+                    "descriptor" : "nyrzamaer::ferromagnetism",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "797a22c2-8a9d-43ff-9148-0adcd14daba9",
+                    "descriptor" : "nyrzamaer::lightning_bolt",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "e2b625a3-c862-46f1-8469-0db825c46b91",
+                    "descriptor" : "nyrzamaer::lorenz_force",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "7b6ba712-fa4d-41dd-8dde-cc61a21f135a",
+                    "descriptor" : "nyrzamaer::olgierds_arrogance",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "8e658a6c-ec44-4e58-af2d-56c5b03a77cf",
+                    "descriptor" : "nyrzamaer::physical_lines",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "a7066d46-d458-48e9-966d-0fd4aacfd1ff",
+                    "descriptor" : "nyrzamaer::short_circuit",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "2c27fc1d-32b7-431e-930f-67784deaa869",
+                    "descriptor" : "nyrzamaer::hall_effect",
+                    "co-descriptor" : 1,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "4a5bff82-4882-47ed-af59-87b28f5b4b67",
+                    "descriptor" : "nyrzamaer::biot-savart-laplace_law",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "b14c268b-9cf8-4ee8-9975-1052221188ac",
+                    "descriptor" : "nyrzamaer::olgierds_spear",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "6dac7ea3-b837-4383-8a18-8fe2826143d9",
+                    "descriptor" : "nyrzamaer::tesla_coil",
+                    "co-descriptor" : 2,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "2df5ec7c-b0bf-49ea-b20e-0bce243c12f6",
+                    "descriptor" : "nyrzamaer::electromagnetic_pulse",
+                    "co-descriptor" : 4,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                },
+                {
+                    "id" : "88d1d428-7145-47e7-aa7c-861c258ebf4d",
+                    "descriptor" : "nyrzamaer::kirchhoffs_circuit_laws",
+                    "co-descriptor" : 3,
+                    "available" : true,
+                    "requires" : [
+                        "builtins::line",
+                        "builtins::column"
+                    ],
+                    "builtins::line" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
+                    "builtins::column" : [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ]
+        },
+        {
+            "descriptor" : "builtins::defend",
+            "co-descriptor" : null,
+            "available" : false,
+            "requires" : [
+                null
+            ]
+        },
+        {
+            "action" : "builtins::move",
+            "descriptor" : "builtins::move",
+            "available" : true,
+            "co-descriptor" : 1,
+            "requires" : [
+                "builtins::line",
+                "builtins::column"
+            ],
+            "builtins::line" : [
+                4,
+                5,
+                6
+            ],
+            "builtins::column" : [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "descriptor" : "builtins::skip",
+            "co-descriptor" : null,
+            "available" : true,
+            "requires" : [
+                null
+            ]
+        }
+    ]
+}
