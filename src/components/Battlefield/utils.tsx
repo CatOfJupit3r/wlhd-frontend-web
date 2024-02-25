@@ -2,6 +2,7 @@ import {imgStyle, tileStyle} from "./styles";
 import {INVALID_ASSET_PATH} from "../../config/configs";
 import React from "react";
 import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../../types/Battlefield";
+import styles from './Battlefield.module.css';
 
 const generateAssetPath = (dlc: string, descriptor: string) => {
     return `assets/${dlc}/${descriptor}.png`;
@@ -51,7 +52,7 @@ const generateJSX = (dlc: string, descriptor: string, id: string, key: string) =
 
 
 const onClickTile = (event: React.MouseEvent<HTMLImageElement>) => {
-    console.log(event.currentTarget.id)
+    event.currentTarget.className = event.currentTarget.className === styles.activeTile ? "" : styles.activeTile
 }
 
 export const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield => {
@@ -90,6 +91,7 @@ export const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield 
 }
 
 export const parsedToJSX = (parsed: ParsedBattlefield) => {
+    const timeNow = performance.now()
     const {battlefield, columns, lines, connectors, separators} = parsed
 
     const numberOfRows = battlefield.length
@@ -140,5 +142,7 @@ export const parsedToJSX = (parsed: ParsedBattlefield) => {
     displayRows(enemyRows, "enemy")
     columnHelpRow("2")
 
+    const timeAfter = performance.now()
+    console.debug(`Time to render battlefield: ${timeAfter - timeNow}ms`)
     return rendered
 }

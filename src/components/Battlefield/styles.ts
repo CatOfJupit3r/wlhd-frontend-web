@@ -7,6 +7,7 @@ export const imgStyle = {
 
 export const tileStyle = {
     ...imgStyle,
+    cursor: "pointer",
     backgroundImage: "url('assets/builtins/tile.png')",
     backgroundSize: "cover"
 }

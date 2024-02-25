@@ -1,0 +1,23 @@
+.activeTile {
+    cursor: pointer;
+    transition: border 0.1s;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid #6ef581;
+    border-radius: 8px;
+}
+
+.unavailableTile {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border: none;
+    transition: opacity 0.1s;
+}
+
+.tile {
+    background-color: #f0f0f0;
+    border: 1px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
