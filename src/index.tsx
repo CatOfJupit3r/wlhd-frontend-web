@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.css';
+import './index.css';
 import App from './App';
+import store from './redux/store';
+import {Provider} from 'react-redux';
 
 import './i18n'
 
@@ -11,5 +13,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <App />
+    <Provider store={store}>
+        <App />
+    </Provider>
 );
