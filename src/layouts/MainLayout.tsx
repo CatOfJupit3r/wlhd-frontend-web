@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from "../components/Header";
-import Error from "../components/Error/Error";
+import Error from "../components/Error";
 
 const MainLayout = () => {
     return (
