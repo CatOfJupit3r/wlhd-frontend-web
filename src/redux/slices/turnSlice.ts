@@ -16,8 +16,8 @@ const initialState = {}
 //     }
 // )
 
-const actionSlice = createSlice({
-    name: 'action',
+const turnSlice = createSlice({
+    name: 'turn',
     initialState,
     reducers: {
         // addBook: (state: BooksState, action) => {
@@ -66,7 +66,7 @@ const actionSlice = createSlice({
     }
 })
 
-export default actionSlice.reducer;
+export default turnSlice.reducer;
 
 // export const {
 //     addBook,
