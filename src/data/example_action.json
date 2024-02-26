@@ -1,484 +1,2509 @@
 {
-    "actions" : [
+    "actions": [
         {
-            "descriptor" : "builtins::item",
-            "co-descriptor" : null,
-            "available" : false,
-            "requires" : [
-                "builtins::item"
-            ],
-            "builtins::item" : []
+            "available": false,
+            "id": "item",
+            "level": "action",
+            "requires": null,
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins::use_item",
+                "level_descriptor": "builtins::action"
+            }
         },
         {
-            "descriptor" : "builtins::attack",
-            "co-descriptor" : null,
-            "available" : true,
-            "requires" : [
-                "builtins::weapon"
+            "available": true,
+            "id": "attack",
+            "level": "action",
+            "requires": [
+                [
+                    {
+                        "available": true,
+                        "id": "fee91ed7-485d-486e-8297-73ec3064ac12",
+                        "level": "weapon",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::aridnik_blades",
+                            "level_descriptor": "builtins::weapon"
+                        }
+                    }
+                ]
             ],
-            "builtins::weapon" : [
-                {
-                    "id" : "f739876e-2647-4f4d-a39b-af2dad8e64a1",
-                    "descriptor" : "nyrzamaer::aridnik_blades",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        3,
-                        4
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                }
-            ]
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins:attack",
+                "level_descriptor": "builtins::action"
+            }
         },
         {
-            "descriptor" : "builtins::spell",
-            "co-descriptor" : null,
-            "available" : false,
-            "requires" : [
-                "builtins::spell"
+            "available": true,
+            "id": "spell",
+            "level": "action",
+            "requires": [
+                [
+                    {
+                        "available": true,
+                        "id": "be704514-f43b-41b5-83d7-ff7eec8ccd80",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::charge_atomicity",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "1af09ea9-a587-4f64-bccd-0799fe7f8d24",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::flare",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "de6e44a1-dad4-4cf7-a6a5-95bdcd8c295c",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::electrical_love",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "a156166f-18c0-47b7-bd98-3809939ecb2f",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::ferromagnetism",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "2c4d4555-8e77-4d01-b8fb-1480688e98ce",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::lightning_bolt",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "f5e02ca6-a9a0-471b-9912-21d7f760e2d3",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::lorenz_force",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "df556a59-6e59-4247-9d13-91cc5799eb09",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::olgierds_arrogance",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "cf8e4f16-6980-453e-b902-526b14974da4",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::physical_lines",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "899ae122-cf8e-45da-b11b-31fc2d56094f",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::short_circuit",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "6a15f484-4c77-4dbc-81cc-9f65685561b0",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 1,
+                            "descriptor": "nyrzamaer::hall_effect",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "d875a567-c5a7-4f8b-ba34-d2bfa761e6ce",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::biot-savart-laplace_law",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "9079785e-64b7-47b2-a349-229c73582280",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::olgierds_spear",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "b9b20e5b-7201-47e9-bde1-67d7fe5e67bf",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 2,
+                            "descriptor": "nyrzamaer::tesla_coil",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "8282a7a8-34a9-4dd8-9895-f65cc02ae8a6",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 4,
+                            "descriptor": "nyrzamaer::electromagnetic_pulse",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "532b77e6-d22b-4d64-a0ed-47e1be4262bf",
+                        "level": "spell",
+                        "requires": [
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::melee_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::ranged_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "line",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::safe_line",
+                                        "level_descriptor": "builtins::line"
+                                    }
+                                }
+                            ],
+                            [
+                                {
+                                    "available": true,
+                                    "id": "1",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::first_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "2",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::second_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "3",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::third_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "4",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fourth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "5",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::fifth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                },
+                                {
+                                    "available": true,
+                                    "id": "6",
+                                    "level": "column",
+                                    "requires": null,
+                                    "translation_info": {
+                                        "co_descriptor": null,
+                                        "descriptor": "builtins::sixth_column",
+                                        "level_descriptor": "builtins::column"
+                                    }
+                                }
+                            ]
+                        ],
+                        "translation_info": {
+                            "co_descriptor": 3,
+                            "descriptor": "nyrzamaer::kirchhoffs_circuit_laws",
+                            "level_descriptor": "builtins::spell"
+                        }
+                    }
+                ]
             ],
-            "builtins::spell" : [
-                {
-                    "id" : "1589a5c6-8ba6-4468-b1a5-517333f1f88b",
-                    "descriptor" : "nyrzamaer::charge_atomicity",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "773ac3bf-c680-4cb6-8de6-4e4d6fcd130a",
-                    "descriptor" : "nyrzamaer::flare",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "8bac12e9-0c69-4520-a9c5-0008fc94b2bf",
-                    "descriptor" : "nyrzamaer::electrical_love",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "7e689485-599a-4d3a-9b16-996b212cf27d",
-                    "descriptor" : "nyrzamaer::ferromagnetism",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "797a22c2-8a9d-43ff-9148-0adcd14daba9",
-                    "descriptor" : "nyrzamaer::lightning_bolt",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "e2b625a3-c862-46f1-8469-0db825c46b91",
-                    "descriptor" : "nyrzamaer::lorenz_force",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "7b6ba712-fa4d-41dd-8dde-cc61a21f135a",
-                    "descriptor" : "nyrzamaer::olgierds_arrogance",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "8e658a6c-ec44-4e58-af2d-56c5b03a77cf",
-                    "descriptor" : "nyrzamaer::physical_lines",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "a7066d46-d458-48e9-966d-0fd4aacfd1ff",
-                    "descriptor" : "nyrzamaer::short_circuit",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "2c27fc1d-32b7-431e-930f-67784deaa869",
-                    "descriptor" : "nyrzamaer::hall_effect",
-                    "co-descriptor" : 1,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "4a5bff82-4882-47ed-af59-87b28f5b4b67",
-                    "descriptor" : "nyrzamaer::biot-savart-laplace_law",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "b14c268b-9cf8-4ee8-9975-1052221188ac",
-                    "descriptor" : "nyrzamaer::olgierds_spear",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "6dac7ea3-b837-4383-8a18-8fe2826143d9",
-                    "descriptor" : "nyrzamaer::tesla_coil",
-                    "co-descriptor" : 2,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "2df5ec7c-b0bf-49ea-b20e-0bce243c12f6",
-                    "descriptor" : "nyrzamaer::electromagnetic_pulse",
-                    "co-descriptor" : 4,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                },
-                {
-                    "id" : "88d1d428-7145-47e7-aa7c-861c258ebf4d",
-                    "descriptor" : "nyrzamaer::kirchhoffs_circuit_laws",
-                    "co-descriptor" : 3,
-                    "available" : true,
-                    "requires" : [
-                        "builtins::line",
-                        "builtins::column"
-                    ],
-                    "builtins::line" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "builtins::column" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ]
-                }
-            ]
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins::spell",
+                "level_descriptor": "builtins::action"
+            }
         },
         {
-            "descriptor" : "builtins::defend",
-            "co-descriptor" : null,
-            "available" : false,
-            "requires" : [
-                null
-            ]
+            "available": false,
+            "id": "defend",
+            "level": "action",
+            "requires": null,
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins:defend",
+                "level_descriptor": "builtins::action"
+            }
         },
         {
-            "action" : "builtins::move",
-            "descriptor" : "builtins::move",
-            "available" : true,
-            "co-descriptor" : 1,
-            "requires" : [
-                "builtins::line",
-                "builtins::column"
+            "available": true,
+            "id": "move",
+            "level": "action",
+            "requires": [
+                [
+                    {
+                        "available": true,
+                        "id": "4",
+                        "level": "line",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::melee_line",
+                            "level_descriptor": "builtins::line"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "5",
+                        "level": "line",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::ranged_line",
+                            "level_descriptor": "builtins::line"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "6",
+                        "level": "line",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::safe_line",
+                            "level_descriptor": "builtins::line"
+                        }
+                    }
+                ],
+                [
+                    {
+                        "available": true,
+                        "id": "1",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::first_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "2",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::second_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "3",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::third_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "4",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::fourth_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "5",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::fifth_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    },
+                    {
+                        "available": true,
+                        "id": "6",
+                        "level": "column",
+                        "requires": null,
+                        "translation_info": {
+                            "co_descriptor": null,
+                            "descriptor": "builtins::sixth_column",
+                            "level_descriptor": "builtins::column"
+                        }
+                    }
+                ]
             ],
-            "builtins::line" : [
-                4,
-                5,
-                6
-            ],
-            "builtins::column" : [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6
-            ]
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins::move",
+                "level_descriptor": "builtins::action"
+            }
         },
         {
-            "descriptor" : "builtins::skip",
-            "co-descriptor" : null,
-            "available" : true,
-            "requires" : [
-                null
-            ]
+            "available": true,
+            "id": "skip",
+            "level": "action",
+            "requires": null,
+            "translation_info": {
+                "co_descriptor": null,
+                "descriptor": "builtins:skip",
+                "level_descriptor": "builtins::action"
+            }
         }
-    ]
+    ],
+    "column": 2,
+    "current_ap": 300,
+    "entity_name": "nyrzamaer::dortyn:name",
+    "line": 4,
+    "max_ap": 300
 }
