@@ -62,7 +62,7 @@ const turnSlice = createSlice({
             }
         }) => {
             const {cell} = action.payload;
-            return {...state, chosenCell: cell}
+            return state.squareChoice ? {...state, chosenCell: cell} : state;
         },
         setChosenAction: (state: TurnState, action: {
             type: string,
@@ -74,9 +74,7 @@ const turnSlice = createSlice({
             const {key, action_value} = action.payload;
             return {...state, chosenAction: {...state.chosenAction, [key]: action_value}}
         },
-        resetChosenActions: (state: TurnState, action: {
-            type: string,
-        }) => {
+        resetChosenActions: (state: TurnState) => {
             return {...state, chosenAction: {}}
         },
         setDisplayedActions: (state: TurnState, action: {
@@ -89,9 +87,7 @@ const turnSlice = createSlice({
             const {key, action_value} = action.payload;
             return {...state, displayedActions: {...state.displayedActions, [key]: action_value}}
         },
-        resetDisplayedActions: (state: TurnState, action: {
-            type: string,
-        }) => {
+        resetDisplayedActions: (state: TurnState) => {
             return {...state, displayedActions: {}}
         },
         setIsTurnActive: (state: TurnState, action: {

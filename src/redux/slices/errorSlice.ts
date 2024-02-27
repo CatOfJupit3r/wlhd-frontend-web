@@ -1,14 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {StoreState} from "../../types/Redux";
 
-const initialState: string = ''
+const initialState: {
+    message: string,
+    code: string
+} = {
+    message: "",
+    code: ""
+}
 
 const ErrorSlice = createSlice({
     name: 'error',
     initialState,
     reducers: {
-        setError: (_, action) => {
-            return action.payload
+        setError: (state, action) => {
+            return {...state, message: action.payload.message, code: action.payload.code}
         },
         clearError: () => {
             return initialState

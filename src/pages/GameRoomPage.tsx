@@ -1,3 +1,11 @@
+import React from 'react';
+import Battlefield from "../components/Battlefield/Battlefield";
+import {selectIsTurnActive} from "../redux/slices/turnSlice";
+import store from "../redux/store";
+import ActionInput from "../components/ActionInput/ActionInput";
+import {useSelector} from "react-redux";
+
+
 /*
 
 The Game Room Page is the page where the game is played. It is the main page of the game and
@@ -10,13 +18,23 @@ After this, socket will listen for commands from server:
 
  */
 
-import React from 'react';
-import Battlefield from "../components/Battlefield/Battlefield";
+
 
 const GameRoomPage = () => {
+    const isTurn = useSelector(selectIsTurnActive)
+
     return (
-        <div>
+        <div style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+        }}>
             <Battlefield />
+            {isTurn ?
+            <ActionInput />
+            :
+            <h1>Not your turn!</h1>}
         </div>
     );
 };
