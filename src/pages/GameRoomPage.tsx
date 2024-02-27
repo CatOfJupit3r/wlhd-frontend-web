@@ -1,7 +1,6 @@
 import React from 'react';
 import Battlefield from "../components/Battlefield/Battlefield";
 import {selectIsTurnActive} from "../redux/slices/turnSlice";
-import store from "../redux/store";
 import ActionInput from "../components/ActionInput/ActionInput";
 import {useSelector} from "react-redux";
 
@@ -26,9 +25,6 @@ const GameRoomPage = () => {
     return (
         <div style={{
             display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-evenly",
         }}>
             <Battlefield />
             {isTurn ?

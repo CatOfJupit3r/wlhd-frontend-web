@@ -15,8 +15,15 @@ const turnSlice = createSlice({
     name: 'turn',
     initialState,
     reducers: {
-        toggleSquareChoice: (state: TurnState) => {
-            return {...state, squareChoice: !(state.squareChoice)}
+        resetTurn: (state) => ({...initialState, isTurnActive: state.isTurnActive}),
+        setSquareChoice: (state: TurnState, action: {
+            type: string,
+            payload: {
+                flag: boolean
+            }
+        }) => {
+            const {flag} = action.payload;
+            return {...state, squareChoice: flag}
         },
         setActiveCells: (state: TurnState, action: {
             type: string,
@@ -43,17 +50,13 @@ const turnSlice = createSlice({
             const {line} = payload.payload;
             const newState = {...state};
             newState.activeCells[line] = {};
-            for (let i = 1; i <= 6; i++) {
-                newState.activeCells[line][i.toString()] = false;
+            for (let column in newState.activeCells[line]) {
+                newState.activeCells[line][column] = false;
             }
             return newState;
         },
         resetAllActiveCells: (state: TurnState) => {
-            for (let line of ["1", "2", "3", "4", "5", "6"]) {
-                for (let column of ["1", "2", "3", "4", "5", "6"]) {
-                    state.activeCells[line][column] = false;
-                }
-            }
+            return {...state, activeCells: {}}
         },
         setChosenCell: (state: TurnState, action: {
             type: string,
@@ -106,15 +109,14 @@ const turnSlice = createSlice({
 export default turnSlice.reducer;
 
 export const {
-    toggleSquareChoice,
+    resetTurn,
+    setSquareChoice,
     setActiveCells,
     resetActiveCells,
     resetAllActiveCells,
     setChosenCell,
     setChosenAction,
-    resetChosenActions,
     setDisplayedActions,
-    resetDisplayedActions,
     setIsTurnActive,
 } = turnSlice.actions;
 

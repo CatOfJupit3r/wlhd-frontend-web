@@ -2364,7 +2364,7 @@
             }
         },
         {
-            "available": false,
+            "available": true,
             "id": "defend",
             "level": "action",
             "requires": null,
