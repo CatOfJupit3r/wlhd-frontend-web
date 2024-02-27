@@ -9,9 +9,9 @@ function getLanguageFiles() {
     We get jsons, add them to dlc category (which is located in manifest.json) and dlc category to the language
     * */
     console.log("111")
-    const languages = {}
-    const dlc = {}
-    const translations = {}
+    // const languages = {}
+    // const dlc = {}
+    // const translations = {}
     const translationPath = '../translations/'
     const folders = fs.readdirSync(translationPath)
     console.log(folders)
