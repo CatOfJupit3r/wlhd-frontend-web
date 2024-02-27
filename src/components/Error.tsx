@@ -16,7 +16,9 @@ const Error = () => {
     }, [errorMessage, dispatch]);
 
     return (
-        <ToastContainer position={"top-right"} autoClose={2000} limit={5}/>
+        <ToastContainer position={"top-right"} autoClose={2000} limit={5} onClick={()=> {
+            toast.dismiss()
+        }}/>
     );
 };
 
