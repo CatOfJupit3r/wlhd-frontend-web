@@ -1,78 +1,130 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import {TurnState} from "../../types/Redux";
 
-const initialState = {}
+const initialState: TurnState = {
+    squareChoice: false,
+    activeCells: {},
+    chosenCell: "",
+    chosenAction: {},
+    displayedActions: {},
+    isTurnActive: false,
+}
 
-// export const fetchBook = createAsyncThunk(
-//     'books/fetchBook',
-//     async (url: string, thunkAPI) => {
-//         try{
-//             const res = await axios.get(url)
-//             return res.data
-//         } catch (e: any) {
-//             thunkAPI.dispatch(setError(e.message))
-//             return thunkAPI.rejectWithValue(e)
-//         }
-//     }
-// )
 
 const turnSlice = createSlice({
     name: 'turn',
     initialState,
     reducers: {
-        // addBook: (state: BooksState, action) => {
-        //     return {...state, books: [...state.books, action.payload]}
-        // },
-        // removeBook: (state, action) => {
-        //     return {...state, books: state.books.filter((book: Book) => book.id !== action.payload)}
-        // },
-        // favoriteBook: (state: BooksState, action) => {
-        //     return {
-        //         ...state,
-        //         books: state.books.map((book: Book) => {
-        //             if (book.id === action.payload) {
-        //                 return {
-        //                     ...book,
-        //                     favorite: !(book.favorite)
-        //                 }
-        //             }
-        //             return book
-        //         })
-        //     }
-        // },
-        // clearBooks: (state) => {
-        //     return {
-        //         ...state,
-        //         books: []
-        //     }
-        // }
-    },
-    extraReducers: (builder) => {
-        // builder.addCase(fetchBook.pending, (state: BooksState) => {
-        //     return {...state, isLoadingViaAPI: true}
-        // })
-        // builder.addCase(fetchBook.fulfilled, (state: BooksState, action) => {
-        //     const {payload} = action
-        //     if (payload?.title && payload?.author) {
-        //         const {title, author} = payload
-        //         return {...state, isLoadingViaAPI: false, books: [...state.books, createBook(title, author, "API")]}
-        //     } else {
-        //         return {...state, isLoadingViaAPI: false}
-        //     }
-        // })
-        // builder.addCase(fetchBook.rejected, (state: BooksState) => {
-        //     return {...state, isLoadingViaAPI: false}
-        // })
+        toggleSquareChoice: (state: TurnState) => {
+            return {...state, squareChoice: !(state.squareChoice)}
+        },
+        setActiveCells: (state: TurnState, action: {
+            type: string,
+            payload: {
+                lines: string[]
+            }
+        }) => {
+            const {lines} = action.payload;
+            const newState = {...state};
+            for (let line of lines) {
+                newState.activeCells[line] = {};
+                for (let i = 1; i <= 6; i++) {
+                    newState.activeCells[line][i.toString()] = true;
+                }
+            }
+            return newState;
+        },
+        resetActiveCells: (state: TurnState, payload: {
+            type: string,
+            payload: {
+                line: string
+            }
+        }) => {
+            const {line} = payload.payload;
+            const newState = {...state};
+            newState.activeCells[line] = {};
+            for (let i = 1; i <= 6; i++) {
+                newState.activeCells[line][i.toString()] = false;
+            }
+            return newState;
+        },
+        resetAllActiveCells: (state: TurnState) => {
+            for (let line of ["1", "2", "3", "4", "5", "6"]) {
+                for (let column of ["1", "2", "3", "4", "5", "6"]) {
+                    state.activeCells[line][column] = false;
+                }
+            }
+        },
+        setChosenCell: (state: TurnState, action: {
+            type: string,
+            payload: {
+                cell: string
+            }
+        }) => {
+            const {cell} = action.payload;
+            return {...state, chosenCell: cell}
+        },
+        setChosenAction: (state: TurnState, action: {
+            type: string,
+            payload: {
+                key: string,
+                action_value: string,
+            }
+        }) => {
+            const {key, action_value} = action.payload;
+            return {...state, chosenAction: {...state.chosenAction, [key]: action_value}}
+        },
+        resetChosenActions: (state: TurnState, action: {
+            type: string,
+        }) => {
+            return {...state, chosenAction: {}}
+        },
+        setDisplayedActions: (state: TurnState, action: {
+            type: string,
+            payload: {
+                key: string,
+                action_value: string,
+            }
+        }) => {
+            const {key, action_value} = action.payload;
+            return {...state, displayedActions: {...state.displayedActions, [key]: action_value}}
+        },
+        resetDisplayedActions: (state: TurnState, action: {
+            type: string,
+        }) => {
+            return {...state, displayedActions: {}}
+        },
+        setIsTurnActive: (state: TurnState, action: {
+            type: string,
+            payload: {
+                value: boolean
+            }
+        }) => {
+            const {value} = action.payload;
+            return {...state, isTurnActive: value}
+        },
+
     }
 })
 
 export default turnSlice.reducer;
 
-// export const {
-//     addBook,
-//     removeBook,
-//     favoriteBook,
-//     clearBooks,
-// } = bookSlice.actions
+export const {
+    toggleSquareChoice,
+    setActiveCells,
+    resetActiveCells,
+    resetAllActiveCells,
+    setChosenCell,
+    setChosenAction,
+    resetChosenActions,
+    setDisplayedActions,
+    resetDisplayedActions,
+    setIsTurnActive,
+} = turnSlice.actions;
 
-// export const selectIsLoading = (state: {books: BooksState}) => state.books.isLoadingViaAPI
+export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;
+export const selectActiveCells = (state: {turn: TurnState}) => state.turn.activeCells;
+export const selectChosenCell = (state: {turn: TurnState}) => state.turn.chosenCell;
+export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;
+export const selectDisplayedActions = (state: {turn: TurnState}) => state.turn.displayedActions;
+export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.isTurnActive;
