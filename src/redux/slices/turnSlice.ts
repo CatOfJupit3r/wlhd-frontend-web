@@ -3,8 +3,8 @@ import {TurnState} from "../../types/Redux";
 
 const initialState: TurnState = {
     squareChoice: false,
-    interactableCells: {},
-    chosenCell: "",
+    interactableSquares: {},
+    chosenSquare: "",
     chosenAction: {},
     displayedActions: {},
     isTurnActive: false,
@@ -25,7 +25,7 @@ const turnSlice = createSlice({
             const {flag} = action.payload;
             return {...state, squareChoice: flag}
         },
-        setInteractableCells: (state: TurnState, action: {
+        setInteractableSquares: (state: TurnState, action: {
             type: string,
             payload: {
                 lines: string[]
@@ -34,20 +34,23 @@ const turnSlice = createSlice({
         }) => {
             const {lines, columns} = action.payload;
             for (let line of lines) {
-                state.interactableCells[line] = {};
+                state.interactableSquares[line] = {};
                 for (let column of columns) {
-                    state.interactableCells[line][column] = true;
+                    state.interactableSquares[line][column] = true;
                 }
             }
         },
-        setChosenCell: (state: TurnState, action: {
+        resetInteractableSquares: (state: TurnState) => {
+            return {...state, interactableSquares: {}}
+        },
+        setChosenSquare: (state: TurnState, action: {
             type: string,
             payload: {
-                cell: string
+                square: string
             }
         }) => {
-            const {cell} = action.payload;
-            return state.squareChoice ? {...state, chosenCell: cell} : state;
+            const {square} = action.payload;
+            return state.squareChoice ? {...state, chosenSquare: square} : state;
         },
         setChosenAction: (state: TurnState, action: {
             type: string,
@@ -78,7 +81,6 @@ const turnSlice = createSlice({
             const {value} = action.payload;
             return {...state, isTurnActive: value}
         },
-
     }
 })
 
@@ -87,16 +89,16 @@ export default turnSlice.reducer;
 export const {
     resetTurn,
     setSquareChoice,
-    setInteractableCells,
-    setChosenCell,
+    setInteractableSquares,
+    setChosenSquare,
     setChosenAction,
     setDisplayedActions,
     setIsTurnActive,
 } = turnSlice.actions;
 
 export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;
-export const selectActiveCells = (state: {turn: TurnState}) => state.turn.interactableCells;
-export const selectChosenCell = (state: {turn: TurnState}) => state.turn.chosenCell;
+export const selectActiveSquares = (state: {turn: TurnState}) => state.turn.interactableSquares;
+export const selectChosenSquare = (state: {turn: TurnState}) => state.turn.chosenSquare;
 export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;
 export const selectDisplayedActions = (state: {turn: TurnState}) => state.turn.displayedActions;
 export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.isTurnActive;

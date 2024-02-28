@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import example from "../../data/example_bf.json"
 import {battlefieldStyle} from "./styles";
 import {parseBattlefield, parsedToJSX} from "./utils";
@@ -8,22 +8,18 @@ import {setIsTurnActive} from "../../redux/slices/turnSlice";
 
 const Battlefield = () => {
 
-    const [battlefield, setBattlefield] = useState(example as BattlefieldInterface)
     const dispatch = useDispatch()
 
     const changeBattlefield = () => {
-        const new_battlefield = {...example}
-        new_battlefield.game_descriptors.field_components["1"] = "builtins::enemy"
-        setBattlefield(new_battlefield)
         dispatch(setIsTurnActive({value: true}))
     }
 
     return (
         <div style={battlefieldStyle}>
             {
-                parsedToJSX(parseBattlefield(battlefield))
+                parsedToJSX(parseBattlefield(example as BattlefieldInterface))
             }
-            <button onClick={() => changeBattlefield()}>Click me</button>
+            <button onClick={() => changeBattlefield()}>Start turn</button>
         </div>
     );
 };

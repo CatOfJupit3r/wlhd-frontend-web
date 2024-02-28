@@ -9,18 +9,19 @@ import {extractCards} from "./utils";
 import {
     setSquareChoice,
     setChosenAction as setChosenActionStore,
-    resetTurn, selectSquareChoice, setInteractableCells
+    resetTurn, selectSquareChoice, setInteractableSquares, selectChosenSquare
 } from "../../redux/slices/turnSlice";
 
 
 const ActionInput = () => {
+    const dispatch = useDispatch()
+    const isSquareChoice = useSelector(selectSquareChoice)
+    const chosenSquare = useSelector(selectChosenSquare)
 
     const [currentActionLevel, setCurrentActionLevel] = useState(action_example.actions as Action[])
     const [depth, setDepth] = useState(0)
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
     const [chosenAction, setChosenAction] = useState(undefined as number | undefined)
-    const isSquareChoice = useSelector(selectSquareChoice)
-    const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage, ] = useState(9);
 
@@ -48,7 +49,7 @@ const ActionInput = () => {
                     if (!isSquareChoice) {
                         dispatch(setSquareChoice({flag: true}))
                     }
-                    dispatch(setInteractableCells({
+                    dispatch(setInteractableSquares({
                         lines: actionObject.requires[0].map((action: Action) => action.id),
                         columns: actionObject.requires[1].map((action: Action) => action.id)
                     }))
@@ -56,6 +57,19 @@ const ActionInput = () => {
                     dispatch(setError("There was an error with the action input"))
                     handleReset()
                 }
+            }
+        } else if (chosenSquare !== "") {
+            if (isSquareChoice) {
+                setReachedFinalDepth(true)
+                const [line, column] = chosenSquare.split("/")
+                dispatch (setChosenActionStore({
+                    key: "line",
+                    action_value: line
+                }))
+                dispatch (setChosenActionStore({
+                    key: "column",
+                    action_value: column
+                }))
             }
         }
     }
@@ -86,23 +100,15 @@ const ActionInput = () => {
         return extractCards(currentCards, handleSelect);
     }, [currentPage, cardsPerPage, currentActionLevel])
 
-    // const generateOptions = (action: Action[]): JSX.Element => {
-    //     const indexOfLastCard = currentPage * cardsPerPage;
-    //     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    //     const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
-    //
-    //     return extractCards(currentCards, handleSelect);
-    // }
-
     return (
-        <div>
+        <div id={"action-input"}>
             {
                 reachedFinalDepth ?
                     <>
                         <h1>You have chosen</h1>
                         <p>
                             {
-                                currentActionLevel[chosenAction as number].translation_info.descriptor
+                                "Stuff will happen here."
                             }
                         </p>
                     </>

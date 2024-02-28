@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {tileInteractableStyle} from "./styles";
 import {INVALID_ASSET_PATH} from "../../config/configs";
 import {generateAssetPath, splitDescriptor} from "./utils";
 import {useDispatch, useSelector} from "react-redux";
-import {selectActiveCells, selectChosenCell, selectSquareChoice, setChosenCell} from "../../redux/slices/turnSlice";
+import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../redux/slices/turnSlice";
 import styles from "./Battlefield.module.css";
 
 const TileEntity = (props: {
@@ -22,28 +22,18 @@ const TileEntity = (props: {
         fallback} = props;
     const [dlc, descriptor] = splitDescriptor(full_descriptor)
     const dispatch = useDispatch()
-    const chosenCell = useSelector(selectChosenCell)
+    const chosenSquare = useSelector(selectChosenSquare)
     const isSquareChoice = useSelector(selectSquareChoice)
-    const activeCells = useSelector(selectActiveCells)
+    const activeSquares = useSelector(selectActiveSquares)
     const [currentClassAlias, setCurrentClassAlias] = useState("default")
 
-    const squareShouldBeInteractable = () => {
+    const squareShouldBeInteractable = useCallback(() => {
         const [line, column] = id.split("/")
-        return activeCells[line]?.[column] &&
-            activeCells[line][column] !== undefined &&
-            activeCells[line][column] &&
+        return activeSquares[line]?.[column] &&
+            activeSquares[line][column] !== undefined &&
+            activeSquares[line][column] &&
             isSquareChoice
-    }
-
-    const updateClassName = () => {
-        if (chosenCell === id) {
-            setCurrentClassAlias("active")
-        } else if (squareShouldBeInteractable()) {
-            setCurrentClassAlias("interactable")
-        } else {
-            setCurrentClassAlias("default")
-        }
-    }
+    }, [activeSquares, id, isSquareChoice])
 
     const classAliasToName = (alias: string) => {
         switch (alias) {
@@ -58,21 +48,27 @@ const TileEntity = (props: {
 
     const handleTileClick = () => {
         if (currentClassAlias !== "default") {
-            if (chosenCell !== id) {
-                dispatch(setChosenCell({
-                    cell: id
+            if (chosenSquare !== id) {
+                dispatch(setChosenSquare({
+                    square: id
                 }))
             } else {
-                dispatch(setChosenCell({
-                    cell: ""
+                dispatch(setChosenSquare({
+                    square: ""
                 }))
             }
         }
     }
 
     useEffect(() => {
-        updateClassName()
-    }, [chosenCell, activeCells, isSquareChoice, id])
+        if (chosenSquare === id) {
+            setCurrentClassAlias("active")
+        } else if (squareShouldBeInteractable()) {
+            setCurrentClassAlias("interactable")
+        } else {
+            setCurrentClassAlias("default")
+        }
+    }, [chosenSquare, activeSquares, isSquareChoice, id, squareShouldBeInteractable])
 
     return <img
         src={generateAssetPath(dlc, descriptor)}
