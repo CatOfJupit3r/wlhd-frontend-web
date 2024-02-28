@@ -15,17 +15,20 @@ const TileEntity = (props: {
         alt?: string
     }
 }) => {
+    const dispatch = useDispatch()
+
     const {
         full_descriptor,
         className,
         id,
         fallback} = props;
     const [dlc, descriptor] = splitDescriptor(full_descriptor)
-    const dispatch = useDispatch()
+
+    const [currentClassAlias, setCurrentClassAlias] = useState("default")
+
     const chosenSquare = useSelector(selectChosenSquare)
     const isSquareChoice = useSelector(selectSquareChoice)
     const activeSquares = useSelector(selectActiveSquares)
-    const [currentClassAlias, setCurrentClassAlias] = useState("default")
 
     const squareShouldBeInteractable = useCallback(() => {
         const [line, column] = id.split("/")
@@ -47,7 +50,7 @@ const TileEntity = (props: {
     }
 
     const handleTileClick = () => {
-        if (currentClassAlias !== "default") {
+        if (currentClassAlias !== "default" && isSquareChoice) {
             if (chosenSquare !== id) {
                 dispatch(setChosenSquare({
                     square: id
@@ -80,6 +83,9 @@ const TileEntity = (props: {
             event.currentTarget.alt = fallback.alt ? fallback.alt : "invalid"
         }
         }
+        // will add onHover event, which will display entity info in a tooltip
+        // if squareChoice is active, then it will be 1.5 sec,
+        // if not, then it will be 0.5 sec
         className={className && currentClassAlias === "default" ? undefined : classAliasToName(currentClassAlias)}
         id={id}
         key={id}

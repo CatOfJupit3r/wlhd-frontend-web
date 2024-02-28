@@ -75,11 +75,11 @@ const turnSlice = createSlice({
         setIsTurnActive: (state: TurnState, action: {
             type: string,
             payload: {
-                value: boolean
+                flag: boolean
             }
         }) => {
-            const {value} = action.payload;
-            return {...state, isTurnActive: value}
+            const {flag} = action.payload;
+            return {...state, isTurnActive: flag}
         },
     }
 })
@@ -94,6 +94,7 @@ export const {
     setChosenAction,
     setDisplayedActions,
     setIsTurnActive,
+    resetInteractableSquares
 } = turnSlice.actions;
 
 export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;

@@ -9,7 +9,14 @@ import {extractCards} from "./utils";
 import {
     setSquareChoice,
     setChosenAction as setChosenActionStore,
-    resetTurn, selectSquareChoice, setInteractableSquares, selectChosenSquare, resetInteractableSquares
+    resetTurn,
+    selectSquareChoice,
+    setInteractableSquares,
+    selectChosenSquare,
+    resetInteractableSquares,
+    setIsTurnActive,
+    setDisplayedActions, selectDisplayedActions,
+    selectChosenAction as selectChosenActionStore
 } from "../../redux/slices/turnSlice";
 
 
@@ -17,6 +24,8 @@ const ActionInput = () => {
     const dispatch = useDispatch()
     const isSquareChoice = useSelector(selectSquareChoice)
     const chosenSquare = useSelector(selectChosenSquare)
+    const displayedActions = useSelector(selectDisplayedActions)
+    const chosenActionStore = useSelector(selectChosenActionStore)
 
     const [currentActionLevel, setCurrentActionLevel] = useState(action_example.actions as Action[])
     const [depth, setDepth] = useState(0)
@@ -36,6 +45,11 @@ const ActionInput = () => {
             dispatch (setChosenActionStore({
                 key: actionObject.level,
                 action_value: actionObject.id
+            }))
+            const {translation_info} = actionObject
+            dispatch(setDisplayedActions({
+                key: translation_info.level_descriptor,
+                action_value: translation_info.descriptor + ":name"
             }))
             if (actionObject.requires === null) {
                 setReachedFinalDepth(true)
@@ -107,15 +121,31 @@ const ActionInput = () => {
         return extractCards(currentCards, handleSelect);
     }, [currentPage, cardsPerPage, currentActionLevel])
 
+    const objectToString = (obj: any): Array<string> => {
+        return Object.keys(obj).map((key) => {
+            return key + ": " + obj[key]
+        } )
+    }
+
     const finalDepthScreen = () => {
         return (
             <>
                 <h1>You have chosen</h1>
-                <p>
-                    {
-                        "Stuff will happen here."
+                {
+                    objectToString(displayedActions).map((str: string) => {
+                        return <p key={str} style={{marginBottom: 0}}>{str}</p>
+                    })
+                }
+                <button
+                    onClick={() => {
+                        console.log("Submitting...")
+                        console.log(chosenActionStore)
+                        dispatch(resetTurn())
+                        dispatch(setIsTurnActive({
+                            flag: false
+                        }))}
                     }
-                </p>
+                >Submit</button>
                 <button onClick={() => {
                     setReachedFinalDepth(false)
                     handleReset()
@@ -127,6 +157,7 @@ const ActionInput = () => {
     const shallowDepthScreen = () => {
         return (
             <>
+                {/* Will add h1 to display what current action choice is for... But I don't know how? */}
                 {generateOptions(currentActionLevel)}
                 <button onClick={handleConfirm}>Confirm</button>
                 {

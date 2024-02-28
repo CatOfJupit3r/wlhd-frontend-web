@@ -11,7 +11,7 @@ const Battlefield = () => {
     const dispatch = useDispatch()
 
     const changeBattlefield = () => {
-        dispatch(setIsTurnActive({value: true}))
+        dispatch(setIsTurnActive({flag: true}))
     }
 
     return (
