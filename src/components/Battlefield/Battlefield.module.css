@@ -1,11 +1,18 @@
-.activeTile {
+.activeTile .interactableTile {
     cursor: pointer;
     transition: border 0.1s;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border: 2px solid #6ef581;
     border-radius: 8px;
+}
+
+.activeTile {
+    border: 2px solid #6ef581;
+}
+
+.interactableTile {
+    border: 2px solid #18fcd2;
 }
 
 .unavailableTile {

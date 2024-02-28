@@ -7,9 +7,13 @@ export const imgStyle = {
 
 export const tileStyle = {
     ...imgStyle,
-    cursor: "pointer",
+}
+
+export const tileInteractableStyle = {
+    ...imgStyle,
     backgroundImage: "url('assets/builtins/tile.png')",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
+    cursor: "pointer"
 }
 
 

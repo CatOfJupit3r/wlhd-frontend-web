@@ -5,7 +5,7 @@ export interface ErrorState {
 
 export interface TurnState {
     squareChoice: boolean // if false, chosenCell cannot be changed
-    activeCells: {
+    interactableCells: {
         [key: string]: { [key: string]: boolean }
     }, // used for styles on the battlefield
     chosenCell: string, // value changed by buttons. Format is "line/column"

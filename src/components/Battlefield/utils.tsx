@@ -1,13 +1,13 @@
-import {imgStyle, tileStyle} from "./styles";
-import {INVALID_ASSET_PATH} from "../../config/configs";
 import React from "react";
 import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../../types/Battlefield";
-import styles from './Battlefield.module.css';
+import TileCosmetic from "./TileCosmetic";
+import TileEntity from "./TileEntity";
 
-const generateAssetPath = (dlc: string, descriptor: string) => {
+export const generateAssetPath = (dlc: string, descriptor: string) => {
     return `assets/${dlc}/${descriptor}.png`;
 };
-const splitDescriptor = (full_descriptor: string): [string, string] => {
+
+export const splitDescriptor = (full_descriptor: string): [string, string] => {
     if (!full_descriptor.includes("::")) {
         // If the descriptor does not have specified a dlc, we assume it is a builtins asset
         return ["builtins", full_descriptor]
@@ -19,54 +19,20 @@ const splitDescriptor = (full_descriptor: string): [string, string] => {
 }
 
 
-const generateJSXTile = (dlc: string, descriptor: string, id: string, key: string, onClick?: Function) => {
-    return <img
-        src={generateAssetPath(dlc, descriptor)}
-        onClick={onClick ? (event) => onClick(event): undefined}
-        alt={descriptor !== "tile" ? dlc + "::" + descriptor : undefined}
-        style={tileStyle}
-        onError={(event) => {
-            event.currentTarget.src = INVALID_ASSET_PATH
-            event.currentTarget.alt = "invalid"
-        }
-        }
-        id={id}
-        key={key}
-    />
-}
-
-const generateJSX = (dlc: string, descriptor: string, id: string, key: string) => {
-    return <img
-        src={generateAssetPath(dlc, descriptor)}
-        alt={descriptor !== "tile" ? dlc + "::" + descriptor : undefined}
-        style={imgStyle}
-        onError={(event) => {
-            event.currentTarget.src = INVALID_ASSET_PATH
-            event.currentTarget.alt = "invalid"
-        }
-        }
-        id={id}
-        key={key}
-    />
-}
-
-
-const onClickTile = (event: React.MouseEvent<HTMLImageElement>) => {
-    event.currentTarget.className = event.currentTarget.className === styles.activeTile ? "" : styles.activeTile
-}
-
 export const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield => {
     const battlefield = data.battlefield
     const game_descriptors = data.game_descriptors
 
     const columns = (key: string) => game_descriptors.columns.map((descriptor, index) => {
-        return generateJSX(...splitDescriptor(descriptor), `column_${index}`, `column-${index}-${key}`)
+        return <TileCosmetic full_descriptor={descriptor} id={`column_${index}`} key={`column-${index}-${key}`} />
     })
     const lines = (key: string) => game_descriptors.lines.map((descriptor, index) => {
-        return generateJSX(...splitDescriptor(descriptor), `line_${index}`, `line-${index}-${key}`)
+        return <TileCosmetic full_descriptor={descriptor} id={`line_${index}`} key={`line_-${index}-${key}`} />
     })
     const [connectors, separators] = [game_descriptors.connectors, game_descriptors.separators].map((descriptor, index) => {
-        return (key: string) => generateJSX(...splitDescriptor(descriptor), index === 0 ? "connector" : "separator", key)
+        return (key: string) => {
+            return <TileCosmetic full_descriptor={descriptor} id={index === 0 ? "connector" : "separator"} key={key} />
+        }
     })
     const field_components = game_descriptors.field_components
     const battlefieldJSX: JSX.Element[][] = Array<Array<JSX.Element>>()
@@ -75,9 +41,12 @@ export const parseBattlefield = (data: BattlefieldInterface): ParsedBattlefield 
         for (let j = 0; j < battlefield[i].length; j++) {
             const alias = battlefield[i][j]
             const full_descriptor = field_components[alias]
-            let [dlc, descriptor] = splitDescriptor(full_descriptor)
-            const tile_id = `${i}/${j}`
-            row.push(generateJSXTile(dlc, descriptor, tile_id, `${i + 1}/${j + 1}`, onClickTile))
+            const tile_id = `${i + 1}/${j + 1}`
+            const isAlly = i + 1 > Math.floor(battlefield.length / 2)
+            row.push(<TileEntity full_descriptor={full_descriptor} id={tile_id} key={tile_id} fallback={{
+                path: isAlly ? "assets/builtins/ally.png" : "assets/builtins/enemy.png",
+                alt: isAlly ? "ally" : "enemy"
+            }} />)
         }
         battlefieldJSX.push(row)
     }

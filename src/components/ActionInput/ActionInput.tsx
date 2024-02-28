@@ -1,18 +1,16 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import action_example from '../../data/example_action.json';
 import {Action} from "../../types/ActionInput";
 import {setError} from "../../redux/slices/errorSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";
-import CardGroup from 'react-bootstrap/CardGroup';
 
 
 import {
     setSquareChoice,
     setChosenAction as setChosenActionStore,
-    resetTurn, selectSquareChoice
+    resetTurn, selectSquareChoice, setInteractableCells
 } from "../../redux/slices/turnSlice";
-import {Col, Row} from "react-bootstrap";
 
 
 const ActionInput = () => {
@@ -42,13 +40,20 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             } else {
                 if (actionObject.requires.length === 1) {
+                    const newActionLevel = (actionObject.requires as Action[][])[0]
                     setCurrentActionLevel(
-                        (actionObject.requires as Action[][])[0]
+                        newActionLevel
                     )
                 } else if (actionObject.requires.length === 2) {
-                    dispatch(setSquareChoice({flag: true}))
+                    if (!isSquareChoice) {
+                        dispatch(setSquareChoice({flag: true}))
+                    }
+                    dispatch(setInteractableCells({
+                        lines: actionObject.requires[0].map((action: Action) => action.id),
+                        columns: actionObject.requires[1].map((action: Action) => action.id)
+                    }))
                 } else {
-                    dispatch(setError("There is an error with the action input"))
+                    dispatch(setError("There was an error with the action input"))
                     handleReset()
                 }
             }
@@ -62,24 +67,32 @@ const ActionInput = () => {
         dispatch(resetTurn())
     }
 
-    const handleSelect = (e: any) => {
-        const chosenActionIndex  = parseInt(e.target.value)
-        if (currentActionLevel[chosenActionIndex].available) {
-            setChosenAction(parseInt(e.target.value))
-        }
-    }
-
     const handleDepth = (): JSX.Element => {
         return depth === 0 ? <></> : <button onClick={handleReset} key={"reset_button"}>Reset</button>
     }
 
-    const generateOptions = (action: Action[]): JSX.Element => {
+    const generateOptions = useCallback((action: Action[]): JSX.Element => {
         const indexOfLastCard = currentPage * cardsPerPage;
         const indexOfFirstCard = indexOfLastCard - cardsPerPage;
         const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
 
+        const handleSelect = (e: any) => {
+            const chosenActionIndex  = parseInt(e.target.value)
+            if (currentActionLevel[chosenActionIndex].available) {
+                setChosenAction(parseInt(e.target.value))
+            }
+        }
+
         return extractCards(currentCards, handleSelect);
-    }
+    }, [currentPage, cardsPerPage, currentActionLevel])
+
+    // const generateOptions = (action: Action[]): JSX.Element => {
+    //     const indexOfLastCard = currentPage * cardsPerPage;
+    //     const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+    //     const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
+    //
+    //     return extractCards(currentCards, handleSelect);
+    // }
 
     return (
         <div>
@@ -94,19 +107,22 @@ const ActionInput = () => {
                         </p>
                     </>
                     :
-                    isSquareChoice ?
-                        <h1>Choose a square</h1> // maybe instead of text, we glow the squares that are available
-                        // and also this will exclude need to derender the action input (and user will be able to rethink their action)
-                        :
-                        <>
-                            {generateOptions(currentActionLevel)}
-                            <button onClick={handleConfirm}>Confirm</button>
-                            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Back</button>
-                            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(currentActionLevel.length / cardsPerPage)}>Forward</button>
-                            {
-                                handleDepth()
-                            }
-                        </>
+                    <>
+                        {generateOptions(currentActionLevel)}
+                        <button onClick={handleConfirm}>Confirm</button>
+                        {
+                            currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
+                                <></>
+                                :
+                                <>
+                                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Back</button>
+                                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(currentActionLevel.length / cardsPerPage)}>Forward</button>
+                                </>
+                        }
+                        {
+                            handleDepth()
+                        }
+                    </>
             }
         </div>
     );
