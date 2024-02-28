@@ -5,8 +5,8 @@ const Header: React.FC = () => {
     return (
         <header>
             <img src={"assets/local/cat_eat.gif"} alt="cat" style={{
-                height: "20vw",
-                width: "100vw"
+                height: "400px",
+                width: "100%"
             }}/>
             <nav>
                 <Link to="." relative={"route"}>Home </Link>
