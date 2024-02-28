@@ -9,7 +9,7 @@ import {extractCards} from "./utils";
 import {
     setSquareChoice,
     setChosenAction as setChosenActionStore,
-    resetTurn, selectSquareChoice, setInteractableSquares, selectChosenSquare
+    resetTurn, selectSquareChoice, setInteractableSquares, selectChosenSquare, resetInteractableSquares
 } from "../../redux/slices/turnSlice";
 
 
@@ -46,6 +46,11 @@ const ActionInput = () => {
                         newActionLevel
                     )
                 } else if (actionObject.requires.length === 2) {
+                    // probably change line-column to square.
+                    // I used this system previously due to Discord bot limitations (only 25 fields per embed)
+                    // However, as support for the bot is being dropped, I can change this to a more user-friendly system
+                    // Also, this will allow for a more flexible system with multiple requirements for one action (which is waaay to complex for the current implementation)
+                    // But, until I change the backend, this will stay as it is.
                     if (!isSquareChoice) {
                         dispatch(setSquareChoice({flag: true}))
                     }
@@ -70,6 +75,8 @@ const ActionInput = () => {
                     key: "column",
                     action_value: column
                 }))
+                dispatch(resetInteractableSquares())
+                dispatch(setSquareChoice({flag: false}))
             }
         }
     }
@@ -100,35 +107,51 @@ const ActionInput = () => {
         return extractCards(currentCards, handleSelect);
     }, [currentPage, cardsPerPage, currentActionLevel])
 
+    const finalDepthScreen = () => {
+        return (
+            <>
+                <h1>You have chosen</h1>
+                <p>
+                    {
+                        "Stuff will happen here."
+                    }
+                </p>
+                <button onClick={() => {
+                    setReachedFinalDepth(false)
+                    handleReset()
+                }}>Reset</button>
+            </>
+        )
+    }
+
+    const shallowDepthScreen = () => {
+        return (
+            <>
+                {generateOptions(currentActionLevel)}
+                <button onClick={handleConfirm}>Confirm</button>
+                {
+                    currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
+                        <></>
+                        :
+                        <>
+                            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Back</button>
+                            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(currentActionLevel.length / cardsPerPage)}>Forward</button>
+                        </>
+                }
+                {
+                    handleDepth()
+                }
+            </>
+        )
+    }
+
     return (
         <div id={"action-input"}>
             {
                 reachedFinalDepth ?
-                    <>
-                        <h1>You have chosen</h1>
-                        <p>
-                            {
-                                "Stuff will happen here."
-                            }
-                        </p>
-                    </>
+                    finalDepthScreen()
                     :
-                    <>
-                        {generateOptions(currentActionLevel)}
-                        <button onClick={handleConfirm}>Confirm</button>
-                        {
-                            currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
-                                <></>
-                                :
-                                <>
-                                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Back</button>
-                                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(currentActionLevel.length / cardsPerPage)}>Forward</button>
-                                </>
-                        }
-                        {
-                            handleDepth()
-                        }
-                    </>
+                    shallowDepthScreen()
             }
         </div>
     );
