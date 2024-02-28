@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import {setError} from "../redux/slices/errorSlice";
 
 const NicknameEnter: React.FC = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [nickname, setNickname] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const navigate = useNavigate();
 
     const nicknameCheck = () => {
         if (nickname === "") {
-            alert("Please enter a nickname");
+            dispatch(setError({message: "Nickname cannot be empty!"}))
             return false;
         }
         return true;
