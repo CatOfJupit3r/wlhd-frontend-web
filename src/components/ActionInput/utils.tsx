@@ -1,31 +1,50 @@
 import {Action} from "../../types/ActionInput";
 import Card from "react-bootstrap/Card";
 import {Button} from "react-bootstrap";
-
+import {cmdToTranslation} from "../../utils/cmdConverters";
+import ActionCard from "./ActionCard";
 
 export const extractCards = (
     action: Action[],
-    handleSelect: (e: any) => any
+    handleSelect: (e: any) => any,
+    t: (key: string) => string,
 ): JSX.Element => {
     const cards: Array<JSX.Element> = []
 
     for (let [index, option] of action.entries()) {
-        const {descriptor, co_descriptor} = option.translation_info
-        const textNeedsTruncating = `${descriptor}:description`.length > 100;
-        const displayedText = textNeedsTruncating ? `${descriptor}:description`.substring(0, 100) + "..."  : `${descriptor}:description`
         cards.push(
-            <Card className={`col-6 col-lg-4 col-md-6 col-sm-12 p-0 flex-grow-1`} key={index}>
-                <Card.Body>
-                    <Card.Title>{`${descriptor}:name`} {co_descriptor}</Card.Title>
-                    <Card.Text>
-                        {displayedText}
-
-                        {textNeedsTruncating && <button onClick={() => alert(`${descriptor}:description`)}>Read more</button>}
-                    </Card.Text>
-                    <Button variant={option.available ? "outline-primary": "outline-secondary" } value={index} onClick={handleSelect}>Select</Button>
-                </Card.Body>
-            </Card>
+            <ActionCard
+                option={option}
+                index={index}
+                handleSelect={handleSelect}
+                t={t}
+                key={index}
+            />
         )
     }
-    return <div className="row m-0 p-0">{cards}</div>
+
+    return <div className="row m-0 p-0">{cards.sort((a: JSX.Element, b: JSX.Element) => {
+        console.log(a.props)
+        const {
+            aDescriptor,
+            bDescriptor,
+            aAvailable,
+            bAvailable
+        } = {
+            aDescriptor: a.props.option.translation_info.descriptor,
+            bDescriptor: b.props.option.translation_info.descriptor,
+            aAvailable: a.props.option.available,
+            bAvailable: b.props.option.available
+        }
+        if (aAvailable && !bAvailable) {
+            return -1
+        } else if (!aAvailable && bAvailable) {
+            return 1
+        } else if (aDescriptor < bDescriptor) {
+            return -1
+        } else if (aDescriptor > bDescriptor) {
+            return 1
+        }
+        return 0
+    })}</div>
 }

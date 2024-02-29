@@ -1,13 +1,12 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
 
-class GameJoin extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Welcome to the Game Join Page</h1>
-            </div>
-        );
-    }
+function GameJoin() {
+    return (
+        <div>
+            <h1>Welcome to the Game Join Page</h1>
+        </div>
+    );
 }
 
 export {}

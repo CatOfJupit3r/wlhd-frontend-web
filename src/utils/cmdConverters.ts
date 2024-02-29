@@ -3,13 +3,12 @@ import {translationOutput} from "../types/Translation";
 export const cmdToTranslation = (cmd: string): string => {
     try {
         const [dlc, descriptor] = cmd.split("::")
-        if (descriptor === undefined) {
-            throw new Error(`CMD could not be split into dlc and descriptor: ${cmd}`)
-        }
         return `${dlc}:${descriptor.replace(":", ".")}`
     }
     catch (e: any) {
-        console.error(e)
+        if (!(e instanceof TypeError)) {
+            console.error(e)
+        }
         return cmd
     }
 }

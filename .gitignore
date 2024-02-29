@@ -31,7 +31,3 @@ public/assets/*
 !public/assets/local/*
 !public/assets/local/**
 
-src/translations/*
-!src/translations/local/
-!src/translations/local/*
-!src/translations/local/**

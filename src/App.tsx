@@ -3,13 +3,11 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
-import { useTranslation } from "react-i18next";
 import MainLayout from "./layouts/MainLayout";
 import GameRoomPage from "./pages/GameRoomPage";
 import LoginPage from "./pages/LoginPage";
 
 function App() {
-    const { t }  = useTranslation()
     return (
         <BrowserRouter>
             <div className={"App"}>

@@ -1,3 +1,6 @@
+import {REACT_APP_BACKEND_URL} from "../config/configs";
+
+
 /*
 
 These services are used to make API calls to the server and receive responses.
@@ -7,7 +10,6 @@ In plans:
 - Make POST requests to the server.
 
 - GET requests:
-    - Get installed packages (DLCs).
     - Create game using provided game_id.
     - Add entity to the game by descriptor.
     - Get possible actions for the active player.
@@ -18,4 +20,7 @@ In plans:
 */
 
 
-export {}
+export const getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
+    const response = await fetch(`${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`);
+    return await response.json();
+}

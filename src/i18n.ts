@@ -1,28 +1,31 @@
-import getLanguageFiles from "./utils/languageLoader"
+import {getLanguageFiles} from "./utils/languageLoader"
 import i18next from 'i18next'
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 
-// console.log(getLanguageFiles())
+const languageDetector = new LanguageDetector();
+languageDetector.init({
+        order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+        lookupQuerystring: 'lng',
+        lookupCookie: 'i18next',
+        lookupLocalStorage: 'i18nextLng',
+        lookupFromPathIndex: 0,
+        lookupFromSubdomainIndex: 0,
+        caches: ['localStorage', 'cookie'],
+        excludeCacheFor: ['cimode'],
+        cookieMinutes: 10,
+        cookieDomain: 'myDomain',
+        htmlTag: document.documentElement,
+        checkWhitelist: true,
+});
 
 
 i18next
     .use(initReactI18next)
-    // .use(LanguageDetector)
+    .use(languageDetector)
     .init({
-        fallbackLng: "en_US",
-        resources: {
-            en_US: {
-                translation: {
-                    "stuff": "BRUH",
-                    "brrruhhh": "123123"
-                }
-            },
-            en: {
-                "translation": {
-                    "stuff": "RRRRRRRRRR"
-                }
-            }
-        }
+        fallbackLng: "uk-UA",
+        resources: getLanguageFiles(),
 })
+

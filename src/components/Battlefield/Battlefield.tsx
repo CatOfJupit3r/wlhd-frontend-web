@@ -15,10 +15,16 @@ const Battlefield = () => {
     }
 
     return (
-        <div style={battlefieldStyle}>
+        <div style={{
+            display: "grid",
+            width: "fit-content",
+            height: "fit-content",
+        }}>
+            <div style={battlefieldStyle}>
             {
                 parsedToJSX(parseBattlefield(example as BattlefieldInterface))
             }
+            </div>
             <button onClick={() => changeBattlefield()}>Start turn</button>
         </div>
     );

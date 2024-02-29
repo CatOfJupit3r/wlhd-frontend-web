@@ -1,8 +1,7 @@
-import React from 'react';
-import Battlefield from "../components/Battlefield/Battlefield";
-import {selectIsTurnActive} from "../redux/slices/turnSlice";
-import ActionInput from "../components/ActionInput/ActionInput";
-import {useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {getTranslations} from "../services/apiServices";
+import {useTranslation} from "react-i18next";
+import GameScreen from "../components/GameScreen/GameScreen";
 
 
 /*
@@ -20,19 +19,34 @@ After this, socket will listen for commands from server:
 
 
 const GameRoomPage = () => {
-    const isTurn = useSelector(selectIsTurnActive)
+    const [loadingTranslations, setLoadingTranslations] = useState(true)
+    const {i18n} = useTranslation()
+
+    useEffect(() => {
+        try {
+            ["builtins", "nyrzamaer"].map((dlc) => (
+                getTranslations(i18n.language, dlc)
+                    .then((translations) => {
+                        i18n.addResourceBundle(i18n.language, dlc, translations, true, true);
+                    })
+            ))
+        } catch (e) {
+            console.error(e)
+        }
+        console.log(i18n.store.data)
+        setLoadingTranslations(false)
+    }, [i18n]);
 
     return (
-        <div style={{
-            display: "flex",
-        }}>
-            <Battlefield />
-            {isTurn ?
-            <ActionInput />
-            :
-            <h1>Not your turn!</h1>}
-        </div>
-    );
+        <>
+            {
+                loadingTranslations ?
+                    <h1>Loading...</h1>
+                    :
+                    <GameScreen />
+            }
+        </>
+    )
 };
 
 export default GameRoomPage;

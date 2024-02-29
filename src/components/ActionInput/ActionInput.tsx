@@ -4,7 +4,7 @@ import {Action} from "../../types/ActionInput";
 import {setError} from "../../redux/slices/errorSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";
-
+import styles from "./ActionInput.module.css"
 
 import {
     setSquareChoice,
@@ -19,9 +19,23 @@ import {
     selectChosenAction as selectChosenActionStore
 } from "../../redux/slices/turnSlice";
 
+import {useTranslation} from "react-i18next";
+
+import {
+    BsArrowBarLeft, BsCheckSquareFill, BsFillRewindFill, BsSquare
+} from "react-icons/bs";
+
+import {
+    TbSquareChevronLeft,
+    TbSquareChevronLeftFilled,
+    TbSquareChevronRight,
+    TbSquareChevronRightFilled
+} from "react-icons/tb";
+
 
 const ActionInput = () => {
     const dispatch = useDispatch()
+    const {t} = useTranslation()
     const isSquareChoice = useSelector(selectSquareChoice)
     const chosenSquare = useSelector(selectChosenSquare)
     const displayedActions = useSelector(selectDisplayedActions)
@@ -56,9 +70,7 @@ const ActionInput = () => {
             } else {
                 if (actionObject.requires.length === 1) {
                     const newActionLevel = (actionObject.requires as Action[][])[0]
-                    setCurrentActionLevel(
-                        newActionLevel
-                    )
+                    setCurrentActionLevel(newActionLevel)
                 } else if (actionObject.requires.length === 2) {
                     // probably change line-column to square.
                     // I used this system previously due to Discord bot limitations (only 25 fields per embed)
@@ -103,7 +115,10 @@ const ActionInput = () => {
     }
 
     const handleDepth = (): JSX.Element => {
-        return depth === 0 ? <></> : <button onClick={handleReset} key={"reset_button"}>Reset</button>
+        return depth === 0 ? <BsArrowBarLeft/> :
+            <BsArrowBarLeft onClick={() => {
+                handleReset()
+            }}/>
     }
 
     const generateOptions = useCallback((action: Action[]): JSX.Element => {
@@ -111,15 +126,14 @@ const ActionInput = () => {
         const indexOfFirstCard = indexOfLastCard - cardsPerPage;
         const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
 
-        const handleSelect = (e: any) => {
-            const chosenActionIndex  = parseInt(e.target.value)
-            if (currentActionLevel[chosenActionIndex].available) {
-                setChosenAction(parseInt(e.target.value))
+        const handleSelect = (value: number) => {
+            if (currentActionLevel[value].available) {
+                setChosenAction(value)
             }
         }
 
-        return extractCards(currentCards, handleSelect);
-    }, [currentPage, cardsPerPage, currentActionLevel])
+        return extractCards(currentCards, handleSelect, t)
+    }, [currentPage, cardsPerPage, currentActionLevel, t])
 
     const objectToString = (obj: any): Array<string> => {
         return Object.keys(obj).map((key) => {
@@ -146,10 +160,10 @@ const ActionInput = () => {
                         }))}
                     }
                 >Submit</button>
-                <button onClick={() => {
+                <BsFillRewindFill onClick={() => {
                     setReachedFinalDepth(false)
                     handleReset()
-                }}>Reset</button>
+                }}/>
             </>
         )
     }
@@ -159,19 +173,49 @@ const ActionInput = () => {
             <>
                 {/* Will add h1 to display what current action choice is for... But I don't know how? */}
                 {generateOptions(currentActionLevel)}
-                <button onClick={handleConfirm}>Confirm</button>
-                {
-                    currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
-                        <></>
-                        :
-                        <>
-                            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Back</button>
-                            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(currentActionLevel.length / cardsPerPage)}>Forward</button>
-                        </>
-                }
-                {
-                    handleDepth()
-                }
+                <div id={"buttons"} className={styles.buttons} style={{
+                    display: "flex",
+                    justifyContent: "space-between"
+                }}>
+                    <div id={"manipulators"}>
+                        {
+                            chosenAction !== undefined || chosenSquare !== "" ?
+                                <BsCheckSquareFill onClick={handleConfirm}/>
+                                :
+                                <BsSquare onClick={handleConfirm}/>
+                        }
+                        {
+                            handleDepth()
+                        }
+                    </div>
+                    {
+                        <div id={"action-navigation"}>
+                            {
+
+                            currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
+                                <>
+                                    <TbSquareChevronLeft />
+                                    <TbSquareChevronRight  />
+                                </>
+                                :
+                                <>
+                                    {
+                                        currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) ?
+                                            <TbSquareChevronLeftFilled onClick={() => setCurrentPage( currentPage - 1)} />
+                                            :
+                                            <TbSquareChevronLeft />
+                                    }
+                                    {
+                                        currentPage === 1 ?
+                                            <TbSquareChevronRightFilled onClick={() => setCurrentPage(currentPage + 1)}/>
+                                            :
+                                            <TbSquareChevronRight  />
+                                    }
+                                </>
+                            }
+                        </div>
+                    }
+                </div>
             </>
         )
     }
