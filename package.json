@@ -13,6 +13,7 @@
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@types/react-router-dom": "^5.3.3",
+    "@types/socket.io-client": "^3.0.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "fs": "^0.0.1-security",
@@ -28,6 +29,8 @@
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.4",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
