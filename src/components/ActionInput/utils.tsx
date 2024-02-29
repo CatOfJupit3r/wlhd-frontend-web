@@ -1,15 +1,16 @@
 import {Action} from "../../types/ActionInput";
-import Card from "react-bootstrap/Card";
-import {Button} from "react-bootstrap";
-import {cmdToTranslation} from "../../utils/cmdConverters";
 import ActionCard from "./ActionCard";
+import {splitDescriptor} from "../Battlefield/utils";
 
 export const extractCards = (
     action: Action[],
     handleSelect: (e: any) => any,
+    handleConfirm: () => any,
     t: (key: string) => string,
+    chosenAction: number | undefined
 ): JSX.Element => {
     const cards: Array<JSX.Element> = []
+
 
     for (let [index, option] of action.entries()) {
         cards.push(
@@ -17,6 +18,8 @@ export const extractCards = (
                 option={option}
                 index={index}
                 handleSelect={handleSelect}
+                handleConfirm={handleConfirm}
+                chosenAction={chosenAction}
                 t={t}
                 key={index}
             />
@@ -24,25 +27,28 @@ export const extractCards = (
     }
 
     return <div className="row m-0 p-0">{cards.sort((a: JSX.Element, b: JSX.Element) => {
-        console.log(a.props)
         const {
-            aDescriptor,
-            bDescriptor,
+            aFullDescriptor,
+            bFullDescriptor,
             aAvailable,
             bAvailable
         } = {
-            aDescriptor: a.props.option.translation_info.descriptor,
-            bDescriptor: b.props.option.translation_info.descriptor,
+            aFullDescriptor: a.props.option.translation_info.descriptor,
+            bFullDescriptor: b.props.option.translation_info.descriptor,
             aAvailable: a.props.option.available,
             bAvailable: b.props.option.available
         }
+        const aDescriptor = splitDescriptor(aFullDescriptor)[1]
+        const bDescriptor = splitDescriptor(bFullDescriptor)[1]
         if (aAvailable && !bAvailable) {
             return -1
         } else if (!aAvailable && bAvailable) {
             return 1
         } else if (aDescriptor < bDescriptor) {
+            console.log(`${aDescriptor} < ${bDescriptor}`)
             return -1
         } else if (aDescriptor > bDescriptor) {
+            console.log(`${aDescriptor} > ${bDescriptor}`)
             return 1
         }
         return 0

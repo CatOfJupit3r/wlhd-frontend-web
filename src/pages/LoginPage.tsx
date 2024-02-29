@@ -10,7 +10,6 @@ const LoginPage = () => {
     const {nickname} = parsedQuery as {nickname: string};
 
     const redirect = () => {
-        console.log(location.search);
         if (nickname === undefined) {
             navigate("..");
         } else {

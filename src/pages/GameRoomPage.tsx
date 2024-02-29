@@ -33,7 +33,6 @@ const GameRoomPage = () => {
         } catch (e) {
             console.error(e)
         }
-        console.log(i18n.store.data)
         setLoadingTranslations(false)
     }, [i18n]);
 

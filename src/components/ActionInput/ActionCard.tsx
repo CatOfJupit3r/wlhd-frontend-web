@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Card from "react-bootstrap/Card";
 import {cmdToTranslation} from "../../utils/cmdConverters";
-import {Button} from "react-bootstrap";
 import {Action} from "../../types/ActionInput";
 import {BsInfoCircle} from "react-icons/bs";
 
@@ -10,6 +9,8 @@ const ActionCard = (props: {
     option: Action,
     index: number,
     handleSelect: (e: any) => any,
+    handleConfirm: () => any,
+    chosenAction: number | undefined,
     t: (key: string) => string
 }) => {
 
@@ -27,10 +28,14 @@ const ActionCard = (props: {
             border={
                 option.available ? "primary" : "secondary"
             }
+            bg={props.chosenAction === index ? "primary" : undefined}
             key={index}
-            onClick={() => {
-            handleSelect(index)
-        }}>
+            onClick={() => {handleSelect(index)}}
+            onDoubleClick={() => {props.handleConfirm()}}
+            style={{
+                color: props.chosenAction !== index ? "black" : "white",
+            }}
+        >
             <Card.Body>
                 <Card.Title>{t(cmdToTranslation(`${descriptor}:name`))} {co_descriptor ? `(${co_descriptor})`: ""}</Card.Title>
                 <Card.Text style={{

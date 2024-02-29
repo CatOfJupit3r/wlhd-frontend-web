@@ -16,13 +16,13 @@ import {
     resetInteractableSquares,
     setIsTurnActive,
     setDisplayedActions, selectDisplayedActions,
-    selectChosenAction as selectChosenActionStore
+    selectChosenAction as selectChosenActionStore, setChosenSquare
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
 
 import {
-    BsArrowBarLeft, BsCheckSquareFill, BsFillRewindFill, BsSquare
+    BsArrowBarLeft, BsCheckSquareFill, BsSquare
 } from "react-icons/bs";
 
 import {
@@ -31,6 +31,8 @@ import {
     TbSquareChevronRight,
     TbSquareChevronRightFilled
 } from "react-icons/tb";
+import {cmdToTranslation} from "../../utils/cmdConverters";
+import {RxArrowTopRight} from "react-icons/rx";
 
 
 const ActionInput = () => {
@@ -39,7 +41,7 @@ const ActionInput = () => {
     const isSquareChoice = useSelector(selectSquareChoice)
     const chosenSquare = useSelector(selectChosenSquare)
     const displayedActions = useSelector(selectDisplayedActions)
-    const chosenActionStore = useSelector(selectChosenActionStore)
+    // const chosenActionStore = useSelector(selectChosenActionStore)
 
     const [currentActionLevel, setCurrentActionLevel] = useState(action_example.actions as Action[])
     const [depth, setDepth] = useState(0)
@@ -48,9 +50,18 @@ const ActionInput = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage, ] = useState(9);
 
-    const incrementDepth = () => {setDepth(depth + 1)}
+    const incrementDepth = useCallback(() => {
+        setDepth(depth + 1)
+    }, [depth])
 
-    const handleConfirm = () => {
+    const handleReset = useCallback(() => {
+        setCurrentActionLevel(action_example.actions as Action[])
+        setChosenAction(undefined)
+        setDepth(0)
+        dispatch(resetTurn())
+    }, [dispatch])
+
+    const handleConfirm = useCallback(() => {
         if (chosenAction !== undefined) {
             incrementDepth()
             setChosenAction(undefined)
@@ -77,6 +88,7 @@ const ActionInput = () => {
                     // However, as support for the bot is being dropped, I can change this to a more user-friendly system
                     // Also, this will allow for a more flexible system with multiple requirements for one action (which is waaay to complex for the current implementation)
                     // But, until I change the backend, this will stay as it is.
+                    dispatch(setChosenSquare({square: ""}))
                     if (!isSquareChoice) {
                         dispatch(setSquareChoice({flag: true}))
                     }
@@ -105,14 +117,7 @@ const ActionInput = () => {
                 dispatch(setSquareChoice({flag: false}))
             }
         }
-    }
-
-    const handleReset = () => {
-        setCurrentActionLevel(action_example.actions as Action[])
-        setChosenAction(undefined)
-        setDepth(0)
-        dispatch(resetTurn())
-    }
+    }, [chosenAction, chosenSquare, isSquareChoice, dispatch, currentActionLevel, handleReset, incrementDepth]);
 
     const handleDepth = (): JSX.Element => {
         return depth === 0 ? <BsArrowBarLeft/> :
@@ -132,35 +137,34 @@ const ActionInput = () => {
             }
         }
 
-        return extractCards(currentCards, handleSelect, t)
-    }, [currentPage, cardsPerPage, currentActionLevel, t])
-
-    const objectToString = (obj: any): Array<string> => {
-        return Object.keys(obj).map((key) => {
-            return key + ": " + obj[key]
-        } )
-    }
+        return extractCards(currentCards, handleSelect, handleConfirm, t, chosenAction as number)
+    }, [currentPage, cardsPerPage, currentActionLevel, t, chosenAction, handleConfirm])
 
     const finalDepthScreen = () => {
         return (
             <>
                 <h1>You have chosen</h1>
                 {
-                    objectToString(displayedActions).map((str: string) => {
-                        return <p key={str} style={{marginBottom: 0}}>{str}</p>
-                    })
+                    displayedActions !== undefined ?
+                        <p>
+                            {
+                            Object.entries(displayedActions)
+                                    .map(([key, value]) => `${t(cmdToTranslation(key))}: ${t(cmdToTranslation(value))}`)
+                                    .join(', ')
+                            }
+                        </p>
+                        :
+                        <h2>Nothing..?</h2>
                 }
-                <button
+                <RxArrowTopRight
                     onClick={() => {
-                        console.log("Submitting...")
-                        console.log(chosenActionStore)
                         dispatch(resetTurn())
                         dispatch(setIsTurnActive({
                             flag: false
                         }))}
                     }
-                >Submit</button>
-                <BsFillRewindFill onClick={() => {
+                />
+                <BsArrowBarLeft onClick={() => {
                     setReachedFinalDepth(false)
                     handleReset()
                 }}/>

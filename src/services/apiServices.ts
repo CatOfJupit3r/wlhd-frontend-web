@@ -21,6 +21,12 @@ In plans:
 
 
 export const getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
-    const response = await fetch(`${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`);
-    return await response.json();
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`);
+        return await response.json()
+
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
 }
