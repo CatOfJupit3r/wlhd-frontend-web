@@ -1,6 +1,7 @@
 import React from 'react';
 import NicknameEnter from '../components/NicknameEnter';
 import {useTranslation} from "react-i18next";
+import GameIdEnter from "../components/GameIdEnter";
 
 
 function HomePage() {
@@ -9,6 +10,7 @@ function HomePage() {
         <div>
             <h1>{t("local:home_page")}</h1>
             <NicknameEnter/>
+            <GameIdEnter/>
         </div>
     );
 }

@@ -1,10 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {StoreState} from "../../types/Redux";
+import {GameState, StoreState} from "../../types/Redux";
 
-const initialState: {
-    user_name: string,
-} = {
-    user_name: ""
+const initialState: GameState = {
+    user_name: "",
+    game_id: "555",
+    isActive: false
 }
 
 const GameSlice = createSlice({
@@ -14,13 +14,23 @@ const GameSlice = createSlice({
         setName: (state, action) => {
             return {...state, user_name: action.payload.user_name}
         },
+        setActive: (state, action) => {
+            return {...state, isActive: action.payload.isActive}
+        },
+        setGameId: (state, action) => {
+            return {...state, game_id: action.payload.game_id}
+        }
     }
 })
 
 export default GameSlice.reducer;
 
 export const {
-    setName
+    setName,
+    setActive,
+    setGameId
 } = GameSlice.actions
 
-export const selectNameMessage = (state: StoreState) => state.game.user_name
+export const selectName = (state: StoreState) => state.game.user_name
+export const selectIsActive = (state: StoreState) => state.game.isActive
+export const selectGameId = (state: StoreState) => state.game.game_id
