@@ -3,6 +3,12 @@ export interface ErrorState {
     code: number;
 }
 
+
+export interface GameState {
+    user_name: string;
+}
+
+
 export interface TurnState {
     squareChoice: boolean // if false, chosenSquare cannot be changed
     interactableSquares: {
@@ -21,5 +27,6 @@ export interface TurnState {
 export interface StoreState {
     error: ErrorState
     turn: TurnState
+    game: GameState
 }
 
