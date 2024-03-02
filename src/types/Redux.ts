@@ -1,4 +1,4 @@
-export interface ErrorState {
+export interface notifyState {
     message: string;
     code: number;
 }
@@ -6,6 +6,8 @@ export interface ErrorState {
 
 export interface GameState {
     user_name: string;
+    game_id: string;
+    isActive: boolean;
 }
 
 
@@ -25,7 +27,7 @@ export interface TurnState {
 }
 
 export interface StoreState {
-    error: ErrorState
+    notify: notifyState
     turn: TurnState
     game: GameState
 }

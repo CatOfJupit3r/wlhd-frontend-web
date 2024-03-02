@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {setError} from "../redux/slices/errorSlice";
+import {setNotify} from "../redux/slices/notifySlice";
 
 const NicknameEnter: React.FC = () => {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const NicknameEnter: React.FC = () => {
 
     const nicknameCheck = () => {
         if (nickname === "") {
-            dispatch(setError({message: "Nickname cannot be empty!"}))
+            dispatch(setNotify({message: "Nickname cannot be empty!", code: 400}))
             return false;
         }
         return true;

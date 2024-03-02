@@ -1,13 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from "../components/Header";
-import Error from "../components/Error";
+import Notify from "../components/Notify";
 
 const MainLayout = () => {
     return (
         <>
             <Header/>
-            <Error/>
+            <Notify/>
             <Outlet/>
         </>
     );

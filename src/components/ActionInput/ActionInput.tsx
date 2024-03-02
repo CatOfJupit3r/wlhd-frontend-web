@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import action_example from '../../data/example_action.json';
 import {Action} from "../../types/ActionInput";
-import {setError} from "../../redux/slices/errorSlice";
+import {setNotify} from "../../redux/slices/notifySlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";
 import styles from "./ActionInput.module.css"
@@ -16,7 +16,7 @@ import {
     resetInteractableSquares,
     setIsTurnActive,
     setDisplayedActions, selectDisplayedActions,
-    selectChosenAction as selectChosenActionStore, setChosenSquare
+    setChosenSquare
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
@@ -97,7 +97,10 @@ const ActionInput = () => {
                         columns: actionObject.requires[1].map((action: Action) => action.id)
                     }))
                 } else {
-                    dispatch(setError("There was an error with the action input"))
+                    dispatch(setNotify({
+                        message: "This action requires more than 2 requirements. This is not supported yet.",
+                        code: 400
+                    }))
                     handleReset()
                 }
             }
