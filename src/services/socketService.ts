@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import {Socket} from "socket.io";
+import {Socket} from "socket.io-client";
 
 /*
 In plans:

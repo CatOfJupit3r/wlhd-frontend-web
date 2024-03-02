@@ -14,12 +14,42 @@ const GameScreen = () => {
         document.title = "Game Room";
         const socket = io(REACT_APP_BACKEND_URL, {
             query: {
-                game_id: "test",
-                user_token: "test"
+                game_id: "555",
+                user_token: "ADMIN"
             }
         });
         socket.on("connect", () => {
-            socket.emit("message", {game_id: "test", user_token: "test"})
+            console.log("Connected to game server");
+        });
+        socket.on("take_action", (data: any) => {
+            console.log("take_action", data);
+            socket.emit("message", {
+                "command": "take_action",
+                "payload": {
+                    "user_token": "ADMIN",
+                    "action": {
+                        "action": "skip_turn"
+                    }
+                }
+            })
+        })
+        socket.on("game_started", () => {
+            console.log("Game started");
+        });
+        socket.on("round_update", (data: any) => {
+            console.log("round_update", data);
+        });
+        socket.on("state_updated", (data: any) => {
+            console.log("state_updated", data);
+        });
+        socket.on("action_result", (data: any) => {
+            console.log("action_result", data);
+        });
+        socket.on("game_finished", (data: any) => {
+            console.log("game_finished", data);
+        });
+        socket.on("error", (data: any) => {
+            console.error("error", data);
         });
     }, []);
 
