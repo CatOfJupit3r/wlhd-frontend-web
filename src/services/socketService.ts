@@ -1,6 +1,5 @@
 import io from 'socket.io-client';
 import {Socket} from "socket.io";
-import {GAME_SERVER_URL} from "../config/configs";
 
 /*
 In plans:
@@ -29,7 +28,7 @@ const VERIFICATION = (game_id: string) => {
 
 
 export const connectToServer = () => {
-    const socket = io(GAME_SERVER_URL);
+    const socket = io();
 
     // Connect to the server
     socket.on('connect', () => {
