@@ -1,5 +1,5 @@
 import React from "react";
-import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../../types/Battlefield";
+import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../../models/Battlefield";
 import TileCosmetic from "./TileCosmetic";
 import TileEntity from "./TileEntity";
 

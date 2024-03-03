@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {battlefieldStyle} from "./styles";
 import {parseBattlefield, parsedToJSX} from "./utils";
-import {Battlefield as BattlefieldInterface} from "../../types/Battlefield";
+import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
 
 const Battlefield = (props: {
     battlefield: BattlefieldInterface

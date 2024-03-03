@@ -1,4 +1,4 @@
-import {translationOutput} from "../types/Translation";
+import {translationOutput} from "../models/Translation";
 
 export const cmdToTranslation = (cmd: string): string => {
     try {

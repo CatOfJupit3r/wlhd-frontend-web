@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {notifyState, StoreState} from "../../types/Redux";
+import {notifyState, StoreState} from "../../models/Redux";
 
 const initialState: notifyState = {
     message: "",

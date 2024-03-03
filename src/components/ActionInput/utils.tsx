@@ -1,4 +1,4 @@
-import {Action} from "../../types/ActionInput";
+import {Action} from "../../models/ActionInput";
 import ActionCard from "./ActionCard";
 import {splitDescriptor} from "../Battlefield/utils";
 

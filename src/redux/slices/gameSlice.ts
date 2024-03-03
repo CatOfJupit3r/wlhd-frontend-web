@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {GameState, StoreState} from "../../types/Redux";
+import {GameState, StoreState} from "../../models/Redux";
 
 const initialState: GameState = {
-    user_name: "",
-    game_id: "555",
+    user_name: "ADMIN",
+    game_id: "5555",
     isActive: false
 }
 

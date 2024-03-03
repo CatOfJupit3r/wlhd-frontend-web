@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Action, ActionInput as ActionInputInterface} from "../../types/ActionInput";
+import {Action, ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";

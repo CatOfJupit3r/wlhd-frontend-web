@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {TurnState} from "../../types/Redux";
+import {TurnState} from "../../models/Redux";
 
 const initialState: TurnState = {
     squareChoice: false,

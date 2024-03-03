@@ -1,6 +1,6 @@
 import {REACT_APP_BACKEND_URL} from "../config/configs";
-import {Battlefield} from "../types/Battlefield";
-import {ActionInput} from "../types/ActionInput";
+import {Battlefield} from "../models/Battlefield";
+import {ActionInput} from "../models/ActionInput";
 
 
 /*

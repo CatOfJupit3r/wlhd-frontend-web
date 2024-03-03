@@ -4,7 +4,7 @@ import ua_UK from '../locales/ua_UK.json'
 export const getLanguageFiles = (): {
     [key: string]: {
         local: {
-            [key: string]: string
+            [key: string]: string | any
         }
     }
 } => {
