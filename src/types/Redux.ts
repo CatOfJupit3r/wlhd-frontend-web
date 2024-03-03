@@ -24,6 +24,7 @@ export interface TurnState {
         [key: string]: string
     },
     isTurnActive: boolean, // If false, the action input is disabled
+    readyToSubmit: boolean, // If true, the action input is ready to be sent to the server
 }
 
 export interface StoreState {

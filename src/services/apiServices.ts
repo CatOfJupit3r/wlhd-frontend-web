@@ -1,4 +1,6 @@
 import {REACT_APP_BACKEND_URL} from "../config/configs";
+import {Battlefield} from "../types/Battlefield";
+import {ActionInput} from "../types/ActionInput";
 
 
 /*
@@ -24,9 +26,77 @@ export const getTranslations = async (language: string, dlc: string): Promise<{ 
     try{
         const response = await fetch(`${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`);
         return await response.json()
-
     } catch (e) {
         console.error(e)
         return {}
     }
 }
+
+
+export const getGameField = async (game_id: string): Promise<Battlefield> => {
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/game_field`);
+        return await response.json()
+    } catch (e) {
+        console.error(e)
+        return {
+            battlefield: [],
+            game_descriptors: {
+                columns: [],
+                lines: [],
+                connectors: "",
+                separators: "",
+                field_components: {}
+            }
+        }
+    }
+}
+
+export const getGameState = async (game_id: string): Promise<{ [key: string]: string }> => {
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/game_state`);
+        return await response.json()
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
+}
+
+export const getActions = async (game_id: string, entity_id: string): Promise<ActionInput> => {
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`);
+        return await response.json()
+    } catch (e) {
+        console.error(e)
+        return {
+            actions: [],
+            entity_name: "",
+            line: 0,
+            column: 0,
+            current_ap: 0,
+            max_ap: 0
+        }
+    }
+}
+
+export const getMemoryCell = async (game_id: string, memory_cell: string): Promise<{ [key: string]: string[] }> => {
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/memory_cell/${memory_cell}`);
+        return await response.json()
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
+}
+
+export const getAllMessages = async (game_id: string): Promise<{ [key: string]: string[] }> => {
+    try{
+        const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/all_messages`);
+        return await response.json()
+    } catch (e) {
+        console.error(e)
+        return {}
+    }
+}
+
+

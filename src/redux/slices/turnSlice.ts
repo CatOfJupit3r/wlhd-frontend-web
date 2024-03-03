@@ -8,6 +8,7 @@ const initialState: TurnState = {
     chosenAction: {},
     displayedActions: {},
     isTurnActive: false,
+    readyToSubmit: false,
 }
 
 
@@ -81,7 +82,9 @@ const turnSlice = createSlice({
             const {flag} = action.payload;
             return {...state, isTurnActive: flag}
         },
-    }
+        setReadyToSubmit: (state: TurnState, action) => {
+            return {...state, readyToSubmit: action.payload.flag}
+        }}
 })
 
 export default turnSlice.reducer;
@@ -94,7 +97,8 @@ export const {
     setChosenAction,
     setDisplayedActions,
     setIsTurnActive,
-    resetInteractableSquares
+    resetInteractableSquares,
+    setReadyToSubmit
 } = turnSlice.actions;
 
 export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;
@@ -103,3 +107,4 @@ export const selectChosenSquare = (state: {turn: TurnState}) => state.turn.chose
 export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;
 export const selectDisplayedActions = (state: {turn: TurnState}) => state.turn.displayedActions;
 export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.isTurnActive;
+export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;

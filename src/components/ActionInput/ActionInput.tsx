@@ -1,6 +1,5 @@
-import React, {useCallback, useState} from 'react';
-import action_example from '../../data/example_action.json';
-import {Action} from "../../types/ActionInput";
+import React, {useCallback, useEffect, useState} from 'react';
+import {Action, ActionInput as ActionInputInterface} from "../../types/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";
@@ -16,7 +15,7 @@ import {
     resetInteractableSquares,
     setIsTurnActive,
     setDisplayedActions, selectDisplayedActions,
-    setChosenSquare
+    setChosenSquare, setReadyToSubmit
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
@@ -35,7 +34,9 @@ import {cmdToTranslation} from "../../utils/cmdConverters";
 import {RxArrowTopRight} from "react-icons/rx";
 
 
-const ActionInput = () => {
+const ActionInput = (props: {
+    actions: ActionInputInterface
+}) => {
     const dispatch = useDispatch()
     const {t} = useTranslation()
     const isSquareChoice = useSelector(selectSquareChoice)
@@ -43,19 +44,24 @@ const ActionInput = () => {
     const displayedActions = useSelector(selectDisplayedActions)
     // const chosenActionStore = useSelector(selectChosenActionStore)
 
-    const [currentActionLevel, setCurrentActionLevel] = useState(action_example.actions as Action[])
+    const [initialActionLevel, setInitialActionLevel] = useState(props.actions)
+    const [currentActionLevel, setCurrentActionLevel] = useState(initialActionLevel.actions)
     const [depth, setDepth] = useState(0)
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
     const [chosenAction, setChosenAction] = useState(undefined as number | undefined)
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage, ] = useState(9);
 
+    useEffect(() => {
+        setInitialActionLevel(props.actions)
+    }, [props.actions]);
+
     const incrementDepth = useCallback(() => {
         setDepth(depth + 1)
     }, [depth])
 
     const handleReset = useCallback(() => {
-        setCurrentActionLevel(action_example.actions as Action[])
+        setCurrentActionLevel(initialActionLevel.actions)
         setChosenAction(undefined)
         setDepth(0)
         dispatch(resetTurn())
@@ -161,11 +167,13 @@ const ActionInput = () => {
                 }
                 <RxArrowTopRight
                     onClick={() => {
-                        dispatch(resetTurn())
                         dispatch(setIsTurnActive({
                             flag: false
-                        }))}
-                    }
+                        }))
+                        dispatch(setReadyToSubmit({
+                            flag: true
+                        }))
+                    }}
                 />
                 <BsArrowBarLeft onClick={() => {
                     setReachedFinalDepth(false)

@@ -45,10 +45,8 @@ export const extractCards = (
         } else if (!aAvailable && bAvailable) {
             return 1
         } else if (aDescriptor < bDescriptor) {
-            console.log(`${aDescriptor} < ${bDescriptor}`)
             return -1
         } else if (aDescriptor > bDescriptor) {
-            console.log(`${aDescriptor} > ${bDescriptor}`)
             return 1
         }
         return 0

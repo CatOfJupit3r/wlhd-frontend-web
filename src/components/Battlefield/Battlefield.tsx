@@ -1,31 +1,20 @@
-import React from 'react';
-import example from "../../data/example_bf.json"
+import React, {useEffect, useState} from 'react';
 import {battlefieldStyle} from "./styles";
 import {parseBattlefield, parsedToJSX} from "./utils";
 import {Battlefield as BattlefieldInterface} from "../../types/Battlefield";
-import {useDispatch} from "react-redux";
-import {setIsTurnActive} from "../../redux/slices/turnSlice";
 
-const Battlefield = () => {
+const Battlefield = (props: {
+    battlefield: BattlefieldInterface
+}) => {
 
-    const dispatch = useDispatch()
+    const battlefield = props.battlefield
 
-    const changeBattlefield = () => {
-        dispatch(setIsTurnActive({flag: true}))
-    }
+    const [renderedBattlefield, setRenderedBattlefield] = useState(battlefield);
+    useEffect(() => { setRenderedBattlefield(battlefield) }, [battlefield]);
 
     return (
-        <div style={{
-            display: "grid",
-            width: "fit-content",
-            height: "fit-content",
-        }}>
-            <div style={battlefieldStyle}>
-            {
-                parsedToJSX(parseBattlefield(example as BattlefieldInterface))
-            }
-            </div>
-            <button onClick={() => changeBattlefield()}>Start turn</button>
+        <div style={battlefieldStyle}>
+        {parsedToJSX(parseBattlefield(renderedBattlefield))}
         </div>
     );
 };
