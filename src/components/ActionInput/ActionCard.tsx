@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from "react-bootstrap/Card";
 import {cmdToTranslation} from "../../utils/cmdConverters";
-import {Action} from "../../types/ActionInput";
+import {Action} from "../../models/ActionInput";
 import {BsInfoCircle} from "react-icons/bs";
+import styles from "./ActionCard.module.css"
 
 
 const ActionCard = (props: {
@@ -24,7 +25,7 @@ const ActionCard = (props: {
 
     return (
         <Card
-            className={`col-6 col-lg-4 col-md-6 col-sm-12 flex-grow-1`}
+            className={`col-6 col-lg-4 col-md-6 col-sm-12 flex-grow-1 + ${styles.actionCard}`}
             border={
                 option.available ? "primary" : "secondary"
             }
@@ -36,11 +37,11 @@ const ActionCard = (props: {
                 color: props.chosenAction !== index ? "black" : "white",
             }}
         >
-            <Card.Body>
-                <Card.Title>{t(cmdToTranslation(`${descriptor}:name`))} {co_descriptor ? `(${co_descriptor})`: ""}</Card.Title>
+            <Card.Body className={styles.cardBody}>
+                <Card.Title className={styles.cardTitle}>{t(cmdToTranslation(`${descriptor}:name`))} {co_descriptor ? `(${co_descriptor})`: ""}</Card.Title>
                 <Card.Text style={{
                     fontSize: "0.9em"
-                }}>
+                }} className={styles.cardText}>
                     {displayedText}
                     {" "}
                     {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}:description`)}/>}
