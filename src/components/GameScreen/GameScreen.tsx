@@ -1,5 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
+import { io, Socket } from "socket.io-client";
+
 import {
     resetTurn,
     selectChosenAction,
@@ -9,17 +13,13 @@ import {
 } from "../../redux/slices/turnSlice";
 import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
-import { io, Socket } from "socket.io-client";
 import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
 import {getActions, getAllMessages, getGameField, getMemoryCell} from "../../services/apiServices";
-import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../types/GameCommands";
-import {Battlefield as BattlefieldInterface} from "../../types/Battlefield";
-import {ActionInput as ActionInputInterface} from "../../types/ActionInput";
+import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../models/GameCommands";
+import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
+import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
-import {useTranslation} from "react-i18next";
-import {cmdToTranslation} from "../../utils/cmdConverters";
-import {useNavigate} from "react-router-dom";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
@@ -135,7 +135,7 @@ const GameScreen = () => {
         });
         socket.on("action_result", (data: ActionResultCommand) => {
             dispatch(setNotify({
-                message: data.payload.code === 200 ? t("builtins:success") : t("builtins:error"),
+                message: data.payload.code === 200 ? t("local:success") : t("local:error"),
                     code: data.payload.code
             }))
         });
