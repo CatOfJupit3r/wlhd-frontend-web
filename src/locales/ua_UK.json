@@ -4,5 +4,47 @@
     "submit": "Увійти",
     "save": "Зберегти",
     "home_page": "Вітаю на головній сторінці",
-    "exit": "Вийти"
+    "exit": "Вийти",
+    "index": {
+        "title": "Ласкаво просимо до Валенхольда",
+        "subtitle": "міста живих легенд і розбитих надій!",
+        "join": {
+            "title": "Приєднатися до гри",
+            "us-input": "Введіть ім'я користувача",
+            "gi-input": "Введіть ID гри",
+            "submit": "Увійти"
+        },
+        "error": {
+            "username_empty": "Ім'я користувача не може бути порожнім",
+            "game_id_empty": "ID гри не може бути порожнім",
+            "game_not_found": "Гра з таким ID не знайдена",
+            "you_are_in_game": "Ви вже в грі",
+            "no_connection_back": "Немає зв'язку з сервером",
+            "no_connection_game": "Немає зв'язку з ігровими серверами"
+        }
+    },
+    "game": {
+        "title": "Лобі {game_id}",
+        "exit": "Вийти з гри",
+        "components": {
+            "battlefeed": "Журнал бою",
+            "battlefield": "Поле бою",
+            "your_actions": "Ваші дії:",
+            "you_chose": "Ви обрали:"
+        },
+        "its_your_turn": "Твій хід!",
+        "control_info": "Ти контролюєш: {creature} ({current_ap}/{max_ap}) на клітинці {line}/{column}",
+        "round_n": "Раунд {round}",
+        "error": {
+            "no_connection": "Немає зв'язку з сервером",
+            "connection_lost": "З'єднання з сервером втрачено"
+        },
+        "pending": {
+            "not_started": "Гра ще не почалася",
+            "loading_translations": "Завантаження перекладів...",
+            "loading_battlefield": "Завантаження поля бою...",
+            "loading_actions": "Завантаження дій...",
+            "loading_battlefeed": "Завантаження журналу бою..."
+        }
+    }
 }
