@@ -1,12 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {cmdToFormatted, cmdToTranslation} from "../utils/cmdConverters";
+import {cmdToFormatted, cmdToTranslation} from "../../utils/cmdConverters";
 import {
     TbSquareChevronLeft,
     TbSquareChevronLeftFilled,
     TbSquareChevronRight,
     TbSquareChevronRightFilled
 } from "react-icons/tb";
+import {StateFeedStyle} from "./styles";
 
 const GameStateFeed = (props: {
     messages: { [key: string]: Array<[string, string[]]> };
@@ -80,13 +81,28 @@ const GameStateFeed = (props: {
         }
     }, [currentPage])
 
+    const arrowLeft = (key: string, filled: boolean, callback?: () => void) => {
+        return (
+            filled ?
+                <TbSquareChevronLeftFilled key={key} onClick={callback}/>
+                :
+                <TbSquareChevronLeft key={key} onClick={callback}/>
+        )
+    }
+
+    const arrowRight = (key: string, filled: boolean, callback?: () => void) => {
+        return (
+            filled ?
+                <TbSquareChevronRightFilled key={key} onClick={callback}/>
+                :
+                <TbSquareChevronRight key={key} onClick={callback}/>
+        )
+    }
+
     return (
         <div style={{
-            display: "grid",
-            width: "fit-content",
-            height: "fit-content",
+            ...StateFeedStyle(),
             overflow: "hidden",
-
         }} id={"pages-container"}>
             {
                 displayPage()
@@ -95,22 +111,22 @@ const GameStateFeed = (props: {
                 {
                     currentPage >= pages.length && currentPage <= 1 ? // I'm not sure if this is correct statement. need to check
                     <>
-                        <TbSquareChevronLeft /> {/* we can't move back, because there are no pages before 1 */}
-                        <TbSquareChevronRight  /> {/* we can't move forward, because there's no page number bigger than length of [...pages] */}
+                        {arrowLeft("left", false)}
+                        {arrowRight("right", false)}
                     </>
                        :
                     <>
                         {
                             currentPage < pages.length ?
-                                <TbSquareChevronLeftFilled onClick={() => handlePrev()} />
+                                arrowLeft("left", true, () => handlePrev())
                                 :
-                                <TbSquareChevronLeft />
+                                arrowLeft("left", false)
                         }
                         {
                             currentPage <= 1 ?
-                                <TbSquareChevronRightFilled onClick={() => handleNext()}/>
+                                arrowRight("right", true, () => handleNext())
                                 :
-                                <TbSquareChevronRight  />
+                                arrowRight("right", false)
                         }
                     </>
                 }

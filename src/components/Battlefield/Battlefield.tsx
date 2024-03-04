@@ -13,7 +13,7 @@ const Battlefield = (props: {
     useEffect(() => { setRenderedBattlefield(battlefield) }, [battlefield]);
 
     return (
-        <div style={battlefieldStyle}>
+        <div style={battlefieldStyle} id={"battlefield-div"}>
         {parsedToJSX(parseBattlefield(renderedBattlefield))}
         </div>
     );

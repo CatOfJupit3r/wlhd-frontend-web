@@ -22,7 +22,7 @@ import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand
 import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
-import GameStateFeed from "../GameStateFeed";
+import GameStateFeed from "../GameStateFeed/GameStateFeed";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
@@ -38,8 +38,8 @@ const GameScreen = () => {
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
 
-    const [isLoadingBattlefield, setIsLoadingBattlefield] = useState(true)
-    const [isLoadingActions, setIsLoadingActions] = useState(true)
+    const [isLoadingBattlefield, setIsLoadingBattlefield] = useState(false)
+    const [isLoadingActions, setIsLoadingActions] = useState(false)
 
     // const [currentBattlefield, setCurrentBattlefield] = useState({
     //     battlefield: (() => {
@@ -55,12 +55,12 @@ const GameScreen = () => {
     // } as BattlefieldInterface)
 
     const [currentBattlefield, setCurrentBattlefield] = useState(example_bf as BattlefieldInterface) // dev
-    const [currentActions, setCurrentActions] = useState({} as ActionInputInterface)
+    const [currentActions, setCurrentActions] = useState(example_actions as ActionInputInterface)
     const [allMessages, setAllMessages] = useState({} as {
         [key: string]: Array<[string, string[]]>; // Array of tuples where the first element is a string and the second element is an array of strings
     })
     const [roundCount, setRoundCount] = useState(0)
-
+    dispatch(setIsTurnActive({flag: true})) // dev
 
     const addMessage = useCallback((message: {[key: string]: Array<[string, string[]]>}) => {
         message ?
@@ -183,7 +183,7 @@ const GameScreen = () => {
         addMessage({ // will add some, don't have access to examples :(
             // ""
         })
-    }, [])
+    }, [addMessage])
 
     return (
             isActive
@@ -198,8 +198,8 @@ const GameScreen = () => {
                         }}>
                             <div id={"battle-info"} style={{
                                 display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-around",
+                                flexDirection: "row",
+                                justifyContent: "center",
                                 alignItems: "center",
                                 minHeight: "fit-content"
                             }}>
