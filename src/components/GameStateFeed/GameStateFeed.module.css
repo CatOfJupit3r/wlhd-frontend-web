@@ -22,6 +22,8 @@
 
 .pageContainer {
     height: calc(var(--image-size) * 6);
+    overflow: hidden;
+    max-height: calc(var(--image-size) * 6);
 }
 
 .pageManipulators {

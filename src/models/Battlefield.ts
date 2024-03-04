@@ -18,3 +18,17 @@ export interface ParsedBattlefield {
     connectors: (key: string) => JSX.Element;
     separators: (key: string) => JSX.Element;
 }
+
+/*
+{
+    "123123": [
+        ["builtins::item_usage", [["nyrzamaer::dortyn:name"], ["nyrzamaer::aridnik_blades:name"], "3", "6"]],
+        ["builtins::creature_takes_damage", [["nyrzamaer::target_dummy_large:name"], "7", ["builtins::physical"]]],
+        ["builtins::creature_fainted", [["nyrzamaer::target_dummy_large:name"]]],
+    ],
+},
+ */
+
+export interface GameStateMessage {
+    [key: string]: [string, Array<string | Array<string>>][]
+}

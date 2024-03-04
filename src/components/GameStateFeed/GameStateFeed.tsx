@@ -7,9 +7,11 @@ import {
     MdOutlineKeyboardDoubleArrowRight
 } from "react-icons/md";
 import styles from "./GameStateFeed.module.css"
+import {GameStateMessage} from "../../models/Battlefield";
+import {translationOutput} from "../../models/Translation";
 
 const GameStateFeed = (props: {
-    messages: { [key: string]: Array<[string, string[]]> };
+    messages: GameStateMessage;
 }) => {
 
     const {t} = useTranslation()
@@ -25,7 +27,7 @@ const GameStateFeed = (props: {
     }, [props.messages]);
 
 
-    const translateCmd = useCallback((cmd: string, args: string[] | undefined) => {
+    const translateCmd = useCallback((cmd: string, args: | undefined) => {
         if (args === undefined) {
             return t(cmdToTranslation(cmd))
         } else {
@@ -35,21 +37,25 @@ const GameStateFeed = (props: {
     }, [t])
 
     useEffect(() => {
-        const newCmds = Object.keys(messages).filter(
-            (cmd) => !translatedMessages.includes(cmd)
-        )
-        if (newCmds.length > 0) {
-            let newPage = newCmds.reduce((acc, cmd) => {
-                const translatedCmd = translateCmd(cmd, messages[cmd][0][1])
-                return acc + translatedCmd
-            }, "")
-            let choppedPages = ""
-            while (newPage.length > symbolsPerPage) {
-                choppedPages += newPage.substring(0, symbolsPerPage) + "\n"
-                newPage = newPage.substring(symbolsPerPage)
+        try{
+            const newCmds = Object.keys(messages).filter(
+                (cmd) => !translatedMessages.includes(cmd)
+            )
+            if (newCmds.length > 0) {
+                // let newPage = ""
+                // newCmds.forEach((cmd) => {
+                //     newPage += translateCmd(cmd, messages[cmd])
+                // })
+                // let choppedPages = ""
+                // while (newPage.length > symbolsPerPage) {
+                //     choppedPages += newPage.substring(0, symbolsPerPage) + "\n"
+                //     newPage = newPage.substring(symbolsPerPage)
+                // }
+                // setPages([...pages, ...choppedPages, newPage])
+                // setTranslatedMessages([...translatedMessages, ...newCmds])
             }
-            setPages([...pages, ...choppedPages, newPage])
-            setTranslatedMessages([...translatedMessages, ...newCmds])
+        } catch (e) {
+            console.log(e)
         }
     }, [messages, pages, translatedMessages, translateCmd, symbolsPerPage]);
 
@@ -57,12 +63,10 @@ const GameStateFeed = (props: {
         return (
             <p style={{
                 textWrap: "wrap",
-                margin: 0
+                marginLeft: "10px",
+                marginRight: "10px"
             }}>
-                {/*{currentPage >= 0 && currentPage < pages.length ? pages[currentPage - 1] : (() => {*/}
-                {/*    console.log("Page out of range")*/}
-                {/*    return ""*/}
-                {/*})()}*/}
+                {pages[currentPage - 1]}
             </p>
         )
     }, [currentPage, pages])
@@ -86,9 +90,9 @@ const GameStateFeed = (props: {
     const absoluteLeft = (key: string, filled: boolean, callback?: () => void) => {
         return (
             filled ?
-                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.button}/>
+                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.activeButton}/>
                 :
-                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.button}/>
+                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.inactiveButton}/>
         )
     }
 
