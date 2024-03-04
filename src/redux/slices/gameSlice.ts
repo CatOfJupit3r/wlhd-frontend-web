@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {GameState, StoreState} from "../../models/Redux";
 
 const initialState: GameState = {
-    user_name: "ADMIN",
+    user_name: "ADMIN", // maybe will move to local storage. will see.
     game_id: "5555",
     isActive: false
 }

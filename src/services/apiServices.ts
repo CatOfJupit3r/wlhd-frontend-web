@@ -79,7 +79,9 @@ export const getActions = async (game_id: string, entity_id: string): Promise<Ac
     }
 }
 
-export const getMemoryCell = async (game_id: string, memory_cell: string): Promise<{ [key: string]: string[] }> => {
+export const getMemoryCell = async (game_id: string, memory_cell: string): Promise<{
+    [key: string]: Array<[string, string[]]>
+}> => {
     try{
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/memory_cell/${memory_cell}`);
         return await response.json()
@@ -89,7 +91,7 @@ export const getMemoryCell = async (game_id: string, memory_cell: string): Promi
     }
 }
 
-export const getAllMessages = async (game_id: string): Promise<{ [key: string]: string[] }> => {
+export const getAllMessages = async (game_id: string): Promise<{ [key: string]: Array<[string, string[]]> }> => {
     try{
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/all_messages`);
         return await response.json()

@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {getTranslations} from "../services/apiServices";
 import {useTranslation} from "react-i18next";
 import GameScreen from "../components/GameScreen/GameScreen";
+import {useSelector} from "react-redux";
+import {selectGameId, selectName} from "../redux/slices/gameSlice";
+import {useNavigate} from "react-router-dom";
 
 
 /*
@@ -21,6 +24,14 @@ After this, socket will listen for commands from server:
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
     const {i18n} = useTranslation()
+    const navigate = useNavigate()
+    const nickName =  useSelector(selectName)
+    const gameId = useSelector(selectGameId)
+
+
+    if (!nickName || !gameId) {
+        navigate('..')
+    }
 
     useEffect(() => {
         try {

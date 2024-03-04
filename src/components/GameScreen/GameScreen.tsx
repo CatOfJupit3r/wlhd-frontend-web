@@ -1,8 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
+import example_bf from "../../data/example_bf.json";
+import example_actions from "../../data/example_action.json";
 
 import {
     resetTurn,
@@ -20,36 +22,57 @@ import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand
 import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
+import GameStateFeed from "../GameStateFeed";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {t} = useTranslation()
 
+    let retries: number = useMemo(() => 3, [])
     const username = useSelector(selectName)
     const isActive = useSelector(selectIsActive)
     const isTurn = useSelector(selectIsTurnActive)
+    dispatch(setActive({isActive: true})) // dev
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
 
-    const [isLoadingBattlefield, setIsLoadingBattlefield] = useState(false)
-    const [isLoadingActions, setIsLoadingActions] = useState(false)
+    const [isLoadingBattlefield, setIsLoadingBattlefield] = useState(true)
+    const [isLoadingActions, setIsLoadingActions] = useState(true)
 
-    const [currentBattlefield, setCurrentBattlefield] = useState({
-        battlefield: [],
-        game_descriptors: {
-            columns: [],
-            lines: [],
-            connectors: "",
-            separators: "",
-            field_components: {}
-        }
-    } as BattlefieldInterface)
-    // const [currentGameState, setCurrentGameState] = useState({})
+    // const [currentBattlefield, setCurrentBattlefield] = useState({
+    //     battlefield: (() => {
+    //         return Array(6).fill(0).map(() => Array(6).fill("0"));
+    //     })(),
+    //     game_descriptors: {
+    //         columns: ["builtins::one", "builtins::two", "builtins::three", "builtins::four", "builtins::five", "builtins::six"],
+    //         lines: ["builtins::safe", "builtins::ranged", "builtins::melee", "builtins::melee", "builtins::safe", "builtins::safe"],
+    //         connectors: "builtins::connector",
+    //         separators: "builtins::separator",
+    //         field_components: {"0": "builtins::tile"}
+    //     }
+    // } as BattlefieldInterface)
+
+    const [currentBattlefield, setCurrentBattlefield] = useState(example_bf as BattlefieldInterface) // dev
     const [currentActions, setCurrentActions] = useState({} as ActionInputInterface)
-    const [allMessages, setAllMessages] = useState({} as {[key: string]: string[]})
+    const [allMessages, setAllMessages] = useState({} as {
+        [key: string]: Array<[string, string[]]>; // Array of tuples where the first element is a string and the second element is an array of strings
+    })
     const [roundCount, setRoundCount] = useState(0)
+
+
+    const addMessage = useCallback((message: {[key: string]: Array<[string, string[]]>}) => {
+        message ?
+        setAllMessages((prev) => (
+            {...prev, ...message}
+            )
+        )
+        :
+        console.error("Message is empty")
+    }, [])
+
+    /* // dev
 
     const socketRef = useRef<Socket | null>(null);
 
@@ -62,27 +85,16 @@ const GameScreen = () => {
         }
     }, [])
 
-    const addMessage = useCallback((message: {[key: string]: string[]}) => {
-        message ?
-        setAllMessages((prev) => (
-            {...prev, ...message}
-            )
-        )
-        :
-        console.error("Message is empty")
-    }, [])
-
     const countRound = useCallback(() => {
         setRoundCount((prev) => prev + 1)
     }, [])
 
     useEffect(() => {
         document.title = "Game Room - Nyrzamaer";
-        // Although eslint says, that socket is puffed after each render, it is not true
-        // This code is executed only once, when the component is mounted to avoid connecting multiple times
-        // eslint-disable-next-line
-        while (!username || !gameId) { }
-        if (socketRef.current) {
+        if (!username || !gameId) { // If the user is not logged in or the game has not started, we redirect to the main page
+            navigate('..')
+        }
+        if (socketRef.current) { // If the socket is already connected, we don't need to connect again
             return
         }
         const socket = io(REACT_APP_BACKEND_URL, {
@@ -92,7 +104,6 @@ const GameScreen = () => {
                 user_token: username
             }
         });
-        let retries: number = 3
         socketRef.current = socket
         socket.on("connect", () => {
             console.log("Connected to game server");
@@ -139,7 +150,7 @@ const GameScreen = () => {
                     code: data.payload.code
             }))
         });
-        socket.on("game_finished", (data: any) => {
+        socket.on("game_finished", (_: any) => {
             dispatch(setActive({isActive: false}))
         });
         socket.on("error", (data: any) => {
@@ -156,15 +167,23 @@ const GameScreen = () => {
                 navigate("..")
             }
         })
-    }, [username, gameId, dispatch, addMessage, countRound, allMessages, t, navigate]);
+    }, [username, gameId, dispatch, addMessage, countRound, allMessages, t, navigate, retries]);
 
+     */
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            socketEmitter("take_action", submittedInput)
+            // socketEmitter("take_action", submittedInput)
             dispatch(setReadyToSubmit({flag: false}))
             dispatch(resetTurn())
         }
-    }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
+    }, [inputReadyToSubmit, submittedInput, dispatch]); // dev
+    // }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
+
+    const handleAddNewCmd = useCallback(() => { // dev
+        addMessage({ // will add some, don't have access to examples :(
+            // ""
+        })
+    }, [])
 
     return (
             isActive
@@ -175,9 +194,19 @@ const GameScreen = () => {
                         <h1>Loading battlefield...</h1>
                         :
                         <div id={"game-controller"} style={{
-                            display: "flex",
+                            display: "block",
                         }}>
-                            <Battlefield battlefield={currentBattlefield}/>
+                            <div id={"battle-info"} style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                minHeight: "fit-content"
+                            }}>
+                                <Battlefield battlefield={currentBattlefield}/>
+                                <GameStateFeed messages={allMessages}/>
+                            </div>
+                            <button onClick={() => handleAddNewCmd()}>Add random cmd</button> {/* dev */}
                             {isTurn ?
                                 isLoadingActions && currentActions !== undefined ?
                                     <h1>Loading actions...</h1>
@@ -189,7 +218,7 @@ const GameScreen = () => {
                 }
             </>
             :
-            <h1>Waiting for server to start_game</h1>
+            <h1>{t("local:game.pending.not_started")}</h1>
     )
 };
 
