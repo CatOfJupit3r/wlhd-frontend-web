@@ -47,9 +47,8 @@ const TileEntity = (props: {
                 result = `${styles.tile} ${styles.selected} ${styles.withEntity}`
                 break;
             default:
-                result = `${styles.tile} ${styles.withEntity}`
+                result = descriptor === "tile" ? `${styles.tile}` : `${styles.tile} ${styles.withEntity}`
                 break;
-                return `${styles.tile} ${styles.withEntity}` + (className ? ` ${className}` : "")
         }
         return result + (className ? ` ${className}` : "")
     }
