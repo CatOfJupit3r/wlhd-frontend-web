@@ -23,6 +23,7 @@ import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
+import styles from "./GameScreen.module.css";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
@@ -180,8 +181,8 @@ const GameScreen = () => {
     // }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
     const handleAddNewCmd = useCallback(() => { // dev
-        addMessage({ // will add some, don't have access to examples :(
-            // ""
+        addMessage({
+
         })
     }, [addMessage])
 
@@ -193,16 +194,8 @@ const GameScreen = () => {
                     isLoadingBattlefield && currentBattlefield !== undefined ?
                         <h1>Loading battlefield...</h1>
                         :
-                        <div id={"game-controller"} style={{
-                            display: "block",
-                        }}>
-                            <div id={"battle-info"} style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                minHeight: "fit-content"
-                            }}>
+                        <div id={"game-controller"} className={styles.gameControls}>
+                            <div id={"battle-info"} className={styles.battleInfo}>
                                 <Battlefield battlefield={currentBattlefield}/>
                                 <GameStateFeed messages={allMessages}/>
                             </div>

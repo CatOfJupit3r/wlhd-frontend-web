@@ -1,0 +1,13 @@
+.battleInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: fit-content;
+    margin-bottom: 2rem;
+}
+
+.gameControls {
+    display: block;
+    margin-top: 1rem;
+}

@@ -6,5 +6,6 @@
     max-width: calc(var(--image-size) * 8);
     max-height: calc(var(--image-size) * 9);
     background: #1f2023;
+    border-radius: 10px;
 }
 
