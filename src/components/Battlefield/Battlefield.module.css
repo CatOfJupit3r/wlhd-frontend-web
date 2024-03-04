@@ -1,30 +1,10 @@
-.activeTile .interactableTile {
-    cursor: pointer;
-    transition: border 0.1s;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-radius: 8px;
+.battlefield {
+    border: 1px solid black;
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    max-width: calc(var(--image-size) * 8);
+    max-height: calc(var(--image-size) * 9);
+    background: #1f2023;
 }
 
-.activeTile {
-    border: 2px solid #6ef581;
-}
-
-.interactableTile {
-    border: 2px solid #18fcd2;
-}
-
-.unavailableTile {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border: none;
-    transition: opacity 0.1s;
-}
-
-.tile {
-    background-color: #f0f0f0;
-    border: 1px solid #000;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}

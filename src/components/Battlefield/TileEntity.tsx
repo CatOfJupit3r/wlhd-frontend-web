@@ -1,10 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {tileInteractableStyle} from "./styles";
 import {INVALID_ASSET_PATH} from "../../config/configs";
 import {generateAssetPath, splitDescriptor} from "./utils";
 import {useDispatch, useSelector} from "react-redux";
 import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../redux/slices/turnSlice";
-import styles from "./Battlefield.module.css";
+import styles from "./Tiles.module.css";
 
 const TileEntity = (props: {
     full_descriptor: string,
@@ -39,14 +38,20 @@ const TileEntity = (props: {
     }, [activeSquares, id, isSquareChoice])
 
     const classAliasToName = (alias: string) => {
+        let result
         switch (alias) {
             case "interactable":
-                return className ? `${className} ${styles.interactableTile}` : styles.interactableTile
+                result = `${styles.tile} ${styles.interactable} ${styles.withEntity}`
+                break;
             case "active":
-                return className ? `${className} ${styles.activeTile}` : styles.activeTile
+                result = `${styles.tile} ${styles.selected} ${styles.withEntity}`
+                break;
             default:
-                return className ? className : ""
+                result = `${styles.tile} ${styles.withEntity}`
+                break;
+                return `${styles.tile} ${styles.withEntity}` + (className ? ` ${className}` : "")
         }
+        return result + (className ? ` ${className}` : "")
     }
 
     const handleTileClick = () => {
@@ -77,7 +82,6 @@ const TileEntity = (props: {
         src={generateAssetPath(dlc, descriptor)}
         onClick={() => handleTileClick()}
         alt={descriptor !== "tile" ? dlc + "::" + descriptor : undefined}
-        style={tileInteractableStyle}
         onError={(event) => {
             event.currentTarget.src = fallback.path ? fallback.path : INVALID_ASSET_PATH
             event.currentTarget.alt = fallback.alt ? fallback.alt : "invalid"

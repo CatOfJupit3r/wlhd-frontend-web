@@ -1,0 +1,61 @@
+.stateFeed {
+    min-width: fit-content;
+    min-height: fit-content;
+    width: calc(var(--image-size) * 6);
+    height: calc(var(--image-size) * 8);
+    max-width: calc(var(--image-size) * 8);
+    max-height: calc(var(--image-size) * 9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 5px #000;
+    margin-left: 20px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(var(--image-size) * 1);
+    box-shadow: inset 0 0 0 5px #000;
+    border-radius: 10px;
+}
+
+.pageContainer {
+    height: calc(var(--image-size) * 6);
+}
+
+.pageManipulators {
+    display: flex;
+    box-shadow: inset 0 0 0 5px #000;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.button {
+    height: var(--image-size);
+    width: var(--image-size);
+    border-radius: 10px;
+    border: 5px solid black;
+    cursor: pointer;
+}
+
+.activeButton {
+    height: var(--image-size);
+    width: var(--image-size);
+    border-radius: 10px;
+    border: 5px solid black;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.inactiveButton {
+    height: var(--image-size);
+    width: var(--image-size);
+    border-radius: 10px;
+    border: 5px solid black;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}

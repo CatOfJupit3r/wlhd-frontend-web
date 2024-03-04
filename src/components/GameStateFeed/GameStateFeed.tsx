@@ -2,12 +2,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {cmdToFormatted, cmdToTranslation} from "../../utils/cmdConverters";
 import {
-    TbSquareChevronLeft,
-    TbSquareChevronLeftFilled,
-    TbSquareChevronRight,
-    TbSquareChevronRightFilled
-} from "react-icons/tb";
-import {StateFeedStyle} from "./styles";
+    MdOutlineKeyboardArrowLeft,
+    MdOutlineKeyboardArrowRight, MdOutlineKeyboardDoubleArrowLeft,
+    MdOutlineKeyboardDoubleArrowRight
+} from "react-icons/md";
+import styles from "./GameStateFeed.module.css"
 
 const GameStateFeed = (props: {
     messages: { [key: string]: Array<[string, string[]]> };
@@ -56,11 +55,14 @@ const GameStateFeed = (props: {
 
     const displayPage = useCallback((): JSX.Element => {
         return (
-            <p>
-                {currentPage >= 0 && currentPage < pages.length ? pages[currentPage - 1] : (() => {
-                    console.log("Page out of range")
-                    return ""
-                })()}
+            <p style={{
+                textWrap: "wrap",
+                margin: 0
+            }}>
+                {/*{currentPage >= 0 && currentPage < pages.length ? pages[currentPage - 1] : (() => {*/}
+                {/*    console.log("Page out of range")*/}
+                {/*    return ""*/}
+                {/*})()}*/}
             </p>
         )
     }, [currentPage, pages])
@@ -81,55 +83,69 @@ const GameStateFeed = (props: {
         }
     }, [currentPage])
 
+    const absoluteLeft = (key: string, filled: boolean, callback?: () => void) => {
+        return (
+            filled ?
+                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.button}/>
+                :
+                <MdOutlineKeyboardDoubleArrowLeft key={key} onClick={callback} className={styles.button}/>
+        )
+    }
+
     const arrowLeft = (key: string, filled: boolean, callback?: () => void) => {
         return (
             filled ?
-                <TbSquareChevronLeftFilled key={key} onClick={callback}/>
+                <MdOutlineKeyboardArrowLeft key={key} onClick={callback} className={styles.activeButton}/>
                 :
-                <TbSquareChevronLeft key={key} onClick={callback}/>
+                <MdOutlineKeyboardArrowLeft key={key} onClick={callback} className={styles.inactiveButton}/>
+        )
+    }
+
+    const absoluteRight = (key: string, filled: boolean, callback?: () => void) => {
+        return (
+            filled ?
+                <MdOutlineKeyboardDoubleArrowRight key={key} onClick={callback} className={styles.activeButton}/>
+                :
+                <MdOutlineKeyboardDoubleArrowRight key={key} onClick={callback} className={styles.inactiveButton}/>
         )
     }
 
     const arrowRight = (key: string, filled: boolean, callback?: () => void) => {
         return (
             filled ?
-                <TbSquareChevronRightFilled key={key} onClick={callback}/>
+                <MdOutlineKeyboardArrowRight key={key} onClick={callback} className={styles.activeButton}/>
                 :
-                <TbSquareChevronRight key={key} onClick={callback}/>
+                <MdOutlineKeyboardArrowRight key={key} onClick={callback} className={styles.inactiveButton}/>
         )
     }
 
     return (
-        <div style={{
-            ...StateFeedStyle(),
-            overflow: "hidden",
-        }} id={"pages-container"}>
-            {
-                displayPage()
-            }
-            <div id={"page-manipulators"}>
+        <div className={styles.stateFeed} id={"game-state-feed"}>
+            <div id={"title"} className={styles.title}>
+                <h4>{t("local:game.components.battlefeed")}</h4>
+            </div>
+            <div className={styles.pageContainer}>
                 {
-                    currentPage >= pages.length && currentPage <= 1 ? // I'm not sure if this is correct statement. need to check
-                    <>
-                        {arrowLeft("left", false)}
-                        {arrowRight("right", false)}
-                    </>
-                       :
-                    <>
-                        {
-                            currentPage < pages.length ?
-                                arrowLeft("left", true, () => handlePrev())
-                                :
-                                arrowLeft("left", false)
-                        }
-                        {
-                            currentPage <= 1 ?
-                                arrowRight("right", true, () => handleNext())
-                                :
-                                arrowRight("right", false)
-                        }
-                    </>
+                    displayPage()
                 }
+            </div>
+            <div id={"page-manipulators"} className={styles.pageManipulators}>
+                <div id={"left-arrows"}>
+                    {
+                        absoluteLeft("absolute-left", currentPage > 1, () => setCurrentPage(1))
+                    }
+                    {
+                        currentPage > 1 ? arrowLeft("left", true, () => handlePrev()) : arrowLeft("left", false)
+                    }
+                </div>
+                <div id={"right-arrows"}>
+                {
+                    currentPage < pages.length ? arrowRight("right", true, () => handleNext()) : arrowRight("right", false)
+                }
+                {
+                    absoluteRight("absolute-right", currentPage < pages.length, () => setCurrentPage(pages.length))
+                }
+                </div>
             </div>
         </div>
     );

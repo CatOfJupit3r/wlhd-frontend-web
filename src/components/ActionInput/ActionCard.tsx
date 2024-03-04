@@ -25,7 +25,7 @@ const ActionCard = (props: {
 
     return (
         <Card
-            className={`col-6 col-lg-4 col-md-6 col-sm-12 flex-grow-1 ${styles.actionCard}`}
+            className={`col-6 col-lg-4 col-md-6 col-sm-12 flex-grow-1 card`}
             border={
                 option.available ? "primary" : "secondary"
             }

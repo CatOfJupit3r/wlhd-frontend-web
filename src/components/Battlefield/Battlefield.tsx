@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {battlefieldStyle} from "./styles";
 import {parseBattlefield, parsedToJSX} from "./utils";
 import {Battlefield as BattlefieldInterface} from "../../models/Battlefield";
+import styles from "./Battlefield.module.css"
 
 const Battlefield = (props: {
     battlefield: BattlefieldInterface
@@ -13,7 +13,7 @@ const Battlefield = (props: {
     useEffect(() => { setRenderedBattlefield(battlefield) }, [battlefield]);
 
     return (
-        <div style={battlefieldStyle} id={"battlefield-div"}>
+        <div className={styles.battlefield} id={"battlefield-div"}>
         {parsedToJSX(parseBattlefield(renderedBattlefield))}
         </div>
     );

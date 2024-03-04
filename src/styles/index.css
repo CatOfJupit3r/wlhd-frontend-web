@@ -12,7 +12,14 @@ body {
 @media (prefers-color-scheme: dark) {
     body {
         --color-background: #1f2023;
-        --color-foreground: #efefef;
+        --color-foreground: #481a1a;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        --color-background: #efefef;
+        --color-foreground: #1f2023;
     }
 }
 
@@ -31,4 +38,8 @@ code {
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+:root {
+    --image-size: 64px;
 }
