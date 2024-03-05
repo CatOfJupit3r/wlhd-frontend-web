@@ -27,6 +27,17 @@ export interface TurnState {
     readyToSubmit: boolean, // If true, the action input is ready to be sent to the server
 }
 
+
+export interface InfoState {
+    messages: string[];
+    round: number;
+    allMessages: string[];
+    entitiesInfo: {
+        [key: string]: string
+
+    }
+}
+
 export interface StoreState {
     notify: notifyState
     turn: TurnState
