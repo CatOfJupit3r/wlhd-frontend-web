@@ -27,7 +27,7 @@ const GameStateFeed = (props: {
     }, [props.messages]);
 
 
-    const translateCmd = useCallback((cmd: string, args: | undefined) => {
+    const translateCmd = useCallback((cmd: string, args: (string | string[])[] | undefined) => {
         if (args === undefined) {
             return t(cmdToTranslation(cmd))
         } else {
@@ -38,21 +38,25 @@ const GameStateFeed = (props: {
 
     useEffect(() => {
         try{
-            const newCmds = Object.keys(messages).filter(
-                (cmd) => !translatedMessages.includes(cmd)
+            const memoryCells = Object.keys(messages).filter(
+                (cell) => !translatedMessages.includes(cell)
             )
-            if (newCmds.length > 0) {
-                // let newPage = ""
-                // newCmds.forEach((cmd) => {
-                //     newPage += translateCmd(cmd, messages[cmd])
-                // })
-                // let choppedPages = ""
-                // while (newPage.length > symbolsPerPage) {
-                //     choppedPages += newPage.substring(0, symbolsPerPage) + "\n"
-                //     newPage = newPage.substring(symbolsPerPage)
-                // }
-                // setPages([...pages, ...choppedPages, newPage])
-                // setTranslatedMessages([...translatedMessages, ...newCmds])
+            if (memoryCells.length > 0) {
+                let newPage = ""
+                for (let address of memoryCells) {
+                    const message = messages[address]
+                    for (let cmd of message) {
+                        newPage += translateCmd(cmd[0], cmd[1])
+                    }
+
+                }
+                let choppedPages = ""
+                while (newPage.length > symbolsPerPage) {
+                    choppedPages += newPage.substring(0, symbolsPerPage) + "\n"
+                    newPage = newPage.substring(symbolsPerPage)
+                }
+                setPages([...pages, ...choppedPages, newPage])
+                setTranslatedMessages([...translatedMessages, ...memoryCells])
             }
         } catch (e) {
             console.log(e)

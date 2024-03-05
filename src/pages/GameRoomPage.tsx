@@ -34,16 +34,26 @@ const GameRoomPage = () => {
     }
 
     useEffect(() => {
+        console.log("Loading translations")
         try {
-            ["builtins", "nyrzamaer"].map((dlc) => (
-                getTranslations(i18n.language, dlc)
-                    .then((translations) => {
-                        i18n.addResourceBundle(i18n.language, dlc, translations, true, true);
-                    })
-            ))
+            ["builtins", "nyrzamaer"].map((dlc) => {
+                const addTranslations = (language: string) => {
+                    getTranslations(language, dlc)
+                        .then((translations) => {
+                            if (!translations) {
+                            }
+                            console.log(translations)
+                            i18n.addResourceBundle(i18n.language, dlc, translations, true, true);
+                        })
+                        .catch((e) => console.error(e))
+                }
+                return [i18n.language, "ua-UK"].map((language) => addTranslations(language))
+            })
         } catch (e) {
             console.error(e)
         }
+        console.log()
+        console.log("Translations loaded")
         setLoadingTranslations(false)
     }, [i18n]);
 
