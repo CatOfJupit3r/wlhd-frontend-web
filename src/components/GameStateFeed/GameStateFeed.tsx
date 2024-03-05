@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {cmdToTranslation} from "../../utils/cmdConverters";
 import {
     MdOutlineKeyboardArrowLeft,
     MdOutlineKeyboardArrowRight, MdOutlineKeyboardDoubleArrowLeft,
@@ -8,12 +7,14 @@ import {
 } from "react-icons/md";
 import styles from "./GameStateFeed.module.css"
 import {GameStateMessages} from "../../models/Battlefield";
+import useLocalization from "../../hooks/useLocalization";
 
 const GameStateFeed = (props: {
     messages: GameStateMessages;
 }) => {
 
-    const {t} = useTranslation()
+    const localize = useLocalization();
+    const {t} = useTranslation();
 
     const [pages, setPages] = useState([] as Array<string>)
     const [messages, setMessages] = useState(props.messages);
@@ -25,38 +26,9 @@ const GameStateFeed = (props: {
         setMessages(props.messages);
     }, [props.messages]);
 
-    const localize = (cmd: [
-        string, ...any[]
-    ]): string => {
-        try {
-            const [stringId, ...args] = cmd;
-            if (args && args.length === 0 || !args) {
-                return t(cmdToTranslation(stringId));
-            }
-            const parsedArgs: string[] = [];
-
-            for (let arg of args) {
-                if (Array.isArray(arg)) {
-                    for (let subArg of arg) {
-                        parsedArgs.push(localize(subArg));
-                    }
-                } else if (typeof arg === 'number') {
-                    parsedArgs.push(arg.toString());
-                } else {
-                    parsedArgs.push(arg);
-                }
-            }
-            return t(cmdToTranslation(stringId)).replace(/{(\d+)}/g, (match, index) => {
-                return typeof parsedArgs[index] !== 'undefined' ? parsedArgs[index] : match;
-            });
-        } catch (e) {
-            console.error(e);
-            return cmd[0];
-        }
-    }
 
     useEffect(() => {
-        try{
+        try {
             const memoryCells = Object.keys(messages).filter(
                 (cell) => !translatedMessages.includes(cell)
             )
@@ -65,7 +37,7 @@ const GameStateFeed = (props: {
                 for (let address of memoryCells) {
                     const message = messages[address]
                     for (let cmd of message) {
-                        newPage += localize(cmd)
+                        newPage += localize(cmd) + "\n"
                     }
                 }
                 let choppedPages = ""
@@ -79,7 +51,7 @@ const GameStateFeed = (props: {
         } catch (e) {
             console.log(e)
         }
-    }, [messages, pages, translatedMessages, symbolsPerPage]);
+    }, [messages, pages, translatedMessages, symbolsPerPage, localize]);
 
     const displayPage = useCallback((): JSX.Element => {
         return (
