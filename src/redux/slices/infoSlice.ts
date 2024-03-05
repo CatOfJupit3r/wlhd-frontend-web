@@ -71,4 +71,4 @@ export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
 export const selectCurrentBattlefield = (state: StoreState) => state.info.current_battlefield
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
-
+export const selectEntitiesInfo = (state: StoreState) => state.info.current_battlefield.entities_info

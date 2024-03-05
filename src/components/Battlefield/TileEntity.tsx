@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {INVALID_ASSET_PATH} from "../../config/configs";
 import {generateAssetPath, splitDescriptor} from "./utils";
 import {useDispatch, useSelector} from "react-redux";
 import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../redux/slices/turnSlice";
 import styles from "./Tiles.module.css";
 import { Tooltip } from 'react-tooltip'
-import {OverlayTrigger, Placeholder} from "react-bootstrap";
+import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
-import useLocalization from "../../hooks/useLocalization";
+import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../redux/slices/infoSlice";
 
 
 const TileEntity = (props: {
@@ -21,7 +21,6 @@ const TileEntity = (props: {
 }) => {
     const dispatch = useDispatch()
     const {t} = useTranslation()
-    const localize = useLocalization()
 
     const {
         full_descriptor,
@@ -35,6 +34,8 @@ const TileEntity = (props: {
     const chosenSquare = useSelector(selectChosenSquare)
     const isSquareChoice = useSelector(selectSquareChoice)
     const activeSquares = useSelector(selectActiveSquares)
+    const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
+    const entities_info = useSelector(selectEntitiesInfo)
 
     const squareShouldBeInteractable = useCallback(() => {
         const [line, column] = id.split("/")
@@ -92,6 +93,38 @@ const TileEntity = (props: {
         </Placeholder>
     }
 
+    const generateTooltipContent = () => { // TODO: TEST
+        const entity_info = entities_info[id]
+        if (entity_info === undefined) {
+            return [
+                t("game:components:tooltip:creature_and_line"),
+                t("game:components:tooltip:health_max_health"),
+                t("game:components:tooltip:action_points"),
+                t("game:components:tooltip:armor"),
+                t("game:components:tooltip:status_effects")
+            ].map((key) => generatePlaceholder(key))
+        }
+        const {
+            name,
+            line,
+            column,
+            current_health,
+            max_health,
+            current_action_points,
+            max_action_points,
+            current_armor,
+            base_armor,
+            status_effects
+        } = entity_info
+        return [
+            t("game:components:tooltip:creature_and_line", {0: name, 1: line, 2: column}),
+            t("game:components:tooltip:health_max_health", {0: current_health, 1: max_health}),
+            t("game:components:tooltip:action_points", {0: current_action_points, 1: max_action_points}),
+            t("game:components:tooltip:armor", {0: current_armor, 1: base_armor}),
+            t("game:components:tooltip:status_effects", {0: status_effects.map(([name, duration]) => `${name} (${duration})`).join(", ")})
+        ].map((key) => <p key={key}>{key}</p>)
+    }
+
     return <>
         <img
             src={generateAssetPath(dlc, descriptor)}
@@ -116,6 +149,7 @@ const TileEntity = (props: {
                     delayShow={isSquareChoice ? 1500 : 500}
                 >
                         {
+                            isLoadingBattlefield ?
                             [
                                 t("game:components:tooltip:creature_and_line"),
                                 t("game:components:tooltip:health_max_health"),
@@ -123,6 +157,12 @@ const TileEntity = (props: {
                                 t("game:components:tooltip:armor"),
                                 t("game:components:tooltip:status_effects")
                             ].map((key) => generatePlaceholder(key))
+                            :
+                            <div>
+                                {
+                                    generateTooltipContent()
+                                }
+                            </div>
                         }
                 </Tooltip>
                 :

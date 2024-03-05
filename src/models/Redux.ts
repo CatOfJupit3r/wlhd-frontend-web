@@ -1,4 +1,4 @@
-import {GameStateMessages} from "./Battlefield";
+import {EntityInfo, GameStateMessages} from "./Battlefield";
 import {ActionInput as ActionInputInterface} from "./ActionInput";
 
 export interface notifyState {
@@ -43,15 +43,14 @@ export interface InfoState {
             lines: string[],
             columns: string[]
             field_components: {
+                "0": string,
                 [key: string]: string
             },
             separators: string
             connectors: string
         },
         entities_info: {
-            [key: string]: {
-                [key: string]: string
-            }
+            [key: string]: EntityInfo
         }
     }
 }

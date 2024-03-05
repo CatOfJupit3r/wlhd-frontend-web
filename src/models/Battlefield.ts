@@ -37,3 +37,16 @@ export interface GameStateMessages {
         ]
     >
 }
+
+export interface EntityInfo {
+    name: string,
+    line: string,
+    column: string,
+    current_health: string,
+    max_health: string,
+    current_action_points: string,
+    max_action_points: string,
+    current_armor: string,
+    base_armor: string,
+    status_effects: string[][] // [..., [name, duration], ...]
+}
