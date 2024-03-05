@@ -29,12 +29,26 @@ export interface TurnState {
 
 
 export interface InfoState {
-    messages: string[];
     round: number;
-    allMessages: string[];
-    entitiesInfo: {
-        [key: string]: string
-
+    allMessages: {
+        [key: string]: any[]
+    };
+    current_battlefield: {
+        battlefield: string[][],
+        game_descriptors: {
+            lines: string[],
+            columns: string[]
+            field_components: {
+                [key: string]: string
+            },
+            separators: string
+            connectors: string
+        },
+        entities_info: {
+            [key: string]: {
+                [key: string]: string
+            }
+        }
     }
 }
 
@@ -42,5 +56,6 @@ export interface StoreState {
     notify: notifyState
     turn: TurnState
     game: GameState
+    info: InfoState
 }
 
