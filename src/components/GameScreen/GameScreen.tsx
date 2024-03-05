@@ -174,25 +174,6 @@ const GameScreen = () => {
     }, [inputReadyToSubmit, submittedInput, dispatch]); // dev
     // }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
-    const handleAddNewCmd = useCallback(() => { // dev
-        const messages: GameStateMessages[] = [
-            {
-                "123123": [
-                    ["builtins::item_usage", [["nyrzamaer::dortyn:name"], ["nyrzamaer::aridnik_blades:name"], "3", "6"]],
-                    ["builtins::creature_takes_damage", [["nyrzamaer::target_dummy_large:name"], "7", ["builtins::physical"]]],
-                    ["builtins::creature_fainted", [["nyrzamaer::target_dummy_large:name"]]],
-                ],
-            },
-            {
-                "4432432": [
-                    ["builtins::spell_usage", [["nyrzamaer::dortyn:name"], ["nyrzamaer::flare:name"], "3", "6"]]
-                ]
-            }
-        ]
-        const randomMessage = messages[Math.floor(Math.random() * messages.length)]
-        addMessage(randomMessage)
-    }, [addMessage])
-
     return (
             isActive
             ?
@@ -206,7 +187,6 @@ const GameScreen = () => {
                                 <Battlefield battlefield={currentBattlefield}/>
                                 <GameStateFeed messages={allMessages}/>
                             </div>
-                            <button onClick={() => handleAddNewCmd()}>Add random cmd</button> {/* dev */}
                             {isTurn ?
                                 isLoadingActions && currentActions !== undefined ?
                                     <h1>Loading actions...</h1>

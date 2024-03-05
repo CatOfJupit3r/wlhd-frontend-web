@@ -30,7 +30,14 @@
             "battlefeed": "Журнал бою",
             "battlefield": "Поле бою",
             "your_actions": "Ваші дії:",
-            "you_chose": "Ви обрали:"
+            "you_chose": "Ви обрали:",
+            "tooltip": {
+                "creature_and_line": "Створіння .... (.../...)",
+                "health_max_health": "Здоров'я: .../...",
+                "action_points": "Очки дії: .../...",
+                "armor": "Броня: .../...",
+                "status_effects": "Статус ефекти: ..........\n.........\n........\n"
+            }
         },
         "its_your_turn": "Твій хід!",
         "control_info": "Ти контролюєш: {creature} ({current_ap}/{max_ap}) на клітинці {line}/{column}",
