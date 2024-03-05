@@ -3,12 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
-import example_bf from "../../data/example_bf.json";
 import example_actions from "../../data/example_action.json";
 
 import {
     resetTurn,
-    selectChosenAction,
+    selectChosenAction, selectIsLoadingCurrentActions,
     selectIsTurnActive,
     selectReadyToSubmit,
     setIsTurnActive, setReadyToSubmit
@@ -19,28 +18,31 @@ import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
 import {getActions, getAllMessages, getGameField, getMemoryCell} from "../../services/apiServices";
 import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../models/GameCommands";
-import {Battlefield as BattlefieldInterface, GameStateMessages} from "../../models/Battlefield";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
+import {selectIsLoadingBattlefield, selectRound} from "../../redux/slices/infoSlice";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {t} = useTranslation()
 
-    let retries: number = useMemo(() => 3, [])
     const username = useSelector(selectName)
     const isActive = useSelector(selectIsActive)
     const isTurn = useSelector(selectIsTurnActive)
+    const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     dispatch(setActive({isActive: true})) // dev
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
+    const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
+    const roundCount = useSelector(selectRound)
 
-    const [isLoadingBattlefield, setIsLoadingBattlefield] = useState(false)
-    const [isLoadingActions, setIsLoadingActions] = useState(false)
+    dispatch(setIsTurnActive({flag: true})) // dev
+
+    let retries: number = useMemo(() => 3, [])
 
     // const [currentBattlefield, setCurrentBattlefield] = useState({
     //     battlefield: (() => {
@@ -55,19 +57,7 @@ const GameScreen = () => {
     //     }
     // } as BattlefieldInterface)
 
-    const [currentBattlefield, setCurrentBattlefield] = useState(example_bf as BattlefieldInterface) // dev
-    const [currentActions, setCurrentActions] = useState(example_actions as ActionInputInterface)
-    const [allMessages, setAllMessages] = useState({} as GameStateMessages)
-    const [roundCount, setRoundCount] = useState(0)
-    dispatch(setIsTurnActive({flag: true})) // dev
-
-    const addMessage = useCallback((message: GameStateMessages) => {
-        message ? setAllMessages((prev) => ({...prev, ...message}))
-        :
-        console.error("Message is empty")
-    }, [])
-
-    /* // dev
+    /*  // dev
 
     const socketRef = useRef<Socket | null>(null);
 
@@ -78,10 +68,6 @@ const GameScreen = () => {
         catch (e) {
             console.error("Error occurred during emitting of socket: ", e)
         }
-    }, [])
-
-    const countRound = useCallback(() => {
-        setRoundCount((prev) => prev + 1)
     }, [])
 
     useEffect(() => {
@@ -179,23 +165,25 @@ const GameScreen = () => {
             ?
             <>
                 {
-                    isLoadingBattlefield && currentBattlefield !== undefined ?
+                    isLoadingBattlefield ?
                         <h1>Loading battlefield...</h1>
                         :
-                        <div id={"game-controller"} className={styles.gameControls}>
-                            <div id={"battle-info"} className={styles.battleInfo}>
-                                <Battlefield battlefield={currentBattlefield}/>
-                                <GameStateFeed messages={allMessages}/>
-                            </div>
-                            {isTurn ?
-                                isLoadingActions && currentActions !== undefined ?
-                                    <h1>Loading actions...</h1>
-                                    :
-                                    <ActionInput actions={currentActions}/>
-                                :
-                                <h1>Not your turn!</h1>}
-                        </div>
+                        <h1>Round {roundCount}</h1>
                 }
+                <div id={"game-controller"} className={styles.gameControls}>
+                    <div id={"battle-info"} className={styles.battleInfo}>
+                        <Battlefield/>
+                        <GameStateFeed />
+                    </div>
+                    {isTurn ?
+                        isLoadingActions ?
+                            <h1>Loading actions...</h1>
+                            :
+                            <ActionInput/>
+                        :
+                        <h1>Not your turn!</h1>
+                    }
+                </div>
             </>
             :
             <h1>{t("local:game.pending.not_started")}</h1>

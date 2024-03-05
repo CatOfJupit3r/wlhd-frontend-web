@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Action, ActionInput as ActionInputInterface} from "../../models/ActionInput";
+import React, {useCallback, useState} from 'react';
+import {Action} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import {useDispatch, useSelector} from "react-redux";
 import {extractCards} from "./utils";
@@ -15,7 +15,7 @@ import {
     resetInteractableSquares,
     setIsTurnActive,
     setDisplayedActions, selectDisplayedActions,
-    setChosenSquare, setReadyToSubmit
+    setChosenSquare, setReadyToSubmit, selectCurrentActions
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
@@ -34,9 +34,7 @@ import {cmdToTranslation} from "../../utils/cmdConverters";
 import {RxArrowTopRight} from "react-icons/rx";
 
 
-const ActionInput = (props: {
-    actions: ActionInputInterface
-}) => {
+const ActionInput = () => {
     const dispatch = useDispatch()
     const {t} = useTranslation()
     const isSquareChoice = useSelector(selectSquareChoice)
@@ -44,17 +42,13 @@ const ActionInput = (props: {
     const displayedActions = useSelector(selectDisplayedActions)
     // const chosenActionStore = useSelector(selectChosenActionStore)
 
-    const [initialActionLevel, setInitialActionLevel] = useState(props.actions)
+    const initialActionLevel = useSelector(selectCurrentActions)
     const [currentActionLevel, setCurrentActionLevel] = useState(initialActionLevel.actions)
     const [depth, setDepth] = useState(0)
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
     const [chosenAction, setChosenAction] = useState(undefined as number | undefined)
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage, ] = useState(9);
-
-    useEffect(() => {
-        setInitialActionLevel(props.actions)
-    }, [props.actions]);
 
     const incrementDepth = useCallback(() => {
         setDepth(depth + 1)
@@ -65,7 +59,7 @@ const ActionInput = (props: {
         setChosenAction(undefined)
         setDepth(0)
         dispatch(resetTurn())
-    }, [dispatch])
+    }, [dispatch, initialActionLevel.actions])
 
     const handleConfirm = useCallback(() => {
         if (chosenAction !== undefined) {
@@ -136,6 +130,9 @@ const ActionInput = (props: {
     }
 
     const generateOptions = useCallback((action: Action[]): JSX.Element => {
+        if (!action || action.length === 0) {
+            return <h1>{t("No actions available")}</h1>
+        }
         const indexOfLastCard = currentPage * cardsPerPage;
         const indexOfFirstCard = indexOfLastCard - cardsPerPage;
         const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
@@ -206,8 +203,7 @@ const ActionInput = (props: {
                     {
                         <div id={"action-navigation"}>
                             {
-
-                            currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
+                                currentActionLevel && currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
                                 <>
                                     <TbSquareChevronLeft />
                                     <TbSquareChevronRight  />
@@ -215,13 +211,13 @@ const ActionInput = (props: {
                                 :
                                 <>
                                     {
-                                        currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) ?
+                                        currentActionLevel && currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) ?
                                             <TbSquareChevronLeftFilled onClick={() => setCurrentPage( currentPage - 1)} />
                                             :
                                             <TbSquareChevronLeft />
                                     }
                                     {
-                                        currentPage === 1 ?
+                                        currentActionLevel && currentPage === 1 ?
                                             <TbSquareChevronRightFilled onClick={() => setCurrentPage(currentPage + 1)}/>
                                             :
                                             <TbSquareChevronRight  />

@@ -1,15 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {TurnState} from "../../models/Redux";
+import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
+import {GET_ACTIONS} from "../../config/endpoints";
 
 const initialState: TurnState = {
     squareChoice: false,
+    isTurnActive: false,
+    readyToSubmit: false,
+    isLoadingCurrentActions: false,
+    currentActions: {} as ActionInputInterface,
     interactableSquares: {},
     chosenSquare: "",
     chosenAction: {},
     displayedActions: {},
-    isTurnActive: false,
-    readyToSubmit: false,
 }
+
+
+const fetchActions = createAsyncThunk(
+    'turn/fetchActions',
+    async (game_id: string) => {
+        const response = await fetch(GET_ACTIONS(game_id))
+        return response.json()
+    }
+)
 
 
 const turnSlice = createSlice({
@@ -25,6 +38,15 @@ const turnSlice = createSlice({
         }) => {
             const {flag} = action.payload;
             return {...state, squareChoice: flag}
+        },
+        setCurrentActions: (state: TurnState, action: {
+            type: string,
+            payload: {
+                actions: ActionInputInterface
+            }
+        }) => {
+            const {actions} = action.payload;
+            return {...state, currentActions: actions}
         },
         setInteractableSquares: (state: TurnState, action: {
             type: string,
@@ -84,8 +106,42 @@ const turnSlice = createSlice({
         },
         setReadyToSubmit: (state: TurnState, action) => {
             return {...state, readyToSubmit: action.payload.flag}
-        }}
-})
+        },
+        setIsLoadingActions: (state: TurnState, action) => {
+            return {...state, isLoadingCurrentActions: action.payload.flag}
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchActions.fulfilled, (state, action) => {
+            state.currentActions = action.payload
+            setIsLoadingActions({flag: false})
+        })
+        builder.addCase(fetchActions.rejected, (state, action) => {
+            console.error(action.error)
+            state.currentActions = {
+                actions: [],
+                entity_name: "",
+                line: 0,
+                column: 0,
+                current_ap: 0,
+                max_ap: 0
+            }
+            setIsLoadingActions({flag: false})
+        })
+        builder.addCase(fetchActions.pending, (state) => {
+            state.currentActions = {
+                actions: [],
+                entity_name: "",
+                line: 0,
+                column: 0,
+                current_ap: 0,
+                max_ap: 0
+            }
+            setIsLoadingActions({flag: true})
+        })
+    },
+}
+)
 
 export default turnSlice.reducer;
 
@@ -98,7 +154,9 @@ export const {
     setDisplayedActions,
     setIsTurnActive,
     resetInteractableSquares,
-    setReadyToSubmit
+    setReadyToSubmit,
+    setCurrentActions,
+    setIsLoadingActions
 } = turnSlice.actions;
 
 export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;
@@ -108,3 +166,5 @@ export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chose
 export const selectDisplayedActions = (state: {turn: TurnState}) => state.turn.displayedActions;
 export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.isTurnActive;
 export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;
+export const selectCurrentActions = (state: {turn: TurnState}) => state.turn.currentActions;
+export const selectIsLoadingCurrentActions = (state: {turn: TurnState}) => state.turn.isLoadingCurrentActions;

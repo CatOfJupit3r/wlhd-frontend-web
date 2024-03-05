@@ -6,25 +6,21 @@ import {
     MdOutlineKeyboardDoubleArrowRight
 } from "react-icons/md";
 import styles from "./GameStateFeed.module.css"
-import {GameStateMessages} from "../../models/Battlefield";
 import useLocalization from "../../hooks/useLocalization";
+import {useSelector} from "react-redux";
+import {selectAllMessages} from "../../redux/slices/infoSlice";
 
-const GameStateFeed = (props: {
-    messages: GameStateMessages;
-}) => {
+const GameStateFeed = () => {
 
     const localize = useLocalization();
     const {t} = useTranslation();
 
+    const messages = useSelector(selectAllMessages)
+
     const [pages, setPages] = useState([] as Array<string>)
-    const [messages, setMessages] = useState(props.messages);
     const [translatedMessages, setTranslatedMessages] = useState(Array<string>());
     const [currentPage, setCurrentPage] = useState(1);
     const [symbolsPerPage, ] = useState(400);
-
-    useEffect(() => {
-        setMessages(props.messages);
-    }, [props.messages]);
 
 
     useEffect(() => {
