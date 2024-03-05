@@ -11,6 +11,13 @@
     margin-left: 20px;
 }
 
+.stateFeed p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    word-wrap: break-word;
+}
+
 .title {
     display: flex;
     justify-content: center;
@@ -24,6 +31,7 @@
     height: calc(var(--image-size) * 6);
     overflow: hidden;
     max-height: calc(var(--image-size) * 6);
+    max-width: calc(var(--image-size) * 6);
 }
 
 .pageManipulators {

@@ -1,17 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {cmdToFormatted, cmdToTranslation} from "../../utils/cmdConverters";
+import {cmdToTranslation} from "../../utils/cmdConverters";
 import {
     MdOutlineKeyboardArrowLeft,
     MdOutlineKeyboardArrowRight, MdOutlineKeyboardDoubleArrowLeft,
     MdOutlineKeyboardDoubleArrowRight
 } from "react-icons/md";
 import styles from "./GameStateFeed.module.css"
-import {GameStateMessage} from "../../models/Battlefield";
-import {translationOutput} from "../../models/Translation";
+import {GameStateMessages} from "../../models/Battlefield";
 
 const GameStateFeed = (props: {
-    messages: GameStateMessage;
+    messages: GameStateMessages;
 }) => {
 
     const {t} = useTranslation()
@@ -26,15 +25,35 @@ const GameStateFeed = (props: {
         setMessages(props.messages);
     }, [props.messages]);
 
+    const localize = (cmd: [
+        string, ...any[]
+    ]): string => {
+        try {
+            const [stringId, ...args] = cmd;
+            if (args && args.length === 0 || !args) {
+                return t(cmdToTranslation(stringId));
+            }
+            const parsedArgs: string[] = [];
 
-    const translateCmd = useCallback((cmd: string, args: (string | string[])[] | undefined) => {
-        if (args === undefined) {
-            return t(cmdToTranslation(cmd))
-        } else {
-            const {mainCmd, parsedArgs} = cmdToFormatted(cmd, args)
-            return t(mainCmd, parsedArgs)
+            for (let arg of args) {
+                if (Array.isArray(arg)) {
+                    for (let subArg of arg) {
+                        parsedArgs.push(localize(subArg));
+                    }
+                } else if (typeof arg === 'number') {
+                    parsedArgs.push(arg.toString());
+                } else {
+                    parsedArgs.push(arg);
+                }
+            }
+            return t(cmdToTranslation(stringId)).replace(/{(\d+)}/g, (match, index) => {
+                return typeof parsedArgs[index] !== 'undefined' ? parsedArgs[index] : match;
+            });
+        } catch (e) {
+            console.error(e);
+            return cmd[0];
         }
-    }, [t])
+    }
 
     useEffect(() => {
         try{
@@ -46,9 +65,8 @@ const GameStateFeed = (props: {
                 for (let address of memoryCells) {
                     const message = messages[address]
                     for (let cmd of message) {
-                        newPage += translateCmd(cmd[0], cmd[1])
+                        newPage += localize(cmd)
                     }
-
                 }
                 let choppedPages = ""
                 while (newPage.length > symbolsPerPage) {
@@ -61,7 +79,7 @@ const GameStateFeed = (props: {
         } catch (e) {
             console.log(e)
         }
-    }, [messages, pages, translatedMessages, translateCmd, symbolsPerPage]);
+    }, [messages, pages, translatedMessages, symbolsPerPage]);
 
     const displayPage = useCallback((): JSX.Element => {
         return (

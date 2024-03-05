@@ -19,7 +19,7 @@ import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
 import {getActions, getAllMessages, getGameField, getMemoryCell} from "../../services/apiServices";
 import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../models/GameCommands";
-import {Battlefield as BattlefieldInterface, GameStateMessage} from "../../models/Battlefield";
+import {Battlefield as BattlefieldInterface, GameStateMessages} from "../../models/Battlefield";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
@@ -57,11 +57,11 @@ const GameScreen = () => {
 
     const [currentBattlefield, setCurrentBattlefield] = useState(example_bf as BattlefieldInterface) // dev
     const [currentActions, setCurrentActions] = useState(example_actions as ActionInputInterface)
-    const [allMessages, setAllMessages] = useState({} as GameStateMessage)
+    const [allMessages, setAllMessages] = useState({} as GameStateMessages)
     const [roundCount, setRoundCount] = useState(0)
     dispatch(setIsTurnActive({flag: true})) // dev
 
-    const addMessage = useCallback((message: GameStateMessage) => {
+    const addMessage = useCallback((message: GameStateMessages) => {
         message ? setAllMessages((prev) => ({...prev, ...message}))
         :
         console.error("Message is empty")
@@ -175,7 +175,7 @@ const GameScreen = () => {
     // }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
     const handleAddNewCmd = useCallback(() => { // dev
-        const messages: GameStateMessage[] = [
+        const messages: GameStateMessages[] = [
             {
                 "123123": [
                     ["builtins::item_usage", [["nyrzamaer::dortyn:name"], ["nyrzamaer::aridnik_blades:name"], "3", "6"]],
@@ -190,7 +190,6 @@ const GameScreen = () => {
             }
         ]
         const randomMessage = messages[Math.floor(Math.random() * messages.length)]
-        console.log(randomMessage)
         addMessage(randomMessage)
     }, [addMessage])
 

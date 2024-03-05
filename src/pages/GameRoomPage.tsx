@@ -34,15 +34,13 @@ const GameRoomPage = () => {
     }
 
     useEffect(() => {
-        console.log("Loading translations")
         try {
             ["builtins", "nyrzamaer"].map((dlc) => {
-                const addTranslations = (language: string) => {
-                    getTranslations(language, dlc)
+                const addTranslations = async (language: string) => {
+                    await getTranslations(language, dlc)
                         .then((translations) => {
                             if (!translations) {
                             }
-                            console.log(translations)
                             i18n.addResourceBundle(i18n.language, dlc, translations, true, true);
                         })
                         .catch((e) => console.error(e))
@@ -52,8 +50,6 @@ const GameRoomPage = () => {
         } catch (e) {
             console.error(e)
         }
-        console.log()
-        console.log("Translations loaded")
         setLoadingTranslations(false)
     }, [i18n]);
 
