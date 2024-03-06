@@ -58,10 +58,10 @@ const GameScreen = () => {
     }, [])
 
     useEffect(() => {
-        document.title = "Game Room - Nyrzamaer";
         if (!username || !gameId) { // If the user is not logged in or the game has not started, we redirect to the main page
             navigate('..')
         }
+        document.title = t("local:game.title", {gameId: gameId}) === "local:game.title" ? "Game" : t("local:game.title", {gameId: gameId})
         if (socketRef.current) { // If the socket is already connected, we don't need to connect again
             return
         }
@@ -151,11 +151,11 @@ const GameScreen = () => {
             isActive
             ?
             <>
-                <h1 className={styles.roundHeader}>{t("local:game:round_n", {round: roundCount})}</h1>
+                <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
                 {
                     isTurn && !isLoadingActions && activeEntityInfo ?
                     <h1>
-                        {t("local:its_your_turn", activeEntityInfo)}
+                        {t("local:its_your_turn.its_your_turn", activeEntityInfo)}
                     </h1>
                     :
                     <h1>
@@ -169,16 +169,16 @@ const GameScreen = () => {
                     </div>
                     {isTurn ?
                         isLoadingActions ?
-                            <h1>Loading actions...</h1>
+                            <h1>{t("local:game.pending.loading_actions")}</h1>
                             :
                             <>
                                 <h1>
-                                    {t("local:control_info", activeEntityInfo)}
+                                    {t("local:game.control_info", activeEntityInfo)}
                                 </h1>
                                 <ActionInput/>
                             </>
                         :
-                        <h1>Not your turn!</h1>
+                       null
                     }
                 </div>
             </>

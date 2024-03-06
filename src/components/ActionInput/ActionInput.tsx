@@ -131,7 +131,7 @@ const ActionInput = () => {
 
     const generateOptions = useCallback((action: Action[]): JSX.Element => {
         if (!action || action.length === 0) {
-            return <h1>{t("No actions available")}</h1>
+            return <h1>{t("local:game.actions.no_available_actions")}</h1>
         }
         const indexOfLastCard = currentPage * cardsPerPage;
         const indexOfFirstCard = indexOfLastCard - cardsPerPage;
@@ -149,7 +149,7 @@ const ActionInput = () => {
     const finalDepthScreen = () => {
         return (
             <>
-                <h1>You have chosen</h1>
+                <h1>{t("local:game.actions.you_chose")}</h1>
                 {
                     displayedActions !== undefined ?
                         <p>
@@ -160,16 +160,22 @@ const ActionInput = () => {
                             }
                         </p>
                         :
-                        <h2>Nothing..?</h2>
+                        <h2>{t("local:game.actions.nothing?")}</h2>
                 }
                 <RxArrowTopRight
                     onClick={() => {
-                        dispatch(setIsTurnActive({
-                            flag: false
-                        }))
-                        dispatch(setReadyToSubmit({
-                            flag: true
-                        }))
+                        if (chosenAction === undefined) {
+                            dispatch(setChosenActionStore({
+                                key: "action",
+                                action_value: "skip"
+                            }))
+                        }
+                            dispatch(setIsTurnActive({
+                                flag: false
+                            }))
+                            dispatch(setReadyToSubmit({
+                                flag: true
+                            }))
                     }}
                 />
                 <BsArrowBarLeft onClick={() => {
