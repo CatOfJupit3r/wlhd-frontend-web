@@ -8,7 +8,7 @@ const initialState: InfoState = {
     round: 0,
     allMessages: { // when predeclared, sometimes inner objects are not recognized
     },
-    isLoadingBattlefield: false,
+    isLoadingBattlefield: true,
     current_battlefield: {
         battlefield: [
             ["0", "0", "0", "0", "0", "0"],

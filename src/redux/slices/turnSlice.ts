@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {TurnState} from "../../models/Redux";
+import {TurnState, StoreState} from "../../models/Redux";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {GET_ACTIONS} from "../../config/endpoints";
 
@@ -159,12 +159,16 @@ export const {
     setIsLoadingActions
 } = turnSlice.actions;
 
-export const selectSquareChoice = (state: {turn: TurnState}) => state.turn.squareChoice;
-export const selectActiveSquares = (state: {turn: TurnState}) => state.turn.interactableSquares;
-export const selectChosenSquare = (state: {turn: TurnState}) => state.turn.chosenSquare;
-export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;
-export const selectDisplayedActions = (state: {turn: TurnState}) => state.turn.displayedActions;
-export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.isTurnActive;
-export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;
-export const selectCurrentActions = (state: {turn: TurnState}) => state.turn.currentActions;
-export const selectIsLoadingCurrentActions = (state: {turn: TurnState}) => state.turn.isLoadingCurrentActions;
+export const selectSquareChoice = (state: StoreState) => state.turn.squareChoice;
+export const selectActiveSquares = (state: StoreState) => state.turn.interactableSquares;
+export const selectChosenSquare = (state: StoreState) => state.turn.chosenSquare;
+export const selectChosenAction = (state: StoreState) => state.turn.chosenAction;
+export const selectDisplayedActions = (state: StoreState) => state.turn.displayedActions;
+export const selectIsTurnActive = (state: StoreState) => state.turn.isTurnActive;
+export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubmit;
+export const selectCurrentActions = (state: StoreState) => state.turn.currentActions;
+export const selectIsLoadingCurrentActions = (state: StoreState) => state.turn.isLoadingCurrentActions;
+export const selectEntityInControlInfo = (state: StoreState) => {
+    const {entity_name, current_ap, max_ap, line, column} = state.turn.currentActions;
+    return {entity_name, current_ap, max_ap, line, column}
+};
