@@ -9,6 +9,10 @@ const initialState: InfoState = {
     allMessages: { // when predeclared, sometimes inner objects are not recognized
     },
     isLoadingBattlefield: true,
+    endInfo: {
+        ended: false,
+        winner: "",
+    },
     current_battlefield: {
         battlefield: [
             ["0", "0", "0", "0", "0", "0"],
@@ -62,6 +66,14 @@ const InfoSlice = createSlice({
         setRound: (state, action) => {
             return {...state, round: action.payload.round}
         },
+        setEndInfo: (state, action: {
+            payload: {
+                ended: boolean,
+                winner: string
+            }
+        }) => {
+            return {...state, endInfo: action.payload}
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -89,6 +101,7 @@ export default InfoSlice.reducer;
 
 export const {
     setRound,
+    setEndInfo,
 } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
@@ -96,3 +109,4 @@ export const selectAllMessages = (state: StoreState) => state.info.allMessages
 export const selectCurrentBattlefield = (state: StoreState) => state.info.current_battlefield
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
 export const selectEntitiesInfo = (state: StoreState) => state.info.current_battlefield.entities_info
+export const selectEndInfo = (state: StoreState) => state.info.endInfo

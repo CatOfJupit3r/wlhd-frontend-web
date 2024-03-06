@@ -37,6 +37,10 @@ export interface InfoState {
     round: number;
     allMessages: GameStateMessages;
     isLoadingBattlefield: boolean;
+    endInfo: {
+        ended: boolean,
+        winner: string
+    }
     current_battlefield: {
         battlefield: string[][],
         game_descriptors: {

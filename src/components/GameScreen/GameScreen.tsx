@@ -21,8 +21,8 @@ import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
 import {
-    fetchAllMessages, fetchBattlefield, fetchTheMessage,
-    selectRound, setRound
+    fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo,
+    selectRound, setEndInfo, setRound
 } from "../../redux/slices/infoSlice";
 import Overlay from "../Overlay/Overlay";
 import {Spinner} from "react-bootstrap";
@@ -42,6 +42,7 @@ const GameScreen = () => {
     const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
     const roundCount = useSelector(selectRound)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
+    const endInfo = useSelector(selectEndInfo)
 
     let retries: number = useMemo(() => 3, [])
 
@@ -86,8 +87,8 @@ const GameScreen = () => {
         })
         socket.on("game_started", () => {
             (async () => {
-                dispatch(fetchBattlefield(gameId))
-                dispatch(fetchAllMessages(gameId))
+                await dispatch(fetchBattlefield(gameId))
+                await dispatch(fetchAllMessages(gameId))
             })().finally(() => {
                 dispatch(setActive({isActive: true}))
             })
@@ -105,8 +106,10 @@ const GameScreen = () => {
                     code: data.payload.code
             }))
         });
-        socket.on("game_finished", (_: any) => {
+        socket.on("game_finished", (data: any) => {
+            dispatch(setEndInfo({ended: true, winner: data.payload.result}))
             dispatch(setActive({isActive: false}))
+            socket.disconnect()
         });
         socket.on("error", (data: any) => {
             console.error("Error occurred during handling of socket: ", data)
@@ -127,53 +130,67 @@ const GameScreen = () => {
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            // socketEmitter("take_action", submittedInput)
+            socketEmitter("take_action", submittedInput)
             dispatch(setReadyToSubmit({flag: false}))
             dispatch(resetTurn())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
-    return (
-            isActive
-            ?
-            <>
-                <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
-                {
-                    isTurn && !isLoadingActions && activeEntityInfo ?
-                    <h1>
-                        {t("local:its_your_turn.its_your_turn", activeEntityInfo)}
-                    </h1>
-                    :
-                    <h1>
-                        {t("local:game.not_your_turn")}
-                    </h1>
-                }
-                <div id={"game-controller"} className={styles.gameControls}>
-                    <div id={"battle-info"} className={styles.battleInfo}>
-                        <Battlefield />
-                        <GameStateFeed />
-                    </div>
-                    {isTurn ?
-                        isLoadingActions ?
-                            <h1>{t("local:game.pending.loading_actions")}</h1>
-                            :
-                            <>
-                                <h1>
-                                    {t("local:game.control_info", activeEntityInfo)}
-                                </h1>
-                                <ActionInput/>
-                            </>
-                        :
-                       null
-                    }
+    const ActiveScreen = useCallback(() => {
+        return <>
+            <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
+            {
+                isTurn && !isLoadingActions && activeEntityInfo ?
+                <h1>
+                    {t("local:its_your_turn.its_your_turn", activeEntityInfo)}
+                </h1>
+                :
+                <h1>
+                    {t("local:game.not_your_turn")}
+                </h1>
+            }
+            <div id={"game-controller"} className={styles.gameControls}>
+                <div id={"battle-info"} className={styles.battleInfo}>
+                    <Battlefield />
+                    <GameStateFeed />
                 </div>
-            </>
-            :
-            <Overlay>
-                <h1>{t("local:game.pending.not_started")}</h1>
-                <Spinner animation="grow" role="status"/>
+                {isTurn ?
+                    isLoadingActions ?
+                        <h1>{t("local:game.pending.loading_actions")}</h1>
+                        :
+                        <>
+                            <h1>
+                                {t("local:game.control_info", activeEntityInfo)}
+                            </h1>
+                            <ActionInput/>
+                        </>
+                    :
+                   null
+                }
+            </div>
+        </>
+    }, [roundCount, isTurn, isLoadingActions, activeEntityInfo, t])
+
+    return (
+        endInfo && endInfo.ended // if the game has ended, we show the end screen
+            ?
+            <Overlay row={false}>
+                <h1>{t("local:game.end.title")}</h1>
+                <h1>{t("local:game.end.result", {result: endInfo.winner})}</h1>
+                <button onClick={() => {
+                    navigate("..")
+                }}>{t("local:game.end.exit")}</button>
             </Overlay>
+            : // if the game has not ended, we show the game screen
+            isActive // if the game has started, we show the game screen
+                ?
+                ActiveScreen() // if the game has started, we show the game screen
+                : // if the game has not started, we show the loading screen
+                <Overlay>
+                    <h1>{t("local:game.pending.not_started")}</h1>
+                    <Spinner animation="grow" role="status"/>
+                </Overlay>
     )
-};
+}
 
 export default GameScreen;

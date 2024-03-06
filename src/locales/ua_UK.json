@@ -60,6 +60,11 @@
             "loading_battlefield": "Завантаження поля бою...",
             "loading_actions": "Завантаження дій...",
             "loading_battlefeed": "Завантаження журналу бою..."
+        },
+        "end": {
+            "title": "Гра закінчилася!",
+            "result": "Результат: {{result}}",
+            "exit": "Вийти"
         }
     }
 }
