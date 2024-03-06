@@ -45,12 +45,15 @@ const GameRoomPage = () => {
                         })
                         .catch((e) => console.error(e))
                 }
-                return [i18n.language, "ua-UK"].map((language) => addTranslations(language))
+                return [i18n.language, "ua-UK"].map((language) => {
+                    addTranslations(language)
+                        .then(() => setLoadingTranslations(false)) // ONLY LET THE USER SEE THE GAME WHEN ALL TRANSLATIONS ARE LOADED
+                    return null
+                })
             })
         } catch (e) {
             console.error(e)
         }
-        setLoadingTranslations(false)
     }, [i18n]);
 
     return (

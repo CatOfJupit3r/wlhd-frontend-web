@@ -8,6 +8,10 @@ export const generateAssetPath = (dlc: string, descriptor: string) => {
 };
 
 export const splitDescriptor = (full_descriptor: string): [string, string] => {
+    if (!full_descriptor) {
+        console.log("Descriptor is undefined")
+        return ["builtins", "invalid"]
+    }
     if (!full_descriptor.includes("::")) {
         // If the descriptor does not have specified a dlc, we assume it is a builtins asset
         return ["builtins", full_descriptor]

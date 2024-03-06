@@ -22,7 +22,7 @@ import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
-import {selectIsLoadingBattlefield, selectRound} from "../../redux/slices/infoSlice";
+import {addMessage, selectIsLoadingBattlefield, selectRound} from "../../redux/slices/infoSlice";
 
 const GameScreen = () => {
     const dispatch = useDispatch()

@@ -8,6 +8,7 @@ import { Tooltip } from 'react-tooltip'
 import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../redux/slices/infoSlice";
+import useLocalization from "../../hooks/useLocalization";
 
 
 const TileEntity = (props: {
@@ -20,6 +21,7 @@ const TileEntity = (props: {
     }
 }) => {
     const dispatch = useDispatch()
+    const localize = useLocalization()
     const {t} = useTranslation()
 
     const {
@@ -85,24 +87,27 @@ const TileEntity = (props: {
         }
     }, [chosenSquare, activeSquares, isSquareChoice, id, squareShouldBeInteractable])
 
-    const generatePlaceholder = (key: string) => {
-        return <Placeholder as="p" animation="glow" style={{
+    const generatePlaceholder = (key: string, glow: boolean = true) => {
+        return <Placeholder as="p" animation={glow ? "glow" : undefined} style={{
             marginBottom: key === t("game:components:tooltip:status_effects") ? "0" : "7px"
         }} key={key}>
             <Placeholder bg="light"> {t(key)} </Placeholder>
         </Placeholder>
     }
 
-    const generateTooltipContent = () => { // TODO: TEST
-        const entity_info = entities_info[id]
-        if (entity_info === undefined) {
+    const generateTooltipContent = () => {
+        const entity_info = entities_info ? entities_info[id] : undefined
+        if (!entities_info || !entity_info) {
             return [
                 t("game:components:tooltip:creature_and_line"),
                 t("game:components:tooltip:health_max_health"),
                 t("game:components:tooltip:action_points"),
                 t("game:components:tooltip:armor"),
                 t("game:components:tooltip:status_effects")
-            ].map((key) => generatePlaceholder(key))
+            ].map((key) => <>
+                {generatePlaceholder(key, false)}
+                <Placeholder as="br" animation="glow"/>
+            </>)
         }
         const {
             name,
@@ -117,11 +122,14 @@ const TileEntity = (props: {
             status_effects
         } = entity_info
         return [
-            t("game:components:tooltip:creature_and_line", {0: name, 1: line, 2: column}),
-            t("game:components:tooltip:health_max_health", {0: current_health, 1: max_health}),
-            t("game:components:tooltip:action_points", {0: current_action_points, 1: max_action_points}),
-            t("game:components:tooltip:armor", {0: current_armor, 1: base_armor}),
-            t("game:components:tooltip:status_effects", {0: status_effects.map(([name, duration]) => `${name} (${duration})`).join(", ")})
+            localize(["local:game.components.tooltip.creature_and_line", [name], line, column]),
+            localize(["local:game.components.tooltip.health_max_health", current_health, max_health]),
+            localize(["local:game.components.tooltip.action_points", current_action_points, max_action_points]),
+            localize(["local:game.components.tooltip.armor", current_armor, base_armor]),
+            status_effects && status_effects.length > 0 ?
+                localize(["local:game.components.tooltip.status_effects", status_effects.map(([name, duration]) => `${name} (${duration})`).join(", ")])
+                :
+                localize(["local:game.components.tooltip.status_effects", ["local:game.components.tooltip.no_status_effects"]])
         ].map((key) => <p key={key}>{key}</p>)
     }
 

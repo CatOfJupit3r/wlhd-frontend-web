@@ -36,7 +36,8 @@
                 "health_max_health": "Здоров'я: {0}/{1}",
                 "action_points": "Очки дії: {0}/{1}",
                 "armor": "Броня: {0}/{1}",
-                "status_effects": "Статус ефекти: {0}"
+                "status_effects": "Статус ефекти: {0}",
+                "no_status_effects": "Немає статус ефектів"
             }
         },
         "its_your_turn": "Твій хід!",

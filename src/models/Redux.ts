@@ -51,7 +51,7 @@ export interface InfoState {
         },
         entities_info: {
             [key: string]: EntityInfo
-        }
+        } | undefined
     }
 }
 

@@ -3,18 +3,27 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {GET_BATTLEFIELD} from "../../config/endpoints";
 
 
+
 const initialState: InfoState = {
     round: 0,
-    allMessages: {},
+    allMessages: { // when predeclared, sometimes inner objects are not recognized
+    },
     isLoadingBattlefield: false,
     current_battlefield: {
-        battlefield: Array(6).fill(0).map(() => Array(6).fill("0")),
+        battlefield: [
+            ["0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0"],
+            ["0", "1", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0"],
+            ["0", "0", "0", "0", "0", "0"]
+        ],
         game_descriptors: {
             columns: ["builtins::one", "builtins::two", "builtins::three", "builtins::four", "builtins::five", "builtins::six"],
             lines: ["builtins::safe_line", "builtins::ranged_line", "builtins::melee_line", "builtins::melee_line", "builtins::safe_line", "builtins::safe_line"],
             connectors: "builtins::connector",
             separators: "builtins::separator",
-            field_components: {"0": "builtins::tile"}
+            field_components: { "0": "builtins::tile" }
         },
         entities_info: {}
     }
@@ -42,7 +51,10 @@ const InfoSlice = createSlice({
         },
         setBattlefield: (state, action) => {
             return {...state, current_battlefield: action.payload}
-        } // USE ONLY FOR TESTING
+        }, // USE ONLY FOR TESTING
+        setIsLoadingBattlefield: (state, action) => {
+            return {...state, isLoadingBattlefield: action.payload}
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -64,7 +76,8 @@ export default InfoSlice.reducer;
 export const {
     setRound,
     addMessage,
-    setBattlefield
+    setBattlefield,
+    setIsLoadingBattlefield
 } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
