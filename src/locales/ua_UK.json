@@ -5,6 +5,7 @@
     "save": "Зберегти",
     "home_page": "Вітаю на головній сторінці",
     "exit": "Вийти",
+    "loading": "Завантаження...",
     "index": {
         "title": "Ласкаво просимо до Валенхольда",
         "subtitle": "міста живих легенд і розбитих надій!",
@@ -40,8 +41,9 @@
                 "no_status_effects": "Немає статус ефектів"
             }
         },
+        "not_your_turn": "Не твій хід!",
         "its_your_turn": "Твій хід!",
-        "control_info": "Ти контролюєш: {{creature}} ({{current_ap}}/{{max_ap}}) на клітинці {{line}}/{{column}}",
+        "control_info": "Ти контролюєш: {{entity_name}} ({{current_ap}}/{{max_ap}}) на клітинці {{line}}/{{column}}",
         "round_n": "Раунд {{round}}",
         "error": {
             "no_connection": "Немає зв'язку з сервером",

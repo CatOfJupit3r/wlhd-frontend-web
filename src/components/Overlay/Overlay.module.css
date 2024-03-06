@@ -1,0 +1,26 @@
+.overlay {
+    position: fixed;
+    box-sizing: border-box;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    font-size: large;
+    padding: 2rem 2rem 4rem;
+    line-height: 1.2;
+    white-space: pre-wrap;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}

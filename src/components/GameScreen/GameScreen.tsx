@@ -7,7 +7,7 @@ import example_actions from "../../data/example_action.json";
 
 import {
     resetTurn,
-    selectChosenAction, selectIsLoadingCurrentActions,
+    selectChosenAction, selectEntityInControlInfo, selectIsLoadingCurrentActions,
     selectIsTurnActive,
     selectReadyToSubmit,
     setIsTurnActive, setReadyToSubmit
@@ -23,6 +23,8 @@ import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
 import {addMessage, selectIsLoadingBattlefield, selectRound} from "../../redux/slices/infoSlice";
+import Overlay from "../Overlay/Overlay";
+import {Spinner} from "react-bootstrap";
 
 const GameScreen = () => {
     const dispatch = useDispatch()
@@ -33,29 +35,14 @@ const GameScreen = () => {
     const isActive = useSelector(selectIsActive)
     const isTurn = useSelector(selectIsTurnActive)
     const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
-    dispatch(setActive({isActive: true})) // dev
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
     const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
     const roundCount = useSelector(selectRound)
-
-    dispatch(setIsTurnActive({flag: true})) // dev
+    const activeEntityInfo = useSelector(selectEntityInControlInfo)
 
     let retries: number = useMemo(() => 3, [])
-
-    // const [currentBattlefield, setCurrentBattlefield] = useState({
-    //     battlefield: (() => {
-    //         return Array(6).fill(0).map(() => Array(6).fill("0"));
-    //     })(),
-    //     game_descriptors: {
-    //         columns: ["builtins::one", "builtins::two", "builtins::three", "builtins::four", "builtins::five", "builtins::six"],
-    //         lines: ["builtins::safe", "builtins::ranged", "builtins::melee", "builtins::melee", "builtins::safe", "builtins::safe"],
-    //         connectors: "builtins::connector",
-    //         separators: "builtins::separator",
-    //         field_components: {"0": "builtins::tile"}
-    //     }
-    // } as BattlefieldInterface)
 
     /*  // dev
 
@@ -164,29 +151,42 @@ const GameScreen = () => {
             isActive
             ?
             <>
+                <h1 className={styles.roundHeader}>{t("local:game:round_n", {round: roundCount})}</h1>
                 {
-                    isLoadingBattlefield ?
-                        <h1>Loading battlefield...</h1>
-                        :
-                        <h1>{t("local:game:round_n", {round: roundCount})}</h1>
+                    isTurn && !isLoadingActions && activeEntityInfo ?
+                    <h1>
+                        {t("local:its_your_turn", activeEntityInfo)}
+                    </h1>
+                    :
+                    <h1>
+                        {t("local:game.not_your_turn")}
+                    </h1>
                 }
                 <div id={"game-controller"} className={styles.gameControls}>
                     <div id={"battle-info"} className={styles.battleInfo}>
-                        <Battlefield/>
+                        <Battlefield />
                         <GameStateFeed />
                     </div>
                     {isTurn ?
                         isLoadingActions ?
                             <h1>Loading actions...</h1>
                             :
-                            <ActionInput/>
+                            <>
+                                <h1>
+                                    {t("local:control_info", activeEntityInfo)}
+                                </h1>
+                                <ActionInput/>
+                            </>
                         :
                         <h1>Not your turn!</h1>
                     }
                 </div>
             </>
             :
-            <h1>{t("local:game.pending.not_started")}</h1>
+            <Overlay>
+                <h1>{t("local:game.pending.not_started")}</h1>
+                <Spinner animation="grow" role="status"/>
+            </Overlay>
     )
 };
 

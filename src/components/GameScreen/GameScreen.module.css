@@ -11,3 +11,9 @@
     display: block;
     margin-top: 1rem;
 }
+
+.roundHeader {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

@@ -5,6 +5,8 @@ import GameScreen from "../components/GameScreen/GameScreen";
 import {useSelector} from "react-redux";
 import {selectGameId, selectName} from "../redux/slices/gameSlice";
 import {useNavigate} from "react-router-dom";
+import Overlay from "../components/Overlay/Overlay";
+import {Spinner} from "react-bootstrap";
 
 
 /*
@@ -23,7 +25,7 @@ After this, socket will listen for commands from server:
 
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
-    const {i18n} = useTranslation()
+    const {t, i18n} = useTranslation()
     const navigate = useNavigate()
     const nickName =  useSelector(selectName)
     const gameId = useSelector(selectGameId)
@@ -60,7 +62,10 @@ const GameRoomPage = () => {
         <>
             {
                 loadingTranslations ?
-                    <h1>Loading...</h1>
+                    <Overlay>
+                        <h1>{t("local:loading")}</h1>
+                        <Spinner animation="border" role="status" />
+                    </Overlay>
                     :
                     <GameScreen />
             }
