@@ -16,10 +16,13 @@ const initialState: TurnState = {
 }
 
 
-const fetchActions = createAsyncThunk(
+export const fetchActions = createAsyncThunk(
     'turn/fetchActions',
-    async (game_id: string) => {
-        const response = await fetch(GET_ACTIONS(game_id))
+    async ({
+        game_id,
+        entity_id
+           }: {game_id: string, entity_id: string}) => {
+        const response = await fetch(GET_ACTIONS(game_id, entity_id))
         return response.json()
     }
 )

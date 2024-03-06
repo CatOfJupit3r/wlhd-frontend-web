@@ -1,6 +1,6 @@
 import {InfoState, StoreState} from "../../models/Redux";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {GET_BATTLEFIELD} from "../../config/endpoints";
+import {GET_ALL_MESSAGES, GET_BATTLEFIELD, GET_THE_MESSAGE} from "../../config/endpoints";
 
 
 
@@ -30,10 +30,26 @@ const initialState: InfoState = {
 }
 
 
-const fetchBattlefield = createAsyncThunk(
+export const fetchBattlefield = createAsyncThunk(
     'info/fetchBattlefield',
     async (game_id: string) => {
         const response = await fetch(GET_BATTLEFIELD(game_id))
+        return response.json()
+    }
+)
+
+export const fetchAllMessages = createAsyncThunk(
+    'info/fetchMessages',
+    async (game_id: string) => {
+        const response = await fetch(GET_ALL_MESSAGES(game_id))
+        return response.json()
+    }
+)
+
+export const fetchTheMessage = createAsyncThunk(
+    'info/fetchAMessage',
+    async ({game_id, memory_cell}: {game_id: string, memory_cell: string}) => {
+        const response = await fetch(GET_THE_MESSAGE(game_id, memory_cell))
         return response.json()
     }
 )
@@ -46,15 +62,6 @@ const InfoSlice = createSlice({
         setRound: (state, action) => {
             return {...state, round: action.payload.round}
         },
-        addMessage: (state, action) => {
-            return {...state, allMessages: {...state.allMessages, ...action.payload.message}}
-        },
-        setBattlefield: (state, action) => {
-            return {...state, current_battlefield: action.payload}
-        }, // USE ONLY FOR TESTING
-        setIsLoadingBattlefield: (state, action) => {
-            return {...state, isLoadingBattlefield: action.payload}
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -66,6 +73,13 @@ const InfoSlice = createSlice({
         builder.addCase(fetchBattlefield.rejected, (state) => {
             return {...state, isLoadingBattlefield: false}
         })
+        builder.addCase(fetchAllMessages.fulfilled, (state, action) => {
+            return {...state, allMessages: action.payload}
+        })
+        builder.addCase(fetchTheMessage.fulfilled, (state, action) => {
+            return {...state, allMessages: {...state.allMessages, ...action.payload}}
+        })
+
     }
 })
 
@@ -75,9 +89,6 @@ export default InfoSlice.reducer;
 
 export const {
     setRound,
-    addMessage,
-    setBattlefield,
-    setIsLoadingBattlefield
 } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round

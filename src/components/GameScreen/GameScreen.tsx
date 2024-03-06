@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
-import example_actions from "../../data/example_action.json";
 
 import {
+    fetchActions,
     resetTurn,
     selectChosenAction, selectEntityInControlInfo, selectIsLoadingCurrentActions,
     selectIsTurnActive,
@@ -16,25 +16,26 @@ import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
 import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
-import {getActions, getAllMessages, getGameField, getMemoryCell} from "../../services/apiServices";
 import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../models/GameCommands";
-import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
-import {addMessage, selectIsLoadingBattlefield, selectRound} from "../../redux/slices/infoSlice";
+import {
+    fetchAllMessages, fetchBattlefield, fetchTheMessage,
+    selectRound, setRound
+} from "../../redux/slices/infoSlice";
 import Overlay from "../Overlay/Overlay";
 import {Spinner} from "react-bootstrap";
+import {AppDispatch} from "../../redux/store";
 
 const GameScreen = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate()
     const {t} = useTranslation()
 
     const username = useSelector(selectName)
     const isActive = useSelector(selectIsActive)
     const isTurn = useSelector(selectIsTurnActive)
-    const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
@@ -43,8 +44,6 @@ const GameScreen = () => {
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
 
     let retries: number = useMemo(() => 3, [])
-
-    /*  // dev
 
     const socketRef = useRef<Socket | null>(null);
 
@@ -77,40 +76,28 @@ const GameScreen = () => {
             console.log("Connected to game server");
         });
         socket.on("take_action", (data: TakeActionCommand) => {
-            setIsLoadingActions(true)
-            getActions(gameId, data.payload.entity_id).then((actions) => {
-                setCurrentActions(actions)
-            }).finally(() => {
-                setIsLoadingActions(false)
-                dispatch(setIsTurnActive({flag: true}))
-            })
+            dispatch(fetchActions({
+                game_id: gameId,
+                entity_id: data.payload.entity_id,
+            }))
+                .finally(() => {
+                    dispatch(setIsTurnActive({flag: true}))
+                })
         })
         socket.on("game_started", () => {
-            dispatch(setActive({isActive: true}))
-            setIsLoadingBattlefield(true)
-            getAllMessages(gameId).then((messages) => {
-                setAllMessages(messages)
-            })
-            getGameField(gameId).then((gameField) => {
-                setCurrentBattlefield(gameField)
-            }).finally(() => {
-                setIsLoadingBattlefield(false)
+            (async () => {
+                dispatch(fetchBattlefield(gameId))
+                dispatch(fetchAllMessages(gameId))
+            })().finally(() => {
+                dispatch(setActive({isActive: true}))
             })
         });
         socket.on("round_update", (data: GameCommand) => {
-            setRoundCount(data.payload?.roundCount ? data.payload.roundCount : countRound())
+            dispatch(setRound({round: data.payload?.round ? data.payload.round : 1}))
         });
         socket.on("state_updated", (data: StateUpdatedCommand) => {
-            getMemoryCell(gameId, data.payload.memory_cell).then((memoryCell) => {
-                addMessage(memoryCell)
-                console.log(allMessages)
-            })
-            setIsLoadingBattlefield(true)
-            getGameField(gameId).then((gameField) => {
-                setCurrentBattlefield(gameField)
-            }).finally(() => {
-                setIsLoadingBattlefield(false)
-            })
+            dispatch(fetchTheMessage({game_id: gameId, memory_cell: data.payload.memory_cell}))
+            dispatch(fetchBattlefield(gameId))
         });
         socket.on("action_result", (data: ActionResultCommand) => {
             dispatch(setNotify({
@@ -135,17 +122,16 @@ const GameScreen = () => {
                 navigate("..")
             }
         })
-    }, [username, gameId, dispatch, addMessage, countRound, allMessages, t, navigate, retries]);
+    }, [username, gameId, dispatch, t, navigate, retries]);
 
-     */
+
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
             // socketEmitter("take_action", submittedInput)
             dispatch(setReadyToSubmit({flag: false}))
             dispatch(resetTurn())
         }
-    }, [inputReadyToSubmit, submittedInput, dispatch]); // dev
-    // }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
+    }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
     return (
             isActive

@@ -5,7 +5,7 @@ import gameReducer from './slices/gameSlice'
 import infoReducer from './slices/infoSlice'
 
 
-export default configureStore({
+export const store = configureStore({
     reducer: {
         notify: notifyReducer,
         turn: turnReducer,
@@ -13,3 +13,5 @@ export default configureStore({
         info: infoReducer
     }
 })
+
+export type AppDispatch = typeof store.dispatch

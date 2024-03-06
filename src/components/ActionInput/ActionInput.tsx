@@ -40,7 +40,6 @@ const ActionInput = () => {
     const isSquareChoice = useSelector(selectSquareChoice)
     const chosenSquare = useSelector(selectChosenSquare)
     const displayedActions = useSelector(selectDisplayedActions)
-    // const chosenActionStore = useSelector(selectChosenActionStore)
 
     const initialActionLevel = useSelector(selectCurrentActions)
     const [currentActionLevel, setCurrentActionLevel] = useState(initialActionLevel.actions)
