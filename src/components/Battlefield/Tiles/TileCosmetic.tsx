@@ -1,5 +1,5 @@
-import {INVALID_ASSET_PATH} from "../../config/configs";
-import {generateAssetPath, splitDescriptor} from "./utils";
+import {INVALID_ASSET_PATH} from "../../../config/configs";
+import {generateAssetPath, splitDescriptor} from "../utils";
 import styles from "./Tiles.module.css";
 
 const TileCosmetic = (props: {

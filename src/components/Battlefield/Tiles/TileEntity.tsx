@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {INVALID_ASSET_PATH} from "../../config/configs";
-import {generateAssetPath, splitDescriptor} from "./utils";
+import {INVALID_ASSET_PATH} from "../../../config/configs";
+import {generateAssetPath, splitDescriptor} from "../utils";
 import {useDispatch, useSelector} from "react-redux";
-import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../redux/slices/turnSlice";
+import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../../redux/slices/turnSlice";
 import styles from "./Tiles.module.css";
 import { Tooltip } from 'react-tooltip'
 import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
-import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../redux/slices/infoSlice";
-import useLocalization from "../../hooks/useLocalization";
+import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../../redux/slices/infoSlice";
+import useLocalization from "../../../hooks/useLocalization";
 
 
 const TileEntity = (props: {

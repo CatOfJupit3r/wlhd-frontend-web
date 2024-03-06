@@ -1,7 +1,7 @@
 import React from "react";
 import {Battlefield as BattlefieldInterface, ParsedBattlefield} from "../../models/Battlefield";
-import TileCosmetic from "./TileCosmetic";
-import TileEntity from "./TileEntity";
+import TileCosmetic from "./Tiles/TileCosmetic";
+import TileEntity from "./Tiles/TileEntity";
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
     return `assets/${dlc}/${descriptor}.png`;
