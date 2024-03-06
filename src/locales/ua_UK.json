@@ -32,17 +32,17 @@
             "your_actions": "Ваші дії:",
             "you_chose": "Ви обрали:",
             "tooltip": {
-                "creature_and_line": "Створіння {0} ({1}/{2})",
-                "health_max_health": "Здоров'я: {0}/{1}",
-                "action_points": "Очки дії: {0}/{1}",
-                "armor": "Броня: {0}/{1}",
-                "status_effects": "Статус ефекти: {0}",
+                "creature_and_line": "Створіння {{name}} ({{line}}/{{column}})",
+                "health_max_health": "Здоров'я: {{current_health}}/{{max_health}}",
+                "action_points": "Очки дії: {{current_action_points}}/{{max_action_points}}",
+                "armor": "Броня: {{current_armor}}/{{base_armor}}",
+                "status_effects": "Статус ефекти: {{status_effects}}",
                 "no_status_effects": "Немає статус ефектів"
             }
         },
         "its_your_turn": "Твій хід!",
-        "control_info": "Ти контролюєш: {creature} ({current_ap}/{max_ap}) на клітинці {line}/{column}",
-        "round_n": "Раунд {round}",
+        "control_info": "Ти контролюєш: {{creature}} ({{current_ap}}/{{max_ap}}) на клітинці {{line}}/{{column}}",
+        "round_n": "Раунд {{round}}",
         "error": {
             "no_connection": "Немає зв'язку з сервером",
             "connection_lost": "З'єднання з сервером втрачено"

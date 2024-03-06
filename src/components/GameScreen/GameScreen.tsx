@@ -168,7 +168,7 @@ const GameScreen = () => {
                     isLoadingBattlefield ?
                         <h1>Loading battlefield...</h1>
                         :
-                        <h1>Round {roundCount}</h1>
+                        <h1>{t("local:game:round_n", {round: roundCount})}</h1>
                 }
                 <div id={"game-controller"} className={styles.gameControls}>
                     <div id={"battle-info"} className={styles.battleInfo}>
