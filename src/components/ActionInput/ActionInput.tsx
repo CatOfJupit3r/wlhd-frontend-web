@@ -15,7 +15,7 @@ import {
     resetInteractableSquares,
     setIsTurnActive,
     setDisplayedActions, selectDisplayedActions,
-    setChosenSquare, setReadyToSubmit, selectCurrentActions
+    setChosenSquare, setReadyToSubmit, selectCurrentActions, selectChosenAction
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
@@ -48,6 +48,7 @@ const ActionInput = () => {
     const [chosenAction, setChosenAction] = useState(undefined as number | undefined)
     const [currentPage, setCurrentPage] = useState(1);
     const [cardsPerPage, ] = useState(9);
+    const chosenActionStore = useSelector(selectChosenAction)
 
     const incrementDepth = useCallback(() => {
         setDepth(depth + 1)
@@ -163,7 +164,7 @@ const ActionInput = () => {
                 }
                 <RxArrowTopRight
                     onClick={() => {
-                        if (chosenAction === undefined) {
+                        if (chosenActionStore === undefined || chosenActionStore?.action === "") {
                             dispatch(setChosenActionStore({
                                 key: "action",
                                 action_value: "skip"

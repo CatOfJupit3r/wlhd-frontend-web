@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {TurnState, StoreState} from "../../models/Redux";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {GET_ACTIONS} from "../../config/endpoints";
+import {cmdToTranslation} from "../../utils/cmdConverters";
 
 const initialState: TurnState = {
     squareChoice: false,
@@ -117,6 +118,7 @@ const turnSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
             state.currentActions = action.payload
+            state.currentActions.entity_name = cmdToTranslation(action.payload.entity_name)
             setIsLoadingActions({flag: false})
         })
         builder.addCase(fetchActions.rejected, (state, action) => {

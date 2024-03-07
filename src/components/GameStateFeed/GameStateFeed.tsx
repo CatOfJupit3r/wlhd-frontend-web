@@ -35,6 +35,7 @@ const GameStateFeed = () => {
                 let newPage = ""
                 for (let address of memoryCells) {
                     const message = messages[address]
+                    console.log(message)
                     for (let cmd of message) {
                         newPage += localize(cmd) + "\n"
                     }

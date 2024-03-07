@@ -9,6 +9,7 @@ import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../../redux/slices/infoSlice";
 import useLocalization from "../../../hooks/useLocalization";
+import {cmdToTranslation} from "../../../utils/cmdConverters";
 
 
 const TileEntity = (props: {
@@ -126,7 +127,7 @@ const TileEntity = (props: {
             status_effects
         } = entity_info
         return [
-            t("local:game.components.tooltip.creature_and_line", {name, line, column}),
+            t("local:game.components.tooltip.creature_and_line", {name: t(cmdToTranslation(name)), line, column}),
             t("local:game.components.tooltip.health_max_health", {current_health, max_health}),
             t("local:game.components.tooltip.action_points", {current_action_points, max_action_points}),
             t("local:game.components.tooltip.armor", {current_armor, base_armor}),
@@ -161,6 +162,7 @@ const TileEntity = (props: {
                     opacity={0.95}
                     variant={"dark"}
                     delayShow={isSquareChoice ? 1500 : 500}
+                    delayHide={0}
                 >
                         {
                             isLoadingBattlefield ?

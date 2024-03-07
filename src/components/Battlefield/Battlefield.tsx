@@ -12,14 +12,14 @@ const Battlefield = () => {
 
     return (
         <div className={styles.battlefield} id={"battlefield-div"}>
-            {!battlefield ?
-                <Blurhash hash={BATTLEFIELD_BLUR_HASH} width={64 * 8} height={64 * 9} style={{
-                    borderRadius: "10px",
-                    overflow: "hidden",
-                }}/>
-                :
-                parsedToJSX(parseBattlefield(battlefield))
-            }
+            {/*{!battlefield ?*/}
+            {/*    <Blurhash hash={BATTLEFIELD_BLUR_HASH} width={64 * 8} height={64 * 9} style={{*/}
+            {/*        borderRadius: "10px",*/}
+            {/*        overflow: "hidden",*/}
+            {/*    }}/>*/}
+            {/*    :*/}
+            {parsedToJSX(parseBattlefield(battlefield))}
+            {/*}*/}
         </div>
     );
 };

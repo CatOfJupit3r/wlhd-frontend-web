@@ -13,7 +13,7 @@ const Header: React.FC = () => {
             {/*    height: "400px",*/}
             {/*    width: "100%"*/}
             {/*}}/>*/}
-            <nav>
+            <nav> {/* TODO: when navigating to other routes outside of game, then previous state is saved */}
                 <Link to="." relative={"route"} style={{marginRight: "10px"}}>Home</Link>
                 <Link to="about" relative={"path"}>About</Link>
             </nav>

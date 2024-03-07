@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
@@ -70,12 +70,12 @@ const GameScreen = () => {
         const socket = io(REACT_APP_BACKEND_URL, {
             reconnection: false,
             query: {
-                game_id: "555",
+                game_id: gameId,
                 user_token: username
             }
         });
         socketRef.current = socket
-        socket.on("connect_error", (error: any) => {
+        socket.on("connect_error", () => {
             dispatch(setNotify({message: t("local:error"), code: 500}))
             setTimeout(() => {
                 navigate('..');
@@ -112,11 +112,15 @@ const GameScreen = () => {
             dispatch(fetchTheMessage({game_id: gameId, memory_cell: data.payload.memory_cell}))
             dispatch(fetchBattlefield(gameId))
         });
-        socket.on("action_result", (data: ActionResultCommand) => {
-            dispatch(setNotify({
-                message: data.payload.code === 200 ? t("local:success") : t("local:error"),
-                    code: data.payload.code
-            }))
+        socket.on("action_result", (data: any) => {
+            try {
+                dispatch(setNotify({
+                    message: data.code === 200 ? t("local:success") : t("local:error"),
+                        code: data.code
+                }))
+            } catch (e) {
+                console.error("Error occurred during handling of socket: ", e)
+            }
         });
         socket.on("game_finished", (data: any) => {
             dispatch(setEndInfo({ended: true, winner: data.payload.result}))
@@ -156,7 +160,7 @@ const GameScreen = () => {
             {
                 isTurn && !isLoadingActions && activeEntityInfo ?
                 <h1>
-                    {t("local:its_your_turn.its_your_turn", activeEntityInfo)}
+                    {t("local:game.its_your_turn", activeEntityInfo)}
                 </h1>
                 :
                 <h1>
@@ -174,7 +178,12 @@ const GameScreen = () => {
                         :
                         <>
                             <h1>
-                                {t("local:game.control_info", activeEntityInfo)}
+                                {t("local:game.control_info", (() => {
+                                    const result = activeEntityInfo
+                                    if (result?.entity_name)
+                                        result.entity_name = t(result.entity_name)
+                                    return result
+                                })())}
                             </h1>
                             <ActionInput/>
                         </>
