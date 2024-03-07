@@ -3,10 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectGameId, selectName, setGameId as setGameIDStore, setName as setNicknameStore} from "../../redux/slices/gameSlice";
 import {useTranslation} from "react-i18next";
 import styles from './UserInfoEnter.module.css';
+import {useNavigate} from "react-router-dom";
 
 const UserInfoEnter: React.FC = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const navigate = useNavigate();
+
     const [gameID, setGameID] = useState(useSelector(selectGameId))
     const [nickname, setNickname] = useState(useSelector(selectName));
 
@@ -22,15 +25,25 @@ const UserInfoEnter: React.FC = () => {
         setGameID(e.target.value);
     }, []);
 
+    const handleButton = useCallback(() => {
+        if (inputValid(nickname) && inputValid(gameID)) {
+            navigate("../game");
+        }
+    }, [nickname, gameID, dispatch, inputValid, navigate]);
+
     useEffect(() => {
         if (inputValid(nickname)) {
-            dispatch(setNicknameStore(nickname));
+            dispatch(setNicknameStore({
+                user_name: nickname
+            }));
         }
     }, [nickname, dispatch, inputValid]);
 
     useEffect(() => {
         if (inputValid(gameID)) {
-            dispatch(setGameIDStore(gameID));
+            dispatch(setGameIDStore({
+                game_id: gameID
+            }));
         }
     }, [gameID, dispatch, inputValid]);
 
@@ -50,7 +63,10 @@ const UserInfoEnter: React.FC = () => {
                 placeholder={t("local:index.join.gi-input")}
                 className={styles.inputField}
             />
-            <button disabled={!(nickname && nickname.length > 3) || !(gameID && gameID.length > 3)}>
+            <button
+                disabled={!(nickname && nickname.length > 3) || !(gameID && gameID.length > 3)}
+                onClick={handleButton}
+            >
                 {t("local:index.join.submit")}
             </button>
         </div>

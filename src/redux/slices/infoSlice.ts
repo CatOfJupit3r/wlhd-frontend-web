@@ -37,8 +37,20 @@ const initialState: InfoState = {
 export const fetchBattlefield = createAsyncThunk(
     'info/fetchBattlefield',
     async (game_id: string) => {
-        const response = await fetch(GET_BATTLEFIELD(game_id))
-        return response.json()
+        await fetch(GET_BATTLEFIELD(game_id))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                return data
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation: ', error);
+            });
     }
 )
 
@@ -53,8 +65,20 @@ export const fetchAllMessages = createAsyncThunk(
 export const fetchTheMessage = createAsyncThunk(
     'info/fetchAMessage',
     async ({game_id, memory_cell}: {game_id: string, memory_cell: string}) => {
-        const response = await fetch(GET_THE_MESSAGE(game_id, memory_cell))
-        return response.json()
+        await fetch(GET_THE_MESSAGE(game_id, memory_cell))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                return data
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation: ', error);
+            });
     }
 )
 
@@ -77,7 +101,7 @@ const InfoSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
-            return {...state, current_battlefield: action.payload, isLoadingBattlefield: false}
+            return {...state, current_battlefield: action.payload as any, isLoadingBattlefield: false as any}
         })
         builder.addCase(fetchBattlefield.pending, (state) => {
             return {...state, isLoadingBattlefield: true}
@@ -89,7 +113,7 @@ const InfoSlice = createSlice({
             return {...state, allMessages: action.payload}
         })
         builder.addCase(fetchTheMessage.fulfilled, (state, action) => {
-            return {...state, allMessages: {...state.allMessages, ...action.payload}}
+            return {...state, allMessages: {...state.allMessages, ...action.payload as any}}
         })
 
     }

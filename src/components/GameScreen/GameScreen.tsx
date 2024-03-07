@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
@@ -59,9 +59,11 @@ const GameScreen = () => {
 
     useEffect(() => {
         if (!username || !gameId) { // If the user is not logged in or the game has not started, we redirect to the main page
-            navigate('..')
+            setTimeout(() => {
+                navigate('..');
+            }, 200);
         }
-        document.title = t("local:game.title", {gameId: gameId}) === "local:game.title" ? "Game" : t("local:game.title", {gameId: gameId})
+        document.title = t("local:game.title", {gameId: gameId}) === t("local:game.title") ? "Game" : t("local:game.title", {gameId: gameId})
         if (socketRef.current) { // If the socket is already connected, we don't need to connect again
             return
         }
@@ -73,8 +75,18 @@ const GameScreen = () => {
             }
         });
         socketRef.current = socket
+        socket.on("connect_error", (error: any) => {
+            dispatch(setNotify({message: t("local:error"), code: 500}))
+            setTimeout(() => {
+                navigate('..');
+            }, 200);
+        })
         socket.on("connect", () => {
             console.log("Connected to game server");
+            (async () => {
+                await dispatch(fetchBattlefield(gameId))
+                await dispatch(fetchAllMessages(gameId))
+            })()
         });
         socket.on("take_action", (data: TakeActionCommand) => {
             dispatch(fetchActions({
@@ -122,7 +134,9 @@ const GameScreen = () => {
                 socket.connect()
             } else {
                 console.error("Could not reconnect to game server")
-                navigate("..")
+                setTimeout(() => {
+                    navigate('..');
+                }, 200);
             }
         })
     }, [username, gameId, dispatch, t, navigate, retries]);

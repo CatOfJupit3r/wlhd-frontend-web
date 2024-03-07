@@ -25,6 +25,9 @@ const GameStateFeed = () => {
 
     useEffect(() => {
         try {
+            if (Object.keys(messages).length === 0) {
+                return
+            }
             const memoryCells = Object.keys(messages).filter(
                 (cell) => !translatedMessages.includes(cell)
             )
