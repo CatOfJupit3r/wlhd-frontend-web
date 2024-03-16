@@ -29,9 +29,10 @@ export interface ActionResultCommand extends GameCommand {
     }
 }
 
-export interface StateUpdatedCommand extends GameCommand {
+export interface NewMessageCommand extends GameCommand {
     payload: {
-        memory_cell: string,
+        message: string,
     }
 }
+
 

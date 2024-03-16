@@ -7,7 +7,7 @@ import { io, Socket } from "socket.io-client";
 import {
     fetchActions,
     resetTurn,
-    selectChosenAction, selectEntityInControlInfo, selectIsLoadingCurrentActions,
+    selectChosenAction, selectCurrentActions, selectEntityInControlInfo, selectIsLoadingCurrentActions,
     selectIsTurnActive,
     selectReadyToSubmit,
     setIsTurnActive, setReadyToSubmit
@@ -16,11 +16,12 @@ import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
 import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
-import {ActionResultCommand, GameCommand, StateUpdatedCommand, TakeActionCommand} from "../../models/GameCommands";
+import {GameCommand, NewMessageCommand, TakeActionCommand} from "../../models/GameCommands";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
 import {
+    fetchAllEntitiesInfo,
     fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo,
     selectRound, setEndInfo, setRound
 } from "../../redux/slices/infoSlice";
@@ -43,6 +44,7 @@ const GameScreen = () => {
     const roundCount = useSelector(selectRound)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
     const endInfo = useSelector(selectEndInfo)
+    const currentAction = useSelector(selectCurrentActions)
 
     let retries: number = useMemo(() => 3, [])
 
@@ -83,24 +85,31 @@ const GameScreen = () => {
         })
         socket.on("connect", () => {
             console.log("Connected to game server");
+            setTimeout(() => {
+                socket.emit("start_combat")
+            }, 200);
             (async () => {
                 await dispatch(fetchBattlefield(gameId))
                 await dispatch(fetchAllMessages(gameId))
             })()
         });
         socket.on("take_action", (data: TakeActionCommand) => {
+            console.log(data)
             dispatch(fetchActions({
                 game_id: gameId,
-                entity_id: data.payload.entity_id,
+                entity_id: (data as any).entity_id,
             }))
                 .finally(() => {
-                    dispatch(setIsTurnActive({flag: true}))
+                    console.log(currentAction)
+                    socket.emit("debug")
+                    // dispatch(setIsTurnActive({flag: true}))
                 })
         })
-        socket.on("game_started", () => {
+        socket.on("battle_started", () => {
             (async () => {
                 await dispatch(fetchBattlefield(gameId))
                 await dispatch(fetchAllMessages(gameId))
+                await dispatch(fetchAllEntitiesInfo(gameId))
             })().finally(() => {
                 dispatch(setActive({isActive: true}))
             })
@@ -108,9 +117,13 @@ const GameScreen = () => {
         socket.on("round_update", (data: GameCommand) => {
             dispatch(setRound({round: data.payload?.round ? data.payload.round : 1}))
         });
-        socket.on("state_updated", (data: StateUpdatedCommand) => {
-            dispatch(fetchTheMessage({game_id: gameId, memory_cell: data.payload.memory_cell}))
+        socket.on("new_message", (data: NewMessageCommand) => {
+            dispatch(fetchTheMessage({game_id: gameId, message: data.payload.message}))
+            dispatch(fetchAllEntitiesInfo(gameId))
+        });
+        socket.on("battlefield_updated", () => {
             dispatch(fetchBattlefield(gameId))
+            dispatch(fetchAllEntitiesInfo(gameId))
         });
         socket.on("action_result", (data: any) => {
             try {
@@ -122,8 +135,9 @@ const GameScreen = () => {
                 console.error("Error occurred during handling of socket: ", e)
             }
         });
-        socket.on("game_finished", (data: any) => {
-            dispatch(setEndInfo({ended: true, winner: data.payload.result}))
+        socket.on("battle_ended", (data: any) => {
+            console.log("Game has ended")
+            dispatch(setEndInfo({ended: true, winner: data.payload.battle_result}))
             dispatch(setActive({isActive: false}))
             socket.disconnect()
         });

@@ -37,10 +37,12 @@ export interface InfoState {
     round: number;
     allMessages: GameStateMessages;
     isLoadingBattlefield: boolean;
+    isLoadingEntitiesInfo: boolean;
+    isLoadingCurrentEntityInfo: boolean;
     endInfo: {
         ended: boolean,
         winner: string
-    }
+    };
     current_battlefield: {
         battlefield: string[][],
         game_descriptors: {
@@ -53,10 +55,10 @@ export interface InfoState {
             separators: string
             connectors: string
         },
-        entities_info: {
-            [key: string]: EntityInfo
-        } | undefined
-    }
+    };
+    entities_info: {
+        [key: string]: EntityInfo
+    } | undefined
 }
 
 export interface StoreState {

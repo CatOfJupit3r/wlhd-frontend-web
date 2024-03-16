@@ -1,6 +1,12 @@
 import {InfoState, StoreState} from "../../models/Redux";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {GET_ALL_MESSAGES, GET_BATTLEFIELD, GET_THE_MESSAGE} from "../../config/endpoints";
+import {
+    GET_ALL_ENTITIES_INFO,
+    GET_ALL_MESSAGES,
+    GET_BATTLEFIELD,
+    GET_ENTITY_INFO,
+    GET_THE_MESSAGE
+} from "../../config/endpoints";
 
 
 const initialState: InfoState = {
@@ -8,6 +14,8 @@ const initialState: InfoState = {
     allMessages: { // when predeclared, sometimes inner objects are not recognized
     },
     isLoadingBattlefield: true,
+    isLoadingEntitiesInfo: true,
+    isLoadingCurrentEntityInfo: true,
     endInfo: {
         ended: false,
         winner: "",
@@ -27,9 +35,9 @@ const initialState: InfoState = {
             connectors: "builtins::connector",
             separators: "builtins::separator",
             field_components: { "0": "builtins::tile" }
-        },
-        entities_info: {}
-    }
+        }
+    },
+    entities_info: {}
 }
 
 
@@ -69,8 +77,44 @@ export const fetchAllMessages = createAsyncThunk(
 
 export const fetchTheMessage = createAsyncThunk(
     'info/fetchAMessage',
-    async ({game_id, memory_cell}: {game_id: string, memory_cell: string}) => {
-        return await fetch(GET_THE_MESSAGE(game_id, memory_cell))
+    async ({game_id, message}: {game_id: string, message: string}) => {
+        return await fetch(GET_THE_MESSAGE(game_id, message))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation: ', error);
+                return {}
+            });
+    }
+)
+
+
+export const fetchCurrentEntityInfo = createAsyncThunk(
+    'info/fetchCurrentEntityInfo',
+    async ({game_id, entity_id}: {game_id: string, entity_id: string}) => {
+        return await fetch(GET_ENTITY_INFO(game_id, entity_id))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation: ', error);
+                return {}
+            });
+    }
+)
+
+
+export const fetchAllEntitiesInfo = createAsyncThunk(
+    'info/fetchAllEntitiesInfo',
+    async (game_id: string) => {
+        return await fetch(GET_ALL_ENTITIES_INFO(game_id))
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -117,7 +161,24 @@ const InfoSlice = createSlice({
         builder.addCase(fetchTheMessage.fulfilled, (state, action) => {
             return {...state, allMessages: {...state.allMessages, ...action.payload as any}}
         })
-
+        builder.addCase(fetchCurrentEntityInfo.fulfilled, (state, action) => {
+            return {...state, entities_info: {...state.entities_info, [action.payload.id]: action.payload}}
+        })
+        builder.addCase(fetchAllEntitiesInfo.fulfilled, (state, action) => {
+            return {...state, entities_info: action.payload, isLoadingEntitiesInfo: false}
+        })
+        builder.addCase(fetchCurrentEntityInfo.pending, (state) => {
+            return {...state, isLoadingCurrentEntityInfo: true}
+        })
+        builder.addCase(fetchAllEntitiesInfo.pending, (state) => {
+            return {...state, isLoadingEntitiesInfo: true}
+        })
+        builder.addCase(fetchCurrentEntityInfo.rejected, (state) => {
+            return {...state, isLoadingCurrentEntityInfo: false}
+        })
+        builder.addCase(fetchAllEntitiesInfo.rejected, (state) => {
+            return {...state, isLoadingEntitiesInfo: false}
+        })
     }
 })
 
@@ -134,5 +195,5 @@ export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
 export const selectCurrentBattlefield = (state: StoreState) => state.info.current_battlefield
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
-export const selectEntitiesInfo = (state: StoreState) => state.info.current_battlefield.entities_info
+export const selectEntitiesInfo = (state: StoreState) => state.info.entities_info
 export const selectEndInfo = (state: StoreState) => state.info.endInfo

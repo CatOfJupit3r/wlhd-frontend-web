@@ -25,3 +25,25 @@ export interface ActionOutput {
     action: string,
     [key: string]: string
 }
+
+
+interface NewAction {
+    id: string,
+    available: boolean,
+    level: string,
+    translation_info: TranslationInfoAction
+    requires: null | {
+        [key: string]: string | NewAction[], //
+    }
+}
+
+
+interface NewActionInput {
+    actions: NewAction[],
+    aliases: {
+        [key: string]: NewAction[]
+    }
+    levels_localization: {
+        [key: string]: string
+    }
+}
