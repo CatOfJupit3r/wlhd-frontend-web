@@ -57,7 +57,7 @@ const TileEntity = (props: {
         }
     }, [id, isSquareChoice])
 
-    const classAliasToName = (alias: string) => {
+    const classAliasToName = useCallback((alias: string) => {
         let result
         switch (alias) {
             case "interactable":
@@ -71,9 +71,9 @@ const TileEntity = (props: {
                 break;
         }
         return result + (className ? ` ${className}` : "")
-    }
+    }, [className, descriptor])
 
-    const handleDoubleClick = () => {
+    const handleDoubleClick = useCallback(() => {
         if (isSquareChoice) {
             dispatch(addHighlightedComponent(id))
             dispatch(
@@ -83,7 +83,7 @@ const TileEntity = (props: {
                 })
             )
         }
-    }
+    }, [id, isSquareChoice])
 
     useEffect(() => {
         if (
@@ -116,7 +116,7 @@ const TileEntity = (props: {
         ]
     }, [t])
 
-    const generateTooltipContent = () => {
+    const generateTooltipContent = useCallback(() => {
         const entity_info = entities_info ? entities_info[id] : undefined
         if (!entities_info || !entity_info) {
             return emptyTooltipContent.map((key) => <>
@@ -148,7 +148,7 @@ const TileEntity = (props: {
                         t("local:game.components.tooltip.no_status_effects")
                     )})
         ].map((key) => <p key={key}>{key}</p>)
-    }
+    }, [entities_info])
 
     return <>
         <img
