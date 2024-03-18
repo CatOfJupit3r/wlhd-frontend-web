@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {TurnState, StoreState} from "../../models/Redux";
-import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
+import {ActionInput as ActionInputInterface, TranslationInfoAction} from "../../models/ActionInput";
 import {GET_ACTIONS} from "../../config/endpoints";
 import {cmdToTranslation} from "../../utils/cmdConverters";
 
@@ -118,29 +118,45 @@ const turnSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
             state.currentActions = action.payload
-            state.currentActions.entity_name = cmdToTranslation(action.payload.entity_name)
+            // state.currentActions.entity_name = cmdToTranslation(action.payload.entity_name)
             setIsLoadingActions({flag: false})
         })
         builder.addCase(fetchActions.rejected, (state, action) => {
             console.error(action.error)
             state.currentActions = {
-                actions: [],
-                entity_name: "",
-                line: 0,
-                column: 0,
-                current_ap: 0,
-                max_ap: 0
+                root:
+                    [{
+                        id: "builtins:skip",
+                        translation_info: {
+                            descriptor: "builtins:skip",
+                            co_descriptor: null,
+                        },
+                        available: true,
+                        requires: null
+                    }],
+                aliases: {},
+                alias_translations: {
+                    root: "builtins:action"
+                }
             }
             setIsLoadingActions({flag: false})
         })
         builder.addCase(fetchActions.pending, (state) => {
             state.currentActions = {
-                actions: [],
-                entity_name: "",
-                line: 0,
-                column: 0,
-                current_ap: 0,
-                max_ap: 0
+                root:
+                    [{
+                        id: "builtins:skip",
+                        translation_info: {
+                            descriptor: "builtins:skip",
+                            co_descriptor: null,
+                        },
+                        available: true,
+                        requires: null
+                    }],
+                aliases: {},
+                alias_translations: {
+                    root: "builtins:action"
+                }
             }
             setIsLoadingActions({flag: true})
         })
@@ -174,6 +190,10 @@ export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubm
 export const selectCurrentActions = (state: StoreState) => state.turn.currentActions;
 export const selectIsLoadingCurrentActions = (state: StoreState) => state.turn.isLoadingCurrentActions;
 export const selectEntityInControlInfo = (state: StoreState) => {
-    const {entity_name, current_ap, max_ap, line, column} = state.turn.currentActions;
-    return {entity_name, current_ap, max_ap, line, column}
+    return {
+        "entity_name": "test",
+        current_ap: 1000,
+        max_ap: 1000,
+        square: "2/3"
+    }
 };

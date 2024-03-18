@@ -17,7 +17,7 @@ export interface GameState {
 export interface TurnState {
     isTurnActive: boolean, // If false, the action input is disabled
     readyToSubmit: boolean, // If true, the action input is ready to be sent to the server
-    squareChoice: boolean // if false, chosenSquare cannot be changed
+    squareChoice: boolean, // if false, chosenSquare cannot be changed
     isLoadingCurrentActions: boolean
     currentActions: ActionInputInterface
     interactableSquares: { // used for styles on the battlefield

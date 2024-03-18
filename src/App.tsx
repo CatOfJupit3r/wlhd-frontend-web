@@ -6,6 +6,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import MainLayout from "./layouts/MainLayout";
 import GameRoomPage from "./pages/GameRoomPage";
 import LoginPage from "./pages/LoginPage";
+import DebugRoomPage from "./pages/DebugRoomPage";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                         <Route path="about" element={<AboutPage/>}/>
                         <Route path="game" element={<GameRoomPage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
+                        <Route path="debug" element={<DebugRoomPage />}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
                 </Routes>
