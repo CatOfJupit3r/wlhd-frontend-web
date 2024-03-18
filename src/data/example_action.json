@@ -1,7 +1,7 @@
 {
     "root": [
         {
-            "id": "builtins::item",
+            "id": "builtins:item",
             "translation_info": {
                 "descriptor": "builtins:use_item",
                 "co_descriptor": null
@@ -19,9 +19,9 @@
             "requires": null
         },
         {
-            "id": "builtins::spell",
+            "id": "builtins:spell",
             "translation_info": {
-                "descriptor": "builtins::spell",
+                "descriptor": "builtins:spell",
                 "co_descriptor": null
             },
             "available": false,
@@ -48,7 +48,7 @@
             }
         },
         {
-            "id": "builtins::skip",
+            "id": "builtins:skip",
             "translation_info": {
                 "descriptor": "builtins:skip",
                 "co_descriptor": null
