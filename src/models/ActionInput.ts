@@ -7,13 +7,15 @@ export interface Action {
     id: string,
     translation_info: TranslationInfoAction,
     available: boolean,
-    requires: null | string
+    requires: null | {
+        [argument: string]: string
+    }
 }
 
 export interface ActionInput {
     root: Array<Action>,
     aliases: {
-        [key: string]: Action
+        [key: string]:  Array<Action>
     },
     alias_translations: {
         [key: string]: string

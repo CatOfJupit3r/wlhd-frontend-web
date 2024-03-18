@@ -15,20 +15,28 @@ export interface GameState {
 
 
 export interface TurnState {
-    isTurnActive: boolean, // If false, the action input is disabled
-    readyToSubmit: boolean, // If true, the action input is ready to be sent to the server
-    squareChoice: boolean, // if false, chosenSquare cannot be changed
-    isLoadingCurrentActions: boolean
-    currentActions: ActionInputInterface
-    interactableSquares: { // used for styles on the battlefield
-        [key: string]: { [key: string]: boolean }
-    },
-    chosenSquare: string, // value changed by buttons. Format is "line/column"
-    chosenAction: { // action that the user has chosen and this is sent to the server
+    playersTurn: boolean;
+    readyToSubmit: boolean;
+    isLoadingEntityActions: boolean;
+    needToChooseSquare: boolean;
+
+    entityActions: ActionInputInterface,
+    currentAlias: string,
+    scope: {
         [key: string]: string
     },
-    displayedActions: { // This is a readable version of the actions, with the translated name as the key
+    highlightedComponents: {
+        [key: string]: number // not only do we need to know which component was chosen, but also how many times it was chosen to not accidentally unhighlight it
+    },
+    choices: {
         [key: string]: string
+    }
+    translatedChoices: {
+        [key: string]: string
+    }
+    chosenAction: {
+        chosenActionValue: string,
+        translatedActionValue: string
     }
 }
 
