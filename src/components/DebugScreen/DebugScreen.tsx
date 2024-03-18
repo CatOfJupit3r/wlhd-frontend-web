@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 
 import {
     fetchActions,
-    resetTurn,
+    resetInput,
     selectIsTurnActive,
     selectReadyToSubmit, setEntityActions,
     setReadyToSubmit
@@ -46,11 +46,11 @@ const DebugScreen = () => {
     const endInfo = useSelector(selectEndInfo)
     // const currentAction = useSelector(selectCurrentActions)
 
-    const setCurrentActionFromExample = () => {
+    const setCurrentActionFromExample = useCallback(() => {
         dispatch(
             setEntityActions(example as any)
         )
-    }
+    }, [dispatch])
 
     const ActiveScreen = useCallback(() => {
         return <>
@@ -78,7 +78,7 @@ const DebugScreen = () => {
                 </div>
             </div>
         </>
-    }, [roundCount, activeEntityInfo, t])
+    }, [roundCount, activeEntityInfo, t, setCurrentActionFromExample])
 
     return (
         <>

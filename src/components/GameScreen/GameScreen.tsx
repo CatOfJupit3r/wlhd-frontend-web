@@ -6,7 +6,7 @@ import { io, Socket } from "socket.io-client";
 
 import {
     fetchActions,
-    resetTurn,
+    resetInput,
     selectChosenAction,
     selectIsTurnActive,
     selectReadyToSubmit,
@@ -164,7 +164,7 @@ const GameScreen = () => {
         if (inputReadyToSubmit && submittedInput) {
             socketEmitter("take_action", submittedInput)
             // dispatch(setReadyToSubmit({flag: false}))
-            dispatch(resetTurn())
+            dispatch(resetInput())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
