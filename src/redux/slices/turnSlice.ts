@@ -69,8 +69,20 @@ const turnSlice = createSlice({
     name: 'turn',
     initialState,
     reducers: {
-        resetTurn(state) {
-            return {...initialState, isTurnActive: state.playersTurn};
+        resetInput(state) {
+            return {
+                ...state,
+                ...initialState,
+                isTurnActive: state.playersTurn,
+                entityActions: state.entityActions,
+                readyToSubmit: state.readyToSubmit,
+                isLoadingEntityActions: state.isLoadingEntityActions
+            }
+        },
+        resetInfo(state) {
+            return {
+                ...initialState,
+            };
         },
         setPlayersTurn(state, action: PayloadAction<boolean>) {
             state.playersTurn = action.payload;
@@ -133,7 +145,8 @@ const turnSlice = createSlice({
 export default turnSlice.reducer;
 
 export const {
-    resetTurn,
+    resetInput,
+    resetInfo,
     setPlayersTurn,
     setSquareChoice,
     setReadyToSubmit,
