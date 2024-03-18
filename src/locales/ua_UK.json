@@ -33,7 +33,7 @@
             "your_actions": "Ваші дії:",
             "you_chose": "Ви обрали:",
             "tooltip": {
-                "creature_and_line": "Створіння {{name}} ({{line}}/{{column}})",
+                "creature_and_line": "Створіння {{name}} ({{square}})",
                 "health_max_health": "Здоров'я: {{current_health}}/{{max_health}}",
                 "action_points": "Очки дії: {{current_action_points}}/{{max_action_points}}",
                 "armor": "Броня: {{current_armor}}/{{base_armor}}",
@@ -43,7 +43,7 @@
         },
         "not_your_turn": "Не твій хід!",
         "its_your_turn": "Твій хід!",
-        "control_info": "Ти контролюєш: {{entity_name}} ({{current_ap}}/{{max_ap}}) на клітинці {{line}}/{{column}}",
+        "control_info": "Ти контролюєш: {{name}} ({{current_ap}}/{{max_ap}}) на клітинці {{square}}",
         "round_n": "Раунд {{round}}",
         "actions": {
             "no_available_actions": "Немає доступних дій",
