@@ -30,11 +30,11 @@ const initialState: InfoState = {
             ["0", "0", "0", "0", "0", "0"]
         ],
         game_descriptors: {
-            columns: ["builtins::one", "builtins::two", "builtins::three", "builtins::four", "builtins::five", "builtins::six"],
-            lines: ["builtins::safe_line", "builtins::ranged_line", "builtins::melee_line", "builtins::melee_line", "builtins::safe_line", "builtins::safe_line"],
-            connectors: "builtins::connector",
-            separators: "builtins::separator",
-            field_components: { "0": "builtins::tile" }
+            columns: ["builtins:one", "builtins:two", "builtins:three", "builtins:four", "builtins:five", "builtins:six"],
+            lines: ["builtins:safe_line", "builtins:ranged_line", "builtins:melee_line", "builtins:melee_line", "builtins:ranged_line", "builtins:safe_line"],
+            connectors: "builtins:connector",
+            separators: "builtins:separator",
+            field_components: { "0": "builtins:tile" }
         }
     },
     entities_info: {}

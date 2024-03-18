@@ -1,20 +1,51 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {TurnState, StoreState} from "../../models/Redux";
-import {ActionInput as ActionInputInterface, TranslationInfoAction} from "../../models/ActionInput";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {TurnState} from "../../models/Redux";
+import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {GET_ACTIONS} from "../../config/endpoints";
-import {cmdToTranslation} from "../../utils/cmdConverters";
 
 const initialState: TurnState = {
-    squareChoice: false,
-    isTurnActive: false,
+    playersTurn: false,
     readyToSubmit: false,
-    isLoadingCurrentActions: false,
-    currentActions: {} as ActionInputInterface,
-    interactableSquares: {},
-    chosenSquare: "",
-    chosenAction: {},
-    displayedActions: {},
+    isLoadingEntityActions: true,
+    needToChooseSquare: false,
+    entityActions: {
+        root: [{
+            id: "builtins:skip",
+            translation_info: {
+                descriptor: "builtins:skip",
+                co_descriptor: null,
+            },
+            available: true,
+            requires: null
+        }],
+        aliases : {},
+        alias_translations: {
+            root: "builtins:action"
+        }
+    },
+    currentAlias: "root",
+    scope: {},
+    highlightedComponents: {},
+    choices: {},
+    translatedChoices: {}
 }
+
+/*
+
+yourTurn
+readyToSubmit
+isLoadingEntityActions
+
+
+entityActions - keeps all info about all actions that are available to entity.
+currentAlias="root" - keeps track of alias that is currently in choice.
+scope={} - stores requirements that needs to be chosen. this is a workaround and doesn't support nested requirements
+highlightedComponents - components that have been chosen by player and thus need to be distinct
+
+choices
+translatedChoices
+
+*/
 
 
 export const fetchActions = createAsyncThunk(
@@ -33,167 +64,88 @@ const turnSlice = createSlice({
     name: 'turn',
     initialState,
     reducers: {
-        resetTurn: (state) => ({...initialState, isTurnActive: state.isTurnActive}),
-        setSquareChoice: (state: TurnState, action: {
-            type: string,
-            payload: {
-                flag: boolean
-            }
-        }) => {
-            const {flag} = action.payload;
-            return {...state, squareChoice: flag}
+        resetTurn(state) {
+            return {...initialState, isTurnActive: state.playersTurn};
         },
-        setCurrentActions: (state: TurnState, action: {
-            type: string,
-            payload: {
-                actions: ActionInputInterface
-            }
-        }) => {
-            const {actions} = action.payload;
-            return {...state, currentActions: actions}
+        setPlayersTurn(state, action: PayloadAction<boolean>) {
+            state.playersTurn = action.payload;
         },
-        setInteractableSquares: (state: TurnState, action: {
-            type: string,
-            payload: {
-                lines: string[]
-                columns: string[]
-            }
-        }) => {
-            const {lines, columns} = action.payload;
-            for (let line of lines) {
-                state.interactableSquares[line] = {};
-                for (let column of columns) {
-                    state.interactableSquares[line][column] = true;
-                }
-            }
+        setSquareChoice(state, action: PayloadAction<boolean>) {
+            state.needToChooseSquare = action.payload;
         },
-        resetInteractableSquares: (state: TurnState) => {
-            return {...state, interactableSquares: {}}
+        setReadyToSubmit(state, action: PayloadAction<boolean>) {
+            state.readyToSubmit = action.payload;
         },
-        setChosenSquare: (state: TurnState, action: {
-            type: string,
-            payload: {
-                square: string
-            }
-        }) => {
-            const {square} = action.payload;
-            return state.squareChoice ? {...state, chosenSquare: square} : state;
+        setEntityActions(state, action: PayloadAction<ActionInputInterface>) {
+            state.entityActions = action.payload;
         },
-        setChosenAction: (state: TurnState, action: {
-            type: string,
-            payload: {
-                key: string,
-                action_value: string,
-            }
-        }) => {
-            const {key, action_value} = action.payload;
-            return {...state, chosenAction: {...state.chosenAction, [key]: action_value}}
+        setCurrentAlias(state, action: PayloadAction<string>) {
+            state.currentAlias = action.payload;
         },
-        setDisplayedActions: (state: TurnState, action: {
-            type: string,
-            payload: {
-                key: string,
-                action_value: string,
-            }
-        }) => {
-            const {key, action_value} = action.payload;
-            return {...state, displayedActions: {...state.displayedActions, [key]: action_value}}
+        setScope(state, action: PayloadAction<{ [key: string]: string }>) {
+            state.scope = action.payload;
         },
-        setIsTurnActive: (state: TurnState, action: {
-            type: string,
-            payload: {
-                flag: boolean
-            }
-        }) => {
-            const {flag} = action.payload;
-            return {...state, isTurnActive: flag}
+        addHighlightedComponent(state, action: PayloadAction<string>) {
+            const key = action.payload;
+            state.highlightedComponents[key] = (state.highlightedComponents[key] || 0) + 1;
         },
-        setReadyToSubmit: (state: TurnState, action) => {
-            return {...state, readyToSubmit: action.payload.flag}
+        resetHighlightedComponents(state) {
+            state.highlightedComponents = {};
         },
-        setIsLoadingActions: (state: TurnState, action) => {
-            return {...state, isLoadingCurrentActions: action.payload.flag}
-        }
+        setChoice(state, action: PayloadAction<{ key: string, value: string }>) {
+            const { key, value } = action.payload;
+            state.choices[key] = value;
+        },
+        setTranslatedChoice(state, action: PayloadAction<{ key: string, value: string }>) {
+            const { key, value } = action.payload;
+            state.translatedChoices[key] = value;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
-            state.currentActions = action.payload
-            // state.currentActions.entity_name = cmdToTranslation(action.payload.entity_name)
-            setIsLoadingActions({flag: false})
+            state.entityActions = action.payload
+            state.isLoadingEntityActions = false
         })
         builder.addCase(fetchActions.rejected, (state, action) => {
             console.error(action.error)
-            state.currentActions = {
-                root:
-                    [{
-                        id: "builtins:skip",
-                        translation_info: {
-                            descriptor: "builtins:skip",
-                            co_descriptor: null,
-                        },
-                        available: true,
-                        requires: null
-                    }],
-                aliases: {},
-                alias_translations: {
-                    root: "builtins:action"
-                }
-            }
-            setIsLoadingActions({flag: false})
+            state.entityActions = initialState.entityActions
+            state.isLoadingEntityActions = false
         })
         builder.addCase(fetchActions.pending, (state) => {
-            state.currentActions = {
-                root:
-                    [{
-                        id: "builtins:skip",
-                        translation_info: {
-                            descriptor: "builtins:skip",
-                            co_descriptor: null,
-                        },
-                        available: true,
-                        requires: null
-                    }],
-                aliases: {},
-                alias_translations: {
-                    root: "builtins:action"
-                }
-            }
-            setIsLoadingActions({flag: true})
+            state.entityActions = initialState.entityActions
+            state.isLoadingEntityActions = true
         })
     },
-}
-)
+});
 
 export default turnSlice.reducer;
 
 export const {
     resetTurn,
+    setPlayersTurn,
     setSquareChoice,
-    setInteractableSquares,
-    setChosenSquare,
-    setChosenAction,
-    setDisplayedActions,
-    setIsTurnActive,
-    resetInteractableSquares,
     setReadyToSubmit,
-    setCurrentActions,
-    setIsLoadingActions
+    setEntityActions,
+    setCurrentAlias,
+    setScope,
+    addHighlightedComponent,
+    resetHighlightedComponents,
+    setChoice,
+    setTranslatedChoice,
 } = turnSlice.actions;
 
-export const selectSquareChoice = (state: StoreState) => state.turn.squareChoice;
-export const selectActiveSquares = (state: StoreState) => state.turn.interactableSquares;
-export const selectChosenSquare = (state: StoreState) => state.turn.chosenSquare;
-export const selectChosenAction = (state: StoreState) => state.turn.chosenAction;
-export const selectDisplayedActions = (state: StoreState) => state.turn.displayedActions;
-export const selectIsTurnActive = (state: StoreState) => state.turn.isTurnActive;
-export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubmit;
-export const selectCurrentActions = (state: StoreState) => state.turn.currentActions;
-export const selectIsLoadingCurrentActions = (state: StoreState) => state.turn.isLoadingCurrentActions;
-export const selectEntityInControlInfo = (state: StoreState) => {
-    return {
-        "entity_name": "test",
-        current_ap: 1000,
-        max_ap: 1000,
-        square: "2/3"
-    }
-};
+export const selectEntityActions = (state: {turn: TurnState}) => state.turn.entityActions;
+export const selectCurrentAlias = (state: {turn: TurnState}) => state.turn.currentAlias;
+export const selectScope = (state: {turn: TurnState}) => state.turn.scope;
+export const selectHighlightedComponents = (state: {turn: TurnState}) => state.turn.highlightedComponents;
+export const selectChoices = (state: {turn: TurnState}) => state.turn.choices;
+export const selectTranslatedChoices = (state: {turn: TurnState}) => state.turn.translatedChoices;
+export const selectIsLoadingEntityActions = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
+export const selectPlayersTurn = (state: {turn: TurnState}) => state.turn.playersTurn;
+export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;
+export const selectNeedToChooseSquare = (state: {turn: TurnState}) => state.turn.needToChooseSquare;
+export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.playersTurn && !state.turn.isLoadingEntityActions;
+export const selectIsTurnReady = (state: {turn: TurnState}) => state.turn.readyToSubmit;
+export const selectIsSquareChoice = (state: {turn: TurnState}) => state.turn.needToChooseSquare;
+export const selectIsLoading = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
+
