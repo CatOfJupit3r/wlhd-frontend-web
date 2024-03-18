@@ -6,15 +6,15 @@ import styles from "./ActionInput.module.css"
 
 import {
     resetChosenAction,
-    resetTurn, selectAliases,
+    resetInput, selectAliases,
     selectAliasTranslations,
     selectChoices, selectChosenAction,
     selectCurrentAlias,
-    selectEntityActions,
+    selectEntityActions, selectReadyToSubmit,
     selectScope,
     setChoice,
     setCurrentAlias,
-    setScope,
+    setScope, setSquareChoice,
     setTranslatedChoice
 
 } from "../../redux/slices/turnSlice";
@@ -55,12 +55,12 @@ const ActionInput = () => {
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
     const handleReset = useCallback(() => {
-        dispatch(resetTurn())
+        dispatch(resetInput())
     }, [dispatch, initialActionLevel.root])
 
     const handleDepth = (): JSX.Element => {
         return currentAlias && currentAlias !== "root" ?
-            <BsArrowBarLeft onClick={() => handleReset}/>
+            <BsArrowBarLeft onClick={() => handleReset()}/>
             :
             <BsArrowBarLeft />
     }
@@ -89,13 +89,13 @@ const ActionInput = () => {
 
     const generateOptions = useCallback((): JSX.Element | JSX.Element[] => {
         let action: Action[] = []
-        console.log(scope, currentAlias, scope[currentAlias])
+        let aliasValue = ""
         if (currentAlias) {
             if (currentAlias === "root") {
                 action = initialActionLevel.root
             } else {
-                console.log(scope?.[currentAlias])
-                action = aliases[scope?.[currentAlias]]
+                aliasValue = scope[currentAlias]
+                action = aliases[aliasValue]
             }
         }
 
@@ -103,6 +103,11 @@ const ActionInput = () => {
             // add protocol to auto skip in this case and display error
             return <h1>{t("local:game.actions.no_available_actions")}</h1>
         }
+
+        if (aliasValue.startsWith("Square")) {
+            dispatch(setSquareChoice(true))
+        }
+
 
         return action.map((action: Action, index: number) => {
             return (
@@ -174,11 +179,14 @@ const ActionInput = () => {
         )
     }
 
-    const deepDepthScreen = () => {
+    const deepDepthScreen = useCallback(() => {
+        alert("You have reached final depth")
+        alert(JSON.stringify(choices))
+        // dispatch(resetInput()) // this causes infinite loop, i don't know how to fix bruh
         return <h1>
             {t("local:game.actions.no_more_actions")}
         </h1>
-    }
+    }, [dispatch, t])
 
     useEffect( () => {
         if (!currentAlias || choices[currentAlias] === undefined) {
@@ -190,10 +198,12 @@ const ActionInput = () => {
             if (action) {
                 const nextRequirements = action.requires
                 if (nextRequirements) {
-                    dispatch(setCurrentAlias(Object.keys(nextRequirements)[0]))
                     dispatch(setScope(nextRequirements))
+                    dispatch(setCurrentAlias(Object.keys(nextRequirements)[0]))
                 } else {
-                    setReachedFinalDepth(true)
+                    if (!reachedFinalDepth) {
+                        setReachedFinalDepth(true)
+                    }
                 }
             }
             else {
@@ -201,7 +211,6 @@ const ActionInput = () => {
                     message: "No action with given id",
                     code: 400
                 }))
-                handleReset()
             }
         } else {
             // in scope is declared requirements.
@@ -216,7 +225,7 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             }
         }
-    }, [choices])
+    }, [choices, currentAlias, scope, initialActionLevel.root, dispatch, handleReset])
 
     return (
         <div id={"action-input"} style={{
