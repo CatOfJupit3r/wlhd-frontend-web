@@ -16,8 +16,8 @@ function App() {
                     <Route path={"/"} element={<MainLayout/>}>
                         <Route index element={<HomePage/>}/>
                         <Route path="about" element={<AboutPage/>}/>
-                        <Route path="game" element={<GameRoomPage/>}/>
-                        <Route path="login" element={<LoginPage/>}/>
+                        {/*<Route path="game" element={<GameRoomPage/>}/>*/}
+                        {/*<Route path="login" element={<LoginPage/>}/>*/}
                         <Route path="debug" element={<DebugRoomPage />}/>
                     </Route>
                     <Route path="*" element={<NotFoundPage/>}/>
