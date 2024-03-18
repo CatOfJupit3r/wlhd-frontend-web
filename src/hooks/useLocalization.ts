@@ -1,6 +1,5 @@
 import {useCallback} from 'react';
 import {useTranslation} from "react-i18next";
-import {cmdToTranslation} from "../utils/cmdConverters";
 
 const useLocalization = () => {
     const {t} = useTranslation()
@@ -11,7 +10,7 @@ const useLocalization = () => {
         try {
             const [stringId, ...args] = cmd;
             if ((args && args.length === 0) || !args) {
-                return t(cmdToTranslation(stringId));
+                return t(stringId);
             }
             const parsedArgs: string[] = [];
 
@@ -26,7 +25,7 @@ const useLocalization = () => {
                     parsedArgs.push(arg);
                 }
             }
-            return t(cmdToTranslation(stringId)).replace(/{(\d+)}/g, (match, index) => {
+            return t(stringId).replace(/{(\d+)}/g, (match, index) => {
                 return typeof parsedArgs[index] !== 'undefined' ? parsedArgs[index] : match;
             });
         } catch (e) {
