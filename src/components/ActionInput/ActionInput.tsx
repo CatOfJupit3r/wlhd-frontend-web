@@ -1,250 +1,244 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Action} from "../../models/ActionInput";
 import {setNotify} from "../../redux/slices/notifySlice";
 import {useDispatch, useSelector} from "react-redux";
-import {extractCards} from "./utils";
 import styles from "./ActionInput.module.css"
 
 import {
-    setSquareChoice,
-    setChosenAction as setChosenActionStore,
-    resetTurn,
-    selectSquareChoice,
-    setInteractableSquares,
-    selectChosenSquare,
-    resetInteractableSquares,
-    setIsTurnActive,
-    setDisplayedActions, selectDisplayedActions,
-    setChosenSquare, setReadyToSubmit, selectCurrentActions, selectChosenAction
+    resetChosenAction,
+    resetTurn, selectAliases,
+    selectAliasTranslations,
+    selectChoices, selectChosenAction,
+    selectCurrentAlias,
+    selectEntityActions,
+    selectScope,
+    setChoice,
+    setCurrentAlias,
+    setScope,
+    setTranslatedChoice
+
 } from "../../redux/slices/turnSlice";
 
 import {useTranslation} from "react-i18next";
 
 import {
-    BsArrowBarLeft, BsCheckSquareFill, BsSquare
+    BsArrowBarLeft
 } from "react-icons/bs";
 
-import {
-    TbSquareChevronLeft,
-    TbSquareChevronLeftFilled,
-    TbSquareChevronRight,
-    TbSquareChevronRightFilled
-} from "react-icons/tb";
-import {cmdToTranslation} from "../../utils/cmdConverters";
-import {RxArrowTopRight} from "react-icons/rx";
+import ActionCard from "./ActionCard";
+
+
+/*
+
+When we choose item inside select or square, it is written to current choices in format:
+
+choices[currentAlias]: chosenValue
+translatedChoices[aliasesTranslations[currentAlias]]: chosenValueTranslation
+
+ActionInput then listens to changes in choices and if currentAlias is not empty, it moves to next requirement in scope
+
+ */
 
 
 const ActionInput = () => {
     const dispatch = useDispatch()
     const {t} = useTranslation()
-    const isSquareChoice = useSelector(selectSquareChoice)
-    const chosenSquare = useSelector(selectChosenSquare)
-    const displayedActions = useSelector(selectDisplayedActions)
 
-    const initialActionLevel = useSelector(selectCurrentActions)
-    const [currentActionLevel, setCurrentActionLevel] = useState(initialActionLevel.actions)
-    const [depth, setDepth] = useState(0)
-    const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
-    const [chosenAction, setChosenAction] = useState(undefined as number | undefined)
-    const [currentPage, setCurrentPage] = useState(1);
-    const [cardsPerPage, ] = useState(9);
+    const initialActionLevel = useSelector(selectEntityActions)
+    const currentAlias = useSelector(selectCurrentAlias)
+    const aliasesTranslations = useSelector(selectAliasTranslations)
+    const choices = useSelector(selectChoices)
+    const scope = useSelector(selectScope)
+    const aliases = useSelector(selectAliases)
     const chosenActionStore = useSelector(selectChosenAction)
 
-    const incrementDepth = useCallback(() => {
-        setDepth(depth + 1)
-    }, [depth])
+    const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
     const handleReset = useCallback(() => {
-        setCurrentActionLevel(initialActionLevel.actions)
-        setChosenAction(undefined)
-        setDepth(0)
         dispatch(resetTurn())
-    }, [dispatch, initialActionLevel.actions])
-
-    const handleConfirm = useCallback(() => {
-        if (chosenAction !== undefined) {
-            incrementDepth()
-            setChosenAction(undefined)
-            const index = chosenAction as number
-            const actionObject = currentActionLevel[index]
-            dispatch (setChosenActionStore({
-                key: actionObject.level,
-                action_value: actionObject.id
-            }))
-            const {translation_info} = actionObject
-            dispatch(setDisplayedActions({
-                key: translation_info.level_descriptor,
-                action_value: translation_info.descriptor + ":name"
-            }))
-            if (actionObject.requires === null) {
-                setReachedFinalDepth(true)
-            } else {
-                if (actionObject.requires.length === 1) {
-                    const newActionLevel = (actionObject.requires as Action[][])[0]
-                    setCurrentActionLevel(newActionLevel)
-                } else if (actionObject.requires.length === 2) {
-                    // probably change line-column to square.
-                    // I used this system previously due to Discord bot limitations (only 25 fields per embed)
-                    // However, as support for the bot is being dropped, I can change this to a more user-friendly system
-                    // Also, this will allow for a more flexible system with multiple requirements for one action (which is waaay to complex for the current implementation)
-                    // But, until I change the backend, this will stay as it is.
-                    dispatch(setChosenSquare({square: ""}))
-                    if (!isSquareChoice) {
-                        dispatch(setSquareChoice({flag: true}))
-                    }
-                    dispatch(setInteractableSquares({
-                        lines: actionObject.requires[0].map((action: Action) => action.id),
-                        columns: actionObject.requires[1].map((action: Action) => action.id)
-                    }))
-                } else {
-                    dispatch(setNotify({
-                        message: "This action requires more than 2 requirements. This is not supported yet.",
-                        code: 400
-                    }))
-                    handleReset()
-                }
-            }
-        } else if (chosenSquare !== "") {
-            if (isSquareChoice) {
-                setReachedFinalDepth(true)
-                const [line, column] = chosenSquare.split("/")
-                dispatch (setChosenActionStore({
-                    key: "line",
-                    action_value: line
-                }))
-                dispatch (setChosenActionStore({
-                    key: "column",
-                    action_value: column
-                }))
-                dispatch(resetInteractableSquares())
-                dispatch(setSquareChoice({flag: false}))
-            }
-        }
-    }, [chosenAction, chosenSquare, isSquareChoice, dispatch, currentActionLevel, handleReset, incrementDepth]);
+    }, [dispatch, initialActionLevel.root])
 
     const handleDepth = (): JSX.Element => {
-        return depth === 0 ? <BsArrowBarLeft/> :
-            <BsArrowBarLeft onClick={() => {
-                handleReset()
-            }}/>
+        return currentAlias && currentAlias !== "root" ?
+            <BsArrowBarLeft onClick={() => handleReset}/>
+            :
+            <BsArrowBarLeft />
     }
 
-    const generateOptions = useCallback((action: Action[]): JSX.Element => {
-        if (!action || action.length === 0) {
-            return <h1>{t("local:game.actions.no_available_actions")}</h1>
+    useEffect(() => {
+        if (chosenActionStore && chosenActionStore.chosenActionValue !== "" && chosenActionStore.translatedActionValue !== "") {
+            dispatch(setNotify({
+                message: chosenActionStore.translatedActionValue,
+                code: 200
+            }))
+            dispatch(
+                setTranslatedChoice({
+                    key: aliasesTranslations[currentAlias],
+                    value: chosenActionStore.translatedActionValue
+                })
+            )
+            dispatch(
+                setChoice({
+                    key: currentAlias,
+                    value: chosenActionStore.chosenActionValue
+                })
+            )
+            dispatch(resetChosenAction())
         }
-        const indexOfLastCard = currentPage * cardsPerPage;
-        const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-        const currentCards = action.slice(indexOfFirstCard, indexOfLastCard);
+    }, [chosenActionStore]);
 
-        const handleSelect = (value: number) => {
-            if (currentActionLevel[value].available) {
-                setChosenAction(value)
+    const generateOptions = useCallback((): JSX.Element | JSX.Element[] => {
+        let action: Action[] = []
+        console.log(scope, currentAlias, scope[currentAlias])
+        if (currentAlias) {
+            if (currentAlias === "root") {
+                action = initialActionLevel.root
+            } else {
+                console.log(scope?.[currentAlias])
+                action = aliases[scope?.[currentAlias]]
             }
         }
 
-        return extractCards(currentCards, handleSelect, handleConfirm, t, chosenAction as number)
-    }, [currentPage, cardsPerPage, currentActionLevel, t, chosenAction, handleConfirm])
+        if (!action || action.length === 0) {
+            // add protocol to auto skip in this case and display error
+            return <h1>{t("local:game.actions.no_available_actions")}</h1>
+        }
 
-    const finalDepthScreen = () => {
-        return (
-            <>
-                <h1>{t("local:game.actions.you_chose")}</h1>
-                {
-                    displayedActions !== undefined ?
-                        <p>
-                            {
-                            Object.entries(displayedActions)
-                                    .map(([key, value]) => `${t(cmdToTranslation(key))}: ${t(cmdToTranslation(value))}`)
-                                    .join(', ')
-                            }
-                        </p>
-                        :
-                        <h2>{t("local:game.actions.nothing?")}</h2>
-                }
-                <RxArrowTopRight
-                    onClick={() => {
-                        if (chosenActionStore === undefined || chosenActionStore?.action === "") {
-                            dispatch(setChosenActionStore({
-                                key: "action",
-                                action_value: "skip"
-                            }))
-                        }
-                            dispatch(setIsTurnActive({
-                                flag: false
-                            }))
-                            dispatch(setReadyToSubmit({
-                                flag: true
-                            }))
-                    }}
+        return action.map((action: Action, index: number) => {
+            return (
+                <ActionCard
+                    option={action}
+                    index={index}
+                    t={t}
+                    key={index}
                 />
-                <BsArrowBarLeft onClick={() => {
-                    setReachedFinalDepth(false)
-                    handleReset()
-                }}/>
-            </>
-        )
-    }
+            )
+        })
+    }, [t, currentAlias, aliases])
+
+    // const finalDepthScreen = () => {
+    //     return (
+    //         <>
+    //             <h1>{t("local:game.actions.you_chose")}</h1>
+    //             {
+    //                 displayedActions !== undefined ?
+    //                     <p>
+    //                         {
+    //                         Object.entries(displayedActions)
+    //                                 .map(([key, value]) => `${t(cmdToTranslation(key))}: ${t(cmdToTranslation(value))}`)
+    //                                 .join(', ')
+    //                         }
+    //                     </p>
+    //                     :
+    //                     <h2>{t("local:game.actions.nothing?")}</h2>
+    //             }
+    //             <RxArrowTopRight
+    //                 onClick={() => {
+    //                     if (chosenActionStore === undefined || chosenActionStore?.action === "") {
+    //                         dispatch(setChosenActionStore({
+    //                             key: "action",
+    //                             action_value: "skip"
+    //                         }))
+    //                     }
+    //                         dispatch(setIsTurnActive({
+    //                             flag: false
+    //                         }))
+    //                         dispatch(setReadyToSubmit({
+    //                             flag: true
+    //                         }))
+    //                 }}
+    //             />
+    //             <BsArrowBarLeft onClick={() => {
+    //                 setReachedFinalDepth(false)
+    //                 handleReset()
+    //             }}/>
+    //         </>
+    //     )
+    // }
 
     const shallowDepthScreen = () => {
         return (
             <>
-                {/* Will add h1 to display what current action choice is for... But I don't know how? */}
-                {generateOptions(currentActionLevel)}
                 <div id={"buttons"} className={styles.buttons} style={{
                     display: "flex",
                     justifyContent: "space-between"
                 }}>
                     <div id={"manipulators"}>
                         {
-                            chosenAction !== undefined || chosenSquare !== "" ?
-                                <BsCheckSquareFill onClick={handleConfirm}/>
-                                :
-                                <BsSquare onClick={handleConfirm}/>
-                        }
-                        {
                             handleDepth()
                         }
                     </div>
-                    {
-                        <div id={"action-navigation"}>
-                            {
-                                currentActionLevel && currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) && currentPage === 1 ?
-                                <>
-                                    <TbSquareChevronLeft />
-                                    <TbSquareChevronRight  />
-                                </>
-                                :
-                                <>
-                                    {
-                                        currentActionLevel && currentPage === Math.ceil(currentActionLevel.length / cardsPerPage) ?
-                                            <TbSquareChevronLeftFilled onClick={() => setCurrentPage( currentPage - 1)} />
-                                            :
-                                            <TbSquareChevronLeft />
-                                    }
-                                    {
-                                        currentActionLevel && currentPage === 1 ?
-                                            <TbSquareChevronRightFilled onClick={() => setCurrentPage(currentPage + 1)}/>
-                                            :
-                                            <TbSquareChevronRight  />
-                                    }
-                                </>
-                            }
-                        </div>
-                    }
                 </div>
+                {generateOptions()}
             </>
         )
     }
 
-    return (
-        <div id={"action-input"}>
-            {
-                reachedFinalDepth ?
-                    finalDepthScreen()
-                    :
-                    shallowDepthScreen()
+    const deepDepthScreen = () => {
+        return <h1>
+            {t("local:game.actions.no_more_actions")}
+        </h1>
+    }
+
+    useEffect( () => {
+        if (!currentAlias || choices[currentAlias] === undefined) {
+            return
+        }
+        if (choices[currentAlias] !== undefined && currentAlias === "root") {
+            const choice = choices[currentAlias]
+            const action = initialActionLevel.root.find((action: Action) => action.id === choice)
+            if (action) {
+                const nextRequirements = action.requires
+                if (nextRequirements) {
+                    dispatch(setCurrentAlias(Object.keys(nextRequirements)[0]))
+                    dispatch(setScope(nextRequirements))
+                } else {
+                    setReachedFinalDepth(true)
+                }
             }
+            else {
+                dispatch(setNotify({
+                    message: "No action with given id",
+                    code: 400
+                }))
+                handleReset()
+            }
+        } else {
+            // in scope is declared requirements.
+            // if we have chosen an action and there is a another requirement in scope that haven't been defined, we move to next requirement
+            // else, we set readyToSubmit to true
+            const nextRequirements = Object.keys(scope).filter(
+                (key: string) => !choices[key]
+            )
+            if (nextRequirements.length > 0) {
+                dispatch(setCurrentAlias(nextRequirements[0]))
+            } else {
+                setReachedFinalDepth(true)
+            }
+        }
+    }, [choices])
+
+    return (
+        <div id={"action-input"} style={{
+            width: 64*7 + "px",
+            height: 64*9 + "px",
+            borderRadius: "10px",
+            backgroundColor: "lightgray",
+            marginLeft: "25px",
+            overflowY: "scroll",
+            overflowX: "hidden",
+            padding: "10px",
+            paddingRight: "20px",
+            paddingLeft: "20px",
+        }}>
+            <div id={"action-confirms"}>
+                {
+                    reachedFinalDepth ?
+                    deepDepthScreen()
+                        :
+                    shallowDepthScreen()
+                }
+            </div>
         </div>
     );
 };

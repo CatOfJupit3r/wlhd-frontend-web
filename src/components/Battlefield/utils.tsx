@@ -12,12 +12,12 @@ export const splitDescriptor = (full_descriptor: string): [string, string] => {
         console.log("Descriptor is undefined")
         return ["builtins", "invalid"]
     }
-    if (!full_descriptor.includes("::")) {
+    if (!full_descriptor.includes(":")) {
         // If the descriptor does not have specified a dlc, we assume it is a builtins asset
         return ["builtins", full_descriptor]
     }
-    return full_descriptor.split("::").length === 2 ?
-        full_descriptor.split("::") as [string, string]
+    return full_descriptor.split(":").length === 2 ?
+        full_descriptor.split(":") as [string, string]
         :
         ["builtins", "invalid"]
 }

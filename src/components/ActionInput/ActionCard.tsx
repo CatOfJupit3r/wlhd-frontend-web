@@ -1,50 +1,69 @@
 import React from 'react';
 import Card from "react-bootstrap/Card";
-import {cmdToTranslation} from "../../utils/cmdConverters";
 import {Action} from "../../models/ActionInput";
 import {BsInfoCircle} from "react-icons/bs";
 import styles from "./ActionCard.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {
+    addHighlightedComponent,
+    selectCurrentAlias,
+    selectHighlightedComponents,
+    setChoice, setChosenAction
+} from "../../redux/slices/turnSlice";
 
 
 const ActionCard = (props: {
     option: Action,
     index: number,
-    handleSelect: (e: any) => any,
-    handleConfirm: () => any,
-    chosenAction: number | undefined,
     t: (key: string) => string
 }) => {
+    const dispatch = useDispatch()
 
-    const {option, index, handleSelect, t} = props
+    const {option, index, t} = props
 
     const {descriptor, co_descriptor} = option.translation_info
-    const convertedDescriptor = cmdToTranslation(`${descriptor}:desc`)
-    const translatedText = t(convertedDescriptor)
+    const translatedText = t(`${(descriptor)}.desc`)
     const textNeedsTruncating = translatedText.length > 250;
     const displayedText = textNeedsTruncating ? translatedText.substring(0, 250) + "..."  : translatedText
+    const highlightedComponents = useSelector(selectHighlightedComponents)
+    const currentAlias = useSelector(selectCurrentAlias)
+    const isHighlighted = highlightedComponents[option.id] > 0
+
+    const handleDoubleClick = () => {
+        dispatch(setChoice({key: currentAlias, value: option.id}))
+        dispatch(addHighlightedComponent(option.id))
+        dispatch(setChosenAction(
+            {
+                chosenActionValue: option.id,
+                translatedActionValue: t(`${(descriptor)}.name`)
+            }
+        ))
+    }
 
     return (
         <Card
-            className={`col-6 col-lg-4 col-md-6 col-sm-12 flex-grow-1 card`}
             border={
                 option.available ? "primary" : "secondary"
             }
-            bg={props.chosenAction === index ? "primary" : undefined}
+            bg={isHighlighted ? "primary" : undefined}
             key={index}
-            onClick={() => {handleSelect(index)}}
-            onDoubleClick={() => {props.handleConfirm()}}
+            onDoubleClick={handleDoubleClick}
             style={{
-                color: props.chosenAction !== index ? "black" : "white",
+                color: !isHighlighted ? "black" : "white",
+                width: "100%",
+                minWidth: "100%",
+                height: "6rem",
+                marginTop: "0.5rem",
             }}
         >
             <Card.Body className={styles.cardBody}>
-                <Card.Title className={styles.cardTitle}>{t(cmdToTranslation(`${descriptor}:name`))} {co_descriptor ? `(${co_descriptor})`: ""}</Card.Title>
+                <Card.Title className={styles.cardTitle}>{t(`${descriptor}.name`)} {co_descriptor ? `(${co_descriptor})`: ""}</Card.Title>
                 <Card.Text style={{
                     fontSize: "0.9em"
                 }} className={styles.cardText}>
                     {displayedText}
                     {" "}
-                    {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}:description`)}/>}
+                    {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}.description`)}/>}
                 </Card.Text>
             </Card.Body>
         </Card>

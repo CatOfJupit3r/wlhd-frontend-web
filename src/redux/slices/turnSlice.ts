@@ -3,6 +3,7 @@ import {TurnState} from "../../models/Redux";
 import {ActionInput as ActionInputInterface} from "../../models/ActionInput";
 import {GET_ACTIONS} from "../../config/endpoints";
 
+
 const initialState: TurnState = {
     playersTurn: false,
     readyToSubmit: false,
@@ -27,7 +28,11 @@ const initialState: TurnState = {
     scope: {},
     highlightedComponents: {},
     choices: {},
-    translatedChoices: {}
+    translatedChoices: {},
+    chosenAction: {
+        chosenActionValue: "",
+        translatedActionValue: ""
+    }
 }
 
 /*
@@ -100,6 +105,13 @@ const turnSlice = createSlice({
             const { key, value } = action.payload;
             state.translatedChoices[key] = value;
         },
+        setChosenAction(state, action: PayloadAction<{ chosenActionValue: string, translatedActionValue: string }>) {
+            state.chosenAction = action.payload;
+
+        },
+        resetChosenAction(state) {
+            state.chosenAction = initialState.chosenAction;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
@@ -132,6 +144,8 @@ export const {
     resetHighlightedComponents,
     setChoice,
     setTranslatedChoice,
+    setChosenAction,
+    resetChosenAction
 } = turnSlice.actions;
 
 export const selectEntityActions = (state: {turn: TurnState}) => state.turn.entityActions;
@@ -143,9 +157,10 @@ export const selectTranslatedChoices = (state: {turn: TurnState}) => state.turn.
 export const selectIsLoadingEntityActions = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
 export const selectPlayersTurn = (state: {turn: TurnState}) => state.turn.playersTurn;
 export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;
-export const selectNeedToChooseSquare = (state: {turn: TurnState}) => state.turn.needToChooseSquare;
 export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.playersTurn && !state.turn.isLoadingEntityActions;
 export const selectIsTurnReady = (state: {turn: TurnState}) => state.turn.readyToSubmit;
 export const selectIsSquareChoice = (state: {turn: TurnState}) => state.turn.needToChooseSquare;
 export const selectIsLoading = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
-
+export const selectAliasTranslations = (state: {turn: TurnState}) => state.turn.entityActions.alias_translations;
+export const selectAliases = (state: {turn: TurnState}) => state.turn.entityActions.aliases;
+export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;

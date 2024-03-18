@@ -2,14 +2,18 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {INVALID_ASSET_PATH} from "../../../config/configs";
 import {generateAssetPath, splitDescriptor} from "../utils";
 import {useDispatch, useSelector} from "react-redux";
-import {selectActiveSquares, selectChosenSquare, selectSquareChoice, setChosenSquare} from "../../../redux/slices/turnSlice";
 import styles from "./Tiles.module.css";
 import { Tooltip } from 'react-tooltip'
 import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../../redux/slices/infoSlice";
 import useLocalization from "../../../hooks/useLocalization";
-import {cmdToTranslation} from "../../../utils/cmdConverters";
+import {
+    addHighlightedComponent,
+    selectAliases,
+    selectCurrentAlias, selectHighlightedComponents,
+    selectIsSquareChoice, setChoice, setChosenAction
+} from "../../../redux/slices/turnSlice";
 
 
 const TileEntity = (props: {
@@ -34,19 +38,24 @@ const TileEntity = (props: {
 
     const [currentClassAlias, setCurrentClassAlias] = useState("default")
 
-    const chosenSquare = useSelector(selectChosenSquare)
-    const isSquareChoice = useSelector(selectSquareChoice)
-    const activeSquares = useSelector(selectActiveSquares)
+    const isSquareChoice = useSelector(selectIsSquareChoice)
+    const currentAlias = useSelector(selectCurrentAlias)
+    const aliases = useSelector(selectAliases)
     const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     const entities_info = useSelector(selectEntitiesInfo)
+    const highlightedComponents = useSelector(selectHighlightedComponents)
 
     const squareShouldBeInteractable = useCallback(() => {
-        const [line, column] = id.split("/")
-        return activeSquares[line]?.[column] &&
-            activeSquares[line][column] !== undefined &&
-            activeSquares[line][column] &&
-            isSquareChoice
-    }, [activeSquares, id, isSquareChoice])
+        if (!isSquareChoice) {
+            return false
+        } else {
+            for (const action of aliases[currentAlias]) {
+                if (action.id === id) {
+                    return true
+                }
+            }
+        }
+    }, [id, isSquareChoice])
 
     const classAliasToName = (alias: string) => {
         let result
@@ -64,29 +73,30 @@ const TileEntity = (props: {
         return result + (className ? ` ${className}` : "")
     }
 
-    const handleTileClick = () => {
-        if (currentClassAlias !== "default" && isSquareChoice) {
-            if (chosenSquare !== id) {
-                dispatch(setChosenSquare({
-                    square: id
-                }))
-            } else {
-                dispatch(setChosenSquare({
-                    square: ""
-                }))
-            }
+    const handleDoubleClick = () => {
+        if (isSquareChoice) {
+            dispatch(addHighlightedComponent(id))
+            dispatch(
+                setChosenAction({
+                    chosenActionValue: id,
+                    translatedActionValue: t(`${(descriptor)}.name`)
+                })
+            )
         }
     }
 
     useEffect(() => {
-        if (chosenSquare === id) {
+        if (
+            highlightedComponents && highlightedComponents[id] > 0
+        ) {
             setCurrentClassAlias("active")
-        } else if (squareShouldBeInteractable()) {
+        }
+        else if (squareShouldBeInteractable()) {
             setCurrentClassAlias("interactable")
         } else {
             setCurrentClassAlias("default")
         }
-    }, [chosenSquare, activeSquares, isSquareChoice, id, squareShouldBeInteractable])
+    }, [highlightedComponents])
 
     const generatePlaceholder = useCallback((key: string, glow: boolean = true) => {
         return <Placeholder as="p" animation={glow ? "glow" : undefined} style={{
@@ -127,7 +137,7 @@ const TileEntity = (props: {
             status_effects
         } = entity_info
         return [
-            t("local:game.components.tooltip.creature_and_line", {name: t(cmdToTranslation(name)), line, column}),
+            t("local:game.components.tooltip.creature_and_line", {name: t(name), line, column}),
             t("local:game.components.tooltip.health_max_health", {current_health, max_health}),
             t("local:game.components.tooltip.action_points", {current_action_points, max_action_points}),
             t("local:game.components.tooltip.armor", {current_armor, base_armor}),
@@ -143,7 +153,7 @@ const TileEntity = (props: {
     return <>
         <img
             src={generateAssetPath(dlc, descriptor)}
-            onClick={() => handleTileClick()}
+            onDoubleClick={handleDoubleClick}
             alt={descriptor !== "tile" ? dlc + "::" + descriptor : undefined}
             onError={(event) => {
                 event.currentTarget.src = fallback.path ? fallback.path : INVALID_ASSET_PATH

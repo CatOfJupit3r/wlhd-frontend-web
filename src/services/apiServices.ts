@@ -69,12 +69,19 @@ export const getActions = async (game_id: string, entity_id: string): Promise<Ac
     } catch (e) {
         console.error(e)
         return {
-            actions: [],
-            entity_name: "",
-            line: 0,
-            column: 0,
-            current_ap: 0,
-            max_ap: 0
+            root: [
+                {
+                    id: "builtins:skip",
+                    translation_info: {
+                        descriptor: "builtins:skip",
+                        co_descriptor: null
+                    },
+                    available: true,
+                    requires: null
+                }
+            ],
+            aliases: {},
+            alias_translations: {}
         }
     }
 }

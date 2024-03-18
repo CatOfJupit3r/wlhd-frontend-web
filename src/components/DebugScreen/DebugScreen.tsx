@@ -6,10 +6,9 @@ import {useNavigate} from "react-router-dom";
 import {
     fetchActions,
     resetTurn,
-    selectChosenAction, selectCurrentActions, selectEntityInControlInfo, selectIsLoadingCurrentActions,
     selectIsTurnActive,
-    selectReadyToSubmit, setCurrentActions,
-    setIsTurnActive, setReadyToSubmit
+    selectReadyToSubmit, setEntityActions,
+    setReadyToSubmit
 } from "../../redux/slices/turnSlice";
 import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
@@ -21,7 +20,7 @@ import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./DebugScreen.module.css";
 import {
     fetchAllEntitiesInfo,
-    fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo,
+    fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo, selectEntityInControlInfo,
     selectRound, setEndInfo, setRound
 } from "../../redux/slices/infoSlice";
 import Overlay from "../Overlay/Overlay";
@@ -40,43 +39,46 @@ const DebugScreen = () => {
     const isTurn = useSelector(selectIsTurnActive)
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
-    const submittedInput = useSelector(selectChosenAction)
-    const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
+    // const submittedInput = useSelector(selectChosenAction)
+    // const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
     const roundCount = useSelector(selectRound)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
     const endInfo = useSelector(selectEndInfo)
-    const currentAction = useSelector(selectCurrentActions)
+    // const currentAction = useSelector(selectCurrentActions)
 
     const setCurrentActionFromExample = () => {
         dispatch(
-            setCurrentActions({
-                actions: example
-            })
+            setEntityActions(example as any)
         )
     }
 
     const ActiveScreen = useCallback(() => {
         return <>
-             <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
-             <div id={"game-controller"} className={styles.gameControls}>
-                 <div id={"battle-info"} className={styles.battleInfo}>
-                     <Battlefield />
-                     <GameStateFeed />
-                 </div>
-                 <>
-                     <h1>
-                         {t("local:game.control_info", (() => {
-                             const result = activeEntityInfo
-                             if (result?.entity_name)
-                                 result.entity_name = t(result.entity_name)
-                             return result
-                         })())}
-                     </h1>
-                     <ActionInput/>
-                 </>
-             </div>
-         </>
-     }, [roundCount, activeEntityInfo, t])
+            <button onClick={() => setCurrentActionFromExample()}>
+                Set example action
+            </button>
+            <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
+            <h1 className={styles.roundHeader}>
+                {t("local:game.control_info", {
+                    name: activeEntityInfo?.name,
+
+                })
+                }
+            </h1>
+            <div id={"game-controller"} className={styles.gameControls}>
+                <div id={"battle-info"} className={styles.battleInfo}>
+                    <Battlefield/>
+                    <GameStateFeed/>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
+                        <ActionInput/>
+                    </div>
+                </div>
+            </div>
+        </>
+    }, [roundCount, activeEntityInfo, t])
 
     return (
         <>

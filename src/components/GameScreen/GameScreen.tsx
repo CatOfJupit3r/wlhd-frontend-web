@@ -7,10 +7,10 @@ import { io, Socket } from "socket.io-client";
 import {
     fetchActions,
     resetTurn,
-    selectChosenAction, selectCurrentActions, selectEntityInControlInfo, selectIsLoadingCurrentActions,
+    selectChosenAction,
     selectIsTurnActive,
     selectReadyToSubmit,
-    setIsTurnActive, setReadyToSubmit
+    setReadyToSubmit
 } from "../../redux/slices/turnSlice";
 import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
@@ -40,11 +40,11 @@ const GameScreen = () => {
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChosenAction)
-    const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
+    // const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
     const roundCount = useSelector(selectRound)
-    const activeEntityInfo = useSelector(selectEntityInControlInfo)
+    // const activeEntityInfo = useSelector(selectEntityInControlInfo)
     const endInfo = useSelector(selectEndInfo)
-    const currentAction = useSelector(selectCurrentActions)
+    // const currentAction = useSelector(selectCurrentActions)
 
     let retries: number = useMemo(() => 3, [])
 
@@ -100,7 +100,7 @@ const GameScreen = () => {
                 entity_id: (data as any).entity_id,
             }))
                 .finally(() => {
-                    console.log(currentAction)
+                    // console.log(currentAction)
                     socket.emit("debug")
                     // dispatch(setIsTurnActive({flag: true}))
                 })
@@ -163,50 +163,50 @@ const GameScreen = () => {
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
             socketEmitter("take_action", submittedInput)
-            dispatch(setReadyToSubmit({flag: false}))
+            // dispatch(setReadyToSubmit({flag: false}))
             dispatch(resetTurn())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
-    const ActiveScreen = useCallback(() => {
-        return <>
-            <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
-            {
-                isTurn && !isLoadingActions && activeEntityInfo ?
-                <h1>
-                    {t("local:game.its_your_turn", activeEntityInfo)}
-                </h1>
-                :
-                <h1>
-                    {t("local:game.not_your_turn")}
-                </h1>
-            }
-            <div id={"game-controller"} className={styles.gameControls}>
-                <div id={"battle-info"} className={styles.battleInfo}>
-                    <Battlefield />
-                    <GameStateFeed />
-                </div>
-                {isTurn ?
-                    isLoadingActions ?
-                        <h1>{t("local:game.pending.loading_actions")}</h1>
-                        :
-                        <>
-                            <h1>
-                                {t("local:game.control_info", (() => {
-                                    const result = activeEntityInfo
-                                    if (result?.entity_name)
-                                        result.entity_name = t(result.entity_name)
-                                    return result
-                                })())}
-                            </h1>
-                            <ActionInput/>
-                        </>
-                    :
-                   null
-                }
-            </div>
-        </>
-    }, [roundCount, isTurn, isLoadingActions, activeEntityInfo, t])
+    // const ActiveScreen = useCallback(() => {
+    //     return <>
+    //         <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
+    //         {
+    //             // isTurn && !isLoadingActions && activeEntityInfo ?
+    //             <h1>
+    //                 {/*{t("local:game.its_your_turn", activeEntityInfo)}*/}
+    //             </h1>
+    //             :
+    //             <h1>
+    //                 {t("local:game.not_your_turn")}
+    //             </h1>
+    //         }
+    //         <div id={"game-controller"} className={styles.gameControls}>
+    //             <div id={"battle-info"} className={styles.battleInfo}>
+    //                 <Battlefield />
+    //                 <GameStateFeed />
+    //             </div>
+    //             {isTurn ?
+    //                 // isLoadingActions ?
+    //                     <h1>{t("local:game.pending.loading_actions")}</h1>
+    //                     :
+    //                     <>
+    //                         <h1>
+    //                             {/*{t("local:game.control_info", (() => {*/}
+    //                             {/*    const result = activeEntityInfo*/}
+    //                             {/*    if (result?.entity_name)*/}
+    //                             {/*        result.entity_name = t(result.entity_name)*/}
+    //                             {/*    return result*/}
+    //                             {/*})())}*/}
+    //                         </h1>
+    //                         <ActionInput/>
+    //                     </>
+    //                 :
+    //                null
+    //             }
+    //         </div>
+    //     </>
+    // }, [roundCount, isTurn, isLoadingActions, activeEntityInfo, t])
 
     return (
         endInfo && endInfo.ended // if the game has ended, we show the end screen
@@ -219,10 +219,10 @@ const GameScreen = () => {
                 }}>{t("local:game.end.exit")}</button>
             </Overlay>
             : // if the game has not ended, we show the game screen
-            isActive // if the game has started, we show the game screen
-                ?
-                ActiveScreen() // if the game has started, we show the game screen
-                : // if the game has not started, we show the loading screen
+            // isActive // if the game has started, we show the game screen
+                // ?
+                // ActiveScreen() // if the game has started, we show the game screen
+                // : // if the game has not started, we show the loading screen
                 <Overlay>
                     <h1>{t("local:game.pending.not_started")}</h1>
                     <Spinner animation="grow" role="status"/>

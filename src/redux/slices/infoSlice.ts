@@ -197,3 +197,12 @@ export const selectCurrentBattlefield = (state: StoreState) => state.info.curren
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
 export const selectEntitiesInfo = (state: StoreState) => state.info.entities_info
 export const selectEndInfo = (state: StoreState) => state.info.endInfo
+// export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
+export const selectEntityInControlInfo = (state: StoreState) => (
+    {
+        name: "test",
+        square: "3/6",
+        current_ap: "30",
+        max_ap: "40"
+    }
+)
