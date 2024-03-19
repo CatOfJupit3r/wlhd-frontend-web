@@ -153,7 +153,6 @@ export const {
     setCurrentAlias,
     setScope,
     addHighlightedComponent,
-    resetHighlightedComponents,
     setChoice,
     setTranslatedChoice,
     setChosenAction,

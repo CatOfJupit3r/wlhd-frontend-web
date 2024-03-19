@@ -5,53 +5,69 @@ import {useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 
 import {
-    fetchActions, resetInfo,
-    selectChosenAction,
-    selectIsTurnActive,
-    selectReadyToSubmit,
-    setReadyToSubmit
+    fetchActions, resetInfo, selectChoices,
+    selectIsLoadingEntityActions,
+    selectReadyToSubmit, setEntityActions, setPlayersTurn
 } from "../../redux/slices/turnSlice";
 import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
 import {REACT_APP_BACKEND_URL} from "../../config/configs";
 import {selectGameId, selectIsActive, selectName, setActive} from "../../redux/slices/gameSlice";
-import {GameCommand, NewMessageCommand, TakeActionCommand} from "../../models/GameCommands";
 import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./GameScreen.module.css";
 import {
     fetchAllEntitiesInfo,
-    fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo,
+    fetchAllMessages, fetchBattlefield, fetchTheMessage, selectEndInfo, selectEntityInControlInfo,
     selectRound, setEndInfo, setRound
 } from "../../redux/slices/infoSlice";
 import Overlay from "../Overlay/Overlay";
 import {Spinner} from "react-bootstrap";
 import {AppDispatch} from "../../redux/store";
+import example from "../../data/example_action.json";
+import {
+    ActionResultsPayload,
+    BattleEndedPayload,
+    NewMessagePayload,
+    RoundUpdatePayload,
+    TakeActionPayload
+} from "../../models/Events";
 
 const GameScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate()
     const {t} = useTranslation()
+    const navigate = useNavigate()
 
     const username = useSelector(selectName)
     const isActive = useSelector(selectIsActive)
-    const isTurn = useSelector(selectIsTurnActive)
     const gameId = useSelector(selectGameId)
-    const inputReadyToSubmit = useSelector(selectReadyToSubmit)
-    const submittedInput = useSelector(selectChosenAction)
-    // const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
-    const roundCount = useSelector(selectRound)
-    // const activeEntityInfo = useSelector(selectEntityInControlInfo)
+    const isLoadingActions = useSelector(selectIsLoadingEntityActions)
+    const activeEntityInfo = useSelector(selectEntityInControlInfo)
     const endInfo = useSelector(selectEndInfo)
-    // const currentAction = useSelector(selectCurrentActions)
+    const inputReadyToSubmit = useSelector(selectReadyToSubmit)
+    const submittedInput = useSelector(selectChoices)
+    const roundCount = useSelector(selectRound)
+
+
+    const setCurrentActionFromExample = useCallback(() => {
+        dispatch(
+            setEntityActions(example as any)
+        )
+    }, [dispatch])
+
 
     let retries: number = useMemo(() => 3, [])
 
     const socketRef = useRef<Socket | null>(null);
 
-    const socketEmitter = useCallback((command: string, payload: any) => {
+    const socketEmitter = useCallback((event: string, payload: {
+        [key: string]: string
+    } | undefined = undefined) => {
+        if (!socketRef.current) {
+            return
+        }
         try {
-            socketRef.current?.emit(command, payload)
+            socketRef.current?.emit(event, payload)
         }
         catch (e) {
             console.error("Error occurred during emitting of socket: ", e)
@@ -92,16 +108,17 @@ const GameScreen = () => {
                 await dispatch(fetchAllMessages(gameId))
             })()
         });
-        socket.on("take_action", (data: TakeActionCommand) => {
-            console.log(data)
+        socket.on("take_action", (data: TakeActionPayload) => {
             dispatch(fetchActions({
                 game_id: gameId,
                 entity_id: (data as any).entity_id,
             }))
-                .finally(() => {
-                    // console.log(currentAction)
-                    socket.emit("debug")
-                    // dispatch(setIsTurnActive({flag: true}))
+                .then(() => {
+                    dispatch(setPlayersTurn(true))
+                })
+                .catch((e) => {
+                    console.error("Error occurred during fetching of actions: ", e)
+                    socketEmitter("unable_to_take_action")
                 })
         })
         socket.on("battle_started", () => {
@@ -113,18 +130,25 @@ const GameScreen = () => {
                 dispatch(setActive({isActive: true}))
             })
         });
-        socket.on("round_update", (data: GameCommand) => {
-            dispatch(setRound({round: data.payload?.round ? data.payload.round : 1}))
+        socket.on("round_update", (data: RoundUpdatePayload) => {
+            dispatch(setRound({round: data.round_number ? data.round_number : '1'}))
         });
-        socket.on("new_message", (data: NewMessageCommand) => {
-            dispatch(fetchTheMessage({game_id: gameId, message: data.payload.message}))
+        socket.on("new_message", (data: NewMessagePayload) => {
+            dispatch(fetchTheMessage({game_id: gameId, message: data.message}))
             dispatch(fetchAllEntitiesInfo(gameId))
         });
         socket.on("battlefield_updated", () => {
             dispatch(fetchBattlefield(gameId))
             dispatch(fetchAllEntitiesInfo(gameId))
         });
-        socket.on("action_result", (data: any) => {
+        socket.on("choices_timeout", () => {
+            dispatch(setNotify({
+                message: t("local:game.actions.timeout"),
+                code: 500
+            }))
+            dispatch(resetInfo())
+        })
+        socket.on("action_result", (data: ActionResultsPayload) => {
             try {
                 dispatch(setNotify({
                     message: data.code === 200 ? t("local:success") : t("local:error"),
@@ -134,9 +158,9 @@ const GameScreen = () => {
                 console.error("Error occurred during handling of socket: ", e)
             }
         });
-        socket.on("battle_ended", (data: any) => {
+        socket.on("battle_ended", (data: BattleEndedPayload) => {
             console.log("Game has ended")
-            dispatch(setEndInfo({ended: true, winner: data.payload.battle_result}))
+            dispatch(setEndInfo({ended: true, winner: data.battle_result}))
             dispatch(setActive({isActive: false}))
             socket.disconnect()
         });
@@ -161,51 +185,59 @@ const GameScreen = () => {
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            // socketEmitter("take_action", submittedInput)
-            dispatch(setReadyToSubmit(false))
+            socketEmitter("take_action", submittedInput)
+            dispatch(setNotify({
+                message: JSON.stringify(submittedInput),
+                code: 200
+            }))
             dispatch(resetInfo())
         }
-    }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
+    }, [inputReadyToSubmit, submittedInput, dispatch]);
 
-    // const ActiveScreen = useCallback(() => {
-    //     return <>
-    //         <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
-    //         {
-    //             // isTurn && !isLoadingActions && activeEntityInfo ?
-    //             <h1>
-    //                 {/*{t("local:game.its_your_turn", activeEntityInfo)}*/}
-    //             </h1>
-    //             :
-    //             <h1>
-    //                 {t("local:game.not_your_turn")}
-    //             </h1>
-    //         }
-    //         <div id={"game-controller"} className={styles.gameControls}>
-    //             <div id={"battle-info"} className={styles.battleInfo}>
-    //                 <Battlefield />
-    //                 <GameStateFeed />
-    //             </div>
-    //             {isTurn ?
-    //                 // isLoadingActions ?
-    //                     <h1>{t("local:game.pending.loading_actions")}</h1>
-    //                     :
-    //                     <>
-    //                         <h1>
-    //                             {/*{t("local:game.control_info", (() => {*/}
-    //                             {/*    const result = activeEntityInfo*/}
-    //                             {/*    if (result?.entity_name)*/}
-    //                             {/*        result.entity_name = t(result.entity_name)*/}
-    //                             {/*    return result*/}
-    //                             {/*})())}*/}
-    //                         </h1>
-    //                         <ActionInput/>
-    //                     </>
-    //                 :
-    //                null
-    //             }
-    //         </div>
-    //     </>
-    // }, [roundCount, isTurn, isLoadingActions, activeEntityInfo, t])
+    const ActiveScreen = useCallback(() => {
+        return <>
+            <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
+            <h1 className={styles.roundHeader}>
+                {t("local:game.control_info", {
+                    name: activeEntityInfo?.name,
+
+                })
+                }
+            </h1>
+            <div id={"game-controller"} className={styles.gameControls}>
+                <div id={"battle-info"} className={styles.battleInfo}>
+                    <Battlefield/>
+                    <GameStateFeed/>
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
+                        {
+                            isLoadingActions ?
+                            <Overlay>
+                                <h1>{t("local:game.actions.loading")}</h1>
+                                <Spinner role="status"/>
+                            </Overlay>
+                                :
+                            <ActionInput/>
+                        }
+                    </div>
+                </div>
+            </div>
+        </>
+    }, [roundCount, activeEntityInfo, t, setCurrentActionFromExample])
+
+    useEffect(() => {
+        if (inputReadyToSubmit && submittedInput) {
+            // socketEmitter("take_action", submittedInput)
+            dispatch(setNotify({
+                message: JSON.stringify(submittedInput),
+                code: 200
+            }))
+            dispatch(resetInfo())
+        }
+    }, [inputReadyToSubmit, submittedInput, dispatch]);
+
 
     return (
         endInfo && endInfo.ended // if the game has ended, we show the end screen
@@ -218,10 +250,10 @@ const GameScreen = () => {
                 }}>{t("local:game.end.exit")}</button>
             </Overlay>
             : // if the game has not ended, we show the game screen
-            // isActive // if the game has started, we show the game screen
-                // ?
-                // ActiveScreen() // if the game has started, we show the game screen
-                // : // if the game has not started, we show the loading screen
+            isActive // if the game has started, we show the game screen
+                ?
+                ActiveScreen() // if the game has started, we show the game screen
+                : // if the game has not started, we show the loading screen
                 <Overlay>
                     <h1>{t("local:game.pending.not_started")}</h1>
                     <Spinner animation="grow" role="status"/>
