@@ -119,7 +119,6 @@ const turnSlice = createSlice({
         },
         setChosenAction(state, action: PayloadAction<{ chosenActionValue: string, translatedActionValue: string }>) {
             state.chosenAction = action.payload;
-
         },
         resetChosenAction(state) {
             state.chosenAction = initialState.chosenAction;
