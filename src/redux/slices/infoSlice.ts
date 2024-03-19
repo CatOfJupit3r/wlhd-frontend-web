@@ -193,7 +193,12 @@ export const {
 
 export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
-export const selectCurrentBattlefield = (state: StoreState) => state.info.current_battlefield
+export const selectBattlefieldMold = (state: StoreState) => state.info.current_battlefield.battlefield
+export const selectConnectors = (state: StoreState) => state.info.current_battlefield.game_descriptors.connectors
+export const selectColumns = (state: StoreState) => state.info.current_battlefield.game_descriptors.columns
+export const selectLines = (state: StoreState) => state.info.current_battlefield.game_descriptors.lines
+export const selectSeparators = (state: StoreState) => state.info.current_battlefield.game_descriptors.separators
+export const selectFieldComponents = (state: StoreState) => state.info.current_battlefield.game_descriptors.field_components
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
 export const selectEntitiesInfo = (state: StoreState) => state.info.entities_info
 export const selectEndInfo = (state: StoreState) => state.info.endInfo

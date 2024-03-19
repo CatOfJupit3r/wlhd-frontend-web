@@ -164,7 +164,6 @@ const ActionInput = () => {
     }
 
     const deepDepthScreen = useCallback(() => {
-        console.log(choices, translatedChoices)
         return (
             <>
                 <h1>{t("local:game.actions.you_chose")}</h1>

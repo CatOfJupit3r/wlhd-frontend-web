@@ -10,9 +10,10 @@ import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../../redux/sli
 import useLocalization from "../../../hooks/useLocalization";
 import {
     addHighlightedComponent,
-    selectAliases,
-    selectCurrentAlias, selectHighlightedComponents,
-    selectIsSquareChoice, selectScope, setChosenAction, setSquareChoice
+    selectHighlightedComponents,
+    selectIsSquareChoice,
+    setChosenAction,
+    setSquareChoice
 } from "../../../redux/slices/turnSlice";
 
 
@@ -20,6 +21,7 @@ const TileEntity = (props: {
     full_descriptor: string,
     className?: string,
     id: string,
+    active_tiles: {[key: string]: boolean},
     fallback: {
         path: string,
         alt?: string
@@ -39,25 +41,26 @@ const TileEntity = (props: {
     const [currentClassAlias, setCurrentClassAlias] = useState("default")
 
     const isSquareChoice = useSelector(selectIsSquareChoice)
-    const currentAlias = useSelector(selectCurrentAlias)
-    const aliases = useSelector(selectAliases)
     const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     const entities_info = useSelector(selectEntitiesInfo)
     const highlightedComponents = useSelector(selectHighlightedComponents)
-    const scope = useSelector(selectScope)
+
+    const [activeTiles, setActiveTiles] = useState(props.active_tiles)
+
+    useEffect(() => {
+        setActiveTiles(props.active_tiles)
+    }, [props.active_tiles, setActiveTiles])
 
     const squareShouldBeInteractable = useCallback(() => {
         if (!isSquareChoice) {
             return false
         } else {
-            for (const action of aliases[scope[currentAlias]]) {
-                if (action.id === id) {
-                    return true
-                }
+            if (id in activeTiles && activeTiles[id]) {
+                return true
             }
         }
         return false
-    }, [id, isSquareChoice, currentAlias, aliases, scope])
+    }, [id, isSquareChoice, activeTiles])
 
     const classAliasToName = useCallback((alias: string) => {
         let result
@@ -76,7 +79,7 @@ const TileEntity = (props: {
     }, [className, descriptor])
 
     const handleDoubleClick = useCallback(() => {
-        if (isSquareChoice) {
+        if (isSquareChoice && id in activeTiles && activeTiles[id]) {
             dispatch(addHighlightedComponent(id))
             dispatch(
                 setChosenAction({
@@ -86,7 +89,7 @@ const TileEntity = (props: {
             )
             dispatch(setSquareChoice(false))
         }
-    }, [id, isSquareChoice])
+    }, [id, isSquareChoice, dispatch])
 
     useEffect(() => {
         if (
@@ -151,7 +154,7 @@ const TileEntity = (props: {
                         t("local:game.components.tooltip.no_status_effects")
                     )})
         ].map((key) => <p key={key}>{key}</p>)
-    }, [entities_info])
+    }, [entities_info, emptyTooltipContent, localize, t, id, generatePlaceholder])
 
     return <>
         <img
