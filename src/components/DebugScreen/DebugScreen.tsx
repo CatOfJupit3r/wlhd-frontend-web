@@ -13,11 +13,13 @@ import {setNotify} from "../../redux/slices/notifySlice";
 import GameStateFeed from "../GameStateFeed/GameStateFeed";
 import styles from "./DebugScreen.module.css";
 import {
+    addMessage,
     selectEntityInControlInfo,
     selectRound
 } from "../../redux/slices/infoSlice";
 import {AppDispatch} from "../../redux/store";
 import example from "../../data/example_action.json"
+import {GameStateMessage} from "../../models/Battlefield";
 
 
 const DebugScreen = () => {
@@ -35,10 +37,59 @@ const DebugScreen = () => {
         )
     }, [dispatch])
 
+    const addRandomMessage = useCallback(() => {
+        const randomMessages: {[key: string]: GameStateMessage[]}[] = [
+            {
+                "0x0001": [
+                    {
+                        main_string: "builtins:creature_cant_attack",
+                        format_args: {
+                            entity_name: {
+                                main_string: "nyrzamaer:dortyn.name",
+                            }
+                        }
+                    },
+                    {
+                        main_string: "builtins:creature_cant_attack",
+                        format_args: {
+                            entity_name: {
+                                main_string: "nyrzamaer:dortyn.name",
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "0x0002": [
+                    {
+                        main_string: "builtins:creature_cant_attack",
+                        format_args: {
+                            entity_name: {
+                                main_string: "nyrzamaer:dortyn.name",
+                            }
+                        }
+                    },
+                    {
+                        main_string: "builtins:creature_cant_attack",
+                        format_args: {
+                            entity_name: {
+                                main_string: "nyrzamaer:dortyn.name",
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+        dispatch(addMessage(randomMessages[Math.floor(Math.random() * randomMessages.length)]))
+    }, [dispatch])
+
     const ActiveScreen = useCallback(() => {
         return <>
             <button onClick={() => setCurrentActionFromExample()}>
                 Set example action
+            </button>
+            <button onClick={() => addRandomMessage()}>
+                Add random message
             </button>
             <h1 className={styles.roundHeader}>{t("local:game.round_n", {round: roundCount})}</h1>
             <h1 className={styles.roundHeader}>

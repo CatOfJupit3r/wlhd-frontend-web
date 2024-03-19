@@ -1,4 +1,4 @@
-import {EntityInfo, GameStateMessages} from "./Battlefield";
+import {EntityInfo, GameStateContainer} from "./Battlefield";
 import {ActionInput as ActionInputInterface} from "./ActionInput";
 
 export interface notifyState {
@@ -43,7 +43,7 @@ export interface TurnState {
 
 export interface InfoState {
     round: number;
-    allMessages: GameStateMessages;
+    allMessages: GameStateContainer;
     isLoadingBattlefield: boolean;
     isLoadingEntitiesInfo: boolean;
     isLoadingCurrentEntityInfo: boolean;

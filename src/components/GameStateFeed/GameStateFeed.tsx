@@ -6,13 +6,12 @@ import {
     MdOutlineKeyboardDoubleArrowRight
 } from "react-icons/md";
 import styles from "./GameStateFeed.module.css"
-import useLocalization from "../../hooks/useLocalization";
 import {useSelector} from "react-redux";
 import {selectAllMessages} from "../../redux/slices/infoSlice";
+import {GameStateMessage} from "../../models/Battlefield";
 
 const GameStateFeed = () => {
 
-    const localize = useLocalization();
     const {t} = useTranslation();
 
     const messages = useSelector(selectAllMessages)
@@ -22,6 +21,22 @@ const GameStateFeed = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [symbolsPerPage, ] = useState(400);
 
+    const formTranslation = useCallback((msg: GameStateMessage) => {
+        if (msg.format_args === undefined) {
+            return t(msg.main_string)
+        }
+        const keys = Object.keys(msg.format_args)
+        let newArgs: {[key: string]: string} = {}
+        for (let key of keys) {
+            const arg = msg.format_args[key]
+            if (typeof arg === "string") {
+                newArgs[key] = arg
+            } else {
+                newArgs[key] = formTranslation(arg)
+            }
+        }
+        return t(msg.main_string, newArgs)
+    }, [t])
 
     useEffect(() => {
         try {
@@ -35,9 +50,8 @@ const GameStateFeed = () => {
                 let newPage = ""
                 for (let address of memoryCells) {
                     const message = messages[address]
-                    console.log(message)
                     for (let cmd of message) {
-                        newPage += localize(cmd) + "\n"
+                        newPage += formTranslation(cmd) + "\n"
                     }
                 }
                 let choppedPages = ""
@@ -51,7 +65,7 @@ const GameStateFeed = () => {
         } catch (e) {
             console.log(e)
         }
-    }, [messages, pages, translatedMessages, symbolsPerPage, localize]);
+    }, [messages, pages, translatedMessages, symbolsPerPage]);
 
     const displayPage = useCallback((): JSX.Element => {
         return (

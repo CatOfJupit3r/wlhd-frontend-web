@@ -143,6 +143,9 @@ const InfoSlice = createSlice({
             }
         }) => {
             return {...state, endInfo: action.payload}
+        },
+        addMessage: (state, action) => {
+            return {...state, allMessages: {...state.allMessages, ...action.payload}}
         }
     },
     extraReducers: (builder) => {
@@ -189,6 +192,7 @@ export default InfoSlice.reducer;
 export const {
     setRound,
     setEndInfo,
+    addMessage
 } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round

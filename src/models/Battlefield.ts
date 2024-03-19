@@ -29,13 +29,17 @@ export interface ParsedBattlefield {
 },
  */
 
-export interface GameStateMessages {
-    [key: string]: Array<
-        [
-            string,
-            Array<string | Array<string>> | undefined
-        ]
-    >
+
+export interface GameStateMessage {
+    main_string: string;
+    format_args?: {
+        [key: string]: string | GameStateMessage
+    };
+}
+
+
+export interface GameStateContainer {
+    [key: string]: Array<GameStateMessage>
 }
 
 export interface EntityInfo {
