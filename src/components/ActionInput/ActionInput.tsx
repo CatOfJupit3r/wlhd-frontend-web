@@ -10,10 +10,10 @@ import {
     selectAliasTranslations,
     selectChoices, selectChosenAction,
     selectCurrentAlias,
-    selectEntityActions, selectReadyToSubmit,
-    selectScope,
+    selectEntityActions, selectIsSquareChoice,
+    selectScope, selectTranslatedChoices,
     setChoice,
-    setCurrentAlias,
+    setCurrentAlias, setReadyToSubmit,
     setScope, setSquareChoice,
     setTranslatedChoice
 
@@ -26,6 +26,7 @@ import {
 } from "react-icons/bs";
 
 import ActionCard from "./ActionCard";
+import {RxArrowTopRight} from "react-icons/rx";
 
 
 /*
@@ -51,6 +52,8 @@ const ActionInput = () => {
     const scope = useSelector(selectScope)
     const aliases = useSelector(selectAliases)
     const chosenActionStore = useSelector(selectChosenAction)
+    const translatedChoices = useSelector(selectTranslatedChoices)
+    const isSquareChoice = useSelector(selectIsSquareChoice)
 
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
@@ -73,19 +76,27 @@ const ActionInput = () => {
             }))
             dispatch(
                 setTranslatedChoice({
-                    key: aliasesTranslations[currentAlias],
+                    key: t(
+                        currentAlias && currentAlias !== "root" ?
+                            aliasesTranslations[scope[currentAlias]]
+                            :
+                            aliasesTranslations[currentAlias]
+                    ),
                     value: chosenActionStore.translatedActionValue
                 })
             )
             dispatch(
                 setChoice({
-                    key: currentAlias,
+                    key: currentAlias && currentAlias !== "root" ? currentAlias : "action",
                     value: chosenActionStore.chosenActionValue
                 })
             )
+            if (isSquareChoice) {
+                dispatch(setSquareChoice(false))
+            }
             dispatch(resetChosenAction())
         }
-    }, [chosenActionStore]);
+    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, isSquareChoice]);
 
     const generateOptions = useCallback((): JSX.Element | JSX.Element[] => {
         let action: Action[] = []
@@ -104,10 +115,11 @@ const ActionInput = () => {
             return <h1>{t("local:game.actions.no_available_actions")}</h1>
         }
 
-        if (aliasValue.startsWith("Square")) {
-            dispatch(setSquareChoice(true))
+        if (aliasValue.startsWith("Square") && choices[currentAlias] === undefined) {
+            return <h1>
+                {t("local:game.actions.choose_square")}
+            </h1>
         }
-
 
         return action.map((action: Action, index: number) => {
             return (
@@ -121,45 +133,17 @@ const ActionInput = () => {
         })
     }, [t, currentAlias, aliases])
 
-    // const finalDepthScreen = () => {
-    //     return (
-    //         <>
-    //             <h1>{t("local:game.actions.you_chose")}</h1>
-    //             {
-    //                 displayedActions !== undefined ?
-    //                     <p>
-    //                         {
-    //                         Object.entries(displayedActions)
-    //                                 .map(([key, value]) => `${t(cmdToTranslation(key))}: ${t(cmdToTranslation(value))}`)
-    //                                 .join(', ')
-    //                         }
-    //                     </p>
-    //                     :
-    //                     <h2>{t("local:game.actions.nothing?")}</h2>
-    //             }
-    //             <RxArrowTopRight
-    //                 onClick={() => {
-    //                     if (chosenActionStore === undefined || chosenActionStore?.action === "") {
-    //                         dispatch(setChosenActionStore({
-    //                             key: "action",
-    //                             action_value: "skip"
-    //                         }))
-    //                     }
-    //                         dispatch(setIsTurnActive({
-    //                             flag: false
-    //                         }))
-    //                         dispatch(setReadyToSubmit({
-    //                             flag: true
-    //                         }))
-    //                 }}
-    //             />
-    //             <BsArrowBarLeft onClick={() => {
-    //                 setReachedFinalDepth(false)
-    //                 handleReset()
-    //             }}/>
-    //         </>
-    //     )
-    // }
+    useEffect(() => {
+        const aliasValue = scope[currentAlias]
+        if (!currentAlias || aliasValue === undefined) {
+            return
+        }
+        if (aliasValue.startsWith("Square") && choices[currentAlias] === undefined) {
+            dispatch(setSquareChoice(true))
+        } else {
+            dispatch(setSquareChoice(false))
+        }
+    }, [currentAlias, choices, scope, dispatch, t])
 
     const shallowDepthScreen = () => {
         return (
@@ -180,13 +164,41 @@ const ActionInput = () => {
     }
 
     const deepDepthScreen = useCallback(() => {
-        alert("You have reached final depth")
-        alert(JSON.stringify(choices))
-        // dispatch(resetInput()) // this causes infinite loop, i don't know how to fix bruh
-        return <h1>
-            {t("local:game.actions.no_more_actions")}
-        </h1>
-    }, [dispatch, t])
+        console.log(choices, translatedChoices)
+        return (
+            <>
+                <h1>{t("local:game.actions.you_chose")}</h1>
+                {
+                    translatedChoices !== undefined ?
+                        <p>
+                            {
+                            Object.entries(translatedChoices)
+                                    .map(([key, value]) => `${t(key)}: ${t(value)}`)
+                                    .join(', ')
+                            }
+                        </p>
+                        :
+                        <h2>{t("local:game.actions.nothing?")}</h2>
+                }
+                <RxArrowTopRight
+                    onClick={() => {
+                        if (choices === undefined) {
+                            dispatch(setChoice({
+                                key: "action",
+                                value: "builtins:skip"
+                            }))
+                        }
+                        dispatch(setReadyToSubmit(true))
+                    }
+                    }
+                />
+                <BsArrowBarLeft onClick={() => {
+                    setReachedFinalDepth(false)
+                    handleReset()
+                }}/>
+            </>
+        )
+    }, [dispatch, t, choices, translatedChoices, handleReset])
 
     useEffect( () => {
         if (!currentAlias || choices[currentAlias] === undefined) {

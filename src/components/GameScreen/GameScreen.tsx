@@ -5,8 +5,7 @@ import {useNavigate} from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 
 import {
-    fetchActions,
-    resetInput,
+    fetchActions, resetInfo,
     selectChosenAction,
     selectIsTurnActive,
     selectReadyToSubmit,
@@ -162,9 +161,9 @@ const GameScreen = () => {
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            socketEmitter("take_action", submittedInput)
-            // dispatch(setReadyToSubmit({flag: false}))
-            dispatch(resetInput())
+            // socketEmitter("take_action", submittedInput)
+            dispatch(setReadyToSubmit(false))
+            dispatch(resetInfo())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 

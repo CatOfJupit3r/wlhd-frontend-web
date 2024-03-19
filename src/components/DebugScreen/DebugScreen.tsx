@@ -4,8 +4,8 @@ import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 
 import {
-    fetchActions,
-    resetInput,
+    fetchActions, resetInfo,
+    resetInput, selectChoices,
     selectIsTurnActive,
     selectReadyToSubmit, setEntityActions,
     setReadyToSubmit
@@ -39,7 +39,7 @@ const DebugScreen = () => {
     const isTurn = useSelector(selectIsTurnActive)
     const gameId = useSelector(selectGameId)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
-    // const submittedInput = useSelector(selectChosenAction)
+    const submittedInput = useSelector(selectChoices)
     // const isLoadingActions = useSelector(selectIsLoadingCurrentActions)
     const roundCount = useSelector(selectRound)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
@@ -79,6 +79,17 @@ const DebugScreen = () => {
             </div>
         </>
     }, [roundCount, activeEntityInfo, t, setCurrentActionFromExample])
+
+    useEffect(() => {
+        if (inputReadyToSubmit && submittedInput) {
+            // socketEmitter("take_action", submittedInput)
+            dispatch(setNotify({
+                message: JSON.stringify(submittedInput),
+                code: 200
+            }))
+            dispatch(resetInfo())
+        }
+    }, [inputReadyToSubmit, submittedInput, dispatch]);
 
     return (
         <>
