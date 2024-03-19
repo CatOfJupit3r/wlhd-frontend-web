@@ -7,7 +7,6 @@ import { Tooltip } from 'react-tooltip'
 import {Placeholder} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {selectEntitiesInfo, selectIsLoadingBattlefield} from "../../../redux/slices/infoSlice";
-import useLocalization from "../../../hooks/useLocalization";
 import {
     addHighlightedComponent,
     selectHighlightedComponents,
@@ -28,7 +27,6 @@ const TileEntity = (props: {
     }
 }) => {
     const dispatch = useDispatch()
-    const localize = useLocalization()
     const {t} = useTranslation()
 
     const {
@@ -150,11 +148,11 @@ const TileEntity = (props: {
             t("local:game.components.tooltip.status_effects",
                 {status_effects: (
                         status_effects && status_effects.length > 0 ?
-                        status_effects.map(([name, duration]) => `${localize([name])} (${duration})`).join(", ") :
+                        status_effects.map(([name, duration]) => `${t([name])} (${duration})`).join(", ") :
                         t("local:game.components.tooltip.no_status_effects")
                     )})
         ].map((key) => <p key={key}>{key}</p>)
-    }, [entities_info, emptyTooltipContent, localize, t, id, generatePlaceholder])
+    }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
 
     return <>
         <img
