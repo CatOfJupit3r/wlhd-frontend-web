@@ -116,6 +116,6 @@ export const parsedToJSX = (parsed: ParsedBattlefield) => {
     columnHelpRow("2")
 
     const timeAfter = performance.now()
-    console.debug(`Time to render battlefield: ${timeAfter - timeNow}ms`)
+    console.log(`Time to render battlefield: ${timeAfter - timeNow}ms`)
     return rendered
 }

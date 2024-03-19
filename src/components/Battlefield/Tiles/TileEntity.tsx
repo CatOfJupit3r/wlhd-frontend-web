@@ -12,7 +12,7 @@ import {
     addHighlightedComponent,
     selectAliases,
     selectCurrentAlias, selectHighlightedComponents,
-    selectIsSquareChoice, setChoice, setChosenAction
+    selectIsSquareChoice, selectScope, setChosenAction, setSquareChoice
 } from "../../../redux/slices/turnSlice";
 
 
@@ -44,18 +44,20 @@ const TileEntity = (props: {
     const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     const entities_info = useSelector(selectEntitiesInfo)
     const highlightedComponents = useSelector(selectHighlightedComponents)
+    const scope = useSelector(selectScope)
 
     const squareShouldBeInteractable = useCallback(() => {
         if (!isSquareChoice) {
             return false
         } else {
-            for (const action of aliases[currentAlias]) {
+            for (const action of aliases[scope[currentAlias]]) {
                 if (action.id === id) {
                     return true
                 }
             }
         }
-    }, [id, isSquareChoice])
+        return false
+    }, [id, isSquareChoice, currentAlias, aliases, scope])
 
     const classAliasToName = useCallback((alias: string) => {
         let result
@@ -79,9 +81,10 @@ const TileEntity = (props: {
             dispatch(
                 setChosenAction({
                     chosenActionValue: id,
-                    translatedActionValue: t(`${(descriptor)}.name`)
+                    translatedActionValue: id
                 })
             )
+            dispatch(setSquareChoice(false))
         }
     }, [id, isSquareChoice])
 
@@ -96,7 +99,7 @@ const TileEntity = (props: {
         } else {
             setCurrentClassAlias("default")
         }
-    }, [highlightedComponents])
+    }, [highlightedComponents, id, squareShouldBeInteractable])
 
     const generatePlaceholder = useCallback((key: string, glow: boolean = true) => {
         return <Placeholder as="p" animation={glow ? "glow" : undefined} style={{
