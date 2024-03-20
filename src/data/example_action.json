@@ -1,5 +1,5 @@
 {
-    "root": [
+    "action": [
         {
             "id": "builtins:item",
             "translation_info": {
@@ -237,7 +237,7 @@
         ]
     },
     "alias_translations": {
-        "root": "builtins:action",
+        "action": "builtins:action",
         "Square_-2168090085657816245": "builtins:square",
         "Weapon_1068332367469202604": "builtins:weapon"
     }

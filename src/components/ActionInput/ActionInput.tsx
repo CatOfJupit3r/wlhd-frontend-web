@@ -59,10 +59,10 @@ const ActionInput = () => {
 
     const handleReset = useCallback(() => {
         dispatch(resetInput())
-    }, [dispatch, initialActionLevel.root])
+    }, [dispatch, initialActionLevel.action])
 
     const handleDepth = (): JSX.Element => {
-        return currentAlias && currentAlias !== "root" ?
+        return currentAlias && currentAlias !== "action" ?
             <BsArrowBarLeft onClick={() => handleReset()}/>
             :
             <BsArrowBarLeft />
@@ -77,7 +77,7 @@ const ActionInput = () => {
             dispatch(
                 setTranslatedChoice({
                     key: t(
-                        currentAlias && currentAlias !== "root" ?
+                        currentAlias && currentAlias !== "action" ?
                             aliasesTranslations[scope[currentAlias]]
                             :
                             aliasesTranslations[currentAlias]
@@ -87,7 +87,7 @@ const ActionInput = () => {
             )
             dispatch(
                 setChoice({
-                    key: currentAlias && currentAlias !== "root" ? currentAlias : "action",
+                    key: currentAlias,
                     value: chosenActionStore.chosenActionValue
                 })
             )
@@ -102,8 +102,8 @@ const ActionInput = () => {
         let action: Action[] = []
         let aliasValue = ""
         if (currentAlias) {
-            if (currentAlias === "root") {
-                action = initialActionLevel.root
+            if (currentAlias === "action") {
+                action = initialActionLevel.action
             } else {
                 aliasValue = scope[currentAlias]
                 action = aliases[aliasValue]
@@ -203,9 +203,9 @@ const ActionInput = () => {
         if (!currentAlias || choices[currentAlias] === undefined) {
             return
         }
-        if (choices[currentAlias] !== undefined && currentAlias === "root") {
+        if (choices[currentAlias] !== undefined && currentAlias === "action") {
             const choice = choices[currentAlias]
-            const action = initialActionLevel.root.find((action: Action) => action.id === choice)
+            const action = initialActionLevel.action.find((action: Action) => action.id === choice)
             if (action) {
                 const nextRequirements = action.requires
                 if (nextRequirements) {
@@ -236,7 +236,7 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             }
         }
-    }, [choices, currentAlias, scope, initialActionLevel.root, dispatch, handleReset])
+    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset])
 
     return (
         <div id={"action-input"} style={{

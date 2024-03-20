@@ -13,7 +13,7 @@ export interface Action {
 }
 
 export interface ActionInput {
-    root: Array<Action>,
+    action: Array<Action>,
     aliases: {
         [key: string]:  Array<Action>
     },

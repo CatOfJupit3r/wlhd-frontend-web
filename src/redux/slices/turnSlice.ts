@@ -10,7 +10,7 @@ const initialState: TurnState = {
     isLoadingEntityActions: true,
     needToChooseSquare: false,
     entityActions: {
-        root: [{
+        action: [{
             id: "builtins:skip",
             translation_info: {
                 descriptor: "builtins:skip",
@@ -21,10 +21,10 @@ const initialState: TurnState = {
         }],
         aliases : {},
         alias_translations: {
-            root: "builtins:action"
+            action: "builtins:action"
         }
     },
-    currentAlias: "root",
+    currentAlias: "action",
     scope: {},
     highlightedComponents: {},
     choices: {},

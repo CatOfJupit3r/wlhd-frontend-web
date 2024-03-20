@@ -69,7 +69,7 @@ export const getActions = async (game_id: string, entity_id: string): Promise<Ac
     } catch (e) {
         console.error(e)
         return {
-            root: [
+            action: [
                 {
                     id: "builtins:skip",
                     translation_info: {
