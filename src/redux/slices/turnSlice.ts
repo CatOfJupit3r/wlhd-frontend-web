@@ -79,7 +79,7 @@ const turnSlice = createSlice({
                 isLoadingEntityActions: state.isLoadingEntityActions
             }
         },
-        resetInfo(state) {
+        resetInfo(_) {
             return {
                 ...initialState,
             };
@@ -126,6 +126,7 @@ const turnSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
+            console.log("Fetched actions: ", action.payload)
             state.entityActions = action.payload
             state.isLoadingEntityActions = false
         })
@@ -166,12 +167,8 @@ export const selectHighlightedComponents = (state: {turn: TurnState}) => state.t
 export const selectChoices = (state: {turn: TurnState}) => state.turn.choices;
 export const selectTranslatedChoices = (state: {turn: TurnState}) => state.turn.translatedChoices;
 export const selectIsLoadingEntityActions = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
-export const selectPlayersTurn = (state: {turn: TurnState}) => state.turn.playersTurn;
 export const selectReadyToSubmit = (state: {turn: TurnState}) => state.turn.readyToSubmit;
-export const selectIsTurnActive = (state: {turn: TurnState}) => state.turn.playersTurn && !state.turn.isLoadingEntityActions;
-export const selectIsTurnReady = (state: {turn: TurnState}) => state.turn.readyToSubmit;
 export const selectIsSquareChoice = (state: {turn: TurnState}) => state.turn.needToChooseSquare;
-export const selectIsLoading = (state: {turn: TurnState}) => state.turn.isLoadingEntityActions;
 export const selectAliasTranslations = (state: {turn: TurnState}) => state.turn.entityActions.alias_translations;
 export const selectAliases = (state: {turn: TurnState}) => state.turn.entityActions.aliases;
 export const selectChosenAction = (state: {turn: TurnState}) => state.turn.chosenAction;

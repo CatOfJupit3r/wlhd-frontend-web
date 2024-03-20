@@ -59,7 +59,7 @@ const ActionInput = () => {
 
     const handleReset = useCallback(() => {
         dispatch(resetInput())
-    }, [dispatch, initialActionLevel.action])
+    }, [dispatch])
 
     const handleDepth = (): JSX.Element => {
         return currentAlias && currentAlias !== "action" ?
@@ -96,7 +96,7 @@ const ActionInput = () => {
             }
             dispatch(resetChosenAction())
         }
-    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, isSquareChoice]);
+    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, isSquareChoice, scope]);
 
     const generateOptions = useCallback((): JSX.Element | JSX.Element[] => {
         let action: Action[] = []
@@ -131,7 +131,7 @@ const ActionInput = () => {
                 />
             )
         })
-    }, [t, currentAlias, aliases])
+    }, [t, currentAlias, aliases, scope, choices, initialActionLevel.action])
 
     useEffect(() => {
         const aliasValue = scope[currentAlias]
@@ -236,7 +236,7 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             }
         }
-    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset])
+    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset, reachedFinalDepth])
 
     return (
         <div id={"action-input"} style={{
