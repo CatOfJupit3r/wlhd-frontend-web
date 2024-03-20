@@ -87,7 +87,7 @@ const TileEntity = (props: {
             )
             dispatch(setSquareChoice(false))
         }
-    }, [id, isSquareChoice, dispatch])
+    }, [id, isSquareChoice, dispatch, activeTiles])
 
     useEffect(() => {
         if (
