@@ -27,7 +27,7 @@ export const getTranslations = async (language: string, dlc: string): Promise<{ 
         const response = await fetch(`${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {}
     }
 }
@@ -38,7 +38,7 @@ export const getGameField = async (game_id: string): Promise<Battlefield> => {
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/game_field`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {
             battlefield: [],
             game_descriptors: {
@@ -57,7 +57,7 @@ export const getGameState = async (game_id: string): Promise<{ [key: string]: st
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/game_state`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {}
     }
 }
@@ -67,7 +67,7 @@ export const getActions = async (game_id: string, entity_id: string): Promise<Ac
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {
             action: [
                 {
@@ -93,7 +93,7 @@ export const getMemoryCell = async (game_id: string, memory_cell: string): Promi
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/memory_cell/${memory_cell}`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {}
     }
 }
@@ -103,7 +103,7 @@ export const getAllMessages = async (game_id: string): Promise<{ [key: string]: 
         const response = await fetch(`${REACT_APP_BACKEND_URL}/${game_id}/all_messages`);
         return await response.json()
     } catch (e) {
-        console.error(e)
+        console.log(e)
         return {}
     }
 }

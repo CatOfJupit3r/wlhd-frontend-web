@@ -43,9 +43,8 @@ export interface GameStateContainer {
 }
 
 export interface EntityInfo {
-    name: string,
-    line: string,
-    column: string,
+    name: GameStateMessage,
+    square: [number, number],
     current_health: string,
     max_health: string,
     current_action_points: string,

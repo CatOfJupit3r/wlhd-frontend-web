@@ -70,7 +70,7 @@ const GameScreen = () => {
             socketRef.current?.emit(event, payload)
         }
         catch (e) {
-            console.error("Error occurred during emitting of socket: ", e)
+            console.log("Error occurred during emitting of socket: ", e)
         }
     }, [])
 
@@ -109,6 +109,8 @@ const GameScreen = () => {
             })()
         });
         socket.on("take_action", (data: TakeActionPayload) => {
+            dispatch(fetchBattlefield(gameId))
+            dispatch(fetchAllEntitiesInfo(gameId))
             dispatch(fetchActions({
                 game_id: gameId,
                 entity_id: (data as any).entity_id,
@@ -117,7 +119,7 @@ const GameScreen = () => {
                     dispatch(setPlayersTurn(true))
                 })
                 .catch((e) => {
-                    console.error("Error occurred during fetching of actions: ", e)
+                    console.log("Error occurred during fetching of actions: ", e)
                     socketEmitter("unable_to_take_action")
                 })
         })
@@ -155,7 +157,7 @@ const GameScreen = () => {
                         code: data.code
                 }))
             } catch (e) {
-                console.error("Error occurred during handling of socket: ", e)
+                console.log("Error occurred during handling of socket: ", e)
             }
         });
         socket.on("battle_ended", (data: BattleEndedPayload) => {
@@ -165,7 +167,7 @@ const GameScreen = () => {
             socket.disconnect()
         });
         socket.on("error", (data: any) => {
-            console.error("Error occurred during handling of socket: ", data)
+            console.log("Error occurred during handling of socket: ", data)
         });
         socket.on("disconnect", () => {
             console.log("Disconnected from game server");
@@ -174,7 +176,7 @@ const GameScreen = () => {
                 retries--
                 socket.connect()
             } else {
-                console.error("Could not reconnect to game server")
+                console.log("Could not reconnect to game server")
                 setTimeout(() => {
                     navigate('..');
                 }, 200);

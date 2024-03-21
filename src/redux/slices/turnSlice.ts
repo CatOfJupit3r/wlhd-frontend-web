@@ -131,7 +131,7 @@ const turnSlice = createSlice({
             state.isLoadingEntityActions = false
         })
         builder.addCase(fetchActions.rejected, (state, action) => {
-            console.error(action.error)
+            console.log(action.error)
             state.entityActions = initialState.entityActions
             state.isLoadingEntityActions = false
         })

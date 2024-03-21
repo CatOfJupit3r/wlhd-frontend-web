@@ -69,7 +69,7 @@ export const fetchAllMessages = createAsyncThunk(
                 return response.json();
             })
             .catch(error => {
-                console.error('There was a problem with the fetch operation: ', error);
+                console.log('There was a problem with the fetch operation: ', error);
                 return {}
             });
     }
@@ -86,7 +86,7 @@ export const fetchTheMessage = createAsyncThunk(
                 return response.json();
             })
             .catch(error => {
-                console.error('There was a problem with the fetch operation: ', error);
+                console.log('There was a problem with the fetch operation: ', error);
                 return {}
             });
     }
@@ -104,7 +104,7 @@ export const fetchCurrentEntityInfo = createAsyncThunk(
                 return response.json();
             })
             .catch(error => {
-                console.error('There was a problem with the fetch operation: ', error);
+                console.log('There was a problem with the fetch operation: ', error);
                 return {}
             });
     }
@@ -122,7 +122,7 @@ export const fetchAllEntitiesInfo = createAsyncThunk(
                 return response.json();
             })
             .catch(error => {
-                console.error('There was a problem with the fetch operation: ', error);
+                console.log('There was a problem with the fetch operation: ', error);
                 return {}
             });
     }
@@ -207,7 +207,7 @@ export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLo
 export const selectEntitiesInfo = (state: StoreState) => state.info.entities_info
 export const selectEndInfo = (state: StoreState) => state.info.endInfo
 // export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
-export const selectEntityInControlInfo = (state: StoreState) => (
+export const selectEntityInControlInfo = (_: StoreState) => (
     {
         name: "test",
         square: "3/6",

@@ -30,6 +30,9 @@ const ActionCard = (props: {
     const isHighlighted = highlightedComponents[option.id] > 0
 
     const handleDoubleClick = () => {
+        if (!option.available) {
+            return
+        }
         dispatch(setChoice({key: currentAlias, value: option.id}))
         dispatch(addHighlightedComponent(option.id))
         dispatch(setChosenAction(

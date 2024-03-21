@@ -59,6 +59,7 @@ export const JSX_BATTLEFIELD = (
             const alias = battlefield[i][j]
             const full_descriptor = field_components[alias]
             const tile_id = `${i + 1}/${j + 1}`
+            const isAlly = i + 1 > Math.floor(battlefield.length / 2)
             row.push(
                 <TileEntity
                     full_descriptor={full_descriptor}
@@ -66,8 +67,8 @@ export const JSX_BATTLEFIELD = (
                     key={tile_id}
                     active_tiles={active_tiles}
                     fallback={{
-                        path: "assets/builtins/invalid.png",
-                        alt: "invalid"
+                        path: isAlly ? "assets/builtins/ally.png" : "assets/builtins/enemy.png",
+                        alt: isAlly ? "ally" : "enemy"
                     }}
                 />
             )

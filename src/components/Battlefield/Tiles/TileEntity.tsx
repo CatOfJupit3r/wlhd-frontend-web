@@ -14,6 +14,7 @@ import {
     setChosenAction,
     setSquareChoice
 } from "../../../redux/slices/turnSlice";
+import useTranslatableString from "../../../hooks/useTranslatableString";
 
 
 const TileEntity = (props: {
@@ -28,6 +29,7 @@ const TileEntity = (props: {
 }) => {
     const dispatch = useDispatch()
     const {t} = useTranslation()
+    const translatableString = useTranslatableString()
 
     const {
         full_descriptor,
@@ -130,8 +132,7 @@ const TileEntity = (props: {
         }
         const {
             name,
-            line,
-            column,
+            square,
             current_health,
             max_health,
             current_action_points,
@@ -141,7 +142,7 @@ const TileEntity = (props: {
             status_effects
         } = entity_info
         return [
-            t("local:game.components.tooltip.creature_and_line", {name: t(name), line, column}),
+            t("local:game.components.tooltip.creature_and_line", {name: translatableString(name), square: square.join("|")}),
             t("local:game.components.tooltip.health_max_health", {current_health, max_health}),
             t("local:game.components.tooltip.action_points", {current_action_points, max_action_points}),
             t("local:game.components.tooltip.armor", {current_armor, base_armor}),

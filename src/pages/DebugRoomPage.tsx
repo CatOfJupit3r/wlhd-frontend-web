@@ -31,7 +31,7 @@ const DebugRoomPage = () => {
                             }
                             i18n.addResourceBundle(i18n.language, dlc, translations, true, true);
                         })
-                        .catch((e) => console.error(e))
+                        .catch((e) => console.log(e))
                 }
                 return [i18n.language, "ua-UK"].map((language) => {
                     addTranslations(language)
@@ -40,7 +40,7 @@ const DebugRoomPage = () => {
                 })
             })
         } catch (e) {
-            console.error(e)
+            console.log(e)
         }
     }, [i18n]);
 

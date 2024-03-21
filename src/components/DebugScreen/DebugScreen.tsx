@@ -95,7 +95,9 @@ const DebugScreen = () => {
             <h1 className={styles.roundHeader}>
                 {t("local:game.control_info", {
                     name: activeEntityInfo?.name,
-
+                    square: activeEntityInfo?.square,
+                    current_ap: activeEntityInfo?.current_ap,
+                    max_ap: activeEntityInfo?.max_ap,
                 })
                 }
             </h1>

@@ -8,11 +8,12 @@ import {
 import styles from "./GameStateFeed.module.css"
 import {useSelector} from "react-redux";
 import {selectAllMessages} from "../../redux/slices/infoSlice";
-import {GameStateMessage} from "../../models/Battlefield";
+import useTranslatableString from "../../hooks/useTranslatableString";
 
 const GameStateFeed = () => {
 
     const {t} = useTranslation();
+    const translatableString = useTranslatableString();
 
     const messages = useSelector(selectAllMessages)
 
@@ -20,23 +21,6 @@ const GameStateFeed = () => {
     const [translatedMessages, setTranslatedMessages] = useState(Array<string>());
     const [currentPage, setCurrentPage] = useState(1);
     const [symbolsPerPage, ] = useState(400);
-
-    const formTranslation = useCallback((msg: GameStateMessage) => {
-        if (msg.format_args === undefined) {
-            return t(msg.main_string)
-        }
-        const keys = Object.keys(msg.format_args)
-        let newArgs: {[key: string]: string} = {}
-        for (let key of keys) {
-            const arg = msg.format_args[key]
-            if (typeof arg === "string") {
-                newArgs[key] = arg
-            } else {
-                newArgs[key] = formTranslation(arg)
-            }
-        }
-        return t(msg.main_string, newArgs)
-    }, [t])
 
     useEffect(() => {
         try {
@@ -51,7 +35,7 @@ const GameStateFeed = () => {
                 for (let address of memoryCells) {
                     const message = messages[address]
                     for (let cmd of message) {
-                        newPage += formTranslation(cmd) + "\n"
+                        newPage += translatableString(cmd) + "\n"
                     }
                 }
                 let choppedPages = ""
