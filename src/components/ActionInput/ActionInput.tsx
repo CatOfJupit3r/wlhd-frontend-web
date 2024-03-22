@@ -112,7 +112,8 @@ const ActionInput = () => {
 
         if (!action || action.length === 0) {
             // add protocol to auto skip in this case and display error
-            return <h1>{t("local:game.actions.no_available_actions")}</h1>
+            dispatch(resetInput())
+            return [<h1>{t("local:game.actions.no_available_actions")}</h1>]
         }
 
         if (aliasValue.startsWith("Square") && choices[currentAlias] === undefined) {
@@ -146,6 +147,12 @@ const ActionInput = () => {
     }, [currentAlias, choices, scope, dispatch, t])
 
     const shallowDepthScreen = () => {
+        const options = generateOptions()
+        if (Array.isArray(options)) {
+            options.sort((a) => {
+                return a.props.option.available ? -1 : 1
+            })
+        }
         return (
             <>
                 <div id={"buttons"} className={styles.buttons} style={{
@@ -158,7 +165,7 @@ const ActionInput = () => {
                         }
                     </div>
                 </div>
-                {generateOptions()}
+                {options}
             </>
         )
     }

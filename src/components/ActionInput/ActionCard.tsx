@@ -51,8 +51,8 @@ const ActionCard = (props: {
             bg={isHighlighted ? "primary" : undefined}
             key={index}
             onDoubleClick={handleDoubleClick}
+            className={option.available ? styles.actionCardAvailable : styles.actionCardUnavailable}
             style={{
-                color: !isHighlighted ? "black" : "white",
                 width: "100%",
                 minWidth: "100%",
                 height: "6rem",

@@ -1,5 +1,14 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
-.actionCard {
+.actionCardAvailable:hover {
+    color: white;
+    background-color: #399ffa;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
 
+.actionCardUnavailable:hover {
+    background-color: #a8bccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
