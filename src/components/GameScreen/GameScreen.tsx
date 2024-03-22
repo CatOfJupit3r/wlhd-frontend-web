@@ -7,7 +7,7 @@ import { io, Socket } from "socket.io-client";
 import {
     fetchActions, resetInfo, selectChoices,
     selectIsLoadingEntityActions,
-    selectReadyToSubmit, setEntityActions, setPlayersTurn
+    selectReadyToSubmit, setPlayersTurn
 } from "../../redux/slices/turnSlice";
 import Battlefield from "../Battlefield/Battlefield";
 import ActionInput from "../ActionInput/ActionInput";
@@ -24,7 +24,6 @@ import {
 import Overlay from "../Overlay/Overlay";
 import {Spinner} from "react-bootstrap";
 import {AppDispatch} from "../../redux/store";
-import example from "../../data/example_action.json";
 import {
     ActionResultsPayload,
     BattleEndedPayload,
@@ -48,14 +47,6 @@ const GameScreen = () => {
     const submittedInput = useSelector(selectChoices)
     const roundCount = useSelector(selectRound)
 
-
-    const setCurrentActionFromExample = useCallback(() => {
-        dispatch(
-            setEntityActions(example as any)
-        )
-    }, [dispatch])
-
-
     let retries: number = useMemo(() => 3, [])
 
     const socketRef = useRef<Socket | null>(null);
@@ -77,6 +68,7 @@ const GameScreen = () => {
     useEffect(() => {
         if (!username || !gameId) { // If the user is not logged in or the game has not started, we redirect to the main page
             setTimeout(() => {
+                dispatch(resetInfo())
                 navigate('..');
             }, 200);
         }
@@ -100,14 +92,10 @@ const GameScreen = () => {
         })
         socket.on("connect", () => {
             console.log("Connected to game server");
-            setTimeout(() => {
-                socket.emit("start_combat")
-            }, 200);
-            (async () => {
-                await dispatch(fetchBattlefield(gameId))
-                await dispatch(fetchAllMessages(gameId))
-            })()
         });
+        socket.on("close", () => {
+            console.log("Disconnected from game server");
+        })
         socket.on("take_action", (data: TakeActionPayload) => {
             dispatch(fetchBattlefield(gameId))
             dispatch(fetchAllEntitiesInfo(gameId))
@@ -182,7 +170,7 @@ const GameScreen = () => {
                 }, 200);
             }
         })
-    }, [username, gameId, dispatch, t, navigate, retries]);
+    }, [username, gameId, dispatch, t, navigate, retries, socketEmitter]);
 
 
     useEffect(() => {
@@ -194,7 +182,7 @@ const GameScreen = () => {
             }))
             dispatch(resetInfo())
         }
-    }, [inputReadyToSubmit, submittedInput, dispatch]);
+    }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter]);
 
     const ActiveScreen = useCallback(() => {
         return <>
@@ -227,7 +215,7 @@ const GameScreen = () => {
                 </div>
             </div>
         </>
-    }, [roundCount, activeEntityInfo, t, setCurrentActionFromExample])
+    }, [roundCount, activeEntityInfo, t, isLoadingActions])
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {

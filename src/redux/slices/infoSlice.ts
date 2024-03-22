@@ -76,8 +76,9 @@ export const fetchAllMessages = createAsyncThunk(
 )
 
 export const fetchTheMessage = createAsyncThunk(
-    'info/fetchAMessage',
+    'info/fetchTheMessage',
     async ({game_id, message}: {game_id: string, message: string}) => {
+        console.log(GET_THE_MESSAGE(game_id, message))
         return await fetch(GET_THE_MESSAGE(game_id, message))
             .then(response => {
                 if (!response.ok) {
@@ -162,7 +163,7 @@ const InfoSlice = createSlice({
             return {...state, allMessages: action.payload}
         })
         builder.addCase(fetchTheMessage.fulfilled, (state, action) => {
-            return {...state, allMessages: {...state.allMessages, ...action.payload as any}}
+            return {...state, allMessages: {...state.allMessages, ...action.payload}}
         })
         builder.addCase(fetchCurrentEntityInfo.fulfilled, (state, action) => {
             return {...state, entities_info: {...state.entities_info, [action.payload.id]: action.payload}}

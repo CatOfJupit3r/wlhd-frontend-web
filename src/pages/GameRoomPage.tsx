@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {getTranslations} from "../services/apiServices";
 import {useTranslation} from "react-i18next";
 import GameScreen from "../components/GameScreen/GameScreen";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectGameId, selectName} from "../redux/slices/gameSlice";
 import {useNavigate} from "react-router-dom";
 import Overlay from "../components/Overlay/Overlay";
 import {Spinner} from "react-bootstrap";
+import { useBeforeUnload } from "react-router-dom";
+import {resetInfo} from "../redux/slices/turnSlice";
 
 
 /*
@@ -26,6 +28,7 @@ After this, socket will listen for commands from server:
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
     const {t, i18n} = useTranslation()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const nickName =  useSelector(selectName)
     const gameId = useSelector(selectGameId)
@@ -57,6 +60,14 @@ const GameRoomPage = () => {
             console.log(e)
         }
     }, [i18n]);
+
+    useBeforeUnload(
+        React.useCallback(() => {
+            dispatch(
+                resetInfo()
+            )
+        }, [dispatch])
+    );
 
     return (
         <>
