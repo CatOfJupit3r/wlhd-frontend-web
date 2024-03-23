@@ -11,7 +11,7 @@ function HomePage() {
 
     useEffect(() => {
         dispatch(resetInfo())
-    }, []);
+    }, [dispatch]);
 
     return (
         <>

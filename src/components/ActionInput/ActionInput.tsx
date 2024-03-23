@@ -132,7 +132,7 @@ const ActionInput = () => {
                 />
             )
         })
-    }, [t, currentAlias, aliases, scope, choices, initialActionLevel.action])
+    }, [t, currentAlias, aliases, scope, choices, initialActionLevel.action, dispatch])
 
     useEffect(() => {
         const aliasValue = scope[currentAlias]
