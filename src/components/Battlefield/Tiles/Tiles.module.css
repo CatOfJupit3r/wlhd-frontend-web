@@ -14,7 +14,7 @@
 }
 
 .withEntity {
-    background-image: url("/public/assets/builtins/tile.png");
+    background-image: url('/public/assets/builtins/tile.png');
     background-size: cover;
 }
 

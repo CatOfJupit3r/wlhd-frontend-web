@@ -1,35 +1,32 @@
-import React, {useCallback, useEffect} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
-import queryString from "query-string";
-import {useDispatch} from "react-redux";
-import {setName} from "../redux/slices/gameSlice";
+import queryString from 'query-string'
+import { useCallback, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { setName } from '../redux/slices/gameSlice'
 
 const LoginPage = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const location = useLocation()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const parsedQuery = queryString.parse(location.search);
+    const parsedQuery = queryString.parse(location.search)
 
-    const {nickname} = parsedQuery as {nickname: string};
+    const { nickname } = parsedQuery as { nickname: string }
 
     const redirect = useCallback(() => {
         if (nickname === undefined) {
-            navigate("..");
+            navigate('..')
         } else {
-            dispatch(setName({user_name: nickname}));
-            navigate("../game");
+            dispatch(setName({ user_name: nickname }))
+            navigate('../game')
         }
-    }, [nickname, dispatch, navigate]);
+    }, [nickname, dispatch, navigate])
 
     useEffect(() => {
-        redirect();
-    }, [redirect]);
+        redirect()
+    }, [redirect])
 
-    return (
-        <>
-        </>
-    )
-};
+    return <></>
+}
 
-export default LoginPage;
+export default LoginPage

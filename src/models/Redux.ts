@@ -1,33 +1,31 @@
-import {EntityInfo, GameStateContainer} from "./Battlefield";
-import {ActionInput as ActionInputInterface} from "./ActionInput";
+import { ActionInput as ActionInputInterface } from './ActionInput'
+import { EntityInfo, GameStateContainer } from './Battlefield'
 
 export interface notifyState {
-    message: string;
-    code: number;
+    message: string
+    code: number
 }
-
 
 export interface GameState {
-    user_name: string;
-    game_id: string;
-    isActive: boolean;
+    user_name: string
+    game_id: string
+    isActive: boolean
 }
 
-
 export interface TurnState {
-    playersTurn: boolean;
-    readyToSubmit: boolean;
-    isLoadingEntityActions: boolean;
-    needToChooseSquare: boolean;
+    playersTurn: boolean
+    readyToSubmit: boolean
+    isLoadingEntityActions: boolean
+    needToChooseSquare: boolean
 
-    entityActions: ActionInputInterface,
-    currentAlias: string,
+    entityActions: ActionInputInterface
+    currentAlias: string
     scope: {
         [key: string]: string
-    },
+    }
     highlightedComponents: {
         [key: string]: number // not only do we need to know which component was chosen, but also how many times it was chosen to not accidentally unhighlight it
-    },
+    }
     choices: {
         [key: string]: string
     }
@@ -35,38 +33,39 @@ export interface TurnState {
         [key: string]: string
     }
     chosenAction: {
-        chosenActionValue: string,
+        chosenActionValue: string
         translatedActionValue: string
     }
 }
 
-
 export interface InfoState {
-    round: number;
-    allMessages: GameStateContainer;
-    isLoadingBattlefield: boolean;
-    isLoadingEntitiesInfo: boolean;
-    isLoadingCurrentEntityInfo: boolean;
+    round: number
+    allMessages: GameStateContainer
+    isLoadingBattlefield: boolean
+    isLoadingEntitiesInfo: boolean
+    isLoadingCurrentEntityInfo: boolean
     endInfo: {
-        ended: boolean,
+        ended: boolean
         winner: string
-    };
+    }
     current_battlefield: {
-        battlefield: string[][],
+        battlefield: string[][]
         game_descriptors: {
-            lines: string[],
+            lines: string[]
             columns: string[]
             field_components: {
-                "0": string,
+                '0': string
                 [key: string]: string
-            },
+            }
             separators: string
             connectors: string
-        },
-    };
-    entities_info: {
-        [key: string]: EntityInfo
-    } | undefined
+        }
+    }
+    entities_info:
+        | {
+              [key: string]: EntityInfo
+          }
+        | undefined
 }
 
 export interface StoreState {
@@ -75,4 +74,3 @@ export interface StoreState {
     game: GameState
     info: InfoState
 }
-

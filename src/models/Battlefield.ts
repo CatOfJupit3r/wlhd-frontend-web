@@ -1,22 +1,22 @@
 export interface Battlefield {
-    battlefield: string[][];
+    battlefield: string[][]
     game_descriptors: {
-        columns: string[];
-        lines: string[];
-        connectors: string;
-        separators: string;
+        columns: string[]
+        lines: string[]
+        connectors: string
+        separators: string
         field_components: {
-            [key: string]: string;
+            [key: string]: string
         }
     }
 }
 
 export interface ParsedBattlefield {
-    battlefield: JSX.Element[][];
-    columns: (key: string) => JSX.Element[];
-    lines: (key: string) => JSX.Element[];
-    connectors: (key: string) => JSX.Element;
-    separators: (key: string) => JSX.Element;
+    battlefield: JSX.Element[][]
+    columns: (key: string) => JSX.Element[]
+    lines: (key: string) => JSX.Element[]
+    connectors: (key: string) => JSX.Element
+    separators: (key: string) => JSX.Element
 }
 
 /*
@@ -29,27 +29,25 @@ export interface ParsedBattlefield {
 },
  */
 
-
 export interface GameStateMessage {
-    main_string: string;
+    main_string: string
     format_args?: {
         [key: string]: string | GameStateMessage
-    };
+    }
 }
-
 
 export interface GameStateContainer {
     [key: string]: Array<GameStateMessage>
 }
 
 export interface EntityInfo {
-    name: GameStateMessage,
-    square: [number, number],
-    current_health: string,
-    max_health: string,
-    current_action_points: string,
-    max_action_points: string,
-    current_armor: string,
-    base_armor: string,
+    name: GameStateMessage
+    square: [number, number]
+    current_health: string
+    max_health: string
+    current_action_points: string
+    max_action_points: string
+    current_armor: string
+    base_armor: string
     status_effects: string[][] // [..., [name, duration], ...]
 }

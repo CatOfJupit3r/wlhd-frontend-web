@@ -9,11 +9,11 @@ export const getLanguageFiles = (): {
     }
 } => {
     return {
-        "en-US": {
-            "local": en_US
+        'en-US': {
+            local: en_US,
         },
-        "uk-UA": {
-            "local": ua_UK
-        }
+        'uk-UA': {
+            local: ua_UK,
+        },
     }
 }

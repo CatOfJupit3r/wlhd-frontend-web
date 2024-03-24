@@ -1,63 +1,14 @@
 {
     "battlefield": [
-        [
-            "0",
-            "0",
-            "0",
-            "0",
-            "0",
-            "0"
-        ],
-        [
-            "0",
-            "0",
-            "0",
-            "0",
-            "0",
-            "0"
-        ],
-        [
-            "0",
-            "0",
-            "0",
-            "0",
-            "0",
-            "1"
-        ],
-        [
-            "0",
-            "2",
-            "0",
-            "0",
-            "0",
-            "0"
-        ],
-        [
-            "0",
-            "0",
-            "0",
-            "0",
-            "0",
-            "0"
-        ],
-        [
-            "0",
-            "0",
-            "0",
-            "0",
-            "0",
-            "0"
-        ]
+        ["0", "0", "0", "0", "0", "0"],
+        ["0", "0", "0", "0", "0", "0"],
+        ["0", "0", "0", "0", "0", "1"],
+        ["0", "2", "0", "0", "0", "0"],
+        ["0", "0", "0", "0", "0", "0"],
+        ["0", "0", "0", "0", "0", "0"]
     ],
     "game_descriptors": {
-        "columns": [
-            "builtins:one",
-            "builtins:two",
-            "builtins:three",
-            "builtins:four",
-            "builtins:five",
-            "builtins:six"
-        ],
+        "columns": ["builtins:one", "builtins:two", "builtins:three", "builtins:four", "builtins:five", "builtins:six"],
         "connectors": "builtins:connector",
         "field_components": {
             "0": "builtins:tile",
