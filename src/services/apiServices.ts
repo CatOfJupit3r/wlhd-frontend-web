@@ -37,14 +37,12 @@ export const getGameField = async (game_id: string): Promise<Battlefield> => {
     } catch (e) {
         console.log(e)
         return {
-            battlefield: [],
-            game_descriptors: {
-                columns: [],
-                lines: [],
-                connectors: '',
-                separators: '',
-                field_components: {},
-            },
+            field: [],
+            columns: [],
+            lines: [],
+            connectors: '',
+            separators: '',
+            field_pawns: {},
         }
     }
 }

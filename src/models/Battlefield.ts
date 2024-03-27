@@ -1,13 +1,11 @@
 export interface Battlefield {
-    battlefield: string[][]
-    game_descriptors: {
-        columns: string[]
-        lines: string[]
-        connectors: string
-        separators: string
-        field_components: {
-            [key: string]: string
-        }
+    field: string[][]
+    columns: string[]
+    lines: string[]
+    connectors: string
+    separators: string
+    field_pawns: {
+        [key: string]: string
     }
 }
 
