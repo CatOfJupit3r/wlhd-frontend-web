@@ -1,6 +1,8 @@
+import axios from 'axios'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionInput } from '../models/ActionInput'
 import { Battlefield } from '../models/Battlefield'
+import authManager from './AuthManager'
 
 /*
 
@@ -104,4 +106,15 @@ export const getAllMessages = async (game_id: string): Promise<{ [key: string]: 
         console.log(e)
         return {}
     }
+}
+
+export const login = async (handle: string, password: string) => {
+    const response = await axios.post(`${REACT_APP_BACKEND_URL}/login`, { handle, password })
+    const { accessToken, refreshToken } = response.data
+    authManager.login({ accessToken, refreshToken })
+}
+
+export const createAccount = async (handle: string, password: string) => {
+    await axios.post(`${REACT_APP_BACKEND_URL}/register`, { handle, password })
+    await login(handle, password)
 }

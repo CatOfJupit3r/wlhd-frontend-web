@@ -6,23 +6,25 @@ import GameRoomPage from './pages/GameRoomPage'
 import HomePage from './pages/HomePage/HomePage'
 import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
     return (
-        <BrowserRouter>
-            <div className={'App'}>
+        <div className={'App'}>
+            <BrowserRouter>
                 <Routes>
                     <Route path={'/'} element={<MainLayout />}>
                         <Route index element={<HomePage />} />
                         <Route path="about" element={<AboutPage />} />
                         <Route path="game" element={<GameRoomPage />} />
+                        <Route path="register" element={<RegisterPage />} />
                         <Route path="login" element={<LoginPage />} />
                         <Route path="debug" element={<DebugRoomPage />} />
                     </Route>
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </div>
     )
 }
 

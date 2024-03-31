@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
+import AuthManager from '../../services/AuthManager'
 
 const Header: React.FC = () => {
     return (
@@ -20,8 +21,11 @@ const Header: React.FC = () => {
             <nav>
                 {' '}
                 {/* TODO: when navigating to other routes outside of game, then previous state is saved */}
-                <Link to="debug" relative={'path'} style={{ marginRight: '10px' }}>
-                    Debug Room
+                <Link to="login" relative={'path'} style={{ marginRight: '10px' }}>
+                    Login
+                </Link>
+                <Link to="register" relative={'path'} style={{ marginRight: '10px' }}>
+                    Register
                 </Link>
                 <Link to="." relative={'route'} style={{ marginRight: '10px' }}>
                     Home
@@ -29,6 +33,12 @@ const Header: React.FC = () => {
                 <Link to="about" relative={'path'}>
                     About
                 </Link>
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    AuthManager.logout()
+                }}>
+                    Logout
+                </button>
             </nav>
         </header>
     )
