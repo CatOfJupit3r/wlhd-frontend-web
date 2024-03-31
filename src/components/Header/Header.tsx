@@ -2,8 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 import AuthManager from '../../services/AuthManager'
+import { useIsLoggedIn } from '../../hooks/useIsLoggedIn'
 
 const Header: React.FC = () => {
+    const isLoggedIn = useIsLoggedIn()
+
     return (
         <header className={styles.header}>
             <p
@@ -21,24 +24,36 @@ const Header: React.FC = () => {
             <nav>
                 {' '}
                 {/* TODO: when navigating to other routes outside of game, then previous state is saved */}
-                <Link to="login" relative={'path'} style={{ marginRight: '10px' }}>
-                    Login
-                </Link>
-                <Link to="register" relative={'path'} style={{ marginRight: '10px' }}>
-                    Register
-                </Link>
                 <Link to="." relative={'route'} style={{ marginRight: '10px' }}>
                     Home
                 </Link>
-                <Link to="about" relative={'path'}>
+                <Link to="about" relative={'path'} style={{ marginRight: '10px' }}>
                     About
                 </Link>
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    AuthManager.logout()
-                }}>
-                    Logout
-                </button>
+                {isLoggedIn ? (
+                    <>
+                        <Link to="profile" relative={'path'} style={{ marginRight: '10px' }}>
+                            Profile
+                        </Link>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault()
+                                AuthManager.logout()
+                            }}
+                        >
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="login" relative={'path'} style={{ marginRight: '10px' }}>
+                            Login
+                        </Link>
+                        <Link to="register" relative={'path'} >
+                            Register
+                        </Link>
+                    </>
+                )}
             </nav>
         </header>
     )

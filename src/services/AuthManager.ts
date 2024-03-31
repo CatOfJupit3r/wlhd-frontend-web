@@ -84,6 +84,12 @@ class AuthManager {
             this.emitter.off(this.eventTypes.LOGOUT, cb)
         }
     }
+
+    authHeader() {
+        return {
+            Authorization: `Bearer ${this.getAccessToken()}`,
+        }
+    }
 }
 
 export default new AuthManager()
