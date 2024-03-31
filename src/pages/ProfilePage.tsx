@@ -9,13 +9,12 @@ const ProfilePage = () => {
 
     const [joinedLobbies, setJoinedLobbies] = useState([])
 
-
-
     useEffect(() => {
         try {
-            axios.get(`${REACT_APP_BACKEND_URL}/user/joined_lobbies`, {
-                headers: AuthManager.authHeader()
-            })
+            axios
+                .get(`${REACT_APP_BACKEND_URL}/user/joined_lobbies`, {
+                    headers: AuthManager.authHeader(),
+                })
                 .then((res) => res.data)
                 .catch((error) => {
                     console.log(error)
@@ -25,8 +24,7 @@ const ProfilePage = () => {
                 .then((data) => {
                     setJoinedLobbies(data)
                 })
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error)
             navigate('..')
         }
@@ -36,19 +34,30 @@ const ProfilePage = () => {
         <div>
             <h1>Profile Page</h1>
             <h3>Joined lobbies:</h3>
-            {
-                joinedLobbies && joinedLobbies.length
-                    ?
-                    <>
-                        {joinedLobbies && joinedLobbies.map((lobby: { name: string; isGm: boolean, _id: string }, index) => (
-                            <Link key={index} to={`./lobby/${lobby._id}`}>
-                                {lobby.name} - {lobby.isGm ? 'GM' : 'Player'}
-                            </Link>
-                        ))}
-                    </>
-                    :
-                    <h4>No joined lobbies</h4>
-            }
+            {joinedLobbies && joinedLobbies.length ? (
+                <>
+                    {joinedLobbies &&
+                        joinedLobbies.map(
+                            (
+                                lobby: {
+                                    name: string
+                                    isGm: boolean
+                                    _id: string
+                                },
+                                index
+                            ) => (
+                                <>
+                                    <Link key={index} to={`../lobby-room/${lobby._id}`}>
+                                        {lobby.name} - {lobby.isGm ? 'GM' : 'Player'}
+                                    </Link>
+                                    <br />
+                                </>
+                            )
+                        )}
+                </>
+            ) : (
+                <h4>No joined lobbies</h4>
+            )}
         </div>
     )
 }

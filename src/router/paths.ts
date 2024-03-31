@@ -3,7 +3,7 @@ export default {
     signUp: '/sign-up',
     profile: '/profile',
     gameRoom: '/game-room',
-    lobbyRoom: '/lobby-room',
+    lobbyRoom: '/lobby-room/:lobbyId',
     home: '/',
     about: '/about',
 }

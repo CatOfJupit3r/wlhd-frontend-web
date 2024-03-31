@@ -9,6 +9,7 @@ import RegisterPage from '../pages/RegisterPage'
 import paths from './paths'
 import NotFoundPage from '../pages/NotFoundPage'
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
+import LobbyPage from '../pages/LobbyPage'
 
 const authRoutes = [
     {
@@ -21,7 +22,7 @@ const authRoutes = [
     },
     {
         path: paths.lobbyRoom,
-        Component: () => <div>lobby room</div>,
+        Component: LobbyPage,
     },
 ]
 
