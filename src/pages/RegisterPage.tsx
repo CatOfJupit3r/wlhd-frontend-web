@@ -3,7 +3,7 @@ import {setNotify} from "../redux/slices/notifySlice";
 import {AxiosError} from "axios";
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom'
-import { createAccount } from '../services/apiServices'
+import APIService from '../services/APIService'
 
 const RegisterPage = () => {
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ const RegisterPage = () => {
         }
 
         try {
-            await createAccount(handle, password)
+            await APIService.createAccount(handle, password)
             navigate('..')
         } catch (err) {
             if (err && err instanceof AxiosError) {
@@ -41,7 +41,7 @@ const RegisterPage = () => {
         <h1>Login Page</h1>
         <form onSubmit={(e) => {
             e.preventDefault();
-            onSubmit();
+            onSubmit().then();
         }}>
             <input type="text" value={handle} placeholder="Enter handle" onChange={(e) => {
                 setHandle(e.target.value)

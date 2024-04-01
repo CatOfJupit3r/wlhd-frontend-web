@@ -7,7 +7,7 @@ import GameScreen from '../components/GameScreen/GameScreen'
 import Overlay from '../components/Overlay/Overlay'
 import { selectGameId, selectName } from '../redux/slices/gameSlice'
 import { resetInfo } from '../redux/slices/turnSlice'
-import { getTranslations } from '../services/apiServices'
+import APIService from '../services/APIService'
 
 /*
 
@@ -37,7 +37,7 @@ const GameRoomPage = () => {
         try {
             ['builtins', 'nyrzamaer'].map((dlc) => {
                 const addTranslations = async (language: string) => {
-                    await getTranslations(language, dlc)
+                    await APIService.getTranslations(language, dlc)
                         .then((translations) => {
                             if (!translations) {
                                 return

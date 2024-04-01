@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setNotify } from '../redux/slices/notifySlice'
-import { login } from '../services/apiServices'
+import APIService from '../services/APIService'
 
 const LoginPage = () => {
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const LoginPage = () => {
         }
 
         try {
-            await login(handle, password)
+            await APIService.login(handle, password)
             setReadyToNav(true)
         } catch (err) {
             if (err && err instanceof AxiosError) {
@@ -44,7 +44,7 @@ const LoginPage = () => {
             <form
                 onSubmit={(e) => {
                     e.preventDefault()
-                    onSubmit()
+                    onSubmit().then()
                 }}
             >
                 <input
