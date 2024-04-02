@@ -9,6 +9,7 @@ export interface notifyState {
 export interface GameState {
     user_name: string
     game_id: string
+    chosenMenu: string
     isActive: boolean
 }
 

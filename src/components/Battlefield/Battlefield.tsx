@@ -104,8 +104,8 @@ const Battlefield = () => {
             {!battlefield ? (
                 <Blurhash
                     hash={BATTLEFIELD_BLUR_HASH}
-                    width={64 * 8}
-                    height={64 * 9}
+                    width={'80vh'}
+                    height={'90vh'}
                     style={{
                         borderRadius: '10px',
                         overflow: 'hidden',

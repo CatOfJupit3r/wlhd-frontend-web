@@ -49,5 +49,5 @@ code {
 }
 
 :root {
-    --image-size: 64px;
+    --image-size: 10vh;
 }

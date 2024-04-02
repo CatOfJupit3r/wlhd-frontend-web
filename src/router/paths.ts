@@ -6,4 +6,5 @@ export default {
     lobbyRoom: '/lobby-room/:lobbyId',
     home: '/',
     about: '/about',
+    gameTest: '/game-test',
 }

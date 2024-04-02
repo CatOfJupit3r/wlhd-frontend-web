@@ -1,8 +1,8 @@
 .battlefield {
     border: 1px solid black;
     display: grid;
-    width: fit-content;
-    height: fit-content;
+    min-width: fit-content;
+    min-height: fit-content;
     max-width: calc(var(--image-size) * 8);
     max-height: calc(var(--image-size) * 9);
     background: #1f2023;

@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import axios, { AxiosError } from 'axios'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionInput } from '../models/ActionInput'
@@ -11,6 +9,18 @@ const errors = {
 }
 
 class APIService {
+    private endpoints = {
+        GET_BATTLEFIELD: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/battlefield`,
+        GET_ACTIONS: (game_id: string, entity_id: string) =>
+            `${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`,
+        GET_ALL_MESSAGES: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/all_messages`,
+        GET_THE_MESSAGE: (game_id: string, memory_cell: string) =>
+            `${REACT_APP_BACKEND_URL}/${game_id}/message/${memory_cell.toString()}`,
+        GET_ENTITY_INFO: (game_id: string, entity_id: string) =>
+            `${REACT_APP_BACKEND_URL}/${game_id}/entity/${entity_id}`,
+        GET_ALL_ENTITIES_INFO: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/entities_info`,
+    }
+
     private injectResponseMessageToError = (error: AxiosError) => {
         const message = (error.response?.data as any).message
         if (typeof message === 'string') error.message = message
@@ -138,89 +148,50 @@ class APIService {
     }
 
     getGameField = async (game_id: string): Promise<Battlefield> => {
-        try {
-            return (await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/${game_id}/game_field`,
-                method: 'get',
-            })) as Battlefield
-        } catch (e) {
-            console.log(e)
-            return {
-                field: [],
-                columns: [],
-                lines: [],
-                connectors: '',
-                separators: '',
-                field_pawns: {},
-            }
-        }
-    }
-
-    getGameState = async (game_id: string): Promise<{ [key: string]: string }> => {
-        try {
-            return await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/${game_id}/game_state`,
-                method: 'get',
-            })
-        } catch (e) {
-            console.log(e)
-            return {}
-        }
+        return (await this.fetch({
+            url: this.endpoints.GET_BATTLEFIELD(game_id),
+            method: 'get',
+        })) as Battlefield
     }
 
     getActions = async (game_id: string, entity_id: string): Promise<ActionInput> => {
-        try {
-            return (await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`,
-                method: 'get',
-            })) as ActionInput
-        } catch (e) {
-            console.log(e)
-            return {
-                action: [
-                    {
-                        id: 'builtins:skip',
-                        translation_info: {
-                            descriptor: 'builtins:skip',
-                            co_descriptor: null,
-                        },
-                        available: true,
-                        requires: null,
-                    },
-                ],
-                aliases: {},
-                alias_translations: {},
-            }
-        }
+        return (await this.fetch({
+            url: this.endpoints.GET_ACTIONS(game_id, entity_id),
+            method: 'get',
+        })) as ActionInput
     }
 
-    getMemoryCell = async (
+    getOneMessage = async (
         game_id: string,
-        memory_cell: string
+        message_id: string
     ): Promise<{
         [key: string]: Array<[string, string[]]>
     }> => {
-        try {
-            return (await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/${game_id}/memory_cell/${memory_cell}`,
-                method: 'get',
-            })) as { [key: string]: Array<[string, string[]]> }
-        } catch (e) {
-            console.log(e)
-            return {}
-        }
+        return (await this.fetch({
+            url: this.endpoints.GET_THE_MESSAGE(game_id, message_id),
+            method: 'get',
+        })) as { [key: string]: Array<[string, string[]]> }
     }
 
-    getAllMessages = async (game_id: string): Promise<{ [key: string]: Array<[string, string[]]> }> => {
-        try {
-            return await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/${game_id}/all_messages`,
-                method: 'get',
-            })
-        } catch (e) {
-            console.log(e)
-            return {}
-        }
+    getAllMessages = async (game_id: string): Promise<{ [message_id: string]: Array<[string, string[]]> }> => {
+        return await this.fetch({
+            url: this.endpoints.GET_ALL_MESSAGES(game_id),
+            method: 'get',
+        })
+    }
+
+    getEntityInfo = async (game_id: string, entity_id: string): Promise<{ [key: string]: string }> => {
+        return await this.fetch({
+            url: this.endpoints.GET_ENTITY_INFO(game_id, entity_id),
+            method: 'get',
+        })
+    }
+
+    getAllEntitiesInfo = async (game_id: string): Promise<{ [key: string]: { [key: string]: string } }> => {
+        return await this.fetch({
+            url: this.endpoints.GET_ALL_ENTITIES_INFO(game_id),
+            method: 'get',
+        })
     }
 }
 

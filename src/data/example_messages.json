@@ -1,0 +1,44 @@
+{
+    "data" : [
+        {
+            "0x0001" : [
+                {
+                    "main_string" : "builtins:creature_cant_attack",
+                    "format_args" : {
+                        "entity_name" : {
+                            "main_string" : "nyrzamaer:dortyn.name"
+                        }
+                    }
+                },
+                {
+                    "main_string" : "builtins:creature_cant_attack",
+                    "format_args" : {
+                        "entity_name" : {
+                            "main_string" : "nyrzamaer:dortyn.name"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "0x0002" : [
+                {
+                    "main_string" : "builtins:creature_cant_attack",
+                    "format_args" : {
+                        "entity_name" : {
+                            "main_string" : "nyrzamaer:dortyn.name"
+                        }
+                    }
+                },
+                {
+                    "main_string" : "builtins:creature_cant_attack",
+                    "format_args" : {
+                        "entity_name" : {
+                            "main_string" : "nyrzamaer:dortyn.name"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

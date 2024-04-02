@@ -169,7 +169,7 @@ const TileEntity = (props: {
             <img
                 src={generateAssetPath(dlc, descriptor)}
                 onDoubleClick={handleDoubleClick}
-                alt={descriptor !== 'tile' ? dlc + '::' + descriptor : undefined}
+                alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
                 onError={(event) => {
                     event.currentTarget.src = fallback.path ? fallback.path : INVALID_ASSET_PATH
                     event.currentTarget.alt = fallback.alt ? fallback.alt : 'invalid'

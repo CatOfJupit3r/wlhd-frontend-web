@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 import example from '../../data/example_action.json'
+import example_messages from '../../data/example_messages.json'
 import { GameStateMessage } from '../../models/Battlefield'
 import { addMessage, selectEntityInControlInfo, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
@@ -27,48 +28,7 @@ const DebugScreen = () => {
     }, [dispatch])
 
     const addRandomMessage = useCallback(() => {
-        const randomMessages: { [key: string]: GameStateMessage[] }[] = [
-            {
-                '0x0001': [
-                    {
-                        main_string: 'builtins:creature_cant_attack',
-                        format_args: {
-                            entity_name: {
-                                main_string: 'nyrzamaer:dortyn.name',
-                            },
-                        },
-                    },
-                    {
-                        main_string: 'builtins:creature_cant_attack',
-                        format_args: {
-                            entity_name: {
-                                main_string: 'nyrzamaer:dortyn.name',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                '0x0002': [
-                    {
-                        main_string: 'builtins:creature_cant_attack',
-                        format_args: {
-                            entity_name: {
-                                main_string: 'nyrzamaer:dortyn.name',
-                            },
-                        },
-                    },
-                    {
-                        main_string: 'builtins:creature_cant_attack',
-                        format_args: {
-                            entity_name: {
-                                main_string: 'nyrzamaer:dortyn.name',
-                            },
-                        },
-                    },
-                ],
-            },
-        ]
+        const randomMessages: { [key: string]: GameStateMessage[] }[] = example_messages.data as any
         dispatch(addMessage(randomMessages[Math.floor(Math.random() * randomMessages.length)]))
     }, [dispatch])
 

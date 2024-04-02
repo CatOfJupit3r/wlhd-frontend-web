@@ -1,15 +1,16 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
+import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
 import MainLayout from '../layouts/MainLayout'
 import AboutPage from '../pages/AboutPage'
 import GameRoomPage from '../pages/GameRoomPage'
+import GameTestPage from '../pages/GameTestPage'
 import HomePage from '../pages/HomePage/HomePage'
+import LobbyPage from '../pages/LobbyPage'
 import LoginPage from '../pages/LoginPage'
+import NotFoundPage from '../pages/NotFoundPage'
 import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
 import paths from './paths'
-import NotFoundPage from '../pages/NotFoundPage'
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
-import LobbyPage from '../pages/LobbyPage'
 
 const authRoutes = [
     {
@@ -45,6 +46,13 @@ const appRoutes = [
     },
 ]
 
+const noHeaderRoutes = [
+    {
+        path: paths.gameTest,
+        Component: GameTestPage,
+    },
+]
+
 export default function RootRouter() {
     const loggedIn = useIsLoggedIn()
 
@@ -54,18 +62,18 @@ export default function RootRouter() {
           renders the first one that matches the current URL. */}
             <Routes>
                 <Route path={'/'} element={<MainLayout />}>
-                    <>
-                        {appRoutes.map(({ path, Component: C }) => (
-                            <Route key={path} path={path} index={path === paths.home} element={<C/>} />
-                        ))}
-                    </>
-                    {loggedIn && <>
-                        {authRoutes.map(({ path, Component: C }) => (
-                            <Route key={path} path={path} element={<C />} />
-                        ))}
-                    </>
-                    }
+                    {appRoutes.map(({ path, Component: C }) => (
+                        <Route key={path} path={path} index={path === paths.home} element={<C />} />
+                    ))}
+                    {authRoutes.map(({ path, Component: C }) => (
+                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    ))}
                 </Route>
+                {
+                    noHeaderRoutes.map(({ path, Component: C }) => (
+                        <Route key={path} path={path} element={<C />} />
+                    ))
+                }
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
