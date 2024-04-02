@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GET_ACTIONS } from '../../config/endpoints'
 import { ActionInput as ActionInputInterface } from '../../models/ActionInput'
 import { TurnState } from '../../models/Redux'
+import APIService from '../../services/APIService'
 
 const initialState: TurnState = {
     playersTurn: false,
@@ -56,8 +56,12 @@ translatedChoices
 export const fetchActions = createAsyncThunk(
     'turn/fetchActions',
     async ({ game_id, entity_id }: { game_id: string; entity_id: string }) => {
-        const response = await fetch(GET_ACTIONS(game_id, entity_id))
-        return response.json()
+        return await APIService.getActions(game_id, entity_id)
+            .then((response) => response)
+            .catch((error) => {
+                console.log('There was a problem with the fetch operation: ', error)
+                return {}
+            })
     }
 )
 
@@ -123,8 +127,10 @@ const turnSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchActions.fulfilled, (state, action) => {
             console.log('Fetched actions: ', action.payload)
-            state.entityActions = action.payload
-            state.isLoadingEntityActions = false
+            if (Object.keys(action.payload).length > 0) {
+                state.entityActions = action.payload as ActionInputInterface
+                state.isLoadingEntityActions = false
+            }
         })
         builder.addCase(fetchActions.rejected, (state, action) => {
             console.log(action.error)

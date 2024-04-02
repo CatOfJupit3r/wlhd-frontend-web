@@ -1,5 +1,5 @@
 import { ActionInput as ActionInputInterface } from './ActionInput'
-import { EntityInfo, GameStateContainer } from './Battlefield'
+import { Battlefield, EntityInfo, GameStateContainer } from './Battlefield'
 
 export interface notifyState {
     message: string
@@ -49,19 +49,7 @@ export interface InfoState {
         ended: boolean
         winner: string
     }
-    current_battlefield: {
-        battlefield: string[][]
-        game_descriptors: {
-            lines: string[]
-            columns: string[]
-            field_components: {
-                '0': string
-                [key: string]: string
-            }
-            separators: string
-            connectors: string
-        }
-    }
+    current_battlefield: Battlefield
     entities_info:
         | {
               [key: string]: EntityInfo

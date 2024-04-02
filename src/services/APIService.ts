@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionInput } from '../models/ActionInput'
-import { Battlefield } from '../models/Battlefield'
+import { Battlefield, EntityInfo, GameStateContainer } from '../models/Battlefield'
 import { default as AuthManager, default as authManager } from './AuthManager'
 
 const errors = {
@@ -161,19 +161,14 @@ class APIService {
         })) as ActionInput
     }
 
-    getOneMessage = async (
-        game_id: string,
-        message_id: string
-    ): Promise<{
-        [key: string]: Array<[string, string[]]>
-    }> => {
-        return (await this.fetch({
+    getOneMessage = async (game_id: string, message_id: string): Promise<GameStateContainer> => {
+        return await this.fetch({
             url: this.endpoints.GET_THE_MESSAGE(game_id, message_id),
             method: 'get',
-        })) as { [key: string]: Array<[string, string[]]> }
+        })
     }
 
-    getAllMessages = async (game_id: string): Promise<{ [message_id: string]: Array<[string, string[]]> }> => {
+    getAllMessages = async (game_id: string): Promise<GameStateContainer> => {
         return await this.fetch({
             url: this.endpoints.GET_ALL_MESSAGES(game_id),
             method: 'get',
@@ -187,7 +182,11 @@ class APIService {
         })
     }
 
-    getAllEntitiesInfo = async (game_id: string): Promise<{ [key: string]: { [key: string]: string } }> => {
+    getAllEntitiesInfo = async (
+        game_id: string
+    ): Promise<{
+        [key: string]: EntityInfo
+    }> => {
         return await this.fetch({
             url: this.endpoints.GET_ALL_ENTITIES_INFO(game_id),
             method: 'get',
