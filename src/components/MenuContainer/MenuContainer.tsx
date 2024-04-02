@@ -6,6 +6,7 @@ import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameStateFeed from '../GameStateFeed/GameStateFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
+import styles from './MenuContainer.module.css'
 
 const MenuContainer = () => {
     const chosenMenu = useSelector(selectChosenMenu)
@@ -34,15 +35,7 @@ const MenuContainer = () => {
     )
 
     return chosenMenu ? (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                width: '100%',
-                height: '100%',
-            }}
-        >
+        <div className={styles.menuContainer}>
             <h1>{t(chosenMenu)}</h1>
             {menus.find((menu) => menu.key === chosenMenu)?.Component()}
         </div>

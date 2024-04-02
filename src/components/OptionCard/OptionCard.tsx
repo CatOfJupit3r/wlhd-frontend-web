@@ -44,24 +44,13 @@ const OptionCard = (props: { option: Action; index: number; t: (key: string) => 
             bg={isHighlighted ? 'primary' : undefined}
             key={index}
             onDoubleClick={handleDoubleClick}
-            className={option.available ? styles.actionCardAvailable : styles.actionCardUnavailable}
-            style={{
-                width: '100%',
-                minWidth: '100%',
-                height: '6rem',
-                marginTop: '0.5rem',
-            }}
+            className={`${styles.actionCard} ${option.available ? styles.actionCardAvailable : styles.actionCardUnavailable}}`}
         >
             <Card.Body className={styles.cardBody}>
                 <Card.Title className={styles.cardTitle}>
                     {t(`${descriptor}.name`)} {co_descriptor ? `(${co_descriptor})` : ''}
                 </Card.Title>
-                <Card.Text
-                    style={{
-                        fontSize: '0.9em',
-                    }}
-                    className={styles.cardText}
-                >
+                <Card.Text style={{ fontSize: '0.9em' }} className={styles.cardText}>
                     {displayedText}{' '}
                     {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}.description`)} />}
                 </Card.Text>

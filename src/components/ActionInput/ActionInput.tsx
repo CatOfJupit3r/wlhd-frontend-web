@@ -245,18 +245,7 @@ const ActionInput = () => {
     return (
         <div
             id={'action-input'}
-            style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '10px',
-                backgroundColor: 'lightgray',
-                // marginLeft: '25px',
-                overflowY: 'scroll',
-                overflowX: 'hidden',
-                padding: '10px',
-                paddingRight: '20px',
-                paddingLeft: '20px',
-            }}
+            className={styles.actionInput}
         >
             <div id={'action-confirms'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
         </div>
