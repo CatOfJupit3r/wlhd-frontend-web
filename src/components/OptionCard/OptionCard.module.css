@@ -1,5 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 
+
 .actionCardAvailable:hover {
     color: white;
     background-color: #399ffa;

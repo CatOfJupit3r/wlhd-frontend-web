@@ -1,35 +1,49 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { selectChosenMenu } from '../../redux/slices/gameSlice'
+import ActionInput from '../ActionInput/ActionInput'
+import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
+import GameStateFeed from '../GameStateFeed/GameStateFeed'
+import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 
 const MenuContainer = () => {
     const chosenMenu = useSelector(selectChosenMenu)
+    const { t } = useTranslation()
 
     const menus = useMemo(
         () => [
             {
                 key: 'your-entities',
-                Component: () => <h1>Menu 1</h1>,
+                Component: () => <ControlledEntitiesInfo />,
             },
             {
                 key: 'action-select',
-                Component: () => <h1>Menu 2</h1>,
+                Component: () => <ActionInput />,
             },
             {
                 key: 'history',
-                Component: () => <h1>Menu 3</h1>,
+                Component: () => <GameStateFeed />,
             },
             {
                 key: 'gm-settings',
-                Component: () => <h1>Menu 4</h1>,
+                Component: () => <GmOptionMenu />,
             },
         ],
         []
     )
 
     return chosenMenu ? (
-        <div>
-            <h1>{chosenMenu}</h1>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+            }}
+        >
+            <h1>{t(chosenMenu)}</h1>
             {menus.find((menu) => menu.key === chosenMenu)?.Component()}
         </div>
     ) : (

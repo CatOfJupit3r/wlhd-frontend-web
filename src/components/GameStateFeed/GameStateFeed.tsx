@@ -113,9 +113,6 @@ const GameStateFeed = () => {
 
     return (
         <div className={styles.stateFeed} id={'game-state-feed'}>
-            <div id={'title'} className={styles.title}>
-                <h4>{t('local:game.components.battlefeed')}</h4>
-            </div>
             <div className={styles.pageContainer}>{displayPage()}</div>
             <div id={'page-manipulators'} className={styles.pageManipulators}>
                 <div id={'left-arrows'}>

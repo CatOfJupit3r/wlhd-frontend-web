@@ -29,7 +29,7 @@ import { useTranslation } from 'react-i18next'
 import { BsArrowBarLeft } from 'react-icons/bs'
 
 import { RxArrowTopRight } from 'react-icons/rx'
-import ActionCard from './ActionCard'
+import OptionCard from '../OptionCard/OptionCard'
 
 /*
 
@@ -128,7 +128,7 @@ const ActionInput = () => {
         }
 
         return action.map((action: Action, index: number) => {
-            return <ActionCard option={action} index={index} t={t} key={index} />
+            return <OptionCard option={action} index={index} t={t} key={index} />
         })
     }, [t, currentAlias, aliases, scope, choices, initialActionLevel.action, dispatch])
 
@@ -246,11 +246,11 @@ const ActionInput = () => {
         <div
             id={'action-input'}
             style={{
-                width: 64 * 7 + 'px',
-                height: 64 * 9 + 'px',
+                width: '100%',
+                height: '100%',
                 borderRadius: '10px',
                 backgroundColor: 'lightgray',
-                marginLeft: '25px',
+                // marginLeft: '25px',
                 overflowY: 'scroll',
                 overflowX: 'hidden',
                 padding: '10px',

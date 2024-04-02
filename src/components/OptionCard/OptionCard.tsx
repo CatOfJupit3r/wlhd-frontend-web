@@ -9,9 +9,9 @@ import {
     setChoice,
     setChosenAction,
 } from '../../redux/slices/turnSlice'
-import styles from './ActionCard.module.css'
+import styles from './OptionCard.module.css'
 
-const ActionCard = (props: { option: Action; index: number; t: (key: string) => string }) => {
+const OptionCard = (props: { option: Action; index: number; t: (key: string) => string }) => {
     const dispatch = useDispatch()
 
     const { option, index, t } = props
@@ -70,4 +70,4 @@ const ActionCard = (props: { option: Action; index: number; t: (key: string) => 
     )
 }
 
-export default ActionCard
+export default OptionCard

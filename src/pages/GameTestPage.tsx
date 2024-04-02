@@ -17,7 +17,6 @@ const GameTestPage = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: '20px',
                 height: '100vh',
             }}
         >
