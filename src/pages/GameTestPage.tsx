@@ -1,6 +1,9 @@
 import Battlefield from '../components/Battlefield/Battlefield'
 import MenuSelector from '../components/MenuSelector/MenuSelector'
 import MenuContainer from '../components/MenuContainer/MenuContainer'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { resetInfo } from '../redux/slices/turnSlice'
 
 const HALF_SCREEN_STYLE = {
     display: 'flex',
@@ -9,6 +12,12 @@ const HALF_SCREEN_STYLE = {
 }
 
 const GameTestPage = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(resetInfo()) // to prevent any leftover state from previous games
+    }, [dispatch])
 
     return (
         <div

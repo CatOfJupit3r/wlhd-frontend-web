@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import example from '../../data/example_action.json'
 import example_messages from '../../data/example_messages.json'
-import { GameStateMessage } from '../../models/Battlefield'
+import { TranslatableString } from '../../models/Battlefield'
 import { addMessage, selectEntityInControlInfo, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
 import { resetInfo, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
@@ -28,7 +28,7 @@ const DebugScreen = () => {
     }, [dispatch])
 
     const addRandomMessage = useCallback(() => {
-        const randomMessages: { [key: string]: GameStateMessage[] }[] = example_messages.data as any
+        const randomMessages: { [key: string]: TranslatableString[] }[] = example_messages.data as any
         dispatch(addMessage(randomMessages[Math.floor(Math.random() * randomMessages.length)]))
     }, [dispatch])
 

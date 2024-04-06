@@ -140,28 +140,25 @@ const TileEntity = (props: {
             ))
         }
         const {
-            // name,
-            // square,
-            current_health,
-            max_health,
-            current_action_points,
-            max_action_points,
-            current_armor,
-            base_armor,
+            name,
+            square,
+            health,
+            action_points,
+            armor
             // status_effects,
         } = entity_info
         return [
             // t("local:game.components.tooltip.creature_and_line", {name: translatableString(name), square: square.join("|")}),
-            t('local:game.components.tooltip.health_max_health', { current_health, max_health }),
-            t('local:game.components.tooltip.action_points', { current_action_points, max_action_points }),
-            t('local:game.components.tooltip.armor', { current_armor, base_armor }),
+            t('local:game.components.tooltip.health_max_health', { current_health: health.current, max_health: health.max }),
+            t('local:game.components.tooltip.action_points', { current_action_points: action_points.current, max_action_points: action_points.max }),
+            t('local:game.components.tooltip.armor', { current_armor: armor.current, base_armor: armor.base }),
             t('local:game.components.tooltip.status_effects'),
             // {status_effects: (
             //         status_effects && status_effects.length > 0 ?
             //         status_effects.map(([name, duration]) => `${t([name])} (${duration})`).join(", ") :
             //         t("local:game.components.tooltip.no_status_effects")
             //     )})
-        ].map((key) => <p key={key}>{key}</p>)
+        ].map((key, index) => <p key={index}>{key}</p>)
     }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
 
     return (

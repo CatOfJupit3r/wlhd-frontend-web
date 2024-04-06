@@ -11,6 +11,7 @@ import NotFoundPage from '../pages/NotFoundPage'
 import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
 import paths from './paths'
+import CreateCombatPage from '../pages/CreateCombatPage'
 
 const authRoutes = [
     {
@@ -25,6 +26,10 @@ const authRoutes = [
         path: paths.lobbyRoom,
         Component: LobbyPage,
     },
+    {
+        path: paths.createCombatRoom,
+        Component: CreateCombatPage,
+    }
 ]
 
 const appRoutes = [

@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios'
+
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionInput } from '../models/ActionInput'
-import { Battlefield, EntityInfo, GameStateContainer } from '../models/Battlefield'
-import { default as AuthManager, default as authManager } from './AuthManager'
+import { Battlefield, EntityInfoTooltip, GameStateContainer } from '../models/Battlefield'
+import AuthManager from './AuthManager'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -10,6 +11,13 @@ const errors = {
 
 class APIService {
     private endpoints = {
+        LOGIN: `${REACT_APP_BACKEND_URL}/login`,
+        LOGOUT: `${REACT_APP_BACKEND_URL}/logout`,
+        REGISTER: `${REACT_APP_BACKEND_URL}/register`,
+        REFRESH_TOKEN: `${REACT_APP_BACKEND_URL}/token`,
+
+        GET_TRANSLATIONS: (language: string, dlc: string) =>
+            `${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`,
         GET_BATTLEFIELD: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/battlefield`,
         GET_ACTIONS: (game_id: string, entity_id: string) =>
             `${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`,
@@ -35,7 +43,7 @@ class APIService {
         url: string
         method: 'get' | 'post' | 'put' | 'delete'
         data?: {
-            query: { [key: string]: any }
+            [key: string]: any
         }
         _retry?: boolean
     }): Promise<{ [key: string]: any }> => {
@@ -102,11 +110,11 @@ class APIService {
         const {
             data: { accessToken },
         } = await axios({
-            url: '/api/auth/token',
+            url: this.endpoints.REFRESH_TOKEN,
             method: 'post',
             data: { token: refreshToken },
         })
-        console.log('received new access token', accessToken)
+        console.log('Received new access token', accessToken)
         AuthManager.setAccessToken(accessToken)
     }
 
@@ -115,7 +123,7 @@ class APIService {
         const refreshToken = AuthManager.getRefreshToken()
         if (refreshToken) {
             return axios({
-                url: '/api/auth/logout',
+                url: this.endpoints.LOGOUT,
                 method: 'post',
                 data: { token: refreshToken },
             })
@@ -124,20 +132,20 @@ class APIService {
     }
 
     login = async (handle: string, password: string) => {
-        const response = await axios.post(`${REACT_APP_BACKEND_URL}/login`, { handle, password })
+        const response = await axios.post(this.endpoints.LOGIN, { handle, password })
         const { accessToken, refreshToken } = response.data
-        authManager.login({ accessToken, refreshToken })
+        AuthManager.login({ accessToken, refreshToken })
     }
 
     createAccount = async (handle: string, password: string) => {
-        await axios.post(`${REACT_APP_BACKEND_URL}/register`, { handle, password })
+        await axios.post(this.endpoints.REGISTER, { handle, password })
         await this.login(handle, password)
     }
 
     getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
         try {
             const response = await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`,
+                url: this.endpoints.GET_TRANSLATIONS(language, dlc),
                 method: 'get',
             })
             return await response.json()
@@ -185,11 +193,22 @@ class APIService {
     getAllEntitiesInfo = async (
         game_id: string
     ): Promise<{
-        [key: string]: EntityInfo
+        [key: string]: EntityInfoTooltip
     }> => {
         return await this.fetch({
             url: this.endpoints.GET_ALL_ENTITIES_INFO(game_id),
             method: 'get',
+        })
+    }
+
+    createLobbyCombat = async (lobby_id: string, combat_nickname: string, combat_preset: string) => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/create_combat`,
+            method: 'post',
+            data: {
+                combat_nickname,
+                combat_preset,
+            },
         })
     }
 }

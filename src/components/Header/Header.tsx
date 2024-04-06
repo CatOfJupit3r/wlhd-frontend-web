@@ -23,7 +23,7 @@ const Header: React.FC = () => {
             {/*}}/>*/}
             <nav>
                 {' '}
-                {/* TODO: when navigating to other routes outside of game, then previous state is saved */}
+                {/* TODO: make game state clean when outside of game page */}
                 <Link to="." relative={'route'} style={{ marginRight: '10px' }}>
                     Home
                 </Link>

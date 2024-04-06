@@ -9,43 +9,66 @@ export interface Battlefield {
     }
 }
 
-export interface ParsedBattlefield {
-    battlefield: JSX.Element[][]
-    columns: (key: string) => JSX.Element[]
-    lines: (key: string) => JSX.Element[]
-    connectors: (key: string) => JSX.Element
-    separators: (key: string) => JSX.Element
-}
-
-/*
-{
-    "123123": [
-        ["builtins::item_usage", [["nyrzamaer::dortyn:name"], ["nyrzamaer::aridnik_blades:name"], "3", "6"]],
-        ["builtins::creature_takes_damage", [["nyrzamaer::target_dummy_large:name"], "7", ["builtins::physical"]]],
-        ["builtins::creature_fainted", [["nyrzamaer::target_dummy_large:name"]]],
-    ],
-},
- */
-
-export interface GameStateMessage {
+export interface TranslatableString {
     main_string: string
     format_args?: {
-        [key: string]: string | GameStateMessage
+        [key: string]: string | TranslatableString
     }
 }
 
 export interface GameStateContainer {
-    [key: string]: Array<GameStateMessage>
+    [key: string]: Array<TranslatableString>
 }
 
-export interface EntityInfo {
-    name: GameStateMessage
-    square: [number, number]
-    current_health: string
-    max_health: string
+export interface EntityInfoTooltip {
+    name: TranslatableString
+    square: { line: string; column: string }
+    health: { current: string; max: string }
+    action_points: { current: string; max: string }
+    armor: { current: string; base: string }
+    status_effects: Array<{
+        descriptor: TranslatableString
+        duration: string
+    }>
+}
+
+export interface EntityInfoTurn {
+    name: string
+    square: string
     current_action_points: string
     max_action_points: string
-    current_armor: string
-    base_armor: string
-    status_effects: string[][] // [..., [name, duration], ...]
+}
+
+export interface EntityInfoFull {
+    name: string
+    square: string
+    attributes: { [attribute: string]: string }
+
+    items: Array<{
+        descriptor: string
+        cost: number
+        uses: number | null
+        cooldown: { current: number; max: number }
+        count: number // how many of given item entity has
+        consumable: boolean // if item is consumable
+    }>
+    weapons: Array<{
+        descriptor: string
+        cost: number
+        uses: number | null
+        consumable: boolean
+        count: number
+        cooldown: { current: number; max: number }
+        isActive: boolean
+    }>
+    spells: Array<{
+        descriptor: string
+        cost: number
+        uses: number | null
+        cooldown: { current: number; max: number }
+    }>
+    status_effects: Array<{
+        descriptor: TranslatableString
+        duration: number
+    }>
 }

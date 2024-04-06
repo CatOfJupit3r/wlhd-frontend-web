@@ -14,7 +14,7 @@ const initialState: InfoState = {
         ended: false,
         winner: '',
     },
-    current_battlefield: {
+    currentBattlefield: {
         field: [
             ['0', '0', '0', '0', '0', '0'],
             ['0', '0', '0', '0', '0', '0'],
@@ -36,7 +36,14 @@ const initialState: InfoState = {
         separators: 'builtins:separator',
         field_pawns: { '0': 'builtins:tile' },
     },
-    entities_info: {},
+    entitiesInfo: {},
+    controlledEntities: [],
+    activeEntity: {
+        name: 'test',
+        square: '3/6',
+        current_action_points: '30',
+        max_action_points: '40',
+    },
 }
 
 export const fetchBattlefield = createAsyncThunk('info/fetchBattlefield', async (game_id: string) => {
@@ -44,7 +51,7 @@ export const fetchBattlefield = createAsyncThunk('info/fetchBattlefield', async 
         .then((response) => response)
         .catch((error) => {
             console.error('There was a problem with the fetch operation: ', error)
-            return initialState.current_battlefield
+            return initialState.currentBattlefield
         })
 })
 
@@ -129,7 +136,7 @@ const InfoSlice = createSlice({
             return { ...state, allMessages: { ...state.allMessages, ...action.payload } }
         })
         builder.addCase(fetchCurrentEntityInfo.fulfilled, (state, action) => {
-            return { ...state, entities_info: { ...state.entities_info, [(action.payload as any).id]: action.payload } }
+            return { ...state, entities_info: { ...state.entitiesInfo, [(action.payload as any).id]: action.payload } }
         })
         builder.addCase(fetchAllEntitiesInfo.fulfilled, (state, action) => {
             return { ...state, entities_info: action.payload, isLoadingEntitiesInfo: false }
@@ -155,14 +162,14 @@ export const { setRound, setEndInfo, addMessage } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
-export const selectBattlefieldMold = (state: StoreState) => state.info.current_battlefield.field
-export const selectConnectors = (state: StoreState) => state.info.current_battlefield.connectors
-export const selectColumns = (state: StoreState) => state.info.current_battlefield.columns
-export const selectLines = (state: StoreState) => state.info.current_battlefield.lines
-export const selectSeparators = (state: StoreState) => state.info.current_battlefield.separators
-export const selectFieldComponents = (state: StoreState) => state.info.current_battlefield.field_pawns
+export const selectBattlefieldMold = (state: StoreState) => state.info.currentBattlefield.field
+export const selectConnectors = (state: StoreState) => state.info.currentBattlefield.connectors
+export const selectColumns = (state: StoreState) => state.info.currentBattlefield.columns
+export const selectLines = (state: StoreState) => state.info.currentBattlefield.lines
+export const selectSeparators = (state: StoreState) => state.info.currentBattlefield.separators
+export const selectFieldComponents = (state: StoreState) => state.info.currentBattlefield.field_pawns
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
-export const selectEntitiesInfo = (state: StoreState) => state.info.entities_info
+export const selectEntitiesInfo = (state: StoreState) => state.info.entitiesInfo
 export const selectEndInfo = (state: StoreState) => state.info.endInfo
 // export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
 export const selectEntityInControlInfo = () => ({

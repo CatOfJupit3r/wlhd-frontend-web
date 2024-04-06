@@ -1,12 +1,12 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { GameStateMessage } from '../models/Battlefield'
+import { TranslatableString } from '../models/Battlefield'
 
 const useTranslatableString = () => {
     const { t } = useTranslation()
 
     const formTranslation = useCallback(
-        (msg: GameStateMessage) => {
+        (msg: TranslatableString) => {
             if (msg.format_args === undefined) {
                 return t(msg.main_string)
             }
