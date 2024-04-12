@@ -1,5 +1,5 @@
 import Battlefield from '../components/Battlefield/Battlefield'
-import MenuSelector from '../components/MenuSelector/MenuSelector'
+import MenuNavigator from '../components/MenuNavigator/MenuNavigator'
 import MenuContainer from '../components/MenuContainer/MenuContainer'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -69,7 +69,7 @@ const GameTestPage = () => {
                         minWidth: 'fit-content',
                     }}
                 >
-                    <MenuSelector />
+                    <MenuNavigator />
                 </div>
             </div>
         </div>

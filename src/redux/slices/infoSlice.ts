@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { InfoState, StoreState } from '../../models/Redux'
 import APIService from '../../services/APIService'
 
@@ -44,6 +44,7 @@ const initialState: InfoState = {
         current_action_points: '30',
         max_action_points: '40',
     },
+    chosenMenu: '',
 }
 
 export const fetchBattlefield = createAsyncThunk('info/fetchBattlefield', async (game_id: string) => {
@@ -118,6 +119,9 @@ const InfoSlice = createSlice({
         addMessage: (state, action) => {
             return { ...state, allMessages: { ...state.allMessages, ...action.payload } }
         },
+        setChosenMenu: (state, action: PayloadAction<string>) => {
+            state.chosenMenu = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -158,7 +162,7 @@ const InfoSlice = createSlice({
 
 export default InfoSlice.reducer
 
-export const { setRound, setEndInfo, addMessage } = InfoSlice.actions
+export const { setRound, setEndInfo, addMessage, setChosenMenu } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
@@ -171,6 +175,7 @@ export const selectFieldComponents = (state: StoreState) => state.info.currentBa
 export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
 export const selectEntitiesInfo = (state: StoreState) => state.info.entitiesInfo
 export const selectEndInfo = (state: StoreState) => state.info.endInfo
+export const selectChosenMenu = (state: StoreState) => state.info.chosenMenu
 // export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
 export const selectEntityInControlInfo = () => ({
     name: 'test',

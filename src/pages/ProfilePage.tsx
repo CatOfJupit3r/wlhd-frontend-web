@@ -46,12 +46,12 @@ const ProfilePage = () => {
                                 },
                                 index
                             ) => (
-                                <>
-                                    <Link key={index} to={`../lobby-room/${lobby._id}`}>
+                                <div key={index}>
+                                    <Link to={`../lobby-room/${lobby._id}`}>
                                         {lobby.name} - {lobby.isGm ? 'GM' : 'Player'}
                                     </Link>
-                                    <br />
-                                </>
+                                    <br/>
+                                </div>
                             )
                         )}
                 </>

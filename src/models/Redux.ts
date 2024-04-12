@@ -6,11 +6,23 @@ export interface notifyState {
     code: number
 }
 
-export interface GameState {
-    user_name: string
-    game_id: string
-    chosenMenu: string
-    isActive: boolean
+export interface LobbyState {
+    lobbyId: string
+    combats: Array<{
+        nickname: string
+        isActive: boolean
+        roundCount: number
+    }>
+    players: Array<{
+        userId: string
+        nickname: string
+        mainCharacter: string
+    }>
+    gm: string
+    layout: 'default' | 'gm'
+    controlledEntity: {
+        id: string
+    } | null
 }
 
 export interface TurnState {
@@ -57,11 +69,12 @@ export interface InfoState {
         | undefined
     controlledEntities: Array<EntityInfoFull>
     activeEntity: EntityInfoTurn
+    chosenMenu: string
 }
 
 export interface StoreState {
     notify: notifyState
     turn: TurnState
-    game: GameState
+    lobby: LobbyState
     info: InfoState
 }

@@ -13,7 +13,6 @@ import {
     RoundUpdatePayload,
     TakeActionPayload,
 } from '../../models/Events'
-import { selectGameId, selectIsActive, selectName, setActive } from '../../redux/slices/gameSlice'
 import {
     fetchAllEntitiesInfo,
     fetchAllMessages,
@@ -46,9 +45,10 @@ const GameScreen = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    const username = useSelector(selectName)
-    const isActive = useSelector(selectIsActive)
-    const gameId = useSelector(selectGameId)
+    const username = "username" // TODO: CLEANUP
+    const isActive = true
+    const gameId = "123"
+
     const isLoadingActions = useSelector(selectIsLoadingEntityActions)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
     const endInfo = useSelector(selectEndInfo)
@@ -140,7 +140,6 @@ const GameScreen = () => {
                 await dispatch(fetchAllMessages(gameId))
                 await dispatch(fetchAllEntitiesInfo(gameId))
             })().finally(() => {
-                dispatch(setActive(true))
             })
         })
         socket.on('round_update', (data: RoundUpdatePayload) => {
@@ -178,7 +177,6 @@ const GameScreen = () => {
         socket.on('battle_ended', (data: BattleEndedPayload) => {
             console.log('Game has ended')
             dispatch(setEndInfo({ ended: true, winner: data.battle_result }))
-            dispatch(setActive(false))
             socket.disconnect()
         })
         socket.on('error', (data: any) => {

@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionInput } from '../models/ActionInput'
 import { Battlefield, EntityInfoTooltip, GameStateContainer } from '../models/Battlefield'
+import { CharacterInfo } from '../models/CharacterInfo'
 import AuthManager from './AuthManager'
 
 const errors = {
@@ -199,6 +200,27 @@ class APIService {
             url: this.endpoints.GET_ALL_ENTITIES_INFO(game_id),
             method: 'get',
         })
+    }
+
+    getLobbyInfo = async (lobby_id: string) => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}`,
+            method: 'get',
+        })
+    }
+
+    getCharacterInfo = async (character_id: string, lobby_id: string): Promise<CharacterInfo> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}//character/${character_id}`,
+            method: 'get',
+        })) as CharacterInfo
+    }
+
+    getMyCharacterInfo = async (lobby_id: string): Promise<CharacterInfo> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/my_character`,
+            method: 'get',
+        })) as CharacterInfo
     }
 
     createLobbyCombat = async (lobby_id: string, combat_nickname: string, combat_preset: string) => {

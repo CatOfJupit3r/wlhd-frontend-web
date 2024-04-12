@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useBeforeUnload, useNavigate } from 'react-router-dom'
 import GameScreen from '../components/GameScreen/GameScreen'
 import Overlay from '../components/Overlay/Overlay'
-import { selectGameId, selectName } from '../redux/slices/gameSlice'
 import { resetInfo } from '../redux/slices/turnSlice'
 import APIService from '../services/APIService'
 
@@ -25,13 +24,6 @@ const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
     const { t, i18n } = useTranslation()
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const nickName = useSelector(selectName)
-    const gameId = useSelector(selectGameId)
-
-    if (!nickName || !gameId) {
-        navigate('..')
-    }
 
     useEffect(() => {
         try {

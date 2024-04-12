@@ -1,16 +1,17 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
-import { selectChosenMenu } from '../../redux/slices/gameSlice'
 import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameStateFeed from '../GameStateFeed/GameStateFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import styles from './MenuContainer.module.css'
+import { useSelector } from 'react-redux'
+import { selectChosenMenu } from '../../redux/slices/infoSlice'
 
 const MenuContainer = () => {
-    const chosenMenu = useSelector(selectChosenMenu)
     const { t } = useTranslation()
+
+    const chosenMenu = useSelector(selectChosenMenu)
 
     const menus = useMemo(
         () => [

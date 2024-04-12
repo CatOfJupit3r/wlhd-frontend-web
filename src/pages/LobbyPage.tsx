@@ -1,40 +1,26 @@
-import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { REACT_APP_BACKEND_URL } from '../config/configs'
 import paths from '../router/paths'
-import AuthManager from '../services/AuthManager'
+import APIService from '../services/APIService'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectLobbyInfo, setLobbyInfo } from '../redux/slices/lobbySlice'
 
 const LobbyPage = () => {
-    const [lobbyInfo, setLobbyInfo] = useState({
-        combats: [] as Array<{
-            nickname: string
-            isActive: boolean
-            roundCount: number
-        }>,
-        players: [] as Array<{
-            userId: string
-            nickname: string
-            mainCharacter: string
-        }>,
-        gm: '',
-    })
-
+    const lobbyInfo = useSelector(selectLobbyInfo)
     const lobbyId = window.location.pathname.split('/').pop()
+    const dispatch = useDispatch()
 
     const refreshLobbyInfo = useCallback(async () => {
         let response
         try {
-            response = await axios.get(`${REACT_APP_BACKEND_URL}/lobby/${lobbyId}`, {
-                headers: AuthManager.authHeader(),
-            })
+            response = await APIService.getLobbyInfo(lobbyId || '')
         } catch (error) {
             console.log(error)
             return
         }
-        console.log('Lobby info:', response.data)
-        if (response && response.data && response.data.players && response.data.combats) {
-            setLobbyInfo(response.data)
+        console.log('Lobby info:', response)
+        if (response && response.players && response.combats) {
+            dispatch(setLobbyInfo(response as any))
         }
     }, [lobbyId])
 
@@ -61,6 +47,19 @@ const LobbyPage = () => {
                 )}
             </div>
             <div>
+                <h2>Your character</h2>
+                {lobbyInfo.controlledEntity ? (
+                    <>
+                        <h3>{lobbyInfo.controlledEntity.id}</h3>
+                        <Link to={paths.viewCharacter.replace(':lobbyId', lobbyId || '')}>
+                            Controlled entity
+                        </Link>
+                    </>
+                ) : (
+                    <p>No controlled entity</p>
+                )}
+            </div>
+            <div>
                 <h2>Combats</h2>
                 {lobbyInfo.combats && lobbyInfo.combats.length === 0 ? (
                     <p>No combats</p>
@@ -75,9 +74,13 @@ const LobbyPage = () => {
                     </ul>
                 )}
             </div>
-            <Link to={paths.createCombatRoom.replace(':lobbyId', lobbyId || '')}>
-                <button>Create new combat!</button>
-            </Link>
+            {lobbyInfo.layout === 'gm' && (
+                <>
+                    <Link to={paths.createCombatRoom.replace(':lobbyId', lobbyId || '')}>
+                        <button>Create new combat!</button>
+                    </Link>
+                </>
+            )}
         </div>
     )
 }

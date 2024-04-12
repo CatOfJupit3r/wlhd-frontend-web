@@ -3,11 +3,11 @@ import { FaUsers } from 'react-icons/fa'
 import { FaUncharted } from 'react-icons/fa6'
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setChosenMenu } from '../../redux/slices/gameSlice'
+import { useDispatch } from 'react-redux'
+import { setChosenMenu } from '../../redux/slices/infoSlice'
 
-const MenuSelector = () => {
+const MenuNavigator = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -114,4 +114,4 @@ const MenuSelector = () => {
     )
 }
 
-export default MenuSelector
+export default MenuNavigator

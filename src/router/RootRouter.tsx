@@ -12,6 +12,7 @@ import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
 import paths from './paths'
 import CreateCombatPage from '../pages/CreateCombatPage'
+import viewCharacterPage from '../pages/ViewCharacterPage'
 
 const authRoutes = [
     {
@@ -29,6 +30,10 @@ const authRoutes = [
     {
         path: paths.createCombatRoom,
         Component: CreateCombatPage,
+    },
+    {
+        path: paths.viewCharacter,
+        Component: viewCharacterPage
     }
 ]
 
@@ -48,7 +53,7 @@ const appRoutes = [
     {
         path: paths.signUp,
         Component: RegisterPage,
-    },
+    }
 ]
 
 const noHeaderRoutes = [
