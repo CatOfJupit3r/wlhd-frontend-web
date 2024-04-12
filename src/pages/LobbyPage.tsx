@@ -50,9 +50,8 @@ const LobbyPage = () => {
                 <h2>Your character</h2>
                 {lobbyInfo.controlledEntity ? (
                     <>
-                        <h3>{lobbyInfo.controlledEntity.id}</h3>
-                        <Link to={paths.viewCharacter.replace(':lobbyId', lobbyId || '')}>
-                            Controlled entity
+                        <Link to={`${paths.viewCharacter.replace(':lobbyId', lobbyId || '')}?id=${lobbyInfo.controlledEntity.id}`}>
+                            {lobbyInfo.controlledEntity.name}
                         </Link>
                     </>
                 ) : (

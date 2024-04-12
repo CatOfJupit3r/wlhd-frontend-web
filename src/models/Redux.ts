@@ -21,6 +21,7 @@ export interface LobbyState {
     gm: string
     layout: 'default' | 'gm'
     controlledEntity: {
+        name: string
         id: string
     } | null
 }
