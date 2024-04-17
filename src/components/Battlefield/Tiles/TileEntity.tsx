@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Tooltip } from 'react-tooltip'
 import { INVALID_ASSET_PATH } from '../../../config/configs'
 // import useTranslatableString from '../../../hooks/useTranslatableString'
-import { selectEntitiesInfo, selectIsLoadingBattlefield } from '../../../redux/slices/infoSlice'
+import { selectEntitiesInfo } from '../../../redux/slices/infoSlice'
+import {
+    selectBattlefieldMode,
+    selectIsLoadingBattlefield,
+    setClickedSquare,
+} from '../../../redux/slices/battlefieldSlice'
 import {
     addHighlightedComponent,
-    selectHighlightedComponents,
-    selectIsSquareChoice,
-    setChosenAction,
-    setSquareChoice,
+    selectHighlightedComponents
 } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
@@ -35,7 +37,7 @@ const TileEntity = (props: {
 
     const [currentClassAlias, setCurrentClassAlias] = useState('default')
 
-    const isSquareChoice = useSelector(selectIsSquareChoice)
+    const battlefieldMode = useSelector(selectBattlefieldMode)
     const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
     const entities_info = useSelector(selectEntitiesInfo)
     const highlightedComponents = useSelector(selectHighlightedComponents)
@@ -47,7 +49,7 @@ const TileEntity = (props: {
     }, [props.active_tiles, setActiveTiles])
 
     const squareShouldBeInteractable = useCallback(() => {
-        if (!isSquareChoice) {
+        if (battlefieldMode !== 'selection') {
             return false
         } else {
             if (id in activeTiles && activeTiles[id]) {
@@ -55,7 +57,7 @@ const TileEntity = (props: {
             }
         }
         return false
-    }, [id, isSquareChoice, activeTiles])
+    }, [id, activeTiles, battlefieldMode])
 
     const classAliasToName = useCallback(
         (alias: string) => {
@@ -77,17 +79,11 @@ const TileEntity = (props: {
     )
 
     const handleDoubleClick = useCallback(() => {
-        if (isSquareChoice && id in activeTiles && activeTiles[id]) {
+        if (battlefieldMode === 'selection') {
             dispatch(addHighlightedComponent(id))
-            dispatch(
-                setChosenAction({
-                    chosenActionValue: id,
-                    translatedActionValue: id,
-                })
-            )
-            dispatch(setSquareChoice(false))
+            dispatch(setClickedSquare(id))
         }
-    }, [id, isSquareChoice, dispatch, activeTiles])
+    }, [id, dispatch, activeTiles])
 
     useEffect(() => {
         if (highlightedComponents && highlightedComponents[id] > 0) {
@@ -184,7 +180,7 @@ const TileEntity = (props: {
                     place={'left-start'}
                     opacity={0.95}
                     variant={'dark'}
-                    delayShow={isSquareChoice ? 1500 : 500}
+                    delayShow={battlefieldMode === 'selection' ? 1500 : 500}
                     delayHide={0}
                 >
                     {isLoadingBattlefield ? (

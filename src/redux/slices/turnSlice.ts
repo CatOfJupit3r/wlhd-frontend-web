@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ActionInput as ActionInputInterface } from '../../models/ActionInput'
-import { TurnState } from '../../models/Redux'
+import { StoreState, TurnState } from '../../models/Redux'
 import APIService from '../../services/APIService'
 
 const initialState: TurnState = {
@@ -99,8 +99,8 @@ const turnSlice = createSlice({
         setCurrentAlias(state, action: PayloadAction<string>) {
             state.currentAlias = action.payload
         },
-        setScope(state, action: PayloadAction<{ [key: string]: string }>) {
-            state.scope = action.payload
+        appendScope(state, action: PayloadAction<{ [key: string]: string }>) {
+            state.scope = { ...state.scope, ...action.payload }
         },
         addHighlightedComponent(state, action: PayloadAction<string>) {
             const key = action.payload
@@ -154,23 +154,24 @@ export const {
     setReadyToSubmit,
     setEntityActions,
     setCurrentAlias,
-    setScope,
+    appendScope,
     addHighlightedComponent,
     setChoice,
     setTranslatedChoice,
     setChosenAction,
     resetChosenAction,
+    resetHighlightedComponents,
 } = turnSlice.actions
 
-export const selectEntityActions = (state: { turn: TurnState }) => state.turn.entityActions
-export const selectCurrentAlias = (state: { turn: TurnState }) => state.turn.currentAlias
-export const selectScope = (state: { turn: TurnState }) => state.turn.scope
-export const selectHighlightedComponents = (state: { turn: TurnState }) => state.turn.highlightedComponents
-export const selectChoices = (state: { turn: TurnState }) => state.turn.choices
-export const selectTranslatedChoices = (state: { turn: TurnState }) => state.turn.translatedChoices
-export const selectIsLoadingEntityActions = (state: { turn: TurnState }) => state.turn.isLoadingEntityActions
-export const selectReadyToSubmit = (state: { turn: TurnState }) => state.turn.readyToSubmit
-export const selectIsSquareChoice = (state: { turn: TurnState }) => state.turn.needToChooseSquare
-export const selectAliasTranslations = (state: { turn: TurnState }) => state.turn.entityActions.alias_translations
-export const selectAliases = (state: { turn: TurnState }) => state.turn.entityActions.aliases
-export const selectChosenAction = (state: { turn: TurnState }) => state.turn.chosenAction
+export const selectEntityActions = (state: StoreState) => state.turn.entityActions
+export const selectCurrentAlias = (state: StoreState) => state.turn.currentAlias
+export const selectScope = (state: StoreState) => state.turn.scope
+export const selectHighlightedComponents = (state: StoreState) => state.turn.highlightedComponents
+export const selectChoices = (state: StoreState) => state.turn.choices
+export const selectTranslatedChoices = (state: StoreState) => state.turn.translatedChoices
+export const selectIsLoadingEntityActions = (state: StoreState) => state.turn.isLoadingEntityActions
+export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubmit
+export const selectIsSquareChoice = (state: StoreState) => state.turn.needToChooseSquare
+export const selectAliasTranslations = (state: StoreState) => state.turn.entityActions.alias_translations
+export const selectAliases = (state: StoreState) => state.turn.entityActions.aliases
+export const selectChosenAction = (state: StoreState) => state.turn.chosenAction

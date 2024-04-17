@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import AuthManager from '../services/AuthManager'
-import { REACT_APP_BACKEND_URL } from '../config/configs'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { Link } from 'react-router-dom'
 import APIService from '../services/APIService'
 
 const ProfilePage = () => {
-    const navigate = useNavigate()
-
-    const [joinedLobbies, setJoinedLobbies] = useState([] as Array<{
-        name: string
-        isGm: boolean
-        _id: string
-    }>)
+    const [joinedLobbies, setJoinedLobbies] = useState(
+        [] as Array<{
+            name: string
+            isGm: boolean
+            _id: string
+        }>
+    )
 
     const getMyLobbies = async () => {
         const myLobbies = await APIService.getMyLobbies()
@@ -20,9 +17,11 @@ const ProfilePage = () => {
     }
 
     useEffect(() => {
-        getMyLobbies().then().catch((error) => {
-            console.log(error)
-        })
+        getMyLobbies()
+            .then()
+            .catch((error) => {
+                console.log(error)
+            })
     }, [])
 
     return (
@@ -45,7 +44,7 @@ const ProfilePage = () => {
                                     <Link to={`../lobby-room/${lobby._id}`}>
                                         {lobby.name} - {lobby.isGm ? 'GM' : 'Player'}
                                     </Link>
-                                    <br/>
+                                    <br />
                                 </div>
                             )
                         )}

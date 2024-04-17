@@ -7,34 +7,11 @@ const initialState: InfoState = {
     allMessages: {
         // when predeclared, sometimes inner objects are not recognized
     },
-    isLoadingBattlefield: true,
     isLoadingEntitiesInfo: true,
     isLoadingCurrentEntityInfo: true,
     endInfo: {
         ended: false,
         winner: '',
-    },
-    currentBattlefield: {
-        field: [
-            ['0', '0', '0', '0', '0', '0'],
-            ['0', '0', '0', '0', '0', '0'],
-            ['0', '0', '0', '0', '0', '0'],
-            ['0', '0', '0', '0', '0', '0'],
-            ['0', '0', '0', '0', '0', '0'],
-            ['0', '0', '0', '0', '0', '0'],
-        ],
-        columns: ['builtins:one', 'builtins:two', 'builtins:three', 'builtins:four', 'builtins:five', 'builtins:six'],
-        lines: [
-            'builtins:safe_line',
-            'builtins:ranged_line',
-            'builtins:melee_line',
-            'builtins:melee_line',
-            'builtins:ranged_line',
-            'builtins:safe_line',
-        ],
-        connectors: 'builtins:connector',
-        separators: 'builtins:separator',
-        field_pawns: { '0': 'builtins:tile' },
     },
     entitiesInfo: {},
     controlledEntities: [],
@@ -46,15 +23,6 @@ const initialState: InfoState = {
     },
     chosenMenu: '',
 }
-
-export const fetchBattlefield = createAsyncThunk('info/fetchBattlefield', async (game_id: string) => {
-    return await APIService.getGameField(game_id)
-        .then((response) => response)
-        .catch((error) => {
-            console.error('There was a problem with the fetch operation: ', error)
-            return initialState.currentBattlefield
-        })
-})
 
 export const fetchAllMessages = createAsyncThunk('info/fetchMessages', async (game_id: string) => {
     return await APIService.getAllMessages(game_id)
@@ -124,15 +92,6 @@ const InfoSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
-            return { ...state, current_battlefield: action.payload, isLoadingBattlefield: false }
-        })
-        builder.addCase(fetchBattlefield.pending, (state) => {
-            return { ...state, isLoadingBattlefield: true }
-        })
-        builder.addCase(fetchBattlefield.rejected, (state) => {
-            return { ...state, isLoadingBattlefield: false }
-        })
         builder.addCase(fetchAllMessages.fulfilled, (state, action) => {
             return { ...state, allMessages: action.payload }
         })
@@ -166,13 +125,6 @@ export const { setRound, setEndInfo, addMessage, setChosenMenu } = InfoSlice.act
 
 export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
-export const selectBattlefieldMold = (state: StoreState) => state.info.currentBattlefield.field
-export const selectConnectors = (state: StoreState) => state.info.currentBattlefield.connectors
-export const selectColumns = (state: StoreState) => state.info.currentBattlefield.columns
-export const selectLines = (state: StoreState) => state.info.currentBattlefield.lines
-export const selectSeparators = (state: StoreState) => state.info.currentBattlefield.separators
-export const selectFieldComponents = (state: StoreState) => state.info.currentBattlefield.field_pawns
-export const selectIsLoadingBattlefield = (state: StoreState) => state.info.isLoadingBattlefield
 export const selectEntitiesInfo = (state: StoreState) => state.info.entitiesInfo
 export const selectEndInfo = (state: StoreState) => state.info.endInfo
 export const selectChosenMenu = (state: StoreState) => state.info.chosenMenu

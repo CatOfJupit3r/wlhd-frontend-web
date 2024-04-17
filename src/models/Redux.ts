@@ -55,14 +55,12 @@ export interface TurnState {
 export interface InfoState {
     round: number
     allMessages: GameStateContainer
-    isLoadingBattlefield: boolean
     isLoadingEntitiesInfo: boolean
     isLoadingCurrentEntityInfo: boolean
     endInfo: {
         ended: boolean
         winner: string
     }
-    currentBattlefield: Battlefield
     entitiesInfo:
         | {
               [key: string]: EntityInfoTooltip
@@ -73,9 +71,17 @@ export interface InfoState {
     chosenMenu: string
 }
 
+export interface BattlefieldState {
+    isLoadingBattlefield: boolean
+    currentBattlefield: Battlefield
+    battlefieldMode: 'info' | 'selection'
+    clickedSquare: string | null
+}
+
 export interface StoreState {
     notify: notifyState
     turn: TurnState
     lobby: LobbyState
     info: InfoState
+    battlefield: BattlefieldState
 }

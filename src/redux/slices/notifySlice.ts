@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { notifyState, StoreState } from '../../models/Redux'
 
 const initialState: notifyState = {
@@ -10,16 +10,7 @@ const NotifySlice = createSlice({
     name: 'notify',
     initialState,
     reducers: {
-        setNotify: (
-            state,
-            action: {
-                type: string
-                payload: {
-                    message: string
-                    code: number
-                }
-            }
-        ) => {
+        setNotify: (state, action: PayloadAction<{ message: string; code: number }>) => {
             const { message, code } = action.payload
             return { ...state, message, code }
         },

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import battlefieldReducer from './slices/battlefieldSlice'
 import infoReducer from './slices/infoSlice'
 import lobbyReducer from './slices/lobbySlice'
 import notifyReducer from './slices/notifySlice'
@@ -10,6 +11,7 @@ export const store = configureStore({
         turn: turnReducer,
         lobby: lobbyReducer,
         info: infoReducer,
+        battlefield: battlefieldReducer,
     },
 })
 

@@ -16,7 +16,6 @@ import {
 import {
     fetchAllEntitiesInfo,
     fetchAllMessages,
-    fetchBattlefield,
     fetchTheMessage,
     selectEndInfo,
     selectEntityInControlInfo,
@@ -24,9 +23,10 @@ import {
     setEndInfo,
     setRound,
 } from '../../redux/slices/infoSlice'
+import { fetchBattlefield } from '../../redux/slices/battlefieldSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
 import {
-    fetchActions,
+    fetchActions, resetHighlightedComponents,
     resetInfo,
     selectChoices,
     selectIsLoadingEntityActions,
@@ -199,14 +199,15 @@ const GameScreen = () => {
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            socketEmitter('take_action', submittedInput)
             dispatch(
                 setNotify({
                     message: JSON.stringify(submittedInput),
                     code: 200,
                 })
             )
+            socketEmitter('take_action', submittedInput)
             dispatch(resetInfo())
+            dispatch(resetHighlightedComponents())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch, socketEmitter])
 
@@ -243,19 +244,6 @@ const GameScreen = () => {
             </>
         )
     }, [roundCount, activeEntityInfo, t, isLoadingActions])
-
-    useEffect(() => {
-        if (inputReadyToSubmit && submittedInput) {
-            // socketEmitter("take_action", submittedInput)
-            dispatch(
-                setNotify({
-                    message: JSON.stringify(submittedInput),
-                    code: 200,
-                })
-            )
-            dispatch(resetInfo())
-        }
-    }, [inputReadyToSubmit, submittedInput, dispatch])
 
     return endInfo && endInfo.ended ? ( // if the game has ended, we show the end screen
         <Overlay row={false}>

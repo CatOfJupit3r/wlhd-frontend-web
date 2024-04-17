@@ -9,7 +9,7 @@ import {
     selectFieldComponents,
     selectLines,
     selectSeparators,
-} from '../../redux/slices/infoSlice'
+} from '../../redux/slices/battlefieldSlice'
 import { selectAliases, selectCurrentAlias, selectIsSquareChoice, selectScope } from '../../redux/slices/turnSlice'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
@@ -29,7 +29,7 @@ const Battlefield = () => {
 
     const [interactableTiles, setInteractableTiles] = useState({} as { [key: string]: boolean })
 
-    const numberOfRows = battlefield.length
+    const numberOfRows = battlefield.lines.length
     const allyRowIndexes = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i)
     const enemyRows = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i + Math.floor(numberOfRows / 2))
 
@@ -64,7 +64,7 @@ const Battlefield = () => {
         const rendered = []
         const right_lines = LINES_ARRAY(lines, `${side_type}_right`)
         const left_lines = LINES_ARRAY(lines, `${side_type}_left`)
-        const battlefieldJSX = JSX_BATTLEFIELD(battlefield, field_components, interactableTiles)
+        const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components, interactableTiles)
         for (const i of rows) {
             rendered.push(
                 <div
