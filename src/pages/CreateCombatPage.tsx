@@ -3,20 +3,21 @@ import APIService from '../services/APIService'
 import { useNavigate } from 'react-router-dom'
 import paths from '../router/paths'
 import Battlefield from '../components/Battlefield/Battlefield'
+import { useDispatch, useSelector } from 'react-redux'
+import { setBattlefieldMode } from '../redux/slices/battlefieldSlice'
+import { selectLobbyId } from '../redux/slices/lobbySlice'
 
 const CreateCombatPage = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
+    const lobbyId = useSelector(selectLobbyId)
     const [combatName, setCombatName] = useState('')
     const [combatPreset, setCombatPreset] = useState('')
 
     const onSubmit = useCallback(async () => {
         console.log('Creating combat', combatName, combatPreset)
-        console.log(window.location.pathname.split('/'))
-        const lobbyId = (() => {
-            const paths = window.location.pathname.split('/')
-            return paths[paths.length - 2]
-        })()
+        dispatch(setBattlefieldMode('info'))
         await APIService.createLobbyCombat(lobbyId, combatName, combatPreset)
         navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
     }, [combatName, combatPreset, navigate])

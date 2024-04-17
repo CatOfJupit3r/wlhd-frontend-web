@@ -23,5 +23,6 @@ const LobbySlice = createSlice({
 export default LobbySlice.reducer
 
 export const selectLobbyInfo = (state: StoreState) => state.lobby
+export const selectLobbyId = (state: StoreState) => state.lobby.lobbyId
 
 export const { setLobbyInfo } = LobbySlice.actions

@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
+import { selectLobbyInfo, setLobbyInfo } from '../redux/slices/lobbySlice'
 import paths from '../router/paths'
 import APIService from '../services/APIService'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectLobbyInfo, setLobbyInfo } from '../redux/slices/lobbySlice'
 
 const LobbyPage = () => {
     const lobbyInfo = useSelector(selectLobbyInfo)
-    const lobbyId = window.location.pathname.split('/').pop()
     const dispatch = useDispatch()
+    const { lobbyId } = useParams()
 
     const refreshLobbyInfo = useCallback(async () => {
         let response
@@ -22,13 +22,13 @@ const LobbyPage = () => {
         if (response && response.players && response.combats) {
             dispatch(setLobbyInfo(response as any))
         }
-    }, [lobbyId])
+    }, [dispatch])
 
     useEffect(() => {
         refreshLobbyInfo().then()
     }, [])
 
-    return (
+    return lobbyInfo ? (
         <div>
             <h1>Lobby Page</h1>
             <button onClick={refreshLobbyInfo}>Refresh Lobby Info</button>
@@ -50,7 +50,9 @@ const LobbyPage = () => {
                 <h2>Your character</h2>
                 {lobbyInfo.controlledEntity ? (
                     <>
-                        <Link to={`${paths.viewCharacter.replace(':lobbyId', lobbyId || '')}?id=${lobbyInfo.controlledEntity.id}`}>
+                        <Link
+                            to={`${paths.viewCharacter.replace(':lobbyId', lobbyInfo.lobbyId || '')}?id=${lobbyInfo.controlledEntity.id}`}
+                        >
                             {lobbyInfo.controlledEntity.name}
                         </Link>
                     </>
@@ -75,11 +77,15 @@ const LobbyPage = () => {
             </div>
             {lobbyInfo.layout === 'gm' && (
                 <>
-                    <Link to={paths.createCombatRoom.replace(':lobbyId', lobbyId || '')}>
+                    <Link to={paths.createCombatRoom.replace(':lobbyId', lobbyInfo.lobbyId || '')}>
                         <button>Create new combat!</button>
                     </Link>
                 </>
             )}
+        </div>
+    ) : (
+        <div>
+            <h1>Loading...</h1>
         </div>
     )
 }
