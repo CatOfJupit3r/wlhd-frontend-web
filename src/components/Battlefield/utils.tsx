@@ -2,7 +2,7 @@ import TileCosmetic from './Tiles/TileCosmetic'
 import TileEntity from './Tiles/TileEntity'
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
-    return `assets/${dlc}/${descriptor}.png`
+    return `/assets/${dlc}/${descriptor}.png`
 }
 
 export const splitDescriptor = (full_descriptor: string): [string, string] => {
@@ -63,7 +63,7 @@ export const JSX_BATTLEFIELD = (
                     key={tile_id}
                     active_tiles={active_tiles}
                     fallback={{
-                        path: isAlly ? 'assets/builtins/ally.png' : 'assets/builtins/enemy.png',
+                        path: isAlly ? '/assets/builtins/ally.png' : '/assets/builtins/enemy.png',
                         alt: isAlly ? 'ally' : 'enemy',
                     }}
                 />

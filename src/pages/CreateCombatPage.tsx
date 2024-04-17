@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import APIService from '../services/APIService'
 import { useNavigate } from 'react-router-dom'
 import paths from '../router/paths'
+import Battlefield from '../components/Battlefield/Battlefield'
 
 const CreateCombatPage = () => {
     const navigate = useNavigate()
@@ -32,19 +33,12 @@ const CreateCombatPage = () => {
                         setCombatName(e.target.value)
                     }}
                 />
-                <input
-                    type="text"
-                    value={combatPreset}
-                    placeholder="Enter combat preset"
-                    onChange={(e) => {
-                        setCombatPreset(e.target.value)
-                    }}
-                />
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    onSubmit().then()
-                } }>Create</button>
             </form>
+            <Battlefield />
+            <button onClick={(e) => {
+                e.preventDefault()
+                onSubmit().then()
+            } }>Create</button>
         </div>
     )
 }
