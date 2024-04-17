@@ -233,6 +233,19 @@ class APIService {
             },
         })
     }
+
+    getMyLobbies = async (): Promise<
+        Array<{
+            name: string
+            isGm: boolean
+            _id: string
+        }>
+    > => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/user/joined_lobbies`,
+            method: 'get',
+        }).then((data) => data.joinedLobbies)
+    }
 }
 
 export default new APIService()
