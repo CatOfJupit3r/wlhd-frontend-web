@@ -106,6 +106,10 @@ const turnSlice = createSlice({
             const key = action.payload
             state.highlightedComponents[key] = (state.highlightedComponents[key] || 0) + 1
         },
+        highlightNothingButComponent(state, action: PayloadAction<string>) {
+            state.highlightedComponents = {}
+            state.highlightedComponents[action.payload] = 1
+        },
         resetHighlightedComponents(state) {
             state.highlightedComponents = {}
         },
@@ -161,6 +165,7 @@ export const {
     setChosenAction,
     resetChosenAction,
     resetHighlightedComponents,
+    highlightNothingButComponent,
 } = turnSlice.actions
 
 export const selectEntityActions = (state: StoreState) => state.turn.entityActions

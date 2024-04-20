@@ -223,7 +223,7 @@ class APIService {
         })) as CharacterInfo
     }
 
-    createLobbyCombat = async (lobby_id: string, combat_nickname: string, combat_preset: string) => {
+    createLobbyCombat = async (lobby_id: string, combat_nickname: string, combat_preset: any) => {
         return await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/create_combat`,
             method: 'post',

@@ -13,12 +13,16 @@ import RegisterPage from '../pages/RegisterPage'
 import paths from './paths'
 import CreateCombatPage from '../pages/CreateCombatPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
+import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 
 const authRoutes = [
     {
         path: paths.profile,
         Component: ProfilePage,
     },
+]
+
+const lobbyRoutes = [
     {
         path: paths.gameRoom,
         Component: GameRoomPage,
@@ -76,6 +80,11 @@ export default function RootRouter() {
                         <Route key={path} path={path} index={path === paths.home} element={<C />} />
                     ))}
                     {authRoutes.map(({ path, Component: C }) => (
+                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    ))}
+                </Route>
+                <Route path={'/'} element={<LobbyPagesLayout />}>
+                    {lobbyRoutes.map(({ path, Component: C }) => (
                         <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
                     ))}
                 </Route>

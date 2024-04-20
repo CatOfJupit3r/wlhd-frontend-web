@@ -4,7 +4,8 @@ import styles from './Header.module.css'
 import AuthManager from '../../services/AuthManager'
 import { useIsLoggedIn } from '../../hooks/useIsLoggedIn'
 
-const Header: React.FC = () => {
+
+const Header = () => {
     const isLoggedIn = useIsLoggedIn()
 
     return (
@@ -49,7 +50,7 @@ const Header: React.FC = () => {
                         <Link to="login" relative={'path'} style={{ marginRight: '10px' }}>
                             Login
                         </Link>
-                        <Link to="register" relative={'path'} >
+                        <Link to="register" relative={'path'}>
                             Register
                         </Link>
                     </>
