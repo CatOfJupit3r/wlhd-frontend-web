@@ -106,7 +106,7 @@ class APIService {
         }
     }
 
-    refreshToken = async () => {
+    public refreshToken = async () => {
         const refreshToken = AuthManager.getRefreshToken()
         const {
             data: { accessToken },
@@ -119,7 +119,7 @@ class APIService {
         AuthManager.setAccessToken(accessToken)
     }
 
-    logout = async () => {
+    public logout = async () => {
         AuthManager.logout()
         const refreshToken = AuthManager.getRefreshToken()
         if (refreshToken) {
@@ -132,18 +132,18 @@ class APIService {
         return null
     }
 
-    login = async (handle: string, password: string) => {
+    public login = async (handle: string, password: string) => {
         const response = await axios.post(this.endpoints.LOGIN, { handle, password })
         const { accessToken, refreshToken } = response.data
         AuthManager.login({ accessToken, refreshToken })
     }
 
-    createAccount = async (handle: string, password: string) => {
+    public createAccount = async (handle: string, password: string) => {
         await axios.post(this.endpoints.REGISTER, { handle, password })
         await this.login(handle, password)
     }
 
-    getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
+    public getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
         try {
             const response = await this.fetch({
                 url: this.endpoints.GET_TRANSLATIONS(language, dlc),
@@ -156,42 +156,42 @@ class APIService {
         }
     }
 
-    getGameField = async (game_id: string): Promise<Battlefield> => {
+    public getGameField = async (game_id: string): Promise<Battlefield> => {
         return (await this.fetch({
             url: this.endpoints.GET_BATTLEFIELD(game_id),
             method: 'get',
         })) as Battlefield
     }
 
-    getActions = async (game_id: string, entity_id: string): Promise<ActionInput> => {
+    public getActions = async (game_id: string, entity_id: string): Promise<ActionInput> => {
         return (await this.fetch({
             url: this.endpoints.GET_ACTIONS(game_id, entity_id),
             method: 'get',
         })) as ActionInput
     }
 
-    getOneMessage = async (game_id: string, message_id: string): Promise<GameStateContainer> => {
+    public getOneMessage = async (game_id: string, message_id: string): Promise<GameStateContainer> => {
         return await this.fetch({
             url: this.endpoints.GET_THE_MESSAGE(game_id, message_id),
             method: 'get',
         })
     }
 
-    getAllMessages = async (game_id: string): Promise<GameStateContainer> => {
+    public getAllMessages = async (game_id: string): Promise<GameStateContainer> => {
         return await this.fetch({
             url: this.endpoints.GET_ALL_MESSAGES(game_id),
             method: 'get',
         })
     }
 
-    getEntityInfo = async (game_id: string, entity_id: string): Promise<{ [key: string]: string }> => {
+    public getEntityInfo = async (game_id: string, entity_id: string): Promise<{ [key: string]: string }> => {
         return await this.fetch({
             url: this.endpoints.GET_ENTITY_INFO(game_id, entity_id),
             method: 'get',
         })
     }
 
-    getAllEntitiesInfo = async (
+    public getAllEntitiesInfo = async (
         game_id: string
     ): Promise<{
         [key: string]: EntityInfoTooltip
@@ -202,39 +202,40 @@ class APIService {
         })
     }
 
-    getLobbyInfo = async (lobby_id: string) => {
+    public getLobbyInfo = async (lobby_id: string) => {
         return await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}`,
             method: 'get',
         })
     }
 
-    getCharacterInfo = async (character_id: string, lobby_id: string): Promise<CharacterInfo> => {
+    public getCharacterInfo = async (character_id: string, lobby_id: string): Promise<CharacterInfo> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${character_id}`,
             method: 'get',
         })) as CharacterInfo
     }
 
-    getMyCharacterInfo = async (lobby_id: string): Promise<CharacterInfo> => {
+    public getMyCharacterInfo = async (lobby_id: string): Promise<CharacterInfo> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/my_character`,
             method: 'get',
         })) as CharacterInfo
     }
 
-    createLobbyCombat = async (lobby_id: string, combat_nickname: string, combat_preset: any) => {
+    public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {
         return await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/create_combat`,
             method: 'post',
             data: {
-                combat_nickname,
-                combat_preset,
+                lobby_id,
+                combatNickname,
+                combatPreset,
             },
         })
     }
 
-    getMyLobbies = async (): Promise<
+    public getMyLobbies = async (): Promise<
         Array<{
             name: string
             isGm: boolean

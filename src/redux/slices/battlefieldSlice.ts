@@ -28,6 +28,15 @@ const initialState: BattlefieldState = {
     },
     battlefieldMode: 'info',
     clickedSquare: null,
+    interactableTiles: (() => {
+        const interactableTiles: { [key: string]: boolean } = {}
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+                interactableTiles[`${i + 1}/${j + 1}`] = false
+            }
+        }
+        return interactableTiles
+    })(),
 }
 
 export const fetchBattlefield = createAsyncThunk('battlefield/fetchBattlefield', async (game_id: string) => {
@@ -52,6 +61,9 @@ const InfoSlice = createSlice({
         resetClickedSquare: (state) => {
             state.clickedSquare = null
         },
+        setInteractableTiles: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
+            state.interactableTiles = { ...state.interactableTiles, ...action.payload }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -68,7 +80,7 @@ const InfoSlice = createSlice({
 
 export default InfoSlice.reducer
 
-export const { setBattlefieldMode, setClickedSquare, resetClickedSquare } = InfoSlice.actions
+export const { setBattlefieldMode, setClickedSquare, resetClickedSquare, setInteractableTiles } = InfoSlice.actions
 
 export const selectBattlefieldMold = (state: StoreState) => state.battlefield.currentBattlefield,
     selectColumns = (state: StoreState) => state.battlefield.currentBattlefield.columns,
@@ -78,4 +90,5 @@ export const selectBattlefieldMold = (state: StoreState) => state.battlefield.cu
     selectSeparators = (state: StoreState) => state.battlefield.currentBattlefield.separators,
     selectIsLoadingBattlefield = (state: StoreState) => state.battlefield.isLoadingBattlefield,
     selectBattlefieldMode = (state: StoreState) => state.battlefield.battlefieldMode,
-    selectClickedSquare = (state: StoreState) => state.battlefield.clickedSquare
+    selectClickedSquare = (state: StoreState) => state.battlefield.clickedSquare,
+    selectInteractableTiles = (state: StoreState) => state.battlefield.interactableTiles

@@ -7,6 +7,8 @@ import { setBattlefieldMode } from '../redux/slices/battlefieldSlice'
 import { selectLobbyId } from '../redux/slices/lobbySlice'
 import paths from '../router/paths'
 import APIService from '../services/APIService'
+import { AxiosError } from 'axios'
+import {setNotify} from "../redux/slices/notifySlice";
 
 interface CombatPreset {
     field: {
@@ -32,10 +34,23 @@ const CreateCombatPage = () => {
     } as CombatPreset)
 
     const onSubmit = useCallback(async () => {
-        console.log('Creating combat', combatName, combatPreset)
-        dispatch(setBattlefieldMode('info'))
-        await APIService.createLobbyCombat(lobbyId, combatName, combatPreset)
-        navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
+        try {
+            console.log('Creating combat', combatName, combatPreset)
+            dispatch(setBattlefieldMode('info'))
+            const { combat_id } = await APIService.createLobbyCombat(lobbyId, combatName, combatPreset)
+            navigate(paths.gameRoom.replace(':lobbyId', lobbyId).replace(':gameId', combat_id))
+        } catch (e) {
+            if (e instanceof AxiosError) {
+                console.error(e.response?.data)
+                dispatch(setNotify({
+                    message: e.response?.data,
+                    code: e.response?.status || 400
+                }))
+            } else {
+                console.error(e)
+            }
+            // navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
+        }
     }, [combatName, combatPreset, navigate])
 
     const addCharacter = (

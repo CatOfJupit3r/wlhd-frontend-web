@@ -76,6 +76,9 @@ export interface BattlefieldState {
     currentBattlefield: Battlefield
     battlefieldMode: 'info' | 'selection'
     clickedSquare: string | null
+    interactableTiles: {
+        [key: string]: boolean
+    }
 }
 
 export interface StoreState {

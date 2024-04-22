@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Blurhash } from 'react-blurhash'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BATTLEFIELD_BLUR_HASH } from '../../config/configs'
 import {
+    selectBattlefieldMode,
     selectBattlefieldMold,
     selectColumns,
     selectConnectors,
     selectFieldComponents,
     selectLines,
     selectSeparators,
+    setInteractableTiles,
 } from '../../redux/slices/battlefieldSlice'
 import { selectAliases, selectCurrentAlias, selectIsSquareChoice, selectScope } from '../../redux/slices/turnSlice'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
 
 const Battlefield = () => {
+    const dispatch = useDispatch()
+
     const isSquareChoice = useSelector(selectIsSquareChoice)
     const currentAlias = useSelector(selectCurrentAlias)
     const aliases = useSelector(selectAliases)
@@ -26,8 +30,7 @@ const Battlefield = () => {
     const separators = useSelector(selectSeparators)
     const field_components = useSelector(selectFieldComponents)
     const battlefield = useSelector(selectBattlefieldMold)
-
-    const [interactableTiles, setInteractableTiles] = useState({} as { [key: string]: boolean })
+    const battlefieldMode = useSelector(selectBattlefieldMode)
 
     const numberOfRows = battlefield.lines.length
     const allyRowIndexes = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i)
@@ -39,7 +42,21 @@ const Battlefield = () => {
             for (const action of aliases[scope[currentAlias]]) {
                 newInteractableTiles[action.id] = true
             }
-            setInteractableTiles(newInteractableTiles)
+            dispatch(setInteractableTiles(newInteractableTiles))
+        } else if (battlefieldMode === 'selection') {
+            dispatch(
+                setInteractableTiles(
+                    (() => {
+                        const interactableTiles: { [key: string]: boolean } = {}
+                        for (let i = 0; i < battlefield.field.length; i++) {
+                            for (let j = 0; j < battlefield.field[i].length; j++) {
+                                interactableTiles[`${i + 1}/${j + 1}`] = false
+                            }
+                        }
+                        return interactableTiles
+                    })()
+                )
+            )
         }
     }, [isSquareChoice])
 
@@ -64,7 +81,7 @@ const Battlefield = () => {
         const rendered = []
         const right_lines = LINES_ARRAY(lines, `${side_type}_right`)
         const left_lines = LINES_ARRAY(lines, `${side_type}_left`)
-        const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components, interactableTiles)
+        const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components)
         for (const i of rows) {
             rendered.push(
                 <div

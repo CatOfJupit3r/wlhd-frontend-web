@@ -45,8 +45,7 @@ export const LINES_ARRAY = (lines: string[], key: string) => {
 
 export const JSX_BATTLEFIELD = (
     battlefield: string[][],
-    field_components: { [key: string]: string },
-    active_tiles: { [key: string]: boolean }
+    field_components: { [key: string]: string }
 ) => {
     const battlefieldJSX: JSX.Element[][] = Array<Array<JSX.Element>>()
     for (let i = 0; i < battlefield.length; i++) {
@@ -61,7 +60,6 @@ export const JSX_BATTLEFIELD = (
                     full_descriptor={full_descriptor}
                     id={tile_id}
                     key={tile_id}
-                    active_tiles={active_tiles}
                     fallback={{
                         path: isAlly ? '/assets/builtins/ally.png' : '/assets/builtins/enemy.png',
                         alt: isAlly ? 'ally' : 'enemy',

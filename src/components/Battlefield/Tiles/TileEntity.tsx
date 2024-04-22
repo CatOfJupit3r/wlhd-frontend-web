@@ -1,20 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Placeholder } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { Tooltip } from 'react-tooltip'
 import { INVALID_ASSET_PATH } from '../../../config/configs'
 // import useTranslatableString from '../../../hooks/useTranslatableString'
-import { selectEntitiesInfo } from '../../../redux/slices/infoSlice'
 import {
     selectBattlefieldMode,
+    selectInteractableTiles,
     selectIsLoadingBattlefield,
     setClickedSquare,
 } from '../../../redux/slices/battlefieldSlice'
-import {
-    addHighlightedComponent,
-    selectHighlightedComponents
-} from '../../../redux/slices/turnSlice'
+import { selectEntitiesInfo } from '../../../redux/slices/infoSlice'
+import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
 
@@ -22,7 +20,6 @@ const TileEntity = (props: {
     full_descriptor: string
     className?: string
     id: string
-    active_tiles: { [key: string]: boolean }
     fallback: {
         path: string
         alt?: string
@@ -42,22 +39,18 @@ const TileEntity = (props: {
     const entities_info = useSelector(selectEntitiesInfo)
     const highlightedComponents = useSelector(selectHighlightedComponents)
 
-    const [activeTiles, setActiveTiles] = useState(props.active_tiles)
-
-    useEffect(() => {
-        setActiveTiles(props.active_tiles)
-    }, [props.active_tiles, setActiveTiles])
+    const interactableTiles = useSelector(selectInteractableTiles)
 
     const squareShouldBeInteractable = useCallback(() => {
         if (battlefieldMode !== 'selection') {
             return false
         } else {
-            if (id in activeTiles && activeTiles[id]) {
+            if (id in interactableTiles && interactableTiles[id]) {
                 return true
             }
         }
         return false
-    }, [id, activeTiles, battlefieldMode])
+    }, [id, interactableTiles, battlefieldMode])
 
     const classAliasToName = useCallback(
         (alias: string) => {
@@ -83,7 +76,7 @@ const TileEntity = (props: {
             dispatch(addHighlightedComponent(id))
             dispatch(setClickedSquare(id))
         }
-    }, [id, dispatch, activeTiles])
+    }, [id, dispatch, interactableTiles])
 
     useEffect(() => {
         if (highlightedComponents && highlightedComponents[id] > 0) {
@@ -140,13 +133,19 @@ const TileEntity = (props: {
             square,
             health,
             action_points,
-            armor
+            armor,
             // status_effects,
         } = entity_info
         return [
             // t("local:game.components.tooltip.creature_and_line", {name: translatableString(name), square: square.join("|")}),
-            t('local:game.components.tooltip.health_max_health', { current_health: health.current, max_health: health.max }),
-            t('local:game.components.tooltip.action_points', { current_action_points: action_points.current, max_action_points: action_points.max }),
+            t('local:game.components.tooltip.health_max_health', {
+                current_health: health.current,
+                max_health: health.max,
+            }),
+            t('local:game.components.tooltip.action_points', {
+                current_action_points: action_points.current,
+                max_action_points: action_points.max,
+            }),
             t('local:game.components.tooltip.armor', { current_armor: armor.current, base_armor: armor.base }),
             t('local:game.components.tooltip.status_effects'),
             // {status_effects: (
