@@ -7,7 +7,7 @@ import example_messages from '../../data/example_messages.json'
 import { TranslatableString } from '../../models/Battlefield'
 import { addMessage, selectEntityInControlInfo, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
-import { resetInfo, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
+import { resetTurn, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
 import { AppDispatch } from '../../redux/store'
 import ActionInput from '../ActionInput/ActionInput'
 import Battlefield from '../Battlefield/Battlefield'
@@ -73,7 +73,7 @@ const DebugScreen = () => {
                     code: 200,
                 })
             )
-            dispatch(resetInfo())
+            dispatch(resetTurn())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch])
 

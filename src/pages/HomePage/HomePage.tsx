@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { resetInfo } from '../../redux/slices/turnSlice'
+import { resetTurn } from '../../redux/slices/turnSlice'
 import styles from './HomePage.module.css'
 
 function HomePage() {
@@ -9,7 +9,7 @@ function HomePage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(resetInfo())
+        dispatch(resetTurn())
     }, [dispatch])
 
     return (
@@ -18,9 +18,7 @@ function HomePage() {
                 <h1>{t('local:index.title')}</h1>
                 <h2>{t('local:index.subtitle')}</h2>
             </div>
-            <h1>
-                Welcome!
-            </h1>
+            <h1>Welcome!</h1>
         </>
     )
 }

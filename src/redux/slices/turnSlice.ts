@@ -79,7 +79,7 @@ const turnSlice = createSlice({
                 isLoadingEntityActions: state.isLoadingEntityActions,
             }
         },
-        resetInfo() {
+        resetTurn() {
             return {
                 ...initialState,
             }
@@ -152,7 +152,7 @@ export default turnSlice.reducer
 
 export const {
     resetInput,
-    resetInfo,
+    resetTurn,
     setPlayersTurn,
     setSquareChoice,
     setReadyToSubmit,

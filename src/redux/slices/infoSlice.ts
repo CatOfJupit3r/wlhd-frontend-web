@@ -9,9 +9,9 @@ const initialState: InfoState = {
     },
     isLoadingEntitiesInfo: true,
     isLoadingCurrentEntityInfo: true,
-    endInfo: {
-        ended: false,
-        winner: '',
+    gameFlow: {
+        type: 'pending',
+        details: '',
     },
     entitiesInfo: {},
     controlledEntities: [],
@@ -90,6 +90,30 @@ const InfoSlice = createSlice({
         setChosenMenu: (state, action: PayloadAction<string>) => {
             state.chosenMenu = action.payload
         },
+        setFlowToActive: (state) => {
+            state.gameFlow = {
+                type: 'active',
+                details: '',
+            }
+        },
+        setFlowToPending: (state) => {
+            state.gameFlow = {
+                type: 'pending',
+                details: '',
+            }
+        },
+        setFlowToEnded: (state, action: PayloadAction<string>) => {
+            state.gameFlow = {
+                type: 'ended',
+                details: action.payload,
+            }
+        },
+        setFlowToAborted: (state, action: PayloadAction<string>) => {
+            state.gameFlow = {
+                type: 'aborted',
+                details: action.payload,
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAllMessages.fulfilled, (state, action) => {
@@ -121,12 +145,21 @@ const InfoSlice = createSlice({
 
 export default InfoSlice.reducer
 
-export const { setRound, setEndInfo, addMessage, setChosenMenu } = InfoSlice.actions
+export const {
+    setRound,
+    setEndInfo,
+    addMessage,
+    setChosenMenu,
+    setFlowToEnded,
+    setFlowToActive,
+    setFlowToPending,
+    setFlowToAborted,
+} = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
 export const selectAllMessages = (state: StoreState) => state.info.allMessages
 export const selectEntitiesInfo = (state: StoreState) => state.info.entitiesInfo
-export const selectEndInfo = (state: StoreState) => state.info.endInfo
+export const selectGameFlow = (state: StoreState) => state.info.gameFlow
 export const selectChosenMenu = (state: StoreState) => state.info.chosenMenu
 // export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
 export const selectEntityInControlInfo = () => ({

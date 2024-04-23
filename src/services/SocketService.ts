@@ -1,10 +1,18 @@
 import { io, Socket } from 'socket.io-client'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
 import { ActionResultsPayload } from '../models/Events'
+import { resetGameComponentsStateAction } from '../redux/highActions'
 import { fetchBattlefield } from '../redux/slices/battlefieldSlice'
-import { fetchAllEntitiesInfo, fetchTheMessage, setEndInfo, setRound } from '../redux/slices/infoSlice'
+import {
+    fetchAllEntitiesInfo,
+    fetchTheMessage,
+    setFlowToAborted,
+    setFlowToActive,
+    setFlowToEnded,
+    setRound,
+} from '../redux/slices/infoSlice'
 import { setNotify } from '../redux/slices/notifySlice'
-import { fetchActions, setPlayersTurn } from '../redux/slices/turnSlice'
+import { fetchActions, resetTurn, setPlayersTurn } from '../redux/slices/turnSlice'
 import { store as ReduxStore } from '../redux/store'
 
 const SOCKET_EVENTS = {
@@ -95,6 +103,13 @@ class SocketService {
                 event: 'disconnect',
                 callback: () => {
                     console.log('Disconnected from socket')
+                    const currentState = ReduxStore.getState()
+                    if (currentState.info.gameFlow.type !== 'ended') {
+                        ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'))
+                    }
+                    if (currentState.info.gameFlow.type === 'active') {
+                        ReduxStore.dispatch(resetGameComponentsStateAction())
+                    }
                 },
             },
             {
@@ -107,7 +122,7 @@ class SocketService {
                         this.reconnect()
                     } else {
                         console.log('Could not reconnect to game server')
-                        // TODO: we signal that game is over.
+                        ReduxStore.dispatch(setFlowToAborted('local:game.connection_lost'))
                         this.retries = 3
                     }
                 },
@@ -115,7 +130,7 @@ class SocketService {
             {
                 event: SOCKET_EVENTS.ACTION_RESULT,
                 callback: ({ code, message }: ActionResultsPayload) => {
-                    console.log('Received action result', code, message)
+                    console.log('Action result', code, message)
                     ReduxStore.dispatch(setNotify({ code, message }))
                 },
             },
@@ -125,13 +140,14 @@ class SocketService {
                     // this action stops any further action from being taken.
                     // emitted to avoid users from taking actions when they shouldn't no longer
                     console.log('Halted action')
+                    ReduxStore.dispatch(resetTurn())
                 },
             },
             {
                 event: SOCKET_EVENTS.BATTLE_ENDED,
                 callback: ({ battle_result }: { battle_result: string }) => {
                     console.log('Battle ended', battle_result)
-                    ReduxStore.dispatch(setEndInfo({ ended: true, winner: battle_result }))
+                    ReduxStore.dispatch(setFlowToEnded(battle_result))
                 },
             },
             {
@@ -183,7 +199,7 @@ class SocketService {
             {
                 event: SOCKET_EVENTS.BATTLE_STARTED,
                 callback: () => {
-                    console.log('Battle started')
+                    ReduxStore.dispatch(setFlowToActive())
                 },
             },
             {
@@ -200,7 +216,6 @@ class SocketService {
                             ReduxStore.dispatch(fetchBattlefield(this.combatId))
                             ReduxStore.dispatch(fetchAllEntitiesInfo(this.combatId))
                             ReduxStore.dispatch(
-                                // add redux-thunk, cuz plain dispatch is not enough
                                 fetchActions({
                                     game_id: this.combatId,
                                     entity_id: entity_id,

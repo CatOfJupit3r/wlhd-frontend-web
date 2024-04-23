@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useBeforeUnload, useNavigate } from 'react-router-dom'
 import GameScreen from '../components/GameScreen/GameScreen'
 import Overlay from '../components/Overlay/Overlay'
-import { resetInfo } from '../redux/slices/turnSlice'
+import { resetTurn } from '../redux/slices/turnSlice'
 import APIService from '../services/APIService'
 
 /*
@@ -50,7 +50,7 @@ const GameRoomPage = () => {
 
     useBeforeUnload(
         React.useCallback(() => {
-            dispatch(resetInfo())
+            dispatch(resetTurn())
         }, [dispatch])
     )
 

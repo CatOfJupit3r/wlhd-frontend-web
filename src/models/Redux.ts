@@ -57,9 +57,13 @@ export interface InfoState {
     allMessages: GameStateContainer
     isLoadingEntitiesInfo: boolean
     isLoadingCurrentEntityInfo: boolean
-    endInfo: {
-        ended: boolean
-        winner: string
+    gameFlow: {
+        type: 'pending' | 'active' | 'ended' | 'aborted'
+        details: string
+        // pending: 'waiting for GM' | 'waiting for game start'
+        // active: ???
+        // ended: winner
+        // aborted: reason why (if possible)
     }
     entitiesInfo:
         | {

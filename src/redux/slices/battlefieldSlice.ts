@@ -64,6 +64,9 @@ const InfoSlice = createSlice({
         setInteractableTiles: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
             state.interactableTiles = { ...state.interactableTiles, ...action.payload }
         },
+        resetState: () => {
+            return initialState
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchBattlefield.fulfilled, (state, action) => {
@@ -80,7 +83,8 @@ const InfoSlice = createSlice({
 
 export default InfoSlice.reducer
 
-export const { setBattlefieldMode, setClickedSquare, resetClickedSquare, setInteractableTiles } = InfoSlice.actions
+export const { setBattlefieldMode, setClickedSquare, resetClickedSquare, setInteractableTiles, resetState } =
+    InfoSlice.actions
 
 export const selectBattlefieldMold = (state: StoreState) => state.battlefield.currentBattlefield,
     selectColumns = (state: StoreState) => state.battlefield.currentBattlefield.columns,

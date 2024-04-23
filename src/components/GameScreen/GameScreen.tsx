@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { Spinner } from 'react-bootstrap'
-import { selectEndInfo, selectEntityInControlInfo, selectRound } from '../../redux/slices/infoSlice'
+import { resetGameComponentsStateAction } from '../../redux/highActions'
+import { selectEntityInControlInfo, selectGameFlow, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
 import {
     resetHighlightedComponents,
-    resetInfo,
+    resetTurn,
     selectChoices,
     selectIsLoadingEntityActions,
     selectReadyToSubmit,
@@ -19,6 +19,7 @@ import ActionInput from '../ActionInput/ActionInput'
 import Battlefield from '../Battlefield/Battlefield'
 import GameStateFeed from '../GameStateFeed/GameStateFeed'
 import Overlay from '../Overlay/Overlay'
+import ThinkingHn from '../ThinkingHn'
 import styles from './GameScreen.module.css'
 
 const GameScreen = () => {
@@ -26,19 +27,18 @@ const GameScreen = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    const isActive = true
     const { gameId, lobbyId } = useParams()
 
     const isLoadingActions = useSelector(selectIsLoadingEntityActions)
     const activeEntityInfo = useSelector(selectEntityInControlInfo)
-    const endInfo = useSelector(selectEndInfo)
+    const gameFlow = useSelector(selectGameFlow)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChoices)
     const roundCount = useSelector(selectRound)
 
     useEffect(() => {
         if (!lobbyId || !gameId) {
-            dispatch(resetInfo())
+            dispatch(resetTurn())
             navigate('..')
             return
         }
@@ -46,6 +46,7 @@ const GameScreen = () => {
             t('local:game.title', { gameId: gameId }) === t('local:game.title')
                 ? 'Game'
                 : t('local:game.title', { gameId: gameId })
+        dispatch(resetGameComponentsStateAction())
         SocketService.connect({
             lobbyId,
             combatId: gameId,
@@ -61,7 +62,7 @@ const GameScreen = () => {
                 })
             )
             SocketService.emit('take_action', submittedInput)
-            dispatch(resetInfo())
+            dispatch(resetTurn())
             dispatch(resetHighlightedComponents())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch])
@@ -87,8 +88,7 @@ const GameScreen = () => {
                         >
                             {isLoadingActions ? (
                                 <Overlay>
-                                    <h1>{t('local:game.actions.loading')}</h1>
-                                    <Spinner role="status" />
+                                    <ThinkingHn text={t('local:game.actions.loading')} />
                                 </Overlay>
                             ) : (
                                 <ActionInput />
@@ -100,28 +100,59 @@ const GameScreen = () => {
         )
     }, [roundCount, activeEntityInfo, t, isLoadingActions])
 
-    return endInfo && endInfo.ended ? ( // if the game has ended, we show the end screen
-        <Overlay row={false}>
-            <h1>{t('local:game.end.title')}</h1>
-            <h1>{t('local:game.end.result', { result: endInfo.winner })}</h1>
-            <button
-                onClick={() => {
-                    navigate('..')
-                }}
-            >
-                {t('local:game.end.exit')}
-            </button>
-        </Overlay>
-    ) : // if the game has not ended, we show the game screen
-    isActive ? ( // if the game has started, we show the game screen
-        ActiveScreen() // if the game has started, we show the game screen
-    ) : (
-        // if the game has not started, we show the loading screen
-        <Overlay>
-            <h1>{t('local:game.pending.not_started')}</h1>
-            <Spinner animation="grow" role="status" />
-        </Overlay>
-    )
+    const getCurrentScreen = useCallback((): JSX.Element => {
+        switch (gameFlow?.type) {
+            case 'pending':
+                return (
+                    <Overlay>
+                        <ThinkingHn text={t('local:game.pending.not_started')} />
+                        <h2>{t(gameFlow.details || 'local:game.pending.waiting_text')}</h2>
+                    </Overlay>
+                )
+            case 'active':
+                return ActiveScreen()
+            case 'ended':
+                return (
+                    <Overlay row={false}>
+                        <h1>{t('local:game.end.title')}</h1>
+                        <h1>
+                            {t('local:game.end.result', {
+                                result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
+                            })}
+                        </h1>
+                        <button
+                            onClick={() => {
+                                navigate('..')
+                            }}
+                        >
+                            {t('local:game.end.exit')}
+                        </button>
+                    </Overlay>
+                )
+            case 'aborted':
+                return (
+                    <Overlay>
+                        <h1>{t('local:game.end.aborted')}</h1>
+                        <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
+                        <button
+                            onClick={() => {
+                                navigate('..')
+                            }}
+                        >
+                            {t('local:game.end.exit')}
+                        </button>
+                    </Overlay>
+                )
+            default:
+                return (
+                    <Overlay>
+                        <ThinkingHn text={t('local:game.pending.not_started')} />
+                    </Overlay>
+                )
+        }
+    }, [gameFlow, navigate, t])
+
+    return getCurrentScreen()
 }
 
 export default GameScreen
