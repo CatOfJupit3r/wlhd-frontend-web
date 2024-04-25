@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { resetTurn } from '../../redux/slices/turnSlice'
+import { resetTurnSlice } from '../../redux/slices/turnSlice'
 import styles from './HomePage.module.css'
 
 function HomePage() {
@@ -9,7 +9,7 @@ function HomePage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(resetTurn())
+        dispatch(resetTurnSlice())
     }, [dispatch])
 
     return (

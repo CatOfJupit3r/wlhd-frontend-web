@@ -1,9 +1,8 @@
 import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config/configs'
-import { ActionInput } from '../models/ActionInput'
-import { Battlefield, EntityInfoTooltip, GameStateContainer } from '../models/Battlefield'
 import { CharacterInfo } from '../models/CharacterInfo'
+import { LobbyInfo } from '../redux/slices/lobbySlice'
 import AuthManager from './AuthManager'
 
 const errors = {
@@ -156,57 +155,11 @@ class APIService {
         }
     }
 
-    public getGameField = async (game_id: string): Promise<Battlefield> => {
+    public getLobbyInfo = async (lobby_id: string): Promise<LobbyInfo> => {
         return (await this.fetch({
-            url: this.endpoints.GET_BATTLEFIELD(game_id),
-            method: 'get',
-        })) as Battlefield
-    }
-
-    public getActions = async (game_id: string, entity_id: string): Promise<ActionInput> => {
-        return (await this.fetch({
-            url: this.endpoints.GET_ACTIONS(game_id, entity_id),
-            method: 'get',
-        })) as ActionInput
-    }
-
-    public getOneMessage = async (game_id: string, message_id: string): Promise<GameStateContainer> => {
-        return await this.fetch({
-            url: this.endpoints.GET_THE_MESSAGE(game_id, message_id),
-            method: 'get',
-        })
-    }
-
-    public getAllMessages = async (game_id: string): Promise<GameStateContainer> => {
-        return await this.fetch({
-            url: this.endpoints.GET_ALL_MESSAGES(game_id),
-            method: 'get',
-        })
-    }
-
-    public getEntityInfo = async (game_id: string, entity_id: string): Promise<{ [key: string]: string }> => {
-        return await this.fetch({
-            url: this.endpoints.GET_ENTITY_INFO(game_id, entity_id),
-            method: 'get',
-        })
-    }
-
-    public getAllEntitiesInfo = async (
-        game_id: string
-    ): Promise<{
-        [key: string]: EntityInfoTooltip
-    }> => {
-        return await this.fetch({
-            url: this.endpoints.GET_ALL_ENTITIES_INFO(game_id),
-            method: 'get',
-        })
-    }
-
-    public getLobbyInfo = async (lobby_id: string) => {
-        return await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}`,
             method: 'get',
-        })
+        })) as LobbyInfo
     }
 
     public getCharacterInfo = async (character_id: string, lobby_id: string): Promise<CharacterInfo> => {

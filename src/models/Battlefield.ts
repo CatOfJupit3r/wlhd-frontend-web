@@ -1,3 +1,5 @@
+import { GameMessage } from './GameHandshake'
+
 export interface Battlefield {
     field: string[][]
     columns: string[]
@@ -16,9 +18,7 @@ export interface TranslatableString {
     }
 }
 
-export interface GameStateContainer {
-    [key: string]: Array<TranslatableString>
-}
+export type GameStateContainer = Array<GameMessage>
 
 export interface EntityInfoTooltip {
     name: TranslatableString
@@ -34,9 +34,8 @@ export interface EntityInfoTooltip {
 
 export interface EntityInfoTurn {
     name: string
-    square: string
-    current_action_points: string
-    max_action_points: string
+    square: { line: string; column: string }
+    action_points: { current: number; max: number }
 }
 
 export interface EntityInfoFull {

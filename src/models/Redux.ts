@@ -54,9 +54,12 @@ export interface TurnState {
 
 export interface InfoState {
     round: number
-    allMessages: GameStateContainer
-    isLoadingEntitiesInfo: boolean
-    isLoadingCurrentEntityInfo: boolean
+    messages: {
+        start: number
+        end: number
+        length: number
+        loaded: GameStateContainer
+    }
     gameFlow: {
         type: 'pending' | 'active' | 'ended' | 'aborted'
         details: string
@@ -65,18 +68,15 @@ export interface InfoState {
         // ended: winner
         // aborted: reason why (if possible)
     }
-    entitiesInfo:
-        | {
-              [key: string]: EntityInfoTooltip
-          }
-        | undefined
-    controlledEntities: Array<EntityInfoFull>
-    activeEntity: EntityInfoTurn
+    entityTooltips: {
+        [square: string]: EntityInfoTooltip | null
+    }
+    controlledEntities: Array<EntityInfoFull> | null
+    activeEntity: EntityInfoTurn | null
     chosenMenu: string
 }
 
 export interface BattlefieldState {
-    isLoadingBattlefield: boolean
     currentBattlefield: Battlefield
     battlefieldMode: 'info' | 'selection'
     clickedSquare: string | null

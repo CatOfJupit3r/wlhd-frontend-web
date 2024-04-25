@@ -8,10 +8,9 @@ import { INVALID_ASSET_PATH } from '../../../config/configs'
 import {
     selectBattlefieldMode,
     selectInteractableTiles,
-    selectIsLoadingBattlefield,
     setClickedSquare,
 } from '../../../redux/slices/battlefieldSlice'
-import { selectEntitiesInfo } from '../../../redux/slices/infoSlice'
+import { selectEntityTooltips } from '../../../redux/slices/infoSlice'
 import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
@@ -35,8 +34,7 @@ const TileEntity = (props: {
     const [currentClassAlias, setCurrentClassAlias] = useState('default')
 
     const battlefieldMode = useSelector(selectBattlefieldMode)
-    const isLoadingBattlefield = useSelector(selectIsLoadingBattlefield)
-    const entities_info = useSelector(selectEntitiesInfo)
+    const entities_info = useSelector(selectEntityTooltips)
     const highlightedComponents = useSelector(selectHighlightedComponents)
 
     const interactableTiles = useSelector(selectInteractableTiles)
@@ -128,16 +126,13 @@ const TileEntity = (props: {
                 </>
             ))
         }
-        const {
-            name,
-            square,
-            health,
-            action_points,
-            armor,
-            // status_effects,
-        } = entity_info
+        const { name, square, health, action_points, armor, status_effects } = entity_info
         return [
-            // t("local:game.components.tooltip.creature_and_line", {name: translatableString(name), square: square.join("|")}),
+            t('local:game.components.tooltip.creature_and_line', {
+                name: t(name.main_string),
+                square: `
+                ${square.line.toString()}/${square.column.toString()}`,
+            }),
             t('local:game.components.tooltip.health_max_health', {
                 current_health: health.current,
                 max_health: health.max,
@@ -148,11 +143,13 @@ const TileEntity = (props: {
             }),
             t('local:game.components.tooltip.armor', { current_armor: armor.current, base_armor: armor.base }),
             t('local:game.components.tooltip.status_effects'),
-            // {status_effects: (
-            //         status_effects && status_effects.length > 0 ?
-            //         status_effects.map(([name, duration]) => `${t([name])} (${duration})`).join(", ") :
-            //         t("local:game.components.tooltip.no_status_effects")
-            //     )})
+            (() => {
+                return status_effects && status_effects.length > 0
+                    ? status_effects
+                          .map((value) => `${t([value.descriptor.main_string])} (${value.duration})`)
+                          .join(', ')
+                    : t('local:game.components.tooltip.no_status_effects')
+            })(),
         ].map((key, index) => <p key={index}>{key}</p>)
     }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
 
@@ -182,11 +179,7 @@ const TileEntity = (props: {
                     delayShow={battlefieldMode === 'selection' ? 1500 : 500}
                     delayHide={0}
                 >
-                    {isLoadingBattlefield ? (
-                        emptyTooltipContent.map((key) => generatePlaceholder(key))
-                    ) : (
-                        <div>{generateTooltipContent()}</div>
-                    )}
+                    <div>{generateTooltipContent()}</div>
                 </Tooltip>
             ) : null}
         </>

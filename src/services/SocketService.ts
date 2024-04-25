@@ -1,18 +1,32 @@
 import { io, Socket } from 'socket.io-client'
 import { REACT_APP_BACKEND_URL } from '../config/configs'
-import { ActionResultsPayload } from '../models/Events'
-import { resetGameComponentsStateAction } from '../redux/highActions'
-import { fetchBattlefield } from '../redux/slices/battlefieldSlice'
+import { ActionInput } from '../models/ActionInput'
 import {
-    fetchAllEntitiesInfo,
-    fetchTheMessage,
+    Battlefield,
+    EntityInfoFull,
+    EntityInfoTooltip,
+    EntityInfoTurn,
+    TranslatableString,
+} from '../models/Battlefield'
+import { ActionResultsPayload } from '../models/Events'
+import { GameHandshake } from '../models/GameHandshake'
+import { resetGameComponentsStateAction } from '../redux/highActions'
+import { setBattlefield } from '../redux/slices/battlefieldSlice'
+import {
+    addMessage,
+    resetActiveEntity,
+    setActiveEntity,
+    setControlledEntities,
+    setEntityTooltips,
     setFlowToAborted,
     setFlowToActive,
     setFlowToEnded,
+    setFlowToPending,
+    setMessages,
     setRound,
 } from '../redux/slices/infoSlice'
 import { setNotify } from '../redux/slices/notifySlice'
-import { fetchActions, resetTurn, setPlayersTurn } from '../redux/slices/turnSlice'
+import { resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
 import { store as ReduxStore } from '../redux/store'
 
 const SOCKET_EVENTS = {
@@ -27,6 +41,7 @@ const SOCKET_EVENTS = {
     TAKE_ACTION: 'take_action',
     NEW_MESSAGE: 'new_message',
     BATTLEFIELD_UPDATE: 'battlefield_update',
+    ENTITIES_UPDATED: 'entities_updated',
 }
 
 const SOCKET_RESPONSES = {
@@ -48,6 +63,7 @@ class SocketService {
 
     constructor() {
         this.socket = io(REACT_APP_BACKEND_URL, {
+            autoConnect: false,
             reconnection: false, // only manually reconnect
         })
         this.setupListeners()
@@ -140,7 +156,7 @@ class SocketService {
                     // this action stops any further action from being taken.
                     // emitted to avoid users from taking actions when they shouldn't no longer
                     console.log('Halted action')
-                    ReduxStore.dispatch(resetTurn())
+                    ReduxStore.dispatch(resetTurnSlice())
                 },
             },
             {
@@ -152,48 +168,35 @@ class SocketService {
             },
             {
                 event: SOCKET_EVENTS.CURRENT_ENTITY_UPDATED,
-                callback: (entityId: string) => {
-                    // triggers action to fetch info of the current entity
-                    console.log('Current entity updated', entityId)
+                callback: (activeEntityInfo: EntityInfoTurn) => {
+                    console.log('Current entity updated', activeEntityInfo)
+                    ReduxStore.dispatch(setActiveEntity(activeEntityInfo))
                 },
             },
             {
                 event: SOCKET_EVENTS.NO_CURRENT_ENTITY,
                 callback: () => {
-                    // resets the current entity store entry to initialState
                     console.log('No current entity')
+                    ReduxStore.dispatch(resetActiveEntity())
                 },
             },
             {
                 event: SOCKET_EVENTS.BATTLEFIELD_UPDATE,
-                callback: () => {
-                    this.combatId &&
-                        (() => {
-                            ReduxStore.dispatch(fetchBattlefield(this.combatId))
-                            ReduxStore.dispatch(fetchAllEntitiesInfo(this.combatId))
-                        })()
+                callback: ({ battlefield }: { battlefield: Battlefield }) => {
+                    ReduxStore.dispatch(setBattlefield(battlefield))
                 },
             },
             {
                 event: SOCKET_EVENTS.NEW_MESSAGE,
-                callback: (message: string) => {
-                    this.combatId &&
-                        (() => {
-                            ReduxStore.dispatch(
-                                fetchTheMessage({
-                                    game_id: this.combatId,
-                                    message,
-                                })
-                            )
-                            ReduxStore.dispatch(fetchAllEntitiesInfo(this.combatId))
-                        })()
+                callback: ({ message }: { message: Array<TranslatableString> }) => {
+                    ReduxStore.dispatch(addMessage(message))
                 },
             },
             {
                 event: SOCKET_EVENTS.ROUND_UPDATE,
-                callback: ({ round_count }: { round_count: number }) => {
-                    ReduxStore.dispatch(setRound({ round: round_count ? round_count : '1' }))
-                    console.log('Round update', round_count)
+                callback: ({ roundCount }: { roundCount: number }) => {
+                    ReduxStore.dispatch(setRound({ round: roundCount ? roundCount.toString() : '1' }))
+                    console.log('Round update', roundCount)
                 },
             },
             {
@@ -203,32 +206,73 @@ class SocketService {
                 },
             },
             {
+                event: SOCKET_EVENTS.ENTITIES_UPDATED,
+                callback: ({
+                    newControlledEntities,
+                    newTooltips,
+                }: {
+                    newControlledEntities: Array<EntityInfoFull>
+                    newTooltips: { [square: string]: EntityInfoTooltip | null }
+                }) => {
+                    console.log('Entities updated')
+                    ReduxStore.dispatch(setControlledEntities(newControlledEntities))
+                    ReduxStore.dispatch(setEntityTooltips(newTooltips))
+                },
+            },
+            {
                 event: SOCKET_EVENTS.GAME_HANDSHAKE,
-                callback: () => {
-                    console.log('Game handshake')
+                callback: (data: GameHandshake) => {
+                    const DISPATCHES = [
+                        {
+                            type: resetGameComponentsStateAction,
+                            payload: null,
+                        },
+                        {
+                            type: setRound,
+                            payload: data.roundCount,
+                        },
+                        {
+                            type: setMessages,
+                            payload: data.messages,
+                        },
+                        {
+                            type: setBattlefield,
+                            payload: data.currentBattlefield,
+                        },
+                        {
+                            type: setActiveEntity,
+                            payload: data.currentEntityInfo,
+                        },
+                        {
+                            type: setEntityTooltips,
+                            payload: data.entityTooltips,
+                        },
+                        {
+                            type: setControlledEntities,
+                            payload: data.controlledEntities,
+                        },
+                    ]
+                    for (const { type, payload } of DISPATCHES) {
+                        ReduxStore.dispatch(type(payload))
+                    }
+                    if (data.combatStatus === 'pending') {
+                        ReduxStore.dispatch(setFlowToPending())
+                    } else {
+                        ReduxStore.dispatch(setFlowToActive())
+                    }
                 },
             },
             {
                 event: SOCKET_EVENTS.TAKE_ACTION,
-                callback: ({ entity_id }: { entity_id: string }) => {
-                    this.combatId &&
-                        (() => {
-                            ReduxStore.dispatch(fetchBattlefield(this.combatId))
-                            ReduxStore.dispatch(fetchAllEntitiesInfo(this.combatId))
-                            ReduxStore.dispatch(
-                                fetchActions({
-                                    game_id: this.combatId,
-                                    entity_id: entity_id,
-                                })
-                            )
-                                .then(() => {
-                                    ReduxStore.dispatch(setPlayersTurn(true))
-                                })
-                                .catch((e) => {
-                                    console.log('Error occurred during fetching of actions: ', e)
-                                    this.emit(SOCKET_RESPONSES.SKIP)
-                                })
-                        })()
+                callback: ({ actions }: { actions: ActionInput }) => {
+                    try {
+                        ReduxStore.dispatch(setEntityActions(actions))
+                    } catch (e) {
+                        console.log('Error occurred during fetching of actions: ', e)
+                        this.emit(SOCKET_RESPONSES.SKIP)
+                        return
+                    }
+                    ReduxStore.dispatch(setPlayersTurn(true))
                 },
             },
             {

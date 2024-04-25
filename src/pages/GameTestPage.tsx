@@ -3,7 +3,7 @@ import MenuNavigator from '../components/MenuNavigator/MenuNavigator'
 import MenuContainer from '../components/MenuContainer/MenuContainer'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { resetTurn } from '../redux/slices/turnSlice'
+import { resetTurnSlice } from '../redux/slices/turnSlice'
 
 const HALF_SCREEN_STYLE = {
     display: 'flex',
@@ -16,7 +16,7 @@ const GameTestPage = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(resetTurn()) // to prevent any leftover state from previous games
+        dispatch(resetTurnSlice()) // to prevent any leftover state from previous games
     }, [dispatch])
 
     return (

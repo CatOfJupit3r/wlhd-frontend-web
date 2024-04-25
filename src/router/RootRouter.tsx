@@ -14,6 +14,7 @@ import paths from './paths'
 import CreateCombatPage from '../pages/CreateCombatPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
 import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
+import DebugScreen from "../components/DebugScreen/DebugScreen";
 
 const authRoutes = [
     {
@@ -65,6 +66,10 @@ const noHeaderRoutes = [
         path: paths.gameTest,
         Component: GameTestPage,
     },
+    {
+        path: paths.debugRoom,
+        Component: DebugScreen,
+    }
 ]
 
 export default function RootRouter() {

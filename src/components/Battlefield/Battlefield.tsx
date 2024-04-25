@@ -23,7 +23,6 @@ const Battlefield = () => {
     const currentAlias = useSelector(selectCurrentAlias)
     const aliases = useSelector(selectAliases)
     const scope = useSelector(selectScope)
-
     const connectors = useSelector(selectConnectors)
     const columns = useSelector(selectColumns)
     const lines = useSelector(selectLines)

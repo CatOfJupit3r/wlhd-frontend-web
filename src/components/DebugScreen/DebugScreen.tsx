@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import example from '../../data/example_action.json'
 import example_messages from '../../data/example_messages.json'
 import { TranslatableString } from '../../models/Battlefield'
-import { addMessage, selectEntityInControlInfo, selectRound } from '../../redux/slices/infoSlice'
+import { addMessage, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
-import { resetTurn, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
+import { resetTurnSlice, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
 import { AppDispatch } from '../../redux/store'
 import ActionInput from '../ActionInput/ActionInput'
 import Battlefield from '../Battlefield/Battlefield'
-import GameStateFeed from '../GameStateFeed/GameStateFeed'
+import GameMessagesFeed from '../GameMessagesFeed/GameMessagesFeed'
 import styles from './DebugScreen.module.css'
+import {resetGameComponentsStateAction} from "../../redux/highActions";
 
 const DebugScreen = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -21,14 +22,18 @@ const DebugScreen = () => {
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChoices)
     const roundCount = useSelector(selectRound)
-    const activeEntityInfo = useSelector(selectEntityInControlInfo)
+    // const activeEntityInfo = useSelector(selectEntityInControlInfo)
+
+    useEffect(() => {
+        dispatch(resetGameComponentsStateAction())
+    }, []);
 
     const setCurrentActionFromExample = useCallback(() => {
         dispatch(setEntityActions(example as any))
     }, [dispatch])
 
     const addRandomMessage = useCallback(() => {
-        const randomMessages: { [key: string]: TranslatableString[] }[] = example_messages.data as any
+        const randomMessages: Array<Array<TranslatableString>> = example_messages.data
         dispatch(addMessage(randomMessages[Math.floor(Math.random() * randomMessages.length)]))
     }, [dispatch])
 
@@ -40,16 +45,16 @@ const DebugScreen = () => {
                 <h1 className={styles.roundHeader}>{t('local:game.round_n', { round: roundCount })}</h1>
                 <h1 className={styles.roundHeader}>
                     {t('local:game.control_info', {
-                        name: activeEntityInfo?.name,
-                        square: activeEntityInfo?.square,
-                        current_ap: activeEntityInfo?.current_ap,
-                        max_ap: activeEntityInfo?.max_ap,
+                        // name: activeEntityInfo.name,
+                        // square: activeEntityInfo?.square,
+                        // current_ap: activeEntityInfo?.current_ap,
+                        // max_ap: activeEntityInfo?.max_ap,
                     })}
                 </h1>
                 <div id={'game-controller'} className={styles.gameControls}>
                     <div id={'battle-info'} className={styles.battleInfo}>
                         <Battlefield />
-                        <GameStateFeed />
+                        <GameMessagesFeed />
                         <div
                             style={{
                                 display: 'flex',
@@ -62,7 +67,7 @@ const DebugScreen = () => {
                 </div>
             </>
         )
-    }, [roundCount, activeEntityInfo, t, setCurrentActionFromExample])
+    }, [roundCount, t, setCurrentActionFromExample])
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
@@ -73,7 +78,7 @@ const DebugScreen = () => {
                     code: 200,
                 })
             )
-            dispatch(resetTurn())
+            dispatch(resetTurnSlice())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch])
 

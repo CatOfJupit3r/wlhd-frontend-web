@@ -1,37 +1,14 @@
-import { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
-import { selectLobbyInfo, setLobbyInfo } from '../redux/slices/lobbySlice'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { selectLobbyInfo } from '../redux/slices/lobbySlice'
 import paths from '../router/paths'
-import APIService from '../services/APIService'
 
 const LobbyPage = () => {
     const lobbyInfo = useSelector(selectLobbyInfo)
-    const dispatch = useDispatch()
-    const { lobbyId } = useParams()
-
-    const refreshLobbyInfo = useCallback(async () => {
-        let response
-        try {
-            response = await APIService.getLobbyInfo(lobbyId || '')
-        } catch (error) {
-            console.log(error)
-            return
-        }
-        console.log('Lobby info:', response)
-        if (response && response.players && response.combats) {
-            dispatch(setLobbyInfo(response as any))
-        }
-    }, [dispatch])
-
-    useEffect(() => {
-        refreshLobbyInfo().then()
-    }, [])
 
     return lobbyInfo ? (
         <div>
             <h1>Lobby Page</h1>
-            <button onClick={refreshLobbyInfo}>Refresh Lobby Info</button>
             <div>
                 <h2>Players</h2>
                 {lobbyInfo.players && lobbyInfo.players.length === 0 ? (

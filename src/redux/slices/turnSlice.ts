@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ActionInput as ActionInputInterface } from '../../models/ActionInput'
 import { StoreState, TurnState } from '../../models/Redux'
-import APIService from '../../services/APIService'
 
 const initialState: TurnState = {
     playersTurn: false,
@@ -53,18 +52,6 @@ translatedChoices
 
 */
 
-export const fetchActions = createAsyncThunk(
-    'turn/fetchActions',
-    async ({ game_id, entity_id }: { game_id: string; entity_id: string }) => {
-        return await APIService.getActions(game_id, entity_id)
-            .then((response) => response)
-            .catch((error) => {
-                console.log('There was a problem with the fetch operation: ', error)
-                return {}
-            })
-    }
-)
-
 const turnSlice = createSlice({
     name: 'turn',
     initialState,
@@ -79,7 +66,7 @@ const turnSlice = createSlice({
                 isLoadingEntityActions: state.isLoadingEntityActions,
             }
         },
-        resetTurn() {
+        resetTurnSlice() {
             return {
                 ...initialState,
             }
@@ -128,31 +115,13 @@ const turnSlice = createSlice({
             state.chosenAction = initialState.chosenAction
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchActions.fulfilled, (state, action) => {
-            console.log('Fetched actions: ', action.payload)
-            if (Object.keys(action.payload).length > 0) {
-                state.entityActions = action.payload as ActionInputInterface
-                state.isLoadingEntityActions = false
-            }
-        })
-        builder.addCase(fetchActions.rejected, (state, action) => {
-            console.log(action.error)
-            state.entityActions = initialState.entityActions
-            state.isLoadingEntityActions = false
-        })
-        builder.addCase(fetchActions.pending, (state) => {
-            state.entityActions = initialState.entityActions
-            state.isLoadingEntityActions = true
-        })
-    },
 })
 
 export default turnSlice.reducer
 
 export const {
     resetInput,
-    resetTurn,
+    resetTurnSlice,
     setPlayersTurn,
     setSquareChoice,
     setReadyToSubmit,

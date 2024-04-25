@@ -1,94 +1,58 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+    EntityInfoFull,
+    EntityInfoTooltip,
+    EntityInfoTurn,
+    GameStateContainer,
+    TranslatableString,
+} from '../../models/Battlefield'
 import { InfoState, StoreState } from '../../models/Redux'
-import APIService from '../../services/APIService'
 
 const initialState: InfoState = {
     round: 0,
-    allMessages: {
-        // when predeclared, sometimes inner objects are not recognized
+    messages: {
+        start: 0,
+        end: 0,
+        length: 0,
+        loaded: [],
     },
-    isLoadingEntitiesInfo: true,
-    isLoadingCurrentEntityInfo: true,
     gameFlow: {
         type: 'pending',
         details: '',
     },
-    entitiesInfo: {},
-    controlledEntities: [],
-    activeEntity: {
-        name: 'test',
-        square: '3/6',
-        current_action_points: '30',
-        max_action_points: '40',
-    },
+    entityTooltips: {},
+    controlledEntities: null,
+    activeEntity: null,
     chosenMenu: '',
 }
-
-export const fetchAllMessages = createAsyncThunk('info/fetchMessages', async (game_id: string) => {
-    return await APIService.getAllMessages(game_id)
-        .then((response) => response)
-        .catch((error) => {
-            console.log('There was a problem with the fetch operation: ', error)
-            return {}
-        })
-})
-
-export const fetchTheMessage = createAsyncThunk(
-    'info/fetchTheMessage',
-    async ({ game_id, message }: { game_id: string; message: string }) => {
-        return await APIService.getOneMessage(game_id, message)
-            .then((response) => response)
-            .catch((error) => {
-                console.log('There was a problem with the fetch operation: ', error)
-                return {}
-            })
-    }
-)
-
-export const fetchCurrentEntityInfo = createAsyncThunk(
-    'info/fetchCurrentEntityInfo',
-    async ({ game_id, entity_id }: { game_id: string; entity_id: string }) => {
-        return await APIService.getEntityInfo(game_id, entity_id)
-            .then((response) => response)
-            .catch((error) => {
-                console.log('There was a problem with the fetch operation: ', error)
-                return {}
-            })
-    }
-)
-
-export const fetchAllEntitiesInfo = createAsyncThunk('info/fetchAllEntitiesInfo', async (game_id: string) => {
-    return await APIService.getAllEntitiesInfo(game_id)
-        .then((response) => response)
-        .catch((error) => {
-            console.log('There was a problem with the fetch operation: ', error)
-            return {}
-        })
-})
 
 const InfoSlice = createSlice({
     name: 'info',
     initialState,
     reducers: {
         setRound: (state, action) => {
-            return { ...state, round: action.payload.round }
+            state.round = action.payload
         },
-        setEndInfo: (
-            state,
-            action: {
-                payload: {
-                    ended: boolean
-                    winner: string
-                }
-            }
-        ) => {
-            return { ...state, endInfo: action.payload }
-        },
-        addMessage: (state, action) => {
-            return { ...state, allMessages: { ...state.allMessages, ...action.payload } }
+        addMessage: (state, action: PayloadAction<Array<TranslatableString>>) => {
+            state.messages.loaded.push(action.payload)
         },
         setChosenMenu: (state, action: PayloadAction<string>) => {
             state.chosenMenu = action.payload
+        },
+        setEntityTooltips: (state, action: PayloadAction<{ [square: string]: EntityInfoTooltip | null }>) => {
+            state.entityTooltips = action.payload
+        },
+        setControlledEntities: (state, action: PayloadAction<Array<EntityInfoFull> | null>) => {
+            state.controlledEntities = action.payload
+        },
+        setMessages: (state, action: PayloadAction<GameStateContainer>) => {
+            state.messages.loaded = action.payload
+        },
+        setActiveEntity: (state, action: PayloadAction<EntityInfoTurn | null>) => {
+            state.activeEntity = action.payload
+        },
+        resetActiveEntity: (state) => {
+            state.activeEntity = initialState.activeEntity
         },
         setFlowToActive: (state) => {
             state.gameFlow = {
@@ -115,56 +79,29 @@ const InfoSlice = createSlice({
             }
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchAllMessages.fulfilled, (state, action) => {
-            return { ...state, allMessages: action.payload }
-        })
-        builder.addCase(fetchTheMessage.fulfilled, (state, action) => {
-            return { ...state, allMessages: { ...state.allMessages, ...action.payload } }
-        })
-        builder.addCase(fetchCurrentEntityInfo.fulfilled, (state, action) => {
-            return { ...state, entities_info: { ...state.entitiesInfo, [(action.payload as any).id]: action.payload } }
-        })
-        builder.addCase(fetchAllEntitiesInfo.fulfilled, (state, action) => {
-            return { ...state, entities_info: action.payload, isLoadingEntitiesInfo: false }
-        })
-        builder.addCase(fetchCurrentEntityInfo.pending, (state) => {
-            return { ...state, isLoadingCurrentEntityInfo: true }
-        })
-        builder.addCase(fetchAllEntitiesInfo.pending, (state) => {
-            return { ...state, isLoadingEntitiesInfo: true }
-        })
-        builder.addCase(fetchCurrentEntityInfo.rejected, (state) => {
-            return { ...state, isLoadingCurrentEntityInfo: false }
-        })
-        builder.addCase(fetchAllEntitiesInfo.rejected, (state) => {
-            return { ...state, isLoadingEntitiesInfo: false }
-        })
-    },
 })
 
 export default InfoSlice.reducer
 
 export const {
     setRound,
-    setEndInfo,
     addMessage,
     setChosenMenu,
     setFlowToEnded,
     setFlowToActive,
     setFlowToPending,
     setFlowToAborted,
+    setMessages,
+    setActiveEntity,
+    resetActiveEntity,
+    setEntityTooltips,
+    setControlledEntities,
 } = InfoSlice.actions
 
 export const selectRound = (state: StoreState) => state.info.round
-export const selectAllMessages = (state: StoreState) => state.info.allMessages
-export const selectEntitiesInfo = (state: StoreState) => state.info.entitiesInfo
+export const selectAllMessages = (state: StoreState) => state.info.messages.loaded
+export const selectEntityTooltips = (state: StoreState) => state.info.entityTooltips
 export const selectGameFlow = (state: StoreState) => state.info.gameFlow
 export const selectChosenMenu = (state: StoreState) => state.info.chosenMenu
-// export const selectEntityInControlInfo = (state: StoreState) => state.info.entities_info[state.game.user_name]
-export const selectEntityInControlInfo = () => ({
-    name: 'test',
-    square: '3/6',
-    current_ap: '30',
-    max_ap: '40',
-})
+export const selectActiveEntity = (state: StoreState) => state.info.activeEntity
+export const selectControlledEntities = (state: StoreState) => state.info.controlledEntities

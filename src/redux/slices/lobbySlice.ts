@@ -10,11 +10,30 @@ const initialState: LobbyState = {
     controlledEntity: null,
 }
 
+export interface LobbyInfo {
+    combats: Array<{
+        nickname: string
+        isActive: boolean
+        roundCount: number
+    }>
+    players: Array<{
+        userId: string
+        nickname: string
+        mainCharacter: string
+    }>
+    gm: string
+    layout: 'default' | 'gm'
+    controlledEntity: {
+        name: string
+        id: string
+    } | null
+}
+
 const LobbySlice = createSlice({
     name: 'lobby',
     initialState,
     reducers: {
-        setLobbyInfo: (state, action: PayloadAction<LobbyState>) => {
+        setLobbyInfo: (state, action: PayloadAction<LobbyInfo>) => {
             return { ...state, ...action.payload }
         },
     },

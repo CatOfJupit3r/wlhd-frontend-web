@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
-import GameStateFeed from '../GameStateFeed/GameStateFeed'
+import GameMessagesFeed from '../GameMessagesFeed/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import styles from './MenuContainer.module.css'
 import { useSelector } from 'react-redux'
@@ -25,7 +25,7 @@ const MenuContainer = () => {
             },
             {
                 key: 'history',
-                Component: () => <GameStateFeed />,
+                Component: () => <GameMessagesFeed />,
             },
             {
                 key: 'gm-settings',

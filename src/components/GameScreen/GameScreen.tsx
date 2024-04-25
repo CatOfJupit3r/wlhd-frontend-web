@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { resetGameComponentsStateAction } from '../../redux/highActions'
-import { selectEntityInControlInfo, selectGameFlow, selectRound } from '../../redux/slices/infoSlice'
+import { selectActiveEntity, selectGameFlow, selectRound } from '../../redux/slices/infoSlice'
 import { setNotify } from '../../redux/slices/notifySlice'
 import {
     resetHighlightedComponents,
-    resetTurn,
+    resetTurnSlice,
     selectChoices,
     selectIsLoadingEntityActions,
     selectReadyToSubmit,
@@ -17,7 +17,7 @@ import { AppDispatch } from '../../redux/store'
 import SocketService from '../../services/SocketService'
 import ActionInput from '../ActionInput/ActionInput'
 import Battlefield from '../Battlefield/Battlefield'
-import GameStateFeed from '../GameStateFeed/GameStateFeed'
+import GameMessagesFeed from '../GameMessagesFeed/GameMessagesFeed'
 import Overlay from '../Overlay/Overlay'
 import ThinkingHn from '../ThinkingHn'
 import styles from './GameScreen.module.css'
@@ -30,15 +30,15 @@ const GameScreen = () => {
     const { gameId, lobbyId } = useParams()
 
     const isLoadingActions = useSelector(selectIsLoadingEntityActions)
-    const activeEntityInfo = useSelector(selectEntityInControlInfo)
+    const activeEntityInfo = useSelector(selectActiveEntity)
     const gameFlow = useSelector(selectGameFlow)
     const inputReadyToSubmit = useSelector(selectReadyToSubmit)
     const submittedInput = useSelector(selectChoices)
     const roundCount = useSelector(selectRound)
 
     useEffect(() => {
-        if (!lobbyId || !gameId) {
-            dispatch(resetTurn())
+        if (!lobbyId || !gameId) { // if (somehow) lobbyId or gameId is not set, we leave the page before anything bad happens
+            dispatch(resetTurnSlice())
             navigate('..')
             return
         }
@@ -46,6 +46,7 @@ const GameScreen = () => {
             t('local:game.title', { gameId: gameId }) === t('local:game.title')
                 ? 'Game'
                 : t('local:game.title', { gameId: gameId })
+        console.log('GameScreen: useEffect: gameId', gameId)
         dispatch(resetGameComponentsStateAction())
         SocketService.connect({
             lobbyId,
@@ -62,7 +63,7 @@ const GameScreen = () => {
                 })
             )
             SocketService.emit('take_action', submittedInput)
-            dispatch(resetTurn())
+            dispatch(resetTurnSlice())
             dispatch(resetHighlightedComponents())
         }
     }, [inputReadyToSubmit, submittedInput, dispatch])
@@ -72,14 +73,16 @@ const GameScreen = () => {
             <>
                 <h1 className={styles.roundHeader}>{t('local:game.round_n', { round: roundCount })}</h1>
                 <h1 className={styles.roundHeader}>
-                    {t('local:game.control_info', {
-                        name: activeEntityInfo?.name,
-                    })}
+                    {activeEntityInfo
+                        ? t('local:game.control_info', {
+                              name: activeEntityInfo.name,
+                          })
+                        : t('local:game.control_info_no_entity')}
                 </h1>
                 <div id={'game-controller'} className={styles.gameControls}>
                     <div id={'battle-info'} className={styles.battleInfo}>
                         <Battlefield />
-                        <GameStateFeed />
+                        <GameMessagesFeed />
                         <div
                             style={{
                                 display: 'flex',

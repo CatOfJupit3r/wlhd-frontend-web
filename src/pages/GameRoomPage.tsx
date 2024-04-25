@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { useBeforeUnload, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import GameScreen from '../components/GameScreen/GameScreen'
 import Overlay from '../components/Overlay/Overlay'
-import { resetTurn } from '../redux/slices/turnSlice'
+import { resetGameComponentsStateAction } from '../redux/highActions'
+import { AppDispatch } from '../redux/store'
 import APIService from '../services/APIService'
 
-/*
-
-The Game Room Page is the page where the game is played. It is the main page of the game and
-
-When game haven't started, it will only show text "Waiting for server to start_game"
-After this, socket will listen for commands from server:
-    - start_game = web shows the game board and prepare the page for game
-    - take_action = web gives user option to take action from given (for now, it will be in the form of select box)
-    - end_game = displays game result and after 15 seconds return to root of site
-
- */
 
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
     const { t, i18n } = useTranslation()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
         try {
-            ['builtins', 'nyrzamaer'].map((dlc) => {
+            // eslint-disable-next-line @typescript-eslint/no-extra-semi
+            ;['builtins', 'nyrzamaer'].map((dlc) => {
                 const addTranslations = async (language: string) => {
                     await APIService.getTranslations(language, dlc)
                         .then((translations) => {
@@ -48,11 +38,9 @@ const GameRoomPage = () => {
         }
     }, [i18n])
 
-    useBeforeUnload(
-        React.useCallback(() => {
-            dispatch(resetTurn())
-        }, [dispatch])
-    )
+    useEffect(() => {
+        dispatch(resetGameComponentsStateAction())
+    }, [])
 
     return (
         <>
