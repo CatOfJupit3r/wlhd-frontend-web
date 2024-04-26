@@ -63,7 +63,6 @@ const MenuNavigator = () => {
                             color: 'white',
                         }}
                         onClick={() => {
-                            console.log(alt)
                             if (value) {
                                 dispatch(setChosenMenu(value))
                             } else {

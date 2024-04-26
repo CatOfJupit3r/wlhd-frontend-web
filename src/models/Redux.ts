@@ -12,6 +12,7 @@ export interface LobbyState {
         nickname: string
         isActive: boolean
         roundCount: number
+        _id: string
     }>
     players: Array<{
         userId: string
@@ -29,7 +30,6 @@ export interface LobbyState {
 export interface TurnState {
     playersTurn: boolean
     readyToSubmit: boolean
-    isLoadingEntityActions: boolean
     needToChooseSquare: boolean
 
     entityActions: ActionInputInterface
@@ -53,7 +53,7 @@ export interface TurnState {
 }
 
 export interface InfoState {
-    round: number
+    round: string
     messages: {
         start: number
         end: number

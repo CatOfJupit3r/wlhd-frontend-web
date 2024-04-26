@@ -39,7 +39,7 @@ const GameTestPage = () => {
                 }}
             >
                 <h1>Round 1</h1>
-                <Battlefield />
+                <Battlefield mode={'game'} />
             </div>
             <div
                 style={{

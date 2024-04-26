@@ -15,6 +15,7 @@ export interface LobbyInfo {
         nickname: string
         isActive: boolean
         roundCount: number
+        _id: string
     }>
     players: Array<{
         userId: string

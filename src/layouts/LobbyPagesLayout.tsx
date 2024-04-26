@@ -6,7 +6,7 @@ import Notify from '../components/Notify'
 import { setLobbyInfo } from '../redux/slices/lobbySlice'
 import APIService from '../services/APIService'
 
-const LobbyPagesLayout = () => {
+const LobbyPagesLayout = ({header}: {header: boolean}) => {
     const { lobbyId } = useParams()
     const dispatch = useDispatch()
 
@@ -18,7 +18,6 @@ const LobbyPagesLayout = () => {
             console.log(error)
             return
         }
-        console.log('Lobby info:', response)
         if (response && response.players && response.combats) {
             dispatch(setLobbyInfo(response))
         }
@@ -30,7 +29,7 @@ const LobbyPagesLayout = () => {
 
     return (
         <>
-            <Header />
+            {header ? <Header /> : null}
             <Notify />
             <Outlet />
         </>

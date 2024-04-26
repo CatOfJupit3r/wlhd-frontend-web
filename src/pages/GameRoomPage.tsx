@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import GameScreen from '../components/GameScreen/GameScreen'
 import Overlay from '../components/Overlay/Overlay'
-import { resetGameComponentsStateAction } from '../redux/highActions'
 import { AppDispatch } from '../redux/store'
 import APIService from '../services/APIService'
 
@@ -37,10 +36,6 @@ const GameRoomPage = () => {
             console.log(e)
         }
     }, [i18n])
-
-    useEffect(() => {
-        dispatch(resetGameComponentsStateAction())
-    }, [])
 
     return (
         <>

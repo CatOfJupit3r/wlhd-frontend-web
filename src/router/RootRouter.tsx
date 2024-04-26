@@ -25,10 +25,6 @@ const authRoutes = [
 
 const lobbyRoutes = [
     {
-        path: paths.gameRoom,
-        Component: GameRoomPage,
-    },
-    {
         path: paths.lobbyRoom,
         Component: LobbyPage,
     },
@@ -72,6 +68,14 @@ const noHeaderRoutes = [
     }
 ]
 
+const noHeaderButAuth = [
+    {
+        path: paths.gameRoom,
+        Component: GameRoomPage,
+    },
+]
+
+
 export default function RootRouter() {
     const loggedIn = useIsLoggedIn()
 
@@ -88,8 +92,13 @@ export default function RootRouter() {
                         <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
                     ))}
                 </Route>
-                <Route path={'/'} element={<LobbyPagesLayout />}>
+                <Route path={'/'} element={<LobbyPagesLayout header />}>
                     {lobbyRoutes.map(({ path, Component: C }) => (
+                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    ))}
+                </Route>
+                <Route path={'/'} element={<LobbyPagesLayout header={false} />}>
+                    {noHeaderButAuth.map(({ path, Component: C }) => (
                         <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
                     ))}
                 </Route>

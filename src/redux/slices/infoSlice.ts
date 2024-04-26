@@ -9,7 +9,7 @@ import {
 import { InfoState, StoreState } from '../../models/Redux'
 
 const initialState: InfoState = {
-    round: 0,
+    round: '0',
     messages: {
         start: 0,
         end: 0,
@@ -30,7 +30,7 @@ const InfoSlice = createSlice({
     name: 'info',
     initialState,
     reducers: {
-        setRound: (state, action) => {
+        setRound: (state, action: PayloadAction<string>) => {
             state.round = action.payload
         },
         addMessage: (state, action: PayloadAction<Array<TranslatableString>>) => {

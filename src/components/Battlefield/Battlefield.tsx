@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Blurhash } from 'react-blurhash'
 import { useDispatch, useSelector } from 'react-redux'
 import { BATTLEFIELD_BLUR_HASH } from '../../config/configs'
@@ -12,14 +12,13 @@ import {
     selectSeparators,
     setInteractableTiles,
 } from '../../redux/slices/battlefieldSlice'
-import { selectAliases, selectCurrentAlias, selectIsSquareChoice, selectScope } from '../../redux/slices/turnSlice'
+import { selectAliases, selectCurrentAlias, selectScope } from '../../redux/slices/turnSlice'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
 
-const Battlefield = () => {
+const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) => {
     const dispatch = useDispatch()
 
-    const isSquareChoice = useSelector(selectIsSquareChoice)
     const currentAlias = useSelector(selectCurrentAlias)
     const aliases = useSelector(selectAliases)
     const scope = useSelector(selectScope)
@@ -36,28 +35,30 @@ const Battlefield = () => {
     const enemyRows = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i + Math.floor(numberOfRows / 2))
 
     useEffect(() => {
-        if (isSquareChoice) {
-            const newInteractableTiles: { [key: string]: boolean } = {}
-            for (const action of aliases[scope[currentAlias]]) {
-                newInteractableTiles[action.id] = true
-            }
-            dispatch(setInteractableTiles(newInteractableTiles))
-        } else if (battlefieldMode === 'selection') {
-            dispatch(
-                setInteractableTiles(
-                    (() => {
-                        const interactableTiles: { [key: string]: boolean } = {}
-                        for (let i = 0; i < battlefield.field.length; i++) {
-                            for (let j = 0; j < battlefield.field[i].length; j++) {
-                                interactableTiles[`${i + 1}/${j + 1}`] = false
+        if (battlefieldMode === 'selection') {
+            if (mode === 'game') {
+                const newInteractableTiles: { [key: string]: boolean } = {}
+                for (const action of aliases[scope[currentAlias]]) {
+                    newInteractableTiles[action.id] = true
+                }
+                dispatch(setInteractableTiles(newInteractableTiles))
+            } else if (mode === 'editor') {
+                dispatch(
+                    setInteractableTiles(
+                        (() => {
+                            const interactableTiles: { [key: string]: boolean } = {}
+                            for (let i = 0; i < battlefield.field.length; i++) {
+                                for (let j = 0; j < battlefield.field[i].length; j++) {
+                                    interactableTiles[`${i + 1}/${j + 1}`] = false
+                                }
                             }
-                        }
-                        return interactableTiles
-                    })()
+                            return interactableTiles
+                        })()
+                    )
                 )
-            )
+            }
         }
-    }, [isSquareChoice])
+    }, [battlefieldMode])
 
     const columnHelpRow = (key: string) => {
         const rendered = []
@@ -76,27 +77,30 @@ const Battlefield = () => {
         return rendered
     }
 
-    const displayRows = (rows: number[], side_type: string) => {
-        const rendered = []
-        const right_lines = LINES_ARRAY(lines, `${side_type}_right`)
-        const left_lines = LINES_ARRAY(lines, `${side_type}_left`)
-        const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components)
-        for (const i of rows) {
-            rendered.push(
-                <div
-                    style={{
-                        display: 'flex',
-                    }}
-                    key={`entity-row-${i}`}
-                >
-                    {right_lines[i]}
-                    {battlefieldJSX[i]}
-                    {left_lines[i]}
-                </div>
-            )
-        }
-        return rendered
-    }
+    const displayRows = useCallback(
+        (rows: number[], side_type: string) => {
+            const rendered = []
+            const right_lines = LINES_ARRAY(lines, `${side_type}_right`)
+            const left_lines = LINES_ARRAY(lines, `${side_type}_left`)
+            const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components)
+            for (const i of rows) {
+                rendered.push(
+                    <div
+                        style={{
+                            display: 'flex',
+                        }}
+                        key={`entity-row-${i}`}
+                    >
+                        {right_lines[i]}
+                        {battlefieldJSX[i]}
+                        {left_lines[i]}
+                    </div>
+                )
+            }
+            return rendered
+        },
+        [battlefield.field, field_components, lines]
+    )
 
     const displaySeparators = () => {
         const rendered = []

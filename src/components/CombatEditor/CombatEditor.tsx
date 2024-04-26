@@ -58,9 +58,8 @@ const CombatEditor = ({
                         })
                     }
                     value={entityInformation.controlled_by.id || 'none'}
-                    defaultValue={'none'}
                 >
-                    <option value={'none'} disabled selected>
+                    <option value={'none'} disabled>
                         Choose player
                     </option>
                     {lobbyInfo.players.map((player) => (
@@ -110,10 +109,9 @@ const CombatEditor = ({
                             controlled_by: { ...entityInformation.controlled_by, type: e.target.value },
                         })
                     }
-                    defaultValue={'player'}
                     value={entityInformation.controlled_by.type}
                 >
-                    <option value={'none'} disabled selected>
+                    <option value={'none'} disabled>
                         Choose type
                     </option>
                     <option value={'player'}>Player</option>
@@ -129,10 +127,9 @@ const CombatEditor = ({
             <>
                 <select
                     onChange={(e) => setEntityInformation({ ...entityInformation, path: e.target.value })}
-                    defaultValue={''}
                     value={entityInformation.path}
                 >
-                    <option disabled value={''} selected>
+                    <option disabled value={''}>
                         Choose character
                     </option>
                     {lobbyInfo.players.map((player) => (
@@ -180,7 +177,7 @@ const CombatEditor = ({
                     onChange={(e) => setEntityInformation({ ...entityInformation, source: e.target.value })}
                     value={entityInformation.source}
                 >
-                    <option value={'none'} disabled selected>
+                    <option value={'none'} disabled>
                         Creature source
                     </option>
                     <option value={'dlc'}>DLC</option>

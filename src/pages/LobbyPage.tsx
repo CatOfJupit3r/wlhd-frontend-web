@@ -44,10 +44,12 @@ const LobbyPage = () => {
                 ) : (
                     <ul>
                         {lobbyInfo.combats.map((combat) => (
-                            <li key={combat.nickname}>
+                            <Link key={combat.nickname} to={
+                                paths.gameRoom.replace(':lobbyId', lobbyInfo.lobbyId || '').replace(':gameId', combat._id)
+                            }>
                                 {combat.nickname} ({combat.isActive ? 'Active' : 'Inactive'}, {combat.roundCount}{' '}
                                 rounds)
-                            </li>
+                            </Link>
                         ))}
                     </ul>
                 )}

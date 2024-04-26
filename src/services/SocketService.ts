@@ -28,6 +28,8 @@ import {
 import { setNotify } from '../redux/slices/notifySlice'
 import { resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
 import { store as ReduxStore } from '../redux/store'
+import APIService from './APIService'
+import AuthManager from './AuthManager'
 
 const SOCKET_EVENTS = {
     BATTLE_STARTED: 'battle_started',
@@ -60,11 +62,15 @@ class SocketService {
     private lobbyId: string | null = null
     private combatId: string | null = null
     private retries = 3
+    private triedToRefreshToken = false
 
     constructor() {
         this.socket = io(REACT_APP_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
+            query: {
+                userToken: AuthManager.getAccessToken(),
+            },
         })
         this.setupListeners()
     }
@@ -99,7 +105,7 @@ class SocketService {
         if (this.socket.connected) {
             this.disconnect()
         }
-        this.socket.io.opts.query = { lobbyId, combatId }
+        this.socket.io.opts.query = { ...this.socket.io.opts.query, lobbyId, combatId }
         this.socket.connect()
     }
 
@@ -119,12 +125,31 @@ class SocketService {
                 event: 'disconnect',
                 callback: () => {
                     console.log('Disconnected from socket')
+                    if (this.triedToRefreshToken) {
+                        return
+                    }
                     const currentState = ReduxStore.getState()
                     if (currentState.info.gameFlow.type !== 'ended') {
                         ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'))
                     }
                     if (currentState.info.gameFlow.type === 'active') {
                         ReduxStore.dispatch(resetGameComponentsStateAction())
+                    }
+                },
+            },
+            {
+                event: 'invalid_token',
+                callback: () => {
+                    console.log('Invalid token')
+                    if (this.triedToRefreshToken) {
+                        this.triedToRefreshToken = false
+                        console.log('Logging out user')
+                        ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'))
+                    } else {
+                        this.triedToRefreshToken = true
+                        APIService.refreshToken().then(() => {
+                            this.reconnect()
+                        })
                     }
                 },
             },
@@ -194,8 +219,8 @@ class SocketService {
             },
             {
                 event: SOCKET_EVENTS.ROUND_UPDATE,
-                callback: ({ roundCount }: { roundCount: number }) => {
-                    ReduxStore.dispatch(setRound({ round: roundCount ? roundCount.toString() : '1' }))
+                callback: ({ roundCount }: { roundCount: string }) => {
+                    ReduxStore.dispatch(setRound(roundCount))
                     console.log('Round update', roundCount)
                 },
             },
@@ -214,7 +239,6 @@ class SocketService {
                     newControlledEntities: Array<EntityInfoFull>
                     newTooltips: { [square: string]: EntityInfoTooltip | null }
                 }) => {
-                    console.log('Entities updated')
                     ReduxStore.dispatch(setControlledEntities(newControlledEntities))
                     ReduxStore.dispatch(setEntityTooltips(newTooltips))
                 },
@@ -253,7 +277,7 @@ class SocketService {
                         },
                     ]
                     for (const { type, payload } of DISPATCHES) {
-                        ReduxStore.dispatch(type(payload))
+                        ReduxStore.dispatch(type(payload as any))
                     }
                     if (data.combatStatus === 'pending') {
                         ReduxStore.dispatch(setFlowToPending())

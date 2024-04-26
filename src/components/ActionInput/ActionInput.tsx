@@ -14,13 +14,12 @@ import {
     selectChosenAction,
     selectCurrentAlias,
     selectEntityActions,
-    selectIsSquareChoice,
+    selectIsSquareChoice, selectPlayersTurn,
     selectScope,
     selectTranslatedChoices,
     setChoice,
     setCurrentAlias,
     setReadyToSubmit,
-    setSquareChoice,
     setTranslatedChoice,
 } from '../../redux/slices/turnSlice'
 
@@ -29,8 +28,13 @@ import { useTranslation } from 'react-i18next'
 import { BsArrowBarLeft } from 'react-icons/bs'
 
 import { RxArrowTopRight } from 'react-icons/rx'
+import {
+    resetStateAfterSquareChoice,
+    selectBattlefieldMode,
+    selectClickedSquare,
+    setBattlefieldMode,
+} from '../../redux/slices/battlefieldSlice'
 import OptionCard from '../OptionCard/OptionCard'
-import { selectBattlefieldMode, selectClickedSquare, setBattlefieldMode } from '../../redux/slices/battlefieldSlice'
 
 /*
 
@@ -55,9 +59,9 @@ const ActionInput = () => {
     const aliases = useSelector(selectAliases)
     const chosenActionStore = useSelector(selectChosenAction)
     const translatedChoices = useSelector(selectTranslatedChoices)
-    const isSquareChoice = useSelector(selectIsSquareChoice)
     const clickedSquare = useSelector(selectClickedSquare)
     const battlefieldMode = useSelector(selectBattlefieldMode)
+    const isPlayerTurn = useSelector(selectPlayersTurn)
 
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
@@ -103,11 +107,11 @@ const ActionInput = () => {
             )
             dispatch(resetChosenAction())
         }
-    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, isSquareChoice, scope])
+    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, battlefieldMode, scope])
 
     useEffect(() => {
         if (clickedSquare && battlefieldMode === 'selection') {
-            dispatch(setBattlefieldMode('info'))
+            dispatch(resetStateAfterSquareChoice())
             dispatch(
                 setChoice({
                     key: currentAlias,
@@ -150,9 +154,9 @@ const ActionInput = () => {
             return
         }
         if (aliasValue.startsWith('Square') && choices[currentAlias] === undefined) {
-            dispatch(setSquareChoice(true))
+            dispatch(setBattlefieldMode('selection'))
         } else {
-            dispatch(setSquareChoice(false))
+            dispatch(setBattlefieldMode('info'))
         }
     }, [currentAlias, choices, scope, dispatch, t])
 
@@ -204,6 +208,7 @@ const ActionInput = () => {
                             )
                         }
                         dispatch(setReadyToSubmit(true))
+                        setReachedFinalDepth(false)
                     }}
                 />
                 <BsArrowBarLeft
@@ -249,12 +254,13 @@ const ActionInput = () => {
             // if we have chosen an action and there is a another requirement in scope that haven't been defined, we move to next requirement
             // else, we set readyToSubmit to true
             const action = aliases[scope[currentAlias]]
-            action && (() => {
-                const selectedAction = action.find((action: Action) => action.id === choices[currentAlias])
-                if (selectedAction && selectedAction.requires) {
-                    dispatch(appendScope(selectedAction.requires))
-                }
-            })()
+            action &&
+                (() => {
+                    const selectedAction = action.find((action: Action) => action.id === choices[currentAlias])
+                    if (selectedAction && selectedAction.requires) {
+                        dispatch(appendScope(selectedAction.requires))
+                    }
+                })()
             const nextRequirements = Object.keys(scope).filter((key: string) => !choices[key])
             if (nextRequirements.length > 0) {
                 dispatch(setCurrentAlias(nextRequirements[0]))
@@ -265,11 +271,19 @@ const ActionInput = () => {
     }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset, reachedFinalDepth])
 
     return (
-        <div
-            id={'action-input'}
-            className={styles.actionInput}
-        >
-            <div id={'action-confirms'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
+        <div id={'action-input'} className={styles.actionInput}>
+            {
+                isPlayerTurn ?
+                <div id={'action-confirms'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
+                    :
+                <h1 style={{
+                    textAlign: 'center',
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    marginTop: '10px',
+                }}
+                >{t('local:game.actions.waiting_for_turn')}</h1>
+            }
         </div>
     )
 }

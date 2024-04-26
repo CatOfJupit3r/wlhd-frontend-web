@@ -18,15 +18,6 @@ class APIService {
 
         GET_TRANSLATIONS: (language: string, dlc: string) =>
             `${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`,
-        GET_BATTLEFIELD: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/battlefield`,
-        GET_ACTIONS: (game_id: string, entity_id: string) =>
-            `${REACT_APP_BACKEND_URL}/${game_id}/action_options/${entity_id}`,
-        GET_ALL_MESSAGES: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/all_messages`,
-        GET_THE_MESSAGE: (game_id: string, memory_cell: string) =>
-            `${REACT_APP_BACKEND_URL}/${game_id}/message/${memory_cell.toString()}`,
-        GET_ENTITY_INFO: (game_id: string, entity_id: string) =>
-            `${REACT_APP_BACKEND_URL}/${game_id}/entity/${entity_id}`,
-        GET_ALL_ENTITIES_INFO: (game_id: string) => `${REACT_APP_BACKEND_URL}/${game_id}/entities_info`,
     }
 
     private injectResponseMessageToError = (error: AxiosError) => {
@@ -114,7 +105,6 @@ class APIService {
             method: 'post',
             data: { token: refreshToken },
         })
-        console.log('Received new access token', accessToken)
         AuthManager.setAccessToken(accessToken)
     }
 

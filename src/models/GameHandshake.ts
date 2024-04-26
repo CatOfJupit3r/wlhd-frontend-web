@@ -3,7 +3,7 @@ import { Battlefield, EntityInfoFull, EntityInfoTooltip, EntityInfoTurn, Transla
 export type GameMessage = Array<TranslatableString>
 
 export interface GameHandshake {
-    roundCount: number
+    roundCount: string
     messages: Array<GameMessage>
     combatStatus: 'ongoing' | 'pending'
     currentBattlefield: Battlefield

@@ -23,7 +23,7 @@ const initialState: BattlefieldState = {
         ],
         connectors: 'builtins:connector',
         separators: 'builtins:separator',
-        field_pawns: { '0': 'builtins:tile' },
+        pawns: { '0': 'builtins:tile' },
     },
     battlefieldMode: 'info',
     clickedSquare: null,
@@ -48,9 +48,6 @@ const InfoSlice = createSlice({
         setClickedSquare: (state, action: PayloadAction<string>) => {
             state.clickedSquare = action.payload
         },
-        resetClickedSquare: (state) => {
-            state.clickedSquare = null
-        },
         setInteractableTiles: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
             state.interactableTiles = { ...state.interactableTiles, ...action.payload }
         },
@@ -60,6 +57,14 @@ const InfoSlice = createSlice({
         setBattlefield: (state, action: PayloadAction<Battlefield>) => {
             return { ...state, currentBattlefield: action.payload }
         },
+        resetStateAfterSquareChoice: (state) => {
+            return {
+                ...state,
+                battlefieldMode: initialState.battlefieldMode,
+                interactableTiles: initialState.interactableTiles,
+                clickedSquare: null,
+            }
+        },
     },
 })
 
@@ -68,7 +73,7 @@ export default InfoSlice.reducer
 export const {
     setBattlefieldMode,
     setClickedSquare,
-    resetClickedSquare,
+    resetStateAfterSquareChoice,
     setBattlefield,
     setInteractableTiles,
     resetState,
@@ -77,7 +82,7 @@ export const {
 export const selectBattlefieldMold = (state: StoreState) => state.battlefield.currentBattlefield,
     selectColumns = (state: StoreState) => state.battlefield.currentBattlefield.columns,
     selectConnectors = (state: StoreState) => state.battlefield.currentBattlefield.connectors,
-    selectFieldComponents = (state: StoreState) => state.battlefield.currentBattlefield.field_pawns,
+    selectFieldComponents = (state: StoreState) => state.battlefield.currentBattlefield.pawns,
     selectLines = (state: StoreState) => state.battlefield.currentBattlefield.lines,
     selectSeparators = (state: StoreState) => state.battlefield.currentBattlefield.separators,
     selectBattlefieldMode = (state: StoreState) => state.battlefield.battlefieldMode,

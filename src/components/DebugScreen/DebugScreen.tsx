@@ -53,7 +53,7 @@ const DebugScreen = () => {
                 </h1>
                 <div id={'game-controller'} className={styles.gameControls}>
                     <div id={'battle-info'} className={styles.battleInfo}>
-                        <Battlefield />
+                        <Battlefield mode={'game'} />
                         <GameMessagesFeed />
                         <div
                             style={{

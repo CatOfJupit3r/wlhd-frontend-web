@@ -1,14 +1,16 @@
+import { AxiosError } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Battlefield from '../components/Battlefield/Battlefield'
 import CombatEditor from '../components/CombatEditor/CombatEditor'
+import { resetGameComponentsStateAction } from '../redux/highActions'
 import { setBattlefieldMode } from '../redux/slices/battlefieldSlice'
 import { selectLobbyId } from '../redux/slices/lobbySlice'
+import { setNotify } from '../redux/slices/notifySlice'
+import { AppDispatch } from '../redux/store'
 import paths from '../router/paths'
 import APIService from '../services/APIService'
-import { AxiosError } from 'axios'
-import {setNotify} from "../redux/slices/notifySlice";
 
 interface CombatPreset {
     field: {
@@ -25,27 +27,46 @@ interface CombatPreset {
 
 const CreateCombatPage = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const lobbyId = useSelector(selectLobbyId)
-    const [combatName, setCombatName] = useState('')
+    const [combatName, setCombatName] = useState('MyNewPreset')
     const [combatPreset, setCombatPreset] = useState({
-        field: {},
+        field: {
+            '4/3': {
+                path: 'builtins:hero',
+                source: 'dlc',
+                controlledBy: {
+                    type: 'player',
+                    id: '660953204bd5e6d58ed510d2',
+                },
+            },
+            '3/4': {
+                path: 'builtins:target_dummy',
+                source: 'dlc',
+                controlledBy: {
+                    type: 'player',
+                    id: '660953204bd5e6d58ed510d2',
+                },
+            },
+        },
     } as CombatPreset)
 
     const onSubmit = useCallback(async () => {
         try {
-            console.log('Creating combat', combatName, combatPreset)
-            dispatch(setBattlefieldMode('info'))
             const { combat_id } = await APIService.createLobbyCombat(lobbyId, combatName, combatPreset)
+            dispatch(setBattlefieldMode('info'))
+            dispatch(resetGameComponentsStateAction())
             navigate(paths.gameRoom.replace(':lobbyId', lobbyId).replace(':gameId', combat_id))
         } catch (e) {
             if (e instanceof AxiosError) {
                 console.error(e.response?.data)
-                dispatch(setNotify({
-                    message: e.response?.data,
-                    code: e.response?.status || 400
-                }))
+                dispatch(
+                    setNotify({
+                        message: e.response?.data,
+                        code: e.response?.status || 400,
+                    })
+                )
             } else {
                 console.error(e)
             }
@@ -86,7 +107,7 @@ const CreateCombatPage = () => {
                     flexDirection: 'row',
                 }}
             >
-                <Battlefield />
+                <Battlefield mode={'editor'}/>
                 <div
                     style={{
                         display: 'flex',

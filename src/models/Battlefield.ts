@@ -6,7 +6,7 @@ export interface Battlefield {
     lines: string[]
     connectors: string
     separators: string
-    field_pawns: {
+    pawns: {
         [key: string]: string
     }
 }

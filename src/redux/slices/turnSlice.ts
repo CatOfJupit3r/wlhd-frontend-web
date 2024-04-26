@@ -5,7 +5,6 @@ import { StoreState, TurnState } from '../../models/Redux'
 const initialState: TurnState = {
     playersTurn: false,
     readyToSubmit: false,
-    isLoadingEntityActions: true,
     needToChooseSquare: false,
     entityActions: {
         action: [
@@ -60,10 +59,9 @@ const turnSlice = createSlice({
             return {
                 ...state,
                 ...initialState,
-                isTurnActive: state.playersTurn,
+                playersTurn: state.playersTurn,
                 entityActions: state.entityActions,
                 readyToSubmit: state.readyToSubmit,
-                isLoadingEntityActions: state.isLoadingEntityActions,
             }
         },
         resetTurnSlice() {
@@ -73,9 +71,6 @@ const turnSlice = createSlice({
         },
         setPlayersTurn(state, action: PayloadAction<boolean>) {
             state.playersTurn = action.payload
-        },
-        setSquareChoice(state, action: PayloadAction<boolean>) {
-            state.needToChooseSquare = action.payload
         },
         setReadyToSubmit(state, action: PayloadAction<boolean>) {
             state.readyToSubmit = action.payload
@@ -123,7 +118,6 @@ export const {
     resetInput,
     resetTurnSlice,
     setPlayersTurn,
-    setSquareChoice,
     setReadyToSubmit,
     setEntityActions,
     setCurrentAlias,
@@ -143,9 +137,9 @@ export const selectScope = (state: StoreState) => state.turn.scope
 export const selectHighlightedComponents = (state: StoreState) => state.turn.highlightedComponents
 export const selectChoices = (state: StoreState) => state.turn.choices
 export const selectTranslatedChoices = (state: StoreState) => state.turn.translatedChoices
-export const selectIsLoadingEntityActions = (state: StoreState) => state.turn.isLoadingEntityActions
 export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubmit
 export const selectIsSquareChoice = (state: StoreState) => state.turn.needToChooseSquare
 export const selectAliasTranslations = (state: StoreState) => state.turn.entityActions.alias_translations
 export const selectAliases = (state: StoreState) => state.turn.entityActions.aliases
 export const selectChosenAction = (state: StoreState) => state.turn.chosenAction
+export const selectPlayersTurn = (state: StoreState) => state.turn.playersTurn
