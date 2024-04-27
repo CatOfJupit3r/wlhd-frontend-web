@@ -14,7 +14,7 @@ import {
     selectChosenAction,
     selectCurrentAlias,
     selectEntityActions,
-    selectIsSquareChoice, selectPlayersTurn,
+    selectPlayersTurn,
     selectScope,
     selectTranslatedChoices,
     setChoice,
@@ -272,18 +272,20 @@ const ActionInput = () => {
 
     return (
         <div id={'action-input'} className={styles.actionInput}>
-            {
-                isPlayerTurn ?
+            {isPlayerTurn ? (
                 <div id={'action-confirms'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
-                    :
-                <h1 style={{
-                    textAlign: 'center',
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                    marginTop: '10px',
-                }}
-                >{t('local:game.actions.waiting_for_turn')}</h1>
-            }
+            ) : (
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        marginTop: '10px',
+                    }}
+                >
+                    {t('local:game.actions.waiting_for_turn')}
+                </h1>
+            )}
         </div>
     )
 }

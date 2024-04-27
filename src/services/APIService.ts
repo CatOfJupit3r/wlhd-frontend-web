@@ -17,10 +17,11 @@ class APIService {
         REFRESH_TOKEN: `${REACT_APP_BACKEND_URL}/token`,
 
         GET_TRANSLATIONS: (language: string, dlc: string) =>
-            `${REACT_APP_BACKEND_URL}/translation?dlc=${dlc}&language=${language}`,
+            `${REACT_APP_BACKEND_URL}/translations?dlc=${dlc}&language=${language}`,
     }
 
     private injectResponseMessageToError = (error: AxiosError) => {
+        if (!error.response) return
         const message = (error.response?.data as any).message
         if (typeof message === 'string') error.message = message
     }
@@ -54,8 +55,9 @@ class APIService {
             })
             console.log('Fetch succeeded', url)
             return result.data
-        } catch (error: any) {
-            if (error.response.status === 401) {
+        } catch (error: unknown) {
+            if (!(error instanceof AxiosError)) throw error
+            if (error.response && error.response.status === 401) {
                 console.log('Received Unauthorized error from server')
                 if (_retry) {
                     console.log('The request has already been retried, so we logout')
@@ -134,11 +136,10 @@ class APIService {
 
     public getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
         try {
-            const response = await this.fetch({
+            return await this.fetch({
                 url: this.endpoints.GET_TRANSLATIONS(language, dlc),
                 method: 'get',
             })
-            return await response.json()
         } catch (e) {
             console.log(e)
             return {}

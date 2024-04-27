@@ -64,10 +64,8 @@ const turnSlice = createSlice({
                 readyToSubmit: state.readyToSubmit,
             }
         },
-        resetTurnSlice() {
-            return {
-                ...initialState,
-            }
+        resetTurnSlice(state) {
+            return { ...state, ...initialState }
         },
         setPlayersTurn(state, action: PayloadAction<boolean>) {
             state.playersTurn = action.payload

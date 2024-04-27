@@ -14,6 +14,7 @@ import { selectEntityTooltips } from '../../../redux/slices/infoSlice'
 import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
+import useTranslatableString from "../../../hooks/useTranslatableString";
 
 const TileEntity = (props: {
     full_descriptor: string
@@ -25,7 +26,7 @@ const TileEntity = (props: {
     }
 }) => {
     const dispatch = useDispatch()
-    // const translatableString = useTranslatableString()
+    const tString = useTranslatableString()
     const { t } = useTranslation()
 
     const { full_descriptor, className, id, fallback } = props
@@ -129,7 +130,7 @@ const TileEntity = (props: {
         const { name, square, health, action_points, armor, status_effects } = entity_info
         return [
             t('local:game.components.tooltip.creature_and_line', {
-                name: t(name.main_string),
+                name: tString(name),
                 square: `
                 ${square.line.toString()}/${square.column.toString()}`,
             }),
@@ -142,14 +143,15 @@ const TileEntity = (props: {
                 max_action_points: action_points.max,
             }),
             t('local:game.components.tooltip.armor', { current_armor: armor.current, base_armor: armor.base }),
-            t('local:game.components.tooltip.status_effects'),
-            (() => {
-                return status_effects && status_effects.length > 0
-                    ? status_effects
-                          .map((value) => `${t([value.descriptor.main_string])} (${value.duration})`)
-                          .join(', ')
-                    : t('local:game.components.tooltip.no_status_effects')
-            })(),
+            t('local:game.components.tooltip.status_effects', {
+                status_effects: (() => {
+                    return status_effects && status_effects.length > 0
+                        ? status_effects
+                              .map((value) => `${tString(value.descriptor)} (${value.duration})`)
+                              .join(', ')
+                        : t('local:game.components.tooltip.no_status_effects')
+                })(),
+            }),
         ].map((key, index) => <p key={index}>{key}</p>)
     }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
 
