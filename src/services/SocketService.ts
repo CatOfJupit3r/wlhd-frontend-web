@@ -42,8 +42,14 @@ const SOCKET_EVENTS = {
     HALT_ACTION: 'halt_action',
     TAKE_ACTION: 'take_action',
     NEW_MESSAGE: 'new_message',
-    BATTLEFIELD_UPDATE: 'battlefield_update',
+    BATTLEFIELD_UPDATE: 'battlefield_updated',
     ENTITIES_UPDATED: 'entities_updated',
+}
+
+const ELEVATED_RIGHTS_EVENTS = {
+    TAKE_UNALLOCATED_ACTION: 'take_unallocated_action',
+    // if player is not present, but GM is, then GM can take action and is notified about unallocated entity.
+    TAKE_OFFLINE_PLAYER_ACTION: 'take_offline_player_action',
 }
 
 const SOCKET_RESPONSES = {
@@ -55,7 +61,9 @@ export const ELEVATED_RIGHTS_RESPONSES = {
     ALLOCATE: 'allocate',
     START_COMBAT: 'start_combat',
     END_COMBAT: 'end_combat',
+    TRY_SENDING_AGAIN: 'try_sending_again', // this event used to tell server to try sending action to the player again.
 }
+// these will be used by special actions in GM Menu
 
 class SocketService {
     private socket: Socket
@@ -68,11 +76,12 @@ class SocketService {
         this.socket = io(REACT_APP_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
-            query: {
-                userToken: AuthManager.getAccessToken(),
-            },
         })
-        this.setupListeners()
+        this.setupRegularListeners()
+        if (ReduxStore.getState().lobby.layout === 'gm') {
+            // if page displayed is for GM, then we can assume that user IS GM
+            this.setupElevatedRightsListeners()
+        }
     }
 
     private addEventListener(event: string, callback: (...args: any[]) => void) {
@@ -84,7 +93,7 @@ class SocketService {
         this.socket.off(event, callback)
     }
 
-    public emit(event: string, data?: any) {
+    public emit(event: string, data?: unknown) {
         this.socket.emit(event, data)
     }
 
@@ -105,7 +114,12 @@ class SocketService {
         if (this.socket.connected) {
             this.disconnect()
         }
-        this.socket.io.opts.query = { ...this.socket.io.opts.query, lobbyId, combatId }
+        this.socket.io.opts.query = {
+            ...this.socket.io.opts.query,
+            userToken: AuthManager.getAccessToken(),
+            lobbyId,
+            combatId,
+        }
         this.socket.connect()
     }
 
@@ -113,200 +127,185 @@ class SocketService {
         this.socket.connect()
     }
 
-    private setupListeners() {
-        const listeners = [
-            {
-                event: 'connect',
-                callback: () => {
-                    console.log('Connected to socket')
-                },
+    private setupRegularListeners() {
+        const listeners = {
+            connect: () => {
+                console.log('Connected to socket')
             },
-            {
-                event: 'disconnect',
-                callback: () => {
-                    console.log('Disconnected from socket')
-                    if (this.triedToRefreshToken) {
-                        return
-                    }
-                    const currentState = ReduxStore.getState()
-                    if (currentState.info.gameFlow.type !== 'ended') {
-                        ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'))
-                    }
-                    if (currentState.info.gameFlow.type === 'active') {
-                        ReduxStore.dispatch(resetGameComponentsStateAction())
-                    }
-                },
+            disconnect: () => {
+                console.log('Disconnected from socket')
+                if (this.triedToRefreshToken) {
+                    return
+                }
+                const currentState = ReduxStore.getState()
+                if (currentState.info.gameFlow.type !== 'ended') {
+                    ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'))
+                }
+                if (currentState.info.gameFlow.type === 'active') {
+                    ReduxStore.dispatch(resetGameComponentsStateAction())
+                }
             },
-            {
-                event: 'invalid_token',
-                callback: () => {
-                    console.log('Invalid token')
-                    if (this.triedToRefreshToken) {
-                        this.triedToRefreshToken = false
-                        console.log('Logging out user')
-                        ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'))
-                    } else {
-                        this.triedToRefreshToken = true
-                        APIService.refreshToken().then(() => {
-                            this.reconnect()
-                        })
-                    }
-                },
-            },
-            {
-                event: 'error',
-                callback: (error: unknown) => {
-                    console.error('Socket error', error)
-                    if (this.retries > 0) {
-                        console.log('Reconnecting...')
-                        this.retries--
+            ['invalid_token']: () => {
+                console.log('Invalid token')
+                if (this.triedToRefreshToken) {
+                    this.triedToRefreshToken = false
+                    console.log('Logging out user')
+                    ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'))
+                } else {
+                    this.triedToRefreshToken = true
+                    APIService.refreshToken().then(() => {
                         this.reconnect()
-                    } else {
-                        console.log('Could not reconnect to game server')
-                        ReduxStore.dispatch(setFlowToAborted('local:game.connection_lost'))
-                        this.retries = 3
-                    }
-                },
+                    })
+                }
             },
-            {
-                event: SOCKET_EVENTS.ACTION_RESULT,
-                callback: ({ code, message }: ActionResultsPayload) => {
-                    console.log('Action result', code, message)
-                    ReduxStore.dispatch(setNotify({ code, message }))
-                },
+            error: (error: unknown) => {
+                console.error('Socket error', error)
+                if (this.retries > 0) {
+                    console.log('Reconnecting...')
+                    this.retries--
+                    this.reconnect()
+                } else {
+                    console.log('Could not reconnect to game server')
+                    ReduxStore.dispatch(setFlowToAborted('local:game.connection_lost'))
+                    this.retries = 3
+                }
             },
-            {
-                event: SOCKET_EVENTS.HALT_ACTION,
-                callback: () => {
-                    // this action stops any further action from being taken.
-                    // emitted to avoid users from taking actions when they shouldn't no longer
-                    console.log('Halted action')
-                    ReduxStore.dispatch(resetTurnSlice())
-                },
+            [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
+                console.log('Action result', code, message)
+                ReduxStore.dispatch(setNotify({ code, message }))
             },
-            {
-                event: SOCKET_EVENTS.BATTLE_ENDED,
-                callback: ({ battle_result }: { battle_result: string }) => {
-                    console.log('Battle ended', battle_result)
-                    ReduxStore.dispatch(setFlowToEnded(battle_result))
-                },
+            [SOCKET_EVENTS.HALT_ACTION]: () => {
+                // this action stops any further action from being taken.
+                // emitted to avoid users from taking actions when they shouldn't no longer
+                console.log('Halted action')
+                ReduxStore.dispatch(resetTurnSlice())
             },
-            {
-                event: SOCKET_EVENTS.CURRENT_ENTITY_UPDATED,
-                callback: (activeEntityInfo: EntityInfoTurn) => {
-                    console.log('Current entity updated', activeEntityInfo)
-                    ReduxStore.dispatch(setActiveEntity(activeEntityInfo))
-                },
+            [SOCKET_EVENTS.BATTLE_ENDED]: ({ battle_result }: { battle_result: string }) => {
+                console.log('Battle ended', battle_result)
+                ReduxStore.dispatch(setFlowToEnded(battle_result))
             },
-            {
-                event: SOCKET_EVENTS.NO_CURRENT_ENTITY,
-                callback: () => {
-                    console.log('No current entity')
-                    ReduxStore.dispatch(resetActiveEntity())
-                },
+            [SOCKET_EVENTS.CURRENT_ENTITY_UPDATED]: ({ activeEntity }: { activeEntity: EntityInfoTurn }) => {
+                console.log('Current entity updated', activeEntity)
+                ReduxStore.dispatch(setActiveEntity(activeEntity))
             },
-            {
-                event: SOCKET_EVENTS.BATTLEFIELD_UPDATE,
-                callback: ({ battlefield }: { battlefield: Battlefield }) => {
-                    ReduxStore.dispatch(setBattlefield(battlefield))
-                },
+            [SOCKET_EVENTS.NO_CURRENT_ENTITY]: () => {
+                console.log('No current entity')
+                ReduxStore.dispatch(resetActiveEntity())
             },
-            {
-                event: SOCKET_EVENTS.NEW_MESSAGE,
-                callback: ({ message }: { message: Array<TranslatableString> }) => {
-                    ReduxStore.dispatch(addMessage(message))
-                },
+            [SOCKET_EVENTS.BATTLEFIELD_UPDATE]: ({ battlefield }: { battlefield: Battlefield }) => {
+                ReduxStore.dispatch(setBattlefield(battlefield))
             },
-            {
-                event: SOCKET_EVENTS.ROUND_UPDATE,
-                callback: ({ roundCount }: { roundCount: string }) => {
-                    ReduxStore.dispatch(setRound(roundCount))
-                    console.log('Round update', roundCount)
-                },
+            [SOCKET_EVENTS.NEW_MESSAGE]: ({ message }: { message: Array<TranslatableString> }) => {
+                ReduxStore.dispatch(addMessage(message))
             },
-            {
-                event: SOCKET_EVENTS.BATTLE_STARTED,
-                callback: () => {
+            [SOCKET_EVENTS.ROUND_UPDATE]: ({ roundCount }: { roundCount: string }) => {
+                ReduxStore.dispatch(setRound(roundCount))
+                console.log('Round update', roundCount)
+            },
+            [SOCKET_EVENTS.BATTLE_STARTED]: () => {
+                ReduxStore.dispatch(setFlowToActive())
+            },
+            [SOCKET_EVENTS.ENTITIES_UPDATED]: ({
+                newControlledEntities,
+                newTooltips,
+            }: {
+                newControlledEntities: Array<EntityInfoFull>
+                newTooltips: { [key: string]: EntityInfoTooltip | null }
+            }) => {
+                ReduxStore.dispatch(setControlledEntities(newControlledEntities))
+                ReduxStore.dispatch(setEntityTooltips(newTooltips))
+            },
+            [SOCKET_EVENTS.GAME_HANDSHAKE]: ({
+                roundCount,
+                messages,
+                currentBattlefield,
+                currentEntityInfo,
+                entityTooltips,
+                controlledEntities,
+                combatStatus,
+            }: GameHandshake) => {
+                const DISPATCHES = [
+                    {
+                        type: resetGameComponentsStateAction,
+                        payload: null,
+                    },
+                    {
+                        type: setRound,
+                        payload: roundCount,
+                    },
+                    {
+                        type: setMessages,
+                        payload: messages,
+                    },
+                    {
+                        type: setBattlefield,
+                        payload: currentBattlefield,
+                    },
+                    {
+                        type: setActiveEntity,
+                        payload: currentEntityInfo,
+                    },
+                    {
+                        type: setEntityTooltips,
+                        payload: entityTooltips,
+                    },
+                    {
+                        type: setControlledEntities,
+                        payload: controlledEntities,
+                    },
+                ]
+                for (const { type, payload } of DISPATCHES) {
+                    ReduxStore.dispatch(type(payload as any))
+                }
+                if (combatStatus === 'pending') {
+                    ReduxStore.dispatch(setFlowToPending())
+                } else {
                     ReduxStore.dispatch(setFlowToActive())
-                },
+                }
             },
-            {
-                event: SOCKET_EVENTS.ENTITIES_UPDATED,
-                callback: ({
-                    newControlledEntities,
-                    newTooltips,
-                }: {
-                    newControlledEntities: Array<EntityInfoFull>
-                    newTooltips: { [square: string]: EntityInfoTooltip | null }
-                }) => {
-                    ReduxStore.dispatch(setControlledEntities(newControlledEntities))
-                    ReduxStore.dispatch(setEntityTooltips(newTooltips))
-                },
+            [SOCKET_EVENTS.TAKE_ACTION]: ({ actions }: { actions: ActionInput }) => {
+                try {
+                    ReduxStore.dispatch(setEntityActions(actions))
+                } catch (e) {
+                    console.log('Error occurred during fetching of actions: ', e)
+                    this.emit(SOCKET_RESPONSES.SKIP)
+                    return
+                }
+                ReduxStore.dispatch(setPlayersTurn(true))
             },
-            {
-                event: SOCKET_EVENTS.GAME_HANDSHAKE,
-                callback: (data: GameHandshake) => {
-                    const DISPATCHES = [
-                        {
-                            type: resetGameComponentsStateAction,
-                            payload: null,
-                        },
-                        {
-                            type: setRound,
-                            payload: data.roundCount,
-                        },
-                        {
-                            type: setMessages,
-                            payload: data.messages,
-                        },
-                        {
-                            type: setBattlefield,
-                            payload: data.currentBattlefield,
-                        },
-                        {
-                            type: setActiveEntity,
-                            payload: data.currentEntityInfo,
-                        },
-                        {
-                            type: setEntityTooltips,
-                            payload: data.entityTooltips,
-                        },
-                        {
-                            type: setControlledEntities,
-                            payload: data.controlledEntities,
-                        },
-                    ]
-                    for (const { type, payload } of DISPATCHES) {
-                        ReduxStore.dispatch(type(payload as any))
-                    }
-                    if (data.combatStatus === 'pending') {
-                        ReduxStore.dispatch(setFlowToPending())
-                    } else {
-                        ReduxStore.dispatch(setFlowToActive())
-                    }
-                },
+            ['*']: (data: unknown) => {
+                console.log('Received unknown event', data)
             },
-            {
-                event: SOCKET_EVENTS.TAKE_ACTION,
-                callback: ({ actions }: { actions: ActionInput }) => {
-                    try {
-                        ReduxStore.dispatch(setEntityActions(actions))
-                    } catch (e) {
-                        console.log('Error occurred during fetching of actions: ', e)
-                        this.emit(SOCKET_RESPONSES.SKIP)
-                        return
-                    }
-                    ReduxStore.dispatch(setPlayersTurn(true))
-                },
+        }
+        for (const [event, callback] of Object.entries(listeners)) {
+            this.addEventListener(event, callback)
+        }
+    }
+
+    private setupElevatedRightsListeners() {
+        const listeners = {
+            [ELEVATED_RIGHTS_EVENTS.TAKE_UNALLOCATED_ACTION]: ({ actions }: { actions: ActionInput }) => {
+                try {
+                    ReduxStore.dispatch(setEntityActions(actions))
+                } catch (e) {
+                    console.log('Error occurred during fetching of actions: ', e)
+                    this.emit(SOCKET_RESPONSES.SKIP)
+                    return
+                }
+                ReduxStore.dispatch(setPlayersTurn(true))
             },
-            {
-                event: '*',
-                callback: (data: any) => {
-                    console.log('Received unknown event', data)
-                },
+            [ELEVATED_RIGHTS_EVENTS.TAKE_OFFLINE_PLAYER_ACTION]: ({ actions }: { actions: ActionInput }) => {
+                try {
+                    ReduxStore.dispatch(setEntityActions(actions))
+                } catch (e) {
+                    console.log('Error occurred during fetching of actions: ', e)
+                    this.emit(SOCKET_RESPONSES.SKIP)
+                    return
+                }
+                ReduxStore.dispatch(setPlayersTurn(true))
             },
-        ]
-        for (const { event, callback } of listeners) {
+        }
+        for (const [event, callback] of Object.entries(listeners)) {
             this.addEventListener(event, callback)
         }
     }
