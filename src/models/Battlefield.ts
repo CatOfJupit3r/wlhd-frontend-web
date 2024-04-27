@@ -35,7 +35,7 @@ export interface EntityInfoTooltip {
 export interface EntityInfoTurn {
     name: string
     square: { line: string; column: string }
-    action_points: { current: number; max: number }
+    action_points: { current: string; max: string }
 }
 
 export interface EntityInfoFull {
