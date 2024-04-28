@@ -122,10 +122,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Related
 
-- [React Frontend](https://github.com/CatOfJupit3r/wlc-frontend-web) — Frontend for the game coordinator, built using React, Redux and GraphQL. (You are here!)
-- [Game Coordinator](https://github.com/CatOfJupit3r/wlc-coordinator-server) — Backend for the game coordinator, built using ExpressJS and MongoDB.
+- [React Frontend](https://github.com/CatOfJupit3r/wlhd-frontend-web) — Frontend for the game coordinator, built using React, Redux and GraphQL. (You are here!)
+- [Game Coordinator](https://github.com/CatOfJupit3r/wlhd-coordinator-server) — Backend for the game coordinator, built using ExpressJS and MongoDB.
 - [Game Engine](https://youtu.be/h81WXIfCnoE?si=LS7HpLYhI-LBg4-9) — Core game engine, built using Python, Python and Python. (also, FastAPI).
-- [Discord Bot Interface](https://github.com/CatOfJupit3r/wlc-frontend-discord) — Frontend for the game coordinator, built using Discord API. (Deprecated)
+- [Discord Bot Interface](https://github.com/CatOfJupit3r/wlhd-frontend-discord) — Frontend for the game coordinator, built using Discord API. (Deprecated)
 - [Game Guide] — Contains all the necessary information about the game and its various mechanics in a traditional TTRPG format. (WIP)
 - [Game Wiki] — Contains all the necessary information about the game and its various mechanics in easily navigable way. (WIP)
 
