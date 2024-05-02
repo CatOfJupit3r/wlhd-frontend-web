@@ -7,6 +7,7 @@ const initialState: CosmeticsState = {
         message: '',
         code: 200,
     },
+    pageTitle: 'Walenholde', // this title is displayed
 }
 
 const CosmeticsSlice = createSlice({
@@ -17,14 +18,17 @@ const CosmeticsSlice = createSlice({
             const { message, code } = action.payload
             return { ...state, notification: { message, code } }
         },
-        clearNotify: () => {
-            return initialState
+        clearNotify: (state) => {
+            return { ...state, notification: initialState.notification }
+        },
+        setPageTitle: (state, action: PayloadAction<string>) => {
+            return { ...state, pageTitle: action.payload }
         },
     },
 })
 
 export default CosmeticsSlice.reducer
 
-export const { setNotify, clearNotify } = CosmeticsSlice.actions
+export const { setNotify, clearNotify, setPageTitle } = CosmeticsSlice.actions
 
 export const selectNotification = (state: RootState) => state.cosmetics.notification

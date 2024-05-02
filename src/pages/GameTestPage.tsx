@@ -4,6 +4,7 @@ import MenuContainer from '../components/MenuContainer/MenuContainer'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { resetTurnSlice } from '../redux/slices/turnSlice'
+import { setPageTitle } from '../redux/slices/cosmeticsSlice'
 
 const HALF_SCREEN_STYLE = {
     display: 'flex',

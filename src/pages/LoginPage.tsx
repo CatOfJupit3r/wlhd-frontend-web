@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setNotify } from '../redux/slices/cosmeticsSlice'
 import APIService from '../services/APIService'
+import { AppDispatch } from '../redux/store'
 
 const LoginPage = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [handle, setHandle] = useState('admin')
     const [password, setPassword] = useState('motherfucker')

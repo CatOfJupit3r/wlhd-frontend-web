@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { resetTurnSlice } from '../../redux/slices/turnSlice'
 import styles from './HomePage.module.css'
+import { AppDispatch } from '../../redux/store'
 
-function HomePage() {
+const HomePage = () => {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
         dispatch(resetTurnSlice())

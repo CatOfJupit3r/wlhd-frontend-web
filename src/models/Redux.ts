@@ -6,6 +6,7 @@ export interface CosmeticsState {
         message: string
         code: number
     }
+    pageTitle: string
 }
 
 export interface LobbyState {

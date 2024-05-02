@@ -7,10 +7,11 @@ import CombatEditor from '../components/CombatEditor/CombatEditor'
 import { resetGameComponentsStateAction } from '../redux/highActions'
 import { setBattlefieldMode } from '../redux/slices/battlefieldSlice'
 import { selectLobbyId } from '../redux/slices/lobbySlice'
-import { setNotify } from '../redux/slices/cosmeticsSlice'
+import { setNotify, setPageTitle } from '../redux/slices/cosmeticsSlice'
 import { AppDispatch } from '../redux/store'
 import paths from '../router/paths'
 import APIService from '../services/APIService'
+import { useTranslation } from 'react-i18next'
 
 interface CombatPreset {
     field: {
@@ -28,6 +29,7 @@ interface CombatPreset {
 const CreateCombatPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
+    const { t } = useTranslation()
 
     const lobbyId = useSelector(selectLobbyId)
     const [combatName, setCombatName] = useState('MyNewPreset')
@@ -51,6 +53,10 @@ const CreateCombatPage = () => {
             },
         },
     } as CombatPreset)
+
+    useEffect(() => {
+        dispatch(setPageTitle(t('local:page_titles.create_combat')))
+    }, [])
 
     const onSubmit = useCallback(async () => {
         try {

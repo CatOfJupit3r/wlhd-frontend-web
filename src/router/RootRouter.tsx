@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
+import DebugScreen from '../components/DebugScreen/DebugScreen'
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
+import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 import MainLayout from '../layouts/MainLayout'
 import AboutPage from '../pages/AboutPage'
+import CreateCombatPage from '../pages/CreateCombatPage'
 import GameRoomPage from '../pages/GameRoomPage'
 import GameTestPage from '../pages/GameTestPage'
 import HomePage from '../pages/HomePage/HomePage'
@@ -10,16 +13,15 @@ import LoginPage from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
-import paths from './paths'
-import CreateCombatPage from '../pages/CreateCombatPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
-import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
-import DebugScreen from "../components/DebugScreen/DebugScreen";
+import paths from './paths'
+import { Page } from '../pages/PageWrapper'
 
 const authRoutes = [
     {
         path: paths.profile,
         Component: ProfilePage,
+        title: 'profile',
     },
 ]
 
@@ -27,86 +29,108 @@ const lobbyRoutes = [
     {
         path: paths.lobbyRoom,
         Component: LobbyPage,
+        title: 'lobby',
     },
     {
         path: paths.createCombatRoom,
         Component: CreateCombatPage,
+        title: 'create_combat',
     },
     {
         path: paths.viewCharacter,
-        Component: viewCharacterPage
-    }
+        Component: viewCharacterPage,
+        title: 'view_character',
+    },
 ]
 
 const appRoutes = [
     {
         path: paths.home,
         Component: HomePage,
+        title: 'home',
     },
     {
         path: paths.about,
         Component: AboutPage,
+        title: 'about',
     },
     {
         path: paths.login,
         Component: LoginPage,
+        title: 'login',
     },
     {
         path: paths.signUp,
         Component: RegisterPage,
-    }
+        title: 'signup',
+    },
 ]
 
 const noHeaderRoutes = [
     {
         path: paths.gameTest,
         Component: GameTestPage,
+        title: 'game_test',
     },
     {
         path: paths.debugRoom,
         Component: DebugScreen,
-    }
+        title: 'debug',
+    },
 ]
 
 const noHeaderButAuth = [
     {
         path: paths.gameRoom,
         Component: GameRoomPage,
+        title: 'game_room',
     },
 ]
-
 
 export default function RootRouter() {
     const loggedIn = useIsLoggedIn()
 
     return (
         <Router>
-            {/* A <Switch> looks through its children <Route>s and
-          renders the first one that matches the current URL. */}
             <Routes>
                 <Route path={'/'} element={<MainLayout />}>
-                    {appRoutes.map(({ path, Component: C }) => (
-                        <Route key={path} path={path} index={path === paths.home} element={<C />} />
+                    {appRoutes.map(({ path, Component: C, title }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            index={path === paths.home}
+                            element={<Page title={title}> <C /> </Page>}
+                        />
                     ))}
-                    {authRoutes.map(({ path, Component: C }) => (
-                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    {authRoutes.map(({ path, Component: C, title }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                        />
                     ))}
                 </Route>
                 <Route path={'/'} element={<LobbyPagesLayout header />}>
-                    {lobbyRoutes.map(({ path, Component: C }) => (
-                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    {lobbyRoutes.map(({ path, Component: C, title }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                        />
                     ))}
                 </Route>
                 <Route path={'/'} element={<LobbyPagesLayout header={false} />}>
-                    {noHeaderButAuth.map(({ path, Component: C }) => (
-                        <Route key={path} path={path} element={loggedIn ? <C /> : <Navigate to={paths.login} />} />
+                    {noHeaderButAuth.map(({ path, Component: C, title }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                        />
                     ))}
                 </Route>
-                {
-                    noHeaderRoutes.map(({ path, Component: C }) => (
-                        <Route key={path} path={path} element={<C />} />
-                    ))
-                }
+                {noHeaderRoutes.map(({ path, Component: C, title }) => (
+                    <Route key={path} path={path} element={<Page title={title}> <C /> </Page>} />
+                ))}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
