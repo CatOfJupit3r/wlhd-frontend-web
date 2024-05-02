@@ -15,7 +15,7 @@ import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
 import paths from './paths'
-import { Page } from '../pages/PageWrapper'
+import { PageWrapper } from '../pages/PageWrapper'
 
 const authRoutes = [
     {
@@ -99,14 +99,14 @@ const RootRouter = () => {
                             key={path}
                             path={path}
                             index={path === paths.home}
-                            element={<Page title={title}> <C /> </Page>}
+                            element={<PageWrapper title={title}> <C /> </PageWrapper>}
                         />
                     ))}
                     {authRoutes.map(({ path, Component: C, title }) => (
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
                         />
                     ))}
                 </Route>
@@ -115,7 +115,7 @@ const RootRouter = () => {
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
                         />
                     ))}
                 </Route>
@@ -124,12 +124,12 @@ const RootRouter = () => {
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <Page title={title}> <C /> </Page> : <Navigate to={paths.login} />}
+                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
                         />
                     ))}
                 </Route>
                 {noHeaderRoutes.map(({ path, Component: C, title }) => (
-                    <Route key={path} path={path} element={<Page title={title}> <C /> </Page>} />
+                    <Route key={path} path={path} element={<PageWrapper title={title}> <C /> </PageWrapper>} />
                 ))}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
