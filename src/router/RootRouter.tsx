@@ -11,11 +11,11 @@ import HomePage from '../pages/HomePage/HomePage'
 import LobbyPage from '../pages/LobbyPage'
 import LoginPage from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
+import { PageWrapper } from '../pages/PageWrapper'
 import ProfilePage from '../pages/ProfilePage'
 import RegisterPage from '../pages/RegisterPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
 import paths from './paths'
-import { PageWrapper } from '../pages/PageWrapper'
 
 const authRoutes = [
     {
@@ -99,14 +99,26 @@ const RootRouter = () => {
                             key={path}
                             path={path}
                             index={path === paths.home}
-                            element={<PageWrapper title={title}> <C /> </PageWrapper>}
+                            element={
+                                <PageWrapper title={title}>
+                                    <C />
+                                </PageWrapper>
+                            }
                         />
                     ))}
                     {authRoutes.map(({ path, Component: C, title }) => (
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
+                            element={
+                                loggedIn ? (
+                                    <PageWrapper title={title}>
+                                        <C />
+                                    </PageWrapper>
+                                ) : (
+                                    <Navigate to={paths.login} />
+                                )
+                            }
                         />
                     ))}
                 </Route>
@@ -115,7 +127,15 @@ const RootRouter = () => {
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
+                            element={
+                                loggedIn ? (
+                                    <PageWrapper title={title}>
+                                        <C />
+                                    </PageWrapper>
+                                ) : (
+                                    <Navigate to={paths.login} />
+                                )
+                            }
                         />
                     ))}
                 </Route>
@@ -124,18 +144,40 @@ const RootRouter = () => {
                         <Route
                             key={path}
                             path={path}
-                            element={loggedIn ? <PageWrapper title={title}> <C /> </PageWrapper> : <Navigate to={paths.login} />}
+                            element={
+                                loggedIn ? (
+                                    <PageWrapper title={title}>
+                                        <C />
+                                    </PageWrapper>
+                                ) : (
+                                    <Navigate to={paths.login} />
+                                )
+                            }
                         />
                     ))}
                 </Route>
                 {noHeaderRoutes.map(({ path, Component: C, title }) => (
-                    <Route key={path} path={path} element={<PageWrapper title={title}> <C /> </PageWrapper>} />
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <PageWrapper title={title}>
+                                <C />
+                            </PageWrapper>
+                        }
+                    />
                 ))}
-                <Route path="*" element={<NotFoundPage />} />
+                <Route
+                    path="*"
+                    element={
+                        <PageWrapper title={'not_found'}>
+                            <NotFoundPage />
+                        </PageWrapper>
+                    }
+                />
             </Routes>
         </Router>
     )
 }
-
 
 export default RootRouter

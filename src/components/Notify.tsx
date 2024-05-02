@@ -13,7 +13,6 @@ const Notify = () => {
 
     useEffect(() => {
         if (notification.message) {
-            console.log("Rendered toast.")
             if (notification.code === 200) {
                 toast.success(notification.message)
             } else {

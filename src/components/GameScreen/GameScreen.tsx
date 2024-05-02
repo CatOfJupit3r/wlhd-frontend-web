@@ -48,10 +48,6 @@ const GameScreen = () => {
             navigate('..')
             return
         }
-        document.title =
-            t('local:game.title', { gameId: gameId }) === t('local:game.title')
-                ? 'Game'
-                : t('local:game.title', { gameId: gameId })
         dispatch(resetGameComponentsStateAction())
         SocketService.connect({
             lobbyId,

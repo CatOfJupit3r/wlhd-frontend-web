@@ -7,7 +7,7 @@ const initialState: CosmeticsState = {
         message: '',
         code: 200,
     },
-    pageTitle: 'Walenholde', // this title is displayed
+    pageTitle: 'unknown', // this title is displayed
 }
 
 const CosmeticsSlice = createSlice({
