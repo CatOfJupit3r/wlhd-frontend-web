@@ -6,7 +6,8 @@ import {
     GameStateContainer,
     TranslatableString,
 } from '../../models/Battlefield'
-import { InfoState, StoreState } from '../../models/Redux'
+import { InfoState } from '../../models/Redux'
+import { RootState } from '../store'
 
 const initialState: InfoState = {
     round: '0',
@@ -98,10 +99,10 @@ export const {
     setControlledEntities,
 } = InfoSlice.actions
 
-export const selectRound = (state: StoreState) => state.info.round
-export const selectAllMessages = (state: StoreState) => state.info.messages.loaded
-export const selectEntityTooltips = (state: StoreState) => state.info.entityTooltips
-export const selectGameFlow = (state: StoreState) => state.info.gameFlow
-export const selectChosenMenu = (state: StoreState) => state.info.chosenMenu
-export const selectActiveEntity = (state: StoreState) => state.info.activeEntity
-export const selectControlledEntities = (state: StoreState) => state.info.controlledEntities
+export const selectRound = (state: RootState) => state.info.round
+export const selectAllMessages = (state: RootState) => state.info.messages.loaded
+export const selectEntityTooltips = (state: RootState) => state.info.entityTooltips
+export const selectGameFlow = (state: RootState) => state.info.gameFlow
+export const selectChosenMenu = (state: RootState) => state.info.chosenMenu
+export const selectActiveEntity = (state: RootState) => state.info.activeEntity
+export const selectControlledEntities = (state: RootState) => state.info.controlledEntities

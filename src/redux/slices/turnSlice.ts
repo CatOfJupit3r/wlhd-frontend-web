@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ActionInput as ActionInputInterface } from '../../models/ActionInput'
-import { StoreState, TurnState } from '../../models/Redux'
+import { TurnState } from '../../models/Redux'
+import { RootState } from '../store'
 
 const initialState: TurnState = {
     playersTurn: false,
@@ -129,15 +130,15 @@ export const {
     highlightNothingButComponent,
 } = turnSlice.actions
 
-export const selectEntityActions = (state: StoreState) => state.turn.entityActions
-export const selectCurrentAlias = (state: StoreState) => state.turn.currentAlias
-export const selectScope = (state: StoreState) => state.turn.scope
-export const selectHighlightedComponents = (state: StoreState) => state.turn.highlightedComponents
-export const selectChoices = (state: StoreState) => state.turn.choices
-export const selectTranslatedChoices = (state: StoreState) => state.turn.translatedChoices
-export const selectReadyToSubmit = (state: StoreState) => state.turn.readyToSubmit
-export const selectIsSquareChoice = (state: StoreState) => state.turn.needToChooseSquare
-export const selectAliasTranslations = (state: StoreState) => state.turn.entityActions.alias_translations
-export const selectAliases = (state: StoreState) => state.turn.entityActions.aliases
-export const selectChosenAction = (state: StoreState) => state.turn.chosenAction
-export const selectPlayersTurn = (state: StoreState) => state.turn.playersTurn
+export const selectEntityActions = (state: RootState) => state.turn.entityActions
+export const selectCurrentAlias = (state: RootState) => state.turn.currentAlias
+export const selectScope = (state: RootState) => state.turn.scope
+export const selectHighlightedComponents = (state: RootState) => state.turn.highlightedComponents
+export const selectChoices = (state: RootState) => state.turn.choices
+export const selectTranslatedChoices = (state: RootState) => state.turn.translatedChoices
+export const selectReadyToSubmit = (state: RootState) => state.turn.readyToSubmit
+export const selectIsSquareChoice = (state: RootState) => state.turn.needToChooseSquare
+export const selectAliasTranslations = (state: RootState) => state.turn.entityActions.alias_translations
+export const selectAliases = (state: RootState) => state.turn.entityActions.aliases
+export const selectChosenAction = (state: RootState) => state.turn.chosenAction
+export const selectPlayersTurn = (state: RootState) => state.turn.playersTurn

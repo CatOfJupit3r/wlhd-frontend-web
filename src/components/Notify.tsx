@@ -2,23 +2,26 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { clearNotify, selectNotificationCode, selectNotificationMessage } from '../redux/slices/notifySlice'
+import {
+    clearNotify,
+    selectNotification,
+} from '../redux/slices/cosmeticsSlice'
 
 const Notify = () => {
-    const notificationMessage = useSelector(selectNotificationMessage)
-    const notificationCode = useSelector(selectNotificationCode)
+    const notification = useSelector(selectNotification)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (notificationMessage) {
-            if (notificationCode === 200) {
-                toast.success(notificationMessage)
+        if (notification.message) {
+            console.log("Rendered toast.")
+            if (notification.code === 200) {
+                toast.success(notification.message)
             } else {
-                toast.error(notificationMessage)
+                toast.error(notification.message)
             }
             dispatch(clearNotify())
         }
-    }, [notificationMessage, notificationCode, dispatch])
+    }, [notification, dispatch])
 
     return (
         <ToastContainer

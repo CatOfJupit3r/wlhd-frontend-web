@@ -12,6 +12,7 @@ import { ActionResultsPayload } from '../models/Events'
 import { GameHandshake } from '../models/GameHandshake'
 import { resetGameComponentsStateAction } from '../redux/highActions'
 import { setBattlefield } from '../redux/slices/battlefieldSlice'
+import { setNotify } from '../redux/slices/cosmeticsSlice'
 import {
     addMessage,
     resetActiveEntity,
@@ -25,7 +26,6 @@ import {
     setMessages,
     setRound,
 } from '../redux/slices/infoSlice'
-import { setNotify } from '../redux/slices/notifySlice'
 import { resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
 import { store as ReduxStore } from '../redux/store'
 import APIService from './APIService'

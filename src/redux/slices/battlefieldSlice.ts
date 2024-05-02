@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Battlefield } from '../../models/Battlefield'
-import { BattlefieldState, StoreState } from '../../models/Redux'
+import { BattlefieldState } from '../../models/Redux'
+import { RootState } from '../store'
 
 const initialState: BattlefieldState = {
     currentBattlefield: {
@@ -79,12 +80,12 @@ export const {
     resetState,
 } = InfoSlice.actions
 
-export const selectBattlefieldMold = (state: StoreState) => state.battlefield.currentBattlefield,
-    selectColumns = (state: StoreState) => state.battlefield.currentBattlefield.columns,
-    selectConnectors = (state: StoreState) => state.battlefield.currentBattlefield.connectors,
-    selectFieldComponents = (state: StoreState) => state.battlefield.currentBattlefield.pawns,
-    selectLines = (state: StoreState) => state.battlefield.currentBattlefield.lines,
-    selectSeparators = (state: StoreState) => state.battlefield.currentBattlefield.separators,
-    selectBattlefieldMode = (state: StoreState) => state.battlefield.battlefieldMode,
-    selectClickedSquare = (state: StoreState) => state.battlefield.clickedSquare,
-    selectInteractableTiles = (state: StoreState) => state.battlefield.interactableTiles
+export const selectBattlefieldMold = (state: RootState) => state.battlefield.currentBattlefield,
+    selectColumns = (state: RootState) => state.battlefield.currentBattlefield.columns,
+    selectConnectors = (state: RootState) => state.battlefield.currentBattlefield.connectors,
+    selectFieldComponents = (state: RootState) => state.battlefield.currentBattlefield.pawns,
+    selectLines = (state: RootState) => state.battlefield.currentBattlefield.lines,
+    selectSeparators = (state: RootState) => state.battlefield.currentBattlefield.separators,
+    selectBattlefieldMode = (state: RootState) => state.battlefield.battlefieldMode,
+    selectClickedSquare = (state: RootState) => state.battlefield.clickedSquare,
+    selectInteractableTiles = (state: RootState) => state.battlefield.interactableTiles

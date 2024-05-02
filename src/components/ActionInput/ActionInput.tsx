@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Action } from '../../models/ActionInput'
-import { setNotify } from '../../redux/slices/notifySlice'
+import { setNotify } from '../../redux/slices/cosmeticsSlice'
 import styles from './ActionInput.module.css'
 
 import {

@@ -6,7 +6,7 @@ import example from '../../data/example_action.json'
 import example_messages from '../../data/example_messages.json'
 import { TranslatableString } from '../../models/Battlefield'
 import { addMessage, selectRound } from '../../redux/slices/infoSlice'
-import { setNotify } from '../../redux/slices/notifySlice'
+import { setNotify } from '../../redux/slices/cosmeticsSlice'
 import { resetTurnSlice, selectChoices, selectReadyToSubmit, setEntityActions } from '../../redux/slices/turnSlice'
 import { AppDispatch } from '../../redux/store'
 import ActionInput from '../ActionInput/ActionInput'
@@ -71,7 +71,6 @@ const DebugScreen = () => {
 
     useEffect(() => {
         if (inputReadyToSubmit && submittedInput) {
-            // socketEmitter("take_action", submittedInput)
             dispatch(
                 setNotify({
                     message: JSON.stringify(submittedInput),

@@ -6,9 +6,8 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {resetGameComponentsStateAction} from '../../redux/highActions'
 import {selectActiveEntity, selectGameFlow, selectRound} from '../../redux/slices/infoSlice'
 import {selectLobbyInfo} from '../../redux/slices/lobbySlice'
-import {setNotify} from '../../redux/slices/notifySlice'
+import {setNotify} from '../../redux/slices/cosmeticsSlice'
 import {
-    resetHighlightedComponents,
     resetTurnSlice,
     selectChoices,
     selectReadyToSubmit,

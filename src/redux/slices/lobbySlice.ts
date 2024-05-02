@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LobbyState, StoreState } from '../../models/Redux'
+import { LobbyState } from '../../models/Redux'
+import { RootState } from '../store'
 
 const initialState: LobbyState = {
     lobbyId: '',
@@ -42,7 +43,7 @@ const LobbySlice = createSlice({
 
 export default LobbySlice.reducer
 
-export const selectLobbyInfo = (state: StoreState) => state.lobby
-export const selectLobbyId = (state: StoreState) => state.lobby.lobbyId
+export const selectLobbyInfo = (state: RootState) => state.lobby
+export const selectLobbyId = (state: RootState) => state.lobby.lobbyId
 
 export const { setLobbyInfo } = LobbySlice.actions

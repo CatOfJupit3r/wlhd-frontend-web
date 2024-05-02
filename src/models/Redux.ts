@@ -1,9 +1,11 @@
 import { ActionInput as ActionInputInterface } from './ActionInput'
 import { Battlefield, EntityInfoFull, EntityInfoTooltip, EntityInfoTurn, GameStateContainer } from './Battlefield'
 
-export interface notifyState {
-    message: string
-    code: number
+export interface CosmeticsState {
+    notification: {
+        message: string
+        code: number
+    }
 }
 
 export interface LobbyState {
@@ -83,12 +85,4 @@ export interface BattlefieldState {
     interactableTiles: {
         [key: string]: boolean
     }
-}
-
-export interface StoreState {
-    notify: notifyState
-    turn: TurnState
-    lobby: LobbyState
-    info: InfoState
-    battlefield: BattlefieldState
 }

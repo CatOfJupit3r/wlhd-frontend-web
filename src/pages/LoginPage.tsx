@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setNotify } from '../redux/slices/notifySlice'
+import { setNotify } from '../redux/slices/cosmeticsSlice'
 import APIService from '../services/APIService'
 
 const LoginPage = () => {

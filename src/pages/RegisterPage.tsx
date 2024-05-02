@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import {setNotify} from "../redux/slices/notifySlice";
+import {setNotify} from "../redux/slices/cosmeticsSlice";
 import {AxiosError} from "axios";
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom'
