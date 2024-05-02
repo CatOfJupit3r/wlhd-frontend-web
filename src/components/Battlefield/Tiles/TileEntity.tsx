@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { Tooltip } from 'react-tooltip'
 import { INVALID_ASSET_PATH } from '../../../config/configs'
-// import useTranslatableString from '../../../hooks/useTranslatableString'
+import useTranslatableString from '../../../hooks/useTranslatableString'
 import {
     selectBattlefieldMode,
     selectInteractableTiles,
@@ -14,7 +14,6 @@ import { selectEntityTooltips } from '../../../redux/slices/infoSlice'
 import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
-import useTranslatableString from "../../../hooks/useTranslatableString";
 
 const TileEntity = (props: {
     full_descriptor: string
@@ -131,8 +130,7 @@ const TileEntity = (props: {
         return [
             t('local:game.components.tooltip.creature_and_line', {
                 name: tString(name),
-                square: `
-                ${square.line.toString()}/${square.column.toString()}`,
+                square: `${square.line}|${square.column}`,
             }),
             t('local:game.components.tooltip.health_max_health', {
                 current_health: health.current,
@@ -146,9 +144,7 @@ const TileEntity = (props: {
             t('local:game.components.tooltip.status_effects', {
                 status_effects: (() => {
                     return status_effects && status_effects.length > 0
-                        ? status_effects
-                              .map((value) => `${tString(value.descriptor)} (${value.duration})`)
-                              .join(', ')
+                        ? status_effects.map((value) => `${tString(value.descriptor)} (${value.duration})`).join(', ')
                         : t('local:game.components.tooltip.no_status_effects')
                 })(),
             }),
