@@ -87,7 +87,7 @@ const noHeaderButAuth = [
     },
 ]
 
-export default function RootRouter() {
+const RootRouter = () => {
     const loggedIn = useIsLoggedIn()
 
     return (
@@ -136,3 +136,6 @@ export default function RootRouter() {
         </Router>
     )
 }
+
+
+export default RootRouter

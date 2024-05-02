@@ -1,7 +1,7 @@
 import RootRouter from './router/RootRouter'
 
 
-function App() {
+const App = () => {
     return (
         <div className={'App'}>
             <RootRouter />
