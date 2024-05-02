@@ -60,7 +60,7 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
         }
     }, [battlefieldMode])
 
-    const columnHelpRow = (key: string) => {
+    const columnHelpRow = useCallback((key: string) => {
         const rendered = []
         rendered.push(
             <div
@@ -75,7 +75,7 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
             </div>
         )
         return rendered
-    }
+    }, [connectors, columns])
 
     const displayRows = useCallback(
         (rows: number[], side_type: string) => {
@@ -102,7 +102,7 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
         [battlefield.field, field_components, lines]
     )
 
-    const displaySeparators = () => {
+    const displaySeparators = useCallback(() => {
         const rendered = []
         rendered.push(
             <div
@@ -117,7 +117,7 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
             </div>
         )
         return rendered
-    }
+    }, [columns, connectors, separators])
 
     return (
         <div className={styles.battlefield} id={'battlefield-div'}>
