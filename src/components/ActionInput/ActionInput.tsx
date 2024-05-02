@@ -38,12 +38,29 @@ import OptionCard from './OptionCard/OptionCard'
 
 /*
 
+This component is responsible for handling user input during the game.
+
+Communicates with Battlefield components to receive user input from the battlefield (purely UX feature).
+
+    Shallow Depth and Deep Depth Screens
+
+    During handling of possible user actions, action input can be displayed in two different states.
+Shallow depth refers to state when there are still possible options for user to choose.
+This refers both to initial action level and to requirements to those actions.
+
+When all the actions are chosen and there is nothing more to select, we move to deep depth screen. (using setReachedFinalDepth)
+
+    When we reach deep depth, we display what user has chosen and give him option to submit or go back to previous action.
+If he decides to go back, we reset ALL choices and start from the beginning.
+However, if he decides to submit, we set readyToSubmit in ReduxStore to true.
+Then, other components can decide what to do with this input.
+This isolated responsibilities of this component to only handle user input and not to handle any other logic of sending the input to the server.
+
+
 When we choose item inside select or square, it is written to current choices in format:
 
 choices[currentAlias]: chosenValue
 translatedChoices[aliasesTranslations[currentAlias]]: chosenValueTranslation
-
-ActionInput then listens to changes in choices and if currentAlias is not empty, it moves to next requirement in scope
 
  */
 
@@ -269,7 +286,7 @@ const ActionInput = () => {
         } else {
             // in scope is declared requirements.
             // if we have chosen an action and there is a another requirement in scope that haven't been defined, we move to next requirement
-            // else, we set readyToSubmit to true
+            // else, we set reached final depth and it is possible to submit input
             const action = aliases[scope[currentAlias]]
             action &&
                 (() => {
