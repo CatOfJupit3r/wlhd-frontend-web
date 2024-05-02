@@ -68,9 +68,8 @@ const GameScreen = () => {
                     code: 200,
                 })
             )
-            SocketService.emit('take_action', submittedInput)
             dispatch(resetTurnSlice())
-            dispatch(resetHighlightedComponents())
+            SocketService.emit('take_action', submittedInput)
         }
     }, [inputReadyToSubmit, submittedInput, dispatch])
 
