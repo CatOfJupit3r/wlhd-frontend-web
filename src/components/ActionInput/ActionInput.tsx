@@ -14,7 +14,7 @@ import {
     selectChosenAction,
     selectCurrentAlias,
     selectEntityActions,
-    selectPlayersTurn,
+    selectPlayersTurn, selectReadyToSubmit,
     selectScope,
     selectTranslatedChoices,
     setChoice,
@@ -34,7 +34,7 @@ import {
     selectClickedSquare,
     setBattlefieldMode,
 } from '../../redux/slices/battlefieldSlice'
-import OptionCard from '../OptionCard/OptionCard'
+import OptionCard from './OptionCard/OptionCard'
 
 /*
 
@@ -62,6 +62,7 @@ const ActionInput = () => {
     const clickedSquare = useSelector(selectClickedSquare)
     const battlefieldMode = useSelector(selectBattlefieldMode)
     const isPlayerTurn = useSelector(selectPlayersTurn)
+    const inputReadyToSubmit = useSelector(selectReadyToSubmit)
 
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
@@ -79,37 +80,39 @@ const ActionInput = () => {
 
     useEffect(() => {
         if (
-            chosenActionStore &&
-            chosenActionStore.chosenActionValue !== '' &&
-            chosenActionStore.translatedActionValue !== ''
+            !chosenActionStore ||
+            chosenActionStore.chosenActionValue === '' ||
+            chosenActionStore.translatedActionValue === ''
         ) {
-            dispatch(
-                setNotify({
-                    message: chosenActionStore.translatedActionValue,
-                    code: 200,
-                })
-            )
-            dispatch(
-                setTranslatedChoice({
-                    key: t(
-                        currentAlias && currentAlias !== 'action'
-                            ? aliasesTranslations[scope[currentAlias]]
-                            : aliasesTranslations[currentAlias]
-                    ),
-                    value: chosenActionStore.translatedActionValue,
-                })
-            )
-            dispatch(
-                setChoice({
-                    key: currentAlias,
-                    value: chosenActionStore.chosenActionValue,
-                })
-            )
-            dispatch(resetChosenAction())
+            return
         }
+        dispatch(
+            setNotify({
+                message: chosenActionStore.translatedActionValue,
+                code: 200,
+            })
+        )
+        dispatch(
+            setTranslatedChoice({
+                key: t(
+                    currentAlias && currentAlias !== 'action'
+                        ? aliasesTranslations[scope[currentAlias]]
+                        : aliasesTranslations[currentAlias]
+                ),
+                value: chosenActionStore.translatedActionValue,
+            })
+        )
+        dispatch(
+            setChoice({
+                key: currentAlias,
+                value: chosenActionStore.chosenActionValue,
+            })
+        )
+        dispatch(resetChosenAction())
     }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, battlefieldMode, scope])
 
     useEffect(() => {
+        // this effect listens for click on battlefield.
         if (clickedSquare && battlefieldMode === 'selection') {
             dispatch(resetStateAfterSquareChoice())
             dispatch(
@@ -134,13 +137,27 @@ const ActionInput = () => {
         }
 
         if (!action || action.length === 0) {
-            // add protocol to auto skip in this case and display error
+            // add auto skip in this case and display error
             dispatch(resetInput())
-            return <h1>{t('local:game.actions.no_available_actions')}</h1>
+            return <h1 style={
+                {
+                    textAlign: 'center',
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    marginTop: '10px'
+                }
+            }>{t('local:game.actions.no_available_actions')}</h1>
         }
 
         if (aliasValue.startsWith('Square') && choices[currentAlias] === undefined) {
-            return <h1>{t('local:game.actions.choose_square')}</h1>
+            return <h1 style={
+                {
+                    textAlign: 'center',
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    marginTop: '10px'
+                }
+            }>{t('local:game.actions.choose_square')}</h1>
         }
 
         return action.map((action: Action, index: number) => {
@@ -207,8 +224,8 @@ const ActionInput = () => {
                                 })
                             )
                         }
-                        dispatch(setReadyToSubmit(true))
                         setReachedFinalDepth(false)
+                        dispatch(setReadyToSubmit(true))
                     }}
                 />
                 <BsArrowBarLeft
@@ -223,9 +240,9 @@ const ActionInput = () => {
 
     useEffect(() => {
         // this implementation supports recursive requirements.
-        // basically, we just need to check if there is more requirements in current scope that haven't been added. if there is, we add those to scope (buffer)
+        // basically, we just need to check if there is more requirements in current scope that haven't been added. if there is, we add those to scope
         // (writing to not forget solution)
-        if (!currentAlias || choices[currentAlias] === undefined) {
+        if (!currentAlias || choices[currentAlias] === undefined || inputReadyToSubmit) {
             return
         }
         if (choices[currentAlias] !== undefined && currentAlias === 'action') {
@@ -268,7 +285,7 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             }
         }
-    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset, reachedFinalDepth])
+    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset, reachedFinalDepth, inputReadyToSubmit])
 
     return (
         <div id={'action-input'} className={styles.actionInput}>
