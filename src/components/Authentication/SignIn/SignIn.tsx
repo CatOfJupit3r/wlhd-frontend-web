@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../redux/store'
-import { setNotify } from '../../redux/slices/cosmeticsSlice'
-import APIService from '../../services/APIService'
 import { AxiosError } from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { setNotify } from '../../../redux/slices/cosmeticsSlice'
+import { AppDispatch } from '../../../redux/store'
+import paths from '../../../router/paths'
+import APIService from '../../../services/APIService'
+import styles from '../Authentication.module.css'
+import { log } from 'node:util'
 
-const SignIn = () => {
+const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
 
@@ -14,7 +17,10 @@ const SignIn = () => {
     const [password, setPassword] = useState('motherfucker')
     const [readyToNav, setReadyToNav] = useState(false)
 
-    const onSubmit = async () => {
+    const onSubmit = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        e.preventDefault()
         if (!handle || !password) {
             dispatch(setNotify({ code: 400, message: 'Missing parameters!' }))
             return
@@ -23,13 +29,13 @@ const SignIn = () => {
         try {
             await APIService.login(handle, password)
             setReadyToNav(true)
-        } catch (err) {
-            if (err && err instanceof AxiosError) {
+        } catch (err: unknown) {
+            if (!err) return
+            if (err instanceof AxiosError) {
                 dispatch(setNotify({ code: 400, message: err.response?.data.message || 'Connection error!' }))
-            } else if (err && err instanceof Error) {
+            } else if (err instanceof Error) {
                 dispatch(setNotify({ code: 400, message: err.message }))
             }
-            console.log('Error: ', err)
         }
     }
 
@@ -40,18 +46,15 @@ const SignIn = () => {
     }, [readyToNav])
 
     return (
-        <div>
-            <h1>Login Page</h1>
+        <div style={style} className={styles.authContainer}>
+            <h2>Welcome back</h2>
             <form
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    onSubmit().then()
-                }}
+                className={styles.singinForm}
             >
                 <input
                     type="text"
                     value={handle}
-                    placeholder="Enter handle"
+                    placeholder="Handle"
                     onChange={(e) => {
                         setHandle(e.target.value)
                     }}
@@ -64,8 +67,19 @@ const SignIn = () => {
                         setPassword(e.target.value)
                     }}
                 />
-                <button type="submit">Login</button>
             </form>
+            <button
+                type="submit"
+                className={styles.confirmBtn}
+                onClick={(e) => onSubmit(e).then()}
+            >
+                Sign In
+            </button>
+            <div>
+                <p>
+                    New around here? <Link to={paths.signUp} className={styles.link}>Sign up!</Link>
+                </p>
+            </div>
         </div>
     )
 }

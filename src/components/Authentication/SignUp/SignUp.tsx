@@ -1,11 +1,13 @@
 import { AxiosError } from 'axios'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { setNotify } from '../../redux/slices/cosmeticsSlice'
-import APIService from '../../services/APIService'
+import { Link, useNavigate } from 'react-router-dom'
+import { setNotify } from '../../../redux/slices/cosmeticsSlice'
+import paths from '../../../router/paths'
+import APIService from '../../../services/APIService'
+import styles from '../Authentication.module.css'
 
-const SignUp = () => {
+const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -13,7 +15,10 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const onSubmit = async () => {
+    const onSubmit = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        e.preventDefault()
         if (!handle || !password) {
             dispatch(setNotify({ code: 400, message: 'Missing parameters!' }))
             return
@@ -36,14 +41,9 @@ const SignUp = () => {
     }
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <form
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    onSubmit().then()
-                }}
-            >
+        <div style={style} className={styles.authContainer}>
+            <h2>Create an account</h2>
+            <form>
                 <input
                     type="text"
                     value={handle}
@@ -63,13 +63,28 @@ const SignUp = () => {
                 <input
                     type="password"
                     value={confirmPassword}
-                    placeholder="Confirm password!"
+                    placeholder="Confirm password"
                     onChange={(e) => {
                         setConfirmPassword(e.target.value)
                     }}
+
                 />
-                <button type="submit">Login</button>
             </form>
+            <button
+                className={styles.confirmBtn}
+                onClick={(e) => onSubmit(e).then()}
+                disabled={handle.length === 0 || password.length === 0 || confirmPassword.length === 0}
+            >
+                Sign up!
+            </button>
+            <div>
+                <p>
+                    Already have an account?{' '}
+                    <Link to={paths.signIn} className={styles.link}>
+                        Sign In!
+                    </Link>
+                </p>
+            </div>
         </div>
     )
 }
