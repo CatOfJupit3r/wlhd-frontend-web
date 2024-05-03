@@ -6,7 +6,7 @@ import Notify from '../components/Notify'
 import { setLobbyInfo } from '../redux/slices/lobbySlice'
 import APIService from '../services/APIService'
 
-const LobbyPagesLayout = ({header}: {header: boolean}) => {
+const LobbyPagesLayout = ({includeHeader}: {includeHeader?: boolean}) => {
     const { lobbyId } = useParams()
     const dispatch = useDispatch()
 
@@ -29,7 +29,7 @@ const LobbyPagesLayout = ({header}: {header: boolean}) => {
 
     return (
         <>
-            {header ? <Header /> : null}
+            {includeHeader ? <Header /> : null}
             <Notify />
             <Outlet />
         </>

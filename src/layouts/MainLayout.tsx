@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom'
 import Header from '../components/Header/Header'
 import Notify from '../components/Notify'
 
-const MainLayout = () => {
+const MainLayout = ({ includeHeader }: { includeHeader?: boolean }) => {
     return (
         <>
-            <Header />
+            {includeHeader && <Header />}
             <Notify />
             <Outlet />
         </>
