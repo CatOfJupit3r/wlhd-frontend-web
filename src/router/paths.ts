@@ -1,7 +1,7 @@
 export default {
     home: '/',
     about: '/about',
-    login: '/login',
+    signIn: '/sign-in',
     signUp: '/sign-up',
     profile: '/profile',
     gameTest: '/game-test',

@@ -9,11 +9,11 @@ import GameRoomPage from '../pages/GameRoomPage'
 import GameTestPage from '../pages/GameTestPage'
 import HomePage from '../pages/HomePage/HomePage'
 import LobbyPage from '../pages/LobbyPage'
-import LoginPage from '../pages/LoginPage'
+import SignInPage from '../pages/SignInPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { PageWrapper } from '../pages/PageWrapper'
 import ProfilePage from '../pages/ProfilePage'
-import RegisterPage from '../pages/RegisterPage'
+import SignUpPage from '../pages/SignUpPage'
 import viewCharacterPage from '../pages/ViewCharacterPage'
 import paths from './paths'
 
@@ -55,13 +55,13 @@ const appRoutes = [
         title: 'about',
     },
     {
-        path: paths.login,
-        Component: LoginPage,
-        title: 'login',
+        path: paths.signIn,
+        Component: SignInPage,
+        title: 'signin',
     },
     {
         path: paths.signUp,
-        Component: RegisterPage,
+        Component: SignUpPage,
         title: 'signup',
     },
 ]
@@ -116,7 +116,7 @@ const RootRouter = () => {
                                         <C />
                                     </PageWrapper>
                                 ) : (
-                                    <Navigate to={paths.login} />
+                                    <Navigate to={paths.signIn} />
                                 )
                             }
                         />
@@ -133,7 +133,7 @@ const RootRouter = () => {
                                         <C />
                                     </PageWrapper>
                                 ) : (
-                                    <Navigate to={paths.login} />
+                                    <Navigate to={paths.signIn} />
                                 )
                             }
                         />
@@ -150,7 +150,7 @@ const RootRouter = () => {
                                         <C />
                                     </PageWrapper>
                                 ) : (
-                                    <Navigate to={paths.login} />
+                                    <Navigate to={paths.signIn} />
                                 )
                             }
                         />

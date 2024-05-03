@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 import AuthManager from '../../services/AuthManager'
 import { useIsLoggedIn } from '../../hooks/useIsLoggedIn'
-
+import paths from '../../router/paths'
 
 const Header = () => {
     const isLoggedIn = useIsLoggedIn()
@@ -23,8 +23,6 @@ const Header = () => {
             {/*    width: "100%"*/}
             {/*}}/>*/}
             <nav>
-                {' '}
-                {/* TODO: make game state clean when outside of game page */}
                 <Link to="." relative={'route'} style={{ marginRight: '10px' }}>
                     Home
                 </Link>
@@ -47,11 +45,11 @@ const Header = () => {
                     </>
                 ) : (
                     <>
-                        <Link to="login" relative={'path'} style={{ marginRight: '10px' }}>
-                            Login
+                        <Link to={paths.signIn} relative={'path'} style={{ marginRight: '10px' }}>
+                            Sign In
                         </Link>
-                        <Link to="register" relative={'path'}>
-                            Register
+                        <Link to={paths.signUp} relative={'path'}>
+                            Sign Up
                         </Link>
                     </>
                 )}
