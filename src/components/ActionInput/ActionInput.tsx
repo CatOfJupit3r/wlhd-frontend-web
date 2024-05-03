@@ -211,6 +211,11 @@ const ActionInput = () => {
         const options = generateOptions()
         if (Array.isArray(options)) {
             options
+                .sort((a, b) => {
+                    return b.props.option.translation_info.descriptor.localeCompare(
+                        a.props.option.translation_info.descriptor
+                    )
+                })
                 .sort((a) => {
                     return a.props.option.available ? -1 : 1
                 })
