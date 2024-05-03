@@ -77,11 +77,6 @@ class SocketService {
             autoConnect: false,
             reconnection: false, // only manually reconnect
         })
-        this.setupRegularListeners()
-        if (ReduxStore.getState().lobby.layout === 'gm') {
-            // if page displayed is for GM, then we can assume that user IS GM
-            this.setupElevatedRightsListeners()
-        }
     }
 
     private addEventListener(event: string, callback: (...args: any[]) => void) {
@@ -113,6 +108,11 @@ class SocketService {
         this.combatId = combatId
         if (this.socket.connected) {
             this.disconnect()
+        }
+        this.setupRegularListeners()
+        if (ReduxStore.getState().lobby.layout === 'gm') {
+            // if page displayed is for GM, then we can assume that user IS GM
+            this.setupElevatedRightsListeners()
         }
         this.socket.io.opts.query = {
             ...this.socket.io.opts.query,
@@ -277,9 +277,7 @@ class SocketService {
                 console.log('Received unknown event', data)
             },
         }
-        for (const [event, callback] of Object.entries(listeners)) {
-            this.addEventListener(event, callback)
-        }
+        this.addBatchOfEventsListener(listeners)
     }
 
     private setupElevatedRightsListeners() {
@@ -305,7 +303,14 @@ class SocketService {
                 ReduxStore.dispatch(setPlayersTurn(true))
             },
         }
+        this.addBatchOfEventsListener(listeners)
+    }
+
+    private addBatchOfEventsListener(listeners: { [key: string]: (...args: any[]) => void }) {
         for (const [event, callback] of Object.entries(listeners)) {
+            if (this.socket.hasListeners(event)) {
+                this.removeEventListener(event, callback)
+            }
             this.addEventListener(event, callback)
         }
     }
