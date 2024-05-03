@@ -14,7 +14,8 @@ import {
     selectChosenAction,
     selectCurrentAlias,
     selectEntityActions,
-    selectPlayersTurn, selectReadyToSubmit,
+    selectPlayersTurn,
+    selectReadyToSubmit,
     selectScope,
     selectTranslatedChoices,
     setChoice,
@@ -62,7 +63,10 @@ When we choose item inside select or square, it is written to current choices in
 choices[currentAlias]: chosenValue
 translatedChoices[aliasesTranslations[currentAlias]]: chosenValueTranslation
 
- */
+
+TODO: Fix Action Input not reacting to HALT_ACTION events (which, surprisingly, should stop and reset the action input)
+
+*/
 
 const ActionInput = () => {
     const dispatch = useDispatch()
@@ -87,13 +91,13 @@ const ActionInput = () => {
         dispatch(resetInput())
     }, [dispatch])
 
-    const handleDepth = (): JSX.Element => {
+    const handleDepth = useCallback((): JSX.Element => {
         return currentAlias && currentAlias !== 'action' ? (
             <BsArrowBarLeft onClick={() => handleReset()} />
         ) : (
             <BsArrowBarLeft />
         )
-    }
+    }, [currentAlias, handleReset])
 
     useEffect(() => {
         if (
@@ -131,13 +135,13 @@ const ActionInput = () => {
     useEffect(() => {
         // this effect listens for click on battlefield.
         if (clickedSquare && battlefieldMode === 'selection') {
-            dispatch(resetStateAfterSquareChoice())
             dispatch(
                 setChoice({
                     key: currentAlias,
                     value: clickedSquare,
                 })
             )
+            dispatch(resetStateAfterSquareChoice())
         }
     }, [clickedSquare])
 
@@ -156,25 +160,33 @@ const ActionInput = () => {
         if (!action || action.length === 0) {
             // add auto skip in this case and display error
             dispatch(resetInput())
-            return <h1 style={
-                {
-                    textAlign: 'center',
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                    marginTop: '10px'
-                }
-            }>{t('local:game.actions.no_available_actions')}</h1>
+            return (
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        marginTop: '10px',
+                    }}
+                >
+                    {t('local:game.actions.no_available_actions')}
+                </h1>
+            )
         }
 
-        if (aliasValue.startsWith('Square') && choices[currentAlias] === undefined) {
-            return <h1 style={
-                {
-                    textAlign: 'center',
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                    marginTop: '10px'
-                }
-            }>{t('local:game.actions.choose_square')}</h1>
+        if (aliasValue.startsWith('Square')) {
+            return (
+                <h1
+                    style={{
+                        textAlign: 'center',
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        marginTop: '10px',
+                    }}
+                >
+                    {t('local:game.actions.choose_square')}
+                </h1>
+            )
         }
 
         return action.map((action: Action, index: number) => {
@@ -194,12 +206,14 @@ const ActionInput = () => {
         }
     }, [currentAlias, choices, scope, dispatch, t])
 
-    const shallowDepthScreen = () => {
+    const shallowDepthScreen = useCallback(() => {
+        console.log('Rendering shallow depth screen')
         const options = generateOptions()
         if (Array.isArray(options)) {
-            options.sort((a) => {
-                return a.props.option.available ? -1 : 1
-            })
+            options
+                .sort((a) => {
+                    return a.props.option.available ? -1 : 1
+                })
         }
         return (
             <>
@@ -216,7 +230,7 @@ const ActionInput = () => {
                 {options}
             </>
         )
-    }
+    }, [generateOptions, handleDepth, reachedFinalDepth])
 
     const deepDepthScreen = useCallback(() => {
         return (
@@ -256,9 +270,6 @@ const ActionInput = () => {
     }, [dispatch, t, choices, translatedChoices, handleReset])
 
     useEffect(() => {
-        // this implementation supports recursive requirements.
-        // basically, we just need to check if there is more requirements in current scope that haven't been added. if there is, we add those to scope
-        // (writing to not forget solution)
         if (!currentAlias || choices[currentAlias] === undefined || inputReadyToSubmit) {
             return
         }
@@ -284,9 +295,9 @@ const ActionInput = () => {
                 )
             }
         } else {
-            // in scope is declared requirements.
-            // if we have chosen an action and there is a another requirement in scope that haven't been defined, we move to next requirement
-            // else, we set reached final depth and it is possible to submit input
+            // scope keeps track of requirements to process.
+            // if we have chosen an action and there is another requirement in scope that haven't been defined, we move to next requirement
+            // else, we set reached final depth, and it is possible to submit input
             const action = aliases[scope[currentAlias]]
             action &&
                 (() => {
@@ -302,7 +313,16 @@ const ActionInput = () => {
                 setReachedFinalDepth(true)
             }
         }
-    }, [choices, currentAlias, scope, initialActionLevel.action, dispatch, handleReset, reachedFinalDepth, inputReadyToSubmit])
+    }, [
+        choices,
+        currentAlias,
+        scope,
+        initialActionLevel.action,
+        dispatch,
+        handleReset,
+        reachedFinalDepth,
+        inputReadyToSubmit,
+    ])
 
     return (
         <div id={'action-input'} className={styles.actionInput}>
