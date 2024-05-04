@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import GameScreenWrapper from '../components/GameScreenWrapper/GameScreenWrapper'
+import GameLogicWrapper from '../components/GameLogicWrapper/GameLogicWrapper'
 import Overlay from '../components/Overlay/Overlay'
 import APIService from '../services/APIService'
 
@@ -36,7 +36,7 @@ const GameRoomPage = () => {
                     <Spinner animation="border" role="status" />
                 </Overlay>
             ) : (
-                <GameScreenWrapper />
+                <GameLogicWrapper />
             )}
         </>
     )

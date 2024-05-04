@@ -14,7 +14,7 @@ import GameScreen from '../GameScreen/GameScreen'
 import Overlay from '../Overlay/Overlay'
 import ThinkingHn from '../ThinkingHn'
 
-const GameScreenWrapper = () => {
+const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation()
     const navigate = useNavigate()
@@ -118,4 +118,4 @@ const GameScreenWrapper = () => {
     return getCurrentScreen()
 }
 
-export default GameScreenWrapper
+export default GameLogicWrapper
