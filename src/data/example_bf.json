@@ -1,5 +1,5 @@
 {
-    "battlefield": [
+    "field": [
         ["0", "0", "0", "0", "0", "0"],
         ["0", "0", "0", "0", "0", "0"],
         ["0", "0", "0", "0", "0", "1"],
@@ -7,22 +7,20 @@
         ["0", "0", "0", "0", "0", "0"],
         ["0", "0", "0", "0", "0", "0"]
     ],
-    "game_descriptors": {
-        "columns": ["builtins:one", "builtins:two", "builtins:three", "builtins:four", "builtins:five", "builtins:six"],
-        "connectors": "builtins:connector",
-        "field_components": {
-            "0": "builtins:tile",
-            "1": "nyrzamaer:target_dummy_large",
-            "2": "nyrzamaer:dortyn"
-        },
-        "lines": [
-            "builtins:safe_line",
-            "builtins:ranged_line",
-            "builtins:melee_line",
-            "builtins:melee_line",
-            "builtins:ranged_line",
-            "builtins:safe_line"
-        ],
-        "separators": "builtins:separator"
-    }
+    "columns": ["builtins:one", "builtins:two", "builtins:three", "builtins:four", "builtins:five", "builtins:six"],
+    "connectors": "builtins:connector",
+    "pawns": {
+        "0": "builtins:tile",
+        "1": "nyrzamaer:target_dummy_large",
+        "2": "nyrzamaer:dortyn"
+    },
+    "lines": [
+        "builtins:safe_line",
+        "builtins:ranged_line",
+        "builtins:melee_line",
+        "builtins:melee_line",
+        "builtins:ranged_line",
+        "builtins:safe_line"
+    ],
+    "separators": "builtins:separator"
 }
