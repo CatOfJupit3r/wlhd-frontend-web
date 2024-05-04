@@ -1,4 +1,3 @@
-import DebugScreen from '../components/DebugScreen/DebugScreen'
 import { RouteConfig } from '../models/RouteConfig'
 import AboutPage from '../pages/AboutPage'
 import CreateCombatPage from '../pages/CreateCombatPage'
@@ -57,18 +56,6 @@ const routes: Array<RouteConfig> = [
         includeHeader: true,
     },
     {
-        path: paths.gameTest,
-        Component: GameTestPage,
-        title: 'game_test',
-        includeHeader: true,
-    },
-    {
-        path: paths.debugRoom,
-        Component: DebugScreen,
-        title: 'debug',
-        includeHeader: true,
-    },
-    {
         path: paths.signIn,
         Component: SignInPage,
         title: 'signin',
@@ -83,6 +70,12 @@ const routes: Array<RouteConfig> = [
         Component: GameRoomPage,
         title: 'game_room',
         requiresLobbyInfo: true,
+    },
+    {
+        // this room is only to view how game screen components will look without connecting to the backend
+        path: paths.gameTest,
+        Component: GameTestPage,
+        title: 'game_test',
     },
 ]
 
