@@ -1,11 +1,12 @@
 import { AxiosError } from 'axios'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { setNotify } from '../../../redux/slices/cosmeticsSlice'
 import paths from '../../../router/paths'
 import APIService from '../../../services/APIService'
 import styles from '../Authentication.module.css'
+import { checkConfirmPassword, checkHandle, checkPassword } from '../verifyInputs'
 
 const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
@@ -15,9 +16,21 @@ const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const onSubmit = async (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
+    const checkInputValidity = useCallback(() => {
+        for (const check of [
+            checkHandle(handle),
+            checkPassword(password),
+            checkConfirmPassword(password, confirmPassword),
+        ]) {
+            const { valid } = check
+            if (!valid) {
+                return false
+            }
+        }
+        return true
+    }, [password, handle, confirmPassword])
+
+    const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (!handle || !password) {
             dispatch(setNotify({ code: 400, message: 'Missing parameters!' }))
@@ -67,24 +80,17 @@ const SignUp = ({ style }: { style?: React.CSSProperties }) => {
                     onChange={(e) => {
                         setConfirmPassword(e.target.value)
                     }}
-
                 />
             </form>
-            <button
-                className={styles.confirmBtn}
-                onClick={(e) => onSubmit(e).then()}
-                disabled={handle.length === 0 || password.length === 0 || confirmPassword.length === 0}
-            >
+            <button className={styles.confirmBtn} onClick={(e) => onSubmit(e).then()} disabled={!checkInputValidity()}>
                 Sign up!
             </button>
-            <div>
-                <p>
-                    Already have an account?{' '}
-                    <Link to={paths.signIn} className={styles.link}>
-                        Sign In!
-                    </Link>
-                </p>
-            </div>
+            <p id={'to-signin'}>
+                Already have an account?{' '}
+                <Link to={paths.signIn} className={styles.link}>
+                    Sign In!
+                </Link>
+            </p>
         </div>
     )
 }
