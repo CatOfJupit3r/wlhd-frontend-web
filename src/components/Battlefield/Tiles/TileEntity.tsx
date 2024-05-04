@@ -50,18 +50,25 @@ const TileEntity = (props: {
         return false
     }, [id, interactableTiles, battlefieldMode])
 
-    const classAliasToName = useCallback(
+    const classAliasToName = useCallback(() => {
+        return (
+            (descriptor === 'tile' ? `${styles.tile}` : `${styles.tile} ${styles.withEntity}`) +
+            (className ? ` ${className}` : '')
+        )
+    }, [className, descriptor])
+
+    const classAliasToDecoration = useCallback(
         (alias: string) => {
             let result
             switch (alias) {
                 case 'interactable':
-                    result = `${styles.tile} ${styles.interactable} ${styles.withEntity}`
+                    result = `${styles.interactable}`
                     break
                 case 'active':
-                    result = `${styles.tile} ${styles.selected} ${styles.withEntity}`
+                    result = `${styles.selected}`
                     break
                 default:
-                    result = descriptor === 'tile' ? `${styles.tile}` : `${styles.tile} ${styles.withEntity}`
+                    result = ''
                     break
             }
             return result + (className ? ` ${className}` : '')
@@ -70,7 +77,7 @@ const TileEntity = (props: {
     )
 
     const handleDoubleClick = useCallback(() => {
-        if (battlefieldMode === 'selection') {
+        if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
             dispatch(addHighlightedComponent(id))
             dispatch(setClickedSquare(id))
         }
@@ -122,7 +129,12 @@ const TileEntity = (props: {
             return emptyTooltipContent.map((key) => (
                 <>
                     {generatePlaceholder(key, false)}
-                    <Placeholder as="br" animation="glow" />
+                    <Placeholder
+                        as="br"
+                        animation="glow"
+                        key={`br-${key}
+                    `}
+                    />
                 </>
             ))
         }
@@ -152,7 +164,11 @@ const TileEntity = (props: {
     }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
 
     return (
-        <>
+        <div>
+            <div
+                className={`${styles.decoration} ${currentClassAlias === 'default' ? undefined : classAliasToDecoration(currentClassAlias)}`}
+            />
+            {/* decoration to image. Basically, adds border without impacting sizing of the tile */}
             <img
                 src={generateAssetPath(dlc, descriptor)}
                 onDoubleClick={handleDoubleClick}
@@ -161,15 +177,14 @@ const TileEntity = (props: {
                     event.currentTarget.src = fallback.path ? fallback.path : INVALID_ASSET_PATH
                     event.currentTarget.alt = fallback.alt ? fallback.alt : 'invalid'
                 }}
-                className={
-                    className && currentClassAlias === 'default' ? undefined : classAliasToName(currentClassAlias)
-                }
+                className={className && currentClassAlias === 'default' ? undefined : classAliasToName()}
                 id={id}
                 key={id}
                 data-tooltip-id={id}
             />
             {descriptor !== 'tile' ? (
                 <Tooltip
+                    key={`tooltip-${id}`}
                     id={id}
                     place={'left-start'}
                     opacity={0.95}
@@ -180,7 +195,7 @@ const TileEntity = (props: {
                     <div>{generateTooltipContent()}</div>
                 </Tooltip>
             ) : null}
-        </>
+        </div>
     )
 }
 
