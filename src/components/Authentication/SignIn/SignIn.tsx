@@ -8,6 +8,8 @@ import paths from '../../../router/paths'
 import APIService from '../../../services/APIService'
 import styles from '../Authentication.module.css'
 import { checkHandle, checkPassword } from '../verifyInputs'
+import AuthManager from '../../../services/AuthManager'
+import { useIsLoggedIn } from '../../../hooks/useIsLoggedIn'
 
 const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
@@ -16,6 +18,19 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const [handle, setHandle] = useState('admin')
     const [password, setPassword] = useState('motherfucker')
     const [readyToNav, setReadyToNav] = useState(false)
+    const isLoggedIn = useIsLoggedIn()
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setReadyToNav(true)
+        }
+    }, [isLoggedIn])
+
+    useEffect(() => {
+        if (readyToNav) {
+            navigate('/profile')
+        }
+    }, [readyToNav])
 
     const checkInputValidity = useCallback(() => {
         for (const check of [checkHandle(handle), checkPassword(password)]) {
@@ -36,7 +51,6 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
 
         try {
             await APIService.login(handle, password)
-            setReadyToNav(true)
         } catch (err: unknown) {
             if (!err) return
             if (err instanceof AxiosError) {
@@ -46,12 +60,6 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
             }
         }
     }
-
-    useEffect(() => {
-        if (readyToNav) {
-            navigate('/profile')
-        }
-    }, [readyToNav])
 
     return (
         <div style={style} className={styles.authContainer}>
