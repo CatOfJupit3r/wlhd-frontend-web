@@ -8,17 +8,20 @@
     margin-top: 0.5rem;
 }
 
+.actionCardUnavailable {}
+
+
 .actionCardAvailable:hover {
     color: white;
     background-color: #399ffa;
     cursor: pointer;
     transition:
-        background-color 0.3s,
-        color 0.3s;
+        background-color 0.2s,
+        color 0.2s;
 }
 
 .actionCardUnavailable:hover {
-    background-color: #a8bccc;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #d5d5d5;
+    cursor: default;
+    transition: background-color 0.2s;
 }

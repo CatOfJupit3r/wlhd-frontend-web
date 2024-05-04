@@ -44,7 +44,7 @@ const OptionCard = (props: { option: Action; index: number; t: (key: string) => 
             bg={isHighlighted ? 'primary' : undefined}
             key={index}
             onDoubleClick={handleDoubleClick}
-            className={`${styles.actionCard} ${option.available ? styles.actionCardAvailable : styles.actionCardUnavailable}}`}
+            className={`${styles.actionCard} ${option.available ? styles.actionCardAvailable : styles.actionCardUnavailable}`}
         >
             <Card.Body className={styles.cardBody}>
                 <Card.Title className={styles.cardTitle}>
