@@ -63,6 +63,7 @@ export const ELEVATED_RIGHTS_RESPONSES = {
     END_COMBAT: 'end_combat',
     TRY_SENDING_AGAIN: 'try_sending_again', // this event used to tell server to try sending action to the player again.
 }
+
 // these will be used by special actions in GM Menu
 
 class SocketService {
@@ -210,7 +211,7 @@ class SocketService {
                 newTooltips,
             }: {
                 newControlledEntities: Array<EntityInfoFull>
-                newTooltips: { [key: string]: EntityInfoTooltip | null }
+                newTooltips: { [_: string]: EntityInfoTooltip | null }
             }) => {
                 ReduxStore.dispatch(setControlledEntities(newControlledEntities))
                 ReduxStore.dispatch(setEntityTooltips(newTooltips))

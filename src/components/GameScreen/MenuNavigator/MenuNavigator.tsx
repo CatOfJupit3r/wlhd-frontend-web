@@ -5,7 +5,7 @@ import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setChosenMenu } from '../../redux/slices/infoSlice'
+import { setChosenMenu } from '../../../redux/slices/infoSlice'
 
 const MenuNavigator = () => {
     const dispatch = useDispatch()

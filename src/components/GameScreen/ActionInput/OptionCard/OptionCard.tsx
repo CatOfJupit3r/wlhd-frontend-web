@@ -1,14 +1,14 @@
 import Card from 'react-bootstrap/Card'
 import { BsInfoCircle } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import { Action } from '../../../models/ActionInput'
+import { Action } from '../../../../models/ActionInput'
 import {
     addHighlightedComponent,
     selectCurrentAlias,
     selectHighlightedComponents,
     setChoice,
     setChosenAction,
-} from '../../../redux/slices/turnSlice'
+} from '../../../../redux/slices/turnSlice'
 import styles from './OptionCard.module.css'
 
 const OptionCard = (props: { option: Action; index: number; t: (key: string) => string }) => {

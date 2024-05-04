@@ -26,7 +26,7 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <h1>Profile Page</h1>
+            <h1>Welcome back!</h1>
             <h3>Joined lobbies:</h3>
             {joinedLobbies && joinedLobbies.length ? (
                 <>

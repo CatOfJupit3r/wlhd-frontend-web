@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Action } from '../../models/ActionInput'
-import { setNotify } from '../../redux/slices/cosmeticsSlice'
+import { Action } from '../../../models/ActionInput'
+import { setNotify } from '../../../redux/slices/cosmeticsSlice'
 import styles from './ActionInput.module.css'
 
 import {
@@ -22,7 +22,7 @@ import {
     setCurrentAlias,
     setReadyToSubmit,
     setTranslatedChoice,
-} from '../../redux/slices/turnSlice'
+} from '../../../redux/slices/turnSlice'
 
 import { useTranslation } from 'react-i18next'
 
@@ -34,7 +34,7 @@ import {
     selectBattlefieldMode,
     selectClickedSquare,
     setBattlefieldMode,
-} from '../../redux/slices/battlefieldSlice'
+} from '../../../redux/slices/battlefieldSlice'
 import OptionCard from './OptionCard/OptionCard'
 
 /*

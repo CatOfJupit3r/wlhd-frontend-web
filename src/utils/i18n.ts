@@ -19,7 +19,11 @@ languageDetector.init({
     checkWhitelist: true,
 })
 
-i18next.use(initReactI18next).use(languageDetector).init({
-    fallbackLng: 'uk-UA',
-    resources: getLanguageFiles(),
-})
+i18next
+    .use(initReactI18next)
+    .use(languageDetector)
+    .init({
+        fallbackLng: 'uk-UA',
+        resources: getLanguageFiles(),
+    })
+    .then()

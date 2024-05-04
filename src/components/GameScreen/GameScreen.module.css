@@ -1,19 +1,44 @@
-.battleInfo {
+.gameScreenContainer {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    min-height: fit-content;
-    margin-bottom: 2rem;
+    height: 100vh;
 }
 
-.gameControls {
-    display: block;
-    margin-top: 1rem;
+.gameInfoContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+    background-color: black;
+    color: white;
+    flex-direction: column;
 }
 
-.roundHeader {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
+.gameMenusContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 40%;
+    background-color: white;
 }
+
+.menuContainer {
+    display: flex;
+    height: 100%;
+    width: 90%;
+    min-width: fit-content;
+    justify-content: center;
+    padding: 2vh;
+}
+
+
+.menuNavigation {
+    background-color: black;
+    height: 100%;
+    width: 10%;
+    min-width: fit-content;
+}
+
+

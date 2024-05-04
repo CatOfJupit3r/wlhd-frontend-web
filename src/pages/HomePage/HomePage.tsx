@@ -19,7 +19,6 @@ const HomePage = () => {
                 <h1>{t('local:index.title')}</h1>
                 <h2>{t('local:index.subtitle')}</h2>
             </div>
-            <h1>Welcome!</h1>
         </>
     )
 }

@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import GameScreen from '../components/GameScreen/GameScreen'
+import GameScreenWrapper from '../components/GameScreenWrapper/GameScreenWrapper'
 import Overlay from '../components/Overlay/Overlay'
 import APIService from '../services/APIService'
-import { AppDispatch } from '../redux/store'
-import { useDispatch } from 'react-redux'
-import { setPageTitle } from '../redux/slices/cosmeticsSlice'
 
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
@@ -39,7 +36,7 @@ const GameRoomPage = () => {
                     <Spinner animation="border" role="status" />
                 </Overlay>
             ) : (
-                <GameScreen />
+                <GameScreenWrapper />
             )}
         </>
     )
