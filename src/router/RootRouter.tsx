@@ -35,7 +35,7 @@ const RootRouter = () => {
                 }
             />
         )
-    }, [])
+    }, [loggedIn])
 
     const generateRoutes = useCallback((routes: Array<RouteConfig>) => {
         const RequiresLobbyInfoRoutesNoHeader: Array<RouteConfig> = []
@@ -75,7 +75,7 @@ const RootRouter = () => {
                 </Route>
             </>
         )
-    }, [])
+    }, [loggedIn])
 
     return (
         <Router>
