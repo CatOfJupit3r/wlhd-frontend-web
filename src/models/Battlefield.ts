@@ -40,7 +40,10 @@ export interface EntityInfoTurn {
 
 export interface EntityInfoFull {
     name: string
-    square: string
+    square: {
+        line: string
+        column: string
+    }
     attributes: { [attribute: string]: string }
 
     items: Array<{
