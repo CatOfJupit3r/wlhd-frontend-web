@@ -603,5 +603,51 @@
                 }
             }
         ]
-    ]
+    ],
+    "tooltips": {
+        "3/2": {
+            "name": {
+                "main_string": "builtins:target_dummy"
+            },
+            "square": {
+                "line": "3",
+                "column": "2"
+            },
+            "health": {
+                "current": "28",
+                "max": "100"
+            },
+            "action_points": {
+                "current": "2",
+                "max": "2"
+            },
+            "armor": {
+                "current": "0",
+                "base": "20"
+            },
+            "status_effects": []
+        },
+        "4/3": {
+            "name": {
+                "main_string": "builtins:hero"
+            },
+            "square": {
+                "line": "4",
+                "column": "2"
+            },
+            "health": {
+                "current": "100",
+                "max": "100"
+            },
+            "action_points": {
+                "current": "0",
+                "max": "3"
+            },
+            "armor": {
+                "current": "0",
+                "base": "0"
+            },
+            "status_effects": []
+        }
+    }
 }

@@ -7,7 +7,7 @@ import { ActionInput } from '../models/ActionInput'
 import { setBattlefield } from '../redux/slices/battlefieldSlice'
 import { EntityInfoFull, EntityInfoTurn, GameStateContainer } from '../models/Battlefield'
 import example_gamestate from '../data/example_gamestate.json'
-import { setActiveEntity, setControlledEntities, setMessages } from '../redux/slices/infoSlice'
+import { setActiveEntity, setControlledEntities, setEntityTooltips, setMessages } from '../redux/slices/infoSlice'
 
 const GameTestPage = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -17,6 +17,7 @@ const GameTestPage = () => {
     }, [dispatch])
 
     useEffect(() => {
+        dispatch(setEntityTooltips(example_gamestate.tooltips))
         dispatch(setMessages(example_gamestate.messages as GameStateContainer))
         dispatch(setControlledEntities(example_gamestate.controlledEntities as EntityInfoFull[]))
         dispatch(setActiveEntity(example_gamestate.activeEntity as EntityInfoTurn))
