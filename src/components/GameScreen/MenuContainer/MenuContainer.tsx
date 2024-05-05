@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
@@ -35,14 +35,32 @@ const MenuContainer = () => {
         []
     )
 
-    return chosenMenu ? (
-        <div className={styles.menuContainer}>
-            <h1>{t(chosenMenu)}</h1>
-            {menus.find((menu) => menu.key === chosenMenu)?.Component()}
-        </div>
-    ) : (
-        <h1>No menu chosen</h1>
-    )
+    const displayMenu = useCallback(() => {
+        if (!chosenMenu) {
+            if (menus.length === 0) {
+                return <>
+                    <h1>{t('no_menu_available')}</h1>
+                    <div>
+                        {t('report_this_issue')}
+                    </div>
+                </>
+            }
+            return (
+                <>
+                    <h1>{t(menus[0].key)}</h1>
+                    {menus[0].Component()}
+                </>
+            )
+        }
+        return (
+            <>
+                <h1>{t(chosenMenu)}</h1>
+                {menus.find((menu) => menu.key === chosenMenu)?.Component()}
+            </>
+        )
+    }, [chosenMenu, menus, t])
+
+    return <div className={styles.menuContainer}>{displayMenu()}</div>
 }
 
 export default MenuContainer
