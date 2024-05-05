@@ -22,7 +22,7 @@ For now, support for offloading messages, so for now we keep all messages loaded
 
 
 const GameMessagesFeed = () => {
-    const tString = useTranslatableString()
+    const { tstring } = useTranslatableString()
     const { t } = useTranslation()
 
     const messages = useSelector(selectAllMessages)
@@ -45,7 +45,7 @@ const GameMessagesFeed = () => {
             {messages ? (
                 messages.map((msg) => {
                     return msg.map((content, index) => {
-                        return <p key={index}>{tString(content)}</p>
+                        return <p key={index}>{tstring(content)}</p>
                     })
                 })
             ) : (

@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 import AuthManager from '../../services/AuthManager'
-import { useIsLoggedIn } from '../../hooks/useIsLoggedIn'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import paths from '../../router/paths'
 
 const Header = () => {
-    const isLoggedIn = useIsLoggedIn()
+    const { isLoggedIn } = useIsLoggedIn()
 
     return (
         <header className={styles.header}>

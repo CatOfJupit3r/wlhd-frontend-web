@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
+import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 import MainLayout from '../layouts/MainLayout'
 import NotFoundPage from '../pages/NotFoundPage'
@@ -10,7 +10,7 @@ import { RouteConfig } from '../models/RouteConfig'
 import routes from './routes'
 
 const RootRouter = () => {
-    const loggedIn = useIsLoggedIn()
+    const { isLoggedIn } = useIsLoggedIn()
 
     const generateRouteComponent = useCallback(({ path, Component, title, requiresAuth }: RouteConfig) => {
         return (
@@ -20,7 +20,7 @@ const RootRouter = () => {
                 index={path === paths.home}
                 element={
                     requiresAuth ? (
-                        loggedIn ? (
+                        isLoggedIn ? (
                             <PageWrapper title={title}>
                                 <Component />
                             </PageWrapper>
@@ -35,7 +35,7 @@ const RootRouter = () => {
                 }
             />
         )
-    }, [loggedIn])
+    }, [isLoggedIn])
 
     const generateRoutes = useCallback((routes: Array<RouteConfig>) => {
         const RequiresLobbyInfoRoutesNoHeader: Array<RouteConfig> = []
@@ -75,7 +75,7 @@ const RootRouter = () => {
                 </Route>
             </>
         )
-    }, [loggedIn])
+    }, [isLoggedIn])
 
     return (
         <Router>

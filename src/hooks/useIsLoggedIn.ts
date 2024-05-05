@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AuthManager from '../services/AuthManager'
 
-export const useIsLoggedIn = () => {
+const useIsLoggedIn = () => {
     const [loggedIn, setLoggedIn] = useState(AuthManager.isLoggedIn())
 
     useEffect(() => {
@@ -16,5 +16,10 @@ export const useIsLoggedIn = () => {
             unsubscribeFromOnLogin()
         }
     }, [])
-    return loggedIn
+
+    return {
+        isLoggedIn: loggedIn,
+    }
 }
+
+export default useIsLoggedIn

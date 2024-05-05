@@ -25,7 +25,9 @@ const useTranslatableString = () => {
         [t]
     )
 
-    return formTranslation
+    return {
+        tstring: formTranslation,
+    }
 }
 
 export default useTranslatableString

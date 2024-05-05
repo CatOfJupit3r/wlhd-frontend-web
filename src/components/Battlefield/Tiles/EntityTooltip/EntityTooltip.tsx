@@ -7,7 +7,7 @@ import { selectEntityTooltips } from '../../../../redux/slices/infoSlice'
 import styles from './EntityTooltip.module.css'
 
 const EntityTooltip = ({ id }: { id: string }) => {
-    const tString = useTranslatableString()
+    const { tstring } = useTranslatableString()
     const entities_info = useSelector(selectEntityTooltips)
     const { t } = useTranslation()
 
@@ -56,7 +56,7 @@ const EntityTooltip = ({ id }: { id: string }) => {
         const { name, square, health, action_points, armor, status_effects } = entity_info
         return [
             t('local:game.components.tooltip.creature_and_line', {
-                name: tString(name),
+                name: tstring(name),
                 square: `${square.line}|${square.column}`,
             }),
             t('local:game.components.tooltip.health_max_health', {
@@ -71,7 +71,7 @@ const EntityTooltip = ({ id }: { id: string }) => {
             t('local:game.components.tooltip.status_effects', {
                 status_effects: (() => {
                     return status_effects && status_effects.length > 0
-                        ? status_effects.map((value) => `${tString(value.descriptor)} (${value.duration})`).join(', ')
+                        ? status_effects.map((value) => `${tstring(value.descriptor)} (${value.duration})`).join(', ')
                         : t('local:game.components.tooltip.no_status_effects')
                 })(),
             }),

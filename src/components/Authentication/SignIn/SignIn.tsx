@@ -8,8 +8,7 @@ import paths from '../../../router/paths'
 import APIService from '../../../services/APIService'
 import styles from '../Authentication.module.css'
 import { checkHandle, checkPassword } from '../verifyInputs'
-import AuthManager from '../../../services/AuthManager'
-import { useIsLoggedIn } from '../../../hooks/useIsLoggedIn'
+import useIsLoggedIn from '../../../hooks/useIsLoggedIn'
 
 const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
@@ -18,7 +17,7 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const [handle, setHandle] = useState('admin')
     const [password, setPassword] = useState('motherfucker')
     const [readyToNav, setReadyToNav] = useState(false)
-    const isLoggedIn = useIsLoggedIn()
+    const { isLoggedIn } = useIsLoggedIn()
 
     useEffect(() => {
         if (isLoggedIn) {
