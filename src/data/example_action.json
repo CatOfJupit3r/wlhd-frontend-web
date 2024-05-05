@@ -28,6 +28,69 @@
             "requires": null
         },
         {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
+            "id": "builtins:spell",
+            "translation_info": {
+                "descriptor": "builtins:spell",
+                "co_descriptor": null
+            },
+            "available": false,
+            "requires": null
+        },
+        {
             "id": "builtins:defend",
             "translation_info": {
                 "descriptor": "builtins:defend",
