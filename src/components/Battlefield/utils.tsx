@@ -43,10 +43,7 @@ export const LINES_ARRAY = (lines: string[], key: string) => {
     return lines.map((descriptor, index) => LINE(descriptor, `${index.toString()}_${key}`))
 }
 
-export const JSX_BATTLEFIELD = (
-    battlefield: string[][],
-    field_components: { [key: string]: string }
-) => {
+export const JSX_BATTLEFIELD = (battlefield: string[][], field_components: { [key: string]: string }) => {
     const battlefieldJSX: JSX.Element[][] = Array<Array<JSX.Element>>()
     for (let i = 0; i < battlefield.length; i++) {
         const row = []

@@ -60,22 +60,25 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
         }
     }, [battlefieldMode])
 
-    const columnHelpRow = useCallback((key: string) => {
-        const rendered = []
-        rendered.push(
-            <div
-                key={`column-help-${key}`}
-                style={{
-                    display: 'flex',
-                }}
-            >
-                {CONNECTORS(connectors, key)}
-                {COLUMNS_ARRAY(columns)}
-                {CONNECTORS(connectors, key + 1)}
-            </div>
-        )
-        return rendered
-    }, [connectors, columns])
+    const columnHelpRow = useCallback(
+        (key: string) => {
+            const rendered = []
+            rendered.push(
+                <div
+                    key={`column-help-${key}`}
+                    style={{
+                        display: 'flex',
+                    }}
+                >
+                    {CONNECTORS(connectors, key)}
+                    {COLUMNS_ARRAY(columns)}
+                    {CONNECTORS(connectors, key + 1)}
+                </div>
+            )
+            return rendered
+        },
+        [connectors, columns]
+    )
 
     const displayRows = useCallback(
         (rows: number[], side_type: string) => {

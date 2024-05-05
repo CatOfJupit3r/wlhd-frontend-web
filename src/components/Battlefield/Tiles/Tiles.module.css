@@ -6,34 +6,12 @@
     max-height: var(--image-size);
 }
 
-.decoration {
-    overflow: hidden;
-    position: absolute;
-    width: var(--image-size);
-    height: var(--image-size);
-    max-width: var(--image-size);
-    max-height: var(--image-size);
-    border: 0 none;
-    border-radius: 8px;
-    box-sizing: border-box;
-    background-color: transparent;
-}
-
-.activeEntity {
-    border: 3px solid #ffee04;
-}
-
-.selected {
-    border: 3px solid #6ef581;
-}
-
 .withEntity {
     background-image: url('/public/assets/builtins/tile.png');
     background-size: cover;
     cursor: pointer;
 }
 
-.interactable {
-    border: 3px solid #1affd5;
-
+.tooltipContainer {
+    position: relative;
 }
