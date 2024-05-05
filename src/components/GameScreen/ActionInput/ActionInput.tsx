@@ -200,14 +200,17 @@ const ActionInput = () => {
             return
         }
         if (aliasValue.startsWith('Square') && choices[currentAlias] === undefined) {
-            dispatch(setBattlefieldMode('selection'))
+            if (battlefieldMode === 'info') {
+                dispatch(setBattlefieldMode('selection'))
+            }
         } else {
-            dispatch(setBattlefieldMode('info'))
+            if (battlefieldMode === 'selection') {
+                dispatch(setBattlefieldMode('info'))
+            }
         }
     }, [currentAlias, choices, scope, dispatch, t])
 
     const shallowDepthScreen = useCallback(() => {
-        console.log('Rendering shallow depth screen')
         const options = generateOptions()
         if (Array.isArray(options)) {
             options
@@ -232,7 +235,9 @@ const ActionInput = () => {
                 >
                     <div id={'manipulators'}>{handleDepth()}</div>
                 </div>
-                {options}
+                <div id={"options"} className={styles.options}>
+                    {options}
+                </div>
             </>
         )
     }, [generateOptions, handleDepth, reachedFinalDepth])
@@ -330,9 +335,9 @@ const ActionInput = () => {
     ])
 
     return (
-        <div id={'action-input'} className={styles.actionInput}>
+        <div id={'action-input'} className={styles.inputsContainer}>
             {isPlayerTurn ? (
-                <div id={'action-confirms'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
+                <div id={'current-depth-visual'}>{reachedFinalDepth ? deepDepthScreen() : shallowDepthScreen()}</div>
             ) : (
                 <h1
                     style={{
