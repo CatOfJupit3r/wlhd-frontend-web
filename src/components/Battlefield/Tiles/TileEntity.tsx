@@ -6,12 +6,12 @@ import {
     selectInteractableTiles,
     setClickedSquare,
 } from '../../../redux/slices/battlefieldSlice'
+import { selectActiveEntity } from '../../../redux/slices/infoSlice'
 import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
-import { selectActiveEntity } from '../../../redux/slices/infoSlice'
 
 const TileEntity = (props: {
     full_descriptor: string
@@ -33,7 +33,7 @@ const TileEntity = (props: {
             flag: false,
             type: 'neutral',
         },
-        selected: {
+        clicked: {
             flag: false,
             times: 0,
         },
@@ -45,6 +45,18 @@ const TileEntity = (props: {
     const interactableTiles = useSelector(selectInteractableTiles)
     const activeEntity = useSelector(selectActiveEntity)
 
+    const changeDecoration = useCallback((
+        key: 'interactable' | 'clicked' | 'active',
+        value: { flag: boolean; type: 'ally' | 'enemy' | 'neutral' } | { flag: boolean; times: number } | boolean
+    ) => {
+        setDecorations((prev) => {
+            return {
+                ...prev,
+                [key]: value,
+            }
+        })
+    }, [])
+
     const handleMouseEnter = () => {
         setShowTooltip(true)
     }
@@ -53,31 +65,11 @@ const TileEntity = (props: {
         setShowTooltip(false)
     }
 
-    const setDecoration = useCallback(
-        (
-            alias: string,
-            value:
-                | boolean
-                | { flag: boolean; type: 'ally' | 'enemy' | 'neutral' }
-                | {
-                      flag: boolean
-                      times: number
-                  }
-        ) => {
-            setDecorations((prev) => ({ ...prev, [alias]: value }))
-        },
-        []
-    )
-
     const squareShouldBeInteractable = useCallback(() => {
-        if (battlefieldMode !== 'selection') {
-            return false
-        } else {
-            if (id in interactableTiles && interactableTiles[id]) {
-                return true
-            }
-        }
-        return false
+        if (battlefieldMode !== 'selection') return false
+        else {
+            if (id in interactableTiles && interactableTiles[id]) return true
+        } return false
     }, [id, interactableTiles, battlefieldMode])
 
     const handleDoubleClick = useCallback(() => {
@@ -89,34 +81,32 @@ const TileEntity = (props: {
 
     useEffect(() => {
         if (highlightedComponents && highlightedComponents[id] > 0) {
-            setDecoration('selected', { flag: true, times: highlightedComponents[id] })
-            // setCurrentClassAlias('active')
-        } else if (squareShouldBeInteractable()) {
-            setDecoration('interactable', { flag: true, type: id.split('/')[0] in [1, 2, 3] ? 'enemy' : 'ally' })
-        } else {
-            setDecoration('selected', { flag: false, times: 0 })
-            setDecoration('interactable', { flag: false, type: 'neutral' })
-        }
-    }, [highlightedComponents, id, squareShouldBeInteractable])
+            changeDecoration('clicked', { flag: true, times: highlightedComponents[id] })
+        } else changeDecoration('clicked', { flag: false, times: 0 })
+    }, [highlightedComponents, id])
+
+    useEffect(() => {
+        if (squareShouldBeInteractable()) {
+            changeDecoration('interactable', {
+                flag: true,
+                type: id.split('/')[0] in [1, 2, 3] ? 'enemy' : 'ally',
+            })
+        } else changeDecoration('interactable', { flag: false, type: 'neutral' })
+    }, [interactableTiles, battlefieldMode, id])
 
     useEffect(() => {
         if (!activeEntity) {
-            if (decorations.active) {
-                setDecoration('active', false)
-            }
+            if (decorations.active) changeDecoration('active', false)
             return
         }
         const { line, column } = activeEntity.square
-        if (`${line}/${column}` === id) {
-            setDecoration('active', true)
-        } else {
-            setDecoration('active', false)
-        }
-    }, [])
+        if (`${line}/${column}` === id) changeDecoration('active', true)
+        else changeDecoration('active', false)
+    }, [activeEntity])
 
     return (
         <div
-            className={`${styles.tooltipContainer} ${descriptor !== 'tile' ? styles.withEntity : ''}`}
+            className={`${styles.entityContainer} ${descriptor !== 'tile' ? styles.withEntity : ''}`}
             onDoubleClick={handleDoubleClick}
             id={`square_${id}`}
             key={id}

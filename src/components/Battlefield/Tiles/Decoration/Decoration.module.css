@@ -21,8 +21,12 @@
     top: 5%;
 }
 
-.selected {
-    border: 3px solid #6ef581;
+.clickedSquare {
+    position: absolute;
+    width: calc(var(--tile-size) * 0.35);
+    height: calc(var(--tile-size) * 0.35);
+    left: 5%;
+    top: 5%;
 }
 
 .interactable {
@@ -31,7 +35,7 @@
 }
 
 .interactableAlly {
-    border: 3px solid #1affd5;
+    border: 3px solid #23dcd5;
     cursor: pointer;
 }
 
