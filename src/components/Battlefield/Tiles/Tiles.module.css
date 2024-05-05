@@ -1,9 +1,9 @@
 .tile {
     transition: background-color 0.3s;
-    width: var(--image-size);
-    height: var(--image-size);
-    max-width: var(--image-size);
-    max-height: var(--image-size);
+    width: var(--tile-size);
+    height: var(--tile-size);
+    max-width: var(--tile-size);
+    max-height: var(--tile-size);
 }
 
 .withEntity {

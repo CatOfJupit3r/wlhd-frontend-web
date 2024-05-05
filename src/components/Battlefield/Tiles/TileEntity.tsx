@@ -11,6 +11,7 @@ import { generateAssetPath, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
+import { selectActiveEntity } from '../../../redux/slices/infoSlice'
 
 const TileEntity = (props: {
     full_descriptor: string
@@ -25,13 +26,8 @@ const TileEntity = (props: {
 
     const { full_descriptor, className, id, fallback } = props
     const [dlc, descriptor] = splitDescriptor(full_descriptor)
+
     const [showTooltip, setShowTooltip] = useState(false)
-
-    const battlefieldMode = useSelector(selectBattlefieldMode)
-    const highlightedComponents = useSelector(selectHighlightedComponents)
-
-    const interactableTiles = useSelector(selectInteractableTiles)
-
     const [decorations, setDecorations] = useState({
         interactable: {
             flag: false,
@@ -43,6 +39,11 @@ const TileEntity = (props: {
         },
         active: false,
     } as DecorationConfig)
+
+    const battlefieldMode = useSelector(selectBattlefieldMode)
+    const highlightedComponents = useSelector(selectHighlightedComponents)
+    const interactableTiles = useSelector(selectInteractableTiles)
+    const activeEntity = useSelector(selectActiveEntity)
 
     const handleMouseEnter = () => {
         setShowTooltip(true)
@@ -97,6 +98,21 @@ const TileEntity = (props: {
             setDecoration('interactable', { flag: false, type: 'neutral' })
         }
     }, [highlightedComponents, id, squareShouldBeInteractable])
+
+    useEffect(() => {
+        if (!activeEntity) {
+            if (decorations.active) {
+                setDecoration('active', false)
+            }
+            return
+        }
+        const { line, column } = activeEntity.square
+        if (`${line}/${column}` === id) {
+            setDecoration('active', true)
+        } else {
+            setDecoration('active', false)
+        }
+    }, [])
 
     return (
         <div

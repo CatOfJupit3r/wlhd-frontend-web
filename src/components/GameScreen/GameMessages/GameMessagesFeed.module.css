@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(var(--image-size) * 1);
+    height: calc(var(--tile-size) * 1);
     background: black;
     color: white;
     border-radius: 15px;
@@ -25,7 +25,7 @@
 }
 
 .pageContainer {
-    height: calc(100% - var(--image-size) * 1);
+    height: calc(100% - var(--tile-size) * 1);
     overflow: hidden;
     max-height: 100%;
     max-width: 100%;
@@ -34,16 +34,16 @@
 }
 
 .button {
-    height: var(--image-size);
-    width: var(--image-size);
+    height: var(--tile-size);
+    width: var(--tile-size);
     border-radius: 10px;
     border: 5px solid black;
     cursor: pointer;
 }
 
 .activeButton {
-    height: var(--image-size);
-    width: var(--image-size);
+    height: var(--tile-size);
+    width: var(--tile-size);
     border-radius: 10px;
     border: 5px solid black;
     cursor: pointer;
@@ -52,8 +52,8 @@
 }
 
 .inactiveButton {
-    height: var(--image-size);
-    width: var(--image-size);
+    height: var(--tile-size);
+    width: var(--tile-size);
     border-radius: 10px;
     border: 5px solid black;
     cursor: pointer;

@@ -2,10 +2,10 @@
 .decoration {
     overflow: hidden;
     position: absolute;
-    width: var(--image-size);
-    height: var(--image-size);
-    max-width: var(--image-size);
-    max-height: var(--image-size);
+    width: var(--tile-size);
+    height: var(--tile-size);
+    max-width: var(--tile-size);
+    max-height: var(--tile-size);
     border: 0 none;
     border-radius: 8px;
     box-sizing: border-box;
@@ -14,7 +14,11 @@
 }
 
 .activeEntity {
-    border: 3px solid #ffee04;
+    position: absolute;
+    width: calc(var(--tile-size) * 0.35);
+    height: calc(var(--tile-size) * 0.35);
+    right: 5%;
+    top: 5%;
 }
 
 .selected {

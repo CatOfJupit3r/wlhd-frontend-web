@@ -12,30 +12,33 @@ export interface DecorationConfig {
     active: boolean // refers to entity on square
 }
 
-
-
 const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
     const { interactable, selected, active } = decoration
 
     return (
-        <div
-            className={`${styles.decoration} ${
-                interactable.flag
-                    ? (() => {
-                          switch (interactable.type) {
-                              case 'ally':
-                                  return styles.interactableAlly
-                              case 'enemy':
-                                  return styles.interactableEnemy
-                              case 'neutral':
-                                  return styles.interactable
-                              default:
-                                  return ''
-                          }
-                      })()
-                    : ''
-            } ${selected.flag ? styles.selected : ''} ${active ? styles.active : ''}`}
-        />
+        <>
+            <div
+                className={`${styles.decoration} ${
+                    interactable.flag
+                        ? (() => {
+                              switch (interactable.type) {
+                                  case 'ally':
+                                      return styles.interactableAlly
+                                  case 'enemy':
+                                      return styles.interactableEnemy
+                                  case 'neutral':
+                                      return styles.interactable
+                                  default:
+                                      return ''
+                              }
+                          })()
+                        : ''
+                } ${selected.flag ? styles.selected : ''}`}
+            />
+            {active ? (
+                <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="active_entity_icon" />
+            ) : null}
+        </>
     )
 }
 

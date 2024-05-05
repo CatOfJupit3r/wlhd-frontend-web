@@ -3,8 +3,8 @@
     display: grid;
     min-width: fit-content;
     min-height: fit-content;
-    max-width: calc(var(--image-size) * 8);
-    max-height: calc(var(--image-size) * 9);
+    max-width: calc(var(--tile-size) * 8);
+    max-height: calc(var(--tile-size) * 9);
     background: #1f2023;
     border-radius: 10px;
 }
