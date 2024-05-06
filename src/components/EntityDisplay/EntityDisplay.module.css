@@ -1,0 +1,18 @@
+.displayContainer {
+    display: inline-block;
+    flex-direction: column;
+    min-width: 100%;
+    background: gray;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.entityHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
