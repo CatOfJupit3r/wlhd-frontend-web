@@ -5,3 +5,11 @@
     align-items: center;
     margin: 0
 }
+
+.together {
+    justify-content: normal;
+}
+
+.opposite {
+    justify-content: space-between;
+}
