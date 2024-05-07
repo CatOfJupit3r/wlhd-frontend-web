@@ -6,18 +6,22 @@ import { RiArrowDownDoubleFill } from 'react-icons/ri'
 const ToggleContainer = ({ children, header }: { header: JSX.Element; children: ReactNode }) => {
     const [showItems, setShowItems] = useState(false)
 
-    const Toggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => {
+    const Toggle = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => {
         e.preventDefault()
         setShowItems(!showItems)
-    }
+    }, [showItems])
 
     const getIconClassName = useCallback(() => {
         return showItems ? styles.iconOpen : styles.iconClosed
     }, [showItems])
 
     return (
-        <div className={styles.container} onClick={Toggle} onKeyDown={Toggle} role="button" tabIndex={0}>
-            <ElementWithIcon element={header} icon={<RiArrowDownDoubleFill className={getIconClassName()} />} />
+        <div className={`${styles.container} unselectable`} onClick={Toggle} onKeyDown={Toggle} role="button" tabIndex={0}>
+            <ElementWithIcon
+                iconPosition={'opposite'}
+                element={header}
+                icon={<RiArrowDownDoubleFill className={getIconClassName()} />}
+            />
             {showItems && <div className={styles.toggleContainer}>{children}</div>}
         </div>
     )

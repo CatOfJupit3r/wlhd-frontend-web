@@ -9,6 +9,10 @@
     cursor: pointer;
 }
 
+.toggleContainer {
+    padding: 0 1.75rem;
+}
+
 .iconClosed {
     color: white;
     transition: color 0.1s;
