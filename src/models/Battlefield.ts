@@ -45,32 +45,39 @@ export interface EntityInfoFull {
         column: string
     }
     attributes: { [attribute: string]: string }
+    items: Array<ItemInfo>
+    weapons: Array<WeaponInfo>
+    spells: Array<SpellInfo>
+    status_effects: Array<StatusEffectInfo>
+}
 
-    items: Array<{
-        descriptor: string
-        cost: number
-        uses: number | null
-        cooldown: { current: number; max: number }
-        count: number // how many of given item entity has
-        consumable: boolean // if item is consumable
-    }>
-    weapons: Array<{
-        descriptor: string
-        cost: number
-        uses: number | null
-        consumable: boolean
-        count: number
-        cooldown: { current: number; max: number }
-        isActive: boolean
-    }>
-    spells: Array<{
-        descriptor: string
-        cost: number
-        uses: number | null
-        cooldown: { current: number; max: number }
-    }>
-    status_effects: Array<{
-        descriptor: TranslatableString
-        duration: number
-    }>
+export interface WeaponInfo {
+    descriptor: string
+    cost: number
+    uses: number | null
+    consumable: boolean
+    count: number
+    cooldown: { current: number; max: number }
+    isActive: boolean
+}
+
+export interface ItemInfo {
+    descriptor: string
+    cost: number
+    uses: number | null
+    cooldown: { current: number; max: number }
+    count: number // how many of given item entity has
+    consumable: boolean // if item is consumable
+}
+
+export interface SpellInfo {
+    descriptor: string
+    cost: number
+    uses: number | null
+    cooldown: { current: number; max: number }
+}
+
+export interface StatusEffectInfo {
+    descriptor: TranslatableString
+    duration: string
 }

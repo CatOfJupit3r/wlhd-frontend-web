@@ -1,11 +1,17 @@
-import { EntityInfoFull } from '../../models/Battlefield'
-import styles from './EntityDisplay.module.css'
-import useTranslatableString from '../../hooks/useTranslatableString'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import useTranslatableString from '../../hooks/useTranslatableString'
+import { EntityInfoFull } from '../../models/Battlefield'
+import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
+import ToggleContainer from '../ToggleContainer/ToggleContainer'
+import styles from './EntityDisplay.module.css'
+import WeaponDisplay from './WeaponDisplay/WeaponDisplay'
+import SpellDisplay from './SpellDisplay/SpellDisplay'
+import ItemDisplay from './ItemDisplay/ItemDisplay'
+import StatusEffectDisplay from './StatusEffectDisplay/StatusEffectDisplay'
 
 const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
-    const { name, square, attributes, items, weapons } = entityInfo
+    const { name, square, attributes, items, weapons, spells, status_effects } = entityInfo
     const { tstring } = useTranslatableString()
     const { t } = useTranslation()
 
@@ -47,6 +53,108 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
         []
     )
 
+    const LIST_HEADERS = useMemo(
+        () => ({
+            ATTRIBUTES: {
+                element: <div className={styles.entityAttribute}>Attributes:</div>,
+                icon: (
+                    <img
+                        src="https://via.placeholder.com/50"
+                        alt="attributes icon"
+                        style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                        }}
+                    />
+                ),
+                children: () => (
+                    <div>
+                        {Object.entries(attributes).map(([attribute, value]) =>
+                            !ignoredAttributes.find((value) => value === attribute) ? (
+                                <div key={attribute} className={styles.entityAttribute}>
+                                    {t(attribute)}: {value}
+                                </div>
+                            ) : null
+                        )}
+                    </div>
+                ),
+            },
+            SPELLBOOK: {
+                element: <div className={styles.entityAttribute}>Spellbook:</div>,
+                icon: (
+                    <img
+                        src="https://via.placeholder.com/50"
+                        alt="spellbook icon"
+                        style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                        }}
+                    />
+                ),
+                children: () => {
+                    return spells && spells.length > 0 ? spells.map((spell, index) => (
+                        <SpellDisplay spell={spell} key={index}/>
+                    )) : <div>No spells</div>
+                },
+            },
+            STATUS_EFFECTS: {
+                element: <div className={styles.entityAttribute}>Status effects:</div>,
+                icon: (
+                    <img
+                        src="https://via.placeholder.com/50"
+                        alt="status effects icon"
+                        style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                        }}
+                    />
+                ),
+                children: () => {
+                    return status_effects && status_effects.length > 0 ? status_effects.map((status_effect, index) => (
+                        <StatusEffectDisplay status_effect={status_effect} key={index}/>
+                    )) : <div>No status effects</div>
+                }
+            },
+            WEAPONRY: {
+                element: <div className={styles.entityAttribute}>Weapons:</div>,
+                icon: (
+                    <img
+                        src="https://via.placeholder.com/50"
+                        alt="weapons icon"
+                        style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                        }}
+                    />
+                ),
+                children: () => {
+                    return weapons && weapons.length > 0 ? weapons.map((weapon, index) => (
+                        <WeaponDisplay weapon={weapon} key={index}/>
+                    )) : <div>No weapons</div>
+                }
+            },
+            INVENTORY: {
+                element: <div className={styles.entityAttribute}>Inventory:</div>,
+                icon: (
+                    <img
+                        src="https://via.placeholder.com/50"
+                        alt="inventory icon"
+                        style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                        }}
+                    />
+                ),
+                children: () => {
+                    return items && items.length > 0 ? items.map((item, index) => (
+                        <ItemDisplay item={item} key={index}/>
+                    )) : <div>No spells</div>
+                },
+            },
+        }),
+        [attributes, ignoredAttributes, items, spells, status_effects, weapons]
+    )
+
     return (
         <div className={styles.displayContainer}>
             <div className={styles.entityHeader}>
@@ -70,24 +178,21 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                     Armor: {attributes['builtins:current_armor']}/{attributes['builtins:base_armor']}
                 </div>
             </div>
-            <div className={styles.entityAttributesDynamic}>
-                <div className={styles.entityAttribute}>Attributes:</div>
-                {Object.entries(attributes).map(([attribute, value]) =>
-                    !(ignoredAttributes.find((value) => value === attribute)) ? (
-                        <div key={attribute} className={styles.entityAttribute}>
-                            {t(attribute)}: {value}
-                        </div>
-                    ) : null
-                )}
-            </div>
             <div className={styles.entityActiveWeapon}>
                 <div className={styles.entityActiveWeaponName}>Active weapon: {getActiveWeapon()}</div>
             </div>
-            <div className={styles.entityToggleShow}>Attributes</div>
-            <div className={styles.entityToggleShow}>Spellbook</div>
-            <div className={styles.entityToggleShow}>Weapons</div>
-            <div className={styles.entityToggleShow}>Inventory</div>
-            <div className={styles.entityToggleShow}>Status effects</div>
+            {
+                Object.entries(LIST_HEADERS).map(([key, value]) => (
+                    <ToggleContainer
+                        key={key}
+                        header={
+                            <ElementWithIcon icon={value.icon} element={value.element} />
+                        }
+                    >
+                        {value.children ? value.children() : null}
+                    </ToggleContainer>
+                ))
+            }
         </div>
     )
 }
