@@ -1,5 +1,5 @@
 .displayContainer {
-    display: inline-block;
+    display: flex;
     flex-direction: column;
     min-width: 100%;
     max-height: 100%;
@@ -16,9 +16,40 @@
     gap: 0.5rem;
     align-items: center;
     margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .entityAttributesDefined {
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
     gap: 0.5rem;
+    font-size: 1.15rem;
 }
+
+.entityActiveWeapon {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    font-size: 1.15rem;
+}
+
+.entityAttribute {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.entityAttribute p {
+    font-weight: bold;
+    margin-bottom: 0.15rem;
+}
+
+.entityAttribute p:first-child {
+    font-weight: normal;
+}
+
+.description {
+    color: #4b4b4b;
+    font-size: 1.5rem;
+}
+

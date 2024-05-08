@@ -16,7 +16,7 @@ const ToggleContainer = ({ children, header }: { header: JSX.Element; children: 
     }, [showItems])
 
     return (
-        <div className={`${styles.container} unselectable`} onClick={Toggle} onKeyDown={Toggle} role="button" tabIndex={0}>
+        <div className={`${styles.toggleContainer} unselectable`} onClick={Toggle} onKeyDown={Toggle} role="button" tabIndex={0}>
             <ElementWithIcon
                 iconPosition={'opposite'}
                 element={header}
