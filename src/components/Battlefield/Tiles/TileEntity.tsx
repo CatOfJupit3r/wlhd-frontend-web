@@ -89,7 +89,8 @@ const TileEntity = (props: {
         if (squareShouldBeInteractable()) {
             changeDecoration('interactable', {
                 flag: true,
-                type: id.split('/')[0] in [1, 2, 3] ? 'enemy' : 'ally',
+                type: ["1", "2", "3"].includes(id.split('/')[0])
+                    ? 'enemy' : 'ally',
             })
         } else changeDecoration('interactable', { flag: false, type: 'neutral' })
     }, [interactableTiles, battlefieldMode, id])
