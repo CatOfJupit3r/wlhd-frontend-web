@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { WeaponInfo } from '../../../models/Battlefield'
 import ElementWithIcon from '../../ElementWithIcon/ElementWithIcon'
-import styles from './WeaponDisplay.module.css'
+import styles from '../EntityDisplay.module.css'
 
 const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
     const { t } = useTranslation()
@@ -9,8 +9,8 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
     const { descriptor, cost, uses, consumable, count, cooldown, isActive } = weapon
 
     return (
-        <div className={styles.weaponContainer}>
-            <div id={'main-info'} className={styles.weaponHeading}>
+        <div className={styles.infoSegmentContainer}>
+            <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div
                     style={{
                         flexDirection: 'row',
@@ -55,8 +55,8 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
                     }
                 />
             </div>
-            <div id={'minor-info'} className={styles.weaponMinorInfo}>
-                <div id={"type-details"} className={styles.weaponTypeDetails}>
+            <div id={'minor-info'} className={styles.infoSegmentMinorInfo}>
+                <div id={"type-details"} className={styles.infoSegmentTypeDetails}>
                     {
                         consumable ? (
                             <p>
@@ -75,7 +75,7 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
                         {`${t('Cost')}: ${cost}`}
                     </p>
                 </div>
-                <div id={"usages"} className={styles.weaponUsageDetails}>
+                <div id={"usages"} className={styles.infoSegmentUsageDetails}>
                     <p>
                         Can be used on:
                     </p>
@@ -87,7 +87,7 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
                     </p>
                 </div>
             </div>
-            <div id={'description'} className={styles.weaponDescription}>
+            <div id={'description'} className={styles.infoSegmentDescription}>
                 {t(`${descriptor}.desc`)}
             </div>
         </div>
