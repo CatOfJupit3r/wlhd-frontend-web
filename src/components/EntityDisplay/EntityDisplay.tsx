@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import useTranslatableString from '../../hooks/useTranslatableString'
 import { EntityInfoFull } from '../../models/Battlefield'
 import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
 import ToggleContainer from '../ToggleContainer/ToggleContainer'
@@ -9,6 +8,7 @@ import ItemDisplay from './ItemDisplay/ItemDisplay'
 import SpellDisplay from './SpellDisplay/SpellDisplay'
 import StatusEffectDisplay from './StatusEffectDisplay/StatusEffectDisplay'
 import WeaponDisplay from './WeaponDisplay/WeaponDisplay'
+import { generateAssetPathFullDescriptor } from '../Battlefield/utils'
 
 const iconStyle = {
     width: '1.25rem',
@@ -16,8 +16,7 @@ const iconStyle = {
 }
 
 const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
-    const { name, square, attributes, items, weapons, spells, status_effects } = entityInfo
-    const { tstring } = useTranslatableString()
+    const { decorations, square, attributes, items, weapons, spells, status_effects } = entityInfo
     const { t } = useTranslation()
 
     // SPRITE NAME                                     SQUARE
@@ -32,6 +31,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
 
     // available:
     // - armor (0, high, full)
+    // 
     // required:
     // - health (0, low, medium, high, full),
     // - ap (0, 1, >1), (boots),
@@ -130,12 +130,9 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
     return (
         <div className={styles.displayContainer}>
             <div className={styles.entityHeader}>
-                <img src="https://via.placeholder.com/50" alt="entity sprite" />
+                <img src={generateAssetPathFullDescriptor(decorations.sprite)} alt="entity sprite" />
                 <div className={styles.entityName}>
-                    {tstring({
-                        // TODO: change name to TranslatableString
-                        main_string: name,
-                    })}
+                    {t(decorations.name)}
                 </div>
                 <div className={styles.entitySquare}>{`${square.line}|${square.column}`}</div>
             </div>

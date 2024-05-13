@@ -52,6 +52,9 @@ const InfoSlice = createSlice({
         setInteractableTiles: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
             state.interactableTiles = { ...state.interactableTiles, ...action.payload }
         },
+        resetInteractableTiles: (state) => {
+            state.interactableTiles = initialState.interactableTiles
+        },
         resetState: () => {
             return initialState
         },
@@ -78,6 +81,7 @@ export const {
     setBattlefield,
     setInteractableTiles,
     resetState,
+    resetInteractableTiles,
 } = InfoSlice.actions
 
 export const selectBattlefieldMold = (state: RootState) => state.battlefield.currentBattlefield,

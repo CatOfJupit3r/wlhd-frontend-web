@@ -2,12 +2,10 @@ import { useCallback, useMemo } from 'react'
 import { Placeholder } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import useTranslatableString from '../../../../hooks/useTranslatableString'
 import { selectEntityTooltips } from '../../../../redux/slices/infoSlice'
 import styles from './EntityTooltip.module.css'
 
 const EntityTooltip = ({ id }: { id: string }) => {
-    const { tstring } = useTranslatableString()
     const entities_info = useSelector(selectEntityTooltips)
     const { t } = useTranslation()
 
@@ -53,10 +51,10 @@ const EntityTooltip = ({ id }: { id: string }) => {
                 </>
             ))
         }
-        const { name, square, health, action_points, armor, status_effects } = entity_info
+        const { decorations, square, health, action_points, armor, status_effects } = entity_info
         return [
             t('local:game.components.tooltip.creature_and_line', {
-                name: tstring(name),
+                name: t(decorations.name),
                 square: `${square.line}|${square.column}`,
             }),
             t('local:game.components.tooltip.health_max_health', {
@@ -71,7 +69,13 @@ const EntityTooltip = ({ id }: { id: string }) => {
             t('local:game.components.tooltip.status_effects', {
                 status_effects: (() => {
                     return status_effects && status_effects.length > 0
-                        ? status_effects.map((value) => `${tstring(value.descriptor)} (${value.duration})`).join(', ')
+                        ? status_effects
+                              .map((value) =>
+                                  value.duration !== null
+                                      ? `${t(value.decorations.name)} (${value.duration})`
+                                      : t(value.decorations.name)
+                              )
+                              .join(', ')
                         : t('local:game.components.tooltip.no_status_effects')
                 })(),
             }),

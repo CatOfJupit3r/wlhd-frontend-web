@@ -6,7 +6,7 @@ import styles from '../EntityDisplay.module.css'
 const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
     const { t } = useTranslation()
 
-    const { descriptor, cost, uses, consumable, count, cooldown, isActive } = weapon
+    const { decorations, cost, uses, consumable, quantity, cooldown, isActive, user_needs_range } = weapon
 
     return (
         <div className={styles.infoSegmentContainer}>
@@ -19,7 +19,7 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
                         gap: '0.5rem',
                     }}
                 >
-                    {t(`${descriptor}.name`)}
+                    {t(decorations.name)}
                     {isActive && (
                         <img
                             src={'/assets/local/available_icon.svg'}
@@ -56,39 +56,29 @@ const WeaponDisplay = ({ weapon }: { weapon: WeaponInfo }) => {
                 />
             </div>
             <div id={'minor-info'} className={styles.infoSegmentMinorInfo}>
-                <div id={"type-details"} className={styles.infoSegmentTypeDetails}>
-                    {
-                        consumable ? (
-                            <p>
-                                {t('Consumable')}
-                            </p>
-                        ) : (
-                            <p>
-                                {t('Not Consumable')}
-                            </p>
-                        )
-                    }
-                    <p>
-                        {`${t('Count')}: ${count}`}
-                    </p>
-                    <p>
-                        {`${t('Cost')}: ${cost}`}
-                    </p>
+                <div id={'type-details'} className={styles.infoSegmentTypeDetails}>
+                    {consumable ? <p>{t('Consumable')}</p> : <p>{t('Not Consumable')}</p>}
+                    <p>{`${t('Count')}: ${quantity}`}</p>
+                    <p>{`${t('Cost')}: ${cost}`}</p>
                 </div>
-                <div id={"usages"} className={styles.infoSegmentUsageDetails}>
+                <div id={'usages'} className={styles.infoSegmentUsageDetails}>
                     <p>
-                        Can be used on:
+                        User must be on:{' '}
+                        {user_needs_range
+                            ? user_needs_range
+                                  .map((value: unknown) => {
+                                      if (value && !(value instanceof String)) {
+                                          return value
+                                      }
+                                  })
+                                  .join(',')
+                            : '???'}
                     </p>
-                    <p>
-                        User must be on:
-                    </p>
-                    <p>
-                        {`${t('Uses')}: ${uses || 0}`}
-                    </p>
+                    {uses && uses.max !== null && <p>{`${t('Uses')}: ${uses.current || '0'}|${uses.max || '0'}`}</p>}
                 </div>
             </div>
             <div id={'description'} className={styles.infoSegmentDescription}>
-                {t(`${descriptor}.desc`)}
+                {t(decorations.description)}
             </div>
         </div>
     )

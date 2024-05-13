@@ -5,6 +5,11 @@ export const generateAssetPath = (dlc: string, descriptor: string) => {
     return `/assets/${dlc}/${descriptor}.png`
 }
 
+export const generateAssetPathFullDescriptor = (full_descriptor: string) => {
+    const [dlc, descriptor] = splitDescriptor(full_descriptor)
+    return generateAssetPath(dlc, descriptor)
+}
+
 export const splitDescriptor = (full_descriptor: string): [string, string] => {
     if (!full_descriptor) {
         console.log('Descriptor is undefined')
