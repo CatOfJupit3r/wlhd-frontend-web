@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client'
-import { REACT_APP_BACKEND_URL } from '../config/configs'
+import { REACT_APP_BACKEND_URL } from '../config'
 import { ActionInput } from '../models/ActionInput'
 import {
     Battlefield,

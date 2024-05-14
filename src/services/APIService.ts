@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-import { REACT_APP_BACKEND_URL } from '../config/configs'
+import { REACT_APP_BACKEND_URL } from '../config'
 import { CharacterInfo } from '../models/CharacterInfo'
 import { LobbyInfo } from '../redux/slices/lobbySlice'
 import AuthManager from './AuthManager'

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { INVALID_ASSET_PATH } from '../../../config/configs'
+import { INVALID_ASSET_PATH } from '../../../config'
 import {
     selectBattlefieldMode,
     selectInteractableTiles,

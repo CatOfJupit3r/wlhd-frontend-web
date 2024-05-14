@@ -88,6 +88,7 @@ const ActionInput = () => {
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
     const handleReset = useCallback(() => {
+        dispatch(resetStateAfterSquareChoice())
         dispatch(resetInput())
     }, [dispatch])
 

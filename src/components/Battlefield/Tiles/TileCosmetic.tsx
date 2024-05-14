@@ -1,5 +1,5 @@
 import React from 'react'
-import { INVALID_ASSET_PATH } from '../../../config/configs'
+import { INVALID_ASSET_PATH } from '../../../config'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
 

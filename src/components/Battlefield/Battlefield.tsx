@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { Blurhash } from 'react-blurhash'
 import { useDispatch, useSelector } from 'react-redux'
-import { BATTLEFIELD_BLUR_HASH } from '../../config/configs'
+import { BATTLEFIELD_BLUR_HASH } from '../../config'
 import {
     selectBattlefieldMode,
     selectBattlefieldMold,
