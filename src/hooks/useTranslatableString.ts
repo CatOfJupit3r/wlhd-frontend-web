@@ -15,7 +15,11 @@ const useTranslatableString = () => {
             for (const key of keys) {
                 const arg = msg.format_args[key]
                 if (typeof arg === 'string') {
-                    newArgs[key] = arg
+                    if (/^[a-zA-Z]+:[a-zA-Z._-]+$/gm.test(arg)) {
+                        newArgs[key] = t(arg)
+                    } else {
+                        newArgs[key] = arg
+                    }
                 } else {
                     newArgs[key] = formTranslation(arg)
                 }
