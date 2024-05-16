@@ -155,7 +155,19 @@
                 "builtins:nature_attack" : "0",
                 "builtins:nature_defense" : "0"
             },
-            "items" : [],
+            "items" : [
+                {
+                    "descriptor": "builtins:healing_potion",
+                    "cost": 1,
+                    "uses": null,
+                    "cooldown": {
+                        "current": 0,
+                        "max": 2
+                    },
+                    "count": 10,
+                    "consumable": true
+                }
+            ],
             "weapons" : [
                 {
                     "descriptor" : "builtins:hero_sword",

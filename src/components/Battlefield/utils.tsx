@@ -1,8 +1,9 @@
 import TileCosmetic from './Tiles/TileCosmetic'
 import TileEntity from './Tiles/TileEntity'
+import { REACT_APP_BACKEND_URL } from '../../config'
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
-    return `/assets/${dlc}/${descriptor}.png`
+    return `${REACT_APP_BACKEND_URL}/assets/${dlc}/${descriptor}`
 }
 
 export const generateAssetPathFullDescriptor = (full_descriptor: string) => {
@@ -13,7 +14,7 @@ export const generateAssetPathFullDescriptor = (full_descriptor: string) => {
 export const splitDescriptor = (full_descriptor: string): [string, string] => {
     if (!full_descriptor) {
         console.log('Descriptor is undefined')
-        return ['builtins', 'invalid']
+        return ['local', 'invalid_asset']
     }
     if (!full_descriptor.includes(':')) {
         // If the descriptor does not have specified a dlc, we assume it is a builtins asset
@@ -21,7 +22,7 @@ export const splitDescriptor = (full_descriptor: string): [string, string] => {
     }
     return full_descriptor.split(':').length === 2
         ? (full_descriptor.split(':') as [string, string])
-        : ['builtins', 'invalid']
+        : ['local', 'invalid_asset']
 }
 
 export const CONNECTORS = (descriptor: string, key: string) => {
@@ -63,7 +64,7 @@ export const JSX_BATTLEFIELD = (battlefield: string[][], field_components: { [ke
                     id={tile_id}
                     key={tile_id}
                     fallback={{
-                        path: isAlly ? '/assets/builtins/ally.png' : '/assets/builtins/enemy.png',
+                        path: isAlly ? generateAssetPath('builtins', 'ally') : generateAssetPath('builtins', 'enemy'),
                         alt: isAlly ? 'ally' : 'enemy',
                     }}
                 />

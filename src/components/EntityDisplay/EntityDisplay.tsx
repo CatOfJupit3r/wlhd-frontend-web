@@ -4,7 +4,7 @@ import { EntityInfoFull } from '../../models/Battlefield'
 import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
 import ToggleContainer from '../ToggleContainer/ToggleContainer'
 import styles from './EntityDisplay.module.css'
-import { generateAssetPathFullDescriptor } from '../Battlefield/utils'
+import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
 import { INVALID_ASSET_PATH } from '../../config'
 
@@ -139,10 +139,10 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                         const { src, alt } = event.currentTarget
                         if (src !== INVALID_ASSET_PATH && alt !== 'invalid') {
                             if (['1', '2', '3'].includes(square.line)) {
-                                event.currentTarget.src = '/assets/builtins/enemy.png'
+                                event.currentTarget.src = generateAssetPath('builtins', 'enemy')
                                 event.currentTarget.alt = 'enemy'
                             } else {
-                                event.currentTarget.src = '/assets/builtins/ally.png'
+                                event.currentTarget.src = generateAssetPath('builtins', 'ally')
                                 event.currentTarget.alt = 'ally'
                             }
                         } else {

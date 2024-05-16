@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import GameLogicWrapper from '../components/GameLogicWrapper/GameLogicWrapper'
 import Overlay from '../components/Overlay/Overlay'
 import APIService from '../services/APIService'
+import { log } from 'node:util'
 
 const GameRoomPage = () => {
     const [loadingTranslations, setLoadingTranslations] = useState(true)
@@ -12,9 +13,10 @@ const GameRoomPage = () => {
     useEffect(() => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-extra-semi
-            ;['builtins', 'nyrzamaer'].map((dlc) => {
+            ;['builtins'].map((dlc) => {
                 const addTranslations = async (language: string) => {
                     const translations = await APIService.getTranslations(language, dlc)
+                    console.log("Received translations: ", translations)
                     if (!translations) return
                     i18n.addResourceBundle(i18n.language, dlc, translations, true, true)
                 }
