@@ -1,0 +1,14 @@
+.entityAttribute {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.entityAttribute p {
+    font-weight: normal;
+    margin-bottom: 0.15rem;
+}
+
+.entityAttribute p:last-child {
+    font-weight: bold;
+}

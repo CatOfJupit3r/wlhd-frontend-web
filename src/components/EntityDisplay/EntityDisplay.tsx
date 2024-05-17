@@ -7,6 +7,7 @@ import styles from './EntityDisplay.module.css'
 import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
 import { INVALID_ASSET_PATH } from '../../config'
+import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 
 const iconStyle = {
     width: '1.25rem',
@@ -45,18 +46,6 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
         return weapons.find((weapon) => weapon.isActive)?.descriptor || 'None'
     }, [])
 
-    const ignoredAttributes = useMemo(
-        () => [
-            'builtins:current_health',
-            'builtins:max_health',
-            'builtins:current_action_points',
-            'builtins:max_action_points',
-            'builtins:current_armor',
-            'builtins:base_armor',
-        ],
-        []
-    )
-
     const LIST_HEADERS = useMemo(
         () => ({
             ATTRIBUTES: {
@@ -67,16 +56,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                     style={iconStyle}
                 />,
                 children: () => (
-                    <div>
-                        {Object.entries(attributes).map(([attribute, value]) =>
-                            !ignoredAttributes.find((value) => value === attribute) ? (
-                                <div key={attribute} className={styles.entityAttribute}>
-                                    <p>{t(attribute)}</p>
-                                    <p>{value}</p>
-                                </div>
-                            ) : null
-                        )}
-                    </div>
+                    <AttributeDisplay attributes={attributes} />
                 ),
             },
             SPELLBOOK: {
@@ -126,7 +106,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 },
             },
         }),
-        [attributes, ignoredAttributes, items, spells, status_effects, weapons]
+        [attributes, items, spells, status_effects, weapons]
     )
 
     return (

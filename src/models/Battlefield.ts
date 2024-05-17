@@ -44,12 +44,16 @@ export interface EntityInfoTurn {
 export interface EntityInfoFull {
     decorations: GameComponentDecoration
     square: { line: string; column: string }
-    attributes: { [attribute: string]: string }
+    attributes: EntityAttributes
 
     items: Array<ItemInfo>
     weapons: Array<WeaponInfo>
     spells: Array<SpellInfo>
     status_effects: Array<StatusEffectInfo>
+}
+
+export interface EntityAttributes {
+    [attribute: string]: string
 }
 
 export interface WeaponInfo {
