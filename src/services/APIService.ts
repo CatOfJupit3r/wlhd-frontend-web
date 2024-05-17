@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
 import { CharacterInfo } from '../models/CharacterInfo'
+import { TranslationJSON } from '../models/Translation'
 import { LobbyInfo } from '../redux/slices/lobbySlice'
 import AuthManager from './AuthManager'
 
@@ -16,8 +17,8 @@ class APIService {
         REGISTER: `${REACT_APP_BACKEND_URL}/register`,
         REFRESH_TOKEN: `${REACT_APP_BACKEND_URL}/token`,
 
-        GET_TRANSLATIONS: (language: string, dlc: string) =>
-            `${REACT_APP_BACKEND_URL}/translations?dlc=${dlc}&language=${language}`,
+        GET_TRANSLATIONS: (languages: Array<string>, dlcs: Array<string>) =>
+            `${REACT_APP_BACKEND_URL}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`,
     }
 
     private injectResponseMessageToError = (error: AxiosError) => {
@@ -134,10 +135,10 @@ class APIService {
         await this.login(handle, password)
     }
 
-    public getTranslations = async (language: string, dlc: string): Promise<{ [key: string]: string }> => {
+    public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
         try {
             return await this.fetch({
-                url: this.endpoints.GET_TRANSLATIONS(language, dlc),
+                url: this.endpoints.GET_TRANSLATIONS(languages, dlcs),
                 method: 'get',
             })
         } catch (e) {
