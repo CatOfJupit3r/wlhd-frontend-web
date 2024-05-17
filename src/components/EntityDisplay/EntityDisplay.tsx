@@ -46,10 +46,17 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
         return weapons.find((weapon) => weapon.isActive)?.descriptor || 'None'
     }, [])
 
+    const tExt = useCallback(
+        (key: string) => {
+            return t(`local:game.entity_display.${key}`)
+        }, []
+    )
+
+
     const LIST_HEADERS = useMemo(
         () => ({
             ATTRIBUTES: {
-                element: <div className={styles.entityAttribute}>Attributes:</div>,
+                element: <div className={styles.entityAttribute}>{tExt('attributes')}</div>,
                 icon: <img
                     src="https://via.placeholder.com/50"
                     alt="attributes icon"
@@ -60,18 +67,18 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 ),
             },
             SPELLBOOK: {
-                element: <div className={styles.entityAttribute}>Spellbook:</div>,
+                element: <div className={styles.entityAttribute}>{tExt('spellbook')}</div>,
                 icon: <img src="https://via.placeholder.com/50" alt="spellbook icon" style={iconStyle} />,
                 children: () => {
                     return spells && spells.length > 0 ? (
                         spells.map((spell, index) => <InfoDisplay type={'spell'} info={spell} key={index} />)
                     ) : (
-                        <div>No spells</div>
+                        <div>{tExt('no_spellbook')}</div>
                     )
                 },
             },
             STATUS_EFFECTS: {
-                element: <div className={styles.entityAttribute}>Status effects:</div>,
+                element: <div className={styles.entityAttribute}>{tExt('status_effects')}</div>,
                 icon: <img src="https://via.placeholder.com/50" alt="status effects icon" style={iconStyle} />,
                 children: () => {
                     return status_effects && status_effects.length > 0 ? (
@@ -79,29 +86,29 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                             <InfoDisplay type={'status_effect'} info={status_effect} key={index} />
                         ))
                     ) : (
-                        <div>No status effects</div>
+                        <div>{tExt('no_status_effects')}</div>
                     )
                 },
             },
             WEAPONRY: {
-                element: <div className={styles.entityAttribute}>Weapons:</div>,
+                element: <div className={styles.entityAttribute}>{tExt('weaponry')}</div>,
                 icon: <img src="https://via.placeholder.com/50" alt="weapons icon" style={iconStyle} />,
                 children: () => {
                     return weapons && weapons.length > 0 ? (
                         weapons.map((weapon, index) => <InfoDisplay type={'weapon'} info={weapon} key={index} />)
                     ) : (
-                        <div>No weapons</div>
+                        <div>{tExt('no_weaponry')}</div>
                     )
                 },
             },
             INVENTORY: {
-                element: <div className={styles.entityAttribute}>Inventory:</div>,
+                element: <div className={styles.entityAttribute}>{tExt('inventory')}</div>,
                 icon: <img src="https://via.placeholder.com/50" alt="inventory icon" style={iconStyle} />,
                 children: () => {
                     return items && items.length > 0 ? (
                         items.map((item, index) => <InfoDisplay type={'item'} info={item} key={index} />)
                     ) : (
-                        <div>No items</div>
+                        <div>{tExt('no_inventory')}</div>
                     )
                 },
             },
