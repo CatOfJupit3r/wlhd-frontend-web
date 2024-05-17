@@ -80,13 +80,11 @@ class SocketService {
         })
     }
 
-    private addEventListener(event: string, callback: (...args: any[]) => void) {
-        this.socket.on(event, callback)
-        console.log('Added listener for', event)
-    }
-
-    private removeEventListener(event: string, callback: (...args: any[]) => void) {
-        this.socket.off(event, callback)
+    private addBatchOfEventsListener(listeners: { [key: string]: (...args: any[]) => void }) {
+        for (const [event, callback] of Object.entries(listeners)) {
+            this.socket.removeListener(event)
+            this.socket.on(event, callback)
+        }
     }
 
     public emit(event: string, data?: unknown) {
@@ -305,15 +303,6 @@ class SocketService {
             },
         }
         this.addBatchOfEventsListener(listeners)
-    }
-
-    private addBatchOfEventsListener(listeners: { [key: string]: (...args: any[]) => void }) {
-        for (const [event, callback] of Object.entries(listeners)) {
-            if (this.socket.hasListeners(event)) {
-                this.removeEventListener(event, callback)
-            }
-            this.addEventListener(event, callback)
-        }
     }
 }
 
