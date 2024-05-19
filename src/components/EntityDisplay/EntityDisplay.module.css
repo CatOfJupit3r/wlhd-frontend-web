@@ -3,8 +3,8 @@
     flex-direction: column;
     min-width: 100%;
     max-height: 100%;
-    background: gray;
     padding: 1rem;
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
     overflow-x: hidden;
     overflow-y: scroll;

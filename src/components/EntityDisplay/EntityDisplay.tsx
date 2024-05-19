@@ -1,13 +1,13 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { INVALID_ASSET_PATH } from '../../config'
 import { EntityInfoFull } from '../../models/Battlefield'
+import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
 import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
 import ToggleContainer from '../ToggleContainer/ToggleContainer'
-import styles from './EntityDisplay.module.css'
-import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
-import InfoDisplay from './InfoDisplay/InfoDisplay'
-import { INVALID_ASSET_PATH } from '../../config'
 import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
+import styles from './EntityDisplay.module.css'
+import InfoDisplay from './InfoDisplay/InfoDisplay'
 
 const iconStyle = {
     width: '1.25rem',
@@ -46,29 +46,20 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
         return weapons.find((weapon) => weapon.isActive)?.descriptor || 'None'
     }, [])
 
-    const tExt = useCallback(
-        (key: string) => {
-            return t(`local:game.entity_display.${key}`)
-        }, []
-    )
-
+    const tExt = useCallback((key: string) => {
+        return t(`local:game.entity_display.${key}`)
+    }, [])
 
     const LIST_HEADERS = useMemo(
         () => ({
             ATTRIBUTES: {
                 element: <div className={styles.entityAttribute}>{tExt('attributes')}</div>,
-                icon: <img
-                    src="https://via.placeholder.com/50"
-                    alt="attributes icon"
-                    style={iconStyle}
-                />,
-                children: () => (
-                    <AttributeDisplay attributes={attributes} />
-                ),
+                icon: <img src="/assets/cr/attributes.svg" alt="attributes icon" style={iconStyle} />,
+                children: () => <AttributeDisplay attributes={attributes} />,
             },
             SPELLBOOK: {
                 element: <div className={styles.entityAttribute}>{tExt('spellbook')}</div>,
-                icon: <img src="https://via.placeholder.com/50" alt="spellbook icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/spell_book.svg" alt="spellbook icon" style={iconStyle} />,
                 children: () => {
                     return spells && spells.length > 0 ? (
                         spells.map((spell, index) => <InfoDisplay type={'spell'} info={spell} key={index} />)
@@ -79,7 +70,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             STATUS_EFFECTS: {
                 element: <div className={styles.entityAttribute}>{tExt('status_effects')}</div>,
-                icon: <img src="https://via.placeholder.com/50" alt="status effects icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/status_effects.svg" alt="status effects icon" style={iconStyle} />,
                 children: () => {
                     return status_effects && status_effects.length > 0 ? (
                         status_effects.map((status_effect, index) => (
@@ -92,7 +83,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             WEAPONRY: {
                 element: <div className={styles.entityAttribute}>{tExt('weaponry')}</div>,
-                icon: <img src="https://via.placeholder.com/50" alt="weapons icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/weaponry.svg" alt="weapons icon" style={iconStyle} />,
                 children: () => {
                     return weapons && weapons.length > 0 ? (
                         weapons.map((weapon, index) => <InfoDisplay type={'weapon'} info={weapon} key={index} />)
@@ -103,7 +94,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             INVENTORY: {
                 element: <div className={styles.entityAttribute}>{tExt('inventory')}</div>,
-                icon: <img src="https://via.placeholder.com/50" alt="inventory icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/inventory.svg" alt="inventory icon" style={iconStyle} />,
                 children: () => {
                     return items && items.length > 0 ? (
                         items.map((item, index) => <InfoDisplay type={'item'} info={item} key={index} />)
@@ -114,6 +105,33 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
         }),
         [attributes, items, spells, status_effects, weapons]
+    )
+
+    const MAIN_ATTRIBUTES = useMemo(
+        () => ({
+            HEALTH: {
+                icon: {
+                    src: '/assets/cr/hp.svg',
+                    alt: 'Health',
+                },
+                text: `${attributes['builtins:current_health']}/${attributes['builtins:max_health']}`,
+            },
+            ARMOR: {
+                icon: {
+                    src: '/assets/cr/armor.svg',
+                    alt: 'Armor',
+                },
+                text: `${attributes['builtins:current_armor']}/${attributes['builtins:base_armor']}`,
+            },
+            AP: {
+                icon: {
+                    src: '/assets/cr/ap.svg',
+                    alt: 'Action Points',
+                },
+                text: `${attributes['builtins:current_action_points']}/${attributes['builtins:max_action_points']}`,
+            },
+        }),
+        [attributes]
     )
 
     return (
@@ -146,15 +164,13 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 <div className={styles.entitySquare}>{`${square.line}|${square.column}`}</div>
             </div>
             <div className={styles.entityAttributesDefined}>
-                <div className={styles.entityAttribute}>
-                    Health: {attributes['builtins:current_health']}/{attributes['builtins:max_health']}
-                </div>
-                <div className={styles.entityAttribute}>
-                    AP: {attributes['builtins:current_action_points']}/{attributes['builtins:max_action_points']}
-                </div>
-                <div className={styles.entityAttribute}>
-                    Armor: {attributes['builtins:current_armor']}/{attributes['builtins:base_armor']}
-                </div>
+                {Object.entries(MAIN_ATTRIBUTES).map(([key, value]) => (
+                    <ElementWithIcon
+                        key={key}
+                        icon={<img src={value.icon.src} alt={value.icon.alt} style={iconStyle} />}
+                        element={<p style={{ margin: 0 }}>{value.text}</p>}
+                    />
+                ))}
             </div>
             <div className={styles.entityActiveWeapon}>
                 <div className={styles.entityActiveWeaponName}>Active weapon: {getActiveWeapon()}</div>
