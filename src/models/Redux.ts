@@ -32,27 +32,12 @@ export interface LobbyState {
 
 export interface TurnState {
     playersTurn: boolean
-    readyToSubmit: boolean
     needToChooseSquare: boolean
-
     entityActions: ActionInputInterface
-    currentAlias: string
-    scope: {
+    actionOutputs: {
         [key: string]: string
-    }
-    highlightedComponents: {
-        [key: string]: number // not only do we need to know which component was chosen, but also how many times it was chosen to not accidentally unhighlight it
-    }
-    choices: {
-        [key: string]: string
-    }
-    translatedChoices: {
-        [key: string]: string
-    }
-    chosenAction: {
-        chosenActionValue: string
-        translatedActionValue: string
-    }
+    } | null
+    halted: boolean
 }
 
 export interface InfoState {
@@ -85,5 +70,8 @@ export interface BattlefieldState {
     clickedSquare: string | null
     interactableTiles: {
         [key: string]: boolean
+    }
+    highlightedSquares: {
+        [key: string]: number
     }
 }

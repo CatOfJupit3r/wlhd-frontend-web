@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectClickedSquare } from '../../redux/slices/battlefieldSlice'
+import { highlightOnlyThisSquare, selectClickedSquare } from '../../redux/slices/battlefieldSlice'
 import { selectLobbyInfo } from '../../redux/slices/lobbySlice'
-import { highlightNothingButComponent } from '../../redux/slices/turnSlice'
 
 const CombatEditor = ({
     addCharacter,
@@ -33,7 +32,7 @@ const CombatEditor = ({
 
     useEffect(() => {
         // TODO: Add `highlightMode` to battlefieldSlice. `sequential` | `individual`. to avoid 3 redux actions at once.
-        if (currentSquare) dispatch(highlightNothingButComponent(currentSquare))
+        if (currentSquare) dispatch(highlightOnlyThisSquare(currentSquare))
         setEntityInformation({
             source: 'dlc',
             path: '',

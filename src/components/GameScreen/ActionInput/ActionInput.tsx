@@ -5,23 +5,15 @@ import { setNotify } from '../../../redux/slices/cosmeticsSlice'
 import styles from './ActionInput.module.css'
 
 import {
-    appendScope,
-    resetChosenAction,
+    receivedHalt,
     resetInput,
     selectAliases,
     selectAliasTranslations,
-    selectChoices,
-    selectChosenAction,
-    selectCurrentAlias,
     selectEntityActions,
+    selectHalted,
+    selectOutput,
     selectPlayersTurn,
-    selectReadyToSubmit,
-    selectScope,
-    selectTranslatedChoices,
-    setChoice,
-    setCurrentAlias,
-    setReadyToSubmit,
-    setTranslatedChoice,
+    setOutput,
 } from '../../../redux/slices/turnSlice'
 
 import { useTranslation } from 'react-i18next'
@@ -30,12 +22,16 @@ import { BsArrowBarLeft } from 'react-icons/bs'
 
 import { RxArrowTopRight } from 'react-icons/rx'
 import {
+    addHighlightedSquare,
+    resetHighlightedSquares,
     resetStateAfterSquareChoice,
     selectBattlefieldMode,
     selectClickedSquare,
     setBattlefieldMode,
+    setInteractableTiles,
 } from '../../../redux/slices/battlefieldSlice'
 import OptionCard from './OptionCard/OptionCard'
+import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter'
 
 /*
 
@@ -58,14 +54,6 @@ Then, other components can decide what to do with this input.
 This isolated responsibilities of this component to only handle user input and not to handle any other logic of sending the input to the server.
 
 
-When we choose item inside select or square, it is written to current choices in format:
-
-choices[currentAlias]: chosenValue
-translatedChoices[aliasesTranslations[currentAlias]]: chosenValueTranslation
-
-
-TODO: Fix Action Input not reacting to HALT_ACTION events (which, surprisingly, should stop and reset the action input)
-
 */
 
 const ActionInput = () => {
@@ -73,24 +61,69 @@ const ActionInput = () => {
     const { t } = useTranslation()
 
     const initialActionLevel = useSelector(selectEntityActions)
-    const currentAlias = useSelector(selectCurrentAlias)
-    const aliasesTranslations = useSelector(selectAliasTranslations)
-    const choices = useSelector(selectChoices)
-    const scope = useSelector(selectScope)
+
     const aliases = useSelector(selectAliases)
-    const chosenActionStore = useSelector(selectChosenAction)
-    const translatedChoices = useSelector(selectTranslatedChoices)
+    const aliasesTranslated = useSelector(selectAliasTranslations)
+
     const clickedSquare = useSelector(selectClickedSquare)
     const battlefieldMode = useSelector(selectBattlefieldMode)
     const isPlayerTurn = useSelector(selectPlayersTurn)
-    const inputReadyToSubmit = useSelector(selectReadyToSubmit)
+    const output = useSelector(selectOutput)
+    const halted = useSelector(selectHalted)
+
+    const [currentAlias, setCurrentAlias] = useState('action')
+    const [scopeOfChoice, setScopeOfChoice] = useState(
+        {} as {
+            [key: string]: string
+        }
+    )
+    const [choices, setChoices] = useState({
+        mechanic: {},
+        displayed: {},
+    } as {
+        mechanic: { [key: string]: string }
+        displayed: { [key: string]: string }
+    })
+    const [clickedAction, setClickedAction] = useState(
+        null as {
+            mechanic_val: string
+            displayed_val: string
+        } | null
+    )
 
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
+    const appendScope = useCallback((scope: { [key: string]: string }) => {
+        setScopeOfChoice((prev) => ({ ...prev, ...scope }))
+    }, [])
+
     const handleReset = useCallback(() => {
         dispatch(resetStateAfterSquareChoice())
-        dispatch(resetInput())
+        resetInputs()
     }, [dispatch])
+
+    const resetClickedAction = useCallback(() => {
+        setClickedAction(null)
+    }, [])
+
+    const resetInputs = useCallback(() => {
+        setCurrentAlias('action')
+        setScopeOfChoice({})
+        setChoices({
+            mechanic: {},
+            displayed: {},
+        })
+        setClickedAction(null)
+        setReachedFinalDepth(false)
+        dispatch(resetHighlightedSquares())
+    }, [])
+
+    useEffect(() => {
+        if (halted) {
+            resetInputs()
+            dispatch(receivedHalt())
+        }
+    }, [halted])
 
     const handleDepth = useCallback((): JSX.Element => {
         return currentAlias && currentAlias !== 'action' ? (
@@ -101,47 +134,41 @@ const ActionInput = () => {
     }, [currentAlias, handleReset])
 
     useEffect(() => {
-        if (
-            !chosenActionStore ||
-            chosenActionStore.chosenActionValue === '' ||
-            chosenActionStore.translatedActionValue === ''
-        ) {
+        if (!clickedAction || clickedAction.mechanic_val === '' || clickedAction.displayed_val === '') {
             return
         }
         dispatch(
             setNotify({
-                message: chosenActionStore.translatedActionValue,
+                message: clickedAction.displayed_val,
                 code: 200,
             })
         )
-        dispatch(
-            setTranslatedChoice({
-                key: t(
-                    currentAlias && currentAlias !== 'action'
-                        ? aliasesTranslations[scope[currentAlias]]
-                        : aliasesTranslations[currentAlias]
-                ),
-                value: chosenActionStore.translatedActionValue,
-            })
-        )
-        dispatch(
-            setChoice({
-                key: currentAlias,
-                value: chosenActionStore.chosenActionValue,
-            })
-        )
-        dispatch(resetChosenAction())
-    }, [chosenActionStore, dispatch, t, aliasesTranslations, currentAlias, battlefieldMode, scope])
+        console.log(currentAlias, clickedAction.mechanic_val, clickedAction.displayed_val, t(aliasesTranslated[currentAlias]))
+        setChoices((prev) => ({
+            mechanic: { ...prev.mechanic, [currentAlias]: clickedAction.mechanic_val },
+            displayed: {
+                ...prev.displayed,
+                [currentAlias && currentAlias !== 'action'
+                    ? aliasesTranslated[scopeOfChoice[currentAlias]]
+                    : aliasesTranslated[currentAlias]]: clickedAction.displayed_val,
+            },
+        }))
+        resetClickedAction()
+    }, [clickedAction, dispatch, t, currentAlias, battlefieldMode, scopeOfChoice])
 
     useEffect(() => {
         // this effect listens for click on battlefield.
         if (clickedSquare && battlefieldMode === 'selection') {
-            dispatch(
-                setChoice({
-                    key: currentAlias,
-                    value: clickedSquare,
-                })
-            )
+            setChoices((prev) => ({
+                mechanic: { ...prev.mechanic, [currentAlias]: clickedSquare },
+                displayed: {
+                    ...prev.displayed,
+                    [currentAlias && currentAlias !== 'action'
+                        ? aliasesTranslated[scopeOfChoice[currentAlias]]
+                        : aliasesTranslated[currentAlias]]: clickedSquare,
+                },
+            }))
+            dispatch(addHighlightedSquare(clickedSquare))
             dispatch(resetStateAfterSquareChoice())
         }
     }, [clickedSquare])
@@ -153,7 +180,7 @@ const ActionInput = () => {
             if (currentAlias === 'action') {
                 action = initialActionLevel.action
             } else {
-                aliasValue = scope[currentAlias]
+                aliasValue = scopeOfChoice[currentAlias]
                 action = aliases[aliasValue]
             }
         }
@@ -176,6 +203,11 @@ const ActionInput = () => {
         }
 
         if (aliasValue.startsWith('Square')) {
+            const interactableTiles = {} as { [key: string]: boolean }
+            action.forEach((action: Action) => {
+                interactableTiles[action.id] = true
+            })
+            dispatch(setInteractableTiles(interactableTiles))
             return (
                 <h1
                     style={{
@@ -191,16 +223,29 @@ const ActionInput = () => {
         }
 
         return action.map((action: Action, index: number) => {
-            return <OptionCard option={action} index={index} t={t} key={index} />
+            return (
+                <OptionCard
+                    option={action}
+                    index={index}
+                    key={index}
+                    callback={() => {
+                        setClickedAction({
+                            mechanic_val: action.id,
+                            displayed_val: t(`${action.translation_info.descriptor}.name`),
+                        })
+                    }}
+                    highlighted={clickedAction?.mechanic_val === action.id}
+                />
+            )
         })
-    }, [t, currentAlias, aliases, scope, choices, initialActionLevel.action, dispatch])
+    }, [t, currentAlias, aliases, scopeOfChoice, choices.mechanic, choices, initialActionLevel.action, dispatch])
 
     useEffect(() => {
-        const aliasValue = scope[currentAlias]
+        const aliasValue = scopeOfChoice[currentAlias]
         if (!currentAlias || aliasValue === undefined) {
             return
         }
-        if (aliasValue.startsWith('Square') && choices[currentAlias] === undefined) {
+        if (aliasValue.startsWith('Square') && choices.mechanic[currentAlias] === undefined) {
             if (battlefieldMode === 'info') {
                 dispatch(setBattlefieldMode('selection'))
             }
@@ -209,7 +254,7 @@ const ActionInput = () => {
                 dispatch(setBattlefieldMode('info'))
             }
         }
-    }, [currentAlias, choices, scope, dispatch, t])
+    }, [currentAlias, choices.mechanic, choices, scopeOfChoice, dispatch, t])
 
     const shallowDepthScreen = useCallback(() => {
         const options = generateOptions()
@@ -236,7 +281,7 @@ const ActionInput = () => {
                 >
                     <div id={'manipulators'}>{handleDepth()}</div>
                 </div>
-                <div id={"options"} className={styles.options}>
+                <div id={'options'} className={styles.options}>
                     {options}
                 </div>
             </>
@@ -247,10 +292,10 @@ const ActionInput = () => {
         return (
             <>
                 <h1>{t('local:game.actions.you_chose')}</h1>
-                {translatedChoices !== undefined ? (
+                {choices.displayed ? (
                     <p>
-                        {Object.entries(translatedChoices)
-                            .map(([key, value]) => `${t(key)}: ${t(value)}`)
+                        {Object.entries(choices.displayed)
+                            .map(([key, value]) => `${capitalizeFirstLetter(t(key))}: ${t(value)}`)
                             .join(', ')}
                     </p>
                 ) : (
@@ -258,16 +303,19 @@ const ActionInput = () => {
                 )}
                 <RxArrowTopRight
                     onClick={() => {
-                        if (choices === undefined) {
-                            dispatch(
-                                setChoice({
-                                    key: 'action',
-                                    value: 'builtins:skip',
-                                })
-                            )
+                        if (choices.mechanic === undefined) {
+                            setChoices({
+                                mechanic: {
+                                    action: 'builtins:skip',
+                                },
+                                displayed: {
+                                    action: 'builtins:skip',
+                                },
+                            })
                         }
                         setReachedFinalDepth(false)
-                        dispatch(setReadyToSubmit(true))
+                        resetInputs()
+                        dispatch(setOutput(choices.mechanic))
                     }}
                 />
                 <BsArrowBarLeft
@@ -278,20 +326,20 @@ const ActionInput = () => {
                 />
             </>
         )
-    }, [dispatch, t, choices, translatedChoices, handleReset])
+    }, [dispatch, t, choices, handleReset])
 
     useEffect(() => {
-        if (!currentAlias || choices[currentAlias] === undefined || inputReadyToSubmit) {
+        if (!currentAlias || choices.mechanic[currentAlias] === undefined || output !== null) {
             return
         }
-        if (choices[currentAlias] !== undefined && currentAlias === 'action') {
-            const choice = choices[currentAlias]
+        if (choices.mechanic[currentAlias] !== undefined && currentAlias === 'action') {
+            const choice = choices.mechanic[currentAlias]
             const action = initialActionLevel.action.find((action: Action) => action.id === choice)
             if (action) {
                 const nextRequirements = action.requires
                 if (nextRequirements) {
-                    dispatch(appendScope(nextRequirements))
-                    dispatch(setCurrentAlias(Object.keys(nextRequirements)[0]))
+                    appendScope(nextRequirements)
+                    setCurrentAlias(Object.keys(nextRequirements)[0])
                 } else {
                     if (!reachedFinalDepth) {
                         setReachedFinalDepth(true)
@@ -309,30 +357,30 @@ const ActionInput = () => {
             // scope keeps track of requirements to process.
             // if we have chosen an action and there is another requirement in scope that haven't been defined, we move to next requirement
             // else, we set reached final depth, and it is possible to submit input
-            const action = aliases[scope[currentAlias]]
+            const action = aliases[scopeOfChoice[currentAlias]]
             action &&
                 (() => {
-                    const selectedAction = action.find((action: Action) => action.id === choices[currentAlias])
+                    const selectedAction = action.find((action: Action) => action.id === choices.mechanic[currentAlias])
                     if (selectedAction && selectedAction.requires) {
-                        dispatch(appendScope(selectedAction.requires))
+                        appendScope(selectedAction.requires)
                     }
                 })()
-            const nextRequirements = Object.keys(scope).filter((key: string) => !choices[key])
+            const nextRequirements = Object.keys(scopeOfChoice).filter((key: string) => !choices.mechanic[key])
             if (nextRequirements.length > 0) {
-                dispatch(setCurrentAlias(nextRequirements[0]))
+                setCurrentAlias(nextRequirements[0])
             } else {
                 setReachedFinalDepth(true)
             }
         }
     }, [
-        choices,
+        choices.mechanic,
         currentAlias,
-        scope,
+        scopeOfChoice,
         initialActionLevel.action,
         dispatch,
         handleReset,
         reachedFinalDepth,
-        inputReadyToSubmit,
+        output,
     ])
 
     return (

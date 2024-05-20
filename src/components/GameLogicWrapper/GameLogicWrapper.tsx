@@ -7,7 +7,7 @@ import { resetGameComponentsStateAction } from '../../redux/highActions'
 import { setNotify } from '../../redux/slices/cosmeticsSlice'
 import { selectGameFlow } from '../../redux/slices/infoSlice'
 import { selectLobbyInfo } from '../../redux/slices/lobbySlice'
-import { resetTurnSlice, selectChoices, selectReadyToSubmit } from '../../redux/slices/turnSlice'
+import { resetTurnSlice, selectOutput } from '../../redux/slices/turnSlice'
 import { AppDispatch } from '../../redux/store'
 import SocketService from '../../services/SocketService'
 import GameScreen from '../GameScreen/GameScreen'
@@ -22,8 +22,7 @@ const GameLogicWrapper = () => {
     const { gameId, lobbyId } = useParams()
 
     const gameFlow = useSelector(selectGameFlow)
-    const inputReadyToSubmit = useSelector(selectReadyToSubmit)
-    const submittedInput = useSelector(selectChoices)
+    const actionOutput = useSelector(selectOutput)
     const lobbyInfo = useSelector(selectLobbyInfo)
 
     useEffect(() => {
@@ -41,17 +40,17 @@ const GameLogicWrapper = () => {
     }, [gameId, dispatch, t, navigate])
 
     useEffect(() => {
-        if (inputReadyToSubmit && submittedInput) {
+        if (actionOutput) {
             dispatch(
                 setNotify({
-                    message: JSON.stringify(submittedInput),
+                    message: JSON.stringify(actionOutput),
                     code: 200,
                 })
             )
             dispatch(resetTurnSlice())
-            SocketService.emit('take_action', submittedInput)
+            SocketService.emit('take_action', actionOutput)
         }
-    }, [inputReadyToSubmit, submittedInput, dispatch])
+    }, [actionOutput, dispatch])
 
     const getCurrentScreen = useCallback((): JSX.Element => {
         switch (gameFlow?.type) {

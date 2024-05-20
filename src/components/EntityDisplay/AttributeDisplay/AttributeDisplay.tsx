@@ -2,12 +2,7 @@ import { useMemo } from 'react'
 import { EntityAttributes } from '../../../models/Battlefield'
 import styles from './AttributeDisplay.module.css'
 import { useTranslation } from 'react-i18next'
-
-const capitalizeFirstLetter = (string: string) => {
-    if (!string) return ''
-    if (string.length === 1) return string.toUpperCase()
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter'
 
 const AttributeDisplay = ({ attributes }: { attributes: EntityAttributes }) => {
     const { t } = useTranslation()

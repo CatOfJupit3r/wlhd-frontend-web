@@ -24,7 +24,7 @@ const Notify = () => {
 
     return (
         <ToastContainer
-            position={'top-right'}
+            position={'bottom-left'}
             autoClose={2000}
             limit={5}
             onClick={() => {

@@ -5,8 +5,6 @@ import { RootState } from '../store'
 
 const initialState: TurnState = {
     playersTurn: false,
-    readyToSubmit: false,
-    needToChooseSquare: false,
     entityActions: {
         action: [
             {
@@ -24,15 +22,9 @@ const initialState: TurnState = {
             action: 'builtins:action',
         },
     },
-    currentAlias: 'action',
-    scope: {},
-    highlightedComponents: {},
-    choices: {},
-    translatedChoices: {},
-    chosenAction: {
-        chosenActionValue: '',
-        translatedActionValue: '',
-    },
+    halted: false,
+    needToChooseSquare: false,
+    actionOutputs: null,
 }
 
 /*
@@ -62,83 +54,37 @@ const turnSlice = createSlice({
                 ...initialState,
                 playersTurn: state.playersTurn,
                 entityActions: state.entityActions,
-                readyToSubmit: state.readyToSubmit,
             }
         },
         resetTurnSlice(state) {
-            return { ...state, ...initialState }
+            return { ...state, ...initialState, halted: state.halted }
         },
         setPlayersTurn(state, action: PayloadAction<boolean>) {
             state.playersTurn = action.payload
         },
-        setReadyToSubmit(state, action: PayloadAction<boolean>) {
-            state.readyToSubmit = action.payload
-        },
         setEntityActions(state, action: PayloadAction<ActionInputInterface>) {
             state.entityActions = action.payload
         },
-        setCurrentAlias(state, action: PayloadAction<string>) {
-            state.currentAlias = action.payload
+        setOutput(state, action: PayloadAction<{ [key: string]: string }>) {
+            state.actionOutputs = action.payload
         },
-        appendScope(state, action: PayloadAction<{ [key: string]: string }>) {
-            state.scope = { ...state.scope, ...action.payload }
+        haltAction(state) {
+            state.halted = true
         },
-        addHighlightedComponent(state, action: PayloadAction<string>) {
-            const key = action.payload
-            state.highlightedComponents[key] = (state.highlightedComponents[key] || 0) + 1
-        },
-        highlightNothingButComponent(state, action: PayloadAction<string>) {
-            state.highlightedComponents = {}
-            state.highlightedComponents[action.payload] = 1
-        },
-        resetHighlightedComponents(state) {
-            state.highlightedComponents = {}
-        },
-        setChoice(state, action: PayloadAction<{ key: string; value: string }>) {
-            const { key, value } = action.payload
-            state.choices[key] = value
-        },
-        setTranslatedChoice(state, action: PayloadAction<{ key: string; value: string }>) {
-            const { key, value } = action.payload
-            state.translatedChoices[key] = value
-        },
-        setChosenAction(state, action: PayloadAction<{ chosenActionValue: string; translatedActionValue: string }>) {
-            state.chosenAction = action.payload
-        },
-        resetChosenAction(state) {
-            state.chosenAction = initialState.chosenAction
+        receivedHalt(state) {
+            state.halted = false
         },
     },
 })
 
 export default turnSlice.reducer
 
-export const {
-    resetInput,
-    resetTurnSlice,
-    setPlayersTurn,
-    setReadyToSubmit,
-    setEntityActions,
-    setCurrentAlias,
-    appendScope,
-    addHighlightedComponent,
-    setChoice,
-    setTranslatedChoice,
-    setChosenAction,
-    resetChosenAction,
-    resetHighlightedComponents,
-    highlightNothingButComponent,
-} = turnSlice.actions
+export const { resetInput, resetTurnSlice, setPlayersTurn, setEntityActions, setOutput, receivedHalt, haltAction } =
+    turnSlice.actions
 
 export const selectEntityActions = (state: RootState) => state.turn.entityActions
-export const selectCurrentAlias = (state: RootState) => state.turn.currentAlias
-export const selectScope = (state: RootState) => state.turn.scope
-export const selectHighlightedComponents = (state: RootState) => state.turn.highlightedComponents
-export const selectChoices = (state: RootState) => state.turn.choices
-export const selectTranslatedChoices = (state: RootState) => state.turn.translatedChoices
-export const selectReadyToSubmit = (state: RootState) => state.turn.readyToSubmit
-export const selectIsSquareChoice = (state: RootState) => state.turn.needToChooseSquare
 export const selectAliasTranslations = (state: RootState) => state.turn.entityActions.alias_translations
 export const selectAliases = (state: RootState) => state.turn.entityActions.aliases
-export const selectChosenAction = (state: RootState) => state.turn.chosenAction
 export const selectPlayersTurn = (state: RootState) => state.turn.playersTurn
+export const selectOutput = (state: RootState) => state.turn.actionOutputs
+export const selectHalted = (state: RootState) => state.turn.halted

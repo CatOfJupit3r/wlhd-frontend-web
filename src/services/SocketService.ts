@@ -26,7 +26,7 @@ import {
     setMessages,
     setRound,
 } from '../redux/slices/infoSlice'
-import { resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
+import { haltAction, resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
 import { store as ReduxStore } from '../redux/store'
 import APIService from './APIService'
 import AuthManager from './AuthManager'
@@ -178,6 +178,7 @@ class SocketService {
                 // emitted to avoid users from taking actions when they shouldn't no longer
                 console.log('Halted action')
                 ReduxStore.dispatch(resetTurnSlice())
+                ReduxStore.dispatch(haltAction())
             },
             [SOCKET_EVENTS.BATTLE_ENDED]: ({ battle_result }: { battle_result: string }) => {
                 console.log('Battle ended', battle_result)

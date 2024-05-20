@@ -12,16 +12,12 @@ import {
     selectSeparators,
     setInteractableTiles,
 } from '../../redux/slices/battlefieldSlice'
-import { selectAliases, selectCurrentAlias, selectScope } from '../../redux/slices/turnSlice'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
 
 const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) => {
     const dispatch = useDispatch()
 
-    const currentAlias = useSelector(selectCurrentAlias)
-    const aliases = useSelector(selectAliases)
-    const scope = useSelector(selectScope)
     const connectors = useSelector(selectConnectors)
     const columns = useSelector(selectColumns)
     const lines = useSelector(selectLines)
@@ -35,28 +31,20 @@ const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) =
     const enemyRows = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i + Math.floor(numberOfRows / 2))
 
     useEffect(() => {
-        if (battlefieldMode === 'selection') {
-            if (mode === 'game') {
-                const newInteractableTiles: { [key: string]: boolean } = {}
-                for (const action of aliases[scope[currentAlias]]) {
-                    newInteractableTiles[action.id] = true
-                }
-                dispatch(setInteractableTiles(newInteractableTiles))
-            } else if (mode === 'editor') {
-                dispatch(
-                    setInteractableTiles(
-                        (() => {
-                            const interactableTiles: { [key: string]: boolean } = {}
-                            for (let i = 0; i < battlefield.field.length; i++) {
-                                for (let j = 0; j < battlefield.field[i].length; j++) {
-                                    interactableTiles[`${i + 1}/${j + 1}`] = false
-                                }
+        if (battlefieldMode === 'selection' && mode === 'editor') {
+            dispatch(
+                setInteractableTiles(
+                    (() => {
+                        const interactableTiles: { [key: string]: boolean } = {}
+                        for (let i = 0; i < battlefield.field.length; i++) {
+                            for (let j = 0; j < battlefield.field[i].length; j++) {
+                                interactableTiles[`${i + 1}/${j + 1}`] = false
                             }
-                            return interactableTiles
-                        })()
-                    )
+                        }
+                        return interactableTiles
+                    })()
                 )
-            }
+            )
         }
     }, [battlefieldMode])
 

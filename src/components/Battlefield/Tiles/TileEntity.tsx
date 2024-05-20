@@ -4,11 +4,11 @@ import { INVALID_ASSET_PATH } from '../../../config'
 import {
     selectBattlefieldMode,
     selectFieldComponents,
+    selectHighlightedSquares,
     selectInteractableTiles,
     setClickedSquare,
 } from '../../../redux/slices/battlefieldSlice'
 import { selectActiveEntity } from '../../../redux/slices/infoSlice'
-import { addHighlightedComponent, selectHighlightedComponents } from '../../../redux/slices/turnSlice'
 import { generateAssetPath, generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
@@ -42,10 +42,10 @@ const TileEntity = (props: {
     } as DecorationConfig)
 
     const battlefieldMode = useSelector(selectBattlefieldMode)
-    const highlightedComponents = useSelector(selectHighlightedComponents)
     const interactableTiles = useSelector(selectInteractableTiles)
     const activeEntity = useSelector(selectActiveEntity)
     const pawns = useSelector(selectFieldComponents)
+    const highlightedComponents = useSelector(selectHighlightedSquares)
 
     const changeDecoration = useCallback(
         (
@@ -80,7 +80,6 @@ const TileEntity = (props: {
 
     const handleDoubleClick = useCallback(() => {
         if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
-            dispatch(addHighlightedComponent(id))
             dispatch(setClickedSquare(id))
         }
     }, [id, dispatch, interactableTiles])
