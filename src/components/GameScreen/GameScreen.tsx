@@ -10,7 +10,7 @@ const GameScreen = () => {
         <div className={styles.gameScreenContainer}>
             <div className={styles.gameInfoContainer}>
                 <RoundHeader />
-                <Battlefield mode={'game'} />
+                <Battlefield />
             </div>
             <div className={styles.gameMenusContainer}>
                 <div className={styles.menuContainer}>

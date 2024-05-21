@@ -1,17 +1,17 @@
 import { AxiosError } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Battlefield from '../components/Battlefield/Battlefield'
 import CombatEditor from '../components/CombatEditor/CombatEditor'
 import { resetGameComponentsStateAction } from '../redux/highActions'
-import { setBattlefieldMode } from '../redux/slices/battlefieldSlice'
+import { selectBattlefieldMold, setBattlefieldMode, setInteractableTiles } from '../redux/slices/battlefieldSlice'
+import { setNotify } from '../redux/slices/cosmeticsSlice'
 import { selectLobbyId } from '../redux/slices/lobbySlice'
-import { setNotify, setPageTitle } from '../redux/slices/cosmeticsSlice'
 import { AppDispatch } from '../redux/store'
 import paths from '../router/paths'
 import APIService from '../services/APIService'
-import { useTranslation } from 'react-i18next'
 
 interface CombatPreset {
     field: {
@@ -30,6 +30,7 @@ const CreateCombatPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation()
+    const battlefield = useSelector(selectBattlefieldMold)
 
     const lobbyId = useSelector(selectLobbyId)
     const [combatName, setCombatName] = useState('MyNewPreset')
@@ -53,10 +54,6 @@ const CreateCombatPage = () => {
             },
         },
     } as CombatPreset)
-
-    useEffect(() => {
-        dispatch(setPageTitle(t('local:page_titles.create_combat')))
-    }, [])
 
     const onSubmit = useCallback(async () => {
         try {
@@ -103,6 +100,19 @@ const CreateCombatPage = () => {
 
     useEffect(() => {
         dispatch(setBattlefieldMode('selection'))
+        dispatch(
+            setInteractableTiles(
+                (() => {
+                    const interactableTiles: { [key: string]: boolean } = {}
+                    for (let i = 0; i < battlefield.field.length; i++) {
+                        for (let j = 0; j < battlefield.field[i].length; j++) {
+                            interactableTiles[`${i + 1}/${j + 1}`] = false
+                        }
+                    }
+                    return interactableTiles
+                })()
+            )
+        )
     }, [])
 
     return (
@@ -113,7 +123,7 @@ const CreateCombatPage = () => {
                     flexDirection: 'row',
                 }}
             >
-                <Battlefield mode={'editor'}/>
+                <Battlefield />
                 <div
                     style={{
                         display: 'flex',

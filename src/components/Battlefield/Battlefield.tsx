@@ -1,52 +1,29 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { Blurhash } from 'react-blurhash'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { BATTLEFIELD_BLUR_HASH } from '../../config'
 import {
-    selectBattlefieldMode,
     selectBattlefieldMold,
     selectColumns,
     selectConnectors,
     selectFieldComponents,
     selectLines,
     selectSeparators,
-    setInteractableTiles,
 } from '../../redux/slices/battlefieldSlice'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
 
-const Battlefield = ({ mode }: { mode: 'editor' | 'game' } = { mode: 'game' }) => {
-    const dispatch = useDispatch()
-
+const Battlefield = () => {
     const connectors = useSelector(selectConnectors)
     const columns = useSelector(selectColumns)
     const lines = useSelector(selectLines)
     const separators = useSelector(selectSeparators)
     const field_components = useSelector(selectFieldComponents)
     const battlefield = useSelector(selectBattlefieldMold)
-    const battlefieldMode = useSelector(selectBattlefieldMode)
 
     const numberOfRows = battlefield.lines.length
     const allyRowIndexes = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i)
     const enemyRows = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i + Math.floor(numberOfRows / 2))
-
-    useEffect(() => {
-        if (battlefieldMode === 'selection' && mode === 'editor') {
-            dispatch(
-                setInteractableTiles(
-                    (() => {
-                        const interactableTiles: { [key: string]: boolean } = {}
-                        for (let i = 0; i < battlefield.field.length; i++) {
-                            for (let j = 0; j < battlefield.field[i].length; j++) {
-                                interactableTiles[`${i + 1}/${j + 1}`] = false
-                            }
-                        }
-                        return interactableTiles
-                    })()
-                )
-            )
-        }
-    }, [battlefieldMode])
 
     const columnHelpRow = useCallback(
         (key: string) => {
