@@ -143,7 +143,6 @@ const ActionInput = () => {
                 code: 200,
             })
         )
-        console.log(currentAlias, clickedAction.mechanic_val, clickedAction.displayed_val, t(aliasesTranslated[currentAlias]))
         setChoices((prev) => ({
             mechanic: { ...prev.mechanic, [currentAlias]: clickedAction.mechanic_val },
             displayed: {
@@ -273,7 +272,7 @@ const ActionInput = () => {
             <>
                 <div
                     id={'buttons'}
-                    className={styles.buttons}
+                    className={styles.buttonContainer}
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -301,6 +300,7 @@ const ActionInput = () => {
                 ) : (
                     <h2>{t('local:game.actions.nothing?')}</h2>
                 )}
+                <div className={styles.buttonContainer}>
                 <RxArrowTopRight
                     onClick={() => {
                         if (choices.mechanic === undefined) {
@@ -324,6 +324,7 @@ const ActionInput = () => {
                         handleReset()
                     }}
                 />
+                </div>
             </>
         )
     }, [dispatch, t, choices, handleReset])

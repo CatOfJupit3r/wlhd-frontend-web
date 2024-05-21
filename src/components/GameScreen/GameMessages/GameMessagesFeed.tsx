@@ -2,6 +2,10 @@ import {useTranslation} from 'react-i18next'
 import {useSelector} from 'react-redux'
 import {selectAllMessages} from '../../../redux/slices/infoSlice'
 import useTranslatableString from "../../../hooks/useTranslatableString";
+import styles from './GameMessagesFeed.module.css'
+import {GameStateContainer} from "../../../models/Battlefield";
+import {useCallback} from "react";
+import {GameMessage} from "../../../models/GameHandshake";
 
 /*
 
@@ -27,24 +31,21 @@ const GameMessagesFeed = () => {
 
     const messages = useSelector(selectAllMessages)
 
+    const reverseMessageContainer = useCallback((messages: GameStateContainer): GameStateContainer => {
+        return messages.slice().reverse()
+    }, [])
+
+    const reverseGameMessages = useCallback((messages: GameMessage): GameMessage => {
+        return messages.slice().reverse()
+    }, [])
+
     return (
         <div
-            className="game-messages-feed"
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                overflowY: 'scroll',
-                height: '100%',
-                width: '100%',
-                padding: '10px',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                color: 'white',
-                borderRadius: '5px',
-            }}
+            className={styles.stateFeed}
         >
             {messages ? (
-                messages.map((msg) => {
-                    return msg.map((content, index) => {
+                reverseMessageContainer(messages).map((msg) => {
+                    return reverseGameMessages(msg).map((content, index) => {
                         return <p key={index}>{tstring(content)}</p>
                     })
                 })

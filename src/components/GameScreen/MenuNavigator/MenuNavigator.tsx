@@ -6,26 +6,26 @@ import { TbManualGearbox } from 'react-icons/tb'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setChosenMenu } from '../../../redux/slices/infoSlice'
+import {useTranslation} from "react-i18next";
+import styles from './MenuNavigator.module.css'
 
 const MenuNavigator = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const optionNavigators = useMemo(
         () => [
             {
                 Component: FaUsers,
-                alt: 'Controlled Entities',
                 value: 'your-entities',
             },
             {
                 Component: FaUncharted,
-                alt: 'Take action!',
                 value: 'action-select',
             },
             {
                 Component: MdHistoryToggleOff,
-                alt: 'History',
                 value: 'history',
             },
         ],
@@ -36,12 +36,10 @@ const MenuNavigator = () => {
         () => [
             {
                 Component: TbManualGearbox,
-                alt: 'GM Settings',
                 value: 'gm-settings',
             },
             {
                 Component: MdOutlineVideogameAssetOff,
-                alt: 'Leave',
                 value: undefined,
             },
         ],
@@ -51,17 +49,11 @@ const MenuNavigator = () => {
     const generateOption = useCallback(
         (arr: typeof optionNavigators | typeof pageNavigators, componentKeyAlias: string) => {
             return arr.map((pageNavigator, index) => {
-                const { Component, alt, value } = pageNavigator
+                const { Component, value } = pageNavigator
                 return (
                     <Component
                         key={`${componentKeyAlias}-${index}`}
-                        title={alt}
-                        style={{
-                            marginBottom: '1vh',
-                            height: '8vh',
-                            width: '8vh',
-                            color: 'white',
-                        }}
+                        title={value && t(`local:game.action_menus.${value}`)}
                         onClick={() => {
                             if (value) {
                                 dispatch(setChosenMenu(value))
@@ -78,33 +70,16 @@ const MenuNavigator = () => {
 
     return (
         <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '1vh',
-            }}
+            className={styles.navigationContainer}
         >
             <div
                 id={'option-navigators'}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
+                className={styles.navigationButtonContainer}
             >
                 {generateOption(optionNavigators, 'option-navigator')}
             </div>
             <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
+                className={styles.navigationButtonContainer}
                 id={'page-navigators'}
             >
                 {generateOption(pageNavigators, 'page-navigator')}

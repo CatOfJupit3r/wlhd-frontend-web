@@ -39,7 +39,7 @@ const MenuContainer = () => {
         if (!chosenMenu) {
             if (menus.length === 0) {
                 return <>
-                    <h1>{t('local:game.action_menus.no_menu_available')}</h1>
+                    <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
                     <div>
                         {t('local:game.action_menus.report_this_issue')}
                     </div>
@@ -47,14 +47,14 @@ const MenuContainer = () => {
             }
             return (
                 <>
-                    <h1>{t(`local:game.action_menus.${menus[0].key}`)}</h1>
+                    <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${menus[0].key}`)}</h1>
                     {menus[0].Component()}
                 </>
             )
         }
         return (
             <>
-                <h1>{t(`local:game.action_menus.${chosenMenu}`)}</h1>
+                <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${chosenMenu}`)}</h1>
                 {menus.find((menu) => menu.key === chosenMenu)?.Component()}
             </>
         )
