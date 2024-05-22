@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useState } from 'react'
+import { RiArrowDownDoubleFill } from 'react-icons/ri'
 import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
 import styles from './ToggleContainer.module.css'
-import { RiArrowDownDoubleFill } from 'react-icons/ri'
 
 const ToggleContainer = ({
     children,
@@ -14,10 +14,26 @@ const ToggleContainer = ({
 }) => {
     const [showItems, setShowItems] = useState(false)
 
-    const Toggle = useCallback(
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => {
+    const ToggleMouse = useCallback(
+        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             e.preventDefault()
             setShowItems(!showItems)
+        },
+        [showItems]
+    )
+
+    const ToggleKey = useCallback(
+        (e: React.KeyboardEvent<HTMLDivElement>) => {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+                e.preventDefault()
+                setShowItems(!showItems)
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault()
+                setShowItems(false)
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault()
+                setShowItems(true)
+            }
         },
         [showItems]
     )
@@ -27,14 +43,13 @@ const ToggleContainer = ({
     }, [showItems])
 
     return (
-        <div className={`${styles.toggleContainer}` + (className ? ` ${className}` : '')}
-        >
+        <div className={`${styles.toggleContainer}` + (className ? ` ${className}` : '')}>
             <ElementWithIcon
                 iconPosition={'opposite'}
                 element={header}
                 icon={<RiArrowDownDoubleFill className={getIconClassName()} />}
-                onClick={Toggle}
-                onKeyDown={Toggle}
+                onClick={ToggleMouse}
+                onKeyDown={ToggleKey}
                 role="button"
                 tabIndex={0}
                 className={styles.toggleSwitch}
