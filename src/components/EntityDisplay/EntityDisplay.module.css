@@ -8,6 +8,7 @@
     border-radius: 0.5rem;
     overflow-x: hidden;
     overflow-y: scroll;
+    gap: 0.5rem;
 }
 
 .entityHeader {
@@ -15,7 +16,6 @@
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
-    margin-bottom: 0.5rem;
     font-size: 1.5rem;
 }
 
@@ -33,3 +33,14 @@
     font-size: 1.15rem;
 }
 
+.attributeToggle {
+    width: 100%;
+    border: 1px solid #000000;
+    border-radius: 0.2625rem;
+    padding: 0.5rem;
+}
+
+.entityIWillComeUpWithAName {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
