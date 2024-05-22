@@ -84,7 +84,15 @@
             "spellbook": "Книга заклять",
             "no_spellbook": "Немає заклять",
             "attributes": "Атрибути",
-            "no_attributes": "Немає атрибутів"
+            "no_attributes": "Немає атрибутів",
+            "equipped": "Екіпіровано: {{slot}}",
+            "nothing_weapon": "Нічого"
+        },
+        "info_display": {
+            "quantity": "Кількість: {{quantity}}",
+            "cost": "Вартість: {{cost}}",
+            "user_must_be": "Радіус користувача: {{range}}",
+            "uses": "Використання: {{uses}}"
         }
     },
     "page_titles": {

@@ -6,20 +6,33 @@
     height: 100%;
     background-color: #f0f0f0;
     border-radius: 5px;
+}
+
+
+.toggleSwitch {
     cursor: pointer;
 }
 
+
 .toggleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 0 1.75rem;
 }
 
 .iconClosed {
-    color: white;
+    color: black;
     transition: color 0.1s;
 }
 
 .iconClosed:hover {
-    color: #e1e1e1;
+    color: #4d4d4d;
+    transition: color 0.1s;
+}
+
+.iconClosed:active {
+    color: #4d4d4d;
     transition: color 0.1s;
 }
 
