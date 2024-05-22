@@ -30,8 +30,9 @@ import {
     setBattlefieldMode,
     setInteractableTiles,
 } from '../../../redux/slices/battlefieldSlice'
-import OptionCard from './OptionCard/OptionCard'
 import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter'
+import ElementWithIcon from '../../ElementWithIcon/ElementWithIcon'
+import OptionCard from './OptionCard/OptionCard'
 
 /*
 
@@ -127,9 +128,9 @@ const ActionInput = () => {
 
     const handleDepth = useCallback((): JSX.Element => {
         return currentAlias && currentAlias !== 'action' ? (
-            <BsArrowBarLeft onClick={() => handleReset()} />
+            <ResetButton />
         ) : (
-            <BsArrowBarLeft />
+            <ResetButton />
         )
     }, [currentAlias, handleReset])
 
@@ -255,6 +256,45 @@ const ActionInput = () => {
         }
     }, [currentAlias, choices.mechanic, choices, scopeOfChoice, dispatch, t])
 
+    const ResetButton = useCallback(() => {
+        return (<ElementWithIcon
+            icon={
+                <BsArrowBarLeft
+                    onClick={() => {
+                        setReachedFinalDepth(false)
+                        handleReset()
+                    }}
+                />
+            }
+            element={<p>{t('local:game.actions.reset')}</p>}
+        />)
+    }, [handleReset, t])
+
+    const ConfirmButton = useCallback(() => {
+        return (                    <ElementWithIcon
+            icon={
+                <RxArrowTopRight
+                    onClick={() => {
+                        if (choices.mechanic === undefined) {
+                            setChoices({
+                                mechanic: {
+                                    action: 'builtins:skip',
+                                },
+                                displayed: {
+                                    action: 'builtins:skip',
+                                },
+                            })
+                        }
+                        setReachedFinalDepth(false)
+                        resetInputs()
+                        dispatch(setOutput(choices.mechanic))
+                    }}
+                />
+            }
+            element={<p>{t('local:game.actions.submit')}</p>}
+        />)
+    }, [dispatch, t, choices, handleReset])
+
     const shallowDepthScreen = useCallback(() => {
         const options = generateOptions()
         if (Array.isArray(options)) {
@@ -301,29 +341,8 @@ const ActionInput = () => {
                     <h2>{t('local:game.actions.nothing?')}</h2>
                 )}
                 <div className={styles.buttonContainer}>
-                <RxArrowTopRight
-                    onClick={() => {
-                        if (choices.mechanic === undefined) {
-                            setChoices({
-                                mechanic: {
-                                    action: 'builtins:skip',
-                                },
-                                displayed: {
-                                    action: 'builtins:skip',
-                                },
-                            })
-                        }
-                        setReachedFinalDepth(false)
-                        resetInputs()
-                        dispatch(setOutput(choices.mechanic))
-                    }}
-                />
-                <BsArrowBarLeft
-                    onClick={() => {
-                        setReachedFinalDepth(false)
-                        handleReset()
-                    }}
-                />
+                    <ConfirmButton />
+                    <ResetButton />
                 </div>
             </>
         )

@@ -48,7 +48,9 @@
         "actions": {
             "no_available_actions": "Немає доступних дій",
             "you_chose": "Ти обрав",
-            "nothing?": "Нічого?"
+            "nothing?": "Нічого?",
+            "reset": "Скинути",
+            "submit": "Підтвердити"
         },
         "error": {
             "no_connection": "Немає зв'язку з сервером",
