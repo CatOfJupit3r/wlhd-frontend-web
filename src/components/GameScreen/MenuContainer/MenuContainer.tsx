@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import ActionInput from '../ActionInput/ActionInput'
-import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
-import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
-import styles from './MenuContainer.module.css'
 import { useSelector } from 'react-redux'
 import { selectChosenMenu } from '../../../redux/slices/infoSlice'
+import ActionInput from '../ActionInput/ActionInput'
+import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
+import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
+import styles from './MenuContainer.module.css'
 
 const MenuContainer = () => {
     const { t } = useTranslation()
@@ -35,27 +35,33 @@ const MenuContainer = () => {
         []
     )
 
+    const ReportThisIssue = useCallback(() => {
+        return <div>{t('local:game.action_menus.report_this_issue')}</div>
+    }, [])
+
     const displayMenu = useCallback(() => {
         if (!chosenMenu) {
             if (menus.length === 0) {
-                return <>
-                    <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
-                    <div>
-                        {t('local:game.action_menus.report_this_issue')}
-                    </div>
-                </>
+                return (
+                    <>
+                        <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
+                        <ReportThisIssue />
+                    </>
+                )
             }
+            const { key, Component } = menus[0]
             return (
                 <>
-                    <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${menus[0].key}`)}</h1>
-                    {menus[0].Component()}
+                    <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${key}`)}</h1>
+                    {<Component />}
                 </>
             )
         }
+        const { Component } = menus.find((menu) => menu.key === chosenMenu) || { Component: () => <ReportThisIssue /> }
         return (
             <>
                 <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${chosenMenu}`)}</h1>
-                {menus.find((menu) => menu.key === chosenMenu)?.Component()}
+                {<Component />}
             </>
         )
     }, [chosenMenu, menus, t])
