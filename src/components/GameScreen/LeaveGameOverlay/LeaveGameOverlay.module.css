@@ -1,0 +1,42 @@
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.buttons button {
+    font-weight: bold;
+    width: 20vh;
+    min-width: fit-content;
+    height: 5vh;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+.noButton {
+    color: white;
+    background-color: transparent;
+}
+
+.yesButton {
+    background-color: white;
+    color: black;
+}
+
+.yesButton:hover {
+    background-color: #ffffff;
+    color: #5d5d5d;
+    box-shadow: 0 0 10px 0 #ffffff;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.2s
+}
+
+.noButton:hover {
+    background-color: white;
+    color: black;
+    transition: 0.3s;
+}
+
+.buttons button:active {
+    background-color: #dcdcdc;
+    color: black;
+}

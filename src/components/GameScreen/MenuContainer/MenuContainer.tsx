@@ -7,6 +7,7 @@ import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntities
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import styles from './MenuContainer.module.css'
+import LeaveGameOverlay from '../LeaveGameOverlay/LeaveGameOverlay'
 
 const MenuContainer = () => {
     const { t } = useTranslation()
@@ -30,6 +31,10 @@ const MenuContainer = () => {
             {
                 key: 'gm-settings',
                 Component: () => <GmOptionMenu />,
+            },
+            {
+                key: 'leave-game',
+                Component: () => <LeaveGameOverlay />,
             },
         ],
         []

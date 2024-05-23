@@ -61,7 +61,7 @@ export interface InfoState {
     }
     controlledEntities: Array<EntityInfoFull> | null
     activeEntity: EntityInfoTurn | null
-    chosenMenu: string
+    chosenMenu: string | null
 }
 
 export interface BattlefieldState {

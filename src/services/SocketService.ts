@@ -91,7 +91,7 @@ class SocketService {
         this.socket.emit(event, data)
     }
 
-    private disconnect() {
+    public disconnect() {
         this.socket.disconnect()
     }
 

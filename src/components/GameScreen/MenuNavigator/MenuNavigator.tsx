@@ -3,7 +3,6 @@ import { FaUsers } from 'react-icons/fa'
 import { FaUncharted } from 'react-icons/fa6'
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setChosenMenu } from '../../../redux/slices/infoSlice'
 import {useTranslation} from "react-i18next";
@@ -11,7 +10,6 @@ import styles from './MenuNavigator.module.css'
 
 const MenuNavigator = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const { t } = useTranslation()
 
     const optionNavigators = useMemo(
@@ -40,7 +38,7 @@ const MenuNavigator = () => {
             },
             {
                 Component: MdOutlineVideogameAssetOff,
-                value: undefined,
+                value: 'leave-game',
             },
         ],
         []
@@ -55,11 +53,7 @@ const MenuNavigator = () => {
                         key={`${componentKeyAlias}-${index}`}
                         title={value && t(`local:game.action_menus.${value}`)}
                         onClick={() => {
-                            if (value) {
-                                dispatch(setChosenMenu(value))
-                            } else {
-                                navigate('..')
-                            }
+                            dispatch(setChosenMenu(value))
                         }}
                     />
                 )

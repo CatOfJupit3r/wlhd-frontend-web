@@ -26,7 +26,12 @@
     },
     "game": {
         "title": "Лобі {{game_id}}",
-        "exit": "Вийти з гри",
+        "exit": {
+            "header": "Ви впевнені, що хочете вийти?",
+            "subheader": "Завжди можна залишитись...",
+            "yes": "Точно-точно вийти!",
+            "no": "Я передумав"
+        },
         "components": {
             "battlefeed": "Журнал бою",
             "battlefield": "Поле бою",
@@ -74,7 +79,8 @@
             "your-entities": "Ти керуєш",
             "action-select": "Вибір дії",
             "history": "Історія",
-            "gm-settings": "GM меню"
+            "gm-settings": "GM меню",
+            "leave-game": "Вийти з гри"
         },
         "entity_display": {
             "status_effects": "Статус ефекти",

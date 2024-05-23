@@ -37,7 +37,7 @@ const InfoSlice = createSlice({
         addMessage: (state, action: PayloadAction<Array<TranslatableString>>) => {
             state.messages.loaded.push(action.payload)
         },
-        setChosenMenu: (state, action: PayloadAction<string>) => {
+        setChosenMenu: (state, action: PayloadAction<string | null>) => {
             state.chosenMenu = action.payload
         },
         setEntityTooltips: (state, action: PayloadAction<{ [square: string]: EntityInfoTooltip | null }>) => {
