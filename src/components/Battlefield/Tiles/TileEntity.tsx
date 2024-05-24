@@ -82,7 +82,7 @@ const TileEntity = (props: {
         if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
             dispatch(setClickedSquare(id))
         }
-    }, [id, dispatch, interactableTiles])
+    }, [id, interactableTiles])
 
     useEffect(() => {
         if (highlightedComponents && highlightedComponents[id] > 0) {

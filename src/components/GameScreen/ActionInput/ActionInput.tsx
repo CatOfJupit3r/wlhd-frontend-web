@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Action } from '../../../models/ActionInput'
 import { setNotify } from '../../../redux/slices/cosmeticsSlice'
@@ -92,88 +92,26 @@ const ActionInput = () => {
         } | null
     )
 
+    const [needToAddInteractableTiles, setNeedToAddInteractableTiles] = useState({
+        flag: false,
+        action: initialActionLevel.action,
+    })
+
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
-    const appendScope = useCallback((scope: { [key: string]: string }) => {
-        setScopeOfChoice((prev) => ({ ...prev, ...scope }))
-    }, [])
-
-    const handleReset = useCallback(() => {
-        dispatch(resetStateAfterSquareChoice())
-        resetInputs()
-    }, [dispatch])
-
-    const resetClickedAction = useCallback(() => {
-        setClickedAction(null)
-    }, [])
-
-    const resetInputs = useCallback(() => {
-        setCurrentAlias('action')
-        setScopeOfChoice({})
-        setChoices({
-            mechanic: {},
-            displayed: {},
-        })
-        setClickedAction(null)
-        setReachedFinalDepth(false)
-        dispatch(resetHighlightedSquares())
-    }, [])
-
     useEffect(() => {
-        if (halted) {
-            resetInputs()
-            dispatch(receivedHalt())
-        }
-    }, [halted])
-
-    const handleDepth = useCallback((): JSX.Element => {
-        return currentAlias && currentAlias !== 'action' ? (
-            <ResetButton />
-        ) : (
-            <ResetButton />
-        )
-    }, [currentAlias, handleReset])
-
-    useEffect(() => {
-        if (!clickedAction || clickedAction.mechanic_val === '' || clickedAction.displayed_val === '') {
+        if (!needToAddInteractableTiles) {
             return
         }
-        dispatch(
-            setNotify({
-                message: clickedAction.displayed_val,
-                code: 200,
-            })
-        )
-        setChoices((prev) => ({
-            mechanic: { ...prev.mechanic, [currentAlias]: clickedAction.mechanic_val },
-            displayed: {
-                ...prev.displayed,
-                [currentAlias && currentAlias !== 'action'
-                    ? aliasesTranslated[scopeOfChoice[currentAlias]]
-                    : aliasesTranslated[currentAlias]]: clickedAction.displayed_val,
-            },
-        }))
-        resetClickedAction()
-    }, [clickedAction, dispatch, t, currentAlias, battlefieldMode, scopeOfChoice])
-
-    useEffect(() => {
-        // this effect listens for click on battlefield.
-        if (clickedSquare && battlefieldMode === 'selection') {
-            setChoices((prev) => ({
-                mechanic: { ...prev.mechanic, [currentAlias]: clickedSquare },
-                displayed: {
-                    ...prev.displayed,
-                    [currentAlias && currentAlias !== 'action'
-                        ? aliasesTranslated[scopeOfChoice[currentAlias]]
-                        : aliasesTranslated[currentAlias]]: clickedSquare,
-                },
-            }))
-            dispatch(addHighlightedSquare(clickedSquare))
-            dispatch(resetStateAfterSquareChoice())
+        const interactableTiles = {} as { [key: string]: boolean }
+        for (const action of needToAddInteractableTiles.action) {
+            interactableTiles[action.id] = true
         }
-    }, [clickedSquare])
+        dispatch(setInteractableTiles(interactableTiles))
+        setNeedToAddInteractableTiles({ flag: false, action: [] })
+    }, [needToAddInteractableTiles])
 
-    const generateOptions = useCallback((): JSX.Element | JSX.Element[] => {
+    const options = useMemo(() => {
         let action: Action[] = []
         let aliasValue = ''
         if (currentAlias) {
@@ -203,11 +141,10 @@ const ActionInput = () => {
         }
 
         if (aliasValue.startsWith('Square')) {
-            const interactableTiles = {} as { [key: string]: boolean }
-            action.forEach((action: Action) => {
-                interactableTiles[action.id] = true
+            setNeedToAddInteractableTiles({
+                flag: true,
+                action,
             })
-            dispatch(setInteractableTiles(interactableTiles))
             return (
                 <h1
                     style={{
@@ -238,7 +175,78 @@ const ActionInput = () => {
                 />
             )
         })
-    }, [t, currentAlias, aliases, scopeOfChoice, choices.mechanic, choices, initialActionLevel.action, dispatch])
+    }, [currentAlias, aliases, scopeOfChoice, choices.mechanic, choices, initialActionLevel.action])
+
+    const appendScope = useCallback((scope: { [key: string]: string }) => {
+        setScopeOfChoice((prev) => ({ ...prev, ...scope }))
+    }, [])
+
+    const handleReset = useCallback(() => {
+        dispatch(resetStateAfterSquareChoice())
+        resetInputs()
+    }, [])
+
+    const resetClickedAction = useCallback(() => {
+        setClickedAction(null)
+    }, [])
+
+    const resetInputs = useCallback(() => {
+        setCurrentAlias('action')
+        setScopeOfChoice({})
+        setChoices({
+            mechanic: {},
+            displayed: {},
+        })
+        setClickedAction(null)
+        setReachedFinalDepth(false)
+        dispatch(resetHighlightedSquares())
+    }, [])
+
+    useEffect(() => {
+        if (halted) {
+            resetInputs()
+            dispatch(receivedHalt())
+        }
+    }, [halted])
+
+    useEffect(() => {
+        if (!clickedAction || clickedAction.mechanic_val === '' || clickedAction.displayed_val === '') {
+            return
+        }
+        dispatch(
+            setNotify({
+                message: clickedAction.displayed_val,
+                code: 200,
+            })
+        )
+        setChoices((prev) => ({
+            mechanic: { ...prev.mechanic, [currentAlias]: clickedAction.mechanic_val },
+            displayed: {
+                ...prev.displayed,
+                [currentAlias && currentAlias !== 'action'
+                    ? aliasesTranslated[scopeOfChoice[currentAlias]]
+                    : aliasesTranslated[currentAlias]]: clickedAction.displayed_val,
+            },
+        }))
+        resetClickedAction()
+    }, [clickedAction, currentAlias, battlefieldMode, scopeOfChoice])
+
+    useEffect(() => {
+        // this effect listens for click on battlefield.
+        if (clickedSquare && battlefieldMode === 'selection') {
+            setChoices((prev) => ({
+                mechanic: { ...prev.mechanic, [currentAlias]: clickedSquare },
+                displayed: {
+                    ...prev.displayed,
+                    [currentAlias && currentAlias !== 'action'
+                        ? aliasesTranslated[scopeOfChoice[currentAlias]]
+                        : aliasesTranslated[currentAlias]]: clickedSquare,
+                },
+            }))
+            dispatch(addHighlightedSquare(clickedSquare))
+            dispatch(resetStateAfterSquareChoice())
+        }
+    }, [clickedSquare])
 
     useEffect(() => {
         const aliasValue = scopeOfChoice[currentAlias]
@@ -254,49 +262,52 @@ const ActionInput = () => {
                 dispatch(setBattlefieldMode('info'))
             }
         }
-    }, [currentAlias, choices.mechanic, choices, scopeOfChoice, dispatch, t])
+    }, [currentAlias, choices.mechanic, choices, scopeOfChoice, t])
 
     const ResetButton = useCallback(() => {
-        return (<ElementWithIcon
-            icon={
-                <BsArrowBarLeft
-                    onClick={() => {
-                        setReachedFinalDepth(false)
-                        handleReset()
-                    }}
-                />
-            }
-            element={<p>{t('local:game.actions.reset')}</p>}
-        />)
+        return (
+            <ElementWithIcon
+                icon={
+                    <BsArrowBarLeft
+                        onClick={() => {
+                            setReachedFinalDepth(false)
+                            handleReset()
+                        }}
+                    />
+                }
+                element={<p>{t('local:game.actions.reset')}</p>}
+            />
+        )
     }, [handleReset, t])
 
     const ConfirmButton = useCallback(() => {
-        return (                    <ElementWithIcon
-            icon={
-                <RxArrowTopRight
-                    onClick={() => {
-                        if (choices.mechanic === undefined) {
-                            setChoices({
-                                mechanic: {
-                                    action: 'builtins:skip',
-                                },
-                                displayed: {
-                                    action: 'builtins:skip',
-                                },
-                            })
-                        }
-                        setReachedFinalDepth(false)
-                        resetInputs()
-                        dispatch(setOutput(choices.mechanic))
-                    }}
-                />
-            }
-            element={<p>{t('local:game.actions.submit')}</p>}
-        />)
-    }, [dispatch, t, choices, handleReset])
+        return (
+            <ElementWithIcon
+                icon={
+                    <RxArrowTopRight
+                        onClick={() => {
+                            if (choices.mechanic === undefined) {
+                                setChoices({
+                                    mechanic: {
+                                        action: 'builtins:skip',
+                                    },
+                                    displayed: {
+                                        action: 'builtins:skip',
+                                    },
+                                })
+                            }
+                            setReachedFinalDepth(false)
+                            resetInputs()
+                            dispatch(setOutput(choices.mechanic))
+                        }}
+                    />
+                }
+                element={<p>{t('local:game.actions.submit')}</p>}
+            />
+        )
+    }, [choices, handleReset])
 
     const shallowDepthScreen = useCallback(() => {
-        const options = generateOptions()
         if (Array.isArray(options)) {
             options
                 .sort((a, b) => {
@@ -318,14 +329,16 @@ const ActionInput = () => {
                         justifyContent: 'space-between',
                     }}
                 >
-                    <div id={'manipulators'}>{handleDepth()}</div>
+                    <div id={'manipulators'}>
+                        <ResetButton />
+                    </div>
                 </div>
                 <div id={'options'} className={styles.options}>
                     {options}
                 </div>
             </>
         )
-    }, [generateOptions, handleDepth, reachedFinalDepth])
+    }, [options, reachedFinalDepth])
 
     const deepDepthScreen = useCallback(() => {
         return (
