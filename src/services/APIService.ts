@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
+import { LobbyInformation, UserInformation } from '../models/APIData'
 import { CharacterInfo } from '../models/CharacterInfo'
 import { TranslationJSON } from '../models/Translation'
 import { LobbyInfo } from '../redux/slices/lobbySlice'
@@ -180,17 +181,21 @@ class APIService {
         })
     }
 
-    public getMyLobbies = async (): Promise<
-        Array<{
-            name: string
-            isGm: boolean
-            _id: string
-        }>
-    > => {
+    public getMyLobbies = async (): Promise<Array<LobbyInformation>> => {
         return await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/user/joined_lobbies`,
             method: 'get',
         }).then((data) => data.joinedLobbies)
+    }
+
+    public getUserInformation = async (): Promise<UserInformation> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/user/profile`,
+            method: 'get',
+        })) as {
+            handle: string
+            createdAt: string
+        }
     }
 }
 
