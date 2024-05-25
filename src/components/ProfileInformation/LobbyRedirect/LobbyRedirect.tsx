@@ -21,8 +21,14 @@ const LobbyRedirect = ({ info }: { info: LobbyInformation }) => {
 
     return (
         <div className={styles.lobbyInfoContainer}>
-            {isGm ? <Icon /> : null}
-            <LinkToLobby />
+            <div style={{display: 'flex', flexDirection: 'row', gap: '0.5rem'}}>
+                {isGm ? <Icon /> : null}
+                <LinkToLobby />
+            </div>
+            <p style={{
+                fontSize: 'var(--text-size-small)',
+                margin: '0'
+            }}>{isGm ? 'Game Master' : 'Player'}</p>
         </div>
     )
 }

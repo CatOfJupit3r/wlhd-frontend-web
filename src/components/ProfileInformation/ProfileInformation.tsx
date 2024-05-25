@@ -1,70 +1,46 @@
-import {useCallback, useEffect, useState} from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { LobbyInformation, UserInformation } from '../../models/APIData'
 import APIService from '../../services/APIService'
-import LobbyRedirect from './LobbyRedirect/LobbyRedirect'
+import JoinedLobbies from './JoinedLobbies/JoinedLobbies'
 import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
-    const [joinedLobbies, setJoinedLobbies] = useState(
-        [] as Array<{
-            name: string
-            isGm: boolean
-            _id: string
-        }>
-    )
+    const [joinedLobbies, setJoinedLobbies] = useState([] as Array<LobbyInformation>)
 
-    const [userInfo, setUserInfo] = useState({
+    const [{ handle, createdAt }, setUserInfo] = useState({
         handle: '',
         createdAt: '',
-    } as {
-        handle: string
-        createdAt: string
-    })
-
-    const getMyLobbies = useCallback(async () => {
-        const myLobbies = await APIService.getMyLobbies()
-        setJoinedLobbies(myLobbies)
-    }, [])
+    } as UserInformation)
 
     const getUserInformation = useCallback(async () => {
         const userInfo = await APIService.getUserInformation()
         setUserInfo(userInfo)
     }, [])
 
+    const getMyLobbies = useCallback(async () => {
+        const myLobbies = await APIService.getMyLobbies()
+        setJoinedLobbies(myLobbies)
+    }, [])
+
     useEffect(() => {
-        getMyLobbies().catch((error) => {
+        getUserInformation().catch((error) => {
             console.log(error)
         })
-        getUserInformation().catch((error) => {
+        getMyLobbies().catch((error) => {
             console.log(error)
         })
     }, [])
 
-    const JoinedLobbies = useCallback(() => {
-        return (
-            <>
-                {joinedLobbies &&
-                    joinedLobbies.map(
-                        (
-                            lobby: {
-                                name: string
-                                isGm: boolean
-                                _id: string
-                            },
-                            index
-                        ) => <LobbyRedirect info={lobby} key={index} />
-                    )}
-            </>
-        )
-    }, [joinedLobbies])
-
     return (
         <div className={styles.profileContainer}>
-            <h1>Welcome back {userInfo.handle}!</h1>
-            <h3>Joined lobbies:</h3>
-            <div className={styles.joinedLobbiesContainer}>
-                <JoinedLobbies />
+            <div className={styles.infoSection}>
+                <img src={'https://placehold.co/260x260'} alt="User Avatar" className={styles.avatar}/>
+                <h1 className={styles.handle}>{'@'.concat(handle)}</h1>
+                <div className={styles.bio}>
+                    <h5>You are with us since {new Date(createdAt).toLocaleDateString()}! 🎉</h5>
+                </div>
             </div>
-            <h5>You are with us since {new Date(userInfo.createdAt).toLocaleDateString()}! 🎉</h5>
+            <JoinedLobbies joinedLobbies={joinedLobbies} className={styles.lobbies} />
         </div>
     )
 }
