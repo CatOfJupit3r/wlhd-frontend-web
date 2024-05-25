@@ -1,17 +1,12 @@
 import React from 'react';
 import {Spinner} from "react-bootstrap";
+import styles from './ThinkingHn.module.css';
 
 const ThinkingHn = (props: {
     text: string
 }) => {
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '1rem',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
+        <div className={styles.thinkingHnContainer}>
             <h1 style={{
                 margin: 0
             }}>{props.text}</h1>

@@ -12,7 +12,7 @@ import { AppDispatch } from '../../redux/store'
 import SocketService from '../../services/SocketService'
 import GameScreen from '../GameScreen/GameScreen'
 import Overlay from '../Overlay/Overlay'
-import ThinkingHn from '../ThinkingHn'
+import ThinkingHn from '../ThinkingHn/ThinkingHn'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
