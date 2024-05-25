@@ -13,7 +13,7 @@
 }
 
 .footerContainer h1 {
-    font-size: 1.5rem;
+    font-size: var(--text-size-medium);
     font-weight: bold;
     text-align: center;
 }
@@ -23,6 +23,7 @@
     justify-content: center;
     margin-top: 1%;
     gap: 1%;
+    font-size: var(--text-size-small);
 }
 
 @media (max-width: 512px) {
