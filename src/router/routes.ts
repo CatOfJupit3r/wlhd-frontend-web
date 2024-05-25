@@ -18,6 +18,7 @@ const routes: Array<RouteConfig> = [
         title: 'profile',
         includeHeader: true,
         requiresAuth: true,
+        includeFooter: true,
     },
     {
         path: paths.lobbyRoom,
@@ -26,6 +27,7 @@ const routes: Array<RouteConfig> = [
         includeHeader: true,
         requiresAuth: true,
         requiresLobbyInfo: true,
+        includeFooter: true,
     },
     {
         path: paths.createCombatRoom,
@@ -42,18 +44,21 @@ const routes: Array<RouteConfig> = [
         includeHeader: true,
         requiresAuth: true,
         requiresLobbyInfo: true,
+        includeFooter: true,
     },
     {
         path: paths.home,
         Component: HomePage,
         title: 'home',
         includeHeader: true,
+        includeFooter: true,
     },
     {
         path: paths.about,
         Component: AboutPage,
         title: 'about',
         includeHeader: true,
+        includeFooter: true,
     },
     {
         path: paths.signIn,

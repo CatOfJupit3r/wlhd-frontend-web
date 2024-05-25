@@ -1,0 +1,36 @@
+.footerContainer {
+    bottom: 0;
+    position: fixed;
+    background-color: black;
+    color: #d5d5d5;
+    width: 100%;
+    padding: 2rem;
+    justify-content: center;
+    z-index: 100;
+    min-height: fit-content;
+    display: block;
+    box-sizing: border-box;
+}
+
+.footerContainer h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.linksContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    gap: 1%;
+}
+
+@media (max-width: 512px) {
+    .linksContainer {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}

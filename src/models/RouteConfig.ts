@@ -5,6 +5,7 @@ export interface RouteConfig {
     Component: ComponentType
     title: string
     includeHeader?: boolean
+    includeFooter?: boolean
     requiresAuth?: boolean
     requiresLobbyInfo?: boolean
 }
