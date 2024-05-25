@@ -50,6 +50,11 @@ const Header = () => {
                 to="."
                 relative={'route'}
                 id={'header-logo'}
+                style={{
+                    fontWeight: 'bold',
+                    textDecoration: 'none',
+                    color: 'white',
+                }}
             >
                 Walenholde
             </Link>
