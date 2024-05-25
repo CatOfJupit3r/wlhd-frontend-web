@@ -56,4 +56,10 @@ code {
 
 :root {
     --tile-size: 10vh;
+
+    --text-size-biggest: 2.5rem;
+    --text-size-bigger: 2rem;
+    --text-size-big: 1.5rem;
+    --text-size-medium: 1.25rem;
+    --text-size-small: 1rem;
 }
