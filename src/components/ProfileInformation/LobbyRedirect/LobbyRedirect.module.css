@@ -17,8 +17,3 @@
     height: 1.5rem;
     color: black;
 }
-
-.gmIcon:hover {
-    cursor: pointer;
-    fill: black;
-}
