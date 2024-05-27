@@ -11,18 +11,22 @@ const initialState: LobbyState = {
     controlledEntity: null,
 }
 
+export interface CombatInfo {
+    nickname: string
+    isActive: boolean
+    roundCount: number
+    _id: string
+}
+
+export interface LobbyPlayerInfo {
+    userId: string
+    nickname: string
+    mainCharacter: string
+}
+
 export interface LobbyInfo {
-    combats: Array<{
-        nickname: string
-        isActive: boolean
-        roundCount: number
-        _id: string
-    }>
-    players: Array<{
-        userId: string
-        nickname: string
-        mainCharacter: string
-    }>
+    combats: Array<CombatInfo>
+    players: Array<LobbyPlayerInfo>
     gm: string
     layout: 'default' | 'gm'
     controlledEntity: {
