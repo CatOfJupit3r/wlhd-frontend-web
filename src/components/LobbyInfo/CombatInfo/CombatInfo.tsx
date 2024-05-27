@@ -26,7 +26,11 @@ const CombatInfo = () => {
             ) : (
                 <>
                     {combats.map((combat, index) => (
-                        <ActiveCombat combat={combat} lobbyId={lobbyId} key={index} />
+                        <ActiveCombat
+                            combat={combat}
+                            link={paths.gameRoom.replace(':lobbyId', lobbyId || '').replace(':gameId', combat._id)}
+                            key={index}
+                        />
                     ))}
                 </>
             )}

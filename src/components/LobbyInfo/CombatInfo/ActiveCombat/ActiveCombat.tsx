@@ -1,16 +1,14 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { CombatInfo } from '../../../../redux/slices/lobbySlice'
-import paths from '../../../../router/paths'
+import { CombatInfo } from '../../../../models/Redux'
 import styles from './ActiveCombat.module.css'
 
-const ActiveCombat = ({ combat, lobbyId }: { combat: CombatInfo; lobbyId: string }) => {
+const ActiveCombat = ({ combat, link }: { combat: CombatInfo; link: string }) => {
+    const combatIsActive = useMemo(() => (combat.isActive ? 'active' : 'inactive'), [combat.isActive])
+
     return (
-        <Link
-            key={combat.nickname}
-            to={paths.gameRoom.replace(':lobbyId', lobbyId || '').replace(':gameId', combat._id)}
-            className={styles.crutch}
-        >
-            {combat.nickname} ({combat.isActive ? 'Active' : 'Inactive'}, {combat.roundCount} rounds)
+        <Link key={combat.nickname} to={link} className={styles.crutch}>
+            {combat.nickname} ({combatIsActive}, {combat.roundCount} rounds)
         </Link>
     )
 }
