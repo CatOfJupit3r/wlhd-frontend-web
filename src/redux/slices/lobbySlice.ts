@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LobbyState } from '../../models/Redux'
+import { LobbyInfo, LobbyState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: LobbyState = {
@@ -9,30 +9,6 @@ const initialState: LobbyState = {
     gm: '',
     layout: 'default',
     controlledEntity: null,
-}
-
-export interface CombatInfo {
-    nickname: string
-    isActive: boolean
-    roundCount: number
-    _id: string
-}
-
-export interface LobbyPlayerInfo {
-    userId: string
-    nickname: string
-    mainCharacter: string
-}
-
-export interface LobbyInfo {
-    combats: Array<CombatInfo>
-    players: Array<LobbyPlayerInfo>
-    gm: string
-    layout: 'default' | 'gm'
-    controlledEntity: {
-        name: string
-        id: string
-    } | null
 }
 
 const LobbySlice = createSlice({

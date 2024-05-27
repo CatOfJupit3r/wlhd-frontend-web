@@ -3,8 +3,8 @@ import axios, { AxiosError } from 'axios'
 import { REACT_APP_BACKEND_URL } from '../config'
 import { LobbyInformation, UserInformation } from '../models/APIData'
 import { CharacterInfo } from '../models/CharacterInfo'
+import { LobbyInfo } from '../models/Redux'
 import { TranslationJSON } from '../models/Translation'
-import { LobbyInfo } from '../redux/slices/lobbySlice'
 import AuthManager from './AuthManager'
 
 const errors = {
