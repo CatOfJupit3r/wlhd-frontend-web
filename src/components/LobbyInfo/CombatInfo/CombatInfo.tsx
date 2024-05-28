@@ -18,7 +18,7 @@ const CombatInfo = () => {
     }, [lobbyId])
 
     return (
-        <div className={styles.crutch}>
+        <div className={styles.combatContainer}>
             <h2>Combats</h2>
             {layout === 'gm' && <CreateNewCombat />}
             {combats && combats.length === 0 ? (

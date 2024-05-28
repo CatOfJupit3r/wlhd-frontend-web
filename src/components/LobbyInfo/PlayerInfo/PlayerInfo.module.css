@@ -1,0 +1,33 @@
+.playerInfoContainer {
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.5rem solid black;
+}
+
+.playerInfoContainer h1 {
+    font-size: var(--text-size-massive);
+    text-align: center;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-bottom: 0.125rem solid black;
+}
+
+.playerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 0.75rem 0.75rem 0.75rem;
+    font-size: var(--text-size-normal);
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.player img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+}
