@@ -3,6 +3,7 @@ import { LobbyInfo, LobbyState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: LobbyState = {
+    name: '',
     lobbyId: '',
     combats: [],
     players: [],

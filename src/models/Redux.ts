@@ -10,6 +10,7 @@ export interface CosmeticsState {
 }
 
 export interface LobbyState {
+    name: string
     lobbyId: string
     combats: Array<CombatInfo>
     players: Array<LobbyPlayerInfo>
