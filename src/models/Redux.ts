@@ -72,7 +72,10 @@ export interface CombatInfo {
     nickname: string
     isActive: boolean
     roundCount: number
-    activePlayers: Array<string>
+    activePlayers: Array<{
+        handle: string
+        nickname: string
+    }>
     _id: string
 }
 
