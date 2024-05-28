@@ -6,7 +6,7 @@ const useTranslatableString = () => {
     const { t } = useTranslation()
 
     const formTranslation = useCallback(
-        (msg: TranslatableString) => {
+        (msg: TranslatableString): string => {
             if (msg.format_args === undefined) {
                 return t(msg.main_string)
             }

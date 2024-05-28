@@ -12,9 +12,9 @@ const PlayerInfo = () => {
                 <p>No players</p>
             ) : (
                 <ul>
-                    {players.map((player) => (
-                        <li key={player.userId}>
-                            {player.nickname} ({player.mainCharacter})
+                    {players.map(({player, character}, index) => (
+                        <li key={index}>
+                            {player.nickname} ({character?.name || 'No character'})
                         </li>
                     ))}
                 </ul>

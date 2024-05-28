@@ -13,7 +13,7 @@ export const PageWrapper = ({ title, children }: { title: string; children: Reac
     }, [title])
 
     useEffect(() => {
-        // the reason for this "hook" is to allow external components to change the page title
+        // the reason for this "effect" is to allow external components to change the page title
         // (for example, game pages that have a dynamic title)
         dispatch(setPageTitle(t(title)))
     }, [])

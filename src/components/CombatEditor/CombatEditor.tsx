@@ -61,7 +61,7 @@ const CombatEditor = ({
                     <option value={'none'} disabled>
                         Choose player
                     </option>
-                    {lobbyInfo.players.map((player) => (
+                    {lobbyInfo.players.map(({player}) => (
                         <option key={player.userId} value={player.userId}>
                             {player.nickname}
                         </option>
@@ -131,9 +131,9 @@ const CombatEditor = ({
                     <option disabled value={''}>
                         Choose character
                     </option>
-                    {lobbyInfo.players.map((player) => (
+                    {lobbyInfo.players.map(({ player, character }) => (
                         <option key={player.userId} value={player.userId}>
-                            {player.mainCharacter}
+                            {character?.name || 'Unknown name'}
                         </option>
                     ))}
                 </select>

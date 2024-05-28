@@ -7,9 +7,11 @@ const ActiveCombat = ({ combat, link }: { combat: CombatInfo; link: string }) =>
     const combatIsActive = useMemo(() => (combat.isActive ? 'active' : 'inactive'), [combat.isActive])
 
     return (
-        <Link key={combat.nickname} to={link} className={styles.crutch}>
+        <div>
             {combat.nickname} ({combatIsActive}, {combat.roundCount} rounds)
-        </Link>
+            <Link key={combat.nickname} to={link} className={styles.crutch}>
+            </Link>
+        </div>
     )
 }
 

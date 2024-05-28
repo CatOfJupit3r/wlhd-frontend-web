@@ -33,10 +33,10 @@ const ProfileInformation = () => {
 
     return (
         <div className={styles.profileContainer}>
-            <div className={styles.infoSection}>
-                <img src={'https://placehold.co/260x260'} alt="User Avatar" className={styles.avatar}/>
-                <h1 className={styles.handle}>{'@'.concat(handle)}</h1>
-                <div className={styles.bio}>
+            <div className={styles.info}>
+                <img src={'https://placehold.co/260x260'} alt="User Avatar" />
+                <h1>{'@'.concat(handle)}</h1>
+                <div>
                     <h5>You are with us since {new Date(createdAt).toLocaleDateString()}! 🎉</h5>
                 </div>
             </div>

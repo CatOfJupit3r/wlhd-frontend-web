@@ -76,12 +76,20 @@ export interface CombatInfo {
 }
 
 export interface LobbyPlayerInfo {
-    userId: string
-    nickname: string
-    mainCharacter: string
+    player: {
+        handle: string
+        nickname: string
+        avatar: string
+        userId: string
+    }
+    character: {
+        name: string
+        sprite: string
+    } | null
 }
 
 export interface LobbyInfo {
+    name: string
     combats: Array<CombatInfo>
     players: Array<LobbyPlayerInfo>
     gm: string

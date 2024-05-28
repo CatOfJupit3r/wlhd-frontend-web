@@ -58,8 +58,8 @@ const ViewCharacterPage = () => {
             >
                 <>
                     <option disabled={true}>Choose player</option>
-                    {lobbyInfo.players.map((player, index) => {
-                        return player.mainCharacter ? <option key={index} value={player.mainCharacter}>{player.nickname}</option> : null
+                    {lobbyInfo.players.map(({player, character}, index) => {
+                        return player.nickname ? <option key={index} value={character?.name}>{player.nickname}</option> : null
                     })}
                 </>
             </select>
