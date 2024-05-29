@@ -1,5 +1,22 @@
 .joinedLobbiesContainer {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.5rem solid black;
 }
+
+.joinedLobbiesContainer h1 {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0.125rem solid black;
+    padding: 0.5rem;
+    font-size: var(--text-size-giant);
+    text-align: center;
+}
+
+.lobbyList {
+    padding: 0.5rem;
+}
+
+

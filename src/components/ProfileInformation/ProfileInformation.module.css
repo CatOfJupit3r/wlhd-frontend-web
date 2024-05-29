@@ -19,7 +19,15 @@
 }
 
 .info {
+    display: flex;
+    flex-direction: column;
     grid-area: info;
+    gap: 0.5rem;
+}
+
+.info h1 {
+    padding: 0.5rem;
+    font-size: var(--text-size-giant);
 }
 
 .lobbies {

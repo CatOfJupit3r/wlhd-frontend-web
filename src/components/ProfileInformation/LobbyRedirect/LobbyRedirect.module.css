@@ -2,8 +2,9 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    border: 1px solid black;
-    padding: 1rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.25rem solid black;
+    padding: 0.5rem;
     border-radius: 1rem;
     font-size: var(--text-size-normal);
 }

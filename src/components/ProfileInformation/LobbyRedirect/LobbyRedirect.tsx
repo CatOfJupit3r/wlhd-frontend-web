@@ -8,7 +8,9 @@ const LobbyRedirect = ({ info }: { info: LobbyInformation }) => {
     const { name, isGm, assignedCharacter, _id } = info
 
     const LinkToLobby = useCallback(() => {
-        return <Link to={`../lobby-room/${_id}`}>{name}</Link>
+        return <Link to={`../lobby-room/${_id}`} style={{
+            fontSize: 'var(--text-size-normal)',
+        }}>{name}</Link>
     }, [_id, name])
 
     const Icon = useCallback(() => {
