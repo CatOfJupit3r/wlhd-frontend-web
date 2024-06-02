@@ -5,8 +5,11 @@
     border: 0.125rem solid black;
     border-bottom: 0.25rem solid black;
     padding: 0.5rem;
+    gap: 0.5rem;
     border-radius: 1rem;
     font-size: var(--text-size-normal);
+    text-decoration: none;
+    color: black;
 }
 
 .lobbyInfoContainer:hover {

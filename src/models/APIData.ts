@@ -1,11 +1,12 @@
-export interface LobbyInformation {
+export interface ShortLobbyInformation {
     name: string
     isGm: boolean
     _id: string
-    assignedCharacter: string | null
+    characters: Array<string>
 }
 
 export interface UserInformation {
     handle: string
     createdAt: string
+    joined: Array<string>
 }

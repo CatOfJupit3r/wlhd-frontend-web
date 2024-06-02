@@ -24,21 +24,21 @@ const ViewCharacterPage = () => {
 
     const refreshEntityInfo = useCallback(async () => {
         try {
-            let response
-            if (currentCharacter && lobbyInfo) {
-                response = await APIService.getCharacterInfo(currentCharacter, lobbyInfo.lobbyId)
-            } else {
-                if (!lobbyInfo.lobbyId) {
-                    navigate('..')
-                } else {
-                    response = await APIService.getMyCharacterInfo(lobbyInfo.lobbyId)
-                }
-            }
-            console.log('Entity info:', response)
-            if (response) {
-                console.log('Setting entity info')
-                setCharacterInfo(response)
-            }
+            // let response
+            // if (currentCharacter && lobbyInfo) {
+            //     response = await APIService.getCharacterInfo(currentCharacter, lobbyInfo.lobbyId)
+            // } else {
+            //     if (!lobbyInfo.lobbyId) {
+            //         navigate('..')
+            //     } else {
+            //         response = await APIService.getMyCharacterInfo(lobbyInfo.lobbyId)
+            //     }
+            // }
+            // console.log('Entity info:', response)
+            // if (response) {
+            //     console.log('Setting entity info')
+            //     setCharacterInfo(response)
+            // }
         } catch (error) {
             console.log(error)
         }

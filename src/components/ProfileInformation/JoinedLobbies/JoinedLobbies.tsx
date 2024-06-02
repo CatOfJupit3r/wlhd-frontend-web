@@ -1,14 +1,12 @@
-import { LobbyInformation } from '../../../models/APIData'
-import LobbyRedirect from '../LobbyRedirect/LobbyRedirect'
+import LobbyInfo from '../LobbyInfo/LobbyInfo'
 import styles from './JoinedLobbies.module.css'
 
-const JoinedLobbies = ({ joinedLobbies, className }: { joinedLobbies: Array<LobbyInformation>; className?: string }) => {
+const JoinedLobbies = ({ joined, className }: { joined: Array<string>; className?: string }) => {
     return (
         <div className={styles.joinedLobbiesContainer.concat(className ? ` ${className}` : '')}>
             <h1>Joined</h1>
             <div className={styles.lobbyList}>
-                {joinedLobbies &&
-                    joinedLobbies.map((lobby: LobbyInformation, index) => <LobbyRedirect info={lobby} key={index} />)}
+                {joined && joined.map((lobbyId: string, index) => <LobbyInfo lobbyId={lobbyId} key={index} />)}
             </div>
         </div>
     )

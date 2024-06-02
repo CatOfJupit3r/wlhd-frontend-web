@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
-import { LobbyInformation, UserInformation } from '../models/APIData'
+import { ShortLobbyInformation, UserInformation } from '../models/APIData'
 import { CharacterInfo } from '../models/CharacterInfo'
 import { LobbyInfo } from '../models/Redux'
 import { TranslationJSON } from '../models/Translation'
@@ -51,7 +51,7 @@ class APIService {
             const result = await axios(url, {
                 method,
                 headers: {
-                    Authorization: AuthManager.getAccessToken(),
+                    ...(AuthManager.authHeader() || {}),
                 },
                 data,
             })
@@ -162,11 +162,11 @@ class APIService {
         })) as CharacterInfo
     }
 
-    public getMyCharacterInfo = async (lobby_id: string): Promise<CharacterInfo> => {
+    public getMyCharacterInfo = async (lobby_id: string): Promise<Array<CharacterInfo>> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/my_character`,
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/my_characters`,
             method: 'get',
-        })) as CharacterInfo
+        })) as Array<CharacterInfo>
     }
 
     public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {
@@ -181,13 +181,6 @@ class APIService {
         })
     }
 
-    public getMyLobbies = async (): Promise<Array<LobbyInformation>> => {
-        return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/user/joined_lobbies`,
-            method: 'get',
-        }).then((data) => data.joinedLobbies)
-    }
-
     public getUserInformation = async (): Promise<UserInformation> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/user/profile`,
@@ -195,7 +188,15 @@ class APIService {
         })) as {
             handle: string
             createdAt: string
+            joined: Array<string>
         }
+    }
+
+    public getShortLobbyInfo = async (lobby_id: string): Promise<ShortLobbyInformation> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}?short=true`,
+            method: 'get',
+        })) as ShortLobbyInformation
     }
 }
 

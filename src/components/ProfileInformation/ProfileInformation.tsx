@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
-import { LobbyInformation, UserInformation } from '../../models/APIData'
+import { ShortLobbyInformation, UserInformation } from '../../models/APIData'
 import APIService from '../../services/APIService'
 import JoinedLobbies from './JoinedLobbies/JoinedLobbies'
 import styles from './ProfileInformation.module.css'
+import joinedLobbies from './JoinedLobbies/JoinedLobbies'
 
 const ProfileInformation = () => {
-    const [joinedLobbies, setJoinedLobbies] = useState([] as Array<LobbyInformation>)
-
-    const [{ handle, createdAt }, setUserInfo] = useState({
+    const [{ handle, createdAt, joined }, setUserInfo] = useState({
         handle: '',
         createdAt: '',
+        joined: []
     } as UserInformation)
 
     const getUserInformation = useCallback(async () => {
@@ -17,16 +17,8 @@ const ProfileInformation = () => {
         setUserInfo(userInfo)
     }, [])
 
-    const getMyLobbies = useCallback(async () => {
-        const myLobbies = await APIService.getMyLobbies()
-        setJoinedLobbies(myLobbies)
-    }, [])
-
     useEffect(() => {
         getUserInformation().catch((error) => {
-            console.log(error)
-        })
-        getMyLobbies().catch((error) => {
             console.log(error)
         })
     }, [])
@@ -40,7 +32,7 @@ const ProfileInformation = () => {
                     <h5>You are with us since {new Date(createdAt).toLocaleDateString()}! 🎉</h5>
                 </div>
             </div>
-            <JoinedLobbies joinedLobbies={joinedLobbies} className={styles.lobbies} />
+            <JoinedLobbies joined={joined} className={styles.lobbies} />
         </div>
     )
 }
