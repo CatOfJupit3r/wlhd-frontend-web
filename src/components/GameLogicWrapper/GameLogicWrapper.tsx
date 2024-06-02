@@ -52,7 +52,7 @@ const GameLogicWrapper = () => {
         }
     }, [actionOutput, dispatch])
 
-    const getCurrentScreen = useCallback((): JSX.Element => {
+    const CurrentScreen = useCallback((): JSX.Element => {
         switch (gameFlow?.type) {
             case 'pending':
                 return (
@@ -114,7 +114,7 @@ const GameLogicWrapper = () => {
         }
     }, [gameFlow, navigate, t])
 
-    return getCurrentScreen()
+    return <CurrentScreen />
 }
 
 export default GameLogicWrapper
