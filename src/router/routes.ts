@@ -1,5 +1,6 @@
 import { RouteConfig } from '../models/RouteConfig'
 import AboutPage from '../pages/AboutPage'
+import CreateCharacterPage from '../pages/CreateCharacterPage'
 import CreateCombatPage from '../pages/CreateCombatPage'
 import GameRoomPage from '../pages/GameRoomPage'
 import GameTestPage from '../pages/GameTestPage'
@@ -75,6 +76,15 @@ const routes: Array<RouteConfig> = [
         Component: GameRoomPage,
         title: 'game_room',
         requiresLobbyInfo: true,
+    },
+    {
+        path: paths.createCharacter,
+        Component: CreateCharacterPage,
+        title: 'create_character',
+        requiresLobbyInfo: true,
+        includeFooter: true,
+        includeHeader: true,
+        requiresAuth: true,
     },
     {
         // this room is only to view how game screen components will look without connecting to the backend

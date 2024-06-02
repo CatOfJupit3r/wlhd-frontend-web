@@ -1,39 +1,56 @@
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { LobbyPlayerInfo } from '../../../models/Redux'
+import { Link } from 'react-router-dom'
+import { CharacterInLobby, LobbyPlayerInfo } from '../../../models/Redux'
 import { selectLobbyInfo } from '../../../redux/slices/lobbySlice'
 import styles from './PlayerInfo.module.css'
-import ElementWithIcon from '../../ElementWithIcon/ElementWithIcon'
 
 const PlayerInfo = ({ className }: { className: string }) => {
     const { players } = useSelector(selectLobbyInfo)
 
-    const Player = useCallback(({ info }: { info: LobbyPlayerInfo }) => {
-        const { player, character } = info
-        return (
-            <div className={styles.player}>
-                <ElementWithIcon
-                    element={
+    const CharactersToLinks = useCallback((characters: Array<CharacterInLobby>) => {
+        return characters.map((value, index) => (
+            <Link to={`./character/${value.descriptor}`} key={index}>
+                {value.name} (@{value.descriptor})
+            </Link>
+        ))
+    }, [])
+
+    const Player = useCallback(
+        ({ info }: { info: LobbyPlayerInfo }) => {
+            const { player, characters } = info
+            return (
+                <div className={styles.player}>
+                    <img src={'https://placehold.co/50x50'} alt={player.nickname} />
+                    <div>
                         <p>
                             {player.nickname} (@{player.handle})
                         </p>
-                    }
-                    icon={<img src={'https://placehold.co/50x50'} alt={player.nickname} />}
-                ></ElementWithIcon>
-
-                {character && (
-                    <ElementWithIcon
-                        element={
-                            <p>
-                                {character.name}
-                            </p>
-                        }
-                        icon={<img src={'https://placehold.co/50x50'} alt={character.name} />}
-                    ></ElementWithIcon>
-                )}
-            </div>
-        )
-    }, [])
+                        {characters.length ? (
+                            <span
+                                style={{
+                                    fontSize: 'var(--text-size-small)',
+                                    margin: '0',
+                                    color: 'gray',
+                                }}
+                            >
+                                Playing as{' '}
+                                {CharactersToLinks(characters).map((value, index, array) => (
+                                    <span key={index}>
+                                        {value}
+                                        {index === array.length - 1 ? '.' : ', '}
+                                    </span>
+                                ))}
+                            </span>
+                        ) : (
+                            <span>No character assigned</span>
+                        )}
+                    </div>
+                </div>
+            )
+        },
+        [players]
+    )
 
     return (
         <div className={className.concat(` ${styles.playerInfoContainer}` || '')}>

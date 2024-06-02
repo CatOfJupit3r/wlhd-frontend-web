@@ -131,11 +131,13 @@ const CombatEditor = ({
                     <option disabled value={''}>
                         Choose character
                     </option>
-                    {lobbyInfo.players.map(({ player, character }) => (
-                        <option key={player.userId} value={player.userId}>
-                            {character?.name || 'Unknown name'}
-                        </option>
-                    ))}
+                    {
+                    //     lobbyInfo.players.map(({ player, character }) => (
+                    //     <option key={player.userId} value={player.userId}>
+                    //         {character?.name || 'Unknown name'}
+                    //     </option>
+                    // ))
+                    }
                 </select>
             </>
         )

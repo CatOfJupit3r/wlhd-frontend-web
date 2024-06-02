@@ -58,9 +58,11 @@ const ViewCharacterPage = () => {
             >
                 <>
                     <option disabled={true}>Choose player</option>
-                    {lobbyInfo.players.map(({player, character}, index) => {
-                        return player.nickname ? <option key={index} value={character?.name}>{player.nickname}</option> : null
-                    })}
+                    {
+                    //     lobbyInfo.players.map(({player, character}, index) => {
+                    //     return player.nickname ? <option key={index} value={character?.name}>{player.nickname}</option> : null
+                    // })
+                    }
                 </>
             </select>
             <button onClick={refreshEntityInfo}>Refresh Character Info</button>

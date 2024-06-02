@@ -14,12 +14,9 @@ export interface LobbyState {
     lobbyId: string
     combats: Array<CombatInfo>
     players: Array<LobbyPlayerInfo>
+    characters: Array<CharacterInLobby>
     gm: string
     layout: 'default' | 'gm'
-    controlledEntity: {
-        name: string
-        id: string
-    } | null
 }
 
 export interface TurnState {
@@ -86,10 +83,7 @@ export interface LobbyPlayerInfo {
         avatar: string
         userId: string
     }
-    character: {
-        name: string
-        sprite: string
-    } | null
+    characters: [CharacterInLobby]
 }
 
 export interface LobbyInfo {
@@ -102,4 +96,11 @@ export interface LobbyInfo {
         name: string
         id: string
     } | null
+}
+
+export interface CharacterInLobby {
+    descriptor: string
+    name: string
+    description: string
+    sprite: string
 }

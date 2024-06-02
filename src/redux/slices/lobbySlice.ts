@@ -7,9 +7,9 @@ const initialState: LobbyState = {
     lobbyId: '',
     combats: [],
     players: [],
+    characters: [],
     gm: '',
     layout: 'default',
-    controlledEntity: null,
 }
 
 const LobbySlice = createSlice({
