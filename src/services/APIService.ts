@@ -148,6 +148,18 @@ class APIService {
         }
     }
 
+    public getCustomLobbyTranslations = async (lobby_id: string): Promise<TranslationJSON> => {
+        try {
+            return await this.fetch({
+                url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/custom_translations`,
+                method: 'get',
+            })
+        } catch (e) {
+            console.log(e)
+            return {}
+        }
+    }
+
     public getLobbyInfo = async (lobby_id: string): Promise<LobbyInfo> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}`,
