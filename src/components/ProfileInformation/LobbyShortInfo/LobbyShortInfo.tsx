@@ -5,11 +5,11 @@ import { RiVipCrownLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import { ShortLobbyInformation } from '../../../models/APIData'
 import APIService from '../../../services/APIService'
-import styles from './LobbyInfo.module.css'
+import styles from './LobbyShortInfo.module.css'
 
 type LoadingType = 'loading' | 'failed' | 'success'
 
-const LobbyInfo = ({ lobbyId }: { lobbyId: string }) => {
+const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     const { t } = useTranslation()
 
     const [{ name, isGm, characters, _id }, setInfo] = useState({
@@ -138,4 +138,4 @@ const LobbyInfo = ({ lobbyId }: { lobbyId: string }) => {
     )
 }
 
-export default LobbyInfo
+export default LobbyShortInfo

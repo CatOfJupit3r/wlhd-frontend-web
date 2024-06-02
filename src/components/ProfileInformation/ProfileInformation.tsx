@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { UserInformation } from '../../models/APIData'
 import APIService from '../../services/APIService'
 import styles from './ProfileInformation.module.css'
-import LobbyInfo from './LobbyInfo/LobbyInfo'
+import LobbyShortInfo from './LobbyShortInfo/LobbyShortInfo'
 
 const ProfileInformation = () => {
     const [{ handle, createdAt, joined }, setUserInfo] = useState({
@@ -34,7 +34,7 @@ const ProfileInformation = () => {
             <div className={`${styles.joinedLobbiesContainer}`}>
                 <h1>Joined</h1>
                 <div className={styles.lobbyList}>
-                    {joined && joined.map((lobbyId: string, index) => <LobbyInfo lobbyId={lobbyId} key={index} />)}
+                    {joined && joined.map((lobbyId: string, index) => <LobbyShortInfo lobbyId={lobbyId} key={index} />)}
                 </div>
             </div>
         </div>
