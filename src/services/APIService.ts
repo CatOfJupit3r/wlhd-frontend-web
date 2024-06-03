@@ -167,9 +167,9 @@ class APIService {
         })) as LobbyInfo
     }
 
-    public getCharacterInfo = async (character_id: string, lobby_id: string): Promise<CharacterInfo> => {
+    public getCharacterInfo = async (descriptor: string, lobby_id: string): Promise<CharacterInfo> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${character_id}`,
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}`,
             method: 'get',
         })) as CharacterInfo
     }

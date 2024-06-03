@@ -10,7 +10,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
 
     const CharactersToLinks = useCallback((characters: Array<CharacterInLobby>) => {
         return characters.map((value, index) => (
-            <Link to={`./character/${value.descriptor}`} key={index}>
+            <Link to={`./view-character?character=${value.descriptor}`} key={index}>
                 {value.name} (@{value.descriptor})
             </Link>
         ))

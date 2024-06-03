@@ -5,7 +5,7 @@ export default {
     signUp: '/sign-up',
     profile: '/profile',
     gameTest: '/game-test',
-    viewCharacter: '/lobby-room/:lobbyId/character/:characterId',
+    viewCharacter: '/lobby-room/:lobbyId/view-character',
     lobbyRoom: '/lobby-room/:lobbyId',
     gameRoom: '/lobby-room/:lobbyId/game-room/:gameId',
     createCombatRoom: '/lobby-room/:lobbyId/create-combat',
