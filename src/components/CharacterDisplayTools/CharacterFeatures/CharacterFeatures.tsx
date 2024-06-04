@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
 import styles from './CharacterFeatures.module.css'
 import { CharacterInfo } from '../../../models/CharacterInfo'
+import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
 
 const CharacterFeatures = (props: {
     attributes: any
@@ -31,7 +32,7 @@ const CharacterFeatures = (props: {
             {
                 name: 'Attributes',
                 icon: WiMoonWaxingCrescent4,
-                content: <div>attributes</div>,
+                content: <AttributeDisplay attributes={attributes} includeHealthAPDefense={true} />,
             },
             {
                 name: 'Spells',
@@ -49,7 +50,7 @@ const CharacterFeatures = (props: {
                 content: <div>weaponry</div>,
             },
         ],
-        []
+        [attributes, inventory, spellBook, spellLayout, weaponry]
     )
 
     return (
@@ -66,7 +67,7 @@ const CharacterFeatures = (props: {
                 style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    height: '20%',
+                    height: '2rem',
                     gap: '0.25rem',
                     width: '100%',
                     border: '0.125rem solid black',
@@ -93,7 +94,7 @@ const CharacterFeatures = (props: {
                     border: '0.125rem solid black',
                     borderRadius: '1rem',
                     borderBottom: '0.25rem solid black',
-                    height: '90%',
+                    height: '100%',
                     padding: '1rem',
                 }}
             >
