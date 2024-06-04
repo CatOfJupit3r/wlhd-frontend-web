@@ -5,11 +5,11 @@ import { CharacterInfo } from '../../../models/CharacterInfo'
 import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
 
 const CharacterFeatures = (props: {
-    attributes: any
-    spellBook: any
-    spellLayout: any
-    inventory: any
-    weaponry: any
+    attributes: CharacterInfo['attributes'],
+    spellBook: CharacterInfo['spellBook'],
+    spellLayout: CharacterInfo['spellLayout'],
+    inventory: CharacterInfo['inventory'],
+    weaponry: CharacterInfo['weaponry'],
 }) => {
     const [activeTab, setActiveTab] = useState(0)
 
