@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { CharacterInfo } from '../../../models/CharacterInfo'
 import { selectLobbyInfo } from '../../../redux/slices/lobbySlice'
-import styles from './CharacterDisplayContent.module.css'
+import { generateAssetPath } from '../../Battlefield/utils'
 import CharacterFeatures from '../CharacterFeatures/CharacterFeatures'
+import styles from './CharacterDisplayContent.module.css'
 
 const CharacterDisplayContent = ({
     characterInfo,
@@ -12,8 +13,10 @@ const CharacterDisplayContent = ({
     characterInfo: CharacterInfo
     setCurrentCharacter: (descriptor: string) => void
 }) => {
-    const [{ descriptor, controlledBy, attributes, spellBook, spellLayout, inventory, weaponry }, setInfo] =
-        useState(characterInfo)
+    const [
+        { descriptor, controlledBy, attributes, spellBook, spellLayout, inventory, weaponry, decorations },
+        setInfo,
+    ] = useState(characterInfo)
     const { characters } = useSelector(selectLobbyInfo)
 
     useEffect(() => {
@@ -31,11 +34,19 @@ const CharacterDisplayContent = ({
                 }}
             >
                 <img
-                    src={'https://placehold.co/500x500'}
+                    src={generateAssetPath('coordinator', decorations.sprite)}
                     alt={'character-sprite'}
+                    onError={(e) => {
+                        if (e.currentTarget.src == '/assets/local/invalid_asset.png') {
+                            return
+                        }
+                        e.currentTarget.src = '/assets/local/invalid_asset.png'
+                    }}
                     style={{
                         width: '5rem',
                         height: '5rem',
+                        minWidth: '5rem',
+                        minHeight: '5rem',
                         borderRadius: '1.25rem',
                         border: '1px solid black',
                     }}
