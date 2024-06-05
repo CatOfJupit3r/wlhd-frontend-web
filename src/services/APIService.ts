@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
 import { ShortLobbyInformation, UserInformation } from '../models/APIData'
+import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../models/Battlefield'
 import { CharacterInfo } from '../models/CharacterInfo'
 import { LobbyInfo } from '../models/Redux'
 import { TranslationJSON } from '../models/Translation'
@@ -37,7 +38,7 @@ class APIService {
         url: string
         method: 'get' | 'post' | 'put' | 'delete'
         data?: {
-            [key: string]: any
+            [_: string]: any
         }
         _retry?: boolean
     }): Promise<{ [key: string]: any }> => {
@@ -167,18 +168,72 @@ class APIService {
         })) as LobbyInfo
     }
 
-    public getCharacterInfo = async (descriptor: string, lobby_id: string): Promise<CharacterInfo> => {
+    public getBasicCharacterInfo = async (lobby_id: string, descriptor: string): Promise<CharacterInfo> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}`,
             method: 'get',
         })) as CharacterInfo
     }
 
-    public getMyCharacterInfo = async (lobby_id: string): Promise<Array<CharacterInfo>> => {
+    public getCharacterWeaponry = async (
+        lobby_id: string,
+        descriptor: string
+    ): Promise<{
+        weaponry: Array<WeaponInfo>
+    }> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/my_characters`,
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/weaponry`,
             method: 'get',
-        })) as Array<CharacterInfo>
+        })) as { weaponry: Array<WeaponInfo> }
+    }
+
+    public getCharacterSpellbook = async (
+        lobby_id: string,
+        descriptor: string
+    ): Promise<{
+        spellBook: Array<SpellInfo>
+        spellLayout: { layout: Array<string>; conflicts: unknown }
+    }> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/spellbook`,
+            method: 'get',
+        })) as { spellBook: Array<WeaponInfo>; spellLayout: { layout: Array<string>; conflicts: unknown } }
+    }
+
+    public getCharacterStatusEffects = async (
+        lobby_id: string,
+        descriptor: string
+    ): Promise<{
+        statusEffects: Array<StatusEffectInfo>
+    }> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/status_effects`,
+            method: 'get',
+        })) as { statusEffects: Array<StatusEffectInfo> }
+    }
+
+    public getCharacterInventory = async (
+        lobby_id: string,
+        descriptor: string
+    ): Promise<{
+        inventory: Array<ItemInfo>
+    }> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory`,
+            method: 'get',
+        })) as { inventory: Array<WeaponInfo> }
+    }
+
+    public getCharacterAttributes = async (
+        lobby_id: string,
+        descriptor: string
+    ): Promise<{
+        attributes: { [attribute: string]: string }
+    }> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/attributes`,
+            method: 'get',
+        })) as { attributes: { [attribute: string]: string } }
     }
 
     public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {

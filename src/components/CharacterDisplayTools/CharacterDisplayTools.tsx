@@ -19,11 +19,6 @@ const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string 
             sprite: '',
         },
         controlledBy: [],
-        attributes: {},
-        spellBook: [],
-        spellLayout: [],
-        inventory: [],
-        weaponry: [],
     } as CharacterInfo)
 
     const setControllingPlayers = useCallback(() => {
@@ -43,7 +38,7 @@ const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string 
             if (!currentCharacter || !lobbyId) {
                 return
             }
-            const entityInfo = await APIService.getCharacterInfo(currentCharacter, lobbyId)
+            const entityInfo = await APIService.getBasicCharacterInfo(lobbyId, currentCharacter)
             setCharacterInfo(entityInfo)
             setControllingPlayers()
         } catch (error) {

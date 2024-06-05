@@ -123,6 +123,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 >
                     {t(decorations.name)}
                     {type === 'weapon' && IsActiveWeaponDetails({ info } as WeaponSegment)}
+                    {type === 'spell' && info.isActive && IsActiveWeaponDetails({ info } as WeaponSegment)}
                 </div>
                 {type !== 'status_effect' &&
                     CooldownDetails({

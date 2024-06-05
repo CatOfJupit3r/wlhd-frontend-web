@@ -13,10 +13,7 @@ const CharacterDisplayContent = ({
     characterInfo: CharacterInfo
     setCurrentCharacter: (descriptor: string) => void
 }) => {
-    const [
-        { descriptor, controlledBy, attributes, spellBook, spellLayout, inventory, weaponry, decorations },
-        setInfo,
-    ] = useState(characterInfo)
+    const [{ descriptor, controlledBy, decorations }, setInfo] = useState(characterInfo)
     const { characters } = useSelector(selectLobbyInfo)
 
     useEffect(() => {

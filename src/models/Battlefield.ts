@@ -95,6 +95,7 @@ export interface SpellInfo {
         max: number | null
     }
     cooldown: { current: number; max: number | null }
+    isActive?: boolean // CHARACTER PAGE EXCLUSIVE
 }
 
 export interface StatusEffectInfo {

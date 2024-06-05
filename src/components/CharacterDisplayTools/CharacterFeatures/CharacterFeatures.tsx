@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
-import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
-import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
 import styles from './CharacterFeatures.module.css'
 import FeatureProvider from './FeatureProvider'
 
@@ -13,46 +11,27 @@ const CharacterFeatures = () => {
             {
                 name: 'Attributes',
                 icon: WiMoonWaxingCrescent4,
-                content: () => (
-                    <FeatureProvider
-                        type={'attributes'}
-                        component={(data) => <AttributeDisplay attributes={data} includeHealthAPDefense={true} />}
-                    />
-                ),
+                content: () => <FeatureProvider type={'attributes'} />,
             },
             {
                 name: 'Spells',
                 icon: WiMoonWaxingCrescent4,
-                content: () => (
-                    <FeatureProvider type={'spell'} component={(data) => <InfoDisplay type={'spell'} info={data} />} />
-                ),
+                content: () => <FeatureProvider type={'spell'} />,
             },
             {
                 name: 'Inventory',
                 icon: WiMoonWaxingCrescent4,
-                content: () => (
-                    <FeatureProvider type={'item'} component={(data) => <InfoDisplay type={'item'} info={data} />} />
-                ),
+                content: () => <FeatureProvider type={'item'} />,
             },
             {
                 name: 'Weaponry',
                 icon: WiMoonWaxingCrescent4,
-                content: () => (
-                    <FeatureProvider
-                        type={'weapon'}
-                        component={(data) => <InfoDisplay type={'weapon'} info={data} />}
-                    />
-                ),
+                content: () => <FeatureProvider type={'weapon'} />,
             },
             {
                 name: 'Status Effects',
                 icon: WiMoonWaxingCrescent4,
-                content: () => (
-                    <FeatureProvider
-                        type={'status_effect'}
-                        component={(data) => <InfoDisplay type={'status_effect'} info={data} />}
-                    />
-                ),
+                content: () => <FeatureProvider type={'status_effect'} />,
             },
         ],
         [activeTab]
