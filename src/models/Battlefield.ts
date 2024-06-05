@@ -101,3 +101,5 @@ export interface StatusEffectInfo {
     decorations: GameComponentDecoration
     duration: string | null
 }
+
+export type CharacterFeaturesType = WeaponInfo | ItemInfo | SpellInfo | StatusEffectInfo

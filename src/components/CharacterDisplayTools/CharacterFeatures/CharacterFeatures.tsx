@@ -1,57 +1,66 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
-import styles from './CharacterFeatures.module.css'
-import { CharacterInfo } from '../../../models/CharacterInfo'
 import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
+import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
+import styles from './CharacterFeatures.module.css'
+import FeatureProvider from './FeatureProvider'
 
-const CharacterFeatures = (props: {
-    attributes: CharacterInfo['attributes'],
-    spellBook: CharacterInfo['spellBook'],
-    spellLayout: CharacterInfo['spellLayout'],
-    inventory: CharacterInfo['inventory'],
-    weaponry: CharacterInfo['weaponry'],
-}) => {
+const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
-
-    const [attributes, setAttributes] = useState({} as CharacterInfo['attributes'])
-    const [spellBook, setSpellBook] = useState([] as CharacterInfo['spellBook'])
-    const [spellLayout, setSpellLayout] = useState([] as CharacterInfo['spellLayout'])
-    const [inventory, setInventory] = useState([] as CharacterInfo['inventory'])
-    const [weaponry, setWeaponry] = useState([] as CharacterInfo['weaponry'])
-
-    useEffect(() => {
-        setAttributes(props.attributes)
-        setSpellBook(props.spellBook)
-        setSpellLayout(props.spellLayout)
-        setInventory(props.inventory)
-        setWeaponry(props.weaponry)
-    }, [props])
 
     const TABS = useMemo(
         () => [
             {
                 name: 'Attributes',
                 icon: WiMoonWaxingCrescent4,
-                content: <AttributeDisplay attributes={attributes} includeHealthAPDefense={true} />,
+                content: () => (
+                    <FeatureProvider
+                        type={'attributes'}
+                        component={(data) => <AttributeDisplay attributes={data} includeHealthAPDefense={true} />}
+                    />
+                ),
             },
             {
                 name: 'Spells',
                 icon: WiMoonWaxingCrescent4,
-                content: <div>spells</div>,
+                content: () => (
+                    <FeatureProvider type={'spell'} component={(data) => <InfoDisplay type={'spell'} info={data} />} />
+                ),
             },
             {
                 name: 'Inventory',
                 icon: WiMoonWaxingCrescent4,
-                content: <div>inventory</div>,
+                content: () => (
+                    <FeatureProvider type={'item'} component={(data) => <InfoDisplay type={'item'} info={data} />} />
+                ),
             },
             {
                 name: 'Weaponry',
                 icon: WiMoonWaxingCrescent4,
-                content: <div>weaponry</div>,
+                content: () => (
+                    <FeatureProvider
+                        type={'weapon'}
+                        component={(data) => <InfoDisplay type={'weapon'} info={data} />}
+                    />
+                ),
+            },
+            {
+                name: 'Status Effects',
+                icon: WiMoonWaxingCrescent4,
+                content: () => (
+                    <FeatureProvider
+                        type={'status_effect'}
+                        component={(data) => <InfoDisplay type={'status_effect'} info={data} />}
+                    />
+                ),
             },
         ],
-        [attributes, inventory, spellBook, spellLayout, weaponry]
+        [activeTab]
     )
+
+    const TabContent = useCallback(() => {
+        return TABS[activeTab].content()
+    }, [activeTab])
 
     return (
         <div
@@ -98,7 +107,7 @@ const CharacterFeatures = (props: {
                     padding: '1rem',
                 }}
             >
-                {TABS[activeTab].content}
+                <TabContent />
             </div>
         </div>
     )

@@ -107,13 +107,7 @@ const CharacterDisplayContent = ({
                 <MainSection />
                 <Description />
             </div>
-            <CharacterFeatures
-                attributes={attributes}
-                spellBook={spellBook}
-                spellLayout={spellLayout}
-                inventory={inventory}
-                weaponry={weaponry}
-            />
+            <CharacterFeatures />
         </div>
     )
 }
