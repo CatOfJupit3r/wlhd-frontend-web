@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import battlefieldReducer from './slices/battlefieldSlice'
+import characterReducer from './slices/characterSlice'
 import cosmeticsSlice from './slices/cosmeticsSlice'
 import infoReducer from './slices/infoSlice'
 import lobbyReducer from './slices/lobbySlice'
@@ -12,6 +13,7 @@ export const store = configureStore({
         lobby: lobbyReducer,
         info: infoReducer,
         battlefield: battlefieldReducer,
+        character: characterReducer,
     },
 })
 

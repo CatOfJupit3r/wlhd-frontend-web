@@ -103,4 +103,8 @@ export interface StatusEffectInfo {
     duration: string | null
 }
 
+export interface AttributeInfo {
+    [attribute: string]: string
+}
+
 export type CharacterFeaturesType = WeaponInfo | ItemInfo | SpellInfo | StatusEffectInfo

@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 
 import { REACT_APP_BACKEND_URL } from '../config'
 import { ShortLobbyInformation, UserInformation } from '../models/APIData'
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../models/Battlefield'
+import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../models/Battlefield'
 import { CharacterInfo } from '../models/CharacterInfo'
 import { LobbyInfo } from '../models/Redux'
 import { TranslationJSON } from '../models/Translation'
@@ -228,7 +228,7 @@ class APIService {
         lobby_id: string,
         descriptor: string
     ): Promise<{
-        attributes: { [attribute: string]: string }
+        attributes: AttributeInfo
     }> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/attributes`,

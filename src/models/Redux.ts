@@ -1,5 +1,18 @@
 import { ActionInput as ActionInputInterface } from './ActionInput'
-import { Battlefield, EntityInfoFull, EntityInfoTooltip, EntityInfoTurn, GameStateContainer } from './Battlefield'
+import {
+    AttributeInfo,
+    Battlefield,
+    EntityInfoFull,
+    EntityInfoTooltip,
+    EntityInfoTurn,
+    GameStateContainer,
+    ItemInfo,
+    SpellInfo,
+    StatusEffectInfo,
+    WeaponInfo,
+} from './Battlefield'
+
+export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
 export interface CosmeticsState {
     notification: {
@@ -62,6 +75,30 @@ export interface BattlefieldState {
     }
     highlightedSquares: {
         [key: string]: number
+    }
+}
+
+export interface CharacterState {
+    descriptor: string
+    fetched: {
+        inventory: Array<ItemInfo>
+        weaponry: Array<WeaponInfo>
+        spells: {
+            spellBook: Array<SpellInfo>
+            spellLayout: {
+                layout: Array<string>
+                conflicts: unknown
+            }
+        }
+        statusEffects: Array<StatusEffectInfo>
+        attributes: AttributeInfo
+    }
+    loading: {
+        inventory: LoadingState
+        weaponry: LoadingState
+        spells: LoadingState
+        statusEffects: LoadingState
+        attributes: LoadingState
     }
 }
 
