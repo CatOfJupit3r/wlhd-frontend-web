@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
 import styles from './CharacterFeatures.module.css'
-import FeatureProvider from './FeatureProvider'
+import FeatureContainer from './FeatureContainer'
 
 const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
@@ -11,27 +11,27 @@ const CharacterFeatures = () => {
             {
                 name: 'Attributes',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureProvider type={'attributes'} />,
+                content: () => <FeatureContainer type={'attributes'} />,
             },
             {
                 name: 'Spells',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureProvider type={'spell'} />,
+                content: () => <FeatureContainer type={'spell'} />,
             },
             {
                 name: 'Inventory',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureProvider type={'item'} />,
+                content: () => <FeatureContainer type={'item'} />,
             },
             {
                 name: 'Weaponry',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureProvider type={'weapon'} />,
+                content: () => <FeatureContainer type={'weapon'} />,
             },
             {
                 name: 'Status Effects',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureProvider type={'status_effect'} />,
+                content: () => <FeatureContainer type={'status_effect'} />,
             },
         ],
         [activeTab]
