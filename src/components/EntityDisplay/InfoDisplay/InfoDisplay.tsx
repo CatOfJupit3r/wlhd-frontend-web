@@ -34,11 +34,11 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
 
     const ItemExclusives = useCallback(({ info }: ItemSegment | WeaponSegment) => {
         if (info) return <p>{t(tPath + 'quantity', {
-            quantity: info.quantity || 1
+            quantity: info.quantity || '-'
         })}</p>
     }, [])
 
-    const IsActiveWeaponDetails = useCallback(({ info }: WeaponSegment) => {
+    const IsActiveDetails = useCallback(({ info }: WeaponSegment) => {
         return info.isActive ? (
             <img
                 src={'/assets/local/available_icon.svg'}
@@ -68,7 +68,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     })}
                 </p>
                 {info.uses && info.uses.max !== null && (
-                    <p>{t(tPath + 'uses', { uses: `${info.uses.current || '0'}|${info.uses.max || '0'}`})}</p>
+                    <p>{t(tPath + 'uses', { uses: `${info.uses.current || '-'}|${info.uses.max || '-'}`})}</p>
                 )}
             </div>
         )
@@ -76,7 +76,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
 
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return <p>{t(tPath + 'cost', {
-            cost: info.cost || 0
+            cost: info.cost || '-'
         })}</p>
     }, [])
 
@@ -101,9 +101,9 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             color: 'black',
                         }}
                     >
-                        {info.cooldown.max !== null
-                            ? `${info.cooldown.current || '0'}|${info.cooldown.max || '0'}`
-                            : info.cooldown.current || '0'}
+                        {(info.cooldown && info.cooldown.max !== null)
+                            ? `${info.cooldown.current || '-'}|${info.cooldown.max || '-'}`
+                            : info.cooldown.current || '-'}
                     </p>
                 }
             />
@@ -122,8 +122,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     }}
                 >
                     {t(decorations.name)}
-                    {type === 'weapon' && IsActiveWeaponDetails({ info } as WeaponSegment)}
-                    {type === 'spell' && info.isActive && IsActiveWeaponDetails({ info } as WeaponSegment)}
+                    {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
+                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as ({ isActive: boolean } extends SpellInfo ? SpellSegment : never))}
                 </div>
                 {type !== 'status_effect' &&
                     CooldownDetails({
