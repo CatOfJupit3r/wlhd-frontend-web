@@ -81,29 +81,47 @@ const AttributeDisplay = ({
         )
     }, [healthAPDefenseValues])
 
+    const CommonAttributesComponent = useCallback(
+        () => (
+            <>
+                {Object.keys(attributes).map((attribute, index) => {
+                    if (ignored.includes(attribute)) return null
+                    return (
+                        <div className={styles.entityAttribute} key={`common-attr-${index}`}>
+                            <p key={`common-attr-name-${index}`}>{capitalizeFirstLetter(t(attribute))}</p>
+                            <p key={`common-attr-val-${index}`}>{attributes[attribute] || '-'}</p>
+                        </div>
+                    )
+                })}
+            </>
+        ),
+        [attributes]
+    )
+
+    const AttackDefenseAttributesComponent = useCallback(
+        () => (
+            <>
+                {Object.keys(defense_attackAttributes).map((attribute, index) => {
+                    return (
+                        <div className={styles.entityAttribute} key={`special-attr-${index}`}>
+                            <p key={`special-attr-name-${index}`}>{capitalizeFirstLetter(t(attribute))}</p>
+                            <p key={`special-attr-val-${index}`}>
+                                {defense_attackAttributes[attribute].attack || '-'}/
+                                {defense_attackAttributes[attribute].defense || '-'}
+                            </p>
+                        </div>
+                    )
+                })}
+            </>
+        ),
+        [defense_attackAttributes]
+    )
+
     return (
-        <div>
+        <div className={styles.attributeContainer}>
             {includeHealthAPDefense && <HealthAPDefenseComponent />}
-            {Object.keys(attributes).map((attribute, index) => {
-                if (ignored.includes(attribute)) return null
-                return (
-                    <div className={styles.entityAttribute} key={`common-attr-${index}`}>
-                        <p key={`common-attr-name-${index}`}>{capitalizeFirstLetter(t(attribute))}</p>
-                        <p key={`common-attr-val-${index}`}>{attributes[attribute] || '-'}</p>
-                    </div>
-                )
-            })}
-            {Object.keys(defense_attackAttributes).map((attribute, index) => {
-                return (
-                    <div className={styles.entityAttribute} key={`special-attr-${index}`}>
-                        <p key={`special-attr-name-${index}`}>{capitalizeFirstLetter(t(attribute))}</p>
-                        <p key={`special-attr-val-${index}`}>
-                            {defense_attackAttributes[attribute].attack || '-'}/
-                            {defense_attackAttributes[attribute].defense || '-'}
-                        </p>
-                    </div>
-                )
-            })}
+            <CommonAttributesComponent />
+            <AttackDefenseAttributesComponent />
         </div>
     )
 }

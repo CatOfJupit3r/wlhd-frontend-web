@@ -12,3 +12,7 @@
 .entityAttribute p:last-child {
     font-weight: bold;
 }
+
+.attributeContainer {
+    font-size: var(--text-size-small);
+}
