@@ -22,6 +22,11 @@ const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string 
             sprite: '',
         },
         controlledBy: [],
+        level: {
+            current: 0,
+            max: 0,
+        },
+        gold: 0,
     } as CharacterInfo)
 
     const setControllingPlayers = useCallback(() => {

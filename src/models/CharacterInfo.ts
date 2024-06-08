@@ -6,4 +6,9 @@ export interface CharacterInfo {
         sprite: string
     }
     controlledBy: Array<string> | null
+    level: {
+        current: number
+        max: number
+    }
+    gold: number
 }

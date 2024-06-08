@@ -4,6 +4,7 @@ import { CharacterInfo } from '../../../models/CharacterInfo'
 import { selectLobbyInfo } from '../../../redux/slices/lobbySlice'
 import { generateAssetPath } from '../../Battlefield/utils'
 import CharacterFeatures from '../CharacterFeatures/CharacterFeatures'
+import { SiUps } from "react-icons/si";
 import styles from './CharacterDisplayContent.module.css'
 
 const CharacterDisplayContent = ({
@@ -13,7 +14,7 @@ const CharacterDisplayContent = ({
     characterInfo: CharacterInfo
     setCurrentCharacter: (descriptor: string) => void
 }) => {
-    const [{ descriptor, controlledBy, decorations }, setInfo] = useState(characterInfo)
+    const [{ descriptor, controlledBy, decorations, level, gold }, setInfo] = useState(characterInfo)
     const { characters } = useSelector(selectLobbyInfo)
 
     useEffect(() => {
@@ -77,6 +78,17 @@ const CharacterDisplayContent = ({
         )
     }, [descriptor, controlledBy])
 
+    const LevelGold = useCallback(() => {
+        return (
+            <div className={styles.levelGoldContainer}>
+                <p>Level: {level && level.current || '-'}
+                    {level && level.max && level.max > level.current && <SiUps />}
+                </p>
+                <p>Gold: {gold || 0}</p>
+            </div>
+        )
+    }, [decorations])
+
     const Description = useCallback(() => {
         return (
             <div className={styles.descriptionContainer}>
@@ -100,6 +112,7 @@ const CharacterDisplayContent = ({
                 className={'border-container-biggest'}
             >
                 <MainSection />
+                <LevelGold />
                 <Description />
             </div>
             <CharacterFeatures />
