@@ -92,14 +92,12 @@ const CharacterDisplayContent = ({
                 style={{
                     height: '100%',
                     width: '40%',
-                    border: '0.125rem solid black',
-                    borderRadius: '1.25rem',
-                    borderBottom: '0.25rem solid black',
                     padding: '1rem',
                     display: 'flex',
                     gap: '1rem',
                     flexDirection: 'column',
                 }}
+                className={'border-container-biggest'}
             >
                 <MainSection />
                 <Description />

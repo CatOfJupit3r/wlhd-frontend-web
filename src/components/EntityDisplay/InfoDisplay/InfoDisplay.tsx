@@ -33,9 +33,14 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const tPath = useMemo(() => 'local:game.info_display.', [])
 
     const ItemExclusives = useCallback(({ info }: ItemSegment | WeaponSegment) => {
-        if (info) return <p>{t(tPath + 'quantity', {
-            quantity: info.quantity || '-'
-        })}</p>
+        if (info)
+            return (
+                <p>
+                    {t(tPath + 'quantity', {
+                        quantity: info.quantity || '-',
+                    })}
+                </p>
+            )
     }, [])
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment) => {
@@ -58,26 +63,30 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     {t(tPath + 'user_must_be', {
                         range: info.user_needs_range
                             ? info.user_needs_range
-                                .map((value: unknown) => {
-                                    if (value && !(value instanceof String)) {
-                                        return value
-                                    }
-                                })
-                                .join(', ')
+                                  .map((value: unknown) => {
+                                      if (value && !(value instanceof String)) {
+                                          return value
+                                      }
+                                  })
+                                  .join(', ')
                             : '???',
                     })}
                 </p>
                 {info.uses && info.uses.max !== null && (
-                    <p>{t(tPath + 'uses', { uses: `${info.uses.current || '-'}|${info.uses.max || '-'}`})}</p>
+                    <p>{t(tPath + 'uses', { uses: `${info.uses.current || '-'}|${info.uses.max || '-'}` })}</p>
                 )}
             </div>
         )
     }, [])
 
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
-        return <p>{t(tPath + 'cost', {
-            cost: info.cost || '-'
-        })}</p>
+        return (
+            <p>
+                {t(tPath + 'cost', {
+                    cost: info.cost || '-',
+                })}
+            </p>
+        )
     }, [])
 
     const CooldownDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
@@ -101,7 +110,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             color: 'black',
                         }}
                     >
-                        {(info.cooldown && info.cooldown.max !== null)
+                        {info.cooldown && info.cooldown.max !== null
                             ? `${info.cooldown.current || '-'}|${info.cooldown.max || '-'}`
                             : info.cooldown.current || '-'}
                     </p>
@@ -111,7 +120,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [])
 
     return (
-        <div className={styles.infoSegmentContainer}>
+        <div className={[styles.infoSegmentContainer, 'border-container-medium'].join(' ')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div
                     style={{
@@ -123,7 +132,13 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 >
                     {t(decorations.name)}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
-                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as ({ isActive: boolean } extends SpellInfo ? SpellSegment : never))}
+                    {type === 'spell' &&
+                        info.isActive &&
+                        IsActiveDetails({ info } as {
+                            isActive: boolean
+                        } extends SpellInfo
+                            ? SpellSegment
+                            : never)}
                 </div>
                 {type !== 'status_effect' &&
                     CooldownDetails({

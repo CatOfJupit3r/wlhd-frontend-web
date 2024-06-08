@@ -61,11 +61,9 @@ const CharacterFeatures = () => {
                     height: '2rem',
                     gap: '0.25rem',
                     width: '100%',
-                    border: '0.125rem solid black',
-                    borderRadius: '1rem',
-                    borderBottom: '0.25rem solid black',
                     padding: '0.25rem',
                 }}
+                className={'border-container-big'}
             >
                 {TABS.map((tab, index) => (
                     <tab.icon
@@ -82,12 +80,10 @@ const CharacterFeatures = () => {
                     flexDirection: 'column',
                     gap: '1rem',
                     width: '100%',
-                    border: '0.125rem solid black',
-                    borderRadius: '1rem',
-                    borderBottom: '0.25rem solid black',
                     height: '100%',
                     padding: '1rem',
                 }}
+                className={'border-container-big'}
             >
                 <FeatureContainer type={currentFeatureTabValue()} />
             </div>

@@ -8,7 +8,9 @@ const MainLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean,
         <>
             {includeHeader && <Header />}
             <Notify />
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
             {includeFooter && <Footer />}
         </>
     )

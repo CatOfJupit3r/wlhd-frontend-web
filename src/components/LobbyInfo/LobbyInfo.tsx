@@ -9,7 +9,7 @@ const LobbyInfo = () => {
     return (
         <div className={styles.lobbyInfoContainer}>
             <div className={styles.mainSection}>
-                <h1 className={styles.lobbyName}>{name}</h1>
+                <h1 className={`${styles.lobbyName} border-container-biggest`}>{name}</h1>
                 <CombatInfo />
             </div>
             <PlayerInfo className={styles.playerSection} />

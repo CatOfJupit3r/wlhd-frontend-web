@@ -134,7 +134,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
     )
 
     return (
-        <div className={styles.displayContainer}>
+        <div className={[styles.displayContainer, 'border-container-biggest'].join(' ')}>
             <div className={styles.entityHeader}>
                 <img
                     src={generateAssetPathFullDescriptor(decorations.sprite)}
@@ -181,18 +181,18 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             <div
                 style={{
                     display: 'flex',
-                    gap: '1rem',
+                    gap: '0.5rem',
                     flexWrap: 'wrap',
                     flexDirection: 'column',
-                    borderTop: '1px solid #000',
-                    paddingTop: '0.5rem',
+                    borderTop: '0.125rem solid #000',
+                    padding: '1rem 1rem'
                 }}
             >
                 {Object.entries(LIST_HEADERS).map(([key, value]) => (
                     <ToggleContainer
                         key={key}
                         header={<ElementWithIcon icon={value.icon} element={value.element} />}
-                        className={styles.attributeToggle}
+                        className={[styles.attributeToggle, 'border-container-big'].join(' ')}
                     >
                         {value.children ? value.children() : null}
                     </ToggleContainer>

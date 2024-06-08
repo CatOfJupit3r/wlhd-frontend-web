@@ -1,6 +1,6 @@
 .footerContainer {
     bottom: 0;
-    position: fixed;
+    position: relative;
     background-color: #252525;
     color: #d5d5d5;
     width: 100%;

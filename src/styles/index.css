@@ -28,6 +28,10 @@ p {
     margin: 0;
 }
 
+main {
+    min-height: 100vh;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         --color-background: #1f2023;
@@ -67,4 +71,28 @@ code {
     --text-size-big: 1.5rem;
     --text-size-normal: 1.25rem;
     --text-size-small: 1rem;
+}
+
+.border-container-biggest {
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.5rem solid black;
+}
+
+.border-container-big {
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.4rem solid black;
+}
+
+.border-container-medium {
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.25rem solid black;
+}
+
+.border-container-small {
+    border-radius: 0.5rem;
+    border: 0.125rem solid black;
+    border-bottom: 0.2rem solid black;
 }

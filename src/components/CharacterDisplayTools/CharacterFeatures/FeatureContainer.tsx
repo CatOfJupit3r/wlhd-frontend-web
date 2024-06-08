@@ -5,18 +5,20 @@ import {
     fetchCharacterInventory,
     fetchCharacterSpellbook,
     fetchCharacterStatusEffects,
-    fetchCharacterWeaponry, resetCharacterFeatures,
+    fetchCharacterWeaponry,
+    resetCharacterFeatures,
     selectAttributes,
     selectDescriptor,
-    selectInventory, selectLoading,
+    selectInventory,
+    selectLoading,
     selectSpells,
     selectStatusEffects,
     selectWeaponry,
 } from '../../../redux/slices/characterSlice'
 import { selectLobbyId } from '../../../redux/slices/lobbySlice'
+import { AppDispatch } from '../../../redux/store'
 import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
 import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
-import { AppDispatch } from '../../../redux/store'
 
 interface ItemContainerProps {
     type: 'inventory'
@@ -63,10 +65,10 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
     }, [descriptor])
 
     useEffect(() => {
-        if (!descriptor) {
+        if (!descriptor || !lobbyId) {
             return
         }
-        if ((!descriptorChanged && ['pending', 'fulfilled', 'rejected'].includes(loading[type]))) {
+        if (!descriptorChanged && ['pending', 'fulfilled', 'rejected'].includes(loading[type])) {
             return
         }
         switch (type) {
@@ -95,52 +97,67 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
         return <div>Loading...</div>
     }, [])
 
+    const FailedToLoad = useCallback(() => {
+        return <div>Failed to load...</div>
+    }, [])
+
+    const LoadingQM = useCallback(() => {
+        return <div>Loading?</div>
+    }, [])
+
+    const DecideOnLoad = useCallback((isLoaded: string, content: () => JSX.Element): JSX.Element => {
+        switch (isLoaded) {
+            case 'fulfilled':
+                return content()
+            case 'rejected':
+                return <FailedToLoad />
+            case 'pending':
+                return <Loading />
+            default:
+                return <LoadingQM />
+        }
+    }, [])
+
     const Inventory = useCallback(() => {
         const [inventory, isLoaded] = useSelector(selectInventory)
 
-        return isLoaded === 'fulfilled' && inventory ? (
+        return DecideOnLoad(isLoaded, () => (
             <>
                 {inventory.map((value, index) => {
                     return <InfoDisplay type={'item'} info={value} key={index} />
                 })}
             </>
-        ) : (
-            <Loading />
-        )
+        ))
     }, [descriptor])
 
     const StatusEffects = useCallback(() => {
         const [effects, isLoaded] = useSelector(selectStatusEffects)
 
-        return isLoaded === 'fulfilled' && effects ? (
+        return DecideOnLoad(isLoaded, () => (
             <>
                 {effects.map((value, index) => {
                     return <InfoDisplay type={'status_effect'} info={value} key={index} />
                 })}
             </>
-        ) : (
-            <Loading />
-        )
+        ))
     }, [descriptor])
 
     const Weaponry = useCallback(() => {
         const [weaponry, isLoaded] = useSelector(selectWeaponry)
 
-        return isLoaded === 'fulfilled' && weaponry ? (
+        return DecideOnLoad(isLoaded, () => (
             <>
                 {weaponry.map((value, index) => {
                     return <InfoDisplay type={'weapon'} info={value} key={index} />
                 })}
             </>
-        ) : (
-            <Loading />
-        )
+        ))
     }, [descriptor])
 
     const SpellBook = useCallback(() => {
         const [{ spellBook, spellLayout }, isLoaded] = useSelector(selectSpells)
 
-        return isLoaded === 'fulfilled' && spellBook ? (
+        return DecideOnLoad(isLoaded, () => (
             <>
                 {spellBook.map((value, index) => {
                     return (
@@ -155,21 +172,17 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
                     )
                 })}
             </>
-        ) : (
-            <Loading />
-        )
+        ))
     }, [descriptor])
 
     const Attributes = useCallback(() => {
         const [inventory, isLoaded] = useSelector(selectAttributes)
 
-        return isLoaded === 'fulfilled' ? (
+        return DecideOnLoad(isLoaded, () => (
             <>
-                <AttributeDisplay attributes={inventory} />
+                <AttributeDisplay attributes={inventory} includeHealthAPDefense={true} />
             </>
-        ) : (
-            <Loading />
-        )
+        ))
     }, [descriptor])
 
     const ProvidedContent = useCallback(() => {
@@ -196,11 +209,14 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
     }, [type])
 
     return (
-        <div id={`${type}-container`} style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-        }}>
+        <div
+            id={`${type}-container`}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+            }}
+        >
             <ProvidedContent />
         </div>
     )
