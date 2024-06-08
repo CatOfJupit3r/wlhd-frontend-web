@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../../models/Battlefield'
 import { CharacterState, LoadingState } from '../../models/Redux'
 import APIService from '../../services/APIService'
@@ -109,35 +109,36 @@ const CharacterSlice = createSlice({
         builder.addCase(fetchCharacterInventory.fulfilled, (state, action) => {
             return setFetchedData(state, {
                 fetchType: 'inventory',
-                loadingType: 'idle',
+                loadingType: 'fulfilled',
                 data: action.payload.inventory,
             })
         })
         builder.addCase(fetchCharacterWeaponry.fulfilled, (state, action) => {
             return setFetchedData(state, {
                 fetchType: 'weaponry',
-                loadingType: 'idle',
+                loadingType: 'fulfilled',
                 data: action.payload.weaponry,
             })
         })
         builder.addCase(fetchCharacterSpellbook.fulfilled, (state, action) => {
+            console.log(action.payload)
             return setFetchedData(state, {
                 fetchType: 'spells',
-                loadingType: 'idle',
-                data: action.payload,
+                loadingType: 'fulfilled',
+                data: action.payload.spells,
             })
         })
         builder.addCase(fetchCharacterStatusEffects.fulfilled, (state, action) => {
             return setFetchedData(state, {
                 fetchType: 'statusEffects',
-                loadingType: 'idle',
+                loadingType: 'fulfilled',
                 data: action.payload.statusEffects,
             })
         })
         builder.addCase(fetchCharacterAttributes.fulfilled, (state, action) => {
             return setFetchedData(state, {
                 fetchType: 'attributes',
-                loadingType: 'idle',
+                loadingType: 'fulfilled',
                 data: action.payload.attributes,
             })
         })
@@ -212,32 +213,39 @@ export const selectDescriptor = (state: RootState) => state.character.descriptor
 
 type CharacterFeatureSelect<T> = [T, LoadingState]
 
-export const selectInventory = (state: RootState): CharacterFeatureSelect<Array<ItemInfo>> => [
-    state.character.fetched.inventory,
-    state.character.loading.inventory,
-]
+export const selectInventory = createSelector(
+    (state: RootState) => state.character.fetched.inventory,
+    (state: RootState) => state.character.loading.inventory,
+    (inventory, loading) => [inventory, loading] as CharacterFeatureSelect<Array<ItemInfo>>
+)
 
-export const selectWeaponry = (state: RootState): CharacterFeatureSelect<Array<WeaponInfo>> => [
-    state.character.fetched.weaponry,
-    state.character.loading.weaponry,
-]
+export const selectWeaponry = createSelector(
+    (state: RootState) => state.character.fetched.weaponry,
+    (state: RootState) => state.character.loading.weaponry,
+    (weaponry, loading) => [weaponry, loading] as CharacterFeatureSelect<Array<WeaponInfo>>
+)
 
-export const selectSpells = (
-    state: RootState
-): CharacterFeatureSelect<{
-    spellBook: Array<SpellInfo>
-    spellLayout: {
-        layout: Array<string>
-        conflicts: unknown
-    }
-}> => [state.character.fetched.spells, state.character.loading.spells]
+export const selectSpells = createSelector(
+    (state: RootState) => state.character.fetched.spells,
+    (state: RootState) => state.character.loading.spells,
+    (spells, loading) =>
+        [spells, loading] as CharacterFeatureSelect<{
+            spellBook: Array<SpellInfo>
+            spellLayout: {
+                layout: Array<string>
+                conflicts: unknown
+            }
+        }>
+)
 
-export const selectStatusEffects = (state: RootState): CharacterFeatureSelect<Array<StatusEffectInfo>> => [
-    state.character.fetched.statusEffects,
-    state.character.loading.statusEffects,
-]
+export const selectStatusEffects = createSelector(
+    (state: RootState) => state.character.fetched.statusEffects,
+    (state: RootState) => state.character.loading.statusEffects,
+    (statusEffects, loading) => [statusEffects, loading] as CharacterFeatureSelect<Array<StatusEffectInfo>>
+)
 
-export const selectAttributes = (state: RootState): CharacterFeatureSelect<AttributeInfo> => [
-    state.character.fetched.attributes,
-    state.character.loading.attributes,
-]
+export const selectAttributes = createSelector(
+    (state: RootState) => state.character.fetched.attributes,
+    (state: RootState) => state.character.loading.attributes,
+    (attributes, loading) => [attributes, loading] as CharacterFeatureSelect<AttributeInfo>
+)

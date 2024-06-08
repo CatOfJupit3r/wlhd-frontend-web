@@ -191,13 +191,15 @@ class APIService {
         lobby_id: string,
         descriptor: string
     ): Promise<{
-        spellBook: Array<SpellInfo>
-        spellLayout: { layout: Array<string>; conflicts: unknown }
+        spells: {
+            spellBook: Array<SpellInfo>
+            spellLayout: { layout: Array<string>; conflicts: unknown }
+        }
     }> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/spellbook`,
             method: 'get',
-        })) as { spellBook: Array<WeaponInfo>; spellLayout: { layout: Array<string>; conflicts: unknown } }
+        })) as { spells: { spellBook: Array<WeaponInfo>; spellLayout: { layout: Array<string>; conflicts: unknown } } }
     }
 
     public getCharacterStatusEffects = async (
@@ -218,8 +220,9 @@ class APIService {
     ): Promise<{
         inventory: Array<ItemInfo>
     }> => {
+        console.log("Fetching character's inventory", lobby_id, descriptor)
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory`,
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory/`,
             method: 'get',
         })) as { inventory: Array<WeaponInfo> }
     }
@@ -231,7 +234,7 @@ class APIService {
         attributes: AttributeInfo
     }> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/attributes`,
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/attributes/`,
             method: 'get',
         })) as { attributes: { [attribute: string]: string } }
     }

@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CharacterInfo } from '../../models/CharacterInfo'
 import { selectLobbyInfo } from '../../redux/slices/lobbySlice'
 import APIService from '../../services/APIService'
 import CharacterDisplayContent from './CharacterDisplayContent/CharacterDisplayContent'
 import styles from './CharacterDisplayTools.module.css'
+import { AppDispatch } from '../../redux/store'
+import { setDescriptor } from '../../redux/slices/characterSlice'
 
 const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string }) => {
     const { lobbyId, players } = useSelector(selectLobbyInfo)
+    const dispatch = useDispatch<AppDispatch>()
 
     const [currentCharacter, setCurrentCharacter] = useState(initialCharacter || '')
 
@@ -32,6 +35,13 @@ const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string 
             }))
         }
     }, [currentCharacter, players])
+
+    useEffect(() => {
+        if (!currentCharacter) {
+            return
+        }
+        dispatch(setDescriptor(currentCharacter))
+    }, [currentCharacter])
 
     const refreshEntityInfo = useCallback(async () => {
         try {

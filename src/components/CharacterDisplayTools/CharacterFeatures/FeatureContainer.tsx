@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     fetchCharacterAttributes,
     fetchCharacterInventory,
@@ -16,6 +16,7 @@ import {
 import { selectLobbyId } from '../../../redux/slices/lobbySlice'
 import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
 import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
+import { AppDispatch } from '../../../redux/store'
 
 interface ItemContainerProps {
     type: 'item'
@@ -48,23 +49,27 @@ type FeatureProps = ProvidingProps
 const FeatureContainer: FC<FeatureProps> = ({ type }) => {
     const descriptor = useSelector(selectDescriptor)
     const lobbyId = useSelector(selectLobbyId)
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
+        if (!descriptor) {
+            return
+        }
         switch (type) {
             case 'item':
-                fetchCharacterInventory(lobbyId)
+                dispatch(fetchCharacterInventory(lobbyId))
                 break
             case 'weapon':
-                fetchCharacterWeaponry(lobbyId)
+                dispatch(fetchCharacterWeaponry(lobbyId))
                 break
             case 'spell':
-                fetchCharacterSpellbook(lobbyId)
+                dispatch(fetchCharacterSpellbook(lobbyId))
                 break
             case 'status_effect':
-                fetchCharacterStatusEffects(lobbyId)
+                dispatch(fetchCharacterStatusEffects(lobbyId))
                 break
             case 'attributes':
-                fetchCharacterAttributes(lobbyId)
+                dispatch(fetchCharacterAttributes(lobbyId))
                 break
             default:
                 break
@@ -123,7 +128,16 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
         return isLoaded === 'fulfilled' && spellBook ? (
             <>
                 {spellBook.map((value, index) => {
-                    return <InfoDisplay type={'spell'} info={value} key={index} />
+                    return (
+                        <InfoDisplay
+                            type={'spell'}
+                            info={{
+                                ...value,
+                                isActive: spellLayout.layout.includes(value.descriptor),
+                            }}
+                            key={index}
+                        />
+                    )
                 })}
             </>
         ) : (
