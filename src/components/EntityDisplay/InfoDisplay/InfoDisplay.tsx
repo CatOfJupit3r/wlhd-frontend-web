@@ -110,9 +110,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             color: 'black',
                         }}
                     >
-                        {info.cooldown && info.cooldown.max !== null
-                            ? `${info.cooldown.current || '-'}|${info.cooldown.max || '-'}`
-                            : info.cooldown.current || '-'}
+                        {info.cooldown ? `${info.cooldown.current || '-'} | ${info.cooldown.max || '-'}` : '-'}
                     </p>
                 }
             />
