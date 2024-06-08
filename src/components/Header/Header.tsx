@@ -1,12 +1,15 @@
 import { useCallback } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
+import { selectLobbyId } from '../../redux/slices/lobbySlice'
 import paths from '../../router/paths'
 import AuthManager from '../../services/AuthManager'
 import styles from './Header.module.css'
 
-const Header = () => {
+const Header = ({ includeLobbyRoute }: { includeLobbyRoute?: boolean }) => {
     const { isLoggedIn } = useIsLoggedIn()
+    const lobbyId = useSelector(selectLobbyId)
 
     const AuthLinks = useCallback(() => {
         return (
@@ -27,6 +30,11 @@ const Header = () => {
                 <Link to={paths.profile} relative={'path'}>
                     Profile
                 </Link>
+                {includeLobbyRoute && lobbyId && (
+                    <Link to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} relative={'path'}>
+                        Lobby
+                    </Link>
+                )}
                 <Link
                     to={'.'}
                     onClick={(e) => {

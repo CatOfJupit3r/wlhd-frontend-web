@@ -30,7 +30,7 @@ const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: bo
 
     return (
         <>
-            {includeHeader && <Header />}
+            {includeHeader && <Header includeLobbyRoute={true} />}
             <Notify />
             <main>
                 <Outlet />
