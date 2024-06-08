@@ -2,44 +2,47 @@ import { useCallback, useMemo, useState } from 'react'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
 import styles from './CharacterFeatures.module.css'
 import FeatureContainer from './FeatureContainer'
+import { IconType } from 'react-icons'
 
 const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
 
-    const TABS = useMemo(
+    const TABS: Array<{
+        name: string
+        value: "attributes" | "spells" | "inventory" | "weaponry" | "statusEffects"
+        icon: IconType
+    }> = useMemo(
         () => [
             {
                 name: 'Attributes',
+                value: 'attributes',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureContainer type={'attributes'} />,
             },
             {
                 name: 'Spells',
+                value: 'spells',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureContainer type={'spell'} />,
             },
             {
                 name: 'Inventory',
+                value: 'inventory',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureContainer type={'item'} />,
             },
             {
                 name: 'Weaponry',
+                value: 'weaponry',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureContainer type={'weapon'} />,
             },
             {
                 name: 'Status Effects',
+                value: 'statusEffects',
                 icon: WiMoonWaxingCrescent4,
-                content: () => <FeatureContainer type={'status_effect'} />,
             },
         ],
         [activeTab]
     )
 
-    const TabContent = useCallback(() => {
-        return TABS[activeTab].content()
-    }, [activeTab])
+    const currentFeatureTabValue = useCallback( () => (TABS[activeTab].value || 'attributes'), [activeTab, TABS])
 
     return (
         <div
@@ -86,7 +89,7 @@ const CharacterFeatures = () => {
                     padding: '1rem',
                 }}
             >
-                <TabContent />
+                <FeatureContainer type={currentFeatureTabValue()} />
             </div>
         </div>
     )

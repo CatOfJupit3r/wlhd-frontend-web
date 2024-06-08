@@ -220,7 +220,6 @@ class APIService {
     ): Promise<{
         inventory: Array<ItemInfo>
     }> => {
-        console.log("Fetching character's inventory", lobby_id, descriptor)
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory/`,
             method: 'get',

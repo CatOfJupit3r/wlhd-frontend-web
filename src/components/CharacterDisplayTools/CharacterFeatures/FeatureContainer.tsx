@@ -1,14 +1,14 @@
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     fetchCharacterAttributes,
     fetchCharacterInventory,
     fetchCharacterSpellbook,
     fetchCharacterStatusEffects,
-    fetchCharacterWeaponry,
+    fetchCharacterWeaponry, resetCharacterFeatures,
     selectAttributes,
     selectDescriptor,
-    selectInventory,
+    selectInventory, selectLoading,
     selectSpells,
     selectStatusEffects,
     selectWeaponry,
@@ -19,15 +19,15 @@ import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
 import { AppDispatch } from '../../../redux/store'
 
 interface ItemContainerProps {
-    type: 'item'
+    type: 'inventory'
 }
 
 interface WeaponContainerProps {
-    type: 'weapon'
+    type: 'weaponry'
 }
 
 interface SpellContainerProps {
-    type: 'spell'
+    type: 'spells'
 }
 
 interface AttributeContainerProps {
@@ -35,7 +35,7 @@ interface AttributeContainerProps {
 }
 
 interface StatusEffectContainerProps {
-    type: 'status_effect'
+    type: 'statusEffects'
 }
 
 type ProvidingProps =
@@ -50,22 +50,36 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
     const descriptor = useSelector(selectDescriptor)
     const lobbyId = useSelector(selectLobbyId)
     const dispatch = useDispatch<AppDispatch>()
+    const loading = useSelector(selectLoading)
+
+    const [descriptorChanged, setDescriptorChanged] = useState(false)
 
     useEffect(() => {
         if (!descriptor) {
             return
         }
+        dispatch(resetCharacterFeatures())
+        setDescriptorChanged(true)
+    }, [descriptor])
+
+    useEffect(() => {
+        if (!descriptor) {
+            return
+        }
+        if ((!descriptorChanged && ['pending', 'fulfilled', 'rejected'].includes(loading[type]))) {
+            return
+        }
         switch (type) {
-            case 'item':
+            case 'inventory':
                 dispatch(fetchCharacterInventory(lobbyId))
                 break
-            case 'weapon':
+            case 'weaponry':
                 dispatch(fetchCharacterWeaponry(lobbyId))
                 break
-            case 'spell':
+            case 'spells':
                 dispatch(fetchCharacterSpellbook(lobbyId))
                 break
-            case 'status_effect':
+            case 'statusEffects':
                 dispatch(fetchCharacterStatusEffects(lobbyId))
                 break
             case 'attributes':
@@ -74,7 +88,8 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
             default:
                 break
         }
-    }, [descriptor, lobbyId])
+        setDescriptorChanged(false)
+    }, [descriptorChanged, lobbyId, type])
 
     const Loading = useCallback(() => {
         return <div>Loading...</div>
@@ -150,7 +165,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
 
         return isLoaded === 'fulfilled' ? (
             <>
-                return <AttributeDisplay attributes={inventory} />
+                <AttributeDisplay attributes={inventory} />
             </>
         ) : (
             <Loading />
@@ -159,19 +174,19 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
 
     const ProvidedContent = useCallback(() => {
         switch (type) {
-            case 'item': {
+            case 'inventory': {
                 return <Inventory />
             }
-            case 'spell': {
+            case 'spells': {
                 return <SpellBook />
             }
-            case 'weapon': {
+            case 'weaponry': {
                 return <Weaponry />
             }
             case 'attributes': {
                 return <Attributes />
             }
-            case 'status_effect': {
+            case 'statusEffects': {
                 return <StatusEffects />
             }
             default: {
@@ -181,7 +196,11 @@ const FeatureContainer: FC<FeatureProps> = ({ type }) => {
     }, [type])
 
     return (
-        <div id={`${type}-container`}>
+        <div id={`${type}-container`} style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+        }}>
             <ProvidedContent />
         </div>
     )

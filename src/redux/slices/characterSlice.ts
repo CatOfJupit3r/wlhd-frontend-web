@@ -104,6 +104,13 @@ const CharacterSlice = createSlice({
         setDescriptor: (state, action: PayloadAction<string>) => {
             return { ...state, descriptor: action.payload }
         },
+        resetCharacterFeatures: (state) => {
+            return {
+                ...state,
+                fetched: initialState.fetched,
+                loading: initialState.loading,
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchCharacterInventory.fulfilled, (state, action) => {
@@ -121,7 +128,6 @@ const CharacterSlice = createSlice({
             })
         })
         builder.addCase(fetchCharacterSpellbook.fulfilled, (state, action) => {
-            console.log(action.payload)
             return setFetchedData(state, {
                 fetchType: 'spells',
                 loadingType: 'fulfilled',
@@ -207,9 +213,10 @@ const CharacterSlice = createSlice({
 
 export default CharacterSlice.reducer
 
-export const { setDescriptor } = CharacterSlice.actions
+export const { setDescriptor, resetCharacterFeatures } = CharacterSlice.actions
 
 export const selectDescriptor = (state: RootState) => state.character.descriptor
+export const selectLoading = (state: RootState) => state.character.loading
 
 type CharacterFeatureSelect<T> = [T, LoadingState]
 
