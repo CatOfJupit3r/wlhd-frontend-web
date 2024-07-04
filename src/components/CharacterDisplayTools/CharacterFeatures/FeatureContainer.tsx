@@ -1,5 +1,5 @@
-import { FC, useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import AttributeDisplay from '@components/EntityDisplay/AttributeDisplay/AttributeDisplay'
+import InfoDisplay from '@components/EntityDisplay/InfoDisplay/InfoDisplay'
 import {
     fetchCharacterAttributes,
     fetchCharacterInventory,
@@ -17,8 +17,8 @@ import {
 } from '@redux/slices/characterSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
-import AttributeDisplay from '@components/EntityDisplay/AttributeDisplay/AttributeDisplay'
-import InfoDisplay from '@components/EntityDisplay/InfoDisplay/InfoDisplay'
+import { FC, useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface ItemContainerProps {
     type: 'inventory'

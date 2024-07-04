@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 import GameScreen from '@components/GameScreen/GameScreen'
-import example_gamestate from '../data/example_gamestate.json'
 import { EntityInfoFull } from '@models/Battlefield'
 import { setBattlefield } from '@redux/slices/battlefieldSlice'
 import { setActiveEntity, setControlledEntities, setEntityTooltips, setMessages } from '@redux/slices/infoSlice'
 import { resetTurnSlice, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
 import { AppDispatch } from '@redux/store'
 import APIService from '@services/APIService'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import example_gamestate from '../data/example_gamestate.json'
 
 const GameTestPage = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -33,9 +33,7 @@ const GameTestPage = () => {
     useEffect(() => {
         dispatch(resetTurnSlice()) // to prevent any leftover state from previous games
         loadTranslations()
-            .then(() =>
-                setLoadedTranslations(true)
-            )
+            .then(() => setLoadedTranslations(true))
             .catch((error) => console.log(error))
     }, [])
 
@@ -47,11 +45,7 @@ const GameTestPage = () => {
         dispatch(setBattlefield(example_gamestate.battlefield as any))
         dispatch(setEntityActions(example_gamestate.actions as any))
         dispatch(setPlayersTurn(true))
-        setTimeout(
-            () =>
-                setLoadedGameState(true),
-            1000
-        )
+        setTimeout(() => setLoadedGameState(true), 1000)
     }, [])
 
     return <div>{loadedTranslations && loadedGameState ? <GameScreen /> : <div>Loading...</div>}</div>

@@ -1,8 +1,8 @@
+import { selectEntityTooltips } from '@redux/slices/infoSlice'
 import { useCallback, useMemo } from 'react'
 import { Placeholder } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { selectEntityTooltips } from '@redux/slices/infoSlice'
 import styles from './EntityTooltip.module.css'
 
 const EntityTooltip = ({ id }: { id: string }) => {

@@ -1,7 +1,7 @@
+import EntityDisplay from '@components/EntityDisplay/EntityDisplay'
+import { selectControlledEntities } from '@redux/slices/infoSlice'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { selectControlledEntities } from '@redux/slices/infoSlice'
-import EntityDisplay from '@components/EntityDisplay/EntityDisplay'
 import styles from './ControlledEntitiesInfo.module.css'
 
 const ControlledEntitiesInfo = () => {

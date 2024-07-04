@@ -1,11 +1,11 @@
+import { setChosenMenu } from '@redux/slices/infoSlice'
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaUsers } from 'react-icons/fa'
 import { FaUncharted } from 'react-icons/fa6'
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
 import { useDispatch } from 'react-redux'
-import { setChosenMenu } from '@redux/slices/infoSlice'
-import {useTranslation} from "react-i18next";
 import styles from './MenuNavigator.module.css'
 
 const MenuNavigator = () => {
@@ -63,19 +63,11 @@ const MenuNavigator = () => {
     )
 
     return (
-        <div
-            className={styles.navigationContainer}
-        >
-            <div
-                id={'option-navigators'}
-                className={styles.navigationButtonContainer}
-            >
+        <div className={styles.navigationContainer}>
+            <div id={'option-navigators'} className={styles.navigationButtonContainer}>
                 {generateOption(optionNavigators, 'option-navigator')}
             </div>
-            <div
-                className={styles.navigationButtonContainer}
-                id={'page-navigators'}
-            >
+            <div className={styles.navigationButtonContainer} id={'page-navigators'}>
                 {generateOption(pageNavigators, 'page-navigator')}
             </div>
         </div>

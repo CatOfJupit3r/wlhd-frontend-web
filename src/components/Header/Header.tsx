@@ -1,10 +1,10 @@
-import { useCallback } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
+import { useCallback } from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
 
 const Header = ({ includeLobbyRoute }: { includeLobbyRoute?: boolean }) => {

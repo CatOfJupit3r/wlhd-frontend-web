@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux'
 import LobbyInfo from '@components/LobbyInfo/LobbyInfo'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import { useSelector } from 'react-redux'
 
 const LobbyPage = () => {
     const lobbyInfo = useSelector(selectLobbyInfo)

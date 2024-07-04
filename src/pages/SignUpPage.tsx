@@ -8,15 +8,18 @@ const SignUpPage = () => {
                 flexDirection: 'row',
             }}
         >
-            <SignUp style={{
-                marginTop: '30vh',
-            }}/>
-            <div style={{
-                backgroundColor: 'black',
-                flexGrow: 1, /* Takes remaining space */
-                height: '100vh',
-            }}>
-            </div>
+            <SignUp
+                style={{
+                    marginTop: '30vh',
+                }}
+            />
+            <div
+                style={{
+                    backgroundColor: 'black',
+                    flexGrow: 1 /* Takes remaining space */,
+                    height: '100vh',
+                }}
+            ></div>
         </div>
     )
 }

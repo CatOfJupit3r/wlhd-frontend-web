@@ -1,7 +1,3 @@
-import { useCallback } from 'react'
-import { Blurhash } from 'react-blurhash'
-import { useSelector } from 'react-redux'
-import { BATTLEFIELD_BLUR_HASH } from 'config'
 import {
     selectBattlefieldMold,
     selectColumns,
@@ -10,6 +6,10 @@ import {
     selectLines,
     selectSeparators,
 } from '@redux/slices/battlefieldSlice'
+import { BATTLEFIELD_BLUR_HASH } from 'config'
+import { useCallback } from 'react'
+import { Blurhash } from 'react-blurhash'
+import { useSelector } from 'react-redux'
 import styles from './Battlefield.module.css'
 import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
 

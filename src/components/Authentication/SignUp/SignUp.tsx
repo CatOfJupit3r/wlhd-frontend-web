@@ -1,13 +1,13 @@
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import { setNotify } from '@redux/slices/cosmeticsSlice'
+import paths from '@router/paths'
+import APIService from '@services/APIService'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
-import paths from '@router/paths'
-import APIService from '@services/APIService'
 import styles from '../Authentication.module.css'
 import { checkConfirmPassword, checkHandle, checkPassword } from '../verifyInputs'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 
 const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
@@ -18,7 +18,6 @@ const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [readyToNav, setReadyToNav] = useState(false)
     const { isLoggedIn } = useIsLoggedIn()
-
 
     useEffect(() => {
         if (isLoggedIn) {

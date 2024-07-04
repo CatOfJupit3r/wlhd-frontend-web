@@ -1,7 +1,7 @@
+import GameAsset from '@components/GameAsset'
 import React from 'react'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
-import GameAsset from '@components/GameAsset'
 
 const TileCosmetic = (props: {
     full_descriptor: string

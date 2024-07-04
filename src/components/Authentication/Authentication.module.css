@@ -42,12 +42,10 @@
     color: #838383;
 }
 
-
 .authContainer form input:focus {
     transition: border-color 0.4s;
     border-color: #518bf6;
 }
-
 
 .confirmBtn {
     border: none;
@@ -68,7 +66,6 @@
     background-color: #b2b2b2;
     transition: background-color 0.1s;
 }
-
 
 .authContainer h2 {
     color: #494949;

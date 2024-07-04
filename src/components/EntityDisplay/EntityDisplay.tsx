@@ -1,13 +1,13 @@
+import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import { EntityInfoFull } from '@models/Battlefield'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { EntityInfoFull } from '@models/Battlefield'
 import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
-import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import GameAsset from '../GameAsset'
 import ToggleContainer from '../ToggleContainer/ToggleContainer'
 import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 import styles from './EntityDisplay.module.css'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
-import GameAsset from '../GameAsset'
 
 const iconStyle = {
     width: '1.25rem',
@@ -140,13 +140,15 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                     src={generateAssetPathFullDescriptor(decorations.sprite)}
                     alt={decorations.name}
                     fallback={
-                        (['1', '2', '3'].includes(square.line)) ? {
-                            src: generateAssetPath('builtins', 'enemy'),
-                            alt: 'enemy',
-                        } : {
-                            src: generateAssetPath('builtins', 'ally'),
-                            alt: 'ally',
-                        }
+                        ['1', '2', '3'].includes(square.line)
+                            ? {
+                                  src: generateAssetPath('builtins', 'enemy'),
+                                  alt: 'enemy',
+                              }
+                            : {
+                                  src: generateAssetPath('builtins', 'ally'),
+                                  alt: 'ally',
+                              }
                     }
                     style={{
                         width: '5rem',
@@ -179,7 +181,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                     flexWrap: 'wrap',
                     flexDirection: 'column',
                     borderTop: '0.125rem solid #000',
-                    padding: '1rem 1rem'
+                    padding: '1rem 1rem',
                 }}
             >
                 {Object.entries(LIST_HEADERS).map(([key, value]) => (

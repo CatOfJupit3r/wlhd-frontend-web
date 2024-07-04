@@ -1,12 +1,12 @@
-import { useCallback, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import Overlay from '@components/Overlay/Overlay'
 import { setChosenMenu } from '@redux/slices/infoSlice'
 import { AppDispatch } from '@redux/store'
 import SocketService from '@services/SocketService'
-import Overlay from '@components/Overlay/Overlay'
-import styles from './LeaveGameOverlay.module.css'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import styles from './LeaveGameOverlay.module.css'
 
 const LeaveGameOverlay = () => {
     const { t } = useTranslation()

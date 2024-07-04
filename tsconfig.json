@@ -13,7 +13,7 @@
             "@models/*": ["./models/*"],
             "@router/*": ["./router/*"],
             "@lib*": ["./lib/*"],
-            "config": ["./config"],
+            "config": ["./config"]
         },
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,

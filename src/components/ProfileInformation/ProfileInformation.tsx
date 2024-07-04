@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
 import { UserInformation } from '@models/APIData'
 import APIService from '@services/APIService'
-import styles from './ProfileInformation.module.css'
+import { useCallback, useEffect, useState } from 'react'
 import LobbyShortInfo from './LobbyShortInfo/LobbyShortInfo'
+import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
     const [{ handle, createdAt, joined }, setUserInfo] = useState({

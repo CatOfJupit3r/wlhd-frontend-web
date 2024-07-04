@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
-import { useTranslation } from 'react-i18next'
 import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper'
 import Overlay from '@components/Overlay/Overlay'
 import APIService from '@services/APIService'
+import { useCallback, useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const GameRoomPage = () => {
@@ -23,9 +23,8 @@ const GameRoomPage = () => {
         }
         if (lobbyId) {
             const customTranslations = await APIService.getCustomLobbyTranslations(lobbyId)
-            i18n.addResourceBundle(i18n.language, "coordinator", customTranslations, true, true)
+            i18n.addResourceBundle(i18n.language, 'coordinator', customTranslations, true, true)
         }
-
     }, [i18n, lobbyId])
 
     useEffect(() => {

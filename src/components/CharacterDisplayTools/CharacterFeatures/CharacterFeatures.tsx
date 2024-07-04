@@ -1,15 +1,15 @@
 import { useCallback, useMemo, useState } from 'react'
+import { IconType } from 'react-icons'
 import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
 import styles from './CharacterFeatures.module.css'
 import FeatureContainer from './FeatureContainer'
-import { IconType } from 'react-icons'
 
 const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
 
     const TABS: Array<{
         name: string
-        value: "attributes" | "spells" | "inventory" | "weaponry" | "statusEffects"
+        value: 'attributes' | 'spells' | 'inventory' | 'weaponry' | 'statusEffects'
         icon: IconType
     }> = useMemo(
         () => [
@@ -42,7 +42,7 @@ const CharacterFeatures = () => {
         [activeTab]
     )
 
-    const currentFeatureTabValue = useCallback( () => (TABS[activeTab].value || 'attributes'), [activeTab, TABS])
+    const currentFeatureTabValue = useCallback(() => TABS[activeTab].value || 'attributes', [activeTab, TABS])
 
     return (
         <div

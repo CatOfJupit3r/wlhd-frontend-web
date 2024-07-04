@@ -1,14 +1,14 @@
-import { AxiosError } from 'axios'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { setNotify } from '@redux/slices/cosmeticsSlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
+import { AxiosError } from 'axios'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
 import { checkHandle, checkPassword } from '../verifyInputs'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 
 const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()

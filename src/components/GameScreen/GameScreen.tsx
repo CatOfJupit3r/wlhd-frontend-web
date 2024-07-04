@@ -1,9 +1,8 @@
-import React from 'react'
-import RoundHeader from './RoundHeader'
 import Battlefield from '../Battlefield/Battlefield'
 import styles from './GameScreen.module.css'
 import MenuContainer from './MenuContainer/MenuContainer'
 import MenuNavigator from './MenuNavigator/MenuNavigator'
+import RoundHeader from './RoundHeader'
 
 const GameScreen = () => {
     return (

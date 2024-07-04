@@ -22,7 +22,10 @@ const ElementWithIcon = ({
 }) => {
     return (
         <div
-            className={`${styles.container} ${iconPosition === 'opposite' ? styles.opposite : styles.together}` + (className ? ` ${className}` : '')}
+            className={
+                `${styles.container} ${iconPosition === 'opposite' ? styles.opposite : styles.together}` +
+                (className ? ` ${className}` : '')
+            }
             onClick={onClick}
             onKeyDown={onKeyDown}
             role={role}

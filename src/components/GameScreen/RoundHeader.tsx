@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { selectRound } from '@redux/slices/infoSlice'
 import { selectPlayersTurn } from '@redux/slices/turnSlice'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 const RoundHeader = () => {
     const { t } = useTranslation()

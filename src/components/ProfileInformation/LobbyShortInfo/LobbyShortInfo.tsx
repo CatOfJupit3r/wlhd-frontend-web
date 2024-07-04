@@ -1,10 +1,10 @@
+import { ShortLobbyInformation } from '@models/APIData'
+import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import { Placeholder } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { RiVipCrownLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
-import { ShortLobbyInformation } from '@models/APIData'
-import APIService from '@services/APIService'
 import styles from './LobbyShortInfo.module.css'
 
 type LoadingType = 'loading' | 'failed' | 'success'
@@ -19,7 +19,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
         characters: [],
     } as ShortLobbyInformation)
     const [status, setStatus] = useState('loading' as LoadingType)
-    const [placeholderParams, ] = useState({
+    const [placeholderParams] = useState({
         title: '?'.repeat(Math.round(Math.random() * (10 - 4) + 4)),
         description: '?'.repeat(Math.round(Math.random() * (10 - 4) + 4)),
     })

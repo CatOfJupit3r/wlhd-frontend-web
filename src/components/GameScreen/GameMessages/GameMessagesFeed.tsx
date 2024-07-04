@@ -1,11 +1,11 @@
-import {useTranslation} from 'react-i18next'
-import {useSelector} from 'react-redux'
-import {selectAllMessages} from '@redux/slices/infoSlice'
-import useTranslatableString from "@hooks/useTranslatableString";
+import useTranslatableString from '@hooks/useTranslatableString'
+import { GameStateContainer } from '@models/Battlefield'
+import { GameMessage } from '@models/GameHandshake'
+import { selectAllMessages } from '@redux/slices/infoSlice'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import styles from './GameMessagesFeed.module.css'
-import {GameStateContainer} from "@models/Battlefield";
-import {useCallback} from "react";
-import {GameMessage} from "@models/GameHandshake";
 
 /*
 
@@ -24,7 +24,6 @@ For now, support for offloading messages, so for now we keep all messages loaded
 
 */
 
-
 const GameMessagesFeed = () => {
     const { tstring } = useTranslatableString()
     const { t } = useTranslation()
@@ -40,9 +39,7 @@ const GameMessagesFeed = () => {
     }, [])
 
     return (
-        <div
-            className={styles.stateFeed}
-        >
+        <div className={styles.stateFeed}>
             {messages ? (
                 reverseMessageContainer(messages).map((msg) => {
                     return reverseGameMessages(msg).map((content, index) => {

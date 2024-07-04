@@ -1,6 +1,5 @@
 import RootRouter from './router/RootRouter'
 
-
 const App = () => {
     return (
         <div className={'App'}>

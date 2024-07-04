@@ -1,11 +1,8 @@
+import { clearNotify, selectNotification } from '@redux/slices/cosmeticsSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {
-    clearNotify,
-    selectNotification,
-} from '@redux/slices/cosmeticsSlice'
 
 const Notify = () => {
     const notification = useSelector(selectNotification)

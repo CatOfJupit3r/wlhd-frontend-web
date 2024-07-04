@@ -1,7 +1,7 @@
-import { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 import { EntityAttributes } from '@models/Battlefield'
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
+import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from './AttributeDisplay.module.css'
 
 const AttributeDisplay = ({

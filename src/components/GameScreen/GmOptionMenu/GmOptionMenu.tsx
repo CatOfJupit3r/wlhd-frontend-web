@@ -1,6 +1,3 @@
-import React from 'react'
-
-
 /*
 
 This component is a special tool for GM to interact with game engine via special commands.
@@ -18,7 +15,6 @@ I will make it possible to enter parameters (e.g. entity to summon, damage to de
 Maybe a form?...
 
 */
-
 
 const GmOptionMenu = () => {
     // const dispatch = useDispatch()

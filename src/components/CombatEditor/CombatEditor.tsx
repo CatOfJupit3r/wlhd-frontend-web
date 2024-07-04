@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { highlightOnlyThisSquare, selectClickedSquare } from '@redux/slices/battlefieldSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CombatEditor = ({
     addCharacter,
@@ -61,7 +61,7 @@ const CombatEditor = ({
                     <option value={'none'} disabled>
                         Choose player
                     </option>
-                    {lobbyInfo.players.map(({player}) => (
+                    {lobbyInfo.players.map(({ player }) => (
                         <option key={player.userId} value={player.userId}>
                             {player.nickname}
                         </option>
@@ -132,11 +132,11 @@ const CombatEditor = ({
                         Choose character
                     </option>
                     {
-                    //     lobbyInfo.players.map(({ player, character }) => (
-                    //     <option key={player.userId} value={player.userId}>
-                    //         {character?.name || 'Unknown name'}
-                    //     </option>
-                    // ))
+                        //     lobbyInfo.players.map(({ player, character }) => (
+                        //     <option key={player.userId} value={player.userId}>
+                        //         {character?.name || 'Unknown name'}
+                        //     </option>
+                        // ))
                     }
                 </select>
             </>

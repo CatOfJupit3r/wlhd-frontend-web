@@ -1,8 +1,3 @@
-import { AxiosError } from 'axios'
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import Battlefield from '@components/Battlefield/Battlefield'
 import CombatEditor from '@components/CombatEditor/CombatEditor'
 import { resetGameComponentsStateAction } from '@redux/highActions'
@@ -12,6 +7,11 @@ import { selectLobbyId } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
+import { AxiosError } from 'axios'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 interface CombatPreset {
     field: {

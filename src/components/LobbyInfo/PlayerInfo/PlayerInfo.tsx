@@ -1,8 +1,8 @@
+import { CharacterInLobby, LobbyPlayerInfo } from '@models/Redux'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { CharacterInLobby, LobbyPlayerInfo } from '@models/Redux'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import styles from './PlayerInfo.module.css'
 
 const PlayerInfo = ({ className }: { className: string }) => {

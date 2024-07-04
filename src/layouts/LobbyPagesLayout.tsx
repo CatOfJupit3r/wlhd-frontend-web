@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Outlet, useParams } from 'react-router-dom'
 import Footer from '@components/Footer/Footer'
 import Header from '@components/Header/Header'
 import Notify from '@components/Notify'
 import { setLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
+import { useCallback, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Outlet, useParams } from 'react-router-dom'
 
 const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
     const { lobbyId } = useParams()

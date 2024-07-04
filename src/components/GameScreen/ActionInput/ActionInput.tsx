@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Action } from '@models/ActionInput'
 import { setNotify } from '@redux/slices/cosmeticsSlice'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './ActionInput.module.css'
 
 import {
@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 
 import { BsArrowBarLeft } from 'react-icons/bs'
 
-import { RxArrowTopRight } from 'react-icons/rx'
+import ElementWithIcon from '@components//ElementWithIcon/ElementWithIcon'
 import {
     addHighlightedSquare,
     resetHighlightedSquares,
@@ -31,7 +31,7 @@ import {
     setInteractableTiles,
 } from '@redux/slices/battlefieldSlice'
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
-import ElementWithIcon from '@components//ElementWithIcon/ElementWithIcon'
+import { RxArrowTopRight } from 'react-icons/rx'
 import OptionCard from './OptionCard/OptionCard'
 
 /*
