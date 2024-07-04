@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { INVALID_ASSET_PATH } from '../../../config'
 import {
     selectBattlefieldMode,
     selectFieldComponents,
@@ -13,13 +12,14 @@ import { generateAssetPath, generateAssetPathFullDescriptor, splitDescriptor } f
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
+import GameAsset from '../../GameAsset'
 
 const TileEntity = (props: {
     full_descriptor: string
     className?: string
     id: string
     fallback: {
-        path: string
+        src: string
         alt?: string
     }
 }) => {
@@ -124,22 +124,12 @@ const TileEntity = (props: {
             }
         >
             <Decoration decoration={decorations} />
-            <img
+            <GameAsset
                 src={generateAssetPath(dlc, descriptor)}
-                alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
-                onError={(event) => {
-                    if (
-                        fallback.path &&
-                        fallback.alt &&
-                        event.currentTarget.src !== fallback.path &&
-                        event.currentTarget.alt !== fallback.alt
-                    ) {
-                        event.currentTarget.src = fallback.path
-                        event.currentTarget.alt = fallback.alt
-                    } else {
-                        event.currentTarget.src = INVALID_ASSET_PATH
-                        event.currentTarget.alt = 'invalid'
-                    }
+                alt={descriptor !== 'tile' ? dlc + '::' + descriptor : undefined}
+                fallback={{
+                    src: fallback.src,
+                    alt: fallback.alt ? fallback.alt : dlc + '::' + descriptor,
                 }}
                 id={id}
                 className={styles.tile + (className ? ` ${className}` : '')}

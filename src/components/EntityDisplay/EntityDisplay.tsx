@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { INVALID_ASSET_PATH } from '../../config'
 import { EntityInfoFull } from '../../models/Battlefield'
 import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
 import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
@@ -8,6 +7,7 @@ import ToggleContainer from '../ToggleContainer/ToggleContainer'
 import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 import styles from './EntityDisplay.module.css'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
+import GameAsset from '../GameAsset'
 
 const iconStyle = {
     width: '1.25rem',
@@ -136,24 +136,18 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
     return (
         <div className={[styles.displayContainer, 'border-container-biggest'].join(' ')}>
             <div className={styles.entityHeader}>
-                <img
+                <GameAsset
                     src={generateAssetPathFullDescriptor(decorations.sprite)}
                     alt={decorations.name}
-                    onError={(event) => {
-                        const { src, alt } = event.currentTarget
-                        if (src !== INVALID_ASSET_PATH && alt !== 'invalid') {
-                            if (['1', '2', '3'].includes(square.line)) {
-                                event.currentTarget.src = generateAssetPath('builtins', 'enemy')
-                                event.currentTarget.alt = 'enemy'
-                            } else {
-                                event.currentTarget.src = generateAssetPath('builtins', 'ally')
-                                event.currentTarget.alt = 'ally'
-                            }
-                        } else {
-                            event.currentTarget.src = INVALID_ASSET_PATH
-                            event.currentTarget.alt = 'invalid'
+                    fallback={
+                        (['1', '2', '3'].includes(square.line)) ? {
+                            src: generateAssetPath('builtins', 'enemy'),
+                            alt: 'enemy',
+                        } : {
+                            src: generateAssetPath('builtins', 'ally'),
+                            alt: 'ally',
                         }
-                    }}
+                    }
                     style={{
                         width: '5rem',
                         height: '5rem',

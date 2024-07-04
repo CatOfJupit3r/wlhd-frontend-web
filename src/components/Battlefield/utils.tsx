@@ -64,7 +64,7 @@ export const JSX_BATTLEFIELD = (battlefield: string[][], field_components: { [ke
                     id={tile_id}
                     key={tile_id}
                     fallback={{
-                        path: isAlly ? generateAssetPath('builtins', 'ally') : generateAssetPath('builtins', 'enemy'),
+                        src: isAlly ? generateAssetPath('builtins', 'ally') : generateAssetPath('builtins', 'enemy'),
                         alt: isAlly ? 'ally' : 'enemy',
                     }}
                 />

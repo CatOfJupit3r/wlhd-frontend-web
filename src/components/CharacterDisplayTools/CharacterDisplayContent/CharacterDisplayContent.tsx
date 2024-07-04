@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
+import { SiUps } from 'react-icons/si'
 import { useSelector } from 'react-redux'
 import { CharacterInfo } from '../../../models/CharacterInfo'
 import { selectLobbyInfo } from '../../../redux/slices/lobbySlice'
 import { generateAssetPath } from '../../Battlefield/utils'
+import GameAsset from '../../GameAsset'
 import CharacterFeatures from '../CharacterFeatures/CharacterFeatures'
-import { SiUps } from "react-icons/si";
 import styles from './CharacterDisplayContent.module.css'
 
 const CharacterDisplayContent = ({
@@ -31,15 +32,9 @@ const CharacterDisplayContent = ({
                     width: '100%',
                 }}
             >
-                <img
+                <GameAsset
                     src={generateAssetPath('coordinator', decorations.sprite)}
                     alt={'character-sprite'}
-                    onError={(e) => {
-                        if (e.currentTarget.src == '/assets/local/invalid_asset.png') {
-                            return
-                        }
-                        e.currentTarget.src = '/assets/local/invalid_asset.png'
-                    }}
                     style={{
                         width: '5rem',
                         height: '5rem',
@@ -81,7 +76,8 @@ const CharacterDisplayContent = ({
     const LevelGold = useCallback(() => {
         return (
             <div className={styles.levelGoldContainer}>
-                <p>Level: {level && level.current || '-'}
+                <p>
+                    Level: {(level && level.current) || '-'}
                     {level && level.max && level.max > level.current && <SiUps />}
                 </p>
                 <p>Gold: {gold || 0}</p>

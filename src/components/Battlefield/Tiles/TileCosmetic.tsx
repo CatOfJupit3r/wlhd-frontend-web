@@ -1,11 +1,11 @@
 import React from 'react'
-import { INVALID_ASSET_PATH } from '../../../config'
 import { generateAssetPath, splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
+import GameAsset from '../../GameAsset'
 
 const TileCosmetic = (props: {
     full_descriptor: string
-    onClick?: (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => null
+    onClick?: (event: React.MouseEvent<HTMLImageElement, MouseEvent> | undefined) => undefined
     className?: string
     id: string
 }) => {
@@ -13,14 +13,10 @@ const TileCosmetic = (props: {
     const [dlc, descriptor] = splitDescriptor(full_descriptor)
 
     return (
-        <img
+        <GameAsset
             src={generateAssetPath(dlc, descriptor)}
-            onClick={onClick ? (event) => onClick(event) : undefined}
-            alt={descriptor !== 'tile' ? dlc + '::' + descriptor : undefined}
-            onError={(event) => {
-                event.currentTarget.src = INVALID_ASSET_PATH
-                event.currentTarget.alt = 'invalid'
-            }}
+            onClick={onClick ? onClick : undefined}
+            alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
             className={className ? `${className} ${styles.tile}` : styles.tile}
             id={id}
             key={id}
