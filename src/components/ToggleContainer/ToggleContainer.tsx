@@ -1,4 +1,4 @@
-import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon'
 import React, { ReactNode, useCallback, useState } from 'react'
 import { RiArrowDownDoubleFill } from 'react-icons/ri'
 import styles from './ToggleContainer.module.css'

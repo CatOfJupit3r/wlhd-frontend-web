@@ -1,4 +1,4 @@
-import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon'
 import { EntityInfoFull } from '@models/Battlefield'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

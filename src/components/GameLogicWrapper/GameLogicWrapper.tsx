@@ -11,8 +11,8 @@ import { resetTurnSlice, selectOutput } from '@redux/slices/turnSlice'
 import { AppDispatch } from '@redux/store'
 import SocketService from '@services/SocketService'
 import GameScreen from '../GameScreen/GameScreen'
-import Overlay from '../Overlay/Overlay'
-import ThinkingHn from '../ThinkingHn/ThinkingHn'
+import Overlay from '@components/Overlay'
+import ThinkingHn from '../ThinkingHn'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()

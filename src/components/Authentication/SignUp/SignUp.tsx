@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
-import { checkConfirmPassword, checkHandle, checkPassword } from '../verifyInputs'
+import { checkConfirmPassword, checkHandle, checkPassword } from '@utils/verifyInputs'
 
 const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()

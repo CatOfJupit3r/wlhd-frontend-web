@@ -1,5 +1,4 @@
-import React from 'react'
-import styles from './ElementWithIcon.module.css'
+import { KeyboardEvent, MouseEvent } from 'react'
 
 const ElementWithIcon = ({
     icon,
@@ -15,15 +14,16 @@ const ElementWithIcon = ({
     element: JSX.Element
     iconPosition?: 'together' | 'opposite'
     className?: string
-    onClick?: ((e: React.MouseEvent<HTMLDivElement>) => void) | (() => void)
-    onKeyDown?: ((e: React.KeyboardEvent<HTMLDivElement>) => void) | (() => void)
+    onClick?: ((e: MouseEvent<HTMLDivElement>) => void) | (() => void)
+    onKeyDown?: ((e: KeyboardEvent<HTMLDivElement>) => void) | (() => void)
     role?: string
     tabIndex?: number
 }) => {
     return (
         <div
             className={
-                `${styles.container} ${iconPosition === 'opposite' ? styles.opposite : styles.together}` +
+                'margin-0 flex flex-row items-center gap-2 ' +
+                (iconPosition === 'opposite' ? 'justify-between' : 'justify-normal') +
                 (className ? ` ${className}` : '')
             }
             onClick={onClick}

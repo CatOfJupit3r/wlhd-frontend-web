@@ -1,4 +1,4 @@
-import Overlay from '@components/Overlay/Overlay'
+import Overlay from '@components/Overlay'
 import { setChosenMenu } from '@redux/slices/infoSlice'
 import { AppDispatch } from '@redux/store'
 import SocketService from '@services/SocketService'

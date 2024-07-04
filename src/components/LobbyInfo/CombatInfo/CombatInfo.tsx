@@ -1,4 +1,4 @@
-import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import { useCallback } from 'react'

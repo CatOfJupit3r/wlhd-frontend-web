@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next'
 
 import { BsArrowBarLeft } from 'react-icons/bs'
 
-import ElementWithIcon from '@components//ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon'
 import {
     addHighlightedSquare,
     resetHighlightedSquares,

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { RiVipCrownLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import styles from './LobbyShortInfo.module.css'
+import ElementWithIcon from '@components/ElementWithIcon'
 
 type LoadingType = 'loading' | 'failed' | 'success'
 
@@ -53,9 +54,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
 
     const Icon = useCallback(() => {
         return (
-            <div className={styles.gmIcon}>
-                <RiVipCrownLine />
-            </div>
+            <RiVipCrownLine />
         )
     }, [])
 
@@ -99,10 +98,13 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     const LobbyInfoContent = useCallback(() => {
         return (
             <>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '0.5rem' }}>
-                    {isGm ? <Icon /> : null}
-                    <LinkToLobby />
-                </div>
+                {
+                    isGm ? <ElementWithIcon
+                        icon={<RiVipCrownLine />}
+                        element={<LinkToLobby />}
+                        iconPosition={'together'}
+                    /> : <LinkToLobby />
+                }
                 <p
                     style={{
                         fontSize: 'var(--text-size-small)',

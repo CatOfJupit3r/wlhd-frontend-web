@@ -1,5 +1,5 @@
 import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper'
-import Overlay from '@components/Overlay/Overlay'
+import Overlay from '@components/Overlay'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'

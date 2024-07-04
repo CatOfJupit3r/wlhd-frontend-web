@@ -16,7 +16,7 @@ const HomePage = () => {
         <>
             <div className={'mb-5 mt-2 flex-col text-center align-middle'} id={'home-title'}>
                 <h1>{t('local:index.title')}</h1>
-                <h2>{t('local:index.subtitle')}</h2>
+                <h2 className={'font-normal'}>{t('local:index.subtitle')}</h2>
             </div>
         </>
     )

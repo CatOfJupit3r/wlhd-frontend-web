@@ -30,6 +30,3 @@ public/assets/*
 !public/assets/local/
 !public/assets/local/*
 !public/assets/local/**
-
-src/output.css
-

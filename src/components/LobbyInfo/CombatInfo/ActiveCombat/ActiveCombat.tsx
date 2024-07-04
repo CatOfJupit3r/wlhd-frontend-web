@@ -1,4 +1,4 @@
-import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon'
 import { CombatInfo } from '@models/Redux'
 import { useMemo } from 'react'
 import { FaCircle } from 'react-icons/fa6'
