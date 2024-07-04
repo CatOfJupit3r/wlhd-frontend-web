@@ -14,11 +14,11 @@ import {
     selectSpells,
     selectStatusEffects,
     selectWeaponry,
-} from '../../../redux/slices/characterSlice'
-import { selectLobbyId } from '../../../redux/slices/lobbySlice'
-import { AppDispatch } from '../../../redux/store'
-import AttributeDisplay from '../../EntityDisplay/AttributeDisplay/AttributeDisplay'
-import InfoDisplay from '../../EntityDisplay/InfoDisplay/InfoDisplay'
+} from '@redux/slices/characterSlice'
+import { selectLobbyId } from '@redux/slices/lobbySlice'
+import { AppDispatch } from '@redux/store'
+import AttributeDisplay from '@components/EntityDisplay/AttributeDisplay/AttributeDisplay'
+import InfoDisplay from '@components/EntityDisplay/InfoDisplay/InfoDisplay'
 
 interface ItemContainerProps {
     type: 'inventory'

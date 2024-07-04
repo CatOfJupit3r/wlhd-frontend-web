@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react'
-import { INVALID_ASSET_PATH } from '../config'
+import { INVALID_ASSET_PATH } from 'config'
 
 const SET_ASSET_PROPS = (img: HTMLImageElement, fallback: { src: string; alt: string }) => {
     img.src = fallback.src || INVALID_ASSET_PATH

@@ -4,7 +4,7 @@ import { FaUncharted } from 'react-icons/fa6'
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
 import { useDispatch } from 'react-redux'
-import { setChosenMenu } from '../../../redux/slices/infoSlice'
+import { setChosenMenu } from '@redux/slices/infoSlice'
 import {useTranslation} from "react-i18next";
 import styles from './MenuNavigator.module.css'
 

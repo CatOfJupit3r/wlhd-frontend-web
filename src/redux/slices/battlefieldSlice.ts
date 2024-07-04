@@ -1,6 +1,6 @@
+import { Battlefield } from '@models/Battlefield'
+import { BattlefieldState } from '@models/Redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Battlefield } from '../../models/Battlefield'
-import { BattlefieldState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: BattlefieldState = {

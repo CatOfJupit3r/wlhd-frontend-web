@@ -1,6 +1,20 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "baseUrl": "./src",
+        "paths": {
+            "@components/*": ["./components/*"],
+            "@pages/*": ["./pages/*"],
+            "@styles/*": ["./styles/*"],
+            "@utils/*": ["./utils/*"],
+            "@services/*": ["./services/*"],
+            "@hooks/*": ["./hooks/*"],
+            "@redux/*": ["./redux/*"],
+            "@models/*": ["./models/*"],
+            "@router/*": ["./router/*"],
+            "@lib*": ["./lib/*"],
+            "config": ["./config"],
+        },
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,

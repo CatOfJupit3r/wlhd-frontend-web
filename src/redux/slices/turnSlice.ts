@@ -1,6 +1,6 @@
+import { ActionInput as ActionInputInterface } from '@models/ActionInput'
+import { TurnState } from '@models/Redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ActionInput as ActionInputInterface } from '../../models/ActionInput'
-import { TurnState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: TurnState = {

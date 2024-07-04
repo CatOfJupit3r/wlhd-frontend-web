@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useState } from 'react'
 import { RiArrowDownDoubleFill } from 'react-icons/ri'
-import ElementWithIcon from '../ElementWithIcon/ElementWithIcon'
+import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
 import styles from './ToggleContainer.module.css'
 
 const ToggleContainer = ({

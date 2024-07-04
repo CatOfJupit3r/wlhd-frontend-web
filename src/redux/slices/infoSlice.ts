@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
     EntityInfoFull,
     EntityInfoTooltip,
     EntityInfoTurn,
     GameStateContainer,
     TranslatableString,
-} from '../../models/Battlefield'
-import { InfoState } from '../../models/Redux'
+} from '@models/Battlefield'
+import { InfoState } from '@models/Redux'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
 const initialState: InfoState = {

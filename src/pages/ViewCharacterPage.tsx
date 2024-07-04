@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import CharacterInfoWrapper from '../components/CharacterDisplayTools/CharacterDisplayTools'
+import CharacterInfoWrapper from '@components/CharacterDisplayTools/CharacterDisplayTools'
 
 const ViewCharacterPage = () => {
     const [searchParams] = useSearchParams()

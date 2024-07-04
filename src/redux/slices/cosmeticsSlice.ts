@@ -1,5 +1,5 @@
+import { CosmeticsState } from '@models/Redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { CosmeticsState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: CosmeticsState = {

@@ -1,5 +1,5 @@
+import { LobbyInfo, LobbyState } from '@models/Redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { LobbyInfo, LobbyState } from '../../models/Redux'
 import { RootState } from '../store'
 
 const initialState: LobbyState = {

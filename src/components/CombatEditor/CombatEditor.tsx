@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { highlightOnlyThisSquare, selectClickedSquare } from '../../redux/slices/battlefieldSlice'
-import { selectLobbyInfo } from '../../redux/slices/lobbySlice'
+import { highlightOnlyThisSquare, selectClickedSquare } from '@redux/slices/battlefieldSlice'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 
 const CombatEditor = ({
     addCharacter,

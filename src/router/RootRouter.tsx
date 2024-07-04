@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-d
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 import MainLayout from '../layouts/MainLayout'
-import { RouteConfig } from '../models/RouteConfig'
-import NotFoundPage from '../pages/NotFoundPage'
-import { PageWrapper } from '../pages/PageWrapper'
+import { RouteConfig } from '@models/RouteConfig'
+import NotFoundPage from '@pages/NotFoundPage'
+import { PageWrapper } from '@pages/PageWrapper'
 import paths from './paths'
 import routes from './routes'
 

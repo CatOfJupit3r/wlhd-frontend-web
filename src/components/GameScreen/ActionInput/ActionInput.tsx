@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Action } from '../../../models/ActionInput'
-import { setNotify } from '../../../redux/slices/cosmeticsSlice'
+import { Action } from '@models/ActionInput'
+import { setNotify } from '@redux/slices/cosmeticsSlice'
 import styles from './ActionInput.module.css'
 
 import {
@@ -14,7 +14,7 @@ import {
     selectOutput,
     selectPlayersTurn,
     setOutput,
-} from '../../../redux/slices/turnSlice'
+} from '@redux/slices/turnSlice'
 
 import { useTranslation } from 'react-i18next'
 
@@ -29,9 +29,9 @@ import {
     selectClickedSquare,
     setBattlefieldMode,
     setInteractableTiles,
-} from '../../../redux/slices/battlefieldSlice'
-import capitalizeFirstLetter from '../../../utils/capitalizeFirstLetter'
-import ElementWithIcon from '../../ElementWithIcon/ElementWithIcon'
+} from '@redux/slices/battlefieldSlice'
+import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
+import ElementWithIcon from '@components//ElementWithIcon/ElementWithIcon'
 import OptionCard from './OptionCard/OptionCard'
 
 /*

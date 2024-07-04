@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import { FaCircle } from 'react-icons/fa6'
 import { IoEnterOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import { CombatInfo } from '../../../../models/Redux'
-import ElementWithIcon from '../../../ElementWithIcon/ElementWithIcon'
+import { CombatInfo } from '@models/Redux'
+import ElementWithIcon from '@components/ElementWithIcon/ElementWithIcon'
 import styles from './ActiveCombat.module.css'
 
 const ActiveCombat = ({ combat, link }: { combat: CombatInfo; link: string }) => {

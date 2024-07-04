@@ -1,18 +1,10 @@
-import { io, Socket } from 'socket.io-client'
-import { REACT_APP_BACKEND_URL } from '../config'
-import { ActionInput } from '../models/ActionInput'
-import {
-    Battlefield,
-    EntityInfoFull,
-    EntityInfoTooltip,
-    EntityInfoTurn,
-    TranslatableString,
-} from '../models/Battlefield'
-import { ActionResultsPayload } from '../models/Events'
-import { GameHandshake } from '../models/GameHandshake'
-import { resetGameComponentsStateAction } from '../redux/highActions'
-import { setBattlefield } from '../redux/slices/battlefieldSlice'
-import { setNotify } from '../redux/slices/cosmeticsSlice'
+import { ActionInput } from '@models/ActionInput'
+import { Battlefield, EntityInfoFull, EntityInfoTooltip, EntityInfoTurn, TranslatableString } from '@models/Battlefield'
+import { ActionResultsPayload } from '@models/Events'
+import { GameHandshake } from '@models/GameHandshake'
+import { resetGameComponentsStateAction } from '@redux/highActions'
+import { setBattlefield } from '@redux/slices/battlefieldSlice'
+import { setNotify } from '@redux/slices/cosmeticsSlice'
 import {
     addMessage,
     resetActiveEntity,
@@ -25,9 +17,11 @@ import {
     setFlowToPending,
     setMessages,
     setRound,
-} from '../redux/slices/infoSlice'
-import { haltAction, resetTurnSlice, setEntityActions, setPlayersTurn } from '../redux/slices/turnSlice'
-import { store as ReduxStore } from '../redux/store'
+} from '@redux/slices/infoSlice'
+import { haltAction, resetTurnSlice, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
+import { store as ReduxStore } from '@redux/store'
+import { REACT_APP_BACKEND_URL } from 'config'
+import { io, Socket } from 'socket.io-client'
 import APIService from './APIService'
 import AuthManager from './AuthManager'
 

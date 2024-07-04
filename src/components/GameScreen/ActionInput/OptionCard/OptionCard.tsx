@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card'
 import { useTranslation } from 'react-i18next'
 import { BsInfoCircle } from 'react-icons/bs'
-import { Action } from '../../../../models/ActionInput'
+import { Action } from '@models/ActionInput'
 import styles from './OptionCard.module.css'
 
 const OptionCard = ({

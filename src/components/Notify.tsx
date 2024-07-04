@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import {
     clearNotify,
     selectNotification,
-} from '../redux/slices/cosmeticsSlice'
+} from '@redux/slices/cosmeticsSlice'
 
 const Notify = () => {
     const notification = useSelector(selectNotification)

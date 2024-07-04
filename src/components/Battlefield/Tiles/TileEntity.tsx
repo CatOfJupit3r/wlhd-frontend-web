@@ -6,13 +6,13 @@ import {
     selectHighlightedSquares,
     selectInteractableTiles,
     setClickedSquare,
-} from '../../../redux/slices/battlefieldSlice'
-import { selectActiveEntity } from '../../../redux/slices/infoSlice'
+} from '@redux/slices/battlefieldSlice'
+import { selectActiveEntity } from '@redux/slices/infoSlice'
 import { generateAssetPath, generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
-import GameAsset from '../../GameAsset'
+import GameAsset from '@components/GameAsset'
 
 const TileEntity = (props: {
     full_descriptor: string

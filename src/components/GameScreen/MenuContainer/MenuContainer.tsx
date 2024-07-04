@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { selectChosenMenu } from '../../../redux/slices/infoSlice'
+import { selectChosenMenu } from '@redux/slices/infoSlice'
 import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'

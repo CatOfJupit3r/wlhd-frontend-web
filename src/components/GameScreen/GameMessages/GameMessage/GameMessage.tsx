@@ -1,5 +1,5 @@
-import useTranslatableString from '../../../../hooks/useTranslatableString'
-import { GameMessage as GameMessageInterface } from '../../../../models/GameHandshake'
+import useTranslatableString from '@hooks/useTranslatableString'
+import { GameMessage as GameMessageInterface } from '@models/GameHandshake'
 
 const GameMessage = ({ content }: { content: GameMessageInterface }) => {
     const { tstring } = useTranslatableString()

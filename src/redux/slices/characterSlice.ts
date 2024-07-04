@@ -1,7 +1,7 @@
+import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import { CharacterState, LoadingState } from '@models/Redux'
 import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../../models/Battlefield'
-import { CharacterState, LoadingState } from '../../models/Redux'
-import APIService from '../../services/APIService'
+import APIService from '@services/APIService'
 import { RootState } from '../store'
 
 const initialState: CharacterState = {

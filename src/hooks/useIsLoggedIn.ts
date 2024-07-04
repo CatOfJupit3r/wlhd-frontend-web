@@ -1,5 +1,5 @@
+import AuthManager from '@services/AuthManager'
 import { useEffect, useState } from 'react'
-import AuthManager from '../services/AuthManager'
 
 const useIsLoggedIn = () => {
     const [loggedIn, setLoggedIn] = useState(AuthManager.isLoggedIn())

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CharacterInfo } from '../../models/CharacterInfo'
-import { selectLobbyInfo } from '../../redux/slices/lobbySlice'
-import APIService from '../../services/APIService'
+import { CharacterInfo } from '@models/CharacterInfo'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import APIService from '@services/APIService'
 import CharacterDisplayContent from './CharacterDisplayContent/CharacterDisplayContent'
 import styles from './CharacterDisplayTools.module.css'
-import { AppDispatch } from '../../redux/store'
-import { setDescriptor } from '../../redux/slices/characterSlice'
+import { AppDispatch } from '@redux/store'
+import { setDescriptor } from '@redux/slices/characterSlice'
 
 const CharacterDisplayTools = ({ initialCharacter }: { initialCharacter: string }) => {
     const { lobbyId, players } = useSelector(selectLobbyInfo)

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
-import GameLogicWrapper from '../components/GameLogicWrapper/GameLogicWrapper'
-import Overlay from '../components/Overlay/Overlay'
-import APIService from '../services/APIService'
+import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper'
+import Overlay from '@components/Overlay/Overlay'
+import APIService from '@services/APIService'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const GameRoomPage = () => {

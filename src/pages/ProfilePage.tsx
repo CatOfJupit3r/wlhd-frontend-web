@@ -1,4 +1,4 @@
-import ProfileInformation from '../components/ProfileInformation/ProfileInformation'
+import ProfileInformation from '@components/ProfileInformation/ProfileInformation'
 
 const ProfilePage = () => {
     return (

@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios'
 
-import { REACT_APP_BACKEND_URL } from '../config'
-import { ShortLobbyInformation, UserInformation } from '../models/APIData'
-import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../models/Battlefield'
-import { CharacterInfo } from '../models/CharacterInfo'
-import { LobbyInfo } from '../models/Redux'
-import { TranslationJSON } from '../models/Translation'
+import { ShortLobbyInformation, UserInformation } from '@models/APIData'
+import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import { CharacterInfo } from '@models/CharacterInfo'
+import { LobbyInfo } from '@models/Redux'
+import { TranslationJSON } from '@models/Translation'
+import { REACT_APP_BACKEND_URL } from 'config'
 import AuthManager from './AuthManager'
 
 const errors = {

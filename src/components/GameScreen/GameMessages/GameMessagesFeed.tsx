@@ -1,11 +1,11 @@
 import {useTranslation} from 'react-i18next'
 import {useSelector} from 'react-redux'
-import {selectAllMessages} from '../../../redux/slices/infoSlice'
-import useTranslatableString from "../../../hooks/useTranslatableString";
+import {selectAllMessages} from '@redux/slices/infoSlice'
+import useTranslatableString from "@hooks/useTranslatableString";
 import styles from './GameMessagesFeed.module.css'
-import {GameStateContainer} from "../../../models/Battlefield";
+import {GameStateContainer} from "@models/Battlefield";
 import {useCallback} from "react";
-import {GameMessage} from "../../../models/GameHandshake";
+import {GameMessage} from "@models/GameHandshake";
 
 /*
 

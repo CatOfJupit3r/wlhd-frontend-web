@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { UserInformation } from '../../models/APIData'
-import APIService from '../../services/APIService'
+import { UserInformation } from '@models/APIData'
+import APIService from '@services/APIService'
 import styles from './ProfileInformation.module.css'
 import LobbyShortInfo from './LobbyShortInfo/LobbyShortInfo'
 

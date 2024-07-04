@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '../../../models/Battlefield'
-import ElementWithIcon from '../../ElementWithIcon/ElementWithIcon'
+import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import ElementWithIcon from '@components//ElementWithIcon/ElementWithIcon'
 import styles from './InfoDisplay.module.css'
 
 interface WeaponSegment {
