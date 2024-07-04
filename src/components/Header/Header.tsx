@@ -46,11 +46,11 @@ const Header = ({ includeLobbyRoute }: { includeLobbyRoute?: boolean }) => {
                 </Link>
             </>
         )
-    }, [])
+    }, [lobbyId])
 
     const Navigation = useCallback(() => {
         return <nav id={'header-nav'}>{isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}</nav>
-    }, [isLoggedIn])
+    }, [isLoggedIn, lobbyId])
 
     return (
         <header className={styles.header}>
