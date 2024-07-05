@@ -1,5 +1,5 @@
 import Footer from '@components/Footer'
-import Header from '@components/Header/Header'
+import Header from '@components/Header'
 import Notify from '@components/Notify'
 import { setLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
