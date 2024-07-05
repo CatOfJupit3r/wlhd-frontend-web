@@ -1,4 +1,4 @@
-import Footer from '@components/Footer/Footer'
+import Footer from '@components/Footer'
 import Header from '@components/Header/Header'
 import Notify from '@components/Notify'
 import { setLobbyInfo } from '@redux/slices/lobbySlice'
