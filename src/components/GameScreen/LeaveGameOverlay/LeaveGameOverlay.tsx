@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styles from './LeaveGameOverlay.module.css'
+import { Button } from '../../../@/components/ui/button'
 
 const LeaveGameOverlay = () => {
     const { t } = useTranslation()
@@ -27,14 +28,14 @@ const LeaveGameOverlay = () => {
     return (
         <Overlay>
             <h1>{t(tPath + 'header')}</h1>
-            <h3>{t(tPath + 'subheader')}</h3>
+            <h3 className={'font-normal'}>{t(tPath + 'subheader')}</h3>
             <div className={styles.buttons}>
-                <button onClick={leaveGame} className={styles.yesButton}>
+                <Button onClick={leaveGame} variant={'destructive'} className={'font-normal text-white'}>
                     {t(tPath + 'yes')}
-                </button>
-                <button onClick={stayInGame} className={styles.noButton}>
+                </Button>
+                <Button onClick={stayInGame} variant={'ghost'} className={'font-normal'}>
                     {t(tPath + 'no')}
-                </button>
+                </Button>
             </div>
         </Overlay>
     )
