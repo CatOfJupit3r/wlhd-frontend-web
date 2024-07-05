@@ -8,6 +8,7 @@ import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 import styles from './EntityDisplay.module.css'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Separator } from '@/components/ui/separator'
 
 const iconStyle = {
     width: '1.25rem',
@@ -185,16 +186,19 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 }}
             >
                 {Object.entries(LIST_HEADERS).map(([key, value]) => (
-                    <Accordion type="single" collapsible key={key}>
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>
-                                <ElementWithIcon icon={value.icon} element={value.element} />
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                {value.children ? value.children() : null}
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                    <>
+                        <Separator />
+                        <Accordion type="single" collapsible key={key}>
+                            <AccordionItem value="item-1">
+                                <AccordionTrigger>
+                                    <ElementWithIcon icon={value.icon} element={value.element} />
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    {value.children ? value.children() : null}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    </>
                 ))}
             </div>
         </div>
