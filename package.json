@@ -24,6 +24,7 @@
         "jsonwebtoken": "^9.0.2",
         "jwt-decode": "^4.0.0",
         "lucide-react": "^0.400.0",
+        "prettier-plugin-classnames": "^0.7.0",
         "query-string": "^8.2.0",
         "react": "^18.2.0",
         "react-blurhash": "^0.3.0",
