@@ -4,10 +4,10 @@ import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { generateAssetPath, generateAssetPathFullDescriptor } from '../Battlefield/utils'
 import GameAsset from '../GameAsset'
-import ToggleContainer from '../ToggleContainer/ToggleContainer'
 import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 import styles from './EntityDisplay.module.css'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const iconStyle = {
     width: '1.25rem',
@@ -185,13 +185,16 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 }}
             >
                 {Object.entries(LIST_HEADERS).map(([key, value]) => (
-                    <ToggleContainer
-                        key={key}
-                        header={<ElementWithIcon icon={value.icon} element={value.element} />}
-                        className={[styles.attributeToggle, 'border-container-big'].join(' ')}
-                    >
-                        {value.children ? value.children() : null}
-                    </ToggleContainer>
+                    <Accordion type="single" collapsible key={key}>
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>
+                                <ElementWithIcon icon={value.icon} element={value.element} />
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                {value.children ? value.children() : null}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 ))}
             </div>
         </div>
