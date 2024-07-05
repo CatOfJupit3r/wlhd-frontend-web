@@ -1,7 +1,7 @@
 import { UserInformation } from '@models/APIData'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
-import LobbyShortInfo from './LobbyShortInfo/LobbyShortInfo'
+import LobbyShortInfo from './LobbyShortInfo'
 import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
