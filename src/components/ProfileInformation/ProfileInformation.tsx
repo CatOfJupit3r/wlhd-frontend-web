@@ -3,29 +3,17 @@ import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import LobbyShortInfo from './LobbyShortInfo'
 import styles from './ProfileInformation.module.css'
+import {fetchUserInformation, selectUserInformation} from '@redux/slices/cosmeticsSlice'
+import { AppDispatch } from '@redux/store'
+import {useDispatch, useSelector} from 'react-redux'
 
 const ProfileInformation = () => {
-    const [{ handle, createdAt, joined }, setUserInfo] = useState({
-        handle: '',
-        createdAt: '',
-        joined: [],
-    } as UserInformation)
-
-    const getUserInformation = useCallback(async () => {
-        const userInfo = await APIService.getUserInformation()
-        setUserInfo(userInfo)
-    }, [])
-
-    useEffect(() => {
-        getUserInformation().catch((error) => {
-            console.log(error)
-        })
-    }, [])
+    const { avatar, handle, joined, createdAt } = useSelector(selectUserInformation)
 
     return (
         <div className={styles.profileContainer}>
             <div className={styles.info}>
-                <img src={'https://placehold.co/260x260'} alt="User Avatar" />
+                <img src={avatar} alt="User Avatar" />
                 <h1>{'@'.concat(handle)}</h1>
                 <div>
                     <h5>You are with us since {new Date(createdAt).toLocaleDateString()}! 🎉</h5>

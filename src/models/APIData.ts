@@ -6,6 +6,7 @@ export interface ShortLobbyInformation {
 }
 
 export interface UserInformation {
+    avatar: string
     handle: string
     createdAt: string
     joined: Array<string>

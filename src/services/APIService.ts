@@ -254,11 +254,7 @@ class APIService {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/user/profile`,
             method: 'get',
-        })) as {
-            handle: string
-            createdAt: string
-            joined: Array<string>
-        }
+        })) as UserInformation
     }
 
     public getShortLobbyInfo = async (lobby_id: string): Promise<ShortLobbyInformation> => {

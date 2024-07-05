@@ -6,31 +6,28 @@ import APIService from '@services/APIService'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Outlet, useParams } from 'react-router-dom'
+import { refreshLobbyInfo, refreshUserInfo } from '@utils/refreshers'
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
 
 const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
     const { lobbyId } = useParams()
-    const dispatch = useDispatch()
-
-    const refreshLobbyInfo = useCallback(async () => {
-        let response
-        try {
-            response = await APIService.getLobbyInfo(lobbyId || '')
-        } catch (error) {
-            console.log(error)
-            return
-        }
-        if (response && response.players && response.combats) {
-            dispatch(setLobbyInfo(response))
-        }
-    }, [dispatch, lobbyId])
+    const isLoggedIn = useIsLoggedIn()
 
     useEffect(() => {
-        refreshLobbyInfo().then()
+        refreshLobbyInfo(lobbyId).then()
     }, [lobbyId])
+
+    useEffect(() => {
+        console.log("isLoggedIn", isLoggedIn)
+        if (!isLoggedIn) {
+            return
+        }
+        refreshUserInfo()
+    }, [isLoggedIn])
 
     return (
         <>
-            {includeHeader && <Header includeLobbyRoute={true} />}
+            {includeHeader && <Header />}
             <Notify />
             <main>
                 <Outlet />

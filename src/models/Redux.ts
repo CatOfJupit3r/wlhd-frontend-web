@@ -11,10 +11,14 @@ import {
     StatusEffectInfo,
     WeaponInfo,
 } from './Battlefield'
+import { UserInformation } from '@models/APIData'
 
 export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
 export interface CosmeticsState {
+    user: UserInformation & {
+        loading: LoadingState
+    }
     notification: {
         message: string
         code: number

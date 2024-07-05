@@ -2,13 +2,39 @@ import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@components/ui/dropdown-menu'
+import { LucideSquareMenu, LucideUser } from 'lucide-react'
+import { FaBook, FaBookOpen } from 'react-icons/fa'
+import { IoLogoBuffer } from 'react-icons/io'
+import {BiLogOut, BiSolidCog} from 'react-icons/bi'
+import {cn} from "@libutils";
 
-const Header = ({ includeLobbyRoute }: { includeLobbyRoute?: boolean }) => {
+const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
+    const { avatar, handle } = useSelector(selectUserInformation)
     const lobbyId = useSelector(selectLobbyId)
+    const navigate = useNavigate()
+
+    const redirect = useCallback((to: string, relative: 'path' | 'route' = 'path') => {
+        return () => {
+            navigate(to, {
+                relative,
+            })
+        }
+    }, [])
 
     const AuthLinks = useCallback(() => {
         return (
@@ -24,35 +50,97 @@ const Header = ({ includeLobbyRoute }: { includeLobbyRoute?: boolean }) => {
     }, [])
 
     const LoggedInLinks = useCallback(() => {
+        const sections: Array<
+            Array<{
+                name: string
+                action: () => void
+                icon: any
+                className?: string | undefined
+            }>
+        > = useMemo(() => {
+            return [
+                [
+                    {
+                        name: 'Profile',
+                        action: redirect(paths.profile, 'path'),
+                        icon: LucideUser,
+                    },
+                    {
+                        name: 'Recent Lobby',
+                        action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
+                        icon: ({className}: {className: string}) => <LucideSquareMenu className={cn(className, lobbyId ? '': 'text-gray-400')} />,
+                        className: lobbyId ? 'cursor-pointer' : 'cursor-not-allowed text-gray-400',
+                    }
+                ],
+                [
+                    {
+                        name: 'Rulebook',
+                        action: redirect('rulebook', 'path'),
+                        icon: FaBook,
+                    },
+                    {
+                        name: 'World Description',
+                        action: redirect('world-description', 'path'),
+                        icon: FaBookOpen,
+                    },
+                    {
+                        name: 'How to',
+                        action: redirect('how-to', 'path'),
+                        icon: IoLogoBuffer,
+                    },
+                ],
+                [
+                    {
+                        name: "Game Test",
+                        action: redirect(paths.gameTest, 'path'),
+                        icon: BiSolidCog,
+                    },
+                    {
+                        name: 'Logout',
+                        action: () => AuthManager.logout(),
+                        icon: BiLogOut,
+                        className: 'text-red-500 hover:text-red-700',
+                    },
+                ],
+            ]
+        }, [redirect])
+
         return (
             <>
-                <Link to={paths.profile} relative={'path'}>
-                    Profile
-                </Link>
-                {includeLobbyRoute && lobbyId && (
-                    <Link to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} relative={'path'}>
-                        Lobby
-                    </Link>
-                )}
-                <Link
-                    to={'.'}
-                    className={'hover:text-red-800'}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        AuthManager.logout()
-                    }}
-                >
-                    Logout
-                </Link>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Avatar className={'unselectable'}>
+                            {avatar && <AvatarImage src={avatar} />}
+                            <AvatarFallback className="text-black">{'<3'}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>@{handle}</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {sections.map((section, index) => (
+                            <>
+                                <DropdownMenuGroup key={`group_${index}`}>
+                                    {section.map(({ name, action, icon: Icon, className }, index) => (
+                                        <DropdownMenuItem key={`item_${index}`} onClick={action}>
+                                            <Icon className="mr-2 size-5" />
+                                            <span className={className}>{name}</span>
+                                        </DropdownMenuItem>
+                                    ))}
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator key={`separator_${index}`} />
+                            </>
+                        ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </>
         )
-    }, [lobbyId])
+    }, [lobbyId, avatar, handle])
 
     const Navigation = useCallback(() => {
         return (
             <nav
                 id={'header-nav'}
-                className={`flex justify-between gap-3 pr-5 text-white max-[512px]:flex-col max-[512px]:overflow-x-auto max-[512px]:pr-0
+                className={`flex justify-between gap-3 text-white max-[512px]:flex-col max-[512px]:overflow-x-auto
                     max-[512px]:align-middle`}
             >
                 {isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}
