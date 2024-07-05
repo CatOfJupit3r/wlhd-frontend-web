@@ -7,6 +7,14 @@ export default {
         fontFamily: {
             poppins: ['Poppins', 'sans-serif'],
         },
+        fontSize: {
+            't-giant': 'var(--text-size-giant)',
+            't-massive': 'var(--text-size-massive)',
+            't-bigger': 'var(--text-size-bigger)',
+            't-big': 'var(--text-size-big)',
+            't-normal': 'var(--text-size-normal)',
+            't-small': 'var(--text-size-small)',
+        },
         container: {
             center: true,
             padding: '2rem',
