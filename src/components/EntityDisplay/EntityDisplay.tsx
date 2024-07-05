@@ -7,8 +7,8 @@ import GameAsset from '../GameAsset'
 import AttributeDisplay from './AttributeDisplay/AttributeDisplay'
 import styles from './EntityDisplay.module.css'
 import InfoDisplay from './InfoDisplay/InfoDisplay'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Separator } from '@/components/ui/separator'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { Separator } from '@components/ui/separator'
 
 const iconStyle = {
     width: '1.25rem',

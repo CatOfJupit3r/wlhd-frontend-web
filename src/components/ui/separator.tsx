@@ -1,6 +1,6 @@
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
-import { cn } from "@lib/utils"
+import { cn } from "@libutils"
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 const Separator = forwardRef<
