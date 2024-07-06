@@ -2,6 +2,7 @@ import { INVALID_ASSET_PATH } from 'config'
 import React, { CSSProperties } from 'react'
 
 const SET_ASSET_PROPS = (img: HTMLImageElement, fallback: { src: string; alt: string }) => {
+    if (img.src === fallback.src || img.src === INVALID_ASSET_PATH) return
     img.src = fallback.src || INVALID_ASSET_PATH
     img.alt = fallback.alt || 'invalid asset'
 }
