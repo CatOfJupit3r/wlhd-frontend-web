@@ -1,16 +1,19 @@
-import { setChosenMenu } from '@redux/slices/infoSlice'
-import { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaUsers } from 'react-icons/fa'
-import { FaUncharted } from 'react-icons/fa6'
-import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
-import { TbManualGearbox } from 'react-icons/tb'
-import { useDispatch } from 'react-redux'
+import {selectChosenMenu, setChosenMenu} from '@redux/slices/infoSlice'
+import {useCallback, useMemo} from 'react'
+import {useTranslation} from 'react-i18next'
+import {FaUsers} from 'react-icons/fa'
+import {FaUncharted} from 'react-icons/fa6'
+import {MdHistoryToggleOff, MdOutlineVideogameAssetOff} from 'react-icons/md'
+import {TbManualGearbox} from 'react-icons/tb'
+import {useDispatch, useSelector} from 'react-redux'
 import styles from './MenuNavigator.module.css'
+import {motion} from "framer-motion";
+import {cn} from "@libutils";
 
 const MenuNavigator = () => {
     const dispatch = useDispatch()
-    const { t } = useTranslation()
+    const {t} = useTranslation()
+    const chosenMenu = useSelector(selectChosenMenu)
 
     const optionNavigators = useMemo(
         () => [
@@ -47,19 +50,34 @@ const MenuNavigator = () => {
     const generateOption = useCallback(
         (arr: typeof optionNavigators | typeof pageNavigators, componentKeyAlias: string) => {
             return arr.map((pageNavigator, index) => {
-                const { Component, value } = pageNavigator
+                const {Component, value} = pageNavigator
                 return (
-                    <Component
-                        key={`${componentKeyAlias}-${index}`}
-                        title={value && t(`local:game.action_menus.${value}`)}
-                        onClick={() => {
-                            dispatch(setChosenMenu(value))
-                        }}
-                    />
+                    <div key={index} className={'relative mb-2'}>
+                        {
+                            chosenMenu === value && <motion.div
+                                layoutId="clickedbutton"
+                                transition={{type: 'spring', bounce: 0.3, duration: 0.6}}
+                                className={cn(
+                                    'absolute inset-0 bg-gray-200 dark:bg-zinc-800 bg-opacity-60 z-10 rounded-2xl',
+                                )}
+                                style={{
+                                    pointerEvents: 'none',
+                                }}
+                            />
+                        }
+                        <Component
+                            key={`${componentKeyAlias}-${index}`}
+                            title={value && t(`local:game.action_menus.${value}`)}
+                            onClick={() => {
+                                dispatch(setChosenMenu(value))
+                            }}
+                            className={'z-20'}
+                        />
+                    </div>
                 )
             })
         },
-        []
+        [chosenMenu]
     )
 
     return (
