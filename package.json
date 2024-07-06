@@ -16,7 +16,6 @@
         "axios": "^1.6.7",
         "bcryptjs": "^2.4.3",
         "blurhash": "^2.0.5",
-        "bootstrap": "^5.3.3",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
         "dotenv": "^16.4.5",

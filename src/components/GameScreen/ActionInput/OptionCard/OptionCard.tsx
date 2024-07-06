@@ -1,8 +1,8 @@
 import { Action } from '@models/ActionInput'
-import Card from 'react-bootstrap/Card'
 import { useTranslation } from 'react-i18next'
 import { BsInfoCircle } from 'react-icons/bs'
 import styles from './OptionCard.module.css'
+import { cn } from '@libutils'
 
 const OptionCard = ({
     option,
@@ -32,23 +32,25 @@ const OptionCard = ({
     }
 
     return (
-        <Card
-            border={option.available ? 'primary' : 'secondary'}
-            bg={highlighted ? 'primary' : undefined}
+        <div
+            className={cn(
+                styles.actionCard,
+                'border-container-big p-3',
+                option.available ? styles.actionCardAvailable : styles.actionCardUnavailable,
+                'unselectable',
+                highlighted && styles.actionCardHighlighted
+            )}
             key={index}
             onDoubleClick={handleDoubleClick}
-            className={`${styles.actionCard} ${option.available ? styles.actionCardAvailable : styles.actionCardUnavailable} unselectable`}
         >
-            <Card.Body className={styles.cardBody}>
-                <Card.Title className={styles.cardTitle}>
-                    {t(`${descriptor}.name`)} {co_descriptor ? `(${co_descriptor})` : ''}
-                </Card.Title>
-                <Card.Text style={{ fontSize: '0.9em' }} className={styles.cardText}>
-                    {displayedText}{' '}
-                    {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}.description`)} />}
-                </Card.Text>
-            </Card.Body>
-        </Card>
+            <p className={'text-t-normal font-semibold'}>
+                {t(`${descriptor}.name`)} {co_descriptor ? `(${co_descriptor})` : ''}
+            </p>
+            <p className={''}>
+                {displayedText}{' '}
+                {textNeedsTruncating && <BsInfoCircle onClick={() => alert(`${descriptor}.description`)} />}
+            </p>
+        </div>
     )
 }
 
