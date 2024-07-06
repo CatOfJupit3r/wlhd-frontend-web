@@ -8,6 +8,7 @@ import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import LeaveGameOverlay from '../LeaveGameOverlay/LeaveGameOverlay'
 import styles from './MenuContainer.module.css'
+import { Separator } from '@components/ui/separator'
 
 const MenuContainer = () => {
     const { t } = useTranslation()
@@ -66,7 +67,8 @@ const MenuContainer = () => {
         return (
             <>
                 <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${chosenMenu}`)}</h1>
-                {<Component />}
+                <Separator className={'mb-4'} />
+                <Component />
             </>
         )
     }, [chosenMenu, menus, t])
