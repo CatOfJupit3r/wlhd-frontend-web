@@ -16,11 +16,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
-import { LucideSquareMenu, LucideUser } from 'lucide-react'
 import { FaBook, FaBookOpen } from 'react-icons/fa'
 import { IoLogoBuffer } from 'react-icons/io'
-import {BiLogOut, BiSolidCog} from 'react-icons/bi'
-import {cn} from "@libutils";
+import { BiLogOut, BiSolidCog } from 'react-icons/bi'
+import { Button } from '@components/ui/button'
+import { IconType } from 'react-icons'
+import { LuMenuSquare, LuUser } from 'react-icons/lu'
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
@@ -39,12 +40,17 @@ const Header = () => {
     const AuthLinks = useCallback(() => {
         return (
             <>
-                <Link to={paths.signIn} relative={'path'}>
+                <Button onClick={redirect(paths.signIn, 'path')} variant={'ghost'} size={'sm'}>
                     Sign In
-                </Link>
-                <Link to={paths.signUp} relative={'path'}>
-                    Sign Up
-                </Link>
+                </Button>
+                <Button
+                    onClick={redirect(paths.signUp, 'path')}
+                    variant={'default'}
+                    size={'sm'}
+                    className={'bg-accent text-accent-foreground hover:bg-accent/90'}
+                >
+                    Register
+                </Button>
             </>
         )
     }, [])
@@ -54,7 +60,7 @@ const Header = () => {
             Array<{
                 name: string
                 action: () => void
-                icon: any
+                icon: IconType
                 className?: string | undefined
                 disabled?: boolean | undefined
             }>
@@ -64,14 +70,14 @@ const Header = () => {
                     {
                         name: 'Profile',
                         action: redirect(paths.profile, 'path'),
-                        icon: LucideUser,
+                        icon: LuUser,
                     },
                     {
                         name: 'Recent Lobby',
                         action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
-                        icon: ({className}: {className: string}) => <LucideSquareMenu className={cn(className, lobbyId ? '': 'text-gray-400')} />,
+                        icon: LuMenuSquare,
                         disabled: !lobbyId,
-                    }
+                    },
                 ],
                 [
                     {
@@ -92,7 +98,7 @@ const Header = () => {
                 ],
                 [
                     {
-                        name: "Game Test",
+                        name: 'Game Test',
                         action: redirect(paths.gameTest, 'path'),
                         icon: BiSolidCog,
                     },
@@ -141,8 +147,9 @@ const Header = () => {
         return (
             <nav
                 id={'header-nav'}
-                className={`flex justify-between gap-3 text-white max-[512px]:flex-col max-[512px]:overflow-x-auto
-                    max-[512px]:align-middle`}
+                className={
+                    'flex justify-between gap-3 text-white max-[512px]:flex-col max-[512px]:overflow-x-auto max-[512px]:align-middle'
+                }
             >
                 {isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}
             </nav>
