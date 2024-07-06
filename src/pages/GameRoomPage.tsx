@@ -2,9 +2,9 @@ import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper'
 import Overlay from '@components/Overlay'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
+import ThinkingHn from '@components/ThinkingHn'
 
 const GameRoomPage = () => {
     const { lobbyId } = useParams()
@@ -41,8 +41,7 @@ const GameRoomPage = () => {
         <>
             {loadingTranslations ? (
                 <Overlay>
-                    <h1>{t('local:loading')}</h1>
-                    <Spinner animation="border" role="status" />
+                    <ThinkingHn text={t('builtins:loading')} />
                 </Overlay>
             ) : (
                 <GameLogicWrapper />

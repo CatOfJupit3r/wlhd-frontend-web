@@ -72,10 +72,22 @@ export default {
                     from: { height: 'var(--radix-accordion-content-height)' },
                     to: { height: '0' },
                 },
+                'spinner-border': {
+                    to: { transform: 'rotate(360deg)' },
+                },
+                'spinner-grow': {
+                    '0%': { transform: 'scale(0)' },
+                    '50%': {
+                        opacity: '1',
+                        transform: 'none',
+                    },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
+                'spinner-border': 'spinner-border 0.75s linear infinite',
+                'spinner-grow': 'spinner-grow 0.75s linear infinite',
             },
         },
     },
