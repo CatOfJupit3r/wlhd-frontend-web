@@ -10,7 +10,6 @@ const MainLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean;
    const isLoggedIn = useIsLoggedIn()
 
     useEffect(() => {
-        console.log("isLoggedIn", isLoggedIn)
         if (!isLoggedIn) {
             return
         }

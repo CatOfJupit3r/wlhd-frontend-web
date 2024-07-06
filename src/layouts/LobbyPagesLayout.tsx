@@ -1,10 +1,7 @@
 import Footer from '@components/Footer'
 import Header from '@components/Header'
 import Notify from '@components/Notify'
-import { setLobbyInfo } from '@redux/slices/lobbySlice'
-import APIService from '@services/APIService'
-import { useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { refreshLobbyInfo, refreshUserInfo } from '@utils/refreshers'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
@@ -18,7 +15,6 @@ const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: bo
     }, [lobbyId])
 
     useEffect(() => {
-        console.log("isLoggedIn", isLoggedIn)
         if (!isLoggedIn) {
             return
         }

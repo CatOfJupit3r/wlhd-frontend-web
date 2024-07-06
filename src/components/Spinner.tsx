@@ -17,7 +17,7 @@ const Spinner = ({
             className={cn(
                 'inline-block',
                 type === 'spin'
-                    ? //animate-spinner-border
+                    ?
                       'animate-spinner-border border-solid border-r-transparent }'
                     : 'animate-spinner-grow',
                 className

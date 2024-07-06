@@ -1,11 +1,7 @@
-import { UserInformation } from '@models/APIData'
-import APIService from '@services/APIService'
-import { useCallback, useEffect, useState } from 'react'
 import LobbyShortInfo from './LobbyShortInfo'
 import styles from './ProfileInformation.module.css'
-import {fetchUserInformation, selectUserInformation} from '@redux/slices/cosmeticsSlice'
-import { AppDispatch } from '@redux/store'
-import {useDispatch, useSelector} from 'react-redux'
+import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
+import { useSelector } from 'react-redux'
 
 const ProfileInformation = () => {
     const { avatar, handle, joined, createdAt } = useSelector(selectUserInformation)
