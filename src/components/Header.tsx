@@ -56,6 +56,7 @@ const Header = () => {
                 action: () => void
                 icon: any
                 className?: string | undefined
+                disabled?: boolean | undefined
             }>
         > = useMemo(() => {
             return [
@@ -69,7 +70,7 @@ const Header = () => {
                         name: 'Recent Lobby',
                         action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
                         icon: ({className}: {className: string}) => <LucideSquareMenu className={cn(className, lobbyId ? '': 'text-gray-400')} />,
-                        className: lobbyId ? 'cursor-pointer' : 'cursor-not-allowed text-gray-400',
+                        disabled: !lobbyId,
                     }
                 ],
                 [
@@ -107,7 +108,7 @@ const Header = () => {
 
         return (
             <>
-                <DropdownMenu>
+                <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Avatar className={'unselectable'}>
                             {avatar && <AvatarImage src={avatar} />}
@@ -120,8 +121,8 @@ const Header = () => {
                         {sections.map((section, index) => (
                             <>
                                 <DropdownMenuGroup key={`group_${index}`}>
-                                    {section.map(({ name, action, icon: Icon, className }, index) => (
-                                        <DropdownMenuItem key={`item_${index}`} onClick={action}>
+                                    {section.map(({ name, action, icon: Icon, className, disabled }, index) => (
+                                        <DropdownMenuItem key={`item_${index}`} onClick={action} disabled={disabled}>
                                             <Icon className="mr-2 size-5" />
                                             <span className={className}>{name}</span>
                                         </DropdownMenuItem>
