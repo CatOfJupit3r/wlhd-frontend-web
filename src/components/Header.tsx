@@ -124,9 +124,9 @@ const Header = () => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>@{handle}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        {sections.map((section, index) => (
-                            <>
-                                <DropdownMenuGroup key={`group_${index}`}>
+                        {sections.map((section,index) => (
+                            <div key={index}>
+                                <DropdownMenuGroup>
                                     {section.map(({ name, action, icon: Icon, className, disabled }, index) => (
                                         <DropdownMenuItem key={`item_${index}`} onClick={action} disabled={disabled}>
                                             <Icon className="mr-2 size-5" />
@@ -134,8 +134,8 @@ const Header = () => {
                                         </DropdownMenuItem>
                                     ))}
                                 </DropdownMenuGroup>
-                                <DropdownMenuSeparator key={`separator_${index}`} />
-                            </>
+                                <DropdownMenuSeparator />
+                            </div>
                         ))}
                     </DropdownMenuContent>
                 </DropdownMenu>
