@@ -1,6 +1,5 @@
 import Spinner from '@components/Spinner'
 
-
 const ThinkingHn = (props: { text: string }) => {
     return (
         <div className={'flex flex-row items-center justify-center gap-4'}>

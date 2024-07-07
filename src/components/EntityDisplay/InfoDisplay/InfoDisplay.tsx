@@ -118,7 +118,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [])
 
     return (
-        <div className={[styles.infoSegmentContainer, 'border-container-medium'].join(' ')}>
+        <div className={[styles.infoSegmentContainer, 'border-container-medium'].join('')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div
                     style={{

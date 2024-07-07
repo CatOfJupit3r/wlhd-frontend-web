@@ -4,7 +4,6 @@ import { ActionResultsPayload } from '@models/Events'
 import { GameHandshake } from '@models/GameHandshake'
 import { resetGameComponentsStateAction } from '@redux/highActions'
 import { setBattlefield } from '@redux/slices/battlefieldSlice'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import {
     addMessage,
     resetActiveEntity,
@@ -18,7 +17,7 @@ import {
     setMessages,
     setRound,
 } from '@redux/slices/infoSlice'
-import { haltAction, resetTurnSlice, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
+import { haltAction, resetTurnSlice, setActionResult, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
 import { store as ReduxStore } from '@redux/store'
 import { REACT_APP_BACKEND_URL } from 'config'
 import { io, Socket } from 'socket.io-client'
@@ -165,7 +164,7 @@ class SocketService {
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message)
-                ReduxStore.dispatch(setNotify({ code, message }))
+                ReduxStore.dispatch(setActionResult({ type: code === 200 ? 'success' : 'failure', details: message }))
             },
             [SOCKET_EVENTS.HALT_ACTION]: () => {
                 // this action stops any further action from being taken.

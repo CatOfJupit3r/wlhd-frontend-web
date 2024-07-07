@@ -1,17 +1,18 @@
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
 import { checkConfirmPassword, checkHandle, checkPassword } from '@utils/verifyInputs'
+import { useTranslation } from 'react-i18next'
+import { useToast } from '@hooks/useToast'
 
 const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const { t } = useTranslation()
+    const { toastError } = useToast()
 
     const [handle, setHandle] = useState('')
     const [password, setPassword] = useState('')
@@ -48,10 +49,10 @@ const SignUp = ({ style }: { style?: React.CSSProperties }) => {
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (!handle || !password) {
-            dispatch(setNotify({ code: 400, message: 'Missing parameters!' }))
+            toastError({ title: t('local:error'), description: t('local:missingParameters') })
             return
         } else if (password !== confirmPassword) {
-            dispatch(setNotify({ code: 400, message: 'Passwords do not match!' }))
+            toastError({ title: t('local:error'), description: t('local:passwordsDoNotMatch') })
             return
         }
 
@@ -59,9 +60,9 @@ const SignUp = ({ style }: { style?: React.CSSProperties }) => {
             await APIService.createAccount(handle, password)
         } catch (err) {
             if (err && err instanceof AxiosError) {
-                dispatch(setNotify({ code: 400, message: err.response?.data.message }))
+                toastError({ title: t('local:error'), description: err.response?.data.message })
             } else if (err && err instanceof Error) {
-                dispatch(setNotify({ code: 400, message: err.message }))
+                toastError({ title: t('local:error'), description: err.message })
             }
             console.log('Error: ', err)
         }

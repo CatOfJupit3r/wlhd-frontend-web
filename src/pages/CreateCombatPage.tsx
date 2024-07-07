@@ -2,7 +2,6 @@ import Battlefield from '@components/Battlefield/Battlefield'
 import CombatEditor from '@components/CombatEditor/CombatEditor'
 import { resetGameComponentsStateAction } from '@redux/highActions'
 import { selectBattlefieldMold, setBattlefieldMode, setInteractableTiles } from '@redux/slices/battlefieldSlice'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
@@ -12,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useToast } from '@hooks/useToast'
 
 interface CombatPreset {
     field: {
@@ -31,6 +31,7 @@ const CreateCombatPage = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation()
     const battlefield = useSelector(selectBattlefieldMold)
+    const { toastError } = useToast()
 
     const lobbyId = useSelector(selectLobbyId)
     const [combatName, setCombatName] = useState('MyNewPreset')
@@ -64,16 +65,10 @@ const CreateCombatPage = () => {
         } catch (e) {
             if (e instanceof AxiosError) {
                 console.error(e.response?.data)
-                dispatch(
-                    setNotify({
-                        message: e.response?.data,
-                        code: e.response?.status || 400,
-                    })
-                )
+                toastError({ title: t('local:error'), description: e.response?.data.message })
             } else {
                 console.error(e)
             }
-            // navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
         }
     }, [combatName, combatPreset, navigate])
 

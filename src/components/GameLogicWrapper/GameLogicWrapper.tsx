@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { resetGameComponentsStateAction } from '@redux/highActions'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import { selectGameFlow } from '@redux/slices/infoSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { resetTurnSlice, selectOutput } from '@redux/slices/turnSlice'
@@ -13,10 +12,12 @@ import SocketService from '@services/SocketService'
 import GameScreen from '../GameScreen/GameScreen'
 import Overlay from '@components/Overlay'
 import ThinkingHn from '../ThinkingHn'
+import { useToast } from '@hooks/useToast'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation()
+    const { toast } = useToast()
     const navigate = useNavigate()
 
     const { gameId, lobbyId } = useParams()
@@ -41,12 +42,11 @@ const GameLogicWrapper = () => {
 
     useEffect(() => {
         if (actionOutput) {
-            dispatch(
-                setNotify({
-                    message: JSON.stringify(actionOutput),
-                    code: 200,
-                })
-            )
+            toast({
+                title: t('local:game.action_output'),
+                description: JSON.stringify(actionOutput),
+                position: 'bottom-left',
+            })
             dispatch(resetTurnSlice())
             SocketService.emit('take_action', actionOutput)
         }

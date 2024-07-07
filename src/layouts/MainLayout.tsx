@@ -2,19 +2,19 @@ import Footer from '@components/Footer'
 import Header from '@components/Header'
 import Notify from '@components/Notify'
 import { Outlet } from 'react-router-dom'
-import useIsLoggedIn from "@hooks/useIsLoggedIn";
-import {useEffect} from "react";
-import {refreshUserInfo} from "@utils/refreshers";
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import { useEffect } from 'react'
+import { refreshUserInfo } from '@utils/refreshers'
 
 const MainLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
-   const isLoggedIn = useIsLoggedIn()
+    const isLoggedIn = useIsLoggedIn()
 
     useEffect(() => {
         if (!isLoggedIn) {
             return
         }
         refreshUserInfo()
-    }, [isLoggedIn]);
+    }, [isLoggedIn])
 
     return (
         <>

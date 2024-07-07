@@ -135,7 +135,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
     )
 
     return (
-        <div className={[styles.displayContainer, 'border-container-biggest'].join(' ')}>
+        <div className={[styles.displayContainer, 'border-container-biggest'].join('')}>
             <div className={styles.entityHeader}>
                 <GameAsset
                     src={generateAssetPathFullDescriptor(decorations.sprite)}
@@ -193,9 +193,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                                 <AccordionTrigger>
                                     <ElementWithIcon icon={value.icon} element={value.element} />
                                 </AccordionTrigger>
-                                <AccordionContent>
-                                    {value.children ? value.children() : null}
-                                </AccordionContent>
+                                <AccordionContent>{value.children ? value.children() : null}</AccordionContent>
                             </AccordionItem>
                         </Accordion>
                     </>

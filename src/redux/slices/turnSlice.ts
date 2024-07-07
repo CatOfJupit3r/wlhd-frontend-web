@@ -22,6 +22,10 @@ const initialState: TurnState = {
             action: 'builtins:action',
         },
     },
+    actionResult: {
+        type: 'pending',
+        details: null,
+    },
     halted: false,
     needToChooseSquare: false,
     actionOutputs: null,
@@ -59,6 +63,15 @@ const turnSlice = createSlice({
         resetTurnSlice(state) {
             return { ...state, ...initialState, halted: state.halted }
         },
+        setActionResult(
+            state,
+            action: PayloadAction<{ type: 'pending' | 'success' | 'failure'; details: string | null }>
+        ) {
+            state.actionResult = action.payload
+        },
+        resetActionResult(state) {
+            state.actionResult = initialState.actionResult
+        },
         setPlayersTurn(state, action: PayloadAction<boolean>) {
             state.playersTurn = action.payload
         },
@@ -79,8 +92,17 @@ const turnSlice = createSlice({
 
 export default turnSlice.reducer
 
-export const { resetInput, resetTurnSlice, setPlayersTurn, setEntityActions, setOutput, receivedHalt, haltAction } =
-    turnSlice.actions
+export const {
+    resetInput,
+    resetTurnSlice,
+    setPlayersTurn,
+    setEntityActions,
+    setActionResult,
+    resetActionResult,
+    setOutput,
+    receivedHalt,
+    haltAction,
+} = turnSlice.actions
 
 export const selectEntityActions = (state: RootState) => state.turn.entityActions
 export const selectAliasTranslations = (state: RootState) => state.turn.entityActions.alias_translations
@@ -88,3 +110,4 @@ export const selectAliases = (state: RootState) => state.turn.entityActions.alia
 export const selectPlayersTurn = (state: RootState) => state.turn.playersTurn
 export const selectOutput = (state: RootState) => state.turn.actionOutputs
 export const selectHalted = (state: RootState) => state.turn.halted
+export const selectActionResult = (state: RootState) => state.turn.actionResult

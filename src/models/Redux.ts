@@ -19,10 +19,6 @@ export interface CosmeticsState {
     user: UserInformation & {
         loading: LoadingState
     }
-    notification: {
-        message: string
-        code: number
-    }
     pageTitle: string
 }
 
@@ -43,6 +39,10 @@ export interface TurnState {
     actionOutputs: {
         [key: string]: string
     } | null
+    actionResult: {
+        type: 'pending' | 'success' | 'failure'
+        details: string | null
+    }
     halted: boolean
 }
 

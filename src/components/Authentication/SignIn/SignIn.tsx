@@ -1,5 +1,4 @@
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
@@ -9,10 +8,12 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
 import { checkHandle, checkPassword } from '@utils/verifyInputs'
+import { useToast } from '@hooks/useToast'
 
 const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
+    const { toastError } = useToast()
 
     const [handle, setHandle] = useState('admin')
     const [password, setPassword] = useState('motherfucker')
@@ -44,7 +45,10 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (!handle || !password) {
-            dispatch(setNotify({ code: 400, message: 'Missing parameters!' }))
+            toastError({
+                title: 'local:error',
+                description: 'local:error.missingParams',
+            })
             return
         }
 
@@ -53,9 +57,15 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
         } catch (err: unknown) {
             if (!err) return
             if (err instanceof AxiosError) {
-                dispatch(setNotify({ code: 400, message: err.response?.data.message || 'Connection error!' }))
+                toastError({
+                    title: 'local:error',
+                    description: err?.response?.data.message || 'local:error.connectionError',
+                })
             } else if (err instanceof Error) {
-                dispatch(setNotify({ code: 400, message: err.message }))
+                toastError({
+                    title: 'local:error',
+                    description: err.message || 'local:error.connectionError',
+                })
             }
         }
     }

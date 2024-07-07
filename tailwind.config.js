@@ -91,5 +91,6 @@ export default {
             },
         },
     },
-    plugins: [import('tailwindcss-animate')],
+    // eslint-disable-next-line no-undef
+    plugins: [require('tailwindcss-animate')],
 }

@@ -1,5 +1,4 @@
 import { Action } from '@models/ActionInput'
-import { setNotify } from '@redux/slices/cosmeticsSlice'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './ActionInput.module.css'
@@ -33,6 +32,8 @@ import {
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
 import { RxArrowTopRight } from 'react-icons/rx'
 import OptionCard from './OptionCard/OptionCard'
+import { useToast } from '@hooks/useToast'
+import ResultListener from '@components/GameScreen/ActionInput/ResultListener'
 
 /*
 
@@ -60,6 +61,7 @@ This isolated responsibilities of this component to only handle user input and n
 const ActionInput = () => {
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const { toast, toastError } = useToast()
 
     const initialActionLevel = useSelector(selectEntityActions)
 
@@ -213,12 +215,11 @@ const ActionInput = () => {
         if (!clickedAction || clickedAction.mechanic_val === '' || clickedAction.displayed_val === '') {
             return
         }
-        dispatch(
-            setNotify({
-                message: clickedAction.displayed_val,
-                code: 200,
-            })
-        )
+        toast({
+            title: t('local:game.actions.you_chose'),
+            description: t(clickedAction.displayed_val),
+            position: 'bottom-left',
+        })
         setChoices((prev) => ({
             mechanic: { ...prev.mechanic, [currentAlias]: clickedAction.mechanic_val },
             displayed: {
@@ -379,12 +380,10 @@ const ActionInput = () => {
                     }
                 }
             } else {
-                dispatch(
-                    setNotify({
-                        message: 'No action with given id',
-                        code: 400,
-                    })
-                )
+                toastError({
+                    title: t('local:game.actions.you_chose'),
+                    description: t('local:error.invalid_choice'),
+                })
             }
         } else {
             // scope keeps track of requirements to process.
@@ -432,6 +431,7 @@ const ActionInput = () => {
                     {t('local:game.actions.waiting_for_turn')}
                 </h1>
             )}
+            <ResultListener />
         </div>
     )
 }
