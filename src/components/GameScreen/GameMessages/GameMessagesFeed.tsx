@@ -6,10 +6,11 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import styles from './GameMessagesFeed.module.css'
+import { Separator } from '@components/ui/separator'
 
 /*
 
-This component mainly manipulates info.loadedMessages from Redux store.
+This component displays info.loadedMessages from Redux store.
 
 start refers to the start of slice of loaded array of messages on BACKEND
 end refers to the end of slice of loaded array of messages on BACKEND
@@ -41,10 +42,17 @@ const GameMessagesFeed = () => {
     return (
         <div className={styles.stateFeed}>
             {messages ? (
-                reverseMessageContainer(messages).map((msg) => {
-                    return reverseGameMessages(msg).map((content, index) => {
-                        return <p key={index}>{tstring(content)}</p>
-                    })
+                reverseMessageContainer(messages).map((msg, indexBig) => {
+                    return (
+                        <>
+                            <div key={`msg_cont_${indexBig}`}>
+                                {reverseGameMessages(msg).map((content, index) => {
+                                    return <p key={index}>{tstring(content)}</p>
+                                })}
+                            </div>
+                            <Separator key={`sep_${indexBig}`} />
+                        </>
+                    )
                 })
             ) : (
                 <p>{t('local:game.messages.loading')}</p>
