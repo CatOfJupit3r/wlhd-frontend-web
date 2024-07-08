@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './InfoDisplay.module.css'
 import { cn } from '@libutils'
+import { ActiveIcon, CooldownIcon } from '@components/icons'
 
 interface WeaponSegment {
     type: 'weapon'
@@ -46,14 +47,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment) => {
         return info.isActive ? (
-            <img
-                src={'/assets/local/available_icon.svg'}
-                style={{
-                    width: '1.25rem',
-                    height: '1.25rem',
-                }}
-                alt={'available'}
-            />
+            <ActiveIcon className={'size-6'} />
         ) : null
     }, [])
 
@@ -93,16 +87,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const CooldownDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
             <ElementWithIcon
-                icon={
-                    <img
-                        src={'/assets/local/cooldown.png'}
-                        style={{
-                            width: '1.25rem',
-                            height: '1.25rem',
-                        }}
-                        alt={'cooldown'}
-                    />
-                }
+                icon={<CooldownIcon className={'size-5'} />}
                 element={
                     <p
                         style={{
@@ -122,12 +107,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div
-                    style={{
-                        flexDirection: 'row',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                    }}
+                    className={'flex flex-row items-center gap-2'}
                 >
                     {t(decorations.name)}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}

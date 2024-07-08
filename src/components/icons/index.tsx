@@ -26,6 +26,16 @@ const Icons = {
         alt: 'weaponry',
         displayName: 'WeaponryIcon',
     },
+    cooldown: {
+        src: '/assets/local/cooldown.png',
+        alt: 'cooldown',
+        displayName: 'CooldownIcon',
+    },
+    active: {
+        src: '/assets/local/available_icon.svg',
+        alt: 'active',
+        displayName: 'ActiveIcon',
+    }
 }
 
 export const AttributesIcon = IconFactory(Icons.attributes.src, Icons.attributes.alt, Icons.attributes.displayName)
@@ -37,3 +47,5 @@ export const StatusEffectsIcon = IconFactory(
 )
 export const SpellsIcon = IconFactory(Icons.spells.src, Icons.spells.alt, Icons.spells.displayName)
 export const WeaponryIcon = IconFactory(Icons.weaponry.src, Icons.weaponry.alt, Icons.weaponry.displayName)
+export const CooldownIcon = IconFactory(Icons.cooldown.src, Icons.cooldown.alt, Icons.cooldown.displayName)
+export const ActiveIcon = IconFactory(Icons.active.src, Icons.active.alt, Icons.active.displayName)
