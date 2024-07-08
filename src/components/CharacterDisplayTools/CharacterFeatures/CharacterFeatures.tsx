@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { IconType } from 'react-icons'
 import FeatureContainer from './FeatureContainer'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
+import { IconComponentType } from '@components/icons/icon_factory'
 
 const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
@@ -9,7 +10,7 @@ const CharacterFeatures = () => {
     const TABS: Array<{
         name: string
         value: 'attributes' | 'spells' | 'inventory' | 'weaponry' | 'statusEffects'
-        icon: IconType | ((props: { className: string }) => JSX.Element)
+        icon: IconType | IconComponentType
     }> = useMemo(
         () => [
             {

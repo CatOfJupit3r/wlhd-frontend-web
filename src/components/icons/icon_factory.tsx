@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes } from 'react'
 
 export type HTMLIconFactoryProps = ImgHTMLAttributes<HTMLImageElement>
-
+export type IconComponentType = (props: HTMLIconFactoryProps) => JSX.Element
 
 const IconFactory = ({
     src,
@@ -19,7 +19,7 @@ const IconFactory = ({
     )
 }
 
-const createIconComponent = (src: string, alt: string, displayName: string) => {
+const createIconComponent = (src: string, alt: string, displayName: string): IconComponentType => {
     const IconComponent = (props: HTMLIconFactoryProps) => (
         <IconFactory src={src} alt={alt} {...props} />
     );
