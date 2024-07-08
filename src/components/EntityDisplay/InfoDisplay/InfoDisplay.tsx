@@ -3,6 +3,7 @@ import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battl
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './InfoDisplay.module.css'
+import { cn } from '@libutils'
 
 interface WeaponSegment {
     type: 'weapon'
@@ -118,7 +119,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [])
 
     return (
-        <div className={[styles.infoSegmentContainer, 'border-container-medium'].join('')}>
+        <div className={cn(styles.infoSegmentContainer, 'border-container-medium')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div
                     style={{
