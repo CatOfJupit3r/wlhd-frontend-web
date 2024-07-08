@@ -1,8 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { IconType } from 'react-icons'
-import { WiMoonWaxingCrescent4 } from 'react-icons/wi'
-import styles from './CharacterFeatures.module.css'
 import FeatureContainer from './FeatureContainer'
+import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 
 const CharacterFeatures = () => {
     const [activeTab, setActiveTab] = useState(0)
@@ -10,33 +9,33 @@ const CharacterFeatures = () => {
     const TABS: Array<{
         name: string
         value: 'attributes' | 'spells' | 'inventory' | 'weaponry' | 'statusEffects'
-        icon: IconType
+        icon: IconType | ((props: { className: string }) => JSX.Element)
     }> = useMemo(
         () => [
             {
                 name: 'Attributes',
                 value: 'attributes',
-                icon: WiMoonWaxingCrescent4,
+                icon: AttributesIcon,
             },
             {
                 name: 'Spells',
                 value: 'spells',
-                icon: WiMoonWaxingCrescent4,
+                icon: SpellsIcon,
             },
             {
                 name: 'Inventory',
                 value: 'inventory',
-                icon: WiMoonWaxingCrescent4,
+                icon: InventoryIcon,
             },
             {
                 name: 'Weaponry',
                 value: 'weaponry',
-                icon: WiMoonWaxingCrescent4,
+                icon: WeaponryIcon,
             },
             {
                 name: 'Status Effects',
                 value: 'statusEffects',
-                icon: WiMoonWaxingCrescent4,
+                icon: StatusEffectsIcon,
             },
         ],
         [activeTab]
@@ -45,28 +44,11 @@ const CharacterFeatures = () => {
     const currentFeatureTabValue = useCallback(() => TABS[activeTab].value || 'attributes', [activeTab, TABS])
 
     return (
-        <div
-            className={styles.attributesSpellsInventoryAndWeaponry}
-            style={{
-                width: '60%',
-                display: 'flex',
-                gap: '1rem',
-                flexDirection: 'column',
-            }}
-        >
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    height: '2rem',
-                    gap: '0.25rem',
-                    width: '100%',
-                    padding: '0.25rem',
-                }}
-                className={'border-container-big'}
-            >
+        <div className={'border-container-big flex size-full flex-col gap-4 p-4'}>
+            <div className={'border-container-big flex h-12 w-full flex-row gap-1 p-1 align-middle'}>
                 {TABS.map((tab, index) => (
                     <tab.icon
+                        className={'size-8 cursor-pointer'}
                         key={index}
                         onMouseDown={() => {
                             setActiveTab(index)
@@ -74,17 +56,7 @@ const CharacterFeatures = () => {
                     />
                 ))}
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '1rem',
-                    width: '100%',
-                    height: '100%',
-                    padding: '1rem',
-                }}
-                className={'border-container-big'}
-            >
+            <div className={'border-container-big flex size-full flex-col gap-4 p-4'}>
                 <FeatureContainer type={currentFeatureTabValue()} />
             </div>
         </div>

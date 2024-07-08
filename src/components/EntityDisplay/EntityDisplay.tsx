@@ -10,10 +10,7 @@ import InfoDisplay from './InfoDisplay/InfoDisplay'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { Separator } from '@components/ui/separator'
 
-const iconStyle = {
-    width: '1.25rem',
-    height: '1.25rem',
-}
+const iconClassName = 'size-5'
 
 const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
     const { decorations, square, attributes, items, weapons, spells, status_effects } = entityInfo
@@ -54,12 +51,12 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
         () => ({
             ATTRIBUTES: {
                 element: <div className={styles.entityIWillComeUpWithAName}>{t(tPath + 'attributes')}</div>,
-                icon: <img src="/assets/cr/attributes.svg" alt="attributes icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/attributes.svg" alt="attributes icon" className={iconClassName} />,
                 children: () => <AttributeDisplay attributes={attributes} />,
             },
             SPELLBOOK: {
                 element: <div className={styles.entityIWillComeUpWithAName}>{t(tPath + 'spellbook')}</div>,
-                icon: <img src="/assets/cr/spell_book.svg" alt="spellbook icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/spell_book.svg" alt="spellbook icon" className={iconClassName} />,
                 children: () => {
                     return spells && spells.length > 0 ? (
                         spells.map((spell, index) => <InfoDisplay type={'spell'} info={spell} key={index} />)
@@ -70,7 +67,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             STATUS_EFFECTS: {
                 element: <div className={styles.entityIWillComeUpWithAName}>{t(tPath + 'status_effects')}</div>,
-                icon: <img src="/assets/cr/status_effects.svg" alt="status effects icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/status_effects.svg" alt="status effects icon" className={iconClassName} />,
                 children: () => {
                     return status_effects && status_effects.length > 0 ? (
                         status_effects.map((status_effect, index) => (
@@ -83,7 +80,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             WEAPONRY: {
                 element: <div className={styles.entityIWillComeUpWithAName}>{t(tPath + 'weaponry')}</div>,
-                icon: <img src="/assets/cr/weaponry.svg" alt="weapons icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/weaponry.svg" alt="weapons icon" className={iconClassName} />,
                 children: () => {
                     return weapons && weapons.length > 0 ? (
                         weapons.map((weapon, index) => <InfoDisplay type={'weapon'} info={weapon} key={index} />)
@@ -94,7 +91,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
             },
             INVENTORY: {
                 element: <div className={styles.entityIWillComeUpWithAName}>{t(tPath + 'inventory')}</div>,
-                icon: <img src="/assets/cr/inventory.svg" alt="inventory icon" style={iconStyle} />,
+                icon: <img src="/assets/cr/inventory.svg" alt="inventory icon" className={iconClassName} />,
                 children: () => {
                     return items && items.length > 0 ? (
                         items.map((item, index) => <InfoDisplay type={'item'} info={item} key={index} />)
@@ -151,10 +148,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                                   alt: 'ally',
                               }
                     }
-                    style={{
-                        width: '5rem',
-                        height: '5rem',
-                    }}
+                    className={'size-20'}
                 />
                 <div className={styles.entityName}>{t(decorations.name)}</div>
                 <div className={styles.entitySquare}>{`${square.line}|${square.column}`}</div>
@@ -163,7 +157,7 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 {Object.entries(MAIN_ATTRIBUTES).map(([key, value]) => (
                     <ElementWithIcon
                         key={key}
-                        icon={<img src={value.icon.src} alt={value.icon.alt} style={iconStyle} />}
+                        icon={<img src={value.icon.src} alt={value.icon.alt} className={iconClassName} />}
                         element={<p style={{ margin: 0 }}>{value.text}</p>}
                     />
                 ))}
@@ -176,13 +170,9 @@ const EntityDisplay = ({ entityInfo }: { entityInfo: EntityInfoFull }) => {
                 </div>
             </div>
             <div
+                className={'flex flex-col flex-wrap gap-2 p-4'}
                 style={{
-                    display: 'flex',
-                    gap: '0.5rem',
-                    flexWrap: 'wrap',
-                    flexDirection: 'column',
                     borderTop: '0.125rem solid #000',
-                    padding: '1rem 1rem',
                 }}
             >
                 {Object.entries(LIST_HEADERS).map(([key, value]) => (
