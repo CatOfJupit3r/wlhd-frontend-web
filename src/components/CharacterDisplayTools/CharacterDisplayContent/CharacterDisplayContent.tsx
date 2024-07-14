@@ -7,6 +7,7 @@ import { SiUps } from 'react-icons/si'
 import { useSelector } from 'react-redux'
 import CharacterFeatures from '../CharacterFeatures/CharacterFeatures'
 import styles from './CharacterDisplayContent.module.css'
+import { cn } from '@lib/utils'
 
 const CharacterDisplayContent = ({
     characterInfo,
@@ -24,37 +25,17 @@ const CharacterDisplayContent = ({
 
     const MainSection = useCallback(() => {
         return (
-            <div
-                className={styles.mainSection}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '100%',
-                }}
-            >
+            <div className={'flex w-full flex-row'}>
                 <GameAsset
                     src={generateAssetPath('coordinator', decorations.sprite)}
                     alt={'character-sprite'}
                     style={{
-                        width: '5rem',
-                        height: '5rem',
-                        minWidth: '5rem',
-                        minHeight: '5rem',
                         borderRadius: '1.25rem',
                         border: '1px solid black',
                     }}
+                    className={'size-20 min-h-20 min-w-20'}
                 />
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        height: '100%',
-                        padding: '1rem',
-                        paddingTop: '0',
-                        gap: '0.25rem',
-                    }}
-                >
+                <div className={'flex size-full flex-col gap-1 p-4 pt-0'}>
                     <select
                         value={descriptor}
                         onChange={(e) => {
@@ -97,15 +78,10 @@ const CharacterDisplayContent = ({
         <div className={styles.creationToolsContainer}>
             <div
                 id={'left-section'}
-                style={{
-                    height: '100%',
-                    width: '40%',
-                    padding: '1rem',
-                    display: 'flex',
-                    gap: '1rem',
-                    flexDirection: 'column',
-                }}
-                className={'border-container-biggest'}
+                className={cn(
+                    'border-container-biggest',
+                    'h-full w-[40%] p-4 flex gap-4 flex-col w-max-[1028px]:w-full'
+                )}
             >
                 <MainSection />
                 <LevelGold />

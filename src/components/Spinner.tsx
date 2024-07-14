@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '@libutils'
+import { cn } from '@lib/utils'
 
 const Spinner = ({
     type,

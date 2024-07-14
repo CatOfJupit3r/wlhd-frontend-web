@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { apprf, cn } from '@lib/utils'
 
 const Footer = () => {
     return (
@@ -11,8 +12,10 @@ const Footer = () => {
             <div
                 id={'footer-links'}
                 className={
-                    'max-[512px]:flex max-[512px]:flex-col max-[512px]:justify-center max-[512px]:items-center max-[512px]:gap-2 ' +
-                    'mt-[1%] flex justify-center gap-[1%] text-t-small'
+                    cn(
+                      'mt-[1%] flex justify-center gap-[1%] text-t-small',
+                        apprf( 'max-[512px]', 'flex flex-col justify-center items-center gap-2 ')
+                    )
                 }
             >
                 <Link to={'/'}>Home</Link>

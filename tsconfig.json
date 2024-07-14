@@ -12,7 +12,7 @@
             "@redux/*": ["./redux/*"],
             "@models/*": ["./models/*"],
             "@router/*": ["./router/*"],
-            "@lib*": ["./lib/*"],
+            "@lib/*": ["./lib/*"],
             "config": ["./config"]
         },
         "lib": ["dom", "dom.iterable", "esnext"],

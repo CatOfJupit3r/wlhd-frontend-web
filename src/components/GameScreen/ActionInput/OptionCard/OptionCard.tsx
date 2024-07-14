@@ -2,7 +2,7 @@ import { Action } from '@models/ActionInput'
 import { useTranslation } from 'react-i18next'
 import { BsInfoCircle } from 'react-icons/bs'
 import styles from './OptionCard.module.css'
-import { cn } from '@libutils'
+import { cn } from '@lib/utils'
 
 const OptionCard = ({
     option,

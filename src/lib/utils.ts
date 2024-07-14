@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-export const applyPrefix = (prefix: string, className: ClassValue, includeTwoDots?: boolean): ClassValue => {
+export const apprf = (prefix: string, className: ClassValue, includeTwoDots: boolean = true): ClassValue => {
     // adds a prefix to each TailwindCSS class in `className` params. Adds `:` in process.
     if (!className) {
         return className
