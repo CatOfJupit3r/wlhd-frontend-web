@@ -34,6 +34,11 @@ const Icons = [
         alt: 'active',
         displayName: 'ActiveIcon',
     },
+    {
+        src: '/assets/local/placeholder.png',
+        alt: 'placeholder',
+        displayName: 'PlaceholderIcon'
+    }
 ]
 
 
@@ -50,4 +55,5 @@ export const {
     WeaponryIcon,
     CooldownIcon,
     ActiveIcon,
+    PlaceholderIcon
 } = iconExports
