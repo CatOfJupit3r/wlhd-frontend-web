@@ -15,8 +15,10 @@ interface Item {
     disabled?: boolean
 }
 
-interface ComboboxProps {
-    items: Item[]
+export type ComboboxItemArray = Array<Item>
+
+export interface ComboboxProps {
+    items: ComboboxItemArray
     value: string
     onChange: (value: string) => void
     selectText?: string
@@ -61,11 +63,19 @@ export const Combobox = ({ items, value, onChange, selectText, size }: ComboboxP
                     className={cn('justify-between text-left', size?.width || 'w-[400px]', size?.height || 'h-[50px]')}
                 >
                     <div className={'w-full'}>
-                        <p className={'max-w-[90%] truncate'}>
-                            {value && items
-                                ? items.find((item) => item.value === value)?.label
-                                : selectText || 'Select...'}
-                        </p>
+                        {items.find((item) => item.value === value) ? (
+                            <ComboBoxItem
+                                icon={items.find((item) => item.value === value)!.icon}
+                                label={items.find((item) => item.value === value)!.label}
+                            />
+                        ) : (
+                            <ComboBoxItem icon={PlaceholderIcon} label={selectText || 'Select...'} />
+                        )}
+                        {/*<p className={'max-w-[90%] truncate'}>*/}
+                        {/*    {value && items*/}
+                        {/*        ? items.find((item) => )*/}
+                        {/*        : selectText || 'Select...'}*/}
+                        {/*</p>*/}
                     </div>
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </Button>
