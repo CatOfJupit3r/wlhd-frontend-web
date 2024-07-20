@@ -22,6 +22,7 @@ export interface ComboboxProps {
     value: string
     onChange: (value: string) => void
     selectText?: string
+    includeSearch?: boolean
     size?: {
         width?: ClassValue
         height?: ClassValue
@@ -50,7 +51,7 @@ const ComboBoxItem = ({ icon, label }: { icon: IconComponentType; label: string 
     )
 }
 
-export const Combobox = ({ items, value, onChange, selectText, size }: ComboboxProps) => {
+export const Combobox = ({ items, value, onChange, selectText, size, includeSearch }: ComboboxProps) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -71,18 +72,13 @@ export const Combobox = ({ items, value, onChange, selectText, size }: ComboboxP
                         ) : (
                             <ComboBoxItem icon={PlaceholderIcon} label={selectText || 'Select...'} />
                         )}
-                        {/*<p className={'max-w-[90%] truncate'}>*/}
-                        {/*    {value && items*/}
-                        {/*        ? items.find((item) => )*/}
-                        {/*        : selectText || 'Select...'}*/}
-                        {/*</p>*/}
                     </div>
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className={cn('p-1', size?.width || 'w-[400px]')}>
                 <Command>
-                    <CommandInput placeholder={selectText || 'Select...'} />
+                    {includeSearch && <CommandInput placeholder={selectText || 'Select...'} />}
                     <CommandEmpty>Nothing here... huh?..</CommandEmpty>
                     <CommandGroup>
                         <CommandList>
