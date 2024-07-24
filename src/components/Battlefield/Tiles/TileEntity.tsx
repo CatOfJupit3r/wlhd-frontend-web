@@ -9,7 +9,7 @@ import {
 import { selectActiveEntity } from '@redux/slices/infoSlice'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { generateAssetPath, generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
+import { generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
@@ -125,7 +125,10 @@ const TileEntity = (props: {
         >
             <Decoration decoration={decorations} />
             <GameAsset
-                src={generateAssetPath(dlc, descriptor)}
+                src={{
+                    dlc,
+                    descriptor,
+                }}
                 alt={descriptor !== 'tile' ? dlc + '::' + descriptor : undefined}
                 fallback={{
                     src: fallback.src,

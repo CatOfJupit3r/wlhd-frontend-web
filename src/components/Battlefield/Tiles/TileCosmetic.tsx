@@ -1,6 +1,6 @@
 import GameAsset from '@components/GameAsset'
 import React from 'react'
-import { generateAssetPath, splitDescriptor } from '../utils'
+import { splitDescriptor } from '../utils'
 import styles from './Tiles.module.css'
 
 const TileCosmetic = (props: {
@@ -14,7 +14,7 @@ const TileCosmetic = (props: {
 
     return (
         <GameAsset
-            src={generateAssetPath(dlc, descriptor)}
+            src={{ dlc, descriptor }}
             onClick={onClick ? onClick : undefined}
             alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
             className={className ? `${className} ${styles.tile}` : styles.tile}
