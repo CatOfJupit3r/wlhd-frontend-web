@@ -124,7 +124,7 @@ const Header = () => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>@{handle}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        {sections.map((section,index) => (
+                        {sections.map((section, index) => (
                             <div key={index}>
                                 <DropdownMenuGroup>
                                     {section.map(({ name, action, icon: Icon, className, disabled }, index) => (

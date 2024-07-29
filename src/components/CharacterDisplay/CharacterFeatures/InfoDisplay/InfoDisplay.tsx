@@ -26,7 +26,7 @@ interface StatusEffectSegment {
     info: StatusEffectInfo
 }
 
-type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
+export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
 
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t } = useTranslation()

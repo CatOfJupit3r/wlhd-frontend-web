@@ -1406,7 +1406,7 @@
                 "builtins:nature_attack": "0",
                 "builtins:nature_defense": "0"
             },
-            "items": [
+            "inventory": [
                 {
                     "descriptor": "builtins:healing_potion",
                     "decorations": {
@@ -1428,8 +1428,8 @@
                     "consumable": true
                 }
             ],
-            "weapons": [],
-            "spells": [],
+            "weaponry": [],
+            "spellBook": [],
             "status_effects": [
                 {
                     "decorations": {
@@ -1483,7 +1483,7 @@
                 "builtins:nature_attack": "0",
                 "builtins:nature_defense": "0"
             },
-            "items": [
+            "inventory": [
                 {
                     "descriptor": "builtins:healing_potion",
                     "decorations": {
@@ -1565,7 +1565,7 @@
                     "consumable": true
                 }
             ],
-            "weapons": [
+            "weaponry": [
                 {
                     "descriptor": "builtins:hero_sword",
                     "decorations": {
@@ -1589,7 +1589,7 @@
                     "isActive": true
                 }
             ],
-            "spells": [
+            "spellBook": [
                 {
                     "descriptor": "builtins:fireball",
                     "decorations": {

@@ -22,15 +22,7 @@ export interface CosmeticsState {
     pageTitle: string
 }
 
-export interface LobbyState {
-    name: string
-    lobbyId: string
-    combats: Array<CombatInfo>
-    players: Array<LobbyPlayerInfo>
-    characters: Array<CharacterInLobby>
-    gm: string
-    layout: 'default' | 'gm'
-}
+export type LobbyState = LobbyInfo
 
 export interface TurnState {
     playersTurn: boolean
@@ -48,6 +40,13 @@ export interface TurnState {
 
 export interface InfoState {
     round: string
+    turnOrder: Array<{
+        icon: string
+        square: {
+            line: number
+            column: number
+        }
+    }>
     messages: {
         start: number
         end: number
@@ -118,25 +117,21 @@ export interface CombatInfo {
 }
 
 export interface LobbyPlayerInfo {
-    player: {
-        handle: string
-        nickname: string
-        avatar: string
-        userId: string
-    }
-    characters: [CharacterInLobby]
+    handle: string
+    nickname: string
+    avatar: string
+    userId: string
+    characters: Array<string>
 }
 
 export interface LobbyInfo {
     name: string
+    lobbyId: string
     combats: Array<CombatInfo>
     players: Array<LobbyPlayerInfo>
+    characters: Array<CharacterInLobby>
     gm: string
     layout: 'default' | 'gm'
-    controlledEntity: {
-        name: string
-        id: string
-    } | null
 }
 
 export interface CharacterInLobby {

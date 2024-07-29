@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { ShortLobbyInformation, UserInformation } from '@models/APIData'
-import { AttributeInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import { AttributeInfo, EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
 import { CharacterInfo } from '@models/CharacterInfo'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
@@ -224,6 +224,13 @@ class APIService {
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory/`,
             method: 'get',
         })) as { inventory: Array<WeaponInfo> }
+    }
+
+    public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<EntityInfoFull> => {
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/`,
+            method: 'get',
+        })) as EntityInfoFull
     }
 
     public getCharacterAttributes = async (

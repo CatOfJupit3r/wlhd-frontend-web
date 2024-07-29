@@ -1,12 +1,12 @@
-import CharacterInfoWrapper from '@components/CharacterDisplayTools/CharacterDisplayTools'
 import { useSearchParams } from 'react-router-dom'
+import ViewCharacter from '@components/ViewCharacter/ViewCharacter'
 
 const ViewCharacterPage = () => {
     const [searchParams] = useSearchParams()
 
     return (
         <div>
-            <CharacterInfoWrapper initialCharacter={searchParams.get('character') || ''} />
+            <ViewCharacter initial={searchParams.get('character') || null} />
         </div>
     )
 }

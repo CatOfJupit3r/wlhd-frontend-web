@@ -61,7 +61,7 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className={cn('justify-between text-left', size?.width || 'w-[400px]', size?.height || 'h-[50px]')}
+                    className={cn('justify-between text-left', size?.width || 'w-full', size?.height || 'h-[50px]')}
                 >
                     <div className={'w-full'}>
                         {items.find((item) => item.value === value) ? (
@@ -76,7 +76,7 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className={cn('p-1', size?.width || 'w-[400px]')}>
+            <PopoverContent className={cn('p-1', size?.width || 'w-full')}>
                 <Command>
                     {includeSearch && <CommandInput placeholder={selectText || 'Select...'} />}
                     <CommandEmpty>Nothing here... huh?..</CommandEmpty>

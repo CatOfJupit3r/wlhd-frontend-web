@@ -18,6 +18,7 @@ const LeaveGameOverlay = () => {
 
     const leaveGame = useCallback(() => {
         SocketService.disconnect()
+        dispatch(setChosenMenu(null))
         navigate('..')
     }, [])
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import styles from './PlayerInfo.module.css'
 
 const PlayerInfo = ({ className }: { className: string }) => {
-    const { players } = useSelector(selectLobbyInfo)
+    const { players, characters } = useSelector(selectLobbyInfo)
 
     const CharactersToLinks = useCallback((characters: Array<CharacterInLobby>) => {
         return characters.map((value, index) => (
@@ -17,8 +17,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
     }, [])
 
     const Player = useCallback(
-        ({ info }: { info: LobbyPlayerInfo }) => {
-            const { player, characters } = info
+        ({ player }: { player: LobbyPlayerInfo }) => {
             return (
                 <div className={styles.player}>
                     <img src={'https://placehold.co/50x50'} alt={player.nickname} />
@@ -26,7 +25,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
                         <p>
                             {player.nickname} (@{player.handle})
                         </p>
-                        {characters.length ? (
+                        {player.characters.length ? (
                             <span
                                 style={{
                                     fontSize: 'var(--text-size-small)',
@@ -35,7 +34,9 @@ const PlayerInfo = ({ className }: { className: string }) => {
                                 }}
                             >
                                 Playing as{' '}
-                                {CharactersToLinks(characters).map((value, index, array) => (
+                                {CharactersToLinks(
+                                    characters.filter((char) => player.characters.includes(char.descriptor))
+                                ).map((value, index, array) => (
                                     <span key={index}>
                                         {value}
                                         {index === array.length - 1 ? '.' : ', '}
@@ -60,7 +61,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
             ) : (
                 <div className={styles.playerContainer}>
                     {players && players.length !== 0 ? (
-                        players.map((info, index) => <Player info={info} key={index} />)
+                        players.map((info, index) => <Player player={info} key={index} />)
                     ) : (
                         <div>
                             <p>There are no players in this lobby</p>
