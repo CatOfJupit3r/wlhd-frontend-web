@@ -1,6 +1,7 @@
-import { INVALID_ASSET_PATH } from 'config'
 import React from 'react'
 import { generateAssetPath, generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
+
+const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png'
 
 const SET_ASSET_PROPS = (img: HTMLImageElement, fallback: { src: string; alt: string }) => {
     if (img.src === fallback.src || img.src === INVALID_ASSET_PATH) return
