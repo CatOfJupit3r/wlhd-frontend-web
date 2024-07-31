@@ -1,6 +1,7 @@
 import { EntityInfoFull } from '@models/Battlefield'
 import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
+import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 
 export interface CharacterDisplaySettings {
     includeDescription?: boolean
@@ -28,6 +29,7 @@ const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
                 includeSquare={settings?.showSquareIfPossible}
                 includeDescription={settings?.includeDescription}
             />
+            {(settings?.displayBasicAttributes && <BasicCharacterAttributes attributes={character.attributes} />)}
             {settings?.showEquippedWeapon && (
                 <p id={'active-weapon'}>
                     Active weapon:{' '}

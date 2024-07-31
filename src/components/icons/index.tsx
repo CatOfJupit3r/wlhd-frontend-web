@@ -38,9 +38,23 @@ const Icons = [
         src: '/assets/local/placeholder.png',
         alt: 'placeholder',
         displayName: 'PlaceholderIcon'
+    },
+    {
+        src: '/assets/cr/hp.svg',
+        alt: 'Health',
+        displayName: 'HealthIcon'
+    },
+    {
+        src: '/assets/cr/armor.svg',
+        alt: 'Armor',
+        displayName: 'ArmorIcon'
+    },
+    {
+        src: '/assets/cr/ap.svg',
+        alt: 'Action Points',
+        displayName: 'APIcon'
     }
 ]
-
 
 const iconExports = Icons.reduce((acc, { src, alt, displayName }) => {
     acc[displayName] = createIconComponent(src, alt, displayName)
@@ -55,5 +69,8 @@ export const {
     WeaponryIcon,
     CooldownIcon,
     ActiveIcon,
-    PlaceholderIcon
+    PlaceholderIcon,
+    HealthIcon,
+    ArmorIcon,
+    APIcon
 } = iconExports
