@@ -14,6 +14,7 @@ export default {
             't-big': 'var(--text-size-big)',
             't-normal': 'var(--text-size-normal)',
             't-small': 'var(--text-size-small)',
+            't-smaller': 'var(--text-size-smaller)',
         },
         container: {
             center: true,
