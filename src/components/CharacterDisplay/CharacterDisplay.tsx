@@ -1,4 +1,3 @@
-import { attributeShowFlags } from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
 import { EntityInfoFull } from '@models/Battlefield'
 import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
@@ -7,7 +6,8 @@ export interface CharacterDisplaySettings {
     includeDescription?: boolean
     showEquippedWeapon?: boolean
     showSquareIfPossible?: boolean
-    attributeShowFlags?: attributeShowFlags
+    ignoreAttributes?: Array<string>
+    displayBasicAttributes?: boolean
 }
 
 export interface CharacterDisplayProps {
@@ -40,7 +40,7 @@ const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
             <CharacterFeatures
                 character={character}
                 flags={{
-                    attributes: settings?.attributeShowFlags,
+                    ignoreAttributes: settings?.ignoreAttributes,
                 }}
             />
         </div>

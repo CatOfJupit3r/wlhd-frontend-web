@@ -6,16 +6,26 @@ const InGameSettings: CharacterDisplaySettings = {
     includeDescription: false,
     showEquippedWeapon: true,
     showSquareIfPossible: true,
-    attributeShowFlags: {
-        ap: true,
-        armor: true,
-        health: true,
-    },
+    ignoreAttributes: [
+        'builtins:current_health',
+        'builtins:max_health',
+        'builtins:current_action_points',
+        'builtins:max_action_points',
+        'builtins:current_armor',
+        'builtins:base_armor',
+    ],
+    displayBasicAttributes: true
 }
 const InLobbySettings: CharacterDisplaySettings = {
     includeDescription: true,
     showEquippedWeapon: false,
     showSquareIfPossible: false,
+    ignoreAttributes: [
+        'builtins:current_health',
+        'builtins:current_action_points',
+        'builtins:current_armor',
+    ],
+    displayBasicAttributes: false
 }
 
 const CharacterDisplayInGame = ({ character }: {character: EntityInfoFull}) => (

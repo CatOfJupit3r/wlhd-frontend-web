@@ -4,22 +4,15 @@ import { useTranslation } from 'react-i18next'
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
 import { Separator } from '@components/ui/separator'
 
-export interface attributeShowFlags {
-    ap?: boolean
-    armor?: boolean
-    health?: boolean
-}
-
-const includeApArmorHealth = (flags: attributeShowFlags): boolean => {
-    return (flags.ap && flags.armor && flags.health) || false
-}
-
-const flagsToAttributes = (flags: attributeShowFlags): Array<string> => {
-    const attributes = []
-    if (flags.ap) attributes.push('builtins:current_action_points', 'builtins:max_action_points')
-    if (flags.armor) attributes.push('builtins:current_armor', 'builtins:base_armor')
-    if (flags.health) attributes.push('builtins:current_health', 'builtins:max_health')
-    return attributes
+const includeApArmorHealth = (ignored: Array<string>): boolean => {
+    return (
+        ignored.includes('builtins:current_health') &&
+        ignored.includes('builtins:max_health') &&
+        ignored.includes('builtins:current_action_points') &&
+        ignored.includes('builtins:max_action_points') &&
+        ignored.includes('builtins:current_armor') &&
+        ignored.includes('builtins:base_armor')
+    )
 }
 
 const Attribute = ({ name, value }: { name: string; value: string }) => {
@@ -31,9 +24,9 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
     )
 }
 
-const AttributeDisplay = ({ attributes, flags }: { attributes: EntityAttributes; flags: attributeShowFlags }) => {
+const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes; ignore: Array<string> }) => {
     const { t } = useTranslation()
-    const ignored = flagsToAttributes(flags)
+    const ignored = ignore
 
     const addIgnored = useCallback(
         (attribute: string) => {
@@ -69,15 +62,9 @@ const AttributeDisplay = ({ attributes, flags }: { attributes: EntityAttributes;
 
     const healthAPDefenseValues = useMemo((): { [p: string]: string } => {
         return {
-            health: flags.health
-                ? `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`
-                : '-/-',
-            actionPoints: flags.ap
-                ? `${attributes['builtins:current_action_points'] || '0'}/${attributes['builtins:max_action_points'] || '-'}`
-                : '-/-',
-            armor: flags.armor
-                ? `${attributes['builtins:current_armor'] || '-'}/${attributes['builtins:base_armor'] || '-'}`
-                : '-/-',
+            health:`${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
+            actionPoints: `${attributes['builtins:current_action_points'] || '0'}/${attributes['builtins:max_action_points'] || '-'}`,
+            armor: `${attributes['builtins:current_armor'] || '-'}/${attributes['builtins:base_armor'] || '-'}`
         }
     }, [attributes])
 
@@ -130,7 +117,7 @@ const AttributeDisplay = ({ attributes, flags }: { attributes: EntityAttributes;
 
     return (
         <div className={'flex flex-col gap-2 text-t-small'}>
-            {includeApArmorHealth(flags) && (
+            {includeApArmorHealth(ignore) && (
                 <div>
                     <HealthAPDefenseComponent />
                 </div>

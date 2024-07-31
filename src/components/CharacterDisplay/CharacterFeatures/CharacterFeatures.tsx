@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Combobox, ComboboxItemArray } from '@components/ui/combobox'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import { EntityInfoFull } from '@models/Battlefield'
-import { attributeShowFlags } from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 
 const CharacterMenus: ComboboxItemArray = [
@@ -35,7 +34,7 @@ const CharacterMenus: ComboboxItemArray = [
 
 interface CharacterFeaturesProps {
     flags: {
-        attributes?: attributeShowFlags
+        ignoreAttributes?: Array<string>
     }
     character: EntityInfoFull
 }

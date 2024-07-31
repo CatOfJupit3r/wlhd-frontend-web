@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react'
 import { EntityInfoFull } from '@models/Battlefield'
 import InfoDisplay from '@components/CharacterDisplay/CharacterFeatures/InfoDisplay/InfoDisplay'
-import AttributeDisplay, { attributeShowFlags } from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
+import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes'] as const
 
@@ -9,7 +9,7 @@ type FeatureProps = {
     type: (typeof SupportedFeatures)[number] | string
     info: EntityInfoFull
     flags: {
-        attributes?: attributeShowFlags
+        ignoreAttributes?: Array<string>
     }
 }
 
@@ -82,17 +82,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                     children.push(
                         <AttributeDisplay
                             attributes={info.attributes}
-                            {...(flags?.attributes
-                                ? {
-                                      flags: flags.attributes,
-                                  }
-                                : {
-                                      flags: {
-                                          armor: false,
-                                          ap: false,
-                                          health: false,
-                                      },
-                                  })}
+                            ignore={flags?.ignoreAttributes || []}
                         />
                     )
                 break
