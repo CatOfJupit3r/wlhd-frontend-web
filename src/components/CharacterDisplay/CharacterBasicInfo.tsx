@@ -40,13 +40,13 @@ const CharacterBasicInfo = ({
                 />
             </div>
             <div>
-                <div>{character.name}</div>
+                <div className={'text-t-normal font-bold'}>{character.name}</div>
                 {includeSquare && character.square && (
-                    <div>
+                    <div className={'text-t-smaller'}>
                         Square: {character.square.line}/{character.square.column}
                     </div>
                 )}
-                {includeDescription && <div>{character.description}</div>}
+                {includeDescription && <div className={'text-wrap text-t-smaller italic text-gray-400'}>{character.description}</div>}
             </div>
         </div>
     )

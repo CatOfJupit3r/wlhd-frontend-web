@@ -18,7 +18,7 @@ export interface CharacterDisplayProps {
 
 const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
     return (
-        <div className={'flex flex-col gap-4 bg-gray-500 p-4'}>
+        <div className={'flex flex-col gap-4 border-2 p-4'}>
             <CharacterBasicInfo
                 character={{
                     name: character.decorations.name,

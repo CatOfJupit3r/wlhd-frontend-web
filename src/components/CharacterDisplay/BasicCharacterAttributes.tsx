@@ -25,7 +25,7 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
     return (
         <div className={'flex flex-row gap-4'}>
             {Object.entries(MAIN_ATTRIBUTES).map(([key, { icon, text }]) => (
-                <ElementWithIcon key={key} icon={icon({className: 'size-8'})} element={<p>{text}</p>} />
+                <ElementWithIcon key={key} icon={icon({className: 'size-8'})} element={<p className={'text-t-small font-semibold'}>{text}</p>} />
             ))}
         </div>
     )
