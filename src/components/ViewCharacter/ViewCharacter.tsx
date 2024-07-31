@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import ShortCharacterInfo from '@components/ViewCharacter/ShortCharacterInfo'
 import { EntityInfoFull } from '@models/Battlefield'
 import APIService from '@services/APIService'
-import { CharacterDisplay, CharacterDisplayInLobby } from '@components/CharacterDisplay'
+import { CharacterDisplayInLobby } from '@components/CharacterDisplay'
 import { apprf, cn } from '@lib/utils'
 
 const ViewCharacter = ({ initial }: { initial: null | string }) => {

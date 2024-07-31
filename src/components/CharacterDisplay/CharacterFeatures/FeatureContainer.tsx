@@ -13,7 +13,7 @@ type FeatureProps = {
     }
 }
 
-const FeatureContainerNeo: FC<FeatureProps> = ({ type, info, flags }) => {
+const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
     const EmptyWow = useCallback(() => {
         return <div>Wow, so empty...</div>
     }, [type])
@@ -22,47 +22,64 @@ const FeatureContainerNeo: FC<FeatureProps> = ({ type, info, flags }) => {
         if (!type || !(SupportedFeatures.indexOf(type as any) > -1)) {
             return <EmptyWow />
         }
+        const children: Array<JSX.Element> = []
         switch (type) {
             case 'inventory': {
                 const { inventory } = info
-                return (
-                    (inventory && inventory.length > 0 &&
-                        inventory.map((item, index) => {
-                            return <InfoDisplay key={index} info={item} type={'item'} />
-                        })) || <EmptyWow />
-                )
+                inventory &&
+                    inventory.length > 0 &&
+                    children.push(
+                        ...(inventory && inventory.length > 0
+                            ? inventory.map((item, index) => {
+                                  return <InfoDisplay key={index} info={item} type={'item'} />
+                              })
+                            : [])
+                    )
+                break
             }
             case 'statusEffects': {
                 const { status_effects } = info
-                return (
-                    (status_effects && status_effects.length > 0 &&
-                        status_effects.map((effect, index) => {
-                            return <InfoDisplay key={index} info={effect} type={'status_effect'} />
-                        })) || <EmptyWow />
-                )
+                status_effects &&
+                    status_effects.length > 0 &&
+                    children.push(
+                        ...(status_effects && status_effects.length > 0
+                            ? status_effects.map((effect, index) => {
+                                  return <InfoDisplay key={index} info={effect} type={'status_effect'} />
+                              })
+                            : [])
+                    )
+                break
             }
             case 'spells': {
                 const { spellBook } = info
-                return (
-                    (spellBook && spellBook.length > 0 &&
-                        spellBook.map((spell, index) => {
-                            return <InfoDisplay key={index} info={spell} type={'spell'} />
-                        })) || <EmptyWow />
-                )
+                spellBook &&
+                    spellBook.length > 0 &&
+                    children.push(
+                        ...(spellBook && spellBook.length > 0
+                            ? spellBook.map((spell, index) => {
+                                  return <InfoDisplay key={index} info={spell} type={'spell'} />
+                              })
+                            : [])
+                    )
+                break
             }
             case 'weaponry': {
                 const { weaponry } = info
-                return (
-                    (weaponry && weaponry.length > 0 &&
-                        weaponry.map((weapon, index) => {
-                            return <InfoDisplay key={index} info={weapon} type={'weapon'} />
-                        })) || <EmptyWow />
-                )
+                weaponry &&
+                    weaponry.length > 0 &&
+                    children.push(
+                        ...(weaponry && weaponry.length > 0
+                            ? weaponry.map((weapon, index) => {
+                                  return <InfoDisplay key={index} info={weapon} type={'weapon'} />
+                              })
+                            : [])
+                    )
+                break
             }
             case 'attributes': {
                 const { attributes } = info
-                return (
-                    (attributes && (
+                attributes &&
+                    children.push(
                         <AttributeDisplay
                             attributes={info.attributes}
                             {...(flags?.attributes
@@ -77,28 +94,25 @@ const FeatureContainerNeo: FC<FeatureProps> = ({ type, info, flags }) => {
                                       },
                                   })}
                         />
-                    )) || <EmptyWow />
-                )
+                    )
+                break
             }
             default: {
                 console.log('Default value was triggered with this:', type)
-                return <EmptyWow />
+                break
             }
         }
+        return (children && children.length > 0) ? children : <EmptyWow />
     }, [info, type])
 
     return (
         <div
             id={`${type}-container`}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-            }}
+            className={'flex flex-col gap-4'}
         >
             <>{SelectedFeature ? SelectedFeature() : EmptyWow()}</>
         </div>
     )
 }
 
-export default FeatureContainerNeo
+export default FeatureContainer

@@ -3,7 +3,7 @@ import { Combobox, ComboboxItemArray } from '@components/ui/combobox'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import { EntityInfoFull } from '@models/Battlefield'
 import { attributeShowFlags } from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
-import FeatureContainerNeo from '@components/CharacterDisplay/CharacterFeatures/FeatureContainerNeo'
+import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 
 const CharacterMenus: ComboboxItemArray = [
     {
@@ -47,7 +47,7 @@ const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {
         <Combobox items={CharacterMenus} value={currentMenu} onChange={setCurrentMenu} size={{
             width: 'min-w-96',
         }}/>
-        <FeatureContainerNeo type={currentMenu} info={character} flags={flags} />
+        <FeatureContainer type={currentMenu} info={character} flags={flags} />
     </div>
 }
 
