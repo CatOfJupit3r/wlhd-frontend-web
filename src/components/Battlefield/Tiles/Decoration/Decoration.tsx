@@ -23,9 +23,9 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
             setInteractivityType(() => {
                 switch (interactable.type) {
                     case 'ally':
-                        return styles.interactableAlly
+                        return `${styles.borderInCorner} ${styles.interactableAlly}`
                     case 'enemy':
-                        return styles.interactableEnemy
+                        return `${styles.borderInCorner} ${styles.interactableEnemy}`
                     default:
                         return ''
                 }
@@ -44,15 +44,9 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
         return null
     }, [clicked.times])
 
-    useEffect(() => {
-        if (active) {
-            console.log('Active entity on square')
-        }
-    }, [])
-
     return (
         <>
-            <div className={`${styles.decoration} ${interactivityType} `} />
+            <div className={`${styles.decoration} ${interactivityType}`} />
             {active ? (
                 <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="Active Entity Icon" />
             ) : null}

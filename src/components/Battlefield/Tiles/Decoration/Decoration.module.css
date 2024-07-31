@@ -28,17 +28,34 @@
     top: 5%;
 }
 
-.interactable {
-    border: 3px solid #1affd5;
+.borderInCorner {
+    --b: 5px;   /* thickness of the border */
+    --c: #ff8400;   /* color of the border */
+    --w: 1.75rem;  /* width of border */
+    --r: 10px;  /* radius of the border */
+
+
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--c,#ff8400);
+    padding: var(--b);
+    border-radius: var(--r);
+    -webkit-mask:
+            linear-gradient(  0deg,#000 calc(2*var(--b)),#0000 0) 50% var(--b)/calc(100% - 2*var(--w)) 100% repeat-y,
+            linear-gradient(-90deg,#000 calc(2*var(--b)),#0000 0) var(--b) 50%/100% calc(100% - 2*var(--w)) repeat-x,
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+
     cursor: pointer;
 }
 
 .interactableAlly {
-    border: 3px solid #23dcd5;
-    cursor: pointer;
+    --c: #23dcd5;   /* color of the border */
 }
 
 .interactableEnemy {
-    border: 3px solid #ff1a3c;
-    cursor: pointer;
+    --c: #ff1a3c;   /* color of the border */
 }

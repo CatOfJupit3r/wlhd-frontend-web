@@ -13,6 +13,7 @@ import { generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
+import { cn } from '@lib/utils'
 
 const TileEntity = (props: {
     full_descriptor: string
@@ -111,7 +112,11 @@ const TileEntity = (props: {
 
     return (
         <div
-            className={`${styles.entityContainer} ${descriptor !== 'tile' ? styles.withEntity : ''}`}
+            className={cn(
+                'relative',
+                descriptor !== 'tile' ? 'bg-cover' : '',
+                squareShouldBeInteractable() ? 'cursor-pointer' : 'cursor-default'
+            )}
             onDoubleClick={handleDoubleClick}
             id={`square_${id}`}
             key={id}
@@ -129,10 +134,10 @@ const TileEntity = (props: {
                     dlc,
                     descriptor,
                 }}
-                alt={descriptor !== 'tile' ? dlc + '::' + descriptor : undefined}
+                alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
                 fallback={{
                     src: fallback.src,
-                    alt: fallback.alt ? fallback.alt : dlc + '::' + descriptor,
+                    alt: fallback.alt ? fallback.alt : dlc + ':' + descriptor,
                 }}
                 id={id}
                 className={styles.tile + (className ? ` ${className}` : '')}
