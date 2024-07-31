@@ -40,7 +40,7 @@ const CharacterBasicInfo = ({
                 />
             </div>
             <div>
-                <div className={'text-t-normal font-bold'}>{character.name}</div>
+                <div className={'text-ellipsis text-t-normal font-bold'}>{character.name}</div>
                 {includeSquare && character.square && (
                     <div className={'text-t-smaller'}>
                         Square: {character.square.line}/{character.square.column}
