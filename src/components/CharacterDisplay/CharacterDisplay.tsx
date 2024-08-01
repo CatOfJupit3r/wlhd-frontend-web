@@ -2,6 +2,7 @@ import { EntityInfoFull } from '@models/Battlefield'
 import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
+import { Separator } from '@components/ui/separator'
 
 export interface CharacterDisplaySettings {
     includeDescription?: boolean
@@ -39,6 +40,7 @@ const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
                         .join(', ') || 'None'}
                 </p>
             )}
+            <Separator />
             <CharacterFeatures
                 character={character}
                 flags={{

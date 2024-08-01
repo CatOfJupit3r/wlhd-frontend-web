@@ -83,6 +83,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                         <AttributeDisplay
                             attributes={info.attributes}
                             ignore={flags?.ignoreAttributes || []}
+                            key={'attributes'}
                         />
                     )
                 break
