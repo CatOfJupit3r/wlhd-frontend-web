@@ -1,6 +1,8 @@
-import { EntityInfoFull } from '@models/Battlefield'
-import CharacterDisplay, { CharacterDisplaySettings } from '@components/CharacterDisplay/CharacterDisplay'
-import CharacterDisplayPlaceholder from "@components/CharacterDisplay/CharacterDisplayPlaceholder"
+import CharacterDisplay, {
+    CharacterDisplayProps,
+    CharacterDisplaySettings,
+} from '@components/CharacterDisplay/CharacterDisplay'
+import CharacterDisplayPlaceholder from '@components/CharacterDisplay/CharacterDisplayPlaceholder'
 
 const InGameSettings: CharacterDisplaySettings = {
     includeDescription: false,
@@ -14,25 +16,24 @@ const InGameSettings: CharacterDisplaySettings = {
         'builtins:current_armor',
         'builtins:base_armor',
     ],
-    displayBasicAttributes: true
+    displayBasicAttributes: true,
 }
 const InLobbySettings: CharacterDisplaySettings = {
     includeDescription: true,
     showEquippedWeapon: false,
     showSquareIfPossible: false,
-    ignoreAttributes: [
-        'builtins:current_health',
-        'builtins:current_action_points',
-        'builtins:current_armor',
-    ],
-    displayBasicAttributes: false
+    ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
+    displayBasicAttributes: false,
 }
 
-const CharacterDisplayInGame = ({ character }: {character: EntityInfoFull}) => (
-    <CharacterDisplay character={character} settings={InGameSettings} />
+type displayWithoutSettings = Omit<CharacterDisplayProps, 'settings'>
+
+const CharacterDisplayInGame = (props: displayWithoutSettings) => (
+    <CharacterDisplay {...props} settings={InGameSettings} />
 )
-const CharacterDisplayInLobby = ({ character }: {character: EntityInfoFull}) => (
-    <CharacterDisplay character={character} settings={InLobbySettings} />
+
+const CharacterDisplayInLobby = (props: displayWithoutSettings) => (
+    <CharacterDisplay {...props} settings={InLobbySettings} />
 )
 
 export { CharacterDisplayInGame, CharacterDisplayInLobby, CharacterDisplay, CharacterDisplayPlaceholder }

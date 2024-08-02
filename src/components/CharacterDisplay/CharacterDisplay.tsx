@@ -3,6 +3,8 @@ import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/Ch
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { Separator } from '@components/ui/separator'
+import { HTMLAttributes } from 'react'
+import { cn } from '@lib/utils'
 
 export interface CharacterDisplaySettings {
     includeDescription?: boolean
@@ -12,14 +14,21 @@ export interface CharacterDisplaySettings {
     displayBasicAttributes?: boolean
 }
 
-export interface CharacterDisplayProps {
+export type CharacterDisplayProps = {
     character: EntityInfoFull
     settings?: CharacterDisplaySettings
-}
+    ignoreNativeClassName?: boolean
+} & HTMLAttributes<HTMLDivElement>
 
-const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
+const CharacterDisplay = ({
+    character,
+    settings,
+    className,
+    ignoreNativeClassName,
+    ...props
+}: CharacterDisplayProps) => {
     return (
-        <div className={'flex flex-col gap-4 border-2 p-4'}>
+        <div className={cn(className, ignoreNativeClassName ? '': 'flex flex-col gap-4 border-2 p-4')} {...props}>
             <CharacterBasicInfo
                 character={{
                     name: character.decorations.name,
@@ -30,7 +39,7 @@ const CharacterDisplay = ({ character, settings }: CharacterDisplayProps) => {
                 includeSquare={settings?.showSquareIfPossible}
                 includeDescription={settings?.includeDescription}
             />
-            {(settings?.displayBasicAttributes && <BasicCharacterAttributes attributes={character.attributes} />)}
+            {settings?.displayBasicAttributes && <BasicCharacterAttributes attributes={character.attributes} />}
             {settings?.showEquippedWeapon && (
                 <p id={'active-weapon'}>
                     Active weapon:{' '}
