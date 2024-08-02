@@ -1,4 +1,5 @@
 import { KeyboardEvent, MouseEvent } from 'react'
+import { cn } from '@lib/utils'
 
 const ElementWithIcon = ({
     icon,
@@ -21,11 +22,11 @@ const ElementWithIcon = ({
 }) => {
     return (
         <div
-            className={
-                'margin-0 flex flex-row items-center gap-2 ' +
-                (iconPosition === 'opposite' ? 'justify-between' : 'justify-normal') +
-                (className ? ` ${className}` : '')
-            }
+            className={cn(
+                'margin-0 flex flex-row items-center gap-2 ',
+                iconPosition === 'opposite' ? 'justify-between' : 'justify-normal',
+                className ? ` ${className}` : ''
+            )}
             onClick={onClick}
             onKeyDown={onKeyDown}
             role={role}
