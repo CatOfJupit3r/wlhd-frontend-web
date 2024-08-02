@@ -14,7 +14,7 @@ const Footer = () => {
                 className={
                     cn(
                       'mt-[1%] flex justify-center gap-[1%] text-t-small',
-                        apprf( 'max-[512px]', 'flex flex-col justify-center items-center gap-2 ')
+                        apprf('max-[512px]', 'flex flex-col justify-center items-center gap-2')
                     )
                 }
             >

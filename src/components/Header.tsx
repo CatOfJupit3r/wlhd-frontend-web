@@ -22,6 +22,7 @@ import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { Button } from '@components/ui/button'
 import { IconType } from 'react-icons'
 import { LuMenuSquare, LuUser } from 'react-icons/lu'
+import { apprf, cn } from '@lib/utils'
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
@@ -148,7 +149,10 @@ const Header = () => {
             <nav
                 id={'header-nav'}
                 className={
-                    'flex justify-between gap-3 text-white max-[512px]:flex-col max-[512px]:overflow-x-auto max-[512px]:align-middle'
+                cn(
+                    'flex justify-between gap-3 text-white',
+                    apprf('max-[512px]', 'flex-col overflow-x-auto align-middle')
+                )
                 }
             >
                 {isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}
@@ -158,9 +162,10 @@ const Header = () => {
 
     return (
         <header
-            className={`relative top-0 flex w-full justify-between bg-black p-4 text-t-normal text-white max-[512px]:flex-col
-                max-[512px]:justify-center max-[512px]:gap-3 max-[512px]:bg-black max-[512px]:p-4 max-[512px]:text-center
-                max-[512px]:align-middle`}
+            className={cn(
+                'relative top-0 flex w-full justify-between bg-black p-4 text-t-normal text-white',
+                apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle')
+            )}
         >
             <Link to="." relative={'route'} id={'header-logo'} className={'font-bold text-white no-underline'}>
                 Walenholde
