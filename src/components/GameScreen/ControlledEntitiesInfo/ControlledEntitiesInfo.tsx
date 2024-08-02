@@ -17,7 +17,7 @@ const ControlledEntitiesInfo = () => {
                 ? controlledEntities.length > 0
                     ? controlledEntities.map((entity, index) => (
                           <div key={index}>
-                              <CharacterDisplayInGame character={entity} />
+                              <CharacterDisplayInGame character={entity} className={'flex w-full flex-col gap-4 border-2 p-4'} />
                           </div>
                       ))
                     : noEntities()
