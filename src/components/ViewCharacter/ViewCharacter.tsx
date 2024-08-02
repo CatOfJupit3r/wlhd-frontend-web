@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import ShortCharacterInfo from '@components/ViewCharacter/ShortCharacterInfo'
 import { EntityInfoFull } from '@models/Battlefield'
 import APIService from '@services/APIService'
-import { CharacterDisplayInLobby } from '@components/CharacterDisplay'
+import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
 import { apprf, cn } from '@lib/utils'
 
 const ViewCharacter = ({ initial }: { initial: null | string }) => {
@@ -62,7 +62,11 @@ const ViewCharacter = ({ initial }: { initial: null | string }) => {
                     />
                 ))}
             </div>
-            {character ? <CharacterDisplayInLobby character={character} /> : <div>Choose a character</div>}
+            {character ? (
+                <CharacterDisplayInLobby character={character} className={'w-96 flex flex-col gap-4 border-2 p-4'} />
+            ) : (
+                <CharacterDisplayPlaceholder className={'w-96 flex flex-col gap-4 border-2 p-4'} />
+            )}
         </div>
     )
 }

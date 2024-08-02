@@ -4,7 +4,6 @@ import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { Separator } from '@components/ui/separator'
 import { HTMLAttributes } from 'react'
-import { cn } from '@lib/utils'
 
 export interface CharacterDisplaySettings {
     includeDescription?: boolean
@@ -17,18 +16,15 @@ export interface CharacterDisplaySettings {
 export type CharacterDisplayProps = {
     character: EntityInfoFull
     settings?: CharacterDisplaySettings
-    ignoreNativeClassName?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 const CharacterDisplay = ({
     character,
     settings,
-    className,
-    ignoreNativeClassName,
     ...props
 }: CharacterDisplayProps) => {
     return (
-        <div className={cn(className, ignoreNativeClassName ? '': 'flex flex-col gap-4 border-2 p-4')} {...props}>
+        <div {...props}>
             <CharacterBasicInfo
                 character={{
                     name: character.decorations.name,
