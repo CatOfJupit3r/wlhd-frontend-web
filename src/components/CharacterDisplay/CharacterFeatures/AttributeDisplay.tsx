@@ -1,19 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { EntityAttributes } from '@models/Battlefield'
 import { useTranslation } from 'react-i18next'
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
 import { Separator } from '@components/ui/separator'
-
-const includeApArmorHealth = (ignored: Array<string>): boolean => {
-    return (
-        ignored.includes('builtins:current_health') &&
-        ignored.includes('builtins:max_health') &&
-        ignored.includes('builtins:current_action_points') &&
-        ignored.includes('builtins:max_action_points') &&
-        ignored.includes('builtins:current_armor') &&
-        ignored.includes('builtins:base_armor')
-    )
-}
 
 const Attribute = ({ name, value }: { name: string; value: string }) => {
     return (
@@ -26,113 +15,145 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
 
 const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes; ignore: Array<string> }) => {
     const { t } = useTranslation()
-    const ignored = ignore
+
+    const [ignored, setIgnored] = useState<Array<string>>(ignore)
+
+    const [dual, setDuals] = useState<Array<{ key: string; value: string }>>([])
+    const [singular, setSingulars] = useState<Array<{ key: string; value: string }>>([])
+
+    const [processedDuals, setProcessedDuals] = useState<boolean>(false)
+    const [processedSingulars, setProcessedSingulars] = useState<boolean>(false)
 
     const addIgnored = useCallback(
         (attribute: string) => {
-            ignored.push(attribute)
+            setIgnored([...ignored, attribute])
         },
         [ignored]
     )
 
-    const defense_attackAttributes = useMemo(() => {
-        const found_attributes: { [key: string]: { attack: string; defense: string } } = {}
+    const addManyIgnored = useCallback(
+        (...attributes: string[]) => {
+            setIgnored([...ignored, ...attributes])
+        },
+        [ignored]
+    )
+
+    const extractDuals = useCallback((): Array<{
+        key: string
+        value: string
+    }> => {
+        const found_attribute_names = new Set<string>()
+        const found_attributes: Array<{ key: string; value: string }> = []
         for (const attribute in attributes) {
-            if (ignored.includes(attribute)) continue
+            if (ignored.includes(attribute) || found_attribute_names.has(attribute)) continue
             if (attribute.endsWith('_attack')) {
                 const attribute_name = attribute.slice(0, -7)
-                if (found_attributes[attribute_name]) {
-                    found_attributes[attribute_name].attack = attributes[attribute]
-                } else {
-                    found_attributes[attribute_name] = { attack: attributes[attribute], defense: '-' }
+                if (attributes[`${attribute_name}_defense`]) {
+                    found_attributes.push({ key: attribute_name, value: attributes[attribute] })
+
+                    found_attribute_names.add(`${attribute_name}_defense`)
+                    found_attribute_names.add(attribute)
                 }
-                addIgnored(attribute)
             } else if (attribute.endsWith('_defense')) {
                 const attribute_name = attribute.slice(0, -8)
-                if (found_attributes[attribute_name]) {
-                    found_attributes[attribute_name].defense = attributes[attribute]
-                } else {
-                    found_attributes[attribute_name] = { attack: '-', defense: attributes[attribute] }
+                if (attributes[`${attribute_name}_attack`]) {
+                    found_attributes.push({ key: attribute_name, value: attributes[attribute] })
+
+                    found_attribute_names.add(attribute_name)
+                    found_attribute_names.add(`${attribute_name}_attack`)
                 }
+            }
+        }
+
+        addManyIgnored(...found_attribute_names)
+
+        return found_attributes
+    }, [])
+
+    const extractSingulars = useCallback((): Array<{ key: string; value: string }> => {
+        const found_attributes: Array<{ key: string; value: string }> = []
+        for (const attribute in attributes) {
+            if (ignored.includes(attribute)) continue
+            if (!attribute.endsWith('_attack') && !attribute.endsWith('_defense')) {
+                found_attributes.push({ key: attribute, value: attributes[attribute] })
                 addIgnored(attribute)
             }
         }
         return found_attributes
-    }, [attributes])
+    }, [])
 
     const healthAPDefenseValues = useMemo((): { [p: string]: string } => {
         return {
-            health:`${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
-            actionPoints: `${attributes['builtins:current_action_points'] || '0'}/${attributes['builtins:max_action_points'] || '-'}`,
-            armor: `${attributes['builtins:current_armor'] || '-'}/${attributes['builtins:base_armor'] || '-'}`
+            health: `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
+            actionPoints: `${attributes['builtins:current_action_points'] || '-'}/${attributes['builtins:max_action_points'] || '-'}`,
+            armor: `${attributes['builtins:current_armor'] || '-'}/${attributes['builtins:base_armor'] || '-'}`,
         }
     }, [attributes])
 
-    const HealthAPDefenseComponent = useCallback(() => {
-        return (
-            <>
-                <Attribute name={'builtins:health'} value={healthAPDefenseValues.health} />
-                <Attribute name={'builtins:action_points'} value={healthAPDefenseValues.actionPoints} />
-                <Attribute name={'builtins:armor'} value={healthAPDefenseValues.armor} />
-            </>
-        )
-    }, [healthAPDefenseValues])
+    useEffect(() => {
+        setProcessedDuals(false)
+        setProcessedSingulars(false)
+    }, [attributes])
 
-    const CommonAttributesComponent = useCallback(
-        () => (
-            <>
-                {Object.keys(attributes).map((attribute, index) => {
-                    if (ignored.includes(attribute)) return null
-                    return (
-                        <Attribute
-                            name={t(attribute)}
-                            value={attributes[attribute] || '-'}
-                            key={`common-attr-${index}`}
-                        />
-                    )
-                })}
-            </>
-        ),
-        [attributes]
-    )
+    useEffect(() => {
+        setIgnored(ignore)
+    }, [ignore])
 
-    const AttackDefenseAttributesComponent = useCallback(
-        () => (
-            <>
-                {Object.keys(defense_attackAttributes).map((attribute, index) => {
-                    return (
-                        <Attribute
-                            name={t(attribute)}
-                            value={`${defense_attackAttributes[attribute].attack || '-'} / ${
-                                defense_attackAttributes[attribute].defense || '-'
-                            }`}
-                            key={`special-attr-${index}`}
-                        />
-                    )
-                })}
-            </>
-        ),
-        [defense_attackAttributes]
-    )
+    useEffect(() => {
+        setDuals(extractDuals())
+    }, [attributes])
 
-    return (
+    useEffect(() => {
+        if (!processedSingulars && processedDuals) {
+            setSingulars(extractSingulars())
+            setProcessedSingulars(true)
+        }
+    }, [processedSingulars, processedDuals])
+
+    useEffect(() => {
+        if (!processedDuals) {
+            setDuals(extractDuals())
+            setProcessedDuals(true)
+        }
+    }, [processedDuals])
+
+    return processedDuals && processedSingulars ? (
         <div className={'flex flex-col gap-2 text-t-small'}>
-            {includeApArmorHealth(ignore) && (
-                <div>
-                    <HealthAPDefenseComponent />
-                </div>
-            )}
-            <Separator />
             <div>
-                <CommonAttributesComponent />
+                {ignored.includes('builtins:current_health') && ignored.includes('builtins:max_health') && (
+                    <Attribute
+                        name={'builtins:health'}
+                        value={healthAPDefenseValues.health}
+                        key="special-attr-health"
+                    />
+                )}
+                {ignored.includes('builtins:current_action_points') &&
+                    ignored.includes('builtins:max_action_points') && (
+                        <Attribute
+                            name={'builtins:action_points'}
+                            value={healthAPDefenseValues.actionPoints}
+                            key="special-attr-ap"
+                        />
+                    )}
+                {ignored.includes('builtins:current_armor') && ignored.includes('builtins:base_armor') && (
+                    <Attribute name={'builtins:armor'} value={healthAPDefenseValues.armor} key={'special-attr-armor'} />
+                )}
             </div>
             <Separator />
             <div>
-                <AttackDefenseAttributesComponent />
+                {singular.map((attribute, index) => (
+                    <Attribute name={t(attribute.key)} value={attribute.value} key={`sing-attr-${index}`} />
+                ))}
+            </div>
+            <Separator />
+            <div>
+                {dual.map((attribute, index) => (
+                    <Attribute name={t(attribute.key)} value={attribute.value} key={`duo-attr-${index}`} />
+                ))}
             </div>
             <Separator />
         </div>
-    )
+    ) : null
 }
 
 export default AttributeDisplay
