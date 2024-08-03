@@ -1,7 +1,7 @@
 import Battlefield from '@components/Battlefield/Battlefield'
 import CombatEditor from '@components/CombatEditor/CombatEditor'
 import { resetGameComponentsStateAction } from '@redux/highActions'
-import { selectBattlefieldMold, setBattlefieldMode, setInteractableTiles } from '@redux/slices/battlefieldSlice'
+import { selectBattlefieldMold, setBattlefieldMode, setInteractableSquares } from '@redux/slices/battlefieldSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
@@ -96,15 +96,15 @@ const CreateCombatPage = () => {
     useEffect(() => {
         dispatch(setBattlefieldMode('selection'))
         dispatch(
-            setInteractableTiles(
+            setInteractableSquares(
                 (() => {
-                    const interactableTiles: { [key: string]: boolean } = {}
+                    const interactableSquares: { [key: string]: boolean } = {}
                     for (let i = 0; i < battlefield.field.length; i++) {
                         for (let j = 0; j < battlefield.field[i].length; j++) {
-                            interactableTiles[`${i + 1}/${j + 1}`] = false
+                            interactableSquares[`${i + 1}/${j + 1}`] = false
                         }
                     }
-                    return interactableTiles
+                    return interactableSquares
                 })()
             )
         )

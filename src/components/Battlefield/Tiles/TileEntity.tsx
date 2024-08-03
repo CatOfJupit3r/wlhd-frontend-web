@@ -2,8 +2,8 @@ import GameAsset from '@components/GameAsset'
 import {
     selectBattlefieldMode,
     selectFieldComponents,
-    selectClickedSquares,
-    selectInteractableTiles,
+    selectAlreadyClickedSquares,
+    selectInteractableSquares,
     setClickedSquare,
 } from '@redux/slices/battlefieldSlice'
 import { selectActiveEntity } from '@redux/slices/infoSlice'
@@ -43,10 +43,10 @@ const TileEntity = (props: {
     } as DecorationConfig)
 
     const battlefieldMode = useSelector(selectBattlefieldMode)
-    const interactableTiles = useSelector(selectInteractableTiles)
+    const interactableSquares = useSelector(selectInteractableSquares)
     const activeEntity = useSelector(selectActiveEntity)
     const pawns = useSelector(selectFieldComponents)
-    const clickedComponents = useSelector(selectClickedSquares)
+    const alreadyClickedSquares = useSelector(selectAlreadyClickedSquares)
 
     const changeDecoration = useCallback(
         (
@@ -74,22 +74,22 @@ const TileEntity = (props: {
     const squareShouldBeInteractable = useCallback(() => {
         if (battlefieldMode !== 'selection') return false
         else {
-            if (id in interactableTiles && interactableTiles[id]) return true
+            if (id in interactableSquares && interactableSquares[id]) return true
         }
         return false
-    }, [id, interactableTiles, battlefieldMode])
+    }, [id, interactableSquares, battlefieldMode])
 
     const handleDoubleClick = useCallback(() => {
         if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
             dispatch(setClickedSquare(id))
         }
-    }, [id, interactableTiles])
+    }, [id, interactableSquares])
 
     useEffect(() => {
-        if (clickedComponents && clickedComponents[id] > 0) {
-            changeDecoration('clicked', { flag: true, times: clickedComponents[id] })
+        if (alreadyClickedSquares && alreadyClickedSquares[id] > 0) {
+            changeDecoration('clicked', { flag: true, times: alreadyClickedSquares[id] })
         } else changeDecoration('clicked', { flag: false, times: 0 })
-    }, [clickedComponents, id])
+    }, [alreadyClickedSquares, id])
 
     useEffect(() => {
         if (squareShouldBeInteractable()) {
@@ -98,7 +98,7 @@ const TileEntity = (props: {
                 type: ['1', '2', '3'].includes(id.split('/')[0]) ? 'enemy' : 'ally',
             })
         } else changeDecoration('interactable', { flag: false, type: 'neutral' })
-    }, [interactableTiles, battlefieldMode, id])
+    }, [interactableSquares, battlefieldMode, id])
 
     useEffect(() => {
         if (!activeEntity) {

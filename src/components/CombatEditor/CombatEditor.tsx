@@ -1,4 +1,4 @@
-import { highlightOnlyThisSquare, selectClickedSquare } from '@redux/slices/battlefieldSlice'
+import { alreadyClickedOnlyThisSquare, selectClickedSquare } from '@redux/slices/battlefieldSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,7 +32,7 @@ const CombatEditor = ({
 
     useEffect(() => {
         // TODO: Add `highlightMode` to battlefieldSlice. `sequential` | `individual`. to avoid 3 redux actions at once.
-        if (currentSquare) dispatch(highlightOnlyThisSquare(currentSquare))
+        if (currentSquare) dispatch(alreadyClickedOnlyThisSquare(currentSquare))
         setEntityInformation({
             source: 'dlc',
             path: '',

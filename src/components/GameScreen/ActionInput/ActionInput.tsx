@@ -21,13 +21,13 @@ import { BsArrowBarLeft } from 'react-icons/bs'
 
 import ElementWithIcon from '@components/ElementWithIcon'
 import {
-    addHighlightedSquare,
-    resetHighlightedSquares,
+    addClickedSquare,
+    resetAlreadyClickedSquares,
     resetStateAfterSquareChoice,
     selectBattlefieldMode,
     selectClickedSquare,
     setBattlefieldMode,
-    setInteractableTiles,
+    setInteractableSquares,
 } from '@redux/slices/battlefieldSlice'
 import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
 import { RxArrowTopRight } from 'react-icons/rx'
@@ -105,11 +105,11 @@ const ActionInput = () => {
         if (!needToAddInteractableTiles) {
             return
         }
-        const interactableTiles = {} as { [key: string]: boolean }
+        const interactableSquares = {} as { [key: string]: boolean }
         for (const action of needToAddInteractableTiles.action) {
-            interactableTiles[action.id] = true
+            interactableSquares[action.id] = true
         }
-        dispatch(setInteractableTiles(interactableTiles))
+        dispatch(setInteractableSquares(interactableSquares))
         setNeedToAddInteractableTiles({ flag: false, action: [] })
     }, [needToAddInteractableTiles])
 
@@ -201,7 +201,7 @@ const ActionInput = () => {
         })
         setClickedAction(null)
         setReachedFinalDepth(false)
-        dispatch(resetHighlightedSquares())
+        dispatch(resetAlreadyClickedSquares())
     }, [])
 
     useEffect(() => {
@@ -244,7 +244,7 @@ const ActionInput = () => {
                         : aliasesTranslated[currentAlias]]: clickedSquare,
                 },
             }))
-            dispatch(addHighlightedSquare(clickedSquare))
+            dispatch(addClickedSquare(clickedSquare))
             dispatch(resetStateAfterSquareChoice())
         }
     }, [clickedSquare])

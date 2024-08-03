@@ -28,16 +28,17 @@ const initialState: BattlefieldState = {
     },
     battlefieldMode: 'info',
     clickedSquare: null,
-    clickedSquares: {},
-    interactableTiles: (() => {
-        const interactableTiles: { [key: string]: boolean } = {}
+    alreadyClickedSquares: {},
+    interactableSquares: (() => {
+        const interactableSquares: { [key: string]: boolean } = {}
         for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 6; j++) {
-                interactableTiles[`${i + 1}/${j + 1}`] = false
+                interactableSquares[`${i + 1}/${j + 1}`] = false
             }
         }
-        return interactableTiles
+        return interactableSquares
     })(),
+    highlightedSquares: {},
 }
 
 const InfoSlice = createSlice({
@@ -50,11 +51,11 @@ const InfoSlice = createSlice({
         setClickedSquare: (state, action: PayloadAction<string>) => {
             state.clickedSquare = action.payload
         },
-        setInteractableTiles: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
-            state.interactableTiles = { ...state.interactableTiles, ...action.payload }
+        setInteractableSquares: (state, action: PayloadAction<{ [key: string]: boolean }>) => {
+            state.interactableSquares = { ...state.interactableSquares, ...action.payload }
         },
-        resetInteractableTiles: (state) => {
-            state.interactableTiles = initialState.interactableTiles
+        resetInteractableSquares: (state) => {
+            state.interactableSquares = initialState.interactableSquares
         },
         resetState: () => {
             return initialState
@@ -66,22 +67,22 @@ const InfoSlice = createSlice({
             return {
                 ...state,
                 battlefieldMode: initialState.battlefieldMode,
-                interactableTiles: initialState.interactableTiles,
+                interactableSquares: initialState.interactableSquares,
                 clickedSquare: null,
             }
         },
-        addHighlightedSquare: (state, action: PayloadAction<string>) => {
-            if (state.clickedSquares[action.payload]) {
-                state.clickedSquares[action.payload]++
+        addClickedSquare: (state, action: PayloadAction<string>) => {
+            if (state.alreadyClickedSquares[action.payload]) {
+                state.alreadyClickedSquares[action.payload]++
             } else {
-                state.clickedSquares[action.payload] = 1
+                state.alreadyClickedSquares[action.payload] = 1
             }
         },
-        highlightOnlyThisSquare: (state, action: PayloadAction<string>) => {
-            state.clickedSquares = { [action.payload]: 1 }
+        alreadyClickedOnlyThisSquare: (state, action: PayloadAction<string>) => {
+            state.alreadyClickedSquares = { [action.payload]: 1 }
         },
-        resetHighlightedSquares: (state) => {
-            state.clickedSquares = {}
+        resetAlreadyClickedSquares: (state) => {
+            state.alreadyClickedSquares = {}
         },
     },
 })
@@ -93,12 +94,12 @@ export const {
     setClickedSquare,
     resetStateAfterSquareChoice,
     setBattlefield,
-    setInteractableTiles,
+    setInteractableSquares,
     resetState,
-    resetInteractableTiles,
-    addHighlightedSquare,
-    resetHighlightedSquares,
-    highlightOnlyThisSquare,
+    resetInteractableSquares,
+    addClickedSquare,
+    resetAlreadyClickedSquares,
+    alreadyClickedOnlyThisSquare,
 } = InfoSlice.actions
 
 export const selectBattlefieldMold = (state: RootState) => state.battlefield.currentBattlefield,
@@ -109,5 +110,5 @@ export const selectBattlefieldMold = (state: RootState) => state.battlefield.cur
     selectSeparators = (state: RootState) => state.battlefield.currentBattlefield.separators,
     selectBattlefieldMode = (state: RootState) => state.battlefield.battlefieldMode,
     selectClickedSquare = (state: RootState) => state.battlefield.clickedSquare,
-    selectInteractableTiles = (state: RootState) => state.battlefield.interactableTiles,
-    selectClickedSquares = (state: RootState) => state.battlefield.clickedSquares
+    selectInteractableSquares = (state: RootState) => state.battlefield.interactableSquares,
+    selectAlreadyClickedSquares = (state: RootState) => state.battlefield.alreadyClickedSquares
