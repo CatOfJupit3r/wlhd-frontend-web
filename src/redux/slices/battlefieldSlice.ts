@@ -28,7 +28,7 @@ const initialState: BattlefieldState = {
     },
     battlefieldMode: 'info',
     clickedSquare: null,
-    highlightedSquares: {},
+    clickedSquares: {},
     interactableTiles: (() => {
         const interactableTiles: { [key: string]: boolean } = {}
         for (let i = 0; i < 6; i++) {
@@ -71,17 +71,17 @@ const InfoSlice = createSlice({
             }
         },
         addHighlightedSquare: (state, action: PayloadAction<string>) => {
-            if (state.highlightedSquares[action.payload]) {
-                state.highlightedSquares[action.payload]++
+            if (state.clickedSquares[action.payload]) {
+                state.clickedSquares[action.payload]++
             } else {
-                state.highlightedSquares[action.payload] = 1
+                state.clickedSquares[action.payload] = 1
             }
         },
         highlightOnlyThisSquare: (state, action: PayloadAction<string>) => {
-            state.highlightedSquares = { [action.payload]: 1 }
+            state.clickedSquares = { [action.payload]: 1 }
         },
         resetHighlightedSquares: (state) => {
-            state.highlightedSquares = {}
+            state.clickedSquares = {}
         },
     },
 })
@@ -110,4 +110,4 @@ export const selectBattlefieldMold = (state: RootState) => state.battlefield.cur
     selectBattlefieldMode = (state: RootState) => state.battlefield.battlefieldMode,
     selectClickedSquare = (state: RootState) => state.battlefield.clickedSquare,
     selectInteractableTiles = (state: RootState) => state.battlefield.interactableTiles,
-    selectHighlightedSquares = (state: RootState) => state.battlefield.highlightedSquares
+    selectClickedSquares = (state: RootState) => state.battlefield.clickedSquares

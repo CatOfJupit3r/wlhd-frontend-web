@@ -2,7 +2,7 @@ import GameAsset from '@components/GameAsset'
 import {
     selectBattlefieldMode,
     selectFieldComponents,
-    selectHighlightedSquares,
+    selectClickedSquares,
     selectInteractableTiles,
     setClickedSquare,
 } from '@redux/slices/battlefieldSlice'
@@ -46,7 +46,7 @@ const TileEntity = (props: {
     const interactableTiles = useSelector(selectInteractableTiles)
     const activeEntity = useSelector(selectActiveEntity)
     const pawns = useSelector(selectFieldComponents)
-    const highlightedComponents = useSelector(selectHighlightedSquares)
+    const clickedComponents = useSelector(selectClickedSquares)
 
     const changeDecoration = useCallback(
         (
@@ -86,10 +86,10 @@ const TileEntity = (props: {
     }, [id, interactableTiles])
 
     useEffect(() => {
-        if (highlightedComponents && highlightedComponents[id] > 0) {
-            changeDecoration('clicked', { flag: true, times: highlightedComponents[id] })
+        if (clickedComponents && clickedComponents[id] > 0) {
+            changeDecoration('clicked', { flag: true, times: clickedComponents[id] })
         } else changeDecoration('clicked', { flag: false, times: 0 })
-    }, [highlightedComponents, id])
+    }, [clickedComponents, id])
 
     useEffect(() => {
         if (squareShouldBeInteractable()) {

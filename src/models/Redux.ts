@@ -76,7 +76,7 @@ export interface BattlefieldState {
     interactableTiles: {
         [key: string]: boolean
     }
-    highlightedSquares: {
+    clickedSquares: {
         [key: string]: number
     }
 }

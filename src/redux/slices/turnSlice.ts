@@ -31,23 +31,6 @@ const initialState: TurnState = {
     actionOutputs: null,
 }
 
-/*
-
-yourTurn
-readyToSubmit
-isLoadingEntityActions
-
-
-entityActions - keeps all info about all actions that are available to entity.
-currentAlias="root" - keeps track of alias that is currently in choice.
-scope={} - stores requirements that needs to be chosen. this is a workaround and doesn't support nested requirements
-highlightedComponents - components that have been chosen by player and thus need to be distinct
-
-choices
-translatedChoices
-
-*/
-
 const turnSlice = createSlice({
     name: 'turn',
     initialState,
