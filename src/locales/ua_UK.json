@@ -82,19 +82,11 @@
             "gm-settings": "GM меню",
             "leave-game": "Вийти з гри"
         },
-        "entity_display": {
-            "status_effects": "Статус ефекти",
-            "no_status_effects": "Немає статус ефектів",
-            "inventory": "Інвентар",
-            "no_inventory": "Немає предметів",
-            "weaponry": "Зброя",
-            "no_weaponry": "Немає зброї",
-            "spellbook": "Книга заклять",
-            "no_spellbook": "Немає заклять",
-            "attributes": "Атрибути",
-            "no_attributes": "Немає атрибутів",
-            "equipped": "Екіпіровано: {{slot}}",
-            "nothing_weapon": "Нічого"
+        "character_display": {
+            "active_weapon": "Активна зброя — {{weapon}}",
+            "no_active_weapon": "Немає активної зброї!",
+            "nothing_here": "Ого, тут... Нічого немає?",
+            "try_another": "Спробуй інше меню!"
         },
         "info_display": {
             "quantity": "Кількість: {{quantity}}",

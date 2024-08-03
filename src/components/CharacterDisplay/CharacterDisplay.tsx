@@ -4,6 +4,7 @@ import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { Separator } from '@components/ui/separator'
 import { HTMLAttributes } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface CharacterDisplaySettings {
     includeDescription?: boolean
@@ -18,11 +19,28 @@ export type CharacterDisplayProps = {
     settings?: CharacterDisplaySettings
 } & HTMLAttributes<HTMLDivElement>
 
-const CharacterDisplay = ({
-    character,
-    settings,
+const EquippedWeapon = ({
+    weapons,
     ...props
-}: CharacterDisplayProps) => {
+}: {
+    weapons: EntityInfoFull['weaponry']
+} & HTMLAttributes<HTMLDivElement>) => {
+    const { t } = useTranslation()
+
+    if (weapons.length === 0) {
+        return <p {...props}>{t('local:game.character_display.no_active_weapon')}</p>
+    }
+
+    return (
+        <p {...props}>
+            {t('local:game.character_display.active_weapon', {
+                weapon: weapons.map((w) => w.decorations.name).join(', ') || '...',
+            })}
+        </p>
+    )
+}
+
+const CharacterDisplay = ({ character, settings, ...props }: CharacterDisplayProps) => {
     return (
         <div {...props}>
             <CharacterBasicInfo
@@ -37,13 +55,7 @@ const CharacterDisplay = ({
             />
             {settings?.displayBasicAttributes && <BasicCharacterAttributes attributes={character.attributes} />}
             {settings?.showEquippedWeapon && (
-                <p id={'active-weapon'}>
-                    Active weapon:{' '}
-                    {character.weaponry
-                        .filter((w) => w.isActive)
-                        .map((w) => w.decorations.name)
-                        .join(', ') || 'None'}
-                </p>
+                <EquippedWeapon weapons={character.weaponry} className={'text-t-small italic'} id={'active-weapon'} />
             )}
             <Separator />
             <CharacterFeatures
