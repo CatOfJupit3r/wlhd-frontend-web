@@ -53,6 +53,11 @@ const Icons = [
         src: '/assets/cr/ap.svg',
         alt: 'Action Points',
         displayName: 'APIcon'
+    },
+    {
+        src: '/assets/local/location.svg',
+        alt: 'Location',
+        displayName: 'LocationIcon'
     }
 ]
 
@@ -72,5 +77,6 @@ export const {
     PlaceholderIcon,
     HealthIcon,
     ArmorIcon,
-    APIcon
+    APIcon,
+    LocationIcon
 } = iconExports

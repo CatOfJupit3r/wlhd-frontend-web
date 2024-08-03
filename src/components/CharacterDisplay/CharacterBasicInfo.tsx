@@ -1,6 +1,7 @@
 import React from 'react'
 import GameAsset from '@components/GameAsset'
 import { generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
+import { LocationIcon } from '@components/icons'
 
 const CharacterBasicInfo = ({
     includeSquare = true,
@@ -42,11 +43,16 @@ const CharacterBasicInfo = ({
             <div>
                 <div className={'text-ellipsis text-t-normal font-bold'}>{character.name}</div>
                 {includeSquare && character.square && (
-                    <div className={'text-t-smaller'}>
-                        Square: {character.square.line}/{character.square.column}
+                    <div className={'flex flex-row items-center gap-1'}>
+                        <LocationIcon className={'size-5'} />
+                        <p className={'text-t-smaller font-semibold'}>
+                            {character.square.line}/{character.square.column}
+                        </p>
                     </div>
                 )}
-                {includeDescription && <div className={'text-wrap text-t-smaller italic text-gray-400'}>{character.description}</div>}
+                {includeDescription && (
+                    <div className={'text-wrap text-t-smaller italic text-gray-400'}>{character.description}</div>
+                )}
             </div>
         </div>
     )
