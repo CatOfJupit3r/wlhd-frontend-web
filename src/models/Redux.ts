@@ -12,7 +12,6 @@ import {
     WeaponInfo,
 } from './Battlefield'
 import { UserInformation } from '@models/APIData'
-import { selectAlreadyClickedSquares } from '@redux/slices/battlefieldSlice'
 
 export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
@@ -79,9 +78,6 @@ export interface BattlefieldState {
     }
     alreadyClickedSquares: {
         [key: string]: number
-    }
-    highlightedSquares: {
-        [key: string]: boolean
     }
 }
 

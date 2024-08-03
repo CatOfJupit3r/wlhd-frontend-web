@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import styles from './Decoration.module.css'
+import { cn } from '@lib/utils'
 
 export interface DecorationConfig {
     interactable: {
@@ -46,7 +47,12 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
 
     return (
         <>
-            <div className={`${styles.decoration} ${interactivityType}`} />
+            <div className={
+                cn(
+                    styles.decoration,
+                    interactivityType,
+                )}
+            />
             {active ? (
                 <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="Active Entity Icon" />
             ) : null}

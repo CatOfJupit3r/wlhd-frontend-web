@@ -38,7 +38,6 @@ const initialState: BattlefieldState = {
         }
         return interactableSquares
     })(),
-    highlightedSquares: {},
 }
 
 const InfoSlice = createSlice({
