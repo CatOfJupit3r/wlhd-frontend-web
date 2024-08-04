@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react'
 import { EntityInfoFull } from '@models/Battlefield'
 import InfoDisplay from '@components/CharacterDisplay/CharacterFeatures/InfoDisplay/InfoDisplay'
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
+import { useTranslation } from 'react-i18next'
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes'] as const
 
@@ -13,14 +14,21 @@ type FeatureProps = {
     }
 }
 
-const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
-    const EmptyWow = useCallback(() => {
-        return <div>Wow, so empty...</div>
-    }, [type])
+const EmptyFeatureContent = () => {
+    const { t } = useTranslation()
 
+    return (
+        <div className={'flex flex-col items-center p-4'}>
+            <p className={'text-t-normal font-medium'}>{t('local:game.character_display.nothing_here')}</p>
+            <p className={'text-t-small italic text-gray-700'}>{t('local:game.character_display.try_another')}</p>
+        </div>
+    )
+}
+
+const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
     const SelectedFeature = useCallback(() => {
         if (!type || !(SupportedFeatures.indexOf(type as any) > -1)) {
-            return <EmptyWow />
+            return <EmptyFeatureContent />
         }
         const children: Array<JSX.Element> = []
         switch (type) {
@@ -51,7 +59,13 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                 break
             }
             case 'spells': {
-                const { spellBook } = info
+                let spellBook = info.spellBook
+                if (!spellBook) {
+                    spellBook = (info as any).spell_book
+                    if (!spellBook) {
+                        break
+                    }
+                }
                 spellBook &&
                     spellBook.length > 0 &&
                     children.push(
@@ -93,15 +107,12 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                 break
             }
         }
-        return (children && children.length > 0) ? children : <EmptyWow />
+        return children && children.length > 0 ? children : <EmptyFeatureContent />
     }, [info, type])
 
     return (
-        <div
-            id={`${type}-container`}
-            className={'flex flex-col gap-4'}
-        >
-            <>{SelectedFeature ? SelectedFeature() : EmptyWow()}</>
+        <div id={`${type}-container`} className={'flex flex-col gap-4'}>
+            <>{SelectedFeature ? SelectedFeature() : EmptyFeatureContent()}</>
         </div>
     )
 }
