@@ -1,6 +1,7 @@
 import { TranslatableString } from '@models/Battlefield'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { isDescriptor } from '@utils/isDescriptor'
 
 const useTranslatableString = () => {
     const { t } = useTranslation()
@@ -15,7 +16,7 @@ const useTranslatableString = () => {
             for (const key of keys) {
                 const arg = msg.format_args[key]
                 if (typeof arg === 'string') {
-                    if (/^[a-zA-Z]+:[a-zA-Z._-]+$/gm.test(arg)) {
+                    if (isDescriptor(arg)) {
                         newArgs[key] = t(arg)
                     } else {
                         newArgs[key] = arg

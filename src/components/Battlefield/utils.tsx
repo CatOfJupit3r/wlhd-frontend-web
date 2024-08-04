@@ -1,6 +1,7 @@
 import { REACT_APP_BACKEND_URL } from 'config'
 import TileCosmetic from './Tiles/TileCosmetic'
 import TileEntity from './Tiles/TileEntity'
+import { isDescriptor } from '@utils/isDescriptor'
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
     return `${REACT_APP_BACKEND_URL}/assets/${dlc}/${descriptor}`
@@ -16,8 +17,7 @@ export const splitDescriptor = (full_descriptor: string): [string, string] => {
         console.log('Descriptor is undefined')
         return ['local', 'invalid_asset']
     }
-    if (!full_descriptor.includes(':')) {
-        // If the descriptor does not have specified a dlc, we assume it is a builtins asset
+    if (!isDescriptor(full_descriptor)) {
         return ['builtins', full_descriptor]
     }
     return full_descriptor.split(':').length === 2
