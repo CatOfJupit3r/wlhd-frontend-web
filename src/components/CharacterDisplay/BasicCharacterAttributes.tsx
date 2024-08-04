@@ -95,8 +95,11 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
                     }
                 >
                     {MAIN_ATTRIBUTES.AP.text}
-                    <PiSneakerMoveFill className={'size-5'} />
                 </p>
+                <PiSneakerMoveFill
+                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white
+                        opacity-20`}
+                />
             </div>
         </div>
     )
