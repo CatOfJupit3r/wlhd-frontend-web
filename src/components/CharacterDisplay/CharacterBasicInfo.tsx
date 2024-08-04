@@ -2,6 +2,8 @@ import React from 'react'
 import GameAsset from '@components/GameAsset'
 import { generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
 import { LocationIcon } from '@components/icons'
+import { useTranslation } from 'react-i18next'
+import { isDescriptor } from '@utils/isDescriptor'
 
 const CharacterBasicInfo = ({
     includeSquare = true,
@@ -20,6 +22,8 @@ const CharacterBasicInfo = ({
         } | null
     }
 }) => {
+    const { t } = useTranslation()
+
     return (
         <div className={'flex flex-row gap-4'}>
             <div>
@@ -41,7 +45,9 @@ const CharacterBasicInfo = ({
                 />
             </div>
             <div>
-                <div className={'text-ellipsis text-t-normal font-bold'}>{character.name}</div>
+                <div className={'text-ellipsis text-t-normal font-bold'}>
+                    {isDescriptor(character.name) ? t(character.name) : character.name}
+                </div>
                 {includeSquare && character.square && (
                     <div className={'flex flex-row items-center gap-1'}>
                         <LocationIcon className={'size-5'} />
@@ -51,7 +57,13 @@ const CharacterBasicInfo = ({
                     </div>
                 )}
                 {includeDescription && (
-                    <div className={'text-wrap text-t-smaller italic text-gray-400'}>{character.description}</div>
+                    <div className={'text-wrap text-t-smaller italic text-gray-400'}>
+                        {character.description
+                            ? isDescriptor(character.description)
+                                ? t(character.description)
+                                : character.description
+                            : ''}
+                    </div>
                 )}
             </div>
         </div>
