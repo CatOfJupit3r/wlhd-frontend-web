@@ -46,7 +46,7 @@ const GameMessagesFeed = () => {
                     return (
                         <>
                             <div key={`msg_cont_${indexBig}`}>
-                                {reverseGameMessages(msg).map((content, index) => {
+                                {reverseGameMessages(msg).reverse().map((content, index) => {
                                     return <p key={index}>{tstring(content)}</p>
                                 })}
                             </div>
