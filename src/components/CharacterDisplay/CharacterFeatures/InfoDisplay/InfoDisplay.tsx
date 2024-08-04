@@ -3,8 +3,8 @@ import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battl
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './InfoDisplay.module.css'
-import { cn } from '@lib/utils'
 import { ActiveIcon, CooldownIcon } from '@components/icons'
+import { cn } from '@utils'
 
 interface WeaponSegment {
     type: 'weapon'

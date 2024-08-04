@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { apprf, cn } from '@lib/utils'
+import { apprf, cn } from '@utils'
 
 const Footer = () => {
     return (

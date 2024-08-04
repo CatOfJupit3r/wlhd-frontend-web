@@ -1,7 +1,7 @@
 import { REACT_APP_BACKEND_URL } from 'config'
 import TileCosmetic from './Tiles/TileCosmetic'
 import TileEntity from './Tiles/TileEntity'
-import { isDescriptor } from '@utils/isDescriptor'
+import { isDescriptor } from '@utils'
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
     return `${REACT_APP_BACKEND_URL}/assets/${dlc}/${descriptor}`

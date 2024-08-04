@@ -4,9 +4,9 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
 import React, { useState } from 'react'
 import { IconComponentType } from '@components/icons/icon_factory'
-import { cn } from '@lib/utils'
 import { ClassValue } from 'clsx'
 import { PlaceholderIcon } from '@components/icons'
+import { cn } from '@utils'
 
 interface Item {
     value: string

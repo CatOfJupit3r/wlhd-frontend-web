@@ -3,8 +3,8 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react'
 
 /** eslint-disable */
 
-import { cn } from '@lib/utils'
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { cn } from '@utils'
 
 const Select = SelectPrimitive.Root
 

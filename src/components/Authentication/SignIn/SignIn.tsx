@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
-import { checkHandle, checkPassword } from '@utils/verifyInputs'
+import { checkHandle, checkPassword } from '@utils'
 import { useToast } from '@hooks/useToast'
 
 const SignIn = ({ style }: { style?: React.CSSProperties }) => {

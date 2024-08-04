@@ -29,7 +29,7 @@ import {
     setBattlefieldMode,
     setInteractableSquares,
 } from '@redux/slices/battlefieldSlice'
-import capitalizeFirstLetter from '@utils/capitalizeFirstLetter'
+import { capitalizeFirstLetter } from '@utils'
 import { RxArrowTopRight } from 'react-icons/rx'
 import OptionCard from './OptionCard/OptionCard'
 import { useToast } from '@hooks/useToast'

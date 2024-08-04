@@ -1,7 +1,7 @@
 import React from 'react'
 import { CharacterInLobby } from '@models/Redux'
 import GameAsset from '@components/GameAsset'
-import { apprf, cn } from '@lib/utils'
+import { apprf, cn } from '@utils'
 
 const ShortCharacterInfo = ({
     character,

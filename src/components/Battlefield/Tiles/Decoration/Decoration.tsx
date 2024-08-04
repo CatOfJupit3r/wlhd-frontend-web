@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import styles from './Decoration.module.css'
-import { cn } from '@lib/utils'
+
+import { cn } from '@utils'
 
 export interface DecorationConfig {
     interactable: {

@@ -13,7 +13,8 @@ import { generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
-import { cn } from '@lib/utils'
+
+import { cn } from '@utils'
 
 const TileEntity = (props: {
     full_descriptor: string

@@ -1,8 +1,8 @@
 import * as ProgressPrimitive from '@radix-ui/react-progress'
 
-import { cn } from '@lib/utils'
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import { ClassValue } from 'clsx'
+import { cn } from '@utils'
 
 type ProgressProps = {
     colored?: {

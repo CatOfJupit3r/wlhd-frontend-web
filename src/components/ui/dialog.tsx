@@ -1,8 +1,8 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
 
-import { cn } from "@lib/utils"
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes } from 'react'
+import { cn } from '@utils'
 
 const Dialog = DialogPrimitive.Root
 

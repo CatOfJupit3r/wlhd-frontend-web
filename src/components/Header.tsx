@@ -22,7 +22,7 @@ import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { Button } from '@components/ui/button'
 import { IconType } from 'react-icons'
 import { LuMenuSquare, LuUser } from 'react-icons/lu'
-import { apprf, cn } from '@lib/utils'
+import { apprf, cn } from '@utils'
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()

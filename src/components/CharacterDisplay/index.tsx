@@ -23,7 +23,7 @@ const InLobbySettings: CharacterDisplaySettings = {
     showEquippedWeapon: false,
     showSquareIfPossible: false,
     ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
-    displayBasicAttributes: false,
+    displayBasicAttributes: true,
 }
 
 type displayWithoutSettings = Omit<CharacterDisplayProps, 'settings'>

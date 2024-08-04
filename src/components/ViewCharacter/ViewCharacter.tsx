@@ -5,7 +5,7 @@ import ShortCharacterInfo from '@components/ViewCharacter/ShortCharacterInfo'
 import { EntityInfoFull } from '@models/Battlefield'
 import APIService from '@services/APIService'
 import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import { apprf, cn } from '@lib/utils'
+import { apprf, cn } from '@utils'
 
 const ViewCharacter = ({ initial }: { initial: null | string }) => {
     /*
@@ -47,7 +47,7 @@ const ViewCharacter = ({ initial }: { initial: null | string }) => {
         <div
             className={cn(
                 'flex flex-row',
-                apprf('max-[760px]', 'flex-col flex') // does not work?
+                apprf('max-[796px]', 'flex-col') // does not work?
             )}
         >
             <div>
@@ -63,9 +63,9 @@ const ViewCharacter = ({ initial }: { initial: null | string }) => {
                 ))}
             </div>
             {character ? (
-                <CharacterDisplayInLobby character={character} className={'w-96 flex flex-col gap-4 border-2 p-4'} />
+                <CharacterDisplayInLobby character={character} className={'flex w-96 flex-col gap-4 border-2 p-4'} />
             ) : (
-                <CharacterDisplayPlaceholder className={'w-96 flex flex-col gap-4 border-2 p-4'} />
+                <CharacterDisplayPlaceholder className={'flex w-96 flex-col gap-4 border-2 p-4'} />
             )}
         </div>
     )

@@ -5,7 +5,7 @@ import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from '../Authentication.module.css'
-import { checkConfirmPassword, checkHandle, checkPassword } from '@utils/verifyInputs'
+import { checkConfirmPassword, checkHandle, checkPassword } from '@utils'
 import { useTranslation } from 'react-i18next'
 import { useToast } from '@hooks/useToast'
 

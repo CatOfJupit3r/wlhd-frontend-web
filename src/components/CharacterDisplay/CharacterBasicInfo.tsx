@@ -3,7 +3,7 @@ import GameAsset from '@components/GameAsset'
 import { generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
 import { LocationIcon } from '@components/icons'
 import { useTranslation } from 'react-i18next'
-import { isDescriptor } from '@utils/isDescriptor'
+import { isDescriptor } from '@utils'
 
 const CharacterBasicInfo = ({
     includeSquare = true,
