@@ -12,7 +12,7 @@ const CharacterMenus: ComboboxItemArray = [
         icon: AttributesIcon,
     },
     {
-        value: 'status_effects',
+        value: 'statusEffects',
         label: 'Status Effects',
         icon: StatusEffectsIcon,
     },
@@ -33,6 +33,26 @@ const CharacterMenus: ComboboxItemArray = [
     },
 ]
 
+const MenuIsDisabled = (type: string, info: EntityInfoFull) => {
+    switch (type) {
+        case 'inventory':
+            return !info.inventory || info.inventory.length === 0
+        case 'statusEffects':
+            return !info.status_effects || info.status_effects.length === 0
+        case 'weaponry':
+            return !info.weaponry || info.weaponry.length === 0
+        case 'spells': {
+            let spellBook = info.spellBook
+            if (!spellBook) {
+                spellBook = (info as any).spell_book as typeof info.spellBook
+            }
+            return !spellBook || spellBook.length === 0
+        }
+        default:
+            return false
+    }
+}
+
 interface CharacterFeaturesProps {
     flags: {
         ignoreAttributes?: Array<string>
@@ -52,10 +72,22 @@ const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {
                 }}
             >
                 {CharacterMenus.map((menu) => (
-                    <ToggleGroupItem key={menu.value} value={menu.value}>
+                    <ToggleGroupItem
+                        key={menu.value}
+                        value={menu.value}
+                        disabled={MenuIsDisabled(menu.value, character)}
+                    >
                         {menu.icon({ className: 'size-8' })}
                     </ToggleGroupItem>
-                ))}
+                )).sort((a, b) => {
+                    if (a.props.disabled) {
+                        return 1
+                    } else if (b.props.disabled) {
+                        return -1
+                    } else {
+                        return a.props.value > b.props.value ? 1 : -1
+                    }
+                })}
             </ToggleGroup>
             <FeatureContainer type={currentMenu} info={character} flags={flags} />
         </div>
