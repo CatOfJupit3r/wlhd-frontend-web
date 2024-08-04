@@ -86,7 +86,7 @@
             "active_weapon": "Активна зброя — {{weapon}}",
             "no_active_weapon": "Немає активної зброї!",
             "nothing_here": "Ого, тут... Нічого немає?",
-            "try_another": "Спробуй інше меню!"
+            "try_another": "Спробуй обрати інше меню!"
         },
         "info_display": {
             "quantity": "Кількість: {{quantity}}",
