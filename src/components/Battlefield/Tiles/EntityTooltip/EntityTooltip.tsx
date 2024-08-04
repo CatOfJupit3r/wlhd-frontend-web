@@ -1,74 +1,69 @@
 import { selectEntityTooltips } from '@redux/slices/infoSlice'
-import { useCallback, useMemo } from 'react'
-import { Placeholder } from 'react-bootstrap'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import styles from './EntityTooltip.module.css'
+import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
+import { StaticSkeleton } from '@components/ui/skeleton'
 
 const EntityTooltip = ({ id }: { id: string }) => {
     const entities_info = useSelector(selectEntityTooltips)
+    const entity_info = entities_info ? entities_info[id] : undefined
     const { t } = useTranslation()
 
-    const generatePlaceholder = useCallback(
-        (key: string, glow: boolean = true) => {
-            return (
-                <Placeholder
-                    as="p"
-                    animation={glow ? 'glow' : undefined}
-                    style={{
-                        marginBottom: key === t('game:components:tooltip:status_effects') ? '0' : '7px',
+    const PlaceholderTooltip = useCallback(() => {
+        return (
+            <>
+                <div className={'flex flex-row gap-2'}>
+                    <StaticSkeleton className={'h-6 w-[10ch]'} />
+                    <StaticSkeleton className={'h-6 w-[3ch]'} />
+                </div>
+                <BasicCharacterAttributes
+                    attributes={{
+                        'builtins:current_health': '0',
+                        'builtins:max_health': '0',
+                        'builtins:current_action_points': '0',
+                        'builtins:max_action_points': '0',
+                        'builtins:current_armor': '0',
+                        'builtins:base_armor': '0',
                     }}
-                    key={key}
-                >
-                    <Placeholder bg="light" key={`${key}-bg`}>
-                        {t(key)}{' '}
-                    </Placeholder>
-                </Placeholder>
-            )
-        },
-        [t]
-    )
+                />
+                <div className={'flex flex-row gap-2'}>
+                    <StaticSkeleton className={'h-4 w-[12ch]'} />
+                    <StaticSkeleton className={'h-4 w-[10ch]'} />
+                    <StaticSkeleton className={'h-4 w-[6ch]'} />
+                </div>
+                <div className={'flex flex-row gap-2'}>
+                    <StaticSkeleton className={'h-4 w-[8ch]'} />
+                    <StaticSkeleton className={'h-4 w-[7ch]'} />
+                    <StaticSkeleton className={'h-4 w-[12ch]'} />
+                </div>
+            </>
+        )
+    }, [])
 
-    const emptyTooltipContent = useMemo(() => {
-        return [
-            t('game:components:tooltip:creature_and_line'),
-            t('game:components:tooltip:health_max_health'),
-            t('game:components:tooltip:action_points'),
-            t('game:components:tooltip:armor'),
-            t('game:components:tooltip:status_effects', {
-                status_effects: t('game:components:tooltip:no_status_effects'),
-            }),
-        ]
-    }, [t])
-
-    const generateTooltipContent = useCallback(() => {
-        const entity_info = entities_info ? entities_info[id] : undefined
-        if (!entities_info || !entity_info) {
-            return emptyTooltipContent.map((key) => (
-                <>
-                    {generatePlaceholder(key, false)}
-                    <Placeholder as="br" animation="glow" key={`br-${key}`} />
-                </>
-            ))
+    const RealContent = useCallback(() => {
+        if (!entity_info) {
+            return <PlaceholderTooltip />
         }
         const { decorations, square, health, action_points, armor, status_effects } = entity_info
-        return [
-            t('local:game.components.tooltip.creature_and_line', {
-                name: t(decorations.name),
-                square: `${square.line}|${square.column}`,
-            }),
-            t('local:game.components.tooltip.health_max_health', {
-                current_health: health.current,
-                max_health: health.max,
-            }),
-            t('local:game.components.tooltip.action_points', {
-                current_action_points: action_points.current,
-                max_action_points: action_points.max,
-            }),
-            t('local:game.components.tooltip.armor', { current_armor: armor.current, base_armor: armor.base }),
-            t('local:game.components.tooltip.status_effects', {
-                status_effects: (() => {
-                    return status_effects && status_effects.length > 0
+        return (
+            <>
+                <p className={'text-t-small font-semibold'}>
+                    {t(decorations.name)} ({square.line}/{square.column})
+                </p>
+                <BasicCharacterAttributes
+                    attributes={{
+                        'builtins:current_health': health.current,
+                        'builtins:max_health': health.max,
+                        'builtins:current_action_points': action_points.current,
+                        'builtins:max_action_points': action_points.max,
+                        'builtins:current_armor': armor.current,
+                        'builtins:base_armor': armor.base,
+                    }}
+                />
+                <p className={'w-full text-wrap break-all italic'}>
+                    {status_effects && status_effects.length > 0
                         ? status_effects
                               .map((value) =>
                                   value.duration !== null
@@ -76,15 +71,15 @@ const EntityTooltip = ({ id }: { id: string }) => {
                                       : t(value.decorations.name)
                               )
                               .join(', ')
-                        : t('local:game.components.tooltip.no_status_effects')
-                })(),
-            }),
-        ].map((key, index) => <p key={index}>{key}</p>)
-    }, [entities_info, emptyTooltipContent, t, id, generatePlaceholder])
+                        : t('local:game.components.tooltip.no_status_effects')}
+                </p>
+            </>
+        )
+    }, [entities_info])
 
     return (
         <div className={styles.tooltip} style={{ opacity: 0.95 }}>
-            {generateTooltipContent()}
+            {!entities_info || !entity_info ? <PlaceholderTooltip /> : <RealContent />}
         </div>
     )
 }
