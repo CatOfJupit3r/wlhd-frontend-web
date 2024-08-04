@@ -24,11 +24,12 @@
 .infoSegmentDescription {
     display: flex;
     color: #4b4b4b;
-    font-size: 1rem;
+    font-size: var(--text-size-small);
     font-weight: normal;
     overflow: hidden;
     word-break: break-word;
     margin: 0.5rem 0;
+    font-style: italic;
 }
 
 .infoSegmentMinorInfo {
