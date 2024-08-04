@@ -120,22 +120,22 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes
     return processedDuals && processedSingulars ? (
         <div className={'flex flex-col gap-2 text-t-small'}>
             <div>
-                {ignored.includes('builtins:current_health') && ignored.includes('builtins:max_health') && (
+                {!ignored.includes('builtins:current_health') && !ignored.includes('builtins:max_health') && (
                     <Attribute
                         name={'builtins:health'}
                         value={healthAPDefenseValues.health}
                         key="special-attr-health"
                     />
                 )}
-                {ignored.includes('builtins:current_action_points') &&
-                    ignored.includes('builtins:max_action_points') && (
+                {!ignored.includes('builtins:current_action_points') &&
+                    !ignored.includes('builtins:max_action_points') && (
                         <Attribute
                             name={'builtins:action_points'}
                             value={healthAPDefenseValues.actionPoints}
                             key="special-attr-ap"
                         />
                     )}
-                {ignored.includes('builtins:current_armor') && ignored.includes('builtins:base_armor') && (
+                {!ignored.includes('builtins:current_armor') && !ignored.includes('builtins:base_armor') && (
                     <Attribute name={'builtins:armor'} value={healthAPDefenseValues.armor} key={'special-attr-armor'} />
                 )}
             </div>
