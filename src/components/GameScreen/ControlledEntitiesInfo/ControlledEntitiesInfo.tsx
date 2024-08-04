@@ -1,4 +1,4 @@
-import { selectControlledEntities } from '@redux/slices/infoSlice'
+import { selectActiveEntity, selectControlledEntities } from '@redux/slices/infoSlice'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import styles from './ControlledEntitiesInfo.module.css'
@@ -6,6 +6,7 @@ import { CharacterDisplayInGame } from '@components/CharacterDisplay'
 
 const ControlledEntitiesInfo = () => {
     const controlledEntities = useSelector(selectControlledEntities)
+    const activeEntity = useSelector(selectActiveEntity)
 
     const noEntities = useCallback(() => {
         return <p>You have no entities</p>
@@ -15,11 +16,26 @@ const ControlledEntitiesInfo = () => {
         <div className={styles.entitiesContainer}>
             {controlledEntities
                 ? controlledEntities.length > 0
-                    ? controlledEntities.map((entity, index) => (
-                          <div key={index}>
-                              <CharacterDisplayInGame character={entity} className={'flex w-full flex-col gap-4 border-2 p-4'} />
-                          </div>
-                      ))
+                    ? controlledEntities
+                          .map((entity, index) => (
+                              <CharacterDisplayInGame
+                                  character={entity}
+                                  className={'flex w-full flex-col gap-4 border-2 p-4'}
+                                  key={index}
+                              />
+                          ))
+                          .sort((a, b) => {
+                              if (activeEntity) {
+                                  const activeEntitySquare = JSON.stringify(activeEntity.square)
+                                  if (JSON.stringify(b.props.character?.square) === activeEntitySquare) {
+                                      return 1
+                                  } else if (JSON.stringify(a.props.character?.square) === activeEntitySquare) {
+                                      return -1
+                                  }
+                                  return a.props.character?.square?.line > b.props.character?.square?.line ? 1 : -1
+                              }
+                              return a.props.character?.square?.line > b.props.character?.square?.line ? 1 : -1
+                          })
                     : noEntities()
                 : noEntities()}
         </div>
