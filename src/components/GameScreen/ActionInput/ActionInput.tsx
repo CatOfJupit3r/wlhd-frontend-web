@@ -22,7 +22,7 @@ import { BsArrowBarLeft } from 'react-icons/bs'
 import ElementWithIcon from '@components/ElementWithIcon'
 import {
     addClickedSquare,
-    resetAlreadyClickedSquares,
+    resetAlreadyClickedSquares, resetInteractableSquares,
     resetStateAfterSquareChoice,
     selectBattlefieldMode,
     selectClickedSquare,
@@ -102,13 +102,14 @@ const ActionInput = () => {
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
     useEffect(() => {
-        if (!needToAddInteractableTiles) {
+        if (!needToAddInteractableTiles.flag) {
             return
         }
         const interactableSquares = {} as { [key: string]: boolean }
         for (const action of needToAddInteractableTiles.action) {
             interactableSquares[action.id] = true
         }
+        dispatch(resetInteractableSquares())
         dispatch(setInteractableSquares(interactableSquares))
         setNeedToAddInteractableTiles({ flag: false, action: [] })
     }, [needToAddInteractableTiles])

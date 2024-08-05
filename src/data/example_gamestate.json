@@ -1,5 +1,5 @@
 {
-    "actions": {
+    "actions" : {
         "action": [
             {
                 "id": "builtins:item",
@@ -9,7 +9,7 @@
                 },
                 "available": true,
                 "requires": {
-                    "item_id": "Item_-960739603294889960"
+                    "item_id": "Item_-2495655326063966389"
                 }
             },
             {
@@ -20,7 +20,7 @@
                 },
                 "available": true,
                 "requires": {
-                    "square": "Square_8760048448786074264"
+                    "square": "Square_2018740699827016576"
                 }
             },
             {
@@ -31,7 +31,7 @@
                 },
                 "available": true,
                 "requires": {
-                    "spell_id": "Spell_-960739603294889960"
+                    "spell_id": "Spell_-2495655326063966389"
                 }
             },
             {
@@ -51,7 +51,7 @@
                 },
                 "available": true,
                 "requires": {
-                    "square": "Square_-3997783731391735551"
+                    "square": "Square_7161065638515942244"
                 }
             },
             {
@@ -71,12 +71,12 @@
                 },
                 "available": true,
                 "requires": {
-                    "weapon_id": "Weapon_7022413226579068958"
+                    "weapon_id": "Weapon_-8536087784645931112"
                 }
             }
         ],
         "aliases": {
-            "Square_-960739603294889960": [
+            "Square_-2495655326063966389": [
                 {
                     "id": "2/1",
                     "translation_info": {
@@ -726,53 +726,53 @@
                     "requires": null
                 }
             ],
-            "Item_-960739603294889960": [
+            "Item_-2495655326063966389": [
                 {
-                    "id": "b71094fc-fdd1-4bb5-851c-be6a874b4fca",
+                    "id": "b61fb18c-bb08-4e1d-a083-4ae20dd32f71",
                     "translation_info": {
                         "descriptor": "builtins:healing_potion",
                         "co_descriptor": "1"
                     },
                     "available": true,
                     "requires": {
-                        "square": "Square_-960739603294889960"
+                        "square": "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "5ae9d19b-5a20-4806-98de-da0b519d8279",
+                    "id": "8cea2af3-5ecc-4d4f-8ba4-c2f81fd5dc66",
                     "translation_info": {
                         "descriptor": "builtins:healing_potion",
                         "co_descriptor": "1"
                     },
                     "available": true,
                     "requires": {
-                        "square": "Square_-960739603294889960"
+                        "square": "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "6289a19b-afa1-464f-9ee6-e030a143042a",
+                    "id": "295bfd1b-e128-416b-8bb4-cdd3974fa73c",
                     "translation_info": {
                         "descriptor": "builtins:healing_potion",
                         "co_descriptor": "1"
                     },
                     "available": true,
                     "requires": {
-                        "square": "Square_-960739603294889960"
+                        "square": "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "b13c4da3-d183-453b-bac2-198fd0c7947c",
+                    "id": "5364e94e-94ff-4f1e-9242-9bb2db848c14",
                     "translation_info": {
                         "descriptor": "builtins:healing_potion",
                         "co_descriptor": "1"
                     },
                     "available": true,
                     "requires": {
-                        "square": "Square_-960739603294889960"
+                        "square": "Square_-2495655326063966389"
                     }
                 }
             ],
-            "Square_8760048448786074264": [
+            "Square_2018740699827016576": [
                 {
                     "id": "3/1",
                     "translation_info": {
@@ -882,20 +882,20 @@
                     "requires": null
                 }
             ],
-            "Spell_-960739603294889960": [
+            "Spell_-2495655326063966389": [
                 {
-                    "id": "07e0dcb0-2cb5-4eb4-9ec0-f9c4300dce28",
+                    "id": "526ba5c6-fc6c-45ee-be51-13c9570872e5",
                     "translation_info": {
                         "descriptor": "builtins:fireball",
                         "co_descriptor": "0"
                     },
                     "available": true,
                     "requires": {
-                        "square": "Square_-960739603294889960"
+                        "square": "Square_-2495655326063966389"
                     }
                 }
             ],
-            "Square_-3997783731391735551": [
+            "Square_7161065638515942244": [
                 {
                     "id": "4/1",
                     "translation_info": {
@@ -915,6 +915,15 @@
                     "requires": null
                 },
                 {
+                    "id": "4/3",
+                    "translation_info": {
+                        "descriptor": "builtins:4/builtins:3",
+                        "co_descriptor": null
+                    },
+                    "available": true,
+                    "requires": null
+                },
+                {
                     "id": "4/4",
                     "translation_info": {
                         "descriptor": "builtins:4/builtins:4",
@@ -927,15 +936,6 @@
                     "id": "4/5",
                     "translation_info": {
                         "descriptor": "builtins:4/builtins:5",
-                        "co_descriptor": null
-                    },
-                    "available": true,
-                    "requires": null
-                },
-                {
-                    "id": "4/6",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:6",
                         "co_descriptor": null
                     },
                     "available": true,
@@ -1050,9 +1050,9 @@
                     "requires": null
                 }
             ],
-            "Weapon_7022413226579068958": [
+            "Weapon_-8536087784645931112": [
                 {
-                    "id": "920959e5-3e45-449c-8e23-8b4a62a495e6",
+                    "id": "16730c1f-f86f-4540-aa77-da299e45f9a3",
                     "translation_info": {
                         "descriptor": "builtins:hero_sword",
                         "co_descriptor": "1"
@@ -1064,15 +1064,39 @@
         },
         "alias_translations": {
             "action": "builtins:action",
-            "Square_-960739603294889960": "builtins:square",
-            "Item_-960739603294889960": "builtins:item",
-            "Square_8760048448786074264": "builtins:square",
-            "Spell_-960739603294889960": "builtins:spell",
-            "Square_-3997783731391735551": "builtins:square",
-            "Weapon_7022413226579068958": "builtins:weapon"
+            "Square_-2495655326063966389": "builtins:square",
+            "Item_-2495655326063966389": "builtins:item",
+            "Square_2018740699827016576": "builtins:square",
+            "Spell_-2495655326063966389": "builtins:spell",
+            "Square_7161065638515942244": "builtins:square",
+            "Weapon_-8536087784645931112": "builtins:weapon"
         }
     },
-    "messages": [
+    "messages" : [
+        [
+            {
+                "main_string": "builtins:attack_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "weapon_name": "builtins:hero_sword.name"
+                }
+            },
+            {
+                "main_string": "builtins:creature_takes_damage",
+                "format_args": {
+                    "entity_name": "builtins:target_dummy.name",
+                    "damage": "17",
+                    "element_of_hp_change": "builtins:fire"
+                }
+            },
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
+                }
+            }
+        ],
         [
             {
                 "main_string": "builtins:movement_usage",
@@ -1091,10 +1115,74 @@
         ],
         [
             {
+                "main_string": "builtins:movement_usage",
+                "format_args": {
+                    "entity_name": "builtins:target_dummy.name",
+                    "square": "3|4"
+                }
+            },
+            {
                 "main_string": "builtins:creature_spent_ap",
                 "format_args": {
                     "entity_name": "builtins:target_dummy.name",
-                    "value": "9"
+                    "value": "1"
+                }
+            }
+        ],
+        [
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:target_dummy.name",
+                    "value": "8"
+                }
+            }
+        ],
+        [
+            {
+                "main_string": "builtins:attack_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "weapon_name": "builtins:hero_sword.name"
+                }
+            },
+            {
+                "main_string": "builtins:creature_takes_damage",
+                "format_args": {
+                    "entity_name": "builtins:target_dummy.name",
+                    "damage": "7",
+                    "element_of_hp_change": "builtins:fire"
+                }
+            },
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
+                }
+            }
+        ],
+        [
+            {
+                "main_string": "builtins:attack_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "weapon_name": "builtins:hero_sword.name"
+                }
+            },
+            {
+                "main_string": "builtins:creature_takes_damage",
+                "format_args": {
+                    "entity_name": "builtins:target_dummy.name",
+                    "damage": "8",
+                    "element_of_hp_change": "builtins:fire"
+                }
+            },
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
                 }
             }
         ],
@@ -1124,6 +1212,22 @@
         ],
         [
             {
+                "main_string": "builtins:movement_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "square": "4|5"
+                }
+            },
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
+                }
+            }
+        ],
+        [
+            {
                 "main_string": "builtins:attack_usage",
                 "format_args": {
                     "entity_name": "builtins:hero.name",
@@ -1131,11 +1235,35 @@
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
+                "main_string": "builtins:creature_spent_ap",
                 "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "12",
-                    "element_of_hp_change": "builtins:fire"
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
+                }
+            }
+        ],
+        [
+            {
+                "main_string": "builtins:movement_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "square": "4|3"
+                }
+            },
+            {
+                "main_string": "builtins:creature_spent_ap",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "value": "1"
+                }
+            }
+        ],
+        [
+            {
+                "main_string": "builtins:movement_usage",
+                "format_args": {
+                    "entity_name": "builtins:hero.name",
+                    "square": "4|6"
                 }
             },
             {
@@ -1157,80 +1285,8 @@
             {
                 "main_string": "builtins:creature_takes_damage",
                 "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "9",
-                    "element_of_hp_change": "builtins:fire"
-                }
-            },
-            {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
                     "entity_name": "builtins:hero.name",
-                    "value": "1"
-                }
-            }
-        ],
-        [
-            {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
-                }
-            },
-            {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "11",
-                    "element_of_hp_change": "builtins:fire"
-                }
-            },
-            {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
-                }
-            }
-        ],
-        [
-            {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
-                }
-            },
-            {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "13",
-                    "element_of_hp_change": "builtins:fire"
-                }
-            },
-            {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
-                }
-            }
-        ],
-        [
-            {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
-                }
-            },
-            {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "11",
+                    "damage": "16",
                     "element_of_hp_change": "builtins:fire"
                 }
             },
@@ -1259,30 +1315,6 @@
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
-                }
-            }
-        ],
-        [
-            {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
-                }
-            },
-            {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "18",
-                    "element_of_hp_change": "builtins:fire"
-                }
-            },
-            {
                 "main_string": "builtins:entity_activated_status_effect",
                 "format_args": {
                     "entity_name": "builtins:target_dummy.name",
@@ -1304,8 +1336,8 @@
             }
         ]
     ],
-    "tooltips": {
-        "3/2": {
+    "tooltips" : {
+        "3/4": {
             "decorations": {
                 "name": "builtins:target_dummy.name",
                 "sprite": "builtins:target_dummy",
@@ -1313,7 +1345,7 @@
             },
             "square": {
                 "line": "3",
-                "column": "2"
+                "column": "4"
             },
             "health": {
                 "current": "0",
@@ -1338,7 +1370,7 @@
                 }
             ]
         },
-        "4/3": {
+        "4/6": {
             "decorations": {
                 "name": "builtins:hero.name",
                 "sprite": "builtins:hero",
@@ -1346,14 +1378,14 @@
             },
             "square": {
                 "line": "4",
-                "column": "3"
+                "column": "6"
             },
             "health": {
-                "current": "100",
+                "current": "84",
                 "max": "100"
             },
             "action_points": {
-                "current": "2",
+                "current": "1",
                 "max": "10"
             },
             "armor": {
@@ -1363,7 +1395,7 @@
             "status_effects": []
         }
     },
-    "controlledEntities": [
+    "controlledEntities" : [
         {
             "descriptor": "builtins:target_dummy",
             "decorations": {
@@ -1371,10 +1403,9 @@
                 "sprite": "builtins:target_dummy",
                 "description": "builtins:target_dummy.desc"
             },
-            "id": "b33ffac1-e8e7-41bb-a0a5-78ed2c1ed4c5",
             "square": {
                 "line": "3",
-                "column": "2"
+                "column": "4"
             },
             "attributes": {
                 "builtins:current_health": "0",
@@ -1419,7 +1450,14 @@
                         "current": 0,
                         "max": null
                     },
-                    "user_needs_range": [1, 2, 3, 4, 5, 6],
+                    "user_needs_range": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1448,15 +1486,14 @@
                 "sprite": "builtins:hero",
                 "description": "builtins:hero.desc"
             },
-            "id": "5d17d7c8-e2de-432a-b16e-2ea19e186043",
             "square": {
                 "line": "4",
-                "column": "3"
+                "column": "6"
             },
             "attributes": {
-                "builtins:current_health": "100",
+                "builtins:current_health": "84",
                 "builtins:max_health": "100",
-                "builtins:current_action_points": "2",
+                "builtins:current_action_points": "1",
                 "builtins:max_action_points": "10",
                 "builtins:current_armor": "0",
                 "builtins:base_armor": "50",
@@ -1496,7 +1533,14 @@
                         "current": 0,
                         "max": null
                     },
-                    "user_needs_range": [1, 2, 3, 4, 5, 6],
+                    "user_needs_range": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1516,7 +1560,14 @@
                         "current": 0,
                         "max": null
                     },
-                    "user_needs_range": [1, 2, 3, 4, 5, 6],
+                    "user_needs_range": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1536,7 +1587,14 @@
                         "current": 0,
                         "max": null
                     },
-                    "user_needs_range": [1, 2, 3, 4, 5, 6],
+                    "user_needs_range": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1556,7 +1614,14 @@
                         "current": 0,
                         "max": null
                     },
-                    "user_needs_range": [1, 2, 3, 4, 5, 6],
+                    "user_needs_range": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1575,10 +1640,13 @@
                     },
                     "cost": 1,
                     "uses": {
-                        "current": 8,
+                        "current": 10,
                         "max": null
                     },
-                    "user_needs_range": [3, 4],
+                    "user_needs_range": [
+                        3,
+                        4
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": 0
@@ -1598,7 +1666,12 @@
                         "description": "builtins:fireball.desc"
                     },
                     "cost": 0,
-                    "user_needs_range": [2, 3, 4, 5],
+                    "user_needs_range": [
+                        2,
+                        3,
+                        4,
+                        5
+                    ],
                     "cooldown": {
                         "current": 0,
                         "max": null
@@ -1612,31 +1685,58 @@
             "status_effects": []
         }
     ],
-    "activeEntity": {
-        "decorations": {
-            "name": "builtins:hero.name",
-            "sprite": "builtins:hero",
-            "description": "builtins:hero.desc"
-        },
-        "square": {
-            "line": "4",
-            "column": "3"
-        },
-        "action_points": {
-            "current": "2",
-            "max": "10"
-        }
-    },
-    "battlefield": {
-        "field": [
-            ["0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0"],
-            ["0", "1", "0", "0", "0", "0"],
-            ["0", "0", "2", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0"],
-            ["0", "0", "0", "0", "0", "0"]
+    "battlefield" : {
+        "field" : [
+            [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            [
+                "0",
+                "0",
+                "0",
+                "1",
+                "0",
+                "0"
+            ],
+            [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "2"
+            ],
+            [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ],
+            [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+            ]
         ],
-        "lines": [
+        "lines" : [
             "builtins:safe_line",
             "builtins:ranged_line",
             "builtins:melee_line",
@@ -1644,13 +1744,51 @@
             "builtins:ranged_line",
             "builtins:safe_line"
         ],
-        "columns": ["builtins:one", "builtins:two", "builtins:three", "builtins:four", "builtins:five", "builtins:six"],
-        "pawns": {
-            "0": "builtins:tile",
-            "1": "builtins:target_dummy",
-            "2": "builtins:hero"
+        "columns" : [
+            "builtins:one",
+            "builtins:two",
+            "builtins:three",
+            "builtins:four",
+            "builtins:five",
+            "builtins:six"
+        ],
+        "pawns" : {
+            "0" : "builtins:tile",
+            "1" : "builtins:target_dummy",
+            "2" : "builtins:hero"
         },
-        "separators": "builtins:separator",
-        "connectors": "builtins:connector"
+        "separators" : "builtins:separator",
+        "connectors" : "builtins:connector"
+    },
+    "turnOrder": {
+        "order": [
+            {
+                "descriptor": "builtins:target_dummy",
+                "decorations": {
+                    "name": "builtins:target_dummy.name",
+                    "sprite": "builtins:target_dummy",
+                    "description": "builtins:target_dummy.desc"
+                },
+                "square": {
+                    "line": "3",
+                    "column": "4"
+                },
+                "controlledByYou": true
+            },
+            {
+                "descriptor": "builtins:hero",
+                "decorations": {
+                    "name": "builtins:hero.name",
+                    "sprite": "builtins:hero",
+                    "description": "builtins:hero.desc"
+                },
+                "square": {
+                    "line": "4",
+                    "column": "6"
+                },
+                "controlledByYou": true
+            }
+        ],
+        "current": 1
     }
 }

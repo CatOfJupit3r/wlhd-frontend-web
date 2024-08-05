@@ -3,13 +3,17 @@ import styles from './GameScreen.module.css'
 import MenuContainer from './MenuContainer/MenuContainer'
 import MenuNavigator from './MenuNavigator/MenuNavigator'
 import RoundHeader from './RoundHeader'
+import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay'
 
 const GameScreen = () => {
     return (
         <div className={styles.gameScreenContainer}>
             <div className={styles.gameInfoContainer}>
                 <RoundHeader />
-                <Battlefield />
+                <div className={'flex flex-row'}>
+                    <TurnOrderDisplay />
+                    <Battlefield />
+                </div>
             </div>
             <div className={styles.gameMenusContainer}>
                 <div className={styles.menuContainer}>

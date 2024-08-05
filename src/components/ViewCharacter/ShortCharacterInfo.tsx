@@ -19,7 +19,7 @@ const ShortCharacterInfo = ({
             onClick={onClick}
         >
             <div className={'flex min-h-10 min-w-10 flex-row items-center'}>
-                <GameAsset src={character.sprite} alt={character.name} className={'size-10'} />
+                <GameAsset src={character.decorations.sprite} alt={character.descriptor} className={'size-10'} />
                 <p
                     style={{
                         fontSize: '1.25rem',
@@ -29,7 +29,7 @@ const ShortCharacterInfo = ({
                         marginLeft: '0.5rem',
                     }}
                 >
-                    {character.name} (@{character.descriptor})
+                    {character.decorations.name} (@{character.descriptor})
                 </p>
             </div>
             <p

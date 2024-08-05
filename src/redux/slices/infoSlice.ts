@@ -1,16 +1,15 @@
-import {
-    EntityInfoFull,
-    EntityInfoTooltip,
-    EntityInfoTurn,
-    GameStateContainer,
-    TranslatableString,
-} from '@models/Battlefield'
+import { EntityInfoFull, EntityInfoTooltip, GameStateContainer, TranslatableString } from '@models/Battlefield'
 import { InfoState } from '@models/Redux'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
+import { IndividualTurnOrder } from '@models/GameHandshake'
 
 const initialState: InfoState = {
     round: '0',
+    turnOrder: {
+        order: [],
+        current: null,
+    },
     messages: {
         start: 0,
         end: 0,
@@ -23,7 +22,6 @@ const initialState: InfoState = {
     },
     entityTooltips: {},
     controlledEntities: null,
-    activeEntity: null,
     chosenMenu: '',
 }
 
@@ -49,11 +47,11 @@ const InfoSlice = createSlice({
         setMessages: (state, action: PayloadAction<GameStateContainer>) => {
             state.messages.loaded = action.payload
         },
-        setActiveEntity: (state, action: PayloadAction<EntityInfoTurn | null>) => {
-            state.activeEntity = action.payload
+        setTurnOrder: (state, action: PayloadAction<IndividualTurnOrder>) => {
+            state.turnOrder = action.payload
         },
         resetActiveEntity: (state) => {
-            state.activeEntity = initialState.activeEntity
+            state.turnOrder.current = initialState.turnOrder.current
         },
         setFlowToActive: (state) => {
             state.gameFlow = {
@@ -93,10 +91,10 @@ export const {
     setFlowToPending,
     setFlowToAborted,
     setMessages,
-    setActiveEntity,
     resetActiveEntity,
     setEntityTooltips,
     setControlledEntities,
+    setTurnOrder,
 } = InfoSlice.actions
 
 export const selectRound = (state: RootState) => state.info.round
@@ -104,5 +102,13 @@ export const selectAllMessages = (state: RootState) => state.info.messages.loade
 export const selectEntityTooltips = (state: RootState) => state.info.entityTooltips
 export const selectGameFlow = (state: RootState) => state.info.gameFlow
 export const selectChosenMenu = (state: RootState) => state.info.chosenMenu
-export const selectActiveEntity = (state: RootState) => state.info.activeEntity
 export const selectControlledEntities = (state: RootState) => state.info.controlledEntities
+export const selectTurnOrder = (state: RootState) => state.info.turnOrder
+
+export const selectActiveEntity = createSelector([(state: RootState) => state.info.turnOrder], (turnOrder) => {
+    if (turnOrder.current === null) {
+        return null
+    } else {
+        return turnOrder.order[turnOrder.current] || null
+    }
+})

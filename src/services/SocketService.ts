@@ -1,13 +1,12 @@
 import { ActionInput } from '@models/ActionInput'
-import { Battlefield, EntityInfoFull, EntityInfoTooltip, EntityInfoTurn, TranslatableString } from '@models/Battlefield'
+import { Battlefield, EntityInfoFull, EntityInfoTooltip, TranslatableString } from '@models/Battlefield'
 import { ActionResultsPayload } from '@models/Events'
-import { GameHandshake } from '@models/GameHandshake'
+import { GameHandshake, IndividualTurnOrder } from '@models/GameHandshake'
 import { resetGameComponentsStateAction } from '@redux/highActions'
 import { setBattlefield } from '@redux/slices/battlefieldSlice'
 import {
     addMessage,
     resetActiveEntity,
-    setActiveEntity,
     setControlledEntities,
     setEntityTooltips,
     setFlowToAborted,
@@ -16,6 +15,7 @@ import {
     setFlowToPending,
     setMessages,
     setRound,
+    setTurnOrder,
 } from '@redux/slices/infoSlice'
 import { haltAction, resetTurnSlice, setActionResult, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
 import { store as ReduxStore } from '@redux/store'
@@ -30,13 +30,13 @@ const SOCKET_EVENTS = {
     GAME_HANDSHAKE: 'game_handshake',
     ACTION_RESULT: 'action_result',
     BATTLE_ENDED: 'battle_ended',
-    CURRENT_ENTITY_UPDATED: 'current_entity_updated',
     NO_CURRENT_ENTITY: 'no_current_entity',
     HALT_ACTION: 'halt_action',
     TAKE_ACTION: 'take_action',
     NEW_MESSAGE: 'new_message',
     BATTLEFIELD_UPDATE: 'battlefield_updated',
     ENTITIES_UPDATED: 'entities_updated',
+    TURN_ORDER_UPDATED: 'turn_order_updated',
 }
 
 const ELEVATED_RIGHTS_EVENTS = {
@@ -177,9 +177,9 @@ class SocketService {
                 console.log('Battle ended', battle_result)
                 ReduxStore.dispatch(setFlowToEnded(battle_result))
             },
-            [SOCKET_EVENTS.CURRENT_ENTITY_UPDATED]: ({ activeEntity }: { activeEntity: EntityInfoTurn }) => {
-                console.log('Current entity updated', activeEntity)
-                ReduxStore.dispatch(setActiveEntity(activeEntity))
+            [SOCKET_EVENTS.TURN_ORDER_UPDATED]: ({ turnOrder }: { turnOrder: IndividualTurnOrder }) => {
+                console.log('Turn order updated', turnOrder)
+                ReduxStore.dispatch(setTurnOrder(turnOrder))
             },
             [SOCKET_EVENTS.NO_CURRENT_ENTITY]: () => {
                 console.log('No current entity')
@@ -212,7 +212,7 @@ class SocketService {
                 roundCount,
                 messages,
                 currentBattlefield,
-                currentEntityInfo,
+                turnOrder,
                 entityTooltips,
                 controlledEntities,
                 combatStatus,
@@ -235,8 +235,8 @@ class SocketService {
                         payload: currentBattlefield,
                     },
                     {
-                        type: setActiveEntity,
-                        payload: currentEntityInfo,
+                        type: setTurnOrder,
+                        payload: turnOrder,
                     },
                     {
                         type: setEntityTooltips,

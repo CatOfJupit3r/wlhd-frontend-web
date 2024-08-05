@@ -12,6 +12,7 @@ import {
     WeaponInfo,
 } from './Battlefield'
 import { UserInformation } from '@models/APIData'
+import { IndividualTurnOrder } from '@models/GameHandshake'
 
 export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
@@ -40,13 +41,7 @@ export interface TurnState {
 
 export interface InfoState {
     round: string
-    turnOrder: Array<{
-        icon: string
-        square: {
-            line: number
-            column: number
-        }
-    }>
+    turnOrder: IndividualTurnOrder
     messages: {
         start: number
         end: number
@@ -65,7 +60,6 @@ export interface InfoState {
         [square: string]: EntityInfoTooltip | null
     }
     controlledEntities: Array<EntityInfoFull> | null
-    activeEntity: EntityInfoTurn | null
     chosenMenu: string | null
 }
 
@@ -136,7 +130,17 @@ export interface LobbyInfo {
 
 export interface CharacterInLobby {
     descriptor: string
-    name: string
-    description: string
-    sprite: string
+    decorations: {
+        name: string
+        description: string
+        sprite: string
+    }
 }
+
+type CharacterInTurnOrder = {
+    controlledByYou: boolean
+    square: {
+        line: number
+        column: number
+    }
+} & CharacterInLobby

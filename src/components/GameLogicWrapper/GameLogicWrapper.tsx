@@ -13,6 +13,7 @@ import GameScreen from '../GameScreen/GameScreen'
 import Overlay from '@components/Overlay'
 import ThinkingHn from '../ThinkingHn'
 import { useToast } from '@hooks/useToast'
+import { Button } from '@components/ui/button'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -60,15 +61,15 @@ const GameLogicWrapper = () => {
                         <ThinkingHn text={t('local:game.pending.not_started')} />
                         <h2>{t(gameFlow.details || 'local:game.pending.waiting_text')}</h2>
                         {lobbyInfo.layout === 'gm' ? (
-                            <button
+                            <Button
                                 onClick={() => {
                                     SocketService.emit('start_combat')
                                 }}
                             >
                                 {t('local:game.pending.start')}
-                            </button>
+                            </Button>
                         ) : null}
-                        <button onClick={() => navigate('..')}>{t('local:game.pending.exit')}</button>
+                        <Button onClick={() => navigate('..')}>{t('local:game.pending.exit')}</Button>
                     </Overlay>
                 )
             case 'active':
@@ -82,13 +83,13 @@ const GameLogicWrapper = () => {
                                 result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
                             })}
                         </h1>
-                        <button
+                        <Button
                             onClick={() => {
                                 navigate('..')
                             }}
                         >
                             {t('local:game.end.exit')}
-                        </button>
+                        </Button>
                     </Overlay>
                 )
             case 'aborted':
@@ -96,13 +97,13 @@ const GameLogicWrapper = () => {
                     <Overlay>
                         <h1>{t('local:game.end.aborted')}</h1>
                         <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
-                        <button
+                        <Button
                             onClick={() => {
                                 navigate('..')
                             }}
                         >
                             {t('local:game.end.exit')}
-                        </button>
+                        </Button>
                     </Overlay>
                 )
             default:
