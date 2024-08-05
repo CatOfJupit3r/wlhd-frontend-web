@@ -32,15 +32,17 @@ const CharacterBasicInfo = ({
                     alt={character.name}
                     className={'size-20'}
                     fallback={
-                        character.square && ['1', '2', '3'].includes(character.square.line)
-                            ? {
-                                  src: generateAssetPathFullDescriptor('builtins:enemy'),
-                                  alt: 'Unknown enemy',
-                              }
-                            : {
-                                  src: generateAssetPathFullDescriptor('builtins:ally'),
-                                  alt: 'Unknown ally',
-                              }
+                        character.square
+                            ? ['1', '2', '3'].includes(character.square.line)
+                                ? {
+                                      src: generateAssetPathFullDescriptor('builtins:enemy'),
+                                      alt: 'Unknown enemy',
+                                  }
+                                : {
+                                      src: generateAssetPathFullDescriptor('builtins:ally'),
+                                      alt: 'Unknown ally',
+                                  }
+                            : undefined
                     }
                 />
             </div>
