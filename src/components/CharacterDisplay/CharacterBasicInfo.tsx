@@ -1,6 +1,5 @@
 import React from 'react'
-import GameAsset from '@components/GameAsset'
-import { generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
+import { CharacterGameAsset } from '@components/GameAsset'
 import { LocationIcon } from '@components/icons'
 import { useTranslation } from 'react-i18next'
 import { isDescriptor } from '@utils'
@@ -27,23 +26,11 @@ const CharacterBasicInfo = ({
     return (
         <div className={'flex flex-row gap-4'}>
             <div>
-                <GameAsset
+                <CharacterGameAsset
                     src={character.sprite}
                     alt={character.name}
                     className={'size-20'}
-                    fallback={
-                        character.square
-                            ? ['1', '2', '3'].includes(character.square.line)
-                                ? {
-                                      src: generateAssetPathFullDescriptor('builtins:enemy'),
-                                      alt: 'Unknown enemy',
-                                  }
-                                : {
-                                      src: generateAssetPathFullDescriptor('builtins:ally'),
-                                      alt: 'Unknown ally',
-                                  }
-                            : undefined
-                    }
+                    line={character?.square?.line || ''}
                 />
             </div>
             <div>
