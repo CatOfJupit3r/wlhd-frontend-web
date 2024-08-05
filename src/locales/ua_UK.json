@@ -38,17 +38,12 @@
             "your_actions": "Ваші дії:",
             "you_chose": "Ви обрали:",
             "tooltip": {
-                "creature_and_line": "Створіння {{name}} ({{square}})",
-                "health_max_health": "Здоров'я: {{current_health}}/{{max_health}}",
-                "action_points": "Очки дії: {{current_action_points}}/{{max_action_points}}",
-                "armor": "Броня: {{current_armor}}/{{base_armor}}",
-                "status_effects": "Статус ефекти: {{status_effects}}",
                 "no_status_effects": "Немає статус ефектів"
             }
         },
+        "action_output": "Результат дії",
         "not_your_turn": "Не твій хід!",
         "its_your_turn": "Твій хід!",
-        "control_info": "Ти контролюєш: {{name}} ({{current_ap}}/{{max_ap}}) на клітинці {{square}}",
         "round_n": "Раунд {{round}}",
         "actions": {
             "no_available_actions": "Немає доступних дій",
@@ -63,15 +58,20 @@
         },
         "pending": {
             "not_started": "Гра ще не почалася",
+            "waiting_text": "Очікування початку гри...",
             "loading_translations": "Завантаження перекладів...",
             "loading_battlefield": "Завантаження поля бою...",
             "loading_actions": "Завантаження дій...",
-            "loading_battlefeed": "Завантаження журналу бою..."
+            "loading_battlefeed": "Завантаження журналу бою...",
+            "start": "Почати гру",
+            "exit": "Вийти з гри"
         },
         "end": {
             "title": "Гра закінчилася!",
             "result": "Результат: {{result}}",
-            "exit": "Вийти"
+            "exit": "Вийти",
+            "abort": "Гра скасована",
+            "aborted_text": "Через... непередбачувані обставини?.. Зв'яжіться з творцем сайту для отримання додаткової інформації."
         },
         "action_menus": {
             "no_menu_available": "Меню недоступне",
