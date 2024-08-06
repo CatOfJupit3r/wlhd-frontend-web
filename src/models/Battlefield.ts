@@ -48,7 +48,10 @@ export interface EntityInfoFull {
 
     inventory: Array<ItemInfo>
     weaponry: Array<WeaponInfo>
-    spellBook: Array<SpellInfo>
+    spellBook: {
+        spells: Array<SpellInfo>
+        maxActiveSpells: number | null
+    }
     status_effects: Array<StatusEffectInfo>
 }
 

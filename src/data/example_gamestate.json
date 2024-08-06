@@ -1,1456 +1,1456 @@
 {
     "actions" : {
-        "action": [
+        "action" : [
             {
-                "id": "builtins:item",
-                "translation_info": {
-                    "descriptor": "builtins:use_item",
-                    "co_descriptor": null
+                "id" : "builtins:item",
+                "translation_info" : {
+                    "descriptor" : "builtins:use_item",
+                    "co_descriptor" : null
                 },
-                "available": true,
-                "requires": {
-                    "item_id": "Item_-2495655326063966389"
+                "available" : true,
+                "requires" : {
+                    "item_id" : "Item_-2495655326063966389"
                 }
             },
             {
-                "id": "builtins:attack",
-                "translation_info": {
-                    "descriptor": "builtins:attack",
-                    "co_descriptor": null
+                "id" : "builtins:attack",
+                "translation_info" : {
+                    "descriptor" : "builtins:attack",
+                    "co_descriptor" : null
                 },
-                "available": true,
-                "requires": {
-                    "square": "Square_2018740699827016576"
+                "available" : true,
+                "requires" : {
+                    "square" : "Square_2018740699827016576"
                 }
             },
             {
-                "id": "builtins:spell",
-                "translation_info": {
-                    "descriptor": "builtins:spell",
-                    "co_descriptor": null
+                "id" : "builtins:spell",
+                "translation_info" : {
+                    "descriptor" : "builtins:spell",
+                    "co_descriptor" : null
                 },
-                "available": true,
-                "requires": {
-                    "spell_id": "Spell_-2495655326063966389"
+                "available" : true,
+                "requires" : {
+                    "spell_id" : "Spell_-2495655326063966389"
                 }
             },
             {
-                "id": "builtins:defend",
-                "translation_info": {
-                    "descriptor": "builtins:defend",
-                    "co_descriptor": null
+                "id" : "builtins:defend",
+                "translation_info" : {
+                    "descriptor" : "builtins:defend",
+                    "co_descriptor" : null
                 },
-                "available": false,
-                "requires": null
+                "available" : false,
+                "requires" : null
             },
             {
-                "id": "builtins:move",
-                "translation_info": {
-                    "descriptor": "builtins:move",
-                    "co_descriptor": 1
+                "id" : "builtins:move",
+                "translation_info" : {
+                    "descriptor" : "builtins:move",
+                    "co_descriptor" : 1
                 },
-                "available": true,
-                "requires": {
-                    "square": "Square_7161065638515942244"
+                "available" : true,
+                "requires" : {
+                    "square" : "Square_7161065638515942244"
                 }
             },
             {
-                "id": "builtins:skip",
-                "translation_info": {
-                    "descriptor": "builtins:skip",
-                    "co_descriptor": null
+                "id" : "builtins:skip",
+                "translation_info" : {
+                    "descriptor" : "builtins:skip",
+                    "co_descriptor" : null
                 },
-                "available": true,
-                "requires": null
+                "available" : true,
+                "requires" : null
             },
             {
-                "id": "builtins:change_weapon",
-                "translation_info": {
-                    "descriptor": "builtins:change_weapon",
-                    "co_descriptor": null
+                "id" : "builtins:change_weapon",
+                "translation_info" : {
+                    "descriptor" : "builtins:change_weapon",
+                    "co_descriptor" : null
                 },
-                "available": true,
-                "requires": {
-                    "weapon_id": "Weapon_-8536087784645931112"
+                "available" : true,
+                "requires" : {
+                    "weapon_id" : "Weapon_-8536087784645931112"
                 }
             }
         ],
-        "aliases": {
-            "Square_-2495655326063966389": [
+        "aliases" : {
+            "Square_-2495655326063966389" : [
                 {
-                    "id": "2/1",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:0",
-                        "co_descriptor": null
+                    "id" : "2/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/2",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:1",
-                        "co_descriptor": null
+                    "id" : "2/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/3",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:2",
-                        "co_descriptor": null
+                    "id" : "2/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/4",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:3",
-                        "co_descriptor": null
+                    "id" : "2/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/5",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:4",
-                        "co_descriptor": null
+                    "id" : "2/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/6",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:5",
-                        "co_descriptor": null
+                    "id" : "2/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/1",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:0",
-                        "co_descriptor": null
+                    "id" : "3/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/2",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:1",
-                        "co_descriptor": null
+                    "id" : "3/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/3",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:2",
-                        "co_descriptor": null
+                    "id" : "3/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/4",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:3",
-                        "co_descriptor": null
+                    "id" : "3/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/5",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:4",
-                        "co_descriptor": null
+                    "id" : "3/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/6",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:5",
-                        "co_descriptor": null
+                    "id" : "3/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/1",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:0",
-                        "co_descriptor": null
+                    "id" : "4/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/2",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:1",
-                        "co_descriptor": null
+                    "id" : "4/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/3",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:2",
-                        "co_descriptor": null
+                    "id" : "4/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/4",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:3",
-                        "co_descriptor": null
+                    "id" : "4/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/5",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:4",
-                        "co_descriptor": null
+                    "id" : "4/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/6",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:5",
-                        "co_descriptor": null
+                    "id" : "4/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/1",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:0",
-                        "co_descriptor": null
+                    "id" : "5/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/2",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:1",
-                        "co_descriptor": null
+                    "id" : "5/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/3",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:2",
-                        "co_descriptor": null
+                    "id" : "5/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/4",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:3",
-                        "co_descriptor": null
+                    "id" : "5/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/5",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:4",
-                        "co_descriptor": null
+                    "id" : "5/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/6",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:5",
-                        "co_descriptor": null
+                    "id" : "5/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/1",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:0",
-                        "co_descriptor": null
+                    "id" : "6/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/2",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:1",
-                        "co_descriptor": null
+                    "id" : "6/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/3",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:2",
-                        "co_descriptor": null
+                    "id" : "6/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/4",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:3",
-                        "co_descriptor": null
+                    "id" : "6/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/5",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:4",
-                        "co_descriptor": null
+                    "id" : "6/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/6",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:5",
-                        "co_descriptor": null
+                    "id" : "6/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/1",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:0",
-                        "co_descriptor": null
+                    "id" : "7/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:0",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/2",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:1",
-                        "co_descriptor": null
+                    "id" : "7/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/3",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:2",
-                        "co_descriptor": null
+                    "id" : "7/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/4",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:3",
-                        "co_descriptor": null
+                    "id" : "7/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/5",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:4",
-                        "co_descriptor": null
+                    "id" : "7/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "7/6",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:5",
-                        "co_descriptor": null
+                    "id" : "7/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/1",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:1",
-                        "co_descriptor": null
+                    "id" : "1/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/2",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:2",
-                        "co_descriptor": null
+                    "id" : "1/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/3",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:3",
-                        "co_descriptor": null
+                    "id" : "1/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/4",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:4",
-                        "co_descriptor": null
+                    "id" : "1/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/5",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:5",
-                        "co_descriptor": null
+                    "id" : "1/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "1/6",
-                    "translation_info": {
-                        "descriptor": "builtins:1/builtins:6",
-                        "co_descriptor": null
+                    "id" : "1/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:1/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/1",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:1",
-                        "co_descriptor": null
+                    "id" : "2/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/2",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:2",
-                        "co_descriptor": null
+                    "id" : "2/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/3",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:3",
-                        "co_descriptor": null
+                    "id" : "2/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/4",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:4",
-                        "co_descriptor": null
+                    "id" : "2/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/5",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:5",
-                        "co_descriptor": null
+                    "id" : "2/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "2/6",
-                    "translation_info": {
-                        "descriptor": "builtins:2/builtins:6",
-                        "co_descriptor": null
+                    "id" : "2/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:2/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/1",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:1",
-                        "co_descriptor": null
+                    "id" : "3/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/2",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:2",
-                        "co_descriptor": null
+                    "id" : "3/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/3",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:3",
-                        "co_descriptor": null
+                    "id" : "3/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/4",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:4",
-                        "co_descriptor": null
+                    "id" : "3/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/5",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:5",
-                        "co_descriptor": null
+                    "id" : "3/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/6",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:6",
-                        "co_descriptor": null
+                    "id" : "3/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/1",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:1",
-                        "co_descriptor": null
+                    "id" : "4/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/2",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:2",
-                        "co_descriptor": null
+                    "id" : "4/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/3",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:3",
-                        "co_descriptor": null
+                    "id" : "4/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/4",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:4",
-                        "co_descriptor": null
+                    "id" : "4/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/5",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:5",
-                        "co_descriptor": null
+                    "id" : "4/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/6",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:6",
-                        "co_descriptor": null
+                    "id" : "4/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/1",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:1",
-                        "co_descriptor": null
+                    "id" : "5/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/2",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:2",
-                        "co_descriptor": null
+                    "id" : "5/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/3",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:3",
-                        "co_descriptor": null
+                    "id" : "5/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/4",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:4",
-                        "co_descriptor": null
+                    "id" : "5/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/5",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:5",
-                        "co_descriptor": null
+                    "id" : "5/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/6",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:6",
-                        "co_descriptor": null
+                    "id" : "5/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/1",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:1",
-                        "co_descriptor": null
+                    "id" : "6/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/2",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:2",
-                        "co_descriptor": null
+                    "id" : "6/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/3",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:3",
-                        "co_descriptor": null
+                    "id" : "6/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/4",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:4",
-                        "co_descriptor": null
+                    "id" : "6/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/5",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:5",
-                        "co_descriptor": null
+                    "id" : "6/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/6",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:6",
-                        "co_descriptor": null
+                    "id" : "6/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 }
             ],
-            "Item_-2495655326063966389": [
+            "Item_-2495655326063966389" : [
                 {
-                    "id": "b61fb18c-bb08-4e1d-a083-4ae20dd32f71",
-                    "translation_info": {
-                        "descriptor": "builtins:healing_potion",
-                        "co_descriptor": "1"
+                    "id" : "b61fb18c-bb08-4e1d-a083-4ae20dd32f71",
+                    "translation_info" : {
+                        "descriptor" : "builtins:healing_potion",
+                        "co_descriptor" : "1"
                     },
-                    "available": true,
-                    "requires": {
-                        "square": "Square_-2495655326063966389"
+                    "available" : true,
+                    "requires" : {
+                        "square" : "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "8cea2af3-5ecc-4d4f-8ba4-c2f81fd5dc66",
-                    "translation_info": {
-                        "descriptor": "builtins:healing_potion",
-                        "co_descriptor": "1"
+                    "id" : "8cea2af3-5ecc-4d4f-8ba4-c2f81fd5dc66",
+                    "translation_info" : {
+                        "descriptor" : "builtins:healing_potion",
+                        "co_descriptor" : "1"
                     },
-                    "available": true,
-                    "requires": {
-                        "square": "Square_-2495655326063966389"
+                    "available" : true,
+                    "requires" : {
+                        "square" : "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "295bfd1b-e128-416b-8bb4-cdd3974fa73c",
-                    "translation_info": {
-                        "descriptor": "builtins:healing_potion",
-                        "co_descriptor": "1"
+                    "id" : "295bfd1b-e128-416b-8bb4-cdd3974fa73c",
+                    "translation_info" : {
+                        "descriptor" : "builtins:healing_potion",
+                        "co_descriptor" : "1"
                     },
-                    "available": true,
-                    "requires": {
-                        "square": "Square_-2495655326063966389"
+                    "available" : true,
+                    "requires" : {
+                        "square" : "Square_-2495655326063966389"
                     }
                 },
                 {
-                    "id": "5364e94e-94ff-4f1e-9242-9bb2db848c14",
-                    "translation_info": {
-                        "descriptor": "builtins:healing_potion",
-                        "co_descriptor": "1"
+                    "id" : "5364e94e-94ff-4f1e-9242-9bb2db848c14",
+                    "translation_info" : {
+                        "descriptor" : "builtins:healing_potion",
+                        "co_descriptor" : "1"
                     },
-                    "available": true,
-                    "requires": {
-                        "square": "Square_-2495655326063966389"
+                    "available" : true,
+                    "requires" : {
+                        "square" : "Square_-2495655326063966389"
                     }
                 }
             ],
-            "Square_2018740699827016576": [
+            "Square_2018740699827016576" : [
                 {
-                    "id": "3/1",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:1",
-                        "co_descriptor": null
+                    "id" : "3/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/2",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:2",
-                        "co_descriptor": null
+                    "id" : "3/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/3",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:3",
-                        "co_descriptor": null
+                    "id" : "3/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/4",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:4",
-                        "co_descriptor": null
+                    "id" : "3/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/5",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:5",
-                        "co_descriptor": null
+                    "id" : "3/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "3/6",
-                    "translation_info": {
-                        "descriptor": "builtins:3/builtins:6",
-                        "co_descriptor": null
+                    "id" : "3/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:3/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/1",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:1",
-                        "co_descriptor": null
+                    "id" : "4/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/2",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:2",
-                        "co_descriptor": null
+                    "id" : "4/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/3",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:3",
-                        "co_descriptor": null
+                    "id" : "4/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/4",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:4",
-                        "co_descriptor": null
+                    "id" : "4/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/5",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:5",
-                        "co_descriptor": null
+                    "id" : "4/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/6",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:6",
-                        "co_descriptor": null
+                    "id" : "4/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 }
             ],
-            "Spell_-2495655326063966389": [
+            "Spell_-2495655326063966389" : [
                 {
-                    "id": "526ba5c6-fc6c-45ee-be51-13c9570872e5",
-                    "translation_info": {
-                        "descriptor": "builtins:fireball",
-                        "co_descriptor": "0"
+                    "id" : "526ba5c6-fc6c-45ee-be51-13c9570872e5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:fireball",
+                        "co_descriptor" : "0"
                     },
-                    "available": true,
-                    "requires": {
-                        "square": "Square_-2495655326063966389"
+                    "available" : true,
+                    "requires" : {
+                        "square" : "Square_-2495655326063966389"
                     }
                 }
             ],
-            "Square_7161065638515942244": [
+            "Square_7161065638515942244" : [
                 {
-                    "id": "4/1",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:1",
-                        "co_descriptor": null
+                    "id" : "4/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/2",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:2",
-                        "co_descriptor": null
+                    "id" : "4/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/3",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:3",
-                        "co_descriptor": null
+                    "id" : "4/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/4",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:4",
-                        "co_descriptor": null
+                    "id" : "4/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "4/5",
-                    "translation_info": {
-                        "descriptor": "builtins:4/builtins:5",
-                        "co_descriptor": null
+                    "id" : "4/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:4/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/1",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:1",
-                        "co_descriptor": null
+                    "id" : "5/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/2",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:2",
-                        "co_descriptor": null
+                    "id" : "5/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/3",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:3",
-                        "co_descriptor": null
+                    "id" : "5/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/4",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:4",
-                        "co_descriptor": null
+                    "id" : "5/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/5",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:5",
-                        "co_descriptor": null
+                    "id" : "5/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "5/6",
-                    "translation_info": {
-                        "descriptor": "builtins:5/builtins:6",
-                        "co_descriptor": null
+                    "id" : "5/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:5/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/1",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:1",
-                        "co_descriptor": null
+                    "id" : "6/1",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:1",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/2",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:2",
-                        "co_descriptor": null
+                    "id" : "6/2",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:2",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/3",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:3",
-                        "co_descriptor": null
+                    "id" : "6/3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:3",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/4",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:4",
-                        "co_descriptor": null
+                    "id" : "6/4",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:4",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/5",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:5",
-                        "co_descriptor": null
+                    "id" : "6/5",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:5",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 },
                 {
-                    "id": "6/6",
-                    "translation_info": {
-                        "descriptor": "builtins:6/builtins:6",
-                        "co_descriptor": null
+                    "id" : "6/6",
+                    "translation_info" : {
+                        "descriptor" : "builtins:6/builtins:6",
+                        "co_descriptor" : null
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 }
             ],
-            "Weapon_-8536087784645931112": [
+            "Weapon_-8536087784645931112" : [
                 {
-                    "id": "16730c1f-f86f-4540-aa77-da299e45f9a3",
-                    "translation_info": {
-                        "descriptor": "builtins:hero_sword",
-                        "co_descriptor": "1"
+                    "id" : "16730c1f-f86f-4540-aa77-da299e45f9a3",
+                    "translation_info" : {
+                        "descriptor" : "builtins:hero_sword",
+                        "co_descriptor" : "1"
                     },
-                    "available": true,
-                    "requires": null
+                    "available" : true,
+                    "requires" : null
                 }
             ]
         },
-        "alias_translations": {
-            "action": "builtins:action",
-            "Square_-2495655326063966389": "builtins:square",
-            "Item_-2495655326063966389": "builtins:item",
-            "Square_2018740699827016576": "builtins:square",
-            "Spell_-2495655326063966389": "builtins:spell",
-            "Square_7161065638515942244": "builtins:square",
-            "Weapon_-8536087784645931112": "builtins:weapon"
+        "alias_translations" : {
+            "action" : "builtins:action",
+            "Square_-2495655326063966389" : "builtins:square",
+            "Item_-2495655326063966389" : "builtins:item",
+            "Square_2018740699827016576" : "builtins:square",
+            "Spell_-2495655326063966389" : "builtins:spell",
+            "Square_7161065638515942244" : "builtins:square",
+            "Weapon_-8536087784645931112" : "builtins:weapon"
         }
     },
     "messages" : [
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "17",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "damage" : "17",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:movement_usage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "square": "3|2"
+                "main_string" : "builtins:movement_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "square" : "3|2"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:movement_usage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "square": "3|4"
+                "main_string" : "builtins:movement_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "square" : "3|4"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "value": "8"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "value" : "8"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "7",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "damage" : "7",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "8",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "damage" : "8",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "18",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "damage" : "18",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:movement_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "square": "4|5"
+                "main_string" : "builtins:movement_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "square" : "4|5"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:movement_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "square": "4|3"
+                "main_string" : "builtins:movement_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "square" : "4|3"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:movement_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "square": "4|6"
+                "main_string" : "builtins:movement_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "square" : "4|6"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "damage": "16",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "damage" : "16",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ],
         [
             {
-                "main_string": "builtins:attack_usage",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "weapon_name": "builtins:hero_sword.name"
+                "main_string" : "builtins:attack_usage",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "weapon_name" : "builtins:hero_sword.name"
                 }
             },
             {
-                "main_string": "builtins:creature_takes_damage",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "damage": "19",
-                    "element_of_hp_change": "builtins:fire"
+                "main_string" : "builtins:creature_takes_damage",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "damage" : "19",
+                    "element_of_hp_change" : "builtins:fire"
                 }
             },
             {
-                "main_string": "builtins:entity_activated_status_effect",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name",
-                    "effect_name": "builtins:fainted.name"
+                "main_string" : "builtins:entity_activated_status_effect",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name",
+                    "effect_name" : "builtins:fainted.name"
                 }
             },
             {
-                "main_string": "builtins:creature_fainted",
-                "format_args": {
-                    "entity_name": "builtins:target_dummy.name"
+                "main_string" : "builtins:creature_fainted",
+                "format_args" : {
+                    "entity_name" : "builtins:target_dummy.name"
                 }
             },
             {
-                "main_string": "builtins:creature_spent_ap",
-                "format_args": {
-                    "entity_name": "builtins:hero.name",
-                    "value": "1"
+                "main_string" : "builtins:creature_spent_ap",
+                "format_args" : {
+                    "entity_name" : "builtins:hero.name",
+                    "value" : "1"
                 }
             }
         ]
     ],
     "tooltips" : {
-        "3/4": {
-            "decorations": {
-                "name": "builtins:target_dummy.name",
-                "sprite": "builtins:target_dummy",
-                "description": "builtins:target_dummy.desc"
+        "3/4" : {
+            "decorations" : {
+                "name" : "builtins:target_dummy.name",
+                "sprite" : "builtins:target_dummy",
+                "description" : "builtins:target_dummy.desc"
             },
-            "square": {
-                "line": "3",
-                "column": "4"
+            "square" : {
+                "line" : "3",
+                "column" : "4"
             },
-            "health": {
-                "current": "0",
-                "max": "100"
+            "health" : {
+                "current" : "0",
+                "max" : "100"
             },
-            "action_points": {
-                "current": "0",
-                "max": "10"
+            "action_points" : {
+                "current" : "0",
+                "max" : "10"
             },
-            "armor": {
-                "current": "0",
-                "base": "50"
+            "armor" : {
+                "current" : "0",
+                "base" : "50"
             },
-            "status_effects": [
+            "status_effects" : [
                 {
-                    "decorations": {
-                        "name": "builtins:fainted.name",
-                        "sprite": "builtins:status_effect",
-                        "description": "builtins:fainted.desc"
+                    "decorations" : {
+                        "name" : "builtins:fainted.name",
+                        "sprite" : "builtins:status_effect",
+                        "description" : "builtins:fainted.desc"
                     },
-                    "duration": null
+                    "duration" : null
                 }
             ]
         },
-        "4/6": {
-            "decorations": {
-                "name": "builtins:hero.name",
-                "sprite": "builtins:hero",
-                "description": "builtins:hero.desc"
+        "4/6" : {
+            "decorations" : {
+                "name" : "builtins:hero.name",
+                "sprite" : "builtins:hero",
+                "description" : "builtins:hero.desc"
             },
-            "square": {
-                "line": "4",
-                "column": "6"
+            "square" : {
+                "line" : "4",
+                "column" : "6"
             },
-            "health": {
-                "current": "84",
-                "max": "100"
+            "health" : {
+                "current" : "84",
+                "max" : "100"
             },
-            "action_points": {
-                "current": "1",
-                "max": "10"
+            "action_points" : {
+                "current" : "1",
+                "max" : "10"
             },
-            "armor": {
-                "current": "0",
-                "base": "50"
+            "armor" : {
+                "current" : "0",
+                "base" : "50"
             },
-            "status_effects": []
+            "status_effects" : []
         }
     },
     "controlledEntities" : [
         {
-            "descriptor": "builtins:target_dummy",
-            "decorations": {
-                "name": "builtins:target_dummy.name",
-                "sprite": "builtins:target_dummy",
-                "description": "builtins:target_dummy.desc"
+            "descriptor" : "builtins:target_dummy",
+            "decorations" : {
+                "name" : "builtins:target_dummy.name",
+                "sprite" : "builtins:target_dummy",
+                "description" : "builtins:target_dummy.desc"
             },
-            "square": {
-                "line": "3",
-                "column": "4"
+            "square" : {
+                "line" : "3",
+                "column" : "4"
             },
-            "attributes": {
-                "builtins:current_health": "0",
-                "builtins:max_health": "100",
-                "builtins:current_action_points": "0",
-                "builtins:max_action_points": "10",
-                "builtins:current_armor": "0",
-                "builtins:base_armor": "50",
-                "builtins:weapon_bonus_damage": "0",
-                "builtins:weapon_healing_damage": "0",
-                "builtins:athletics": "0",
-                "builtins:caution": "0",
-                "builtins:dexterity": "0",
-                "builtins:persuasion": "0",
-                "builtins:medicine": "0",
-                "builtins:reflexes": "0",
-                "builtins:strength": "0",
-                "builtins:will": "0",
-                "builtins:physical_attack": "10",
-                "builtins:physical_defense": "5",
-                "builtins:fire_attack": "0",
-                "builtins:fire_defense": "0",
-                "builtins:air_attack": "0",
-                "builtins:air_defense": "0",
-                "builtins:water_attack": "0",
-                "builtins:water_defense": "0",
-                "builtins:earth_attack": "0",
-                "builtins:earth_defense": "0",
-                "builtins:nature_attack": "0",
-                "builtins:nature_defense": "0"
+            "attributes" : {
+                "builtins:current_health" : "0",
+                "builtins:max_health" : "100",
+                "builtins:current_action_points" : "0",
+                "builtins:max_action_points" : "10",
+                "builtins:current_armor" : "0",
+                "builtins:base_armor" : "50",
+                "builtins:weapon_bonus_damage" : "0",
+                "builtins:weapon_healing_damage" : "0",
+                "builtins:athletics" : "0",
+                "builtins:caution" : "0",
+                "builtins:dexterity" : "0",
+                "builtins:persuasion" : "0",
+                "builtins:medicine" : "0",
+                "builtins:reflexes" : "0",
+                "builtins:strength" : "0",
+                "builtins:will" : "0",
+                "builtins:physical_attack" : "10",
+                "builtins:physical_defense" : "5",
+                "builtins:fire_attack" : "0",
+                "builtins:fire_defense" : "0",
+                "builtins:air_attack" : "0",
+                "builtins:air_defense" : "0",
+                "builtins:water_attack" : "0",
+                "builtins:water_defense" : "0",
+                "builtins:earth_attack" : "0",
+                "builtins:earth_defense" : "0",
+                "builtins:nature_attack" : "0",
+                "builtins:nature_defense" : "0"
             },
-            "inventory": [
+            "inventory" : [
                 {
-                    "descriptor": "builtins:healing_potion",
-                    "decorations": {
-                        "name": "builtins:healing_potion.name",
-                        "sprite": "builtins:item",
-                        "description": "builtins:healing_potion.desc"
+                    "descriptor" : "builtins:healing_potion",
+                    "decorations" : {
+                        "name" : "builtins:healing_potion.name",
+                        "sprite" : "builtins:item",
+                        "description" : "builtins:healing_potion.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 0,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 0,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         1,
                         2,
                         3,
@@ -1458,82 +1458,85 @@
                         5,
                         6
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": true
+                    "quantity" : 1,
+                    "consumable" : true
                 }
             ],
-            "weaponry": [],
-            "spellBook": [],
-            "status_effects": [
+            "weaponry" : [],
+            "spellBook" : {
+                "spells" : [],
+                "maxActiveSpells" : null
+            },
+            "status_effects" : [
                 {
-                    "decorations": {
-                        "name": "builtins:fainted.name",
-                        "sprite": "builtins:status_effect",
-                        "description": "builtins:fainted.desc"
+                    "decorations" : {
+                        "name" : "builtins:fainted.name",
+                        "sprite" : "builtins:status_effect",
+                        "description" : "builtins:fainted.desc"
                     },
-                    "duration": null
+                    "duration" : null
                 }
             ]
         },
         {
-            "descriptor": "builtins:hero",
-            "decorations": {
-                "name": "builtins:hero.name",
-                "sprite": "builtins:hero",
-                "description": "builtins:hero.desc"
+            "descriptor" : "builtins:hero",
+            "decorations" : {
+                "name" : "builtins:hero.name",
+                "sprite" : "builtins:hero",
+                "description" : "builtins:hero.desc"
             },
-            "square": {
-                "line": "4",
-                "column": "6"
+            "square" : {
+                "line" : "4",
+                "column" : "6"
             },
-            "attributes": {
-                "builtins:current_health": "84",
-                "builtins:max_health": "100",
-                "builtins:current_action_points": "1",
-                "builtins:max_action_points": "10",
-                "builtins:current_armor": "0",
-                "builtins:base_armor": "50",
-                "builtins:weapon_bonus_damage": "0",
-                "builtins:weapon_healing_damage": "0",
-                "builtins:athletics": "0",
-                "builtins:caution": "0",
-                "builtins:dexterity": "0",
-                "builtins:persuasion": "0",
-                "builtins:medicine": "0",
-                "builtins:reflexes": "0",
-                "builtins:strength": "0",
-                "builtins:will": "0",
-                "builtins:physical_attack": "10",
-                "builtins:physical_defense": "10",
-                "builtins:fire_attack": "0",
-                "builtins:fire_defense": "0",
-                "builtins:air_attack": "0",
-                "builtins:air_defense": "0",
-                "builtins:water_attack": "0",
-                "builtins:water_defense": "0",
-                "builtins:earth_attack": "0",
-                "builtins:earth_defense": "0",
-                "builtins:nature_attack": "0",
-                "builtins:nature_defense": "0"
+            "attributes" : {
+                "builtins:current_health" : "84",
+                "builtins:max_health" : "100",
+                "builtins:current_action_points" : "1",
+                "builtins:max_action_points" : "10",
+                "builtins:current_armor" : "0",
+                "builtins:base_armor" : "50",
+                "builtins:weapon_bonus_damage" : "0",
+                "builtins:weapon_healing_damage" : "0",
+                "builtins:athletics" : "0",
+                "builtins:caution" : "0",
+                "builtins:dexterity" : "0",
+                "builtins:persuasion" : "0",
+                "builtins:medicine" : "0",
+                "builtins:reflexes" : "0",
+                "builtins:strength" : "0",
+                "builtins:will" : "0",
+                "builtins:physical_attack" : "10",
+                "builtins:physical_defense" : "10",
+                "builtins:fire_attack" : "0",
+                "builtins:fire_defense" : "0",
+                "builtins:air_attack" : "0",
+                "builtins:air_defense" : "0",
+                "builtins:water_attack" : "0",
+                "builtins:water_defense" : "0",
+                "builtins:earth_attack" : "0",
+                "builtins:earth_defense" : "0",
+                "builtins:nature_attack" : "0",
+                "builtins:nature_defense" : "0"
             },
-            "inventory": [
+            "inventory" : [
                 {
-                    "descriptor": "builtins:healing_potion",
-                    "decorations": {
-                        "name": "builtins:healing_potion.name",
-                        "sprite": "builtins:item",
-                        "description": "builtins:healing_potion.desc"
+                    "descriptor" : "builtins:healing_potion",
+                    "decorations" : {
+                        "name" : "builtins:healing_potion.name",
+                        "sprite" : "builtins:item",
+                        "description" : "builtins:healing_potion.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 0,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 0,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         1,
                         2,
                         3,
@@ -1541,26 +1544,26 @@
                         5,
                         6
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": true
+                    "quantity" : 1,
+                    "consumable" : true
                 },
                 {
-                    "descriptor": "builtins:healing_potion",
-                    "decorations": {
-                        "name": "builtins:healing_potion.name",
-                        "sprite": "builtins:item",
-                        "description": "builtins:healing_potion.desc"
+                    "descriptor" : "builtins:healing_potion",
+                    "decorations" : {
+                        "name" : "builtins:healing_potion.name",
+                        "sprite" : "builtins:item",
+                        "description" : "builtins:healing_potion.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 0,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 0,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         1,
                         2,
                         3,
@@ -1568,26 +1571,26 @@
                         5,
                         6
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": true
+                    "quantity" : 1,
+                    "consumable" : true
                 },
                 {
-                    "descriptor": "builtins:healing_potion",
-                    "decorations": {
-                        "name": "builtins:healing_potion.name",
-                        "sprite": "builtins:item",
-                        "description": "builtins:healing_potion.desc"
+                    "descriptor" : "builtins:healing_potion",
+                    "decorations" : {
+                        "name" : "builtins:healing_potion.name",
+                        "sprite" : "builtins:item",
+                        "description" : "builtins:healing_potion.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 0,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 0,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         1,
                         2,
                         3,
@@ -1595,26 +1598,26 @@
                         5,
                         6
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": true
+                    "quantity" : 1,
+                    "consumable" : true
                 },
                 {
-                    "descriptor": "builtins:healing_potion",
-                    "decorations": {
-                        "name": "builtins:healing_potion.name",
-                        "sprite": "builtins:item",
-                        "description": "builtins:healing_potion.desc"
+                    "descriptor" : "builtins:healing_potion",
+                    "decorations" : {
+                        "name" : "builtins:healing_potion.name",
+                        "sprite" : "builtins:item",
+                        "description" : "builtins:healing_potion.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 0,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 0,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         1,
                         2,
                         3,
@@ -1622,67 +1625,71 @@
                         5,
                         6
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": true
+                    "quantity" : 1,
+                    "consumable" : true
                 }
             ],
-            "weaponry": [
+            "weaponry" : [
                 {
-                    "descriptor": "builtins:hero_sword",
-                    "decorations": {
-                        "name": "builtins:hero_sword.name",
-                        "sprite": "builtins:weapon",
-                        "description": "builtins:hero_sword.desc"
+                    "descriptor" : "builtins:hero_sword",
+                    "decorations" : {
+                        "name" : "builtins:hero_sword.name",
+                        "sprite" : "builtins:weapon",
+                        "description" : "builtins:hero_sword.desc"
                     },
-                    "cost": 1,
-                    "uses": {
-                        "current": 10,
-                        "max": null
+                    "cost" : 1,
+                    "uses" : {
+                        "current" : 10,
+                        "max" : null
                     },
-                    "user_needs_range": [
+                    "user_needs_range" : [
                         3,
                         4
                     ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": 0
+                    "cooldown" : {
+                        "current" : 0,
+                        "max" : 0
                     },
-                    "quantity": 1,
-                    "consumable": false,
-                    "costToSwitch": 1,
-                    "isActive": true
+                    "quantity" : 1,
+                    "consumable" : false,
+                    "costToSwitch" : 1,
+                    "isActive" : true
                 }
             ],
-            "spellBook": [
-                {
-                    "descriptor": "builtins:fireball",
-                    "decorations": {
-                        "name": "builtins:fireball.name",
-                        "sprite": "builtins:pyromancy",
-                        "description": "builtins:fireball.desc"
-                    },
-                    "cost": 0,
-                    "user_needs_range": [
-                        2,
-                        3,
-                        4,
-                        5
-                    ],
-                    "cooldown": {
-                        "current": 0,
-                        "max": null
-                    },
-                    "uses": {
-                        "current": 0,
-                        "max": 1
+            "spellBook" : {
+                "spells" : [
+                    {
+                        "descriptor" : "builtins:fireball",
+                        "decorations" : {
+                            "name" : "builtins:fireball.name",
+                            "sprite" : "builtins:pyromancy",
+                            "description" : "builtins:fireball.desc"
+                        },
+                        "cost" : 0,
+                        "user_needs_range" : [
+                            2,
+                            3,
+                            4,
+                            5
+                        ],
+                        "cooldown" : {
+                            "current" : 0,
+                            "max" : null
+                        },
+                        "uses" : {
+                            "current" : 0,
+                            "max" : 1
+                        },
+                        "isActive": true
                     }
-                }
-            ],
-            "status_effects": []
+                ],
+                "maxActiveSpells" : 4
+            },
+            "status_effects" : []
         }
     ],
     "battlefield" : {
@@ -1760,35 +1767,35 @@
         "separators" : "builtins:separator",
         "connectors" : "builtins:connector"
     },
-    "turnOrder": {
-        "order": [
+    "turnOrder" : {
+        "order" : [
             {
-                "descriptor": "builtins:target_dummy",
-                "decorations": {
-                    "name": "builtins:target_dummy.name",
-                    "sprite": "builtins:target_dummy",
-                    "description": "builtins:target_dummy.desc"
+                "descriptor" : "builtins:target_dummy",
+                "decorations" : {
+                    "name" : "builtins:target_dummy.name",
+                    "sprite" : "builtins:target_dummy",
+                    "description" : "builtins:target_dummy.desc"
                 },
-                "square": {
-                    "line": "3",
-                    "column": "4"
+                "square" : {
+                    "line" : "3",
+                    "column" : "4"
                 },
-                "controlledByYou": true
+                "controlledByYou" : true
             },
             {
-                "descriptor": "builtins:hero",
-                "decorations": {
-                    "name": "builtins:hero.name",
-                    "sprite": "builtins:hero",
-                    "description": "builtins:hero.desc"
+                "descriptor" : "builtins:hero",
+                "decorations" : {
+                    "name" : "builtins:hero.name",
+                    "sprite" : "builtins:hero",
+                    "description" : "builtins:hero.desc"
                 },
-                "square": {
-                    "line": "4",
-                    "column": "6"
+                "square" : {
+                    "line" : "4",
+                    "column" : "6"
                 },
-                "controlledByYou": true
+                "controlledByYou" : true
             }
         ],
-        "current": 1
+        "current" : 1
     }
 }

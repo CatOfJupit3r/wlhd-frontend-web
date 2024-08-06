@@ -42,11 +42,8 @@ const MenuIsDisabled = (type: string, info: EntityInfoFull) => {
         case 'weaponry':
             return !info.weaponry || info.weaponry.length === 0
         case 'spells': {
-            let spellBook = info.spellBook
-            if (!spellBook) {
-                spellBook = (info as any).spell_book as typeof info.spellBook
-            }
-            return !spellBook || spellBook.length === 0
+            const spellBook = info.spellBook
+            return !spellBook || spellBook.spells.length === 0
         }
         default:
             return false

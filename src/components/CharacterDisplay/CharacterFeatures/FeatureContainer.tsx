@@ -59,18 +59,12 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                 break
             }
             case 'spells': {
-                let spellBook = info.spellBook
-                if (!spellBook) {
-                    spellBook = (info as any).spell_book
-                    if (!spellBook) {
-                        break
-                    }
-                }
+                const spellBook = info.spellBook
                 spellBook &&
-                    spellBook.length > 0 &&
+                    spellBook.spells.length > 0 &&
                     children.push(
-                        ...(spellBook && spellBook.length > 0
-                            ? spellBook.map((spell, index) => {
+                        ...(spellBook && spellBook.spells.length > 0
+                            ? spellBook.spells.map((spell, index) => {
                                   return <InfoDisplay key={index} info={spell} type={'spell'} />
                               })
                             : [])
