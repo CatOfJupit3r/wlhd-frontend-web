@@ -6,11 +6,13 @@ import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import styles from '../Authentication.module.css'
-import { checkHandle, checkPassword } from '@utils'
+import { apprf, checkHandle, checkPassword, cn } from '@utils'
 import { useToast } from '@hooks/useToast'
+import { Input } from '@components/ui/input'
+import { Label } from '@components/ui/label'
+import { Button } from '@components/ui/button'
 
-const SignIn = ({ style }: { style?: React.CSSProperties }) => {
+const SignIn = ({ className = '' }: { className?: string }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const { toastError } = useToast()
@@ -71,38 +73,46 @@ const SignIn = ({ style }: { style?: React.CSSProperties }) => {
     }
 
     return (
-        <div style={style} className={styles.authContainer}>
-            <h2>Welcome back</h2>
-            <form>
-                <input
-                    type="text"
-                    value={handle}
-                    placeholder="Handle"
-                    onChange={(e) => {
-                        setHandle(e.target.value)
-                    }}
-                />
-                <input
-                    type="password"
-                    value={password}
-                    placeholder="Enter password"
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
-                />
+        <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
+            <h2 className={'border-b-2 text-t-bigger'}>Welcome back</h2>
+            <form className={'flex w-full flex-col items-center gap-2'}>
+                <div className={'w-full'}>
+                    <Label htmlFor={'login'}>Handle</Label>
+                    <Input value={handle} placeholder="Enter handle" onChange={(e) => setHandle(e.target.value)} />
+                </div>
+                <div className={'w-full'}>
+                    <Label htmlFor={'password'}>Password</Label>
+                    <Input
+                        type="password"
+                        value={password}
+                        placeholder="Enter password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={'w-full'}
+                    />
+                </div>
             </form>
-            <button
+            <Button
                 type="submit"
-                className={styles.confirmBtn}
+                className={cn(
+                    'w-full bg-blue-800 text-white p-2 rounded-md transition-all duration-100',
+                    apprf('disabled:', 'bg-blue-400 text-gray-400 cursor-not-allowed')
+                )}
                 onClick={(e) => onSubmit(e).then()}
                 disabled={!checkInputValidity()}
             >
                 Sign In
-            </button>
+            </Button>
             <div>
                 <p>
                     New around here?{' '}
-                    <Link to={paths.signUp} className={styles.link}>
+                    <Link
+                        to={paths.signUp}
+                        className={cn(
+                            'text-blue-800 underline',
+                            apprf('disabled:', 'text-gray-400 cursor-not-allowed'),
+                            apprf('hover:', 'text-blue-600')
+                        )}
+                    >
                         Sign up!
                     </Link>
                 </p>

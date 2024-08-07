@@ -1,4 +1,4 @@
-import SignUp from '@components/Authentication/SignUp/SignUp'
+import SignUp from '@components/Authentication/SignUp'
 
 const SignUpPage = () => {
     return (
@@ -8,18 +8,14 @@ const SignUpPage = () => {
                 flexDirection: 'row',
             }}
         >
-            <SignUp
-                style={{
-                    marginTop: '30vh',
-                }}
-            />
+            <SignUp className={'mt-[30vh]'} />
             <div
                 style={{
                     backgroundColor: 'black',
                     flexGrow: 1 /* Takes remaining space */,
                     height: '100vh',
                 }}
-            ></div>
+            />
         </div>
     )
 }
