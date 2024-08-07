@@ -1,5 +1,5 @@
 export * from './capitalizeFirstLetter'
-export * from './isDescriptor'
+export * from './descriptorTools'
 export * from './tailwindHelpers'
 export * from './verifyInputs'
 export * from './refreshers'

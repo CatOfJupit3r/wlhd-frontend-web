@@ -9,12 +9,12 @@ import {
 import { selectActiveEntity } from '@redux/slices/infoSlice'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { generateAssetPathFullDescriptor, splitDescriptor } from '../utils'
+import { generateAssetPathFullDescriptor } from '../utils'
 import Decoration, { DecorationConfig } from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
 
-import { cn } from '@utils'
+import { cn, splitDescriptor } from '@utils'
 
 const TileEntity = (props: {
     full_descriptor: string

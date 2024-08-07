@@ -1,6 +1,6 @@
 import GameAsset from '@components/GameAsset'
 import React from 'react'
-import { splitDescriptor } from '../utils'
+import { splitDescriptor } from '@utils'
 import styles from './Tiles.module.css'
 
 const TileCosmetic = (props: {
