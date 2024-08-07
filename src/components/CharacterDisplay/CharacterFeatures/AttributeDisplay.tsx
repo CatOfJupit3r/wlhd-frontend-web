@@ -48,16 +48,24 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes
             if (ignored.includes(attribute) || found_attribute_names.has(attribute)) continue
             if (attribute.endsWith('_attack')) {
                 const attribute_name = attribute.slice(0, -7)
-                if (attributes[`${attribute_name}_defense`]) {
-                    found_attributes.push({ key: attribute_name, value: attributes[attribute] })
+                const defense_attribute = `${attribute_name}_defense`
+                if (attributes[defense_attribute]) {
+                    found_attributes.push({
+                        key: attribute_name,
+                        value: `${attributes[attribute]}/${attributes[defense_attribute]}`,
+                    })
 
-                    found_attribute_names.add(`${attribute_name}_defense`)
+                    found_attribute_names.add(defense_attribute)
                     found_attribute_names.add(attribute)
                 }
             } else if (attribute.endsWith('_defense')) {
                 const attribute_name = attribute.slice(0, -8)
-                if (attributes[`${attribute_name}_attack`]) {
-                    found_attributes.push({ key: attribute_name, value: attributes[attribute] })
+                const attack_attribute = `${attribute_name}_attack`
+                if (attributes[attack_attribute]) {
+                    found_attributes.push({
+                        key: attribute_name,
+                        value: `${attributes[attack_attribute]}/${attributes[attribute]}`,
+                    })
 
                     found_attribute_names.add(attribute_name)
                     found_attribute_names.add(`${attribute_name}_attack`)
