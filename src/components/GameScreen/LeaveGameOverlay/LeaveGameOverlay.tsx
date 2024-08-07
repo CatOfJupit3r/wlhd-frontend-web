@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styles from './LeaveGameOverlay.module.css'
-import { Button } from '../../ui/button'
+import { Button } from '@components/ui/button'
 
 const LeaveGameOverlay = () => {
     const { t } = useTranslation()

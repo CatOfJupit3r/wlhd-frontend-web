@@ -1,4 +1,4 @@
-import Battlefield from '../Battlefield/Battlefield'
+import Battlefield from '@components/Battlefield/Battlefield'
 import styles from './GameScreen.module.css'
 import MenuContainer from './MenuContainer/MenuContainer'
 import MenuNavigator from './MenuNavigator/MenuNavigator'
