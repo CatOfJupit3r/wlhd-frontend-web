@@ -8,9 +8,13 @@ import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 import MainLayout from '../layouts/MainLayout'
 import paths from './paths'
 import routes from './routes'
+import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
+import UnderMaintenancePage from '@pages/UnderMaintenancePage'
+import PseudoPage from '@pages/PseudoPage'
 
 const RootRouter = () => {
     const { isLoggedIn } = useIsLoggedIn()
+    const { isBackendUnavailable } = useIsBackendUnavailable()
 
     const generateRouteComponent = useCallback(
         ({ path, Component, title, requiresAuth }: RouteConfig) => {
@@ -23,14 +27,14 @@ const RootRouter = () => {
                         requiresAuth ? (
                             isLoggedIn ? (
                                 <PageWrapper title={title}>
-                                    <Component />
+                                    {Component ? <Component /> : <UnderMaintenancePage />}
                                 </PageWrapper>
                             ) : (
                                 <Navigate to={paths.signIn} />
                             )
                         ) : (
                             <PageWrapper title={title}>
-                                <Component />
+                                {Component ? <Component /> : <UnderMaintenancePage />}
                             </PageWrapper>
                         )
                     }
@@ -79,15 +83,39 @@ const RootRouter = () => {
     return (
         <Router>
             <Routes>
-                {generateRoutes(routes)}
-                <Route
-                    path="*"
-                    element={
-                        <PageWrapper title={'not_found'}>
-                            <NotFoundPage />
-                        </PageWrapper>
-                    }
-                />
+                {typeof isBackendUnavailable === 'boolean' ? (
+                    isBackendUnavailable ? (
+                        <Route
+                            path="*"
+                            element={
+                                <PageWrapper title={'backend_unavailable'}>
+                                    <UnderMaintenancePage />
+                                </PageWrapper>
+                            }
+                        />
+                    ) : (
+                        <>
+                            {generateRoutes(routes)}
+                            <Route
+                                path="*"
+                                element={
+                                    <PageWrapper title={'not_found'}>
+                                        <NotFoundPage />
+                                    </PageWrapper>
+                                }
+                            />
+                        </>
+                    )
+                ) : (
+                    <Route
+                        path="*"
+                        element={
+                            <PageWrapper title={'loading'}>
+                                <PseudoPage />
+                            </PageWrapper>
+                        }
+                    />
+                )}
             </Routes>
         </Router>
     )

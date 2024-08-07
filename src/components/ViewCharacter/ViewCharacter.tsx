@@ -37,9 +37,14 @@ const ViewCharacter = ({ initial }: { initial: null | string }) => {
         if (current === null) {
             setCharacter(null)
         } else if (lobby && lobby.characters && lobby.characters[current]) {
-            APIService.getCharacterInfo(lobby.lobbyId, lobby.characters[current].descriptor).then((res) => {
-                setCharacter(res)
-            })
+            APIService.getCharacterInfo(lobby.lobbyId, lobby.characters[current].descriptor)
+                .then((res) => {
+                    setCharacter(res)
+                })
+                .catch((e) => {
+                    console.error(e)
+                    setCharacter(null)
+                })
         }
     }, [current])
 

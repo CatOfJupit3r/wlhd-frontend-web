@@ -6,13 +6,32 @@ import { CharacterInfo } from '@models/CharacterInfo'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import { REACT_APP_BACKEND_URL } from 'config'
-import AuthManager from './AuthManager'
+import AuthManager from '@services/AuthManager'
+import EventEmitter from 'events'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
 }
 
+const isServerUnavailableError = (error: unknown) => {
+    return error instanceof AxiosError && error.code === 'ERR_NETWORK'
+}
+
 class APIService {
+    private backendRefusedConnection: boolean | null = null
+    private emitter = new EventEmitter()
+    private healthCheckNeeded = true
+    private healthCheckInterval: NodeJS.Timeout | null = null
+    private healthCheckIntervalTime = 1000 * 60 * 5 // 5 minutes
+
+    eventTypes = {
+        BACKEND_STATUS_CHANGED: 'BACKEND_STATUS_CHANGED',
+    }
+
+    public constructor() {
+        this.addHealthCheckInterval()
+    }
+
     private endpoints = {
         LOGIN: `${REACT_APP_BACKEND_URL}/login`,
         LOGOUT: `${REACT_APP_BACKEND_URL}/logout`,
@@ -80,6 +99,10 @@ class APIService {
                     console.log('Retry succeeded!', url)
                     return retryData
                 }
+            } else if (isServerUnavailableError(error)) {
+                this.handleBackendRefusedConnection()
+                this.injectResponseMessageToError(error)
+                throw error
             } else {
                 this.injectResponseMessageToError(error)
                 throw error
@@ -127,13 +150,28 @@ class APIService {
     }
 
     public login = async (handle: string, password: string) => {
-        const response = await axios.post(this.endpoints.LOGIN, { handle, password })
+        let response
+        try {
+            response = await axios.post(this.endpoints.LOGIN, { handle, password })
+        } catch (error) {
+            if (isServerUnavailableError(error)) {
+                this.handleBackendRefusedConnection()
+            }
+            throw error
+        }
         const { accessToken, refreshToken } = response.data
         AuthManager.login({ accessToken, refreshToken })
     }
 
     public createAccount = async (handle: string, password: string) => {
-        await axios.post(this.endpoints.REGISTER, { handle, password })
+        try {
+            await axios.post(this.endpoints.REGISTER, { handle, password })
+        } catch (error) {
+            if (isServerUnavailableError(error)) {
+                this.handleBackendRefusedConnection()
+            }
+            throw error
+        }
         await this.login(handle, password)
     }
 
@@ -269,6 +307,65 @@ class APIService {
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}?short=true`,
             method: 'get',
         })) as ShortLobbyInformation
+    }
+
+    private handleBackendRefusedConnection = () => {
+        this.backendRefusedConnection = true
+        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
+        this.addHealthCheckInterval()
+    }
+
+    public isBackendUnavailable = (): boolean | null => {
+        if (this.backendRefusedConnection === null) {
+            return null
+        } else {
+            return this.backendRefusedConnection
+        }
+    }
+
+    public onBackendStatusChange = (callback: (status: boolean) => void) => {
+        this.emitter.on(this.eventTypes.BACKEND_STATUS_CHANGED, callback)
+        return () => {
+            this.emitter.off(this.eventTypes.BACKEND_STATUS_CHANGED, callback)
+        }
+    }
+
+    private healthCheck = async () => {
+        console.log("Checking backend's health")
+        if (!this.healthCheckNeeded) {
+            this.removeHealthCheckInterval()
+        }
+        try {
+            await axios.get(`${REACT_APP_BACKEND_URL}/health/`)
+        } catch (error) {
+            if (isServerUnavailableError(error)) {
+                this.backendRefusedConnection = true
+                this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
+                return
+            }
+        }
+        this.backendRefusedConnection = false
+        this.removeHealthCheckInterval()
+        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
+    }
+
+    private removeHealthCheckInterval = () => {
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval)
+        }
+    }
+
+    private addHealthCheckInterval = () => {
+        if (this.backendRefusedConnection === null) {
+            this.healthCheck().then()
+        } else {
+            if (this.healthCheckInterval) {
+                clearInterval(this.healthCheckInterval)
+            }
+            this.healthCheckInterval = setInterval(() => {
+                this.healthCheck().then()
+            }, this.healthCheckIntervalTime)
+        }
     }
 }
 
