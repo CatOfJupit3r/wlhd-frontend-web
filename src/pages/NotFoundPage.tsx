@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { GrDocumentMissing } from 'react-icons/gr'
 import { apprf, cn } from '@utils'
+import { useTranslation } from 'react-i18next'
 
 const NotFoundPage = () => {
+    const { t } = useTranslation()
     return (
         <div className={'mt-[2vh] flex size-full flex-col items-center'}>
             <div
@@ -11,9 +13,9 @@ const NotFoundPage = () => {
                     apprf('max-[712px]', 'max-w-full px-10')
                 )}
             >
-                <h1>Page Not Found</h1>
+                <h1>{t('local:not_found.title')}</h1>
                 <p className={'opacity-60 hover:opacity-100'}>
-                    The page you are looking for does not exist. <Link to={'/'}>Go to Home Page</Link>
+                    {t('local:not_found.explanation')} <Link to={'/'}>{t('local:not_found.back')}</Link>
                 </p>
                 <GrDocumentMissing className={'mt-5 text-t-bigger text-gray-400'} />
             </div>
