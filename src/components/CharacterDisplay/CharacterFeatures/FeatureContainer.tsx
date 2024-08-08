@@ -1,6 +1,11 @@
 import React, { FC, useCallback } from 'react'
 import { EntityInfoFull } from '@models/Battlefield'
-import InfoDisplay from '@components/CharacterDisplay/CharacterFeatures/InfoDisplay/InfoDisplay'
+import {
+    ItemInfoDisplay,
+    SpellInfoDisplay,
+    StatusEffectInfoDisplay,
+    WeaponInfoDisplay,
+} from '@components/CharacterDisplay/CharacterFeatures/InfoDisplay/InfoDisplay'
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
 import { useTranslation } from 'react-i18next'
 
@@ -39,7 +44,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                     children.push(
                         ...(inventory && inventory.length > 0
                             ? inventory.map((item, index) => {
-                                  return <InfoDisplay key={index} info={item} type={'item'} />
+                                  return <ItemInfoDisplay key={index} info={item} />
                               })
                             : [])
                     )
@@ -52,7 +57,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                     children.push(
                         ...(status_effects && status_effects.length > 0
                             ? status_effects.map((effect, index) => {
-                                  return <InfoDisplay key={index} info={effect} type={'status_effect'} />
+                                  return <StatusEffectInfoDisplay key={index} info={effect} />
                               })
                             : [])
                     )
@@ -65,7 +70,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                     children.push(
                         ...(spellBook && spellBook.spells.length > 0
                             ? spellBook.spells.map((spell, index) => {
-                                  return <InfoDisplay key={index} info={spell} type={'spell'} />
+                                  return <SpellInfoDisplay key={index} info={spell} />
                               })
                             : [])
                     )
@@ -78,7 +83,7 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                     children.push(
                         ...(weaponry && weaponry.length > 0
                             ? weaponry.map((weapon, index) => {
-                                  return <InfoDisplay key={index} info={weapon} type={'weapon'} />
+                                  return <WeaponInfoDisplay key={index} info={weapon} />
                               })
                             : [])
                     )

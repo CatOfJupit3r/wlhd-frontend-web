@@ -1,6 +1,6 @@
 import ElementWithIcon from '@components/ElementWithIcon'
 import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { useCallback, useMemo } from 'react'
+import { HTMLAttributes, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './InfoDisplay.module.css'
 import { ActiveIcon, CooldownIcon } from '@components/icons'
@@ -46,9 +46,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [])
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment) => {
-        return info.isActive ? (
-            <ActiveIcon className={'size-6'} />
-        ) : null
+        return info.isActive ? <ActiveIcon className={'size-6'} /> : null
     }, [])
 
     const UsageDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
@@ -106,9 +104,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     return (
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
-                <div
-                    className={'flex flex-row items-center gap-2'}
-                >
+                <div className={'flex flex-row items-center gap-2'}>
                     {t(decorations.name)}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' &&
@@ -144,4 +140,16 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     )
 }
 
+export const WeaponInfoDisplay = ({ info, ...props }: { info: WeaponSegment['info'] } & HTMLAttributes<HTMLDivElement>) => (
+    <InfoDisplay type={'weapon'} info={info} {...props} />
+)
+export const ItemInfoDisplay = ({ info, ...props }: { info: ItemSegment['info'] } & HTMLAttributes<HTMLDivElement>) => (
+    <InfoDisplay type={'item'} info={info} {...props} />
+)
+export const SpellInfoDisplay = ({ info, ...props }: { info: SpellSegment['info'] } & HTMLAttributes<HTMLDivElement>) => (
+    <InfoDisplay type={'spell'} info={info} {...props} />
+)
+export const StatusEffectInfoDisplay = ({ info, ...props }: { info: StatusEffectSegment['info'] } & HTMLAttributes<HTMLDivElement>) => (
+    <InfoDisplay type={'status_effect'} info={info} {...props} />
+)
 export default InfoDisplay
