@@ -25,14 +25,12 @@ const CharacterBasicInfo = ({
 
     return (
         <div className={'flex flex-row gap-4'}>
-            <div>
-                <CharacterGameAsset
-                    src={character.sprite}
-                    alt={character.name}
-                    className={'size-20'}
-                    line={character?.square?.line || ''}
-                />
-            </div>
+            <CharacterGameAsset
+                src={character.sprite}
+                alt={character.name}
+                className={'size-20'}
+                line={character?.square?.line || ''}
+            />
             <div>
                 <div className={'text-ellipsis text-t-normal font-bold'}>
                     {isDescriptor(character.name) ? t(character.name) : character.name}
