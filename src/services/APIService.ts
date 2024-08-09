@@ -1,8 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { ShortLobbyInformation, UserInformation } from '@models/APIData'
-import { AttributeInfo, EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { CharacterInfo } from '@models/CharacterInfo'
+import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import { REACT_APP_BACKEND_URL } from 'config'
@@ -206,62 +205,86 @@ class APIService {
         })) as LobbyInfo
     }
 
-    public getBasicCharacterInfo = async (lobby_id: string, descriptor: string): Promise<CharacterInfo> => {
-        return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}`,
-            method: 'get',
-        })) as CharacterInfo
-    }
-
-    public getCharacterWeaponry = async (
-        lobby_id: string,
-        descriptor: string
+    public getLoadedWeapons = async (
+        dlc: string
     ): Promise<{
-        weaponry: Array<WeaponInfo>
+        [descriptor: string]: WeaponInfo
     }> => {
+        if (!dlc) {
+            return {}
+        }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/weaponry`,
+            url: `${REACT_APP_BACKEND_URL}/game/weapons?dlc=${dlc}`,
             method: 'get',
-        })) as { weaponry: Array<WeaponInfo> }
+        })) as {
+            [descriptor: string]: WeaponInfo
+        }
     }
 
-    public getCharacterSpellbook = async (
-        lobby_id: string,
-        descriptor: string
+    public getLoadedItems = async (
+        dlc: string
     ): Promise<{
-        spells: {
-            spellBook: Array<SpellInfo>
-            spellLayout: { layout: Array<string>; conflicts: unknown }
+        items: {
+            [descriptor: string]: ItemInfo
         }
     }> => {
+        if (!dlc) {
+            return {
+                items: {},
+            }
+        }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/spellbook`,
+            url: `${REACT_APP_BACKEND_URL}/game/items?dlc=${dlc}`,
             method: 'get',
-        })) as { spells: { spellBook: Array<WeaponInfo>; spellLayout: { layout: Array<string>; conflicts: unknown } } }
+        })) as {
+            items: {
+                [descriptor: string]: ItemInfo
+            }
+        }
     }
 
-    public getCharacterStatusEffects = async (
-        lobby_id: string,
-        descriptor: string
+    public getLoadedSpells = async (
+        dlc: string
     ): Promise<{
-        statusEffects: Array<StatusEffectInfo>
+        spells: {
+            [descriptor: string]: SpellInfo
+        }
     }> => {
+        if (!dlc) {
+            return {
+                spells: {},
+            }
+        }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/status_effects`,
+            url: `${REACT_APP_BACKEND_URL}/game/spells?dlc=${dlc}`,
             method: 'get',
-        })) as { statusEffects: Array<StatusEffectInfo> }
+        })) as {
+            spells: {
+                [descriptor: string]: SpellInfo
+            }
+        }
     }
 
-    public getCharacterInventory = async (
-        lobby_id: string,
-        descriptor: string
+    public getLoadedStatusEffects = async (
+        dlc: string
     ): Promise<{
-        inventory: Array<ItemInfo>
+        status_effects: {
+            [descriptor: string]: StatusEffectInfo
+        }
     }> => {
+        if (!dlc) {
+            return {
+                status_effects: {},
+            }
+        }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/inventory/`,
+            url: `${REACT_APP_BACKEND_URL}/game/status_effects?dlc=${dlc}`,
             method: 'get',
-        })) as { inventory: Array<WeaponInfo> }
+        })) as {
+            status_effects: {
+                [descriptor: string]: StatusEffectInfo
+            }
+        }
     }
 
     public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<EntityInfoFull> => {
@@ -269,18 +292,6 @@ class APIService {
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/`,
             method: 'get',
         })) as EntityInfoFull
-    }
-
-    public getCharacterAttributes = async (
-        lobby_id: string,
-        descriptor: string
-    ): Promise<{
-        attributes: AttributeInfo
-    }> => {
-        return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/attributes/`,
-            method: 'get',
-        })) as { attributes: { [attribute: string]: string } }
     }
 
     public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {
