@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { ComboboxItemArray } from '@components/ui/combobox'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import { EntityInfoFull } from '@models/Battlefield'
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
 
-const CharacterMenus: ComboboxItemArray = [
+const CharacterMenus: Array<{
+    value: string
+    label: string
+    icon: React.FC<{ className: string }>
+}> = [
     {
         value: 'attributes',
         label: 'Attributes',

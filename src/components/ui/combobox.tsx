@@ -2,7 +2,7 @@ import { Check, ChevronsUpDown } from 'lucide-react'
 import { Button } from '@components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IconComponentType } from '@components/icons/icon_factory'
 import { ClassValue } from 'clsx'
 import { PlaceholderIcon } from '@components/icons'
@@ -11,7 +11,7 @@ import { cn } from '@utils'
 interface Item {
     value: string
     label: string
-    icon: IconComponentType
+    icon?: IconComponentType
     disabled?: boolean
 }
 
@@ -31,28 +31,40 @@ export interface ComboboxProps {
 
 const iconSizeClassName = 'size-10'
 
-const ComboBoxItem = ({ icon, label }: { icon: IconComponentType; label: string }) => {
+const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType; label: string }) => {
     const [badIcon, setBadIcon] = useState(false)
 
     return (
         <div className="flex max-w-[90%] items-center">
-            {badIcon ? (
-                <PlaceholderIcon className={cn(iconSizeClassName, 'opacity-10')} />
-            ) : (
-                icon({
-                    onError: () => {
-                        setBadIcon(true)
-                    },
-                    className: iconSizeClassName,
-                })
-            )}
-            <p className="ml-2 truncate">{label}</p>
+            {icon ? (
+                badIcon ? (
+                    <PlaceholderIcon className={cn(iconSizeClassName, 'opacity-10')} />
+                ) : (
+                    icon({
+                        onError: () => {
+                            setBadIcon(true)
+                        },
+                        className: iconSizeClassName,
+                    })
+                )
+            ) : null}
+            <p className={cn('truncate', icon ? 'ml-2' : '')}>{label}</p>
         </div>
     )
 }
 
 export const Combobox = ({ items, value, onChange, selectText, size, includeSearch }: ComboboxProps) => {
     const [open, setOpen] = useState(false)
+    const buttonRef = useRef<HTMLButtonElement>(null)
+    const contentRef = useRef<HTMLDivElement>(null)
+
+    const [buttonWidth, setButtonWidth] = useState<string | number>('auto');
+
+    useEffect(() => {
+        if (buttonRef.current) {
+            setButtonWidth(buttonRef.current.offsetWidth);
+        }
+    }, [buttonRef.current?.offsetWidth]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -62,11 +74,12 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                     role="combobox"
                     aria-expanded={open}
                     className={cn('justify-between text-left', size?.width || 'w-full', size?.height || 'h-[50px]')}
+                    ref={buttonRef}
                 >
                     <div className={'w-full'}>
                         {items.find((item) => item.value === value) ? (
                             <ComboBoxItem
-                                icon={items.find((item) => item.value === value)!.icon}
+                                icon={items.find((item) => item.value === value)!.icon || undefined}
                                 label={items.find((item) => item.value === value)!.label}
                             />
                         ) : (
@@ -76,7 +89,13 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className={cn('p-1', size?.width || 'w-full')}>
+            <PopoverContent
+                className={cn('p-1', size?.width || 'w-full')}
+                ref={contentRef}
+                style={{
+                    width: buttonWidth
+                }}
+            >
                 <Command>
                     {includeSearch && <CommandInput placeholder={selectText || 'Select...'} />}
                     <CommandEmpty>Nothing here... huh?..</CommandEmpty>
