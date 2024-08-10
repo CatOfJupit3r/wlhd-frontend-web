@@ -208,16 +208,20 @@ class APIService {
     public getLoadedWeapons = async (
         dlc: string
     ): Promise<{
-        [descriptor: string]: WeaponInfo
+        weapons: { [descriptor: string]: WeaponInfo }
     }> => {
         if (!dlc) {
-            return {}
+            return {
+                weapons: {},
+            }
         }
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/game/weapons?dlc=${dlc}`,
             method: 'get',
         })) as {
-            [descriptor: string]: WeaponInfo
+            weapons: {
+                [descriptor: string]: WeaponInfo
+            }
         }
     }
 
