@@ -30,17 +30,17 @@ interface StatusEffectSegment {
 export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
 
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('local',{
+        keyPrefix: 'game.info_display',
+    })
     const { decorations } = info
-
-    const tPath = useMemo(() => 'local:game.info_display.', [])
 
     const ItemExclusives = useCallback(({ info }: ItemSegment | WeaponSegment) => {
         if (info)
             return (
                 <p>
-                    {t(tPath + 'quantity', {
-                        quantity: info.quantity || '-',
+                    {t('quantity', {
+                        quantity: info.quantity ?? '-',
                     })}
                 </p>
             )
@@ -54,7 +54,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         return (
             <div id={'usages'} className={styles.infoSegmentUsageDetails}>
                 <p>
-                    {t(tPath + 'user_must_be', {
+                    {t('user_must_be', {
                         range: info.user_needs_range
                             ? info.user_needs_range
                                   .map((value: unknown) => {
@@ -67,7 +67,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     })}
                 </p>
                 {info.uses && info.uses.max !== null && (
-                    <p>{t(tPath + 'uses', { uses: `${info.uses.current || '-'}|${info.uses.max || '-'}` })}</p>
+                    <p>{t('uses', { uses: `${info.uses.current ?? '-'}|${info.uses.max ?? '-'}` })}</p>
                 )}
             </div>
         )
@@ -76,8 +76,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
             <p>
-                {t(tPath + 'cost', {
-                    cost: info.cost || '-',
+                {t('cost', {
+                    cost: info.cost ?? '-',
                 })}
             </p>
         )
@@ -95,7 +95,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             color: 'black',
                         }}
                     >
-                        {info.cooldown ? `${info.cooldown.current || '-'} | ${info.cooldown.max || '-'}` : '-'}
+                        {info.cooldown ? `${info.cooldown.current ?? '-'} | ${info.cooldown.max ?? '-'}` : '-'}
                     </p>
                 }
             />
@@ -106,7 +106,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         return (
             <div className={'flex items-center gap-1'}>
                 <HourglassIcon className={'size-5'} />
-                {info.duration === null ? <BiInfinite className={'size-5'} /> : <p>{info.duration || '-'}</p>}
+                {info.duration === null ? <BiInfinite className={'size-5'} /> : <p>{info.duration ?? '-'}</p>}
             </div>
         )
     }, [])
@@ -115,7 +115,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium relative')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div className={'flex flex-row items-center gap-2'}>
-                    {t(decorations?.name) || '???'}
+                    {t(decorations?.name) ?? '???'}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' &&
                         info.isActive &&
@@ -145,7 +145,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 {type !== 'status_effect' && UsageDetails({ type, info } as ItemSegment | WeaponSegment | SpellSegment)}
             </div>
             <div id={'description'} className={styles.infoSegmentDescription}>
-                {t(decorations?.description) || '???'}
+                {t(decorations?.description) ?? '???'}
             </div>
         </div>
     )
