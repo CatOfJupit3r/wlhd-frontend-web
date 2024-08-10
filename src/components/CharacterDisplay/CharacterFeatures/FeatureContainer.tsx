@@ -19,7 +19,7 @@ type FeatureProps = {
     }
 }
 
-const EmptyFeatureContent = () => {
+export const EmptyFeatureContent = () => {
     const { t } = useTranslation()
 
     return (
@@ -51,12 +51,12 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                 break
             }
             case 'statusEffects': {
-                const { status_effects } = info
-                status_effects &&
-                    status_effects.length > 0 &&
+                const { statusEffects } = info
+                statusEffects &&
+                    statusEffects.length > 0 &&
                     children.push(
-                        ...(status_effects && status_effects.length > 0
-                            ? status_effects.map((effect, index) => {
+                        ...(statusEffects && statusEffects.length > 0
+                            ? statusEffects.map((effect, index) => {
                                   return <StatusEffectInfoDisplay key={index} info={effect} />
                               })
                             : [])

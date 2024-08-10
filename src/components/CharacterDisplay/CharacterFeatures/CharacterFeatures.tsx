@@ -41,7 +41,7 @@ const MenuIsDisabled = (type: string, info: EntityInfoFull) => {
         case 'inventory':
             return !info.inventory || info.inventory.length === 0
         case 'statusEffects':
-            return !info.status_effects || info.status_effects.length === 0
+            return !info.statusEffects || info.statusEffects.length === 0
         case 'weaponry':
             return !info.weaponry || info.weaponry.length === 0
         case 'spells': {

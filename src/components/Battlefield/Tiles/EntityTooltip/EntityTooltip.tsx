@@ -46,7 +46,7 @@ const EntityTooltip = ({ id }: { id: string }) => {
         if (!entity_info) {
             return <PlaceholderTooltip />
         }
-        const { decorations, square, health, action_points, armor, status_effects } = entity_info
+        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = entity_info
         return (
             <>
                 <p className={'text-t-small font-semibold'}>

@@ -32,7 +32,7 @@ export interface EntityInfoTooltip {
     health: { current: string; max: string }
     action_points: { current: string; max: string }
     armor: { current: string; base: string }
-    status_effects: Array<StatusEffectInfo>
+    statusEffects: Array<StatusEffectInfo>
 }
 
 export interface EntityInfoTurn {
@@ -52,14 +52,20 @@ export interface EntityInfoFull {
         spells: Array<SpellInfo>
         maxActiveSpells: number | null
     }
-    status_effects: Array<StatusEffectInfo>
+    statusEffects: Array<StatusEffectInfo>
 }
 
 export interface EntityAttributes {
     [attribute: string]: string
 }
 
-export interface WeaponInfo {
+interface MethodVariableObject {
+    method_variables?: {
+        [key: string]: string | null | number
+    }
+}
+
+export interface WeaponInfo extends MethodVariableObject {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -74,7 +80,7 @@ export interface WeaponInfo {
     isActive: boolean
 }
 
-export interface ItemInfo {
+export interface ItemInfo extends MethodVariableObject {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -88,7 +94,7 @@ export interface ItemInfo {
     consumable: boolean // if item is consumable
 }
 
-export interface SpellInfo {
+export interface SpellInfo extends MethodVariableObject {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -98,10 +104,10 @@ export interface SpellInfo {
         max: number | null
     }
     cooldown: { current: number; max: number | null }
-    isActive?: boolean // CHARACTER PAGE EXCLUSIVE
+    isActive?: boolean
 }
 
-export interface StatusEffectInfo {
+export interface StatusEffectInfo extends MethodVariableObject {
     decorations: GameComponentDecoration
     duration: string | null
 }

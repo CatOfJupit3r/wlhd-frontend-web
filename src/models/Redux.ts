@@ -1,16 +1,5 @@
 import { ActionInput as ActionInputInterface } from './ActionInput'
-import {
-    AttributeInfo,
-    Battlefield,
-    EntityInfoFull,
-    EntityInfoTooltip,
-    EntityInfoTurn,
-    GameStateContainer,
-    ItemInfo,
-    SpellInfo,
-    StatusEffectInfo,
-    WeaponInfo,
-} from './Battlefield'
+import { Battlefield, EntityInfoFull, EntityInfoTooltip, GameStateContainer } from './Battlefield'
 import { UserInformation } from '@models/APIData'
 import { IndividualTurnOrder } from '@models/GameHandshake'
 
@@ -75,30 +64,6 @@ export interface BattlefieldState {
     }
 }
 
-export interface CharacterState {
-    descriptor: string
-    fetched: {
-        inventory: Array<ItemInfo>
-        weaponry: Array<WeaponInfo>
-        spells: {
-            spellBook: Array<SpellInfo>
-            spellLayout: {
-                layout: Array<string>
-                conflicts: unknown
-            }
-        }
-        statusEffects: Array<StatusEffectInfo>
-        attributes: AttributeInfo
-    }
-    loading: {
-        inventory: LoadingState
-        weaponry: LoadingState
-        spells: LoadingState
-        statusEffects: LoadingState
-        attributes: LoadingState
-    }
-}
-
 export interface CombatInfo {
     nickname: string
     isActive: boolean
@@ -136,11 +101,3 @@ export interface CharacterInLobby {
         sprite: string
     }
 }
-
-type CharacterInTurnOrder = {
-    controlledByYou: boolean
-    square: {
-        line: number
-        column: number
-    }
-} & CharacterInLobby
