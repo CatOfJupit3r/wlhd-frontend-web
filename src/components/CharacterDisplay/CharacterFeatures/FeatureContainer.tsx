@@ -5,7 +5,7 @@ import {
     SpellInfoDisplay,
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
-} from '@components/CharacterDisplay/CharacterFeatures/InfoDisplay/InfoDisplay'
+} from '@components/InfoDisplay/InfoDisplay'
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
 import { useTranslation } from 'react-i18next'
 
