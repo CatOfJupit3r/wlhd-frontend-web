@@ -20,11 +20,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Checkbox } from '@components/ui/checkbox'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { Input } from '@components/ui/input'
-import { EmptyFeatureContent } from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { useDataContext } from '@components/ContextProviders/GameDataProvider'
 import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
+import { EmptyMenuContent } from '@components/ui/menu'
 
 const checkIfCanActivateMore = (weaponry: EntityInfoFull['weaponry']) => {
     return weaponry.filter((weapon) => weapon.isActive).length === 0
@@ -268,7 +268,7 @@ const WeaponryEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.weaponry.length === 0 && <EmptyFeatureContent />}
+            {character.weaponry.length === 0 && <EmptyMenuContent />}
             {character.weaponry.map((weapon, index) => {
                 return (
                     <div key={index}>

@@ -20,11 +20,11 @@ import { DLCs } from '@components/CharacterEditor/CharacterEditor'
 import { MdExposureNeg1, MdPlusOne } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { EmptyFeatureContent } from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { useDataContext } from '@components/ContextProviders/GameDataProvider'
 import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
+import { EmptyMenuContent } from '@components/ui/menu'
 
 const AddNewItemComponent = () => {
     const { character, updateCharacter, flags } = useCharacterEditorContext()
@@ -249,7 +249,7 @@ const InventoryEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.inventory.length === 0 && <EmptyFeatureContent />}
+            {character.inventory.length === 0 && <EmptyMenuContent />}
             {character.inventory.map((item, index) => {
                 return (
                     <div key={index}>

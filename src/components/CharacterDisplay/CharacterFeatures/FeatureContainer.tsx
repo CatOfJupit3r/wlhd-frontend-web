@@ -7,7 +7,7 @@ import {
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay'
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
-import { useTranslation } from 'react-i18next'
+import { EmptyMenuContent } from '@components/ui/menu'
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes'] as const
 
@@ -19,23 +19,10 @@ type FeatureProps = {
     }
 }
 
-export const EmptyFeatureContent = () => {
-    const { t } = useTranslation('local', {
-        keyPrefix: 'game.character_display',
-    })
-
-    return (
-        <div className={'flex flex-col items-center p-4'}>
-            <p className={'text-t-normal font-medium'}>{t('nothing_here')}</p>
-            <p className={'text-t-small italic text-gray-700'}>{t('try_another')}</p>
-        </div>
-    )
-}
-
 const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
     const SelectedFeature = useCallback(() => {
         if (!type || !(SupportedFeatures.indexOf(type as any) > -1)) {
-            return <EmptyFeatureContent />
+            return <EmptyMenuContent />
         }
         const children: Array<JSX.Element> = []
         switch (type) {
@@ -108,12 +95,12 @@ const FeatureContainer: FC<FeatureProps> = ({ type, info, flags }) => {
                 break
             }
         }
-        return children && children.length > 0 ? children : <EmptyFeatureContent />
+        return children && children.length > 0 ? children : <EmptyMenuContent />
     }, [info, type])
 
     return (
         <div id={`${type}-container`} className={'flex flex-col gap-4'}>
-            <>{SelectedFeature ? SelectedFeature() : EmptyFeatureContent()}</>
+            <>{SelectedFeature ? SelectedFeature() : EmptyMenuContent()}</>
         </div>
     )
 }

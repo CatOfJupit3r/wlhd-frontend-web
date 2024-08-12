@@ -20,10 +20,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { MdExposureNeg1, MdPlusOne } from 'react-icons/md'
 import { Input } from '@components/ui/input'
-import { EmptyFeatureContent } from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { useDataContext } from '@components/ContextProviders/GameDataProvider'
 import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
 import { useTranslation } from 'react-i18next'
+import { EmptyMenuContent } from '@components/ui/menu'
 
 function AddNewEffectComponent() {
     const { character, updateCharacter, flags } = useCharacterEditorContext()
@@ -222,7 +222,7 @@ const StatusEffectsEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.statusEffects.length === 0 && <EmptyFeatureContent />}
+            {character.statusEffects.length === 0 && <EmptyMenuContent />}
             {character.statusEffects.map((item, index) => {
                 return (
                     <div key={index}>

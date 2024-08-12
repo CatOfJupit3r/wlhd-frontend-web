@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import { EntityInfoFull } from '@models/Battlefield'
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
-import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
+import Menu, { MenuSelection } from '@components/ui/menu'
 
 const CharacterMenus: Array<{
     value: string
@@ -61,37 +61,20 @@ interface CharacterFeaturesProps {
 }
 
 const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {
-    const [currentMenu, setCurrentMenu] = useState<string>('')
-
-    return (
-        <div className={'flex flex-col gap-2'}>
-            <ToggleGroup
-                type={'single'}
-                onValueChange={(value) => {
-                    setCurrentMenu(value)
-                }}
-            >
-                {CharacterMenus.map((menu) => (
-                    <ToggleGroupItem
-                        key={menu.value}
-                        value={menu.value}
-                        disabled={MenuIsDisabled(menu.value, character)}
-                    >
-                        {menu.icon({ className: 'size-8' })}
-                    </ToggleGroupItem>
-                )).sort((a, b) => {
-                    if (a.props.disabled) {
-                        return 1
-                    } else if (b.props.disabled) {
-                        return -1
-                    } else {
-                        return a.props.value > b.props.value ? 1 : -1
-                    }
-                })}
-            </ToggleGroup>
-            <FeatureContainer type={currentMenu} info={character} flags={flags} />
-        </div>
+    const menus: MenuSelection = useMemo(
+        () =>
+            CharacterMenus.map((menu) => {
+                return {
+                    value: menu.value,
+                    component: () => <FeatureContainer type={menu.value} info={character} flags={flags} />,
+                    icon: menu.icon,
+                    disabled: MenuIsDisabled(menu.value, character),
+                }
+            }),
+        [character, flags]
     )
+
+    return <Menu selection={menus} />
 }
 
 export default CharacterFeatures

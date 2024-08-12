@@ -19,12 +19,12 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { Checkbox } from '@components/ui/checkbox'
-import { EmptyFeatureContent } from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { useDataContext } from '@components/ContextProviders/GameDataProvider'
 import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
 import { Input } from '@components/ui/input'
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
+import { EmptyMenuContent } from '@components/ui/menu'
 
 const checkIfCanActivateMore = (
     max: EntityInfoFull['spellBook']['maxActiveSpells'],
@@ -265,7 +265,7 @@ const SpellBookEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.spellBook.spells.length === 0 && <EmptyFeatureContent />}
+            {character.spellBook.spells.length === 0 && <EmptyMenuContent />}
             {character.spellBook.spells.map((spell, index) => {
                 return (
                     <div key={index}>
