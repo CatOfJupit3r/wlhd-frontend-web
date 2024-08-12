@@ -291,6 +291,28 @@ class APIService {
         }
     }
 
+    public getLoadedCharacters = async (
+        dlc: string
+    ): Promise<{
+        characters: {
+            [descriptor: string]: EntityInfoFull
+        }
+    }> => {
+        if (!dlc) {
+            return {
+                characters: {},
+            }
+        }
+        return (await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/game/characters?dlc=${dlc}`,
+            method: 'get',
+        })) as {
+            characters: {
+                [descriptor: string]: EntityInfoFull
+            }
+        }
+    }
+
     public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<EntityInfoFull> => {
         return (await this.fetch({
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/`,

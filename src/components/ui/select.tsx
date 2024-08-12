@@ -1,8 +1,5 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronDown, ChevronUp } from 'lucide-react'
-
-/** eslint-disable */
-
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import { cn } from '@utils'
 
@@ -114,7 +111,8 @@ const SelectItem = forwardRef<
         ref={ref}
         className={cn(
             `relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none
-            focus:bg-accent focus:text-accent-foreground data-[disabled='true']:pointer-events-none data-[disabled='true']:opacity-50`,
+            focus:bg-accent focus:text-accent-foreground data-[disabled='true']:pointer-events-none
+            data-[disabled='true']:opacity-50`,
             className
         )}
         {...props}

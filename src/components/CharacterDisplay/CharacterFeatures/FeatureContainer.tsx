@@ -20,12 +20,14 @@ type FeatureProps = {
 }
 
 export const EmptyFeatureContent = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('local', {
+        keyPrefix: 'game.character_display',
+    })
 
     return (
         <div className={'flex flex-col items-center p-4'}>
-            <p className={'text-t-normal font-medium'}>{t('local:game.character_display.nothing_here')}</p>
-            <p className={'text-t-small italic text-gray-700'}>{t('local:game.character_display.try_another')}</p>
+            <p className={'text-t-normal font-medium'}>{t('nothing_here')}</p>
+            <p className={'text-t-small italic text-gray-700'}>{t('try_another')}</p>
         </div>
     )
 }
