@@ -3,15 +3,16 @@ import { cn } from '@utils'
 
 function Skeleton({
     className,
+    pulsating,
     ...props
 }: {
-    static?: boolean
+    pulsating?: boolean
 } & HTMLAttributes<HTMLDivElement>) {
-    return <div className={cn(`rounded-md bg-muted ${props.static ? '' : 'animate-pulse'}`, className)} {...props} />
+    return <div className={cn(`rounded-md bg-muted ${pulsating ? 'animate-pulse' : ''}`, className)} {...props} />
 }
 
 const StaticSkeleton = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
-    return <Skeleton static={true} className={className} {...props} />
+    return <Skeleton pulsating={false} className={className} {...props} />
 }
 
 export { Skeleton, StaticSkeleton }

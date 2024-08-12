@@ -53,17 +53,17 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     }, [_id, name])
 
     const Placeholders = useCallback(
-        (props: { static?: boolean }) => {
+        (props: { pulsating?: boolean }) => {
             return (
                 <>
                     <div id={'title-and-icon'} className={'flex gap-1'}>
-                        <Skeleton className={'size-10 bg-gray-500'} static={props.static || false} />
+                        <Skeleton className={'size-10 bg-gray-500'} pulsating={props.pulsating || true} />
                         <Skeleton
                             className={'h-10 bg-gray-500'}
                             style={{
                                 width: `${placeholderParams.title}rem`,
                             }}
-                            static={props.static || false}
+                            pulsating={props.pulsating || true}
                         />
                     </div>
                     {placeholderParams.description.map((value, index) => {
@@ -74,7 +74,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                                 style={{
                                     width: `${value}rem`,
                                 }}
-                                static={props.static || false}
+                                pulsating={props.pulsating || false}
                             />
                         )
                     }, [])}
@@ -107,10 +107,10 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                 return <LobbyInfoContent />
             }
             case 'loading': {
-                return <Placeholders static={false} />
+                return <Placeholders pulsating={true} />
             }
             default: {
-                return <Placeholders static={true} />
+                return <Placeholders pulsating={false} />
             }
         }
     }, [status])
