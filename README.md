@@ -22,15 +22,15 @@ Before you begin, ensure you have met the following requirements:
 
 1. Clone this repository:
 
-```bash
-git clone https://github.com/CatOfJupit3r/wlc-frontend-web.git
-```
+    ```bash
+    git clone https://github.com/CatOfJupit3r/wlc-frontend-web.git
+    ```
 
 2. Install dependencies:
 
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 3. Create a `.env` file in the root directory of the project and populate it with the variables from `.env.example`.
 
