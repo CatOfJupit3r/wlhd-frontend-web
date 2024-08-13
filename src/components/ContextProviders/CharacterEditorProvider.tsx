@@ -36,6 +36,8 @@ export interface CharacterEditorContextType {
             allowActivation?: boolean
 
             allowExceedCooldown?: boolean
+
+            allowChangeMaxSpells?: boolean
         }
 
         exclude?: {
