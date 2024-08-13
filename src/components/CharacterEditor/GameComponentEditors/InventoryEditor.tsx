@@ -129,7 +129,7 @@ const AddNewItemComponent = () => {
                             />
                         </div>
                     )}
-                    {inventoryFlags?.allowCooldown && inventoryFlags?.allowExceedCooldown ? (
+                    {inventoryFlags?.allowCooldown && (inventoryFlags?.allowExceedCooldown ? (
                         <div>
                             <Label>{t('general.cooldown')}</Label>
                             <Input
@@ -164,7 +164,7 @@ const AddNewItemComponent = () => {
                                 />
                             </>
                         )
-                    )}
+                    ))}
                     {inventoryFlags?.allowUses && item.uses.max !== null && item.uses.max !== 0 && (
                         <div>
                             <Label>{t('general.uses')}</Label>
