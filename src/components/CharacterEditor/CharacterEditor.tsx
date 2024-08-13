@@ -9,6 +9,7 @@ import SpellBookEditor from '@components/CharacterEditor/GameComponentEditors/Sp
 import StatusEffectsEditor from '@components/CharacterEditor/GameComponentEditors/StatusEffectsEditor'
 import WeaponryEditor from '@components/CharacterEditor/GameComponentEditors/WeaponryEditor'
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
+import { cn } from '@utils'
 
 export const DLCs = [
     {
@@ -21,7 +22,7 @@ export const DLCs = [
     },
 ]
 
-const CharacterEditor = () => {
+const CharacterEditor = ({ className }: { className?: string }) => {
     const { flags } = useCharacterEditorContext()
     const { exclude } = flags
     const menus: MenuSelection = useMemo(() => {
@@ -69,7 +70,7 @@ const CharacterEditor = () => {
      */
 
     return (
-        <div className={'relative flex w-[30rem] flex-col gap-4 border-2 p-4 text-left transition-all'}>
+        <div className={cn('relative flex w-[30rem] flex-col gap-4 border-2 p-4 text-left transition-all', className)}>
             <CharacterMainInfoEditor />
             <Separator className={'mt-4'} />
             <Menu selection={menus} />

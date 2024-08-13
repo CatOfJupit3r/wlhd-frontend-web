@@ -266,6 +266,44 @@ const SpellBookEditor = () => {
                 </AccordionItem>
             </Accordion>
             {character.spellBook.spells.length === 0 && <EmptyMenuContent />}
+            {spellBookFlags?.allowChangeMaxSpells && (
+                <div>
+                    <Label>{t('spellBook.max-spells')} (max: 256)</Label>
+                    <Input
+                        type={'string'}
+                        placeholder={t('general.infinity')}
+                        value={character.spellBook.maxActiveSpells || ''}
+                        onChange={(e) => {
+                            if (e.target.value === '') {
+                                updateCharacter({
+                                    ...character,
+                                    spellBook: {
+                                        ...character.spellBook,
+                                        maxActiveSpells: null,
+                                    },
+                                })
+                                return
+                            }
+                            const value = parseInt(e.target.value)
+
+                            if (isNaN(value) || value < 0 || value > 256) {
+                                return
+                            } else {
+                                updateCharacter({
+                                    ...character,
+                                    spellBook: {
+                                        spells: character.spellBook.spells.map((spell) => ({
+                                            ...spell,
+                                            isActive: false,
+                                        })),
+                                        maxActiveSpells: value,
+                                    },
+                                })
+                            }
+                        }}
+                    />
+                </div>
+            )}
             {character.spellBook.spells.map((spell, index) => {
                 return (
                     <div key={index}>
