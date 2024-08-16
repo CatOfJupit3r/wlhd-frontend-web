@@ -7,6 +7,7 @@ import { TranslationJSON } from '@models/Translation'
 import { REACT_APP_BACKEND_URL } from 'config'
 import AuthManager from '@services/AuthManager'
 import EventEmitter from 'events'
+import { CharacterClassConversion } from '@models/EditorConversion'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -54,7 +55,7 @@ class APIService {
         _retry,
     }: {
         url: string
-        method: 'get' | 'post' | 'put' | 'delete'
+        method: 'get' | 'post' | 'put' | 'delete' | 'patch'
         data?: {
             [_: string]: any
         }
@@ -344,6 +345,54 @@ class APIService {
             url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}?short=true`,
             method: 'get',
         })) as ShortLobbyInformation
+    }
+
+    public assignPlayerToCharacter = async (
+        lobbyId: string,
+        descriptor: string,
+        playerId: string
+    ): Promise<unknown> => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}/assign_player`,
+            method: 'patch',
+            data: {
+                player_id: playerId,
+            },
+        })
+    }
+
+    public removePlayerFromCharacter = async (
+        lobbyId: string,
+        descriptor: string,
+        playerId: string
+    ): Promise<unknown> => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}/remove_player`,
+            method: 'delete',
+            data: {
+                player_id: playerId,
+            },
+        })
+    }
+
+    public deleteCharacter = async (lobbyId: string, descriptor: string): Promise<unknown> => {
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}`,
+            method: 'delete',
+        })
+    }
+
+    public updateCharacter = async (
+        lobbyId: string,
+        descriptor: string,
+        data: CharacterClassConversion
+    ): Promise<unknown> => {
+        console.log('Updating character', data)
+        return await this.fetch({
+            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}`,
+            method: 'put',
+            data,
+        })
     }
 
     private handleBackendRefusedConnection = () => {

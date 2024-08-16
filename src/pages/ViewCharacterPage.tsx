@@ -1,12 +1,12 @@
 import { useSearchParams } from 'react-router-dom'
-import ViewCharacter from '@components/ViewCharacter/ViewCharacter'
+import ViewCharacterLobby from '@components/ViewLobbyCharacters/ViewLobbyCharacters'
 
 const ViewCharacterPage = () => {
     const [searchParams] = useSearchParams()
 
     return (
         <div>
-            <ViewCharacter initial={searchParams.get('character') || null} />
+            <ViewCharacterLobby initial={searchParams.get('character') || null} />
         </div>
     )
 }

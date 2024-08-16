@@ -265,10 +265,11 @@ const SpellBookEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.spellBook.spells.length === 0 && <EmptyMenuContent />}
             {spellBookFlags?.allowChangeMaxSpells && (
                 <div>
-                    <Label>{t('spellBook.max-spells')} (max: 256)</Label>
+                    <Label>{t('spellBook.max-spells', {
+                        maxSpells: '256'
+                    })}</Label>
                     <Input
                         type={'string'}
                         placeholder={t('general.infinity')}
@@ -339,6 +340,8 @@ const SpellBookEditor = () => {
                     </div>
                 )
             })}
+            {character.spellBook.spells.length === 0 && <EmptyMenuContent />}
+
         </div>
     )
 }

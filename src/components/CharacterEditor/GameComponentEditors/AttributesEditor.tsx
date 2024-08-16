@@ -39,7 +39,7 @@ const AttributesEditor = () => {
                                         setAttribute(attribute, '0')
                                     } else if (
                                         !isNaN(parseInt(e.target.value)) &&
-                                        parseInt(e.target.value) >= 0 &&
+                                        parseInt(e.target.value) >= -99999 &&
                                         parseInt(e.target.value) <= 99999
                                     ) {
                                         setAttribute(attribute, e.target.value)

@@ -11,7 +11,7 @@ export const refreshLobbyInfo = async (lobbyId: string | undefined) => {
 
     let response
     try {
-        response = await APIService.getLobbyInfo(lobbyId || '')
+        response = await APIService.getLobbyInfo(lobbyId)
     } catch (error) {
         console.log(error)
         return

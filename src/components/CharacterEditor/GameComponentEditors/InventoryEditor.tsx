@@ -129,26 +129,9 @@ const AddNewItemComponent = () => {
                             />
                         </div>
                     )}
-                    {inventoryFlags?.allowCooldown && (inventoryFlags?.allowExceedCooldown ? (
-                        <div>
-                            <Label>{t('general.cooldown')}</Label>
-                            <Input
-                                placeholder={t('general.cooldown')}
-                                value={item.cooldown.current}
-                                type={'number'}
-                                className={'w-[6ch]'}
-                                onChange={getHandlerChange(
-                                    99,
-                                    0,
-                                    (value) => setItem({ ...item, cooldown: { ...item.cooldown, current: value } }),
-                                    0
-                                )}
-                            />
-                        </div>
-                    ) : (
-                        item.cooldown.max !== null &&
-                        item.cooldown.max !== 0 && (
-                            <>
+                    {inventoryFlags?.allowCooldown &&
+                        (inventoryFlags?.allowExceedCooldown ? (
+                            <div>
                                 <Label>{t('general.cooldown')}</Label>
                                 <Input
                                     placeholder={t('general.cooldown')}
@@ -156,15 +139,34 @@ const AddNewItemComponent = () => {
                                     type={'number'}
                                     className={'w-[6ch]'}
                                     onChange={getHandlerChange(
-                                        item?.cooldown.max ?? 0,
+                                        99,
                                         0,
                                         (value) => setItem({ ...item, cooldown: { ...item.cooldown, current: value } }),
                                         0
                                     )}
                                 />
-                            </>
-                        )
-                    ))}
+                            </div>
+                        ) : (
+                            item.cooldown.max !== null &&
+                            item.cooldown.max !== 0 && (
+                                <>
+                                    <Label>{t('general.cooldown')}</Label>
+                                    <Input
+                                        placeholder={t('general.cooldown')}
+                                        value={item.cooldown.current}
+                                        type={'number'}
+                                        className={'w-[6ch]'}
+                                        onChange={getHandlerChange(
+                                            item?.cooldown.max ?? 0,
+                                            0,
+                                            (value) =>
+                                                setItem({ ...item, cooldown: { ...item.cooldown, current: value } }),
+                                            0
+                                        )}
+                                    />
+                                </>
+                            )
+                        ))}
                     {inventoryFlags?.allowUses && item.uses.max !== null && item.uses.max !== 0 && (
                         <div>
                             <Label>{t('general.uses')}</Label>
@@ -249,7 +251,6 @@ const InventoryEditor = () => {
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            {character.inventory.length === 0 && <EmptyMenuContent />}
             {character.inventory.map((item, index) => {
                 return (
                     <div key={index}>
@@ -300,6 +301,7 @@ const InventoryEditor = () => {
                     </div>
                 )
             })}
+            {character.inventory.length === 0 && <EmptyMenuContent />}
         </div>
     )
 }

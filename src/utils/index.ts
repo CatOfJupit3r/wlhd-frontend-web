@@ -7,3 +7,5 @@ export * from './languageLoader'
 export * from './getCharacterSide'
 import * as rand from './rand'
 export { rand }
+import * as editorPrepareFunction from './editorPrepareFunction'
+export { editorPrepareFunction }
