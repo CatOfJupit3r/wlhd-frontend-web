@@ -12,6 +12,7 @@ export interface CharacterDisplaySettings {
     showSquareIfPossible?: boolean
     ignoreAttributes?: Array<string>
     displayBasicAttributes?: boolean
+    ignoreCurrentValuesInBasicAttributes?: boolean
 }
 
 export type CharacterDisplayProps = {
@@ -53,7 +54,14 @@ const CharacterDisplay = ({ character, settings, ...props }: CharacterDisplayPro
                 includeSquare={settings?.showSquareIfPossible}
                 includeDescription={settings?.includeDescription}
             />
-            {settings?.displayBasicAttributes && <BasicCharacterAttributes attributes={character.attributes} />}
+            {settings?.displayBasicAttributes && (
+                <BasicCharacterAttributes
+                    attributes={character.attributes}
+                    flags={{
+                        ignoreCurrentValues: settings?.ignoreCurrentValuesInBasicAttributes,
+                    }}
+                />
+            )}
             {settings?.showEquippedWeapon && (
                 <EquippedWeapon weapons={character.weaponry} className={'text-t-small italic'} id={'active-weapon'} />
             )}

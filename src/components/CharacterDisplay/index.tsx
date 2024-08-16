@@ -24,6 +24,7 @@ const InLobbySettings: CharacterDisplaySettings = {
     showSquareIfPossible: false,
     ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     displayBasicAttributes: true,
+    ignoreCurrentValuesInBasicAttributes: true,
 }
 
 type displayWithoutSettings = Omit<CharacterDisplayProps, 'settings'>

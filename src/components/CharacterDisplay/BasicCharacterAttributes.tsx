@@ -17,26 +17,40 @@ const getPercentage = (current: number, max: number): number => {
     return Math.max(Math.min((current / (max || 1)) * 100, 100), 0)
 }
 
-const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['attributes'] }) => {
+const BasicCharacterAttributes = ({
+    attributes,
+    flags,
+}: {
+    attributes: EntityInfoFull['attributes']
+    flags?: {
+        ignoreCurrentValues?: boolean
+    }
+}) => {
     const MAIN_ATTRIBUTES = useMemo(
         () => ({
             HEALTH: {
                 current: getNumber(attributes['builtins:current_health'], 0),
                 max: getNumber(attributes['builtins:max_health'], 0),
-                text: `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
+                text: flags?.ignoreCurrentValues
+                    ? `${attributes['builtins:max_health'] || '-'}`
+                    : `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
             },
             ARMOR: {
                 current: getNumber(attributes['builtins:current_armor'], 0),
                 base: getNumber(attributes['builtins:base_armor'], 0),
-                text: `${attributes['builtins:current_armor'] || '-'}`,
+                text: flags?.ignoreCurrentValues
+                    ? `${attributes['builtins:base_armor'] || '-'}`
+                    : `${attributes['builtins:current_armor'] || '-'}`,
             },
             AP: {
                 current: getNumber(attributes['builtins:current_action_points'], 0),
                 max: getNumber(attributes['builtins:max_action_points'], 0),
-                text: `${attributes['builtins:current_action_points'] || '-'}/${attributes['builtins:max_action_points'] || '-'}`,
+                text: flags?.ignoreCurrentValues
+                    ? `${attributes['builtins:max_action_points'] || '-'}`
+                    : `${attributes['builtins:current_action_points'] || '-'}/${attributes['builtins:max_action_points'] || '-'}`,
             },
         }),
-        [attributes]
+        [attributes, flags]
     )
 
     return (
@@ -45,7 +59,11 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
                 <div className={'flex w-full flex-row items-center gap-1'}>
                     <IoShieldSharp className={'size-5 text-gray-700'} />
                     <Progress
-                        value={getPercentage(MAIN_ATTRIBUTES.ARMOR.current, MAIN_ATTRIBUTES.ARMOR.base)}
+                        value={
+                            flags?.ignoreCurrentValues
+                                ? 100
+                                : getPercentage(MAIN_ATTRIBUTES.ARMOR.current, MAIN_ATTRIBUTES.ARMOR.base)
+                        }
                         colored={{
                             empty: 'bg-gray-700',
                             fill: 'bg-amber-500',
@@ -58,7 +76,11 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
                 </div>
                 <div className={'relative flex w-full flex-row items-center gap-2'}>
                     <Progress
-                        value={getPercentage(MAIN_ATTRIBUTES.HEALTH.current, MAIN_ATTRIBUTES.HEALTH.max)}
+                        value={
+                            flags?.ignoreCurrentValues
+                                ? 100
+                                : getPercentage(MAIN_ATTRIBUTES.HEALTH.current, MAIN_ATTRIBUTES.HEALTH.max)
+                        }
                         colored={{
                             empty: 'bg-gray-700',
                             fill: 'bg-red-500',
@@ -79,7 +101,11 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
             </div>
             <div className={'relative flex grow flex-row items-center gap-2'}>
                 <Progress
-                    value={getPercentage(MAIN_ATTRIBUTES.AP.current, MAIN_ATTRIBUTES.AP.max)}
+                    value={
+                        flags?.ignoreCurrentValues
+                            ? 100
+                            : getPercentage(MAIN_ATTRIBUTES.AP.current, MAIN_ATTRIBUTES.AP.max)
+                    }
                     colored={{
                         empty: 'bg-gray-700',
                         fill: 'bg-green-500',
@@ -104,5 +130,6 @@ const BasicCharacterAttributes = ({ attributes }: { attributes: EntityInfoFull['
         </div>
     )
 }
+
 
 export default BasicCharacterAttributes
