@@ -1,8 +1,9 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes, forwardRef, useState } from 'react'
 import { cn } from '@utils'
+import Spinner from '@components/Spinner'
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -14,6 +15,8 @@ const buttonVariants = cva(
                 outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
+                destructiveGhost:
+                    'border border-transparent hover:border-destructive hover:text-destructive-foreground',
                 link: 'text-primary underline-offset-4 hover:underline',
             },
             size: {
@@ -42,4 +45,61 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-export { Button, buttonVariants }
+const TimeoutButton = ({ timeoutTime, disabled, ...props }: { timeoutTime: number } & ButtonProps) => {
+    const [isTimeout, setIsTimeout] = useState(false)
+
+    const handleClick = async () => {
+        setIsTimeout(true)
+        setTimeout(() => setIsTimeout(false), timeoutTime)
+    }
+
+    return (
+        <Button {...props} onClick={handleClick} disabled={disabled || isTimeout}>
+            {isTimeout ? 'Wait...' : props.children}
+        </Button>
+    )
+}
+
+const AwaitingButton = ({
+    onClick,
+    thenCase,
+    catchCase,
+    finallyCase,
+    ...props
+}: {
+    onClick?: () => Promise<unknown>
+    thenCase?: () => void
+    catchCase?: (error: unknown) => void
+    finallyCase?: () => void
+} & Omit<ButtonProps, 'onClick'>) => {
+    const [isAwaiting, setIsAwaiting] = useState(false)
+
+    const handleClick = async () => {
+        setIsAwaiting(true)
+        try {
+            if (onClick) {
+                await onClick()
+            }
+            if (thenCase) {
+                thenCase()
+            }
+        } catch (error) {
+            if (catchCase) {
+                catchCase(error)
+            }
+        } finally {
+            setIsAwaiting(false)
+            if (finallyCase) {
+                finallyCase()
+            }
+        }
+    }
+
+    return (
+        <Button {...props} onClick={handleClick} disabled={isAwaiting}>
+            {isAwaiting ? <Spinner type={'pulse'} /> : props.children}
+        </Button>
+    )
+}
+
+export { Button, AwaitingButton, TimeoutButton, buttonVariants }
