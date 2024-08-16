@@ -1361,6 +1361,7 @@
             },
             "statusEffects" : [
                 {
+                    "descriptor": "builtins:fainted",
                     "decorations" : {
                         "name" : "builtins:fainted.name",
                         "sprite" : "builtins:status_effect",

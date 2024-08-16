@@ -32,7 +32,7 @@ export interface EntityInfoTooltip {
     health: { current: string; max: string }
     action_points: { current: string; max: string }
     armor: { current: string; base: string }
-    statusEffects: Array<StatusEffectInfo>
+    statusEffects: Array<Omit<StatusEffectInfo, 'descriptor'>>
 }
 
 export interface EntityInfoTurn {
@@ -108,6 +108,7 @@ export interface SpellInfo extends MethodVariableObject {
 }
 
 export interface StatusEffectInfo extends MethodVariableObject {
+    descriptor: string
     decorations: GameComponentDecoration
     duration: string | null
 }
