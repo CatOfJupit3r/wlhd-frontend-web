@@ -10,7 +10,7 @@ type ProvidedCharacters = ProvidedData<EntityInfoFull>
 
 interface DataContextType {
     characters: ProvidedCharacters
-    fetchCharacter: (lobbyId: string, descriptor: string) => Promise<EntityInfoFull | null>
+    fetchCharacter: (lobbyId: string, descriptor: string, force?: boolean) => Promise<EntityInfoFull | null>
     getCharacter: (descriptor: string) => EntityInfoFull | null
 }
 
@@ -20,8 +20,8 @@ export const CoordinatorEntitiesProvider = ({ children }: { children: ReactNode 
     const [characters, setCharacters] = useState<DataContextType['characters']>({})
 
     const fetchCharacter: DataContextType['fetchCharacter'] = useCallback(
-        async (lobbyId: string, descriptor: string): Promise<EntityInfoFull | null> => {
-            if (characters[descriptor] === undefined) {
+        async (lobbyId: string, descriptor: string, force?: boolean): Promise<EntityInfoFull | null> => {
+            if (characters[descriptor] === undefined || force) {
                 const fetched = await APIService.getCharacterInfo(lobbyId, descriptor)
                 if (fetched) {
                     setCharacters({
