@@ -33,6 +33,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t } = useTranslation('local',{
         keyPrefix: 'game.info_display',
     })
+    const { t: tNoPrefix } = useTranslation()
     const { decorations } = info
 
     const ItemExclusives = useCallback(({ info }: ItemSegment | WeaponSegment) => {
@@ -115,7 +116,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium relative')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div className={'flex flex-row items-center gap-2'}>
-                    {t(decorations?.name) ?? '???'}
+                    {tNoPrefix(decorations?.name, ) ?? '???'}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' &&
                         info.isActive &&
@@ -145,7 +146,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 {type !== 'status_effect' && UsageDetails({ type, info } as ItemSegment | WeaponSegment | SpellSegment)}
             </div>
             <div id={'description'} className={styles.infoSegmentDescription}>
-                {t(decorations?.description) ?? '???'}
+                {tNoPrefix(decorations?.description) ?? '???'}
             </div>
         </div>
     )
