@@ -5,8 +5,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
 import React, { useEffect, useRef, useState } from 'react'
 import { IconComponentType } from '@components/icons/icon_factory'
 import { ClassValue } from 'clsx'
-import { PlaceholderIcon } from '@components/icons'
 import { cn } from '@utils'
+import { PiDotsThreeOutline } from "react-icons/pi"
+import { IconType } from 'react-icons'
+import { useTranslation } from 'react-i18next'
+
+const PlaceholderIcon = PiDotsThreeOutline
 
 interface Item {
     value: string
@@ -31,7 +35,7 @@ export interface ComboboxProps {
 
 const iconSizeClassName = 'size-10'
 
-const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType; label: string }) => {
+const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType | IconType; label: string }) => {
     const [badIcon, setBadIcon] = useState(false)
 
     return (
@@ -57,6 +61,9 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
     const [open, setOpen] = useState(false)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
+    const {t} = useTranslation('local', {
+        keyPrefix: 'ui',
+    })
 
     const [buttonWidth, setButtonWidth] = useState<string | number>('auto');
 
@@ -76,14 +83,14 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                     className={cn('justify-between text-left', size?.width || 'w-full', size?.height || 'h-[50px]')}
                     ref={buttonRef}
                 >
-                    <div className={'w-full'}>
+                    <div className={'w-[90%]'}>
                         {items.find((item) => item.value === value) ? (
                             <ComboBoxItem
                                 icon={items.find((item) => item.value === value)!.icon || undefined}
                                 label={items.find((item) => item.value === value)!.label}
                             />
                         ) : (
-                            <ComboBoxItem icon={PlaceholderIcon} label={selectText || 'Select...'} />
+                            <ComboBoxItem icon={PlaceholderIcon} label={selectText || t('select')} />
                         )}
                     </div>
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
@@ -97,8 +104,10 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                 }}
             >
                 <Command>
-                    {includeSearch && <CommandInput placeholder={selectText || 'Select...'} />}
-                    <CommandEmpty>Nothing here... huh?..</CommandEmpty>
+                    {includeSearch && <CommandInput placeholder={selectText || t('select')} />}
+                    <CommandEmpty>{
+                        t('empty')
+                    }</CommandEmpty>
                     <CommandGroup>
                         <CommandList>
                             {items &&

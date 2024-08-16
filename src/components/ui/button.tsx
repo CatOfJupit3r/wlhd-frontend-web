@@ -1,9 +1,10 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { ButtonHTMLAttributes, forwardRef, useState } from 'react'
+import React, { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { cn } from '@utils'
 import Spinner from '@components/Spinner'
+import { useTranslation } from 'react-i18next'
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -45,17 +46,26 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-const TimeoutButton = ({ timeoutTime, disabled, ...props }: { timeoutTime: number } & ButtonProps) => {
+const TimeoutButton = ({ timeoutTime, onClick, disabled, ...props }: { timeoutTime: number } & ButtonProps) => {
     const [isTimeout, setIsTimeout] = useState(false)
+    const {t} = useTranslation('local', {
+        keyPrefix: 'ui',
+    })
 
-    const handleClick = async () => {
-        setIsTimeout(true)
-        setTimeout(() => setIsTimeout(false), timeoutTime)
-    }
+    const handleClick = useCallback(
+        (e: MouseEvent<HTMLButtonElement>) => {
+            setIsTimeout(true)
+            if (onClick) {
+                onClick(e)
+            }
+            setTimeout(() => setIsTimeout(false), timeoutTime)
+        },
+        [onClick, timeoutTime]
+    )
 
     return (
         <Button {...props} onClick={handleClick} disabled={disabled || isTimeout}>
-            {isTimeout ? 'Wait...' : props.children}
+            {isTimeout ? t('wait') : props.children}
         </Button>
     )
 }
