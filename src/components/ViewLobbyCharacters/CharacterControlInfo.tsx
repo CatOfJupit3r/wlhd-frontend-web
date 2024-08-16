@@ -44,28 +44,32 @@ const PlainListOfPlayers = () => {
                                 className={'size-8'}
                             />
                             <p className={'max-w-[75%]'}>@{player.handle}</p>
-                            <Button
+                            <AwaitingButton
                                 id={'remove-player'}
-                                onClick={() => {
-                                    if (!descriptor || !player.userId) {
-                                        return
-                                    }
-                                    APIService.removePlayerFromCharacter(lobby.lobbyId, descriptor, player.userId)
-                                        .then((data) => {
-                                            refreshLobbyInfo(lobby.lobbyId).then()
-                                            console.log('Player removed', data)
-                                        })
-                                        .catch((error) => {
-                                            console.error('Error removing player', error)
-                                        })
+                                onClick={
+                                    descriptor && player.userId
+                                        ? () => {
+                                              return APIService.removePlayerFromCharacter(
+                                                  lobby.lobbyId,
+                                                  descriptor as string,
+                                                  player.userId
+                                              )
+                                          }
+                                        : undefined
+                                }
+                                thenCase={() => {
+                                    refreshLobbyInfo(lobby.lobbyId).then()
+                                }}
+                                catchCase={(error) => {
+                                    console.error('Error removing player', error)
                                 }}
                                 variant={'destructiveGhost'}
                                 className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600
-                                active:text-red-600 `}
+                                active:text-red-600`}
                             >
                                 <FaXmark className={'mr-1 size-4'} />
                                 <p>{t('remove')}</p>
-                            </Button>
+                            </AwaitingButton>
                         </div>
                     )
                 })}
