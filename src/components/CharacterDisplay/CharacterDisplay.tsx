@@ -35,7 +35,7 @@ const EquippedWeapon = ({
     return (
         <p {...props}>
             {t('local:game.character_display.active_weapon', {
-                weapon: weapons.map((w) => w.decorations.name).join(', ') || '...',
+                weapon: weapons.map((w) => t(w.decorations.name)).join(', ') || '...',
             })}
         </p>
     )

@@ -1,6 +1,6 @@
-import React, { HTMLProps } from 'react'
-import { Skeleton, StaticSkeleton } from '@components/ui/skeleton'
 import { Separator } from '@components/ui/separator'
+import { StaticSkeleton } from '@components/ui/skeleton'
+import { HTMLProps } from 'react'
 
 const CharacterDisplayPlaceholder = (props: HTMLProps<HTMLDivElement>) => {
     return (
