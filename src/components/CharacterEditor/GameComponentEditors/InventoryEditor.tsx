@@ -16,7 +16,6 @@ import { ItemInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
 import { Button } from '@components/ui/button'
 import { isDescriptor } from '@utils'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { DLCs } from '@components/CharacterEditor/CharacterEditor'
 import { MdExposureNeg1, MdPlusOne } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
@@ -25,6 +24,7 @@ import { useCharacterEditorContext } from '@components/ContextProviders/Characte
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
 import { EmptyMenuContent } from '@components/ui/menu'
+import { SUPPORTED_DLCs } from 'config'
 
 const AddNewItemComponent = () => {
     const { character, updateCharacter, flags } = useCharacterEditorContext()
@@ -89,9 +89,9 @@ const AddNewItemComponent = () => {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>{t('general.dlc')}</SelectLabel>
-                                    {DLCs.map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
+                                    {SUPPORTED_DLCs.map(({ title, descriptor }) => (
+                                        <SelectItem key={descriptor} value={descriptor}>
+                                            {title}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>

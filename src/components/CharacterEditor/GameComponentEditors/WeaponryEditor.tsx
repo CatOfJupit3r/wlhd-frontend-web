@@ -10,7 +10,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { DLCs } from '@components/CharacterEditor/CharacterEditor'
 import { Combobox } from '@components/ui/combobox'
 import { SpellInfoDisplay, WeaponInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
 import { Button } from '@components/ui/button'
@@ -25,6 +24,7 @@ import { useCharacterEditorContext } from '@components/ContextProviders/Characte
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
 import { EmptyMenuContent } from '@components/ui/menu'
+import { SUPPORTED_DLCs } from 'config'
 
 const checkIfCanActivateMore = (weaponry: EntityInfoFull['weaponry']) => {
     return weaponry.filter((weapon) => weapon.isActive).length === 0
@@ -93,9 +93,9 @@ function AddNewWeaponComponent() {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>{t('general.dlc')}</SelectLabel>
-                                    {DLCs.map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
+                                    {SUPPORTED_DLCs.map(({ title, descriptor }) => (
+                                        <SelectItem key={descriptor} value={descriptor}>
+                                            {title}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>

@@ -11,16 +11,6 @@ import WeaponryEditor from '@components/CharacterEditor/GameComponentEditors/Wea
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
 import { cn } from '@utils'
 
-export const DLCs = [
-    {
-        value: 'builtins',
-        label: 'Builtins',
-    },
-    {
-        value: 'nyrzamaer',
-        label: 'Nyrzamaer Tales',
-    },
-]
 
 const CharacterEditor = ({ className }: { className?: string }) => {
     const { flags } = useCharacterEditorContext()

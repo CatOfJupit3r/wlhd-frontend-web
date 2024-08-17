@@ -10,7 +10,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { DLCs } from '@components/CharacterEditor/CharacterEditor'
 import { Combobox } from '@components/ui/combobox'
 import { SpellInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
 import { Button } from '@components/ui/button'
@@ -25,6 +24,7 @@ import { Input } from '@components/ui/input'
 import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
 import { useTranslation } from 'react-i18next'
 import { EmptyMenuContent } from '@components/ui/menu'
+import { SUPPORTED_DLCs } from 'config'
 
 const checkIfCanActivateMore = (
     max: EntityInfoFull['spellBook']['maxActiveSpells'],
@@ -97,9 +97,9 @@ const AddNewSpellComponent = () => {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>{t('general.dlc')}</SelectLabel>
-                                    {DLCs.map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
-                                            {label}
+                                    {SUPPORTED_DLCs.map(({ title, descriptor }) => (
+                                        <SelectItem key={descriptor} value={descriptor}>
+                                            {title}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>
