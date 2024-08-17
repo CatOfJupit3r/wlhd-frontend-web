@@ -44,7 +44,7 @@ const InfoSlice = createSlice({
     name: 'battlefield',
     initialState,
     reducers: {
-        setBattlefieldMode: (state, action) => {
+        setBattlefieldMode: (state, action: PayloadAction<'info' | 'selection'>) => {
             state.battlefieldMode = action.payload
         },
         setClickedSquare: (state, action: PayloadAction<string>) => {

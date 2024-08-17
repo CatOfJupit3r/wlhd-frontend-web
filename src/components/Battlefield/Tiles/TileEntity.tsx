@@ -84,7 +84,7 @@ const TileEntity = (props: {
         if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
             dispatch(setClickedSquare(id))
         }
-    }, [id, interactableSquares])
+    }, [id, interactableSquares, battlefieldMode])
 
     useEffect(() => {
         if (alreadyClickedSquares && alreadyClickedSquares[id] > 0) {
