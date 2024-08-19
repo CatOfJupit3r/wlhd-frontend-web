@@ -48,21 +48,23 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
 
     return (
         <>
-            <div className={
-                cn(
-                    styles.decoration,
-                    interactivityType,
-                )}
-            />
+            <div className={cn(styles.decoration, interactivityType)} />
             {active ? (
                 <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="Active Entity Icon" />
             ) : null}
             {clicked.flag ? (
-                <img
-                    className={styles.clickedSquare}
-                    src={getClickedNumberIcon() || '/assets/local/sel_sqr_1.svg'}
-                    alt={`Clicked ${clicked.times} times icon`}
-                />
+                <>
+                    <div className={cn(styles.decoration, styles.clickedEntityBorder)} />
+                    {
+                        clicked.times > 1 ? (
+                            <img
+                                className={styles.clickedSquare}
+                                src={getClickedNumberIcon() || '/assets/local/sel_sqr_1.svg'}
+                                alt={`Clicked ${clicked.times} times icon`}
+                            />
+                        ) : null
+                    }
+                </>
             ) : null}
         </>
     )

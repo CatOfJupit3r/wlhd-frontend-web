@@ -12,6 +12,27 @@
     pointer-events: none;
 }
 
+.clickedEntityBorder {
+    --b: 5px; /* thickness of the border */
+    --c: #39BC55; /* color of the border */
+    --r: 11px; /* 1px bigger than borderInCorner because if they overlap there is area of no overlap */
+
+
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--b);
+
+    border-radius: var(--r);
+    border-color: var(--c);
+    border-width: var(--b);
+    border-style: solid;
+
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: 1;
+}
+
 .activeEntity {
     position: absolute;
     width: calc(var(--tile-size) * 0.35);
@@ -51,6 +72,7 @@
     transition: background-color 0.1s;
 
     cursor: pointer;
+    z-index: 2;
 }
 
 .interactableAlly {
