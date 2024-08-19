@@ -5,7 +5,7 @@ export const SUPPORTED_DLCs = [
         descriptor: 'builtins',
     },
     {
-        title: 'nyrzamaer',
-        descriptor: 'Nyrzamaer Tales',
+        title: 'Nyrzamaer Tales',
+        descriptor: 'nyrzamaer',
     },
 ]
