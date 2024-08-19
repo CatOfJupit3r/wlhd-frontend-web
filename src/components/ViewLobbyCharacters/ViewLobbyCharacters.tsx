@@ -145,7 +145,6 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                     }
                                     fetchCharacter(lobby.lobbyId, lobby.characters[current].descriptor, true)
                                         .then((data) => {
-                                            console.log(data)
                                             changeViewedCharacter(data, lobby.characters[current].descriptor)
                                         })
                                         .catch((e) => {

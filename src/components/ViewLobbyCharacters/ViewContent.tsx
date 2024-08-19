@@ -1,25 +1,25 @@
-import { EntityInfoFull } from '@models/Battlefield'
-import { useSelector } from 'react-redux'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import React, { useState } from 'react'
+import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
+import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
 import {
     buildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
 } from '@components/ContextProviders/CharacterEditorProvider'
 import { useCoordinatorEntitiesContext } from '@components/ContextProviders/CoordinatorEntitiesProvider'
-import { cn, refreshLobbyInfo } from '@utils'
-import { Button } from '@components/ui/button'
-import APIService from '@services/APIService'
-import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction'
-import { Separator } from '@components/ui/separator'
-import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
-import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useViewCharactersContext } from '@components/ContextProviders/ViewCharactersContext'
-import { useTranslation } from 'react-i18next'
 import Overlay from '@components/Overlay'
+import { Button } from '@components/ui/button'
+import { Separator } from '@components/ui/separator'
+import { EntityInfoFull } from '@models/Battlefield'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import APIService from '@services/APIService'
+import { cn, refreshLobbyInfo } from '@utils'
+import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaXmark } from 'react-icons/fa6'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
 
 const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     exclude: {},
@@ -62,6 +62,13 @@ const CharacterEditorMenu = () => {
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
     })
+
+    useEffect(() => {
+        if (!character) {
+            return
+        }
+        changeEditedCharacter(character)
+    }, [character])
 
     return (
         <div className={cn(componentClass, 'flex flex-col gap-2')}>
@@ -197,20 +204,30 @@ const GmOptionMenu = () => {
     )
 }
 
-const ViewContent = ({ type }: { type: string }) => {
-    const { viewedCharacter: character } = useViewCharactersContext()
+const LobbyCharacterDisplay = () => {
+    const { viewedCharacter } = useViewCharactersContext()
 
-    if (!character) {
+    if (!viewedCharacter) {
+        return <CharacterDisplayPlaceholder className={componentClass} />
+    }
+
+    return (
+        <div>
+            <CharacterDisplayInLobby character={viewedCharacter} className={componentClass} />
+        </div>
+    )
+}
+
+const ViewContent = ({ type }: { type: string }) => {
+    const { viewedCharacter } = useViewCharactersContext()
+
+    if (!viewedCharacter) {
         return <CharacterDisplayPlaceholder className={componentClass} />
     }
 
     switch (type) {
         case 'display':
-            return (
-                <div>
-                    <CharacterDisplayInLobby character={character} className={componentClass} />
-                </div>
-            )
+            return <LobbyCharacterDisplay />
         case 'edit':
             return <CharacterEditorMenu />
         case 'gm-options':
