@@ -39,7 +39,6 @@
         "query-string": "^8.2.0",
         "react": "^18.2.0",
         "react-blurhash": "^0.3.0",
-        "react-bootstrap": "^2.10.1",
         "react-dom": "^18.2.0",
         "react-i18next": "^14.0.5",
         "react-icons": "^5.0.1",
