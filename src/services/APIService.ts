@@ -2,12 +2,12 @@ import axios, { AxiosError } from 'axios'
 
 import { ShortLobbyInformation, UserInformation } from '@models/APIData'
 import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import { CharacterClassConversion } from '@models/EditorConversion'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
-import { REACT_APP_BACKEND_URL } from 'config'
 import AuthManager from '@services/AuthManager'
+import { REACT_APP_BACKEND_URL } from 'config'
 import EventEmitter from 'events'
-import { CharacterClassConversion } from '@models/EditorConversion'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -15,6 +15,37 @@ const errors = {
 
 const isServerUnavailableError = (error: unknown) => {
     return error instanceof AxiosError && error.code === 'ERR_NETWORK'
+}
+
+const ENDPOINTS = {
+    LOGIN: `${REACT_APP_BACKEND_URL}/login`,
+    LOGOUT: `${REACT_APP_BACKEND_URL}/logout`,
+    REGISTER: `${REACT_APP_BACKEND_URL}/register`,
+    REFRESH_TOKEN: `${REACT_APP_BACKEND_URL}/token`,
+    HEALTH_CHECK: `${REACT_APP_BACKEND_URL}/health`,
+    USER_INFO: `${REACT_APP_BACKEND_URL}/user/profile`,
+
+    CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${REACT_APP_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
+    LOBBY_INFO: (lobby_id: string) => `${REACT_APP_BACKEND_URL}/lobbies/${lobby_id}`,
+    GAME_WEAPONS: (dlc: string) => `${REACT_APP_BACKEND_URL}/game/weapons?dlc=${dlc}`,
+    GAME_ITEMS: (dlc: string) => `${REACT_APP_BACKEND_URL}/game/items?dlc=${dlc}`,
+    GAME_SPELLS: (dlc: string) => `${REACT_APP_BACKEND_URL}/game/spells?dlc=${dlc}`,
+    GAME_STATUS_EFFECTS: (dlc: string) => `${REACT_APP_BACKEND_URL}/game/status_effects?dlc=${dlc}`,
+    GAME_CHARACTERS: (dlc: string) => `${REACT_APP_BACKEND_URL}/game/characters?dlc=${dlc}`,
+    LOBBY_CHARACTER_INFO: (lobby_id: string, descriptor: string) =>
+        `${REACT_APP_BACKEND_URL}/lobbies/${lobby_id}/characters/${descriptor}/`,
+    CREATE_LOBBY_COMBAT: (lobby_id: string) => `${REACT_APP_BACKEND_URL}/lobbies/${lobby_id}/combats`,
+    SHORT_LOBBY_INFO: (lobby_id: string) => `${REACT_APP_BACKEND_URL}/lobbies/${lobby_id}?short=true`,
+    ASSIGN_PLAYER_TO_CHARACTER: (lobbyId: string, descriptor: string) =>
+        `${REACT_APP_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+    REMOVE_PLAYER_FROM_CHARACTER: (lobbyId: string, descriptor: string) =>
+        `${REACT_APP_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+    DELETE_CHARACTER: (lobbyId: string, descriptor: string) =>
+        `${REACT_APP_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
+    UPDATE_CHARACTER: (lobbyId: string, descriptor: string) =>
+        `${REACT_APP_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
+    GET_TRANSLATIONS: (languages: Array<string>, dlcs: Array<string>) =>
+        `${REACT_APP_BACKEND_URL}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`,
 }
 
 class APIService {
@@ -30,16 +61,6 @@ class APIService {
 
     public constructor() {
         this.addHealthCheckInterval()
-    }
-
-    private endpoints = {
-        LOGIN: `${REACT_APP_BACKEND_URL}/login`,
-        LOGOUT: `${REACT_APP_BACKEND_URL}/logout`,
-        REGISTER: `${REACT_APP_BACKEND_URL}/register`,
-        REFRESH_TOKEN: `${REACT_APP_BACKEND_URL}/token`,
-
-        GET_TRANSLATIONS: (languages: Array<string>, dlcs: Array<string>) =>
-            `${REACT_APP_BACKEND_URL}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`,
     }
 
     private injectResponseMessageToError = (error: AxiosError) => {
@@ -129,7 +150,7 @@ class APIService {
         const {
             data: { accessToken },
         } = await axios({
-            url: this.endpoints.REFRESH_TOKEN,
+            url: ENDPOINTS.REFRESH_TOKEN,
             method: 'post',
             data: { token: refreshToken },
         })
@@ -141,7 +162,7 @@ class APIService {
         const refreshToken = AuthManager.getRefreshToken()
         if (refreshToken) {
             return axios({
-                url: this.endpoints.LOGOUT,
+                url: ENDPOINTS.LOGOUT,
                 method: 'post',
                 data: { token: refreshToken },
             })
@@ -152,7 +173,7 @@ class APIService {
     public login = async (handle: string, password: string) => {
         let response
         try {
-            response = await axios.post(this.endpoints.LOGIN, { handle, password })
+            response = await axios.post(ENDPOINTS.LOGIN, { handle, password })
         } catch (error) {
             if (isServerUnavailableError(error)) {
                 this.handleBackendRefusedConnection()
@@ -165,7 +186,7 @@ class APIService {
 
     public createAccount = async (handle: string, password: string) => {
         try {
-            await axios.post(this.endpoints.REGISTER, { handle, password })
+            await axios.post(ENDPOINTS.REGISTER, { handle, password })
         } catch (error) {
             if (isServerUnavailableError(error)) {
                 this.handleBackendRefusedConnection()
@@ -178,7 +199,7 @@ class APIService {
     public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
         try {
             return await this.fetch({
-                url: this.endpoints.GET_TRANSLATIONS(languages, dlcs),
+                url: ENDPOINTS.GET_TRANSLATIONS(languages, dlcs),
                 method: 'get',
             })
         } catch (e) {
@@ -190,7 +211,7 @@ class APIService {
     public getCustomLobbyTranslations = async (lobby_id: string): Promise<TranslationJSON> => {
         try {
             return await this.fetch({
-                url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/custom_translations`,
+                url: ENDPOINTS.CUSTOM_LOBBY_TRANSLATIONS(lobby_id),
                 method: 'get',
             })
         } catch (e) {
@@ -201,7 +222,7 @@ class APIService {
 
     public getLobbyInfo = async (lobby_id: string): Promise<LobbyInfo> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}`,
+            url: ENDPOINTS.LOBBY_INFO(lobby_id),
             method: 'get',
         })) as LobbyInfo
     }
@@ -217,7 +238,7 @@ class APIService {
             }
         }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/game/weapons?dlc=${dlc}`,
+            url: ENDPOINTS.GAME_WEAPONS(dlc),
             method: 'get',
         })) as {
             weapons: {
@@ -239,7 +260,7 @@ class APIService {
             }
         }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/game/items?dlc=${dlc}`,
+            url: ENDPOINTS.GAME_ITEMS(dlc),
             method: 'get',
         })) as {
             items: {
@@ -261,7 +282,7 @@ class APIService {
             }
         }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/game/spells?dlc=${dlc}`,
+            url: ENDPOINTS.GAME_SPELLS(dlc),
             method: 'get',
         })) as {
             spells: {
@@ -283,7 +304,7 @@ class APIService {
             }
         }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/game/status_effects?dlc=${dlc}`,
+            url: ENDPOINTS.GAME_STATUS_EFFECTS(dlc),
             method: 'get',
         })) as {
             status_effects: {
@@ -305,7 +326,7 @@ class APIService {
             }
         }
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/game/characters?dlc=${dlc}`,
+            url: ENDPOINTS.GAME_CHARACTERS(dlc),
             method: 'get',
         })) as {
             characters: {
@@ -316,14 +337,14 @@ class APIService {
 
     public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<EntityInfoFull> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/character/${descriptor}/`,
+            url: ENDPOINTS.LOBBY_CHARACTER_INFO(lobby_id, descriptor),
             method: 'get',
         })) as EntityInfoFull
     }
 
     public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {
         return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}/create_combat`,
+            url: ENDPOINTS.CREATE_LOBBY_COMBAT(lobby_id),
             method: 'post',
             data: {
                 lobby_id,
@@ -335,14 +356,14 @@ class APIService {
 
     public getUserInformation = async (): Promise<UserInformation> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/user/profile`,
+            url: ENDPOINTS.USER_INFO,
             method: 'get',
         })) as UserInformation
     }
 
     public getShortLobbyInfo = async (lobby_id: string): Promise<ShortLobbyInformation> => {
         return (await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobby_id}?short=true`,
+            url: ENDPOINTS.SHORT_LOBBY_INFO(lobby_id),
             method: 'get',
         })) as ShortLobbyInformation
     }
@@ -353,7 +374,7 @@ class APIService {
         playerId: string
     ): Promise<unknown> => {
         return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}/assign_player`,
+            url: ENDPOINTS.ASSIGN_PLAYER_TO_CHARACTER(lobbyId, descriptor),
             method: 'patch',
             data: {
                 player_id: playerId,
@@ -367,7 +388,7 @@ class APIService {
         playerId: string
     ): Promise<unknown> => {
         return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}/remove_player`,
+            url: ENDPOINTS.REMOVE_PLAYER_FROM_CHARACTER(lobbyId, descriptor),
             method: 'delete',
             data: {
                 player_id: playerId,
@@ -377,7 +398,7 @@ class APIService {
 
     public deleteCharacter = async (lobbyId: string, descriptor: string): Promise<unknown> => {
         return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}`,
+            url: ENDPOINTS.DELETE_CHARACTER(lobbyId, descriptor),
             method: 'delete',
         })
     }
@@ -387,9 +408,8 @@ class APIService {
         descriptor: string,
         data: CharacterClassConversion
     ): Promise<unknown> => {
-        console.log('Updating character', data)
         return await this.fetch({
-            url: `${REACT_APP_BACKEND_URL}/lobby/${lobbyId}/character/${descriptor}`,
+            url: ENDPOINTS.UPDATE_CHARACTER(lobbyId, descriptor),
             method: 'put',
             data,
         })
@@ -422,7 +442,7 @@ class APIService {
             this.removeHealthCheckInterval()
         }
         try {
-            await axios.get(`${REACT_APP_BACKEND_URL}/health/`)
+            await axios.get(ENDPOINTS.HEALTH_CHECK)
         } catch (error) {
             if (isServerUnavailableError(error)) {
                 this.backendRefusedConnection = true
