@@ -14,6 +14,7 @@ import Overlay from '@components/Overlay'
 import ThinkingHn from '@components/ThinkingHn'
 import { useToast } from '@hooks/useToast'
 import { Button } from '@components/ui/button'
+import paths from '@router/paths'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -53,6 +54,13 @@ const GameLogicWrapper = () => {
         }
     }, [actionOutput, dispatch])
 
+    const navigateToLobby = useCallback(() => {
+        if (!lobbyId) {
+            return
+        }
+        navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
+    }, [lobbyId, navigate])
+
     const CurrentScreen = useCallback((): JSX.Element => {
         switch (gameFlow?.type) {
             case 'pending':
@@ -69,7 +77,7 @@ const GameLogicWrapper = () => {
                                 {t('local:game.pending.start')}
                             </Button>
                         ) : null}
-                        <Button onClick={() => navigate('..')}>{t('local:game.pending.exit')}</Button>
+                        <Button onClick={navigateToLobby}>{t('local:game.pending.exit')}</Button>
                     </Overlay>
                 )
             case 'active':
@@ -84,9 +92,7 @@ const GameLogicWrapper = () => {
                             })}
                         </h1>
                         <Button
-                            onClick={() => {
-                                navigate('..')
-                            }}
+                            onClick={navigateToLobby}
                         >
                             {t('local:game.end.exit')}
                         </Button>
@@ -98,9 +104,7 @@ const GameLogicWrapper = () => {
                         <h1>{t('local:game.end.aborted')}</h1>
                         <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
                         <Button
-                            onClick={() => {
-                                navigate('..')
-                            }}
+                            onClick={navigateToLobby}
                         >
                             {t('local:game.end.exit')}
                         </Button>

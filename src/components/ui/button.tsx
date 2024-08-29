@@ -86,6 +86,9 @@ const AwaitingButton = ({
     const [isAwaiting, setIsAwaiting] = useState(false)
 
     const handleClick = async () => {
+        if (isAwaiting) {
+            return
+        }
         setIsAwaiting(true)
         try {
             if (onClick) {

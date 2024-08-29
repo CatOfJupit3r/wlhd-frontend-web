@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 
 import { ShortLobbyInformation, UserInformation } from '@models/APIData'
 import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { CharacterClassConversion } from '@models/EditorConversion'
+import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import AuthManager from '@services/AuthManager'
@@ -342,14 +342,17 @@ class APIService {
         })) as EntityInfoFull
     }
 
-    public createLobbyCombat = async (lobby_id: string, combatNickname: string, combatPreset: any) => {
+    public createLobbyCombat = async (
+        lobby_id: string,
+        nickName: MinifiedCombatPreset['nickName'],
+        battlefield: MinifiedCombatPreset['battlefield']
+    ) => {
         return await this.fetch({
             url: ENDPOINTS.CREATE_LOBBY_COMBAT(lobby_id),
             method: 'post',
             data: {
-                lobby_id,
-                combatNickname,
-                combatPreset,
+                nickName,
+                battlefield,
             },
         })
     }

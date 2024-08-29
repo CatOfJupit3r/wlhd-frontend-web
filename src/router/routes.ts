@@ -34,7 +34,6 @@ const routes: Array<RouteConfig> = [
         path: paths.createCombatRoom,
         Component: CreateCombatPage,
         title: 'create_combat',
-        includeHeader: true,
         requiresAuth: true,
         requiresLobbyInfo: true,
     },

@@ -16,8 +16,8 @@ const CharacterBasicInfo = ({
         sprite: string
         description: string | null
         square: {
-            line: string
-            column: string
+            line: number
+            column: number
         } | null
     }
 }) => {
@@ -29,7 +29,7 @@ const CharacterBasicInfo = ({
                 src={character.sprite}
                 alt={character.name}
                 className={'size-20'}
-                line={character?.square?.line || ''}
+                line={character?.square?.line || 0}
             />
             <div>
                 <div className={'text-ellipsis text-t-normal font-bold'}>

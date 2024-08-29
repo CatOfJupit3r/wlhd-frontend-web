@@ -26,7 +26,6 @@ const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: bo
     return (
         <>
             {includeHeader && <Header />}
-            <Notify />
             <main>
                 <CoordinatorEntitiesProvider>
                     <GameDataProvider>
@@ -34,6 +33,7 @@ const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: bo
                     </GameDataProvider>
                 </CoordinatorEntitiesProvider>
             </main>
+            <Notify />
             {includeFooter && <Footer />}
         </>
     )

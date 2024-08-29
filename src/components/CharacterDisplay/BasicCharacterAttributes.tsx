@@ -5,13 +5,6 @@ import { GiHeartPlus } from 'react-icons/gi'
 import { IoShieldSharp } from 'react-icons/io5'
 import { PiSneakerMoveFill } from 'react-icons/pi'
 
-const getNumber = (value: string, fallback?: number): number => {
-    if (isNaN(Number(value))) {
-        return fallback || 0
-    } else {
-        return Number(value)
-    }
-}
 
 const getPercentage = (current: number, max: number): number => {
     return Math.max(Math.min((current / (max || 1)) * 100, 100), 0)
@@ -29,25 +22,25 @@ const BasicCharacterAttributes = ({
     const MAIN_ATTRIBUTES = useMemo(
         () => ({
             HEALTH: {
-                current: getNumber(attributes['builtins:current_health'], 0),
-                max: getNumber(attributes['builtins:max_health'], 0),
+                current: attributes['builtins:current_health'] ?? 0,
+                max: attributes['builtins:max_health'] ?? 0,
                 text: flags?.ignoreCurrentValues
-                    ? `${attributes['builtins:max_health'] || '-'}`
-                    : `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
+                    ? `${attributes['builtins:max_health'] ?? '-'}`
+                    : `${attributes['builtins:current_health'] ?? '-'}/${attributes['builtins:max_health'] ?? '-'}`,
             },
             ARMOR: {
-                current: getNumber(attributes['builtins:current_armor'], 0),
-                base: getNumber(attributes['builtins:base_armor'], 0),
+                current: attributes['builtins:current_armor'] ?? 0,
+                base: attributes['builtins:base_armor'] ?? 0,
                 text: flags?.ignoreCurrentValues
-                    ? `${attributes['builtins:base_armor'] || '-'}`
-                    : `${attributes['builtins:current_armor'] || '-'}`,
+                    ? `${attributes['builtins:base_armor'] ?? '-'}`
+                    : `${attributes['builtins:current_armor'] ?? '-'}`,
             },
             AP: {
-                current: getNumber(attributes['builtins:current_action_points'], 0),
-                max: getNumber(attributes['builtins:max_action_points'], 0),
+                current: attributes['builtins:current_action_points'] ?? 0,
+                max: attributes['builtins:max_action_points'] ?? 0,
                 text: flags?.ignoreCurrentValues
-                    ? `${attributes['builtins:max_action_points'] || '-'}`
-                    : `${attributes['builtins:current_action_points'] || '-'}/${attributes['builtins:max_action_points'] || '-'}`,
+                    ? `${attributes['builtins:max_action_points'] ?? '-'}`
+                    : `${attributes['builtins:current_action_points'] ?? '-'}/${attributes['builtins:max_action_points'] ?? '-'}`,
             },
         }),
         [attributes, flags]

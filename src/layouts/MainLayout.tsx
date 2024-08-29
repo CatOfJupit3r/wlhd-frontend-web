@@ -19,10 +19,10 @@ const MainLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean;
     return (
         <>
             {includeHeader && <Header />}
-            <Notify />
             <main>
                 <Outlet />
             </main>
+            <Notify />
             {includeFooter && <Footer />}
         </>
     )

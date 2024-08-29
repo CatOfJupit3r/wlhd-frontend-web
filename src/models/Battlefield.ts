@@ -28,10 +28,10 @@ export type GameStateContainer = Array<GameMessage>
 
 export interface EntityInfoTooltip {
     decorations: GameComponentDecoration
-    square: { line: string; column: string }
-    health: { current: string; max: string }
-    action_points: { current: string; max: string }
-    armor: { current: string; base: string }
+    square: { line: number; column: number }
+    health: { current: number; max: number }
+    action_points: { current: number; max: number }
+    armor: { current: number; base: number }
     statusEffects: Array<Omit<StatusEffectInfo, 'descriptor'>>
 }
 
@@ -43,7 +43,7 @@ export interface EntityInfoTurn {
 
 export interface EntityInfoFull {
     decorations: GameComponentDecoration
-    square: { line: string; column: string }
+    square: { line: number; column: number }
     attributes: EntityAttributes
 
     inventory: Array<ItemInfo>
@@ -56,7 +56,7 @@ export interface EntityInfoFull {
 }
 
 export interface EntityAttributes {
-    [attribute: string]: string
+    [attribute: string]: number
 }
 
 interface MethodVariableObject {

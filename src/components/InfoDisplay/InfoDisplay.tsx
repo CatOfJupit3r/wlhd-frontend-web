@@ -1,6 +1,6 @@
 import ElementWithIcon from '@components/ElementWithIcon'
 import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { HTMLAttributes, useCallback, useMemo } from 'react'
+import { HTMLAttributes, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './InfoDisplay.module.css'
 import { ActiveIcon, CooldownIcon, HourglassIcon } from '@components/icons'
@@ -47,7 +47,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             )
     }, [])
 
-    const IsActiveDetails = useCallback(({ info }: WeaponSegment) => {
+    const IsActiveDetails = useCallback(({ info }: WeaponSegment | SpellSegment) => {
         return info.isActive ? <ActiveIcon className={'size-6'} /> : null
     }, [])
 
@@ -120,11 +120,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' &&
                         info.isActive &&
-                        IsActiveDetails({ info } as {
-                            isActive: boolean
-                        } extends SpellInfo
-                            ? SpellSegment
-                            : never)}
+                        IsActiveDetails({ info } as SpellSegment)}
                 </div>
                 {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
                 {type !== 'status_effect' &&

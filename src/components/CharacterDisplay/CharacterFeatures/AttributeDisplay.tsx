@@ -83,7 +83,7 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes
         for (const attribute in attributes) {
             if (ignored.includes(attribute)) continue
             if (!attribute.endsWith('_attack') && !attribute.endsWith('_defense')) {
-                found_attributes.push({ key: attribute, value: attributes[attribute] })
+                found_attributes.push({ key: attribute, value: `${attributes[attribute]}` })
                 addIgnored(attribute)
             }
         }

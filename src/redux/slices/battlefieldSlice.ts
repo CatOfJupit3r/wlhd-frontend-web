@@ -62,6 +62,19 @@ const InfoSlice = createSlice({
         setBattlefield: (state, action: PayloadAction<Battlefield>) => {
             return { ...state, currentBattlefield: action.payload }
         },
+        setPawns: (
+            state,
+            action: PayloadAction<{
+                pawns: BattlefieldState['currentBattlefield']['pawns']
+                field: BattlefieldState['currentBattlefield']['field']
+            }>
+        ) => {
+            state.currentBattlefield = {
+                ...state.currentBattlefield,
+                pawns: action.payload.pawns,
+                field: action.payload.field,
+            }
+        },
         resetStateAfterSquareChoice: (state) => {
             return {
                 ...state,
@@ -98,6 +111,7 @@ export const {
     resetInteractableSquares,
     addClickedSquare,
     resetAlreadyClickedSquares,
+    setPawns,
     alreadyClickedOnlyThisSquare,
 } = InfoSlice.actions
 

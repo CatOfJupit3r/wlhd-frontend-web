@@ -92,15 +92,7 @@ const Battlefield = () => {
     return (
         <div className={styles.battlefield} id={'battlefield-div'}>
             {!battlefield ? (
-                <Blurhash
-                    hash={BATTLEFIELD_BLUR_HASH}
-                    width={'80vh'}
-                    height={'90vh'}
-                    style={{
-                        borderRadius: '10px',
-                        overflow: 'hidden',
-                    }}
-                />
+                <BattlefieldPlaceholder />
             ) : (
                 <>
                     {columnHelpRow('1')}
@@ -111,6 +103,20 @@ const Battlefield = () => {
                 </>
             )}
         </div>
+    )
+}
+
+export const BattlefieldPlaceholder = () => {
+    return (
+        <Blurhash
+            hash={BATTLEFIELD_BLUR_HASH}
+            width={'80vh'}
+            height={'90vh'}
+            style={{
+                borderRadius: '10px',
+                overflow: 'hidden',
+            }}
+        />
     )
 }
 

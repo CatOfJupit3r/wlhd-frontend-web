@@ -23,7 +23,7 @@ interface DataContextType {
     fetchAndSetWeapons: (dlc: string) => Promise<void>
     fetchAndSetSpells: (dlc: string) => Promise<void>
     fetchAndSetStatusEffects: (dlc: string) => Promise<void>
-    fetchAndSetEntities: (dlc: string) => Promise<void>
+    fetchAndSetEntities: (dlc: string) => Promise<{ [descriptor: string]: EntityInfoFull }>
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
@@ -150,7 +150,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
     )
 
     const fetchAndSetEntities = useCallback(
-        async (dlc: string): Promise<void> => {
+        async (dlc: string): Promise<{ [descriptor: string]: EntityInfoFull }> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.entities ?? false)) {
                     const { characters: fetched } = await APIService.getLoadedCharacters(dlc)
@@ -167,10 +167,12 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             entities: true,
                         },
                     })
+                    return fetched
                 }
             } catch (error) {
                 console.error('Failed to fetch entities:', error)
             }
+            return {}
         },
         [alreadyFetchedContent, entities]
     )

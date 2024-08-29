@@ -26,7 +26,7 @@ export interface CharacterInTurnOrder {
         sprite: string
     }
     square: {
-        line: string
-        column: string
+        line: number
+        column: number
     }
 }
