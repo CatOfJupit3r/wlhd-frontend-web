@@ -2,9 +2,9 @@ import {
     CONTROLLED_BY_GAME_LOGIC,
     CONTROLLED_BY_PLAYER,
     useCombatEditorContext,
-} from '@components/ContextProviders/CombatEditorContext'
-import { useCoordinatorEntitiesContext } from '@components/ContextProviders/CoordinatorEntitiesProvider'
-import { useDataContext } from '@components/ContextProviders/GameDataProvider'
+} from '@context/CombatEditorContext'
+import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useDataContext } from '@context/GameDataProvider'
 import GameAsset from '@components/GameAsset'
 import { HTMLIconFactoryProps, IconComponentType } from '@components/icons/icon_factory'
 import { Button } from '@components/ui/button'

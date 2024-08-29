@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { RxReset } from 'react-icons/rx'
 import { cn } from '@utils'
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'

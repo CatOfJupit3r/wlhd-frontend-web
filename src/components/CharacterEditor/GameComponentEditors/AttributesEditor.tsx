@@ -1,4 +1,4 @@
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { Input } from '@components/ui/input'
 import { capitalizeFirstLetter } from '@utils'
 import { useCallback } from 'react'

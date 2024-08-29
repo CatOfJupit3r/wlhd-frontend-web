@@ -14,6 +14,7 @@
             "@models/*": ["./models/*"],
             "@router/*": ["./router/*"],
             "@lib/*": ["./lib/*"],
+            "@context/*": ["./context/*"],
             "config": ["./config"]
         },
         "lib": ["dom", "dom.iterable", "esnext"],

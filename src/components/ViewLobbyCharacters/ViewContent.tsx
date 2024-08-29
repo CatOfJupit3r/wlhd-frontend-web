@@ -4,9 +4,9 @@ import {
     buildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
-} from '@components/ContextProviders/CharacterEditorProvider'
-import { useCoordinatorEntitiesContext } from '@components/ContextProviders/CoordinatorEntitiesProvider'
-import { useViewCharactersContext } from '@components/ContextProviders/ViewCharactersContext'
+} from '@context/CharacterEditorProvider'
+import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import Overlay from '@components/Overlay'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'

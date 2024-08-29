@@ -1,4 +1,4 @@
-import { CombatEditorContextType } from '@components/ContextProviders/CombatEditorContext'
+import { CombatEditorContextType } from '@context/CombatEditorContext'
 import { EntityInfoFull } from '@models/Battlefield'
 import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
 import { isDescriptor } from '@utils/descriptorTools'

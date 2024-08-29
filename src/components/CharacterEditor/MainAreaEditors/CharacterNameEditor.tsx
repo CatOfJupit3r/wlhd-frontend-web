@@ -2,7 +2,7 @@ import { Label } from '@components/ui/label'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import React from 'react'
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { RxReset } from 'react-icons/rx'
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
 

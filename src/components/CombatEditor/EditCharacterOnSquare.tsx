@@ -3,8 +3,8 @@ import {
     buildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
-} from '@components/ContextProviders/CharacterEditorProvider'
-import { useCombatEditorContext } from '@components/ContextProviders/CombatEditorContext'
+} from '@context/CharacterEditorProvider'
+import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
 import {

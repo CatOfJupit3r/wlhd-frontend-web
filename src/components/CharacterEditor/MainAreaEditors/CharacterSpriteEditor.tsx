@@ -1,6 +1,6 @@
 import GameAsset from '@components/GameAsset'
 import React from 'react'
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 
 const CharacterSpriteEditor = () => {
     // Until uploading sprites is implemented, this will be a placeholder

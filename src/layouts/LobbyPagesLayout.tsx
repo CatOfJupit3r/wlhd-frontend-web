@@ -5,8 +5,8 @@ import { useEffect } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { refreshLobbyInfo, refreshUserInfo } from '@utils'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { CoordinatorEntitiesProvider } from '@components/ContextProviders/CoordinatorEntitiesProvider'
-import { GameDataProvider } from '@components/ContextProviders/GameDataProvider'
+import { CoordinatorEntitiesProvider } from '@context/CoordinatorEntitiesProvider'
+import { GameDataProvider } from '@context/GameDataProvider'
 
 const LobbyPagesLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
     const { lobbyId } = useParams()

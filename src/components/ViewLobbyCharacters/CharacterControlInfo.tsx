@@ -12,7 +12,7 @@ import { IoAdd } from 'react-icons/io5'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { Separator } from '@components/ui/separator'
 import { IoMdPersonAdd } from 'react-icons/io'
-import { useViewCharactersContext } from '@components/ContextProviders/ViewCharactersContext'
+import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import { useTranslation } from 'react-i18next'
 
 const Placeholder = () => {

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Separator } from '@components/ui/separator'
 import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import Menu, { MenuSelection } from '@components/ui/menu'
 import InventoryEditor from '@components/CharacterEditor/GameComponentEditors/InventoryEditor'
 import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'

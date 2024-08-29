@@ -3,7 +3,7 @@ import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/C
 import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor'
 import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEditors/CharacterDescriptionEditor'
 import React, { useCallback } from 'react'
-import { useCharacterEditorContext } from '@components/ContextProviders/CharacterEditorProvider'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { Button } from '@components/ui/button'
 import { PencilIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

@@ -8,13 +8,13 @@ import GameAsset from '@components/GameAsset'
 import { FaEdit } from 'react-icons/fa'
 import { RiAdminFill } from 'react-icons/ri'
 import { GrContactInfo } from 'react-icons/gr'
-import { useCoordinatorEntitiesContext } from '@components/ContextProviders/CoordinatorEntitiesProvider'
+import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
 import { Separator } from '@components/ui/separator'
 import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
 import {
     useViewCharactersContext,
     ViewCharactersContextProvider,
-} from '@components/ContextProviders/ViewCharactersContext'
+} from '@context/ViewCharactersContext'
 import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'

@@ -8,7 +8,7 @@ import {
     verifyCombatEditorLocalStorage,
 } from '@components/CombatEditor/CombatEditorLocalStorage'
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare'
-import { CombatEditorContextProvider, useCombatEditorContext } from '@components/ContextProviders/CombatEditorContext'
+import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { Button } from '@components/ui/button'
 import { Toggle } from '@components/ui/toggle'
 import { toastError } from '@hooks/useToast'
