@@ -30,7 +30,7 @@ const SignUp = ({ className }: { className?: string }) => {
 
     useEffect(() => {
         if (readyToNav) {
-            navigate('/profile')
+            navigate(paths.profile)
         }
     }, [readyToNav])
 
