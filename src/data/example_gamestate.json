@@ -1699,7 +1699,10 @@
                             "current" : 0,
                             "max" : 1
                         },
-                        "isActive" : true
+                        "isActive" : true,
+                        "methodVariables": {
+                            "builtins:fire_damage": 3
+                        }
                     },
                     {
                         "descriptor" : "builtins:fireball",

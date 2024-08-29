@@ -59,13 +59,11 @@ export interface EntityAttributes {
     [attribute: string]: number
 }
 
-interface MethodVariableObject {
-    method_variables?: {
-        [key: string]: string | null | number
-    }
+interface InfoWithMethodVariables {
+    methodVariables?: { [variable: string]: string | number | Record<string, unknown> | unknown }
 }
 
-export interface WeaponInfo extends MethodVariableObject {
+export interface WeaponInfo extends InfoWithMethodVariables {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -80,7 +78,7 @@ export interface WeaponInfo extends MethodVariableObject {
     isActive: boolean
 }
 
-export interface ItemInfo extends MethodVariableObject {
+export interface ItemInfo extends InfoWithMethodVariables {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -94,7 +92,7 @@ export interface ItemInfo extends MethodVariableObject {
     consumable: boolean // if item is consumable
 }
 
-export interface SpellInfo extends MethodVariableObject {
+export interface SpellInfo extends InfoWithMethodVariables {
     descriptor: string
     decorations: GameComponentDecoration
     cost: number
@@ -107,7 +105,7 @@ export interface SpellInfo extends MethodVariableObject {
     isActive?: boolean
 }
 
-export interface StatusEffectInfo extends MethodVariableObject {
+export interface StatusEffectInfo extends InfoWithMethodVariables {
     descriptor: string
     decorations: GameComponentDecoration
     duration: string | null

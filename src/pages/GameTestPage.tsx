@@ -23,10 +23,10 @@ const GameTestPage = () => {
     }, [])
 
     useEffect(() => {
-        dispatch(setEntityTooltips(example_gamestate.tooltips) as any)
+        dispatch(setEntityTooltips(example_gamestate.tooltips))
         dispatch(setMessages(example_gamestate.messages as any))
         dispatch(setControlledEntities(example_gamestate.controlledEntities as EntityInfoFull[]))
-        dispatch(setBattlefield(example_gamestate.battlefield as any))
+        dispatch(setBattlefield(example_gamestate.battlefield))
         dispatch(setTurnOrder(example_gamestate.turnOrder as IndividualTurnOrder))
         dispatch(setEntityActions(example_gamestate.actions as any))
         dispatch(setPlayersTurn(true))

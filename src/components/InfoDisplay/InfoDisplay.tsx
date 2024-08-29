@@ -6,6 +6,7 @@ import styles from './InfoDisplay.module.css'
 import { ActiveIcon, CooldownIcon, HourglassIcon } from '@components/icons'
 import { cn } from '@utils'
 import { BiInfinite } from 'react-icons/bi'
+import { Separator } from '@components/ui/separator'
 
 interface WeaponSegment {
     type: 'weapon'
@@ -112,6 +113,28 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         )
     }, [])
 
+    const MethodVariableDetails = useCallback(() => {
+        const { methodVariables } = info
+        if (!methodVariables || Object.keys(methodVariables).length === 0) {
+            return null
+        }
+        return (
+            <div id={'method-variables'} className={'mt-2 flex flex-col items-center px-8 text-t-small gap-1'}>
+                <ul>
+                    {Object.entries(methodVariables).map(([key, value], index) => {
+                        return (
+                            <li key={index} className={'flex flex-row gap-1'}>
+                                <p>{tNoPrefix(key)}</p>
+                                =
+                                <p>{JSON.stringify(value)}</p>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </div>
+        )
+    }, [info])
+
     return (
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium relative')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
@@ -144,6 +167,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             <div id={'description'} className={styles.infoSegmentDescription}>
                 {tNoPrefix(decorations?.description) ?? '???'}
             </div>
+            <Separator />
+            <MethodVariableDetails />
         </div>
     )
 }
@@ -169,4 +194,3 @@ export const StatusEffectInfoDisplay = ({
 }: {
     info: StatusEffectSegment['info']
 } & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'status_effect'} info={info} {...props} />
-export default InfoDisplay
