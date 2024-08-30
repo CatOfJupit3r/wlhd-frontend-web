@@ -1379,87 +1379,6 @@
         ]
     ],
     "tooltips" : {
-        "3/4" : {
-            "decorations" : {
-                "name" : "builtins:target_dummy.name",
-                "sprite" : "builtins:target_dummy",
-                "description" : "builtins:target_dummy.desc"
-            },
-            "square" : {
-                "line" : 3,
-                "column" : 4
-            },
-            "health" : {
-                "current" : 0,
-                "max" : 250
-            },
-            "action_points" : {
-                "current" : 0,
-                "max" : 10
-            },
-            "armor" : {
-                "current" : 0,
-                "base" : 100
-            },
-            "statusEffects" : [
-                {
-                    "decorations" : {
-                        "name" : "builtins:fainted.name",
-                        "sprite" : "builtins:status_effect",
-                        "description" : "builtins:fainted.desc"
-                    },
-                    "duration" : null
-                }
-            ]
-        },
-        "4/3" : {
-            "decorations" : {
-                "name" : "builtins:target_dummy.name",
-                "sprite" : "builtins:target_dummy",
-                "description" : "builtins:target_dummy.desc"
-            },
-            "square" : {
-                "line" : 4,
-                "column" : 3
-            },
-            "health" : {
-                "current" : 233,
-                "max" : 250
-            },
-            "action_points" : {
-                "current" : 0,
-                "max" : 10
-            },
-            "armor" : {
-                "current" : 0,
-                "base" : 100
-            },
-            "statusEffects" : []
-        },
-        "4/5" : {
-            "decorations" : {
-                "name" : "coordinator:mage.name",
-                "sprite" : "coordinator:ally",
-                "description" : "coordinator:mage.description"
-            },
-            "square" : {
-                "line" : 4,
-                "column" : 5
-            },
-            "health" : {
-                "current" : 75,
-                "max" : 75
-            },
-            "action_points" : {
-                "current" : 10,
-                "max" : 10
-            },
-            "armor" : {
-                "current" : 0,
-                "base" : 0
-            },
-            "statusEffects" : []
-        }
     },
     "controlledEntities" : [
         {
@@ -1700,8 +1619,8 @@
                             "max" : 1
                         },
                         "isActive" : true,
-                        "methodVariables": {
-                            "builtins:fire_damage": 3
+                        "methodVariables" : {
+                            "builtins:fire_damage" : 3
                         }
                     },
                     {
@@ -1733,80 +1652,213 @@
         }
     ],
     "battlefield" : {
-        "field" : [
-            [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            [
-                "0",
-                "0",
-                "0",
-                "1",
-                "0",
-                "0"
-            ],
-            [
-                "0",
-                "0",
-                "2",
-                "0",
-                "3",
-                "0"
-            ],
-            [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ],
-            [
-                "0",
-                "0",
-                "0",
-                "0",
-                "0",
-                "0"
-            ]
-        ],
-        "lines" : [
-            "builtins:safe_line",
-            "builtins:ranged_line",
-            "builtins:melee_line",
-            "builtins:melee_line",
-            "builtins:ranged_line",
-            "builtins:safe_line"
-        ],
-        "columns" : [
-            "builtins:one",
-            "builtins:two",
-            "builtins:three",
-            "builtins:four",
-            "builtins:five",
-            "builtins:six"
-        ],
         "pawns" : {
-            "0" : "builtins:tile",
-            "1" : "builtins:target_dummy",
-            "2" : "builtins:target_dummy",
-            "3" : "coordinator:ally"
-        },
-        "separators" : "builtins:separator",
-        "connectors" : "builtins:connector"
+            "1/1" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "1/2" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "1/3" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "1/4" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "1/5" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "1/6" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/1" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/2" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/3" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/4" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/5" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "2/6" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "3/1" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "3/2" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "3/3" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "3/4" : {
+                "character" : {
+                    "descriptor" : "builtins:target_dummy",
+                    "decorations" : {
+                        "name" : "builtins:target_dummy.name",
+                        "sprite" : "builtins:target_dummy",
+                        "description" : "builtins:target_dummy.desc"
+                    },
+                    "square" : {
+                        "line" : 3,
+                        "column" : 4
+                    },
+                    "health" : {
+                        "current" : 0,
+                        "max" : 250
+                    },
+                    "action_points" : {
+                        "current" : 0,
+                        "max" : 10
+                    },
+                    "armor" : {
+                        "current" : 0,
+                        "base" : 100
+                    },
+                    "statusEffects" : [
+                        {
+                            "decorations" : {
+                                "name" : "builtins:fainted.name",
+                                "sprite" : "builtins:status_effect",
+                                "description" : "builtins:fainted.desc"
+                            },
+                            "duration" : null
+                        }
+                    ]
+                },
+                "areaEffects" : []
+            },
+            "3/5" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "3/6" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "4/1" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "4/2" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "4/3" : {
+                "character" : {
+                    "descriptor" : "builtins:target_dummy",
+                    "decorations" : {
+                        "name" : "builtins:target_dummy.name",
+                        "sprite" : "builtins:target_dummy",
+                        "description" : "builtins:target_dummy.desc"
+                    },
+                    "square" : {
+                        "line" : 4,
+                        "column" : 3
+                    },
+                    "health" : {
+                        "current" : 233,
+                        "max" : 250
+                    },
+                    "action_points" : {
+                        "current" : 0,
+                        "max" : 10
+                    },
+                    "armor" : {
+                        "current" : 0,
+                        "base" : 100
+                    },
+                    "statusEffects" : []
+                },
+                "areaEffects" : []
+            },
+            "4/4" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "4/5" : {
+                "character" : {
+                    "descriptor" : "coordinator:mage",
+                    "decorations" : {
+                        "name" : "coordinator:mage.name",
+                        "sprite" : "coordinator:ally",
+                        "description" : "coordinator:mage.description"
+                    },
+                    "square" : {
+                        "line" : 4,
+                        "column" : 5
+                    },
+                    "health" : {
+                        "current" : 75,
+                        "max" : 75
+                    },
+                    "action_points" : {
+                        "current" : 10,
+                        "max" : 10
+                    },
+                    "armor" : {
+                        "current" : 0,
+                        "base" : 0
+                    },
+                    "statusEffects" : []
+                },
+                "areaEffects" : []
+            },
+            "4/6" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/1" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/2" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/3" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/4" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/5" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "5/6" : {
+                "character" : null,
+                "areaEffects" : []
+            },
+            "6/1" : {
+                "character" : null,
+                "areaEffects" : []
+            }
+        }
     },
     "turnOrder" : {
         "order" : [

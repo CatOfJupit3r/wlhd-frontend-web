@@ -1,17 +1,17 @@
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
-import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor'
-import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor'
 import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEditors/CharacterDescriptionEditor'
-import React, { useCallback } from 'react'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
+import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor'
+import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor'
 import { Button } from '@components/ui/button'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { PencilIcon } from 'lucide-react'
+import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const CharacterMainInfoEditor = () => {
     const { flags, character } = useCharacterEditorContext()
     const { t } = useTranslation('local', {
-        keyPrefix: 'editor'
+        keyPrefix: 'editor',
     })
     const [editing, setEditing] = React.useState(false)
 

@@ -1,9 +1,9 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import React, { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
-import { cn } from '@utils'
 import Spinner from '@components/Spinner'
+import { cn } from '@utils'
+import { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const buttonVariants = cva(
@@ -49,7 +49,7 @@ Button.displayName = 'Button'
 
 const TimeoutButton = ({ timeoutTime, onClick, disabled, ...props }: { timeoutTime: number } & ButtonProps) => {
     const [isTimeout, setIsTimeout] = useState(false)
-    const {t} = useTranslation('local', {
+    const { t } = useTranslation('local', {
         keyPrefix: 'ui',
     })
 

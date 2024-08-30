@@ -7,13 +7,11 @@ export interface GameComponentDecoration {
 }
 
 export interface Battlefield {
-    field: string[][]
-    columns: string[]
-    lines: string[]
-    connectors: string
-    separators: string
     pawns: {
-        [key: string]: string
+        [key: string]: {
+            character: EntityInfoTooltip | null
+            areaEffects: Array<unknown>
+        }
     }
 }
 
@@ -33,12 +31,6 @@ export interface EntityInfoTooltip {
     action_points: { current: number; max: number }
     armor: { current: number; base: number }
     statusEffects: Array<Omit<StatusEffectInfo, 'descriptor'>>
-}
-
-export interface EntityInfoTurn {
-    decorations: GameComponentDecoration
-    square: { line: string; column: string }
-    action_points: { current: string; max: string }
 }
 
 export interface EntityInfoFull {
@@ -110,9 +102,3 @@ export interface StatusEffectInfo extends InfoWithMethodVariables {
     decorations: GameComponentDecoration
     duration: string | null
 }
-
-export interface AttributeInfo {
-    [attribute: string]: string
-}
-
-export type CharacterFeaturesType = WeaponInfo | ItemInfo | SpellInfo | StatusEffectInfo

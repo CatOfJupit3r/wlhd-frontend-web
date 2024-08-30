@@ -1,23 +1,23 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { resetGameComponentsStateAction } from '@redux/highActions'
-import { selectGameFlow } from '@redux/slices/infoSlice'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import { resetTurnSlice, selectOutput } from '@redux/slices/turnSlice'
-import { AppDispatch } from '@redux/store'
-import SocketService from '@services/SocketService'
 import GameScreen from '@components/GameScreen/GameScreen'
 import Overlay from '@components/Overlay'
 import ThinkingHn from '@components/ThinkingHn'
-import { useToast } from '@hooks/useToast'
 import { Button } from '@components/ui/button'
+import { ActionContextType } from '@context/ActionContext'
+import { useToast } from '@hooks/useToast'
+import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
+import SocketService from '@services/SocketService'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
+    const [actionOutput, setActionOutput] = useState<ActionContextType['choices']['mechanic'] | null>(null)
     const { t } = useTranslation()
     const { toast } = useToast()
     const navigate = useNavigate()
@@ -25,17 +25,16 @@ const GameLogicWrapper = () => {
     const { gameId, lobbyId } = useParams()
 
     const gameFlow = useSelector(selectGameFlow)
-    const actionOutput = useSelector(selectOutput)
     const lobbyInfo = useSelector(selectLobbyInfo)
 
     useEffect(() => {
         if (!lobbyId || !gameId) {
             // if (somehow) lobbyId or gameId is not set, we leave the page before anything bad happens
-            dispatch(resetTurnSlice())
+            dispatch(resetGameScreenSlice())
             navigate('..')
             return
         }
-        dispatch(resetGameComponentsStateAction())
+        dispatch(setActions(null))
         SocketService.connect({
             lobbyId,
             combatId: gameId,
@@ -49,7 +48,7 @@ const GameLogicWrapper = () => {
                 description: JSON.stringify(actionOutput),
                 position: 'bottom-left',
             })
-            dispatch(resetTurnSlice())
+            dispatch(setActions(null))
             SocketService.emit('take_action', actionOutput)
         }
     }, [actionOutput, dispatch])
@@ -81,7 +80,13 @@ const GameLogicWrapper = () => {
                     </Overlay>
                 )
             case 'active':
-                return <GameScreen />
+                return (
+                    <GameScreen
+                        setActionOutput={(output) => {
+                            setActionOutput(output)
+                        }}
+                    />
+                )
             case 'ended':
                 return (
                     <Overlay row={false}>
@@ -91,11 +96,7 @@ const GameLogicWrapper = () => {
                                 result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
                             })}
                         </h1>
-                        <Button
-                            onClick={navigateToLobby}
-                        >
-                            {t('local:game.end.exit')}
-                        </Button>
+                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </Overlay>
                 )
             case 'aborted':
@@ -103,11 +104,7 @@ const GameLogicWrapper = () => {
                     <Overlay>
                         <h1>{t('local:game.end.aborted')}</h1>
                         <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
-                        <Button
-                            onClick={navigateToLobby}
-                        >
-                            {t('local:game.end.exit')}
-                        </Button>
+                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </Overlay>
                 )
             default:

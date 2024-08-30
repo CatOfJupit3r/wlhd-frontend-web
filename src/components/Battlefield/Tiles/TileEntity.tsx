@@ -1,68 +1,29 @@
 import GameAsset from '@components/GameAsset'
-import {
-    selectBattlefieldMode,
-    selectFieldComponents,
-    selectAlreadyClickedSquares,
-    selectInteractableSquares,
-    setClickedSquare,
-} from '@redux/slices/battlefieldSlice'
-import { selectActiveEntity } from '@redux/slices/infoSlice'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { generateAssetPathFullDescriptor } from '../utils'
-import Decoration, { DecorationConfig } from './Decoration/Decoration'
+import { ImgHTMLAttributes, useMemo, useState } from 'react'
+import Decoration from './Decoration/Decoration'
 import EntityTooltip from './EntityTooltip/EntityTooltip'
 import styles from './Tiles.module.css'
 
-import { cn, splitDescriptor } from '@utils'
+import { useBattlefieldContext } from '@context/BattlefieldContext'
+import { cn, getCharacterSide } from '@utils'
+import { generateAssetPath } from '@utils/generateAssetPath'
+import { useTranslation } from 'react-i18next'
 
-const TileEntity = (props: {
-    full_descriptor: string
-    className?: string
-    id: string
-    fallback: {
-        src: string
-        alt?: string
-    }
-}) => {
-    const dispatch = useDispatch()
+const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTMLAttributes<HTMLImageElement>) => {
+    const { battlefield, onClickTile } = useBattlefieldContext()
+    const { t } = useTranslation()
+    const fallback = useMemo(() => {
+        const line = square.split('/')[0]
+        const side = getCharacterSide(line)
+        return {
+            src: generateAssetPath('builtins', side ?? 'enemy'),
+            alt: `Unknown ${side}`,
+        }
+    }, [square])
 
-    const { full_descriptor, className, id, fallback } = props
-    const [dlc, descriptor] = useMemo(() => splitDescriptor(full_descriptor), [full_descriptor])
+    const squareInfo = useMemo(() => battlefield[square], [battlefield, square])
 
     const [showTooltip, setShowTooltip] = useState(false)
-    const [decorations, setDecorations] = useState({
-        interactable: {
-            flag: false,
-            type: 'neutral',
-        },
-        clicked: {
-            flag: false,
-            times: 0,
-        },
-        active: false,
-    } as DecorationConfig)
-
-    const battlefieldMode = useSelector(selectBattlefieldMode)
-    const interactableSquares = useSelector(selectInteractableSquares)
-    const activeEntity = useSelector(selectActiveEntity)
-    const pawns = useSelector(selectFieldComponents)
-    const alreadyClickedSquares = useSelector(selectAlreadyClickedSquares)
-
-    const changeDecoration = useCallback(
-        (
-            key: 'interactable' | 'clicked' | 'active',
-            value: { flag: boolean; type: 'ally' | 'enemy' | 'neutral' } | { flag: boolean; times: number } | boolean
-        ) => {
-            setDecorations((prev) => {
-                return {
-                    ...prev,
-                    [key]: value,
-                }
-            })
-        },
-        []
-    )
 
     const handleMouseEnter = () => {
         setShowTooltip(true)
@@ -72,80 +33,38 @@ const TileEntity = (props: {
         setShowTooltip(false)
     }
 
-    const squareShouldBeInteractable = useCallback(() => {
-        if (battlefieldMode !== 'selection') return false
-        else {
-            if (id in interactableSquares && interactableSquares[id]) return true
-        }
-        return false
-    }, [id, interactableSquares, battlefieldMode])
-
-    const handleDoubleClick = useCallback(() => {
-        if (battlefieldMode === 'selection' && squareShouldBeInteractable()) {
-            dispatch(setClickedSquare(id))
-        }
-    }, [id, interactableSquares, battlefieldMode])
-
-    useEffect(() => {
-        if (alreadyClickedSquares && alreadyClickedSquares[id] > 0) {
-            changeDecoration('clicked', { flag: true, times: alreadyClickedSquares[id] })
-        } else changeDecoration('clicked', { flag: false, times: 0 })
-    }, [alreadyClickedSquares, id])
-
-    useEffect(() => {
-        if (squareShouldBeInteractable()) {
-            changeDecoration('interactable', {
-                flag: true,
-                type: ['1', '2', '3'].includes(id.split('/')[0]) ? 'enemy' : 'ally',
-            })
-        } else changeDecoration('interactable', { flag: false, type: 'neutral' })
-    }, [interactableSquares, battlefieldMode, id])
-
-    useEffect(() => {
-        if (!activeEntity) {
-            if (decorations.active) changeDecoration('active', false)
-            return
-        }
-        const { line, column } = activeEntity.square
-        if (`${line}/${column}` === id) changeDecoration('active', true)
-        else changeDecoration('active', false)
-    }, [activeEntity])
-
     return (
         <div
             className={cn(
                 'relative',
-                descriptor !== 'tile' ? 'bg-cover' : '',
-                squareShouldBeInteractable() ? 'cursor-pointer' : 'cursor-default'
+                squareInfo?.info !== null ? 'bg-cover' : '',
+                squareInfo?.flags.interactable ? 'cursor-pointer' : 'cursor-default',
+                'h-[10vh] w-[10vh]'
             )}
-            onDoubleClick={handleDoubleClick}
-            id={`square_${id}`}
-            key={id}
-            style={
-                descriptor !== 'tile'
-                    ? {
-                          backgroundImage: `url(${generateAssetPathFullDescriptor(pawns['0'])})`,
-                      }
-                    : {}
-            }
+            onDoubleClick={() => {
+                if (squareInfo?.flags.interactable) {
+                    onClickTile(square)
+                }
+            }}
+            id={`square_${square}`}
+            style={{
+                backgroundImage: `url(/assets/local/default_battlefield/tile.png)`,
+            }}
         >
-            <Decoration decoration={decorations} />
-            <GameAsset
-                src={{
-                    dlc,
-                    descriptor,
-                }}
-                alt={descriptor !== 'tile' ? dlc + ':' + descriptor : undefined}
-                fallback={{
-                    src: fallback.src,
-                    alt: fallback.alt ? fallback.alt : dlc + ':' + descriptor,
-                }}
-                id={id}
-                className={styles.tile + (className ? ` ${className}` : '')}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            />
-            {showTooltip && (descriptor !== 'tile' ? <EntityTooltip id={id} /> : null)}
+            <Decoration square={square} />
+            {squareInfo?.info.character?.decorations.sprite ? (
+                <GameAsset
+                    {...props}
+                    src={squareInfo?.info.character?.decorations.sprite}
+                    alt={t(squareInfo?.info.character?.decorations.name)}
+                    fallback={fallback}
+                    className={cn(styles.tile, className)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+            ) : null}
+            {showTooltip &&
+                (squareInfo?.info.character ? <EntityTooltip character={squareInfo?.info.character} /> : null)}
         </div>
     )
 }

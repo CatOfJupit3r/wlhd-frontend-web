@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { RxReset } from 'react-icons/rx'
-import { cn } from '@utils'
-import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
 
 const MAX_DESCRIPTION_LENGTH = 256
 
@@ -52,10 +51,7 @@ const CharacterDescriptionEditor = () => {
                 rows={1}
             />
             <div className={'mt-1 flex justify-between'}>
-                <CharacterLimit
-                    characterLimit={MAX_DESCRIPTION_LENGTH}
-                    text={character.decorations.description}
-                />
+                <CharacterLimit characterLimit={MAX_DESCRIPTION_LENGTH} text={character.decorations.description} />
                 <Button
                     variant={'ghost'}
                     size={'icon'}

@@ -1,19 +1,19 @@
-import { useSelector } from 'react-redux'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import React, { useMemo, useState } from 'react'
-import { StaticSkeleton } from '@components/ui/skeleton'
 import GameAsset from '@components/GameAsset'
-import { AwaitingButton, Button } from '@components/ui/button'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { AwaitingButton } from '@components/ui/button'
+import { Combobox } from '@components/ui/combobox'
+import { Separator } from '@components/ui/separator'
+import { StaticSkeleton } from '@components/ui/skeleton'
+import { useViewCharactersContext } from '@context/ViewCharactersContext'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
 import { refreshLobbyInfo } from '@utils'
-import { FaXmark } from 'react-icons/fa6'
-import { Combobox } from '@components/ui/combobox'
-import { IoAdd } from 'react-icons/io5'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { Separator } from '@components/ui/separator'
-import { IoMdPersonAdd } from 'react-icons/io'
-import { useViewCharactersContext } from '@context/ViewCharactersContext'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FaXmark } from 'react-icons/fa6'
+import { IoMdPersonAdd } from 'react-icons/io'
+import { IoAdd } from 'react-icons/io5'
+import { useSelector } from 'react-redux'
 
 const Placeholder = () => {
     return (
@@ -64,8 +64,7 @@ const PlainListOfPlayers = () => {
                                     console.error('Error removing player', error)
                                 }}
                                 variant={'destructiveGhost'}
-                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600
-                                active:text-red-600`}
+                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600 active:text-red-600`}
                             >
                                 <FaXmark className={'mr-1 size-4'} />
                                 <p>{t('remove')}</p>

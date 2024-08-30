@@ -1,5 +1,4 @@
 import GameAsset from '@components/GameAsset'
-import React from 'react'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 
 const CharacterSpriteEditor = () => {
@@ -7,9 +6,7 @@ const CharacterSpriteEditor = () => {
 
     const { character } = useCharacterEditorContext()
 
-    return (
-        <GameAsset src={character.decorations.sprite} alt={character.decorations.name} className={'size-20'} />
-    )
+    return <GameAsset src={character.decorations.sprite} alt={character.decorations.name} className={'size-20'} />
 }
 
 export default CharacterSpriteEditor

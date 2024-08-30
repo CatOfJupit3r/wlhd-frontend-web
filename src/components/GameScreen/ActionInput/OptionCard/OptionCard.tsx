@@ -3,34 +3,39 @@ import { useTranslation } from 'react-i18next'
 import { BsInfoCircle } from 'react-icons/bs'
 import styles from './OptionCard.module.css'
 
+import { useActionContext } from '@context/ActionContext'
 import { cn } from '@utils'
+import { useCallback, useMemo } from 'react'
 
 const OptionCard = ({
     option,
     index,
     highlighted,
-    callback,
+    alias,
 }: {
     option: Action
     index: number
+    alias: string
+    aliasTranslated: string
     highlighted?: boolean
-    callback?: () => void
 }) => {
     const { t } = useTranslation()
 
-    const { descriptor, co_descriptor } = option.translation_info
-    const translatedText = t(`${descriptor}.desc`)
-    const textNeedsTruncating = translatedText.length > 250
-    const displayedText = textNeedsTruncating ? translatedText.substring(0, 250) + '...' : translatedText
+    const { descriptor, co_descriptor } = useMemo(() => option.translation_info, [option.translation_info])
+    const translatedText = useMemo(() => t(`${descriptor}.desc`), [descriptor])
+    const textNeedsTruncating = useMemo(() => translatedText.length > 250, [translatedText])
+    const displayedText = useMemo(
+        () => (textNeedsTruncating ? translatedText.substring(0, 250) + '...' : translatedText),
+        [translatedText, textNeedsTruncating]
+    )
+    const { setChoice } = useActionContext()
 
-    const handleDoubleClick = () => {
+    const handleDoubleClick = useCallback(() => {
         if (!option.available) {
             return
         }
-        if (callback) {
-            callback()
-        }
-    }
+        setChoice(alias, option.id, t(`${option.translation_info.descriptor}.name`))
+    }, [option, setChoice, descriptor])
 
     return (
         <div

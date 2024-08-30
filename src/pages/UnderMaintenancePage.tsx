@@ -1,7 +1,7 @@
 import { Button } from '@components/ui/button'
-import { Link } from 'react-router-dom'
-import { FaArrowRotateRight } from 'react-icons/fa6'
 import { useTranslation } from 'react-i18next'
+import { FaArrowRotateRight } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
 
 const UnderMaintenancePage = () => {
     const { t } = useTranslation()
@@ -23,7 +23,7 @@ const UnderMaintenancePage = () => {
                     {t('local:under_maintenance.explanation')}{' '}
                     <Link
                         to={'https://github.com/CatOfJupit3r'}
-                        className={'text-blue-800 font-extrabold'}
+                        className={'font-extrabold text-blue-800'}
                         target={'_blank'}
                     >
                         {t('local:under_maintenance.link')}

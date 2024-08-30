@@ -1,7 +1,7 @@
 import { TranslatableString } from '@models/Battlefield'
+import { isDescriptor } from '@utils'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { isDescriptor } from '@utils'
 
 const useTranslatableString = () => {
     const { t } = useTranslation()

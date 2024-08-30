@@ -1,10 +1,10 @@
 import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper'
 import Overlay from '@components/Overlay'
+import ThinkingHn from '@components/ThinkingHn'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import ThinkingHn from '@components/ThinkingHn'
 
 const GameRoomPage = () => {
     const { lobbyId } = useParams()

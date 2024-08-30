@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
-import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
-import { EntityInfoFull } from '@models/Battlefield'
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
+import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import Menu, { MenuSelection } from '@components/ui/menu'
+import { EntityInfoFull } from '@models/Battlefield'
+import React, { useMemo } from 'react'
 
 const CharacterMenus: Array<{
     value: string

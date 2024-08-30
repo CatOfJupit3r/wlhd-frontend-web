@@ -1,6 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { EntityInfoFull, SpellInfo } from '@models/Battlefield'
+import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
+import { SpellInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { Button } from '@components/ui/button'
+import { Checkbox } from '@components/ui/checkbox'
+import { Combobox } from '@components/ui/combobox'
+import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import { EmptyMenuContent } from '@components/ui/menu'
 import {
     Select,
     SelectContent,
@@ -10,21 +16,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { Combobox } from '@components/ui/combobox'
-import { SpellInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
-import { Button } from '@components/ui/button'
-import { isDescriptor } from '@utils'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { Checkbox } from '@components/ui/checkbox'
-import { useDataContext } from '@context/GameDataProvider'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { Input } from '@components/ui/input'
-import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
-import { useTranslation } from 'react-i18next'
-import { EmptyMenuContent } from '@components/ui/menu'
+import { useDataContext } from '@context/GameDataProvider'
+import { EntityInfoFull, SpellInfo } from '@models/Battlefield'
+import { isDescriptor } from '@utils'
 import { SUPPORTED_DLCs } from 'config'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 
 const checkIfCanActivateMore = (
     max: EntityInfoFull['spellBook']['maxActiveSpells'],
@@ -267,9 +267,11 @@ const SpellBookEditor = () => {
             </Accordion>
             {spellBookFlags?.allowChangeMaxSpells && (
                 <div>
-                    <Label>{t('spellBook.max-spells', {
-                        maxSpells: '256'
-                    })}</Label>
+                    <Label>
+                        {t('spellBook.max-spells', {
+                            maxSpells: '256',
+                        })}
+                    </Label>
                     <Input
                         type={'string'}
                         placeholder={t('general.infinity')}
@@ -341,7 +343,6 @@ const SpellBookEditor = () => {
                 )
             })}
             {character.spellBook.spells.length === 0 && <EmptyMenuContent />}
-
         </div>
     )
 }

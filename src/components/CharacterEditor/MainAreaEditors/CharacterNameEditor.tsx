@@ -1,10 +1,10 @@
-import { Label } from '@components/ui/label'
+import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
-import React from 'react'
+import { Label } from '@components/ui/label'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
+import React from 'react'
 import { RxReset } from 'react-icons/rx'
-import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
 
 const MAX_NAME_LENGTH = 32
 
@@ -36,11 +36,7 @@ const CharacterNameEditor = () => {
                 className={'text-ellipsis text-t-normal font-bold'}
             />
             <div className={'mt-1 flex justify-between'}>
-
-                <CharacterLimit
-                    characterLimit={MAX_NAME_LENGTH}
-                    text={character.decorations.name}
-                />
+                <CharacterLimit characterLimit={MAX_NAME_LENGTH} text={character.decorations.name} />
                 <Button
                     variant={'ghost'}
                     size={'icon'}

@@ -1,8 +1,8 @@
-import { selectActiveEntity, selectControlledEntities } from '@redux/slices/infoSlice'
+import { CharacterDisplayInGame } from '@components/CharacterDisplay'
+import { selectActiveEntity, selectControlledEntities } from '@redux/slices/gameScreenSlice'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import styles from './ControlledEntitiesInfo.module.css'
-import { CharacterDisplayInGame } from '@components/CharacterDisplay'
 
 const ControlledEntitiesInfo = () => {
     const controlledEntities = useSelector(selectControlledEntities)

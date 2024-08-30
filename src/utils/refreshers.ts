@@ -1,7 +1,7 @@
-import APIService from '@services/APIService'
+import { fetchUserInformation } from '@redux/slices/cosmeticsSlice'
 import { setLobbyInfo } from '@redux/slices/lobbySlice'
 import { store as ReduxStore } from '@redux/store'
-import { fetchUserInformation } from '@redux/slices/cosmeticsSlice'
+import APIService from '@services/APIService'
 import AuthManager from '@services/AuthManager'
 
 export const refreshLobbyInfo = async (lobbyId: string | undefined) => {

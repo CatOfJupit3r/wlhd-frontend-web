@@ -1,15 +1,15 @@
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import paths from '@router/paths'
-import APIService from '@services/APIService'
-import { AxiosError } from 'axios'
-import React, { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@utils'
-import { useTranslation } from 'react-i18next'
-import { useToast } from '@hooks/useToast'
+import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
-import { Button } from '@components/ui/button'
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import { useToast } from '@hooks/useToast'
+import paths from '@router/paths'
+import APIService from '@services/APIService'
+import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@utils'
+import { AxiosError } from 'axios'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignUp = ({ className }: { className?: string }) => {
     const navigate = useNavigate()
@@ -73,7 +73,7 @@ const SignUp = ({ className }: { className?: string }) => {
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
             <h2 className={'border-b-2 text-t-bigger'}>Create an account</h2>
-            <form className={'w-full flex flex-col gap-2'}>
+            <form className={'flex w-full flex-col gap-2'}>
                 <div>
                     <Label htmlFor="handle">Handle</Label>
                     <Input
@@ -111,8 +111,8 @@ const SignUp = ({ className }: { className?: string }) => {
             </form>
             <Button
                 className={cn(
-                    'w-full bg-blue-800 text-white p-2 rounded-md transition-all duration-100',
-                    apprf('disabled:', 'bg-blue-400 text-gray-400 cursor-not-allowed')
+                    'w-full rounded-md bg-blue-800 p-2 text-white transition-all duration-100',
+                    apprf('disabled:', 'cursor-not-allowed bg-blue-400 text-gray-400')
                 )}
                 onClick={(e) => onSubmit(e).then()}
                 disabled={!checkInputValidity()}
@@ -125,7 +125,7 @@ const SignUp = ({ className }: { className?: string }) => {
                     to={paths.signIn}
                     className={cn(
                         'text-blue-800 underline',
-                        apprf('disabled:', 'text-gray-400 cursor-not-allowed'),
+                        apprf('disabled:', 'cursor-not-allowed text-gray-400'),
                         apprf('hover:', 'text-blue-600')
                     )}
                 >

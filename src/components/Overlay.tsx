@@ -7,7 +7,7 @@ const Overlay = ({ row, children }: { row?: boolean; children?: React.ReactNode 
             className={
                 'fixed inset-0 box-border flex h-full w-full items-center ' +
                 'justify-center overflow-auto whitespace-pre-wrap bg-black ' +
-                'bg-opacity-90 px-8 pb-16 pt-8 text-lg leading-snug text-white font-bold z-50'
+                'text-lg z-90 bg-opacity-90 px-8 pb-16 pt-8 font-bold leading-snug text-white'
             }
         >
             <div className={`flex items-center justify-center ${row ? 'flex-row' : 'flex-col'} gap-4`}>{children}</div>

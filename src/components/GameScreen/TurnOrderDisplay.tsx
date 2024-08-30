@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { selectTurnOrder } from '@redux/slices/infoSlice'
-import { CharacterInTurnOrder } from '@models/GameHandshake'
 import { CharacterGameAsset } from '@components/GameAsset'
-import { cn, getCharacterSide } from '@utils'
 import { Button } from '@components/ui/button'
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
+import { CharacterInTurnOrder } from '@models/GameHandshake'
+import { selectActiveEntity, selectTurnOrder } from '@redux/slices/gameScreenSlice'
+import { cn, getCharacterSide } from '@utils'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '@redux/store'
+import { useBattlefieldContext } from '@context/BattlefieldContext'
 
 const CharacterCard = ({ character, isActive = false }: { character: CharacterInTurnOrder; isActive?: boolean }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -33,7 +35,7 @@ const CharacterCard = ({ character, isActive = false }: { character: CharacterIn
             />
             <div
                 className={cn(
-                    'w-1/5 h-full rounded opacity-90 items-center justify-center flex overflow-hidden relative',
+                    'relative flex h-full w-1/5 items-center justify-center overflow-hidden rounded opacity-90',
                     getCharacterSide(character.square.line) === 'ally'
                         ? isActive
                             ? character.controlledByYou
@@ -59,6 +61,17 @@ const TurnOrderDisplay = () => {
     const turnOrder = useSelector(selectTurnOrder)
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const [hasOverflow, setHasOverflow] = useState(false)
+    // const activeCharacter = useSelector(selectActiveEntity)
+    // const { setActiveSquares, resetActiveSquares } = useBattlefieldContext()
+
+    // useEffect(() => {
+    //     resetActiveSquares()
+    //     if (activeCharacter === null) {
+    //         return
+    //     } else {
+    //         setActiveSquares(`${activeCharacter.square.line}/${activeCharacter.square.column}`)
+    //     }
+    // }, [activeCharacter])
 
     useEffect(() => {
         const checkForOverflow = () => {

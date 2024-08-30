@@ -24,7 +24,7 @@ const ElementWithIcon = ({
     return (
         <div
             className={cn(
-                'margin-0 flex flex-row items-center gap-2 ',
+                'margin-0 flex flex-row items-center gap-2',
                 iconPosition === 'opposite' ? 'justify-between' : 'justify-normal',
                 className ? ` ${className}` : ''
             )}

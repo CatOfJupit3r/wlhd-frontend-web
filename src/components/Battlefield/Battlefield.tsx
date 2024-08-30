@@ -1,122 +1,104 @@
 import {
-    selectBattlefieldMold,
-    selectColumns,
-    selectConnectors,
-    selectFieldComponents,
-    selectLines,
-    selectSeparators,
-} from '@redux/slices/battlefieldSlice'
+    ConnectorTile,
+    FifthColumnTile,
+    FirstColumnTile,
+    FourthColumnTile,
+    MeleeLineTile,
+    RangedLineTile,
+    SafeLineTile,
+    SecondColumnTile,
+    SeparatorTile,
+    SixthColumnTile,
+    ThirdColumnTile,
+} from '@components/Battlefield/Tiles/CosmeticTiles'
+import TileEntity from '@components/Battlefield/Tiles/TileEntity'
 import { useCallback } from 'react'
-import { Blurhash } from 'react-blurhash'
-import { useSelector } from 'react-redux'
 import styles from './Battlefield.module.css'
-import { COLUMNS_ARRAY, CONNECTORS, JSX_BATTLEFIELD, LINES_ARRAY, SEPARATORS } from './utils'
+import { cn } from '@utils'
 
-const BATTLEFIELD_BLUR_HASH: string =
-    '{7H2i;WB00j[9Ft7M{ofofazoLayoLayfQay00WB-;j[%gt7xuofoffQWBj[WBj[WBj[00WB~qfQ?cof%MfQt7j[ayj[ayfQayj[MxayofayoffQofayayj[t7ayt7WBofWBWBay%MfQxuj[t7j['
+// const BATTLEFIELD_BLUR_HASH: string =
+//     '{7H2i;WB00j[9Ft7M{ofofazoLayoLayfQay00WB-;j[%gt7xuofoffQWBj[WBj[WBj[00WB~qfQ?cof%MfQt7j[ayj[ayfQayj[MxayofayoffQofayayj[t7ayt7WBofWBWBay%MfQxuj[t7j['
 
 const Battlefield = () => {
-    const connectors = useSelector(selectConnectors)
-    const columns = useSelector(selectColumns)
-    const lines = useSelector(selectLines)
-    const separators = useSelector(selectSeparators)
-    const field_components = useSelector(selectFieldComponents)
-    const battlefield = useSelector(selectBattlefieldMold)
-
-    const numberOfRows = battlefield.lines.length
-    const allyRowIndexes = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i)
-    const enemyRows = Array.from({ length: Math.floor(numberOfRows / 2) }, (_, i) => i + Math.floor(numberOfRows / 2))
-
-    const columnHelpRow = useCallback(
-        (key: string) => {
-            const rendered = []
-            rendered.push(
-                <div
-                    key={`column-help-${key}`}
-                    style={{
-                        display: 'flex',
-                    }}
-                >
-                    {CONNECTORS(connectors, key)}
-                    {COLUMNS_ARRAY(columns)}
-                    {CONNECTORS(connectors, key + 1)}
-                </div>
-            )
-            return rendered
-        },
-        [connectors, columns]
-    )
-
-    const displayRows = useCallback(
-        (rows: number[], side_type: string) => {
-            const rendered = []
-            const right_lines = LINES_ARRAY(lines, `${side_type}_right`)
-            const left_lines = LINES_ARRAY(lines, `${side_type}_left`)
-            const battlefieldJSX = JSX_BATTLEFIELD(battlefield.field, field_components)
-            for (const i of rows) {
-                rendered.push(
-                    <div
-                        style={{
-                            display: 'flex',
-                        }}
-                        key={`entity-row-${i}`}
-                    >
-                        {right_lines[i]}
-                        {battlefieldJSX[i]}
-                        {left_lines[i]}
-                    </div>
-                )
-            }
-            return rendered
-        },
-        [battlefield.field, field_components, lines]
-    )
-
-    const displaySeparators = useCallback(() => {
-        const rendered = []
-        rendered.push(
-            <div
-                style={{
-                    display: 'flex',
-                }}
-                key={'separator-row'}
-            >
-                {CONNECTORS(connectors, '1')}
-                {[...Array(columns.length)].map((_, index) => SEPARATORS(separators, index.toString()))}
-                {CONNECTORS(connectors, '2')}
+    const SeparatorRow = useCallback(() => {
+        return (
+            <div id={'separator-row'} className={'flex'}>
+                <ConnectorTile />
+                <SeparatorTile />
+                <SeparatorTile />
+                <SeparatorTile />
+                <SeparatorTile />
+                <SeparatorTile />
+                <SeparatorTile />
+                <ConnectorTile />
             </div>
         )
-        return rendered
-    }, [columns, connectors, separators])
+    }, [])
+
+    const NavigationHelpRow = useCallback(() => {
+        return (
+            <div id={'nav-help-row'} className={'flex'}>
+                <ConnectorTile />
+                <FirstColumnTile />
+                <SecondColumnTile />
+                <ThirdColumnTile />
+                <FourthColumnTile />
+                <FifthColumnTile />
+                <SixthColumnTile />
+                <ConnectorTile />
+            </div>
+        )
+    }, [])
+
+    const CharactersOnRow = useCallback(({ line }: { line: string }) => {
+        return (
+            <>
+                <TileEntity square={`${line}/1`} />
+                <TileEntity square={`${line}/2`} />
+                <TileEntity square={`${line}/3`} />
+                <TileEntity square={`${line}/4`} />
+                <TileEntity square={`${line}/5`} />
+                <TileEntity square={`${line}/6`} />
+            </>
+        )
+    }, [])
 
     return (
-        <div className={styles.battlefield} id={'battlefield-div'}>
-            {!battlefield ? (
-                <BattlefieldPlaceholder />
-            ) : (
-                <>
-                    {columnHelpRow('1')}
-                    {displayRows(allyRowIndexes, 'ally')}
-                    {displaySeparators()}
-                    {displayRows(enemyRows, 'enemy')}
-                    {columnHelpRow('2')}
-                </>
-            )}
+        <div className={cn(styles.battlefield, 'flex flex-col')} id={'battlefield-div'}>
+            <NavigationHelpRow />
+            <div id={'safe-enemy'} className={'flex'}>
+                <SafeLineTile />
+                <CharactersOnRow line={'1'} />
+                <SafeLineTile />
+            </div>
+            <div id={'ranged-enemy'} className={'flex'}>
+                <RangedLineTile />
+                <CharactersOnRow line={'2'} />
+                <RangedLineTile />
+            </div>
+            <div id={'melee-enemy'} className={'flex'}>
+                <MeleeLineTile />
+                <CharactersOnRow line={'3'} />
+                <MeleeLineTile />
+            </div>
+            <SeparatorRow />
+            <div id={'melee-ally'} className={'flex'}>
+                <MeleeLineTile />
+                <CharactersOnRow line={'4'} />
+                <MeleeLineTile />
+            </div>
+            <div id={'ranged-ally'} className={'flex'}>
+                <RangedLineTile />
+                <CharactersOnRow line={'5'} />
+                <RangedLineTile />
+            </div>
+            <div id={'safe-ally'} className={'flex'}>
+                <SafeLineTile />
+                <CharactersOnRow line={'6'} />
+                <SafeLineTile />
+            </div>
+            <NavigationHelpRow />
         </div>
-    )
-}
-
-export const BattlefieldPlaceholder = () => {
-    return (
-        <Blurhash
-            hash={BATTLEFIELD_BLUR_HASH}
-            width={'80vh'}
-            height={'90vh'}
-            style={{
-                borderRadius: '10px',
-                overflow: 'hidden',
-            }}
-        />
     )
 }
 

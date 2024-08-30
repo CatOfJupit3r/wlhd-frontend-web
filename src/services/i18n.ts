@@ -1,8 +1,8 @@
+import APIService from '@services/APIService'
+import { getLanguageFiles } from '@utils'
 import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
-import { getLanguageFiles } from '@utils'
-import APIService from '@services/APIService'
 
 const languageDetector = new LanguageDetector()
 languageDetector.init({

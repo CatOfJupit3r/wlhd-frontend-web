@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
 import APIService from '@services/APIService'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 type ProvidedData<T> = {
     [dlc: string]: { [descriptor: string]: T }
@@ -189,7 +189,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                 fetchAndSetWeapons,
                 fetchAndSetSpells,
                 fetchAndSetStatusEffects,
-                fetchAndSetEntities
+                fetchAndSetEntities,
             }}
         >
             {children}

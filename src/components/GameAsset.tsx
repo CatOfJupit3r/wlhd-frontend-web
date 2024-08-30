@@ -1,6 +1,6 @@
-import React from 'react'
-import { generateAssetPath, generateAssetPathFullDescriptor } from '@components/Battlefield/utils'
 import { getCharacterSide } from '@utils'
+import { generateAssetPath, generateAssetPathFullDescriptor } from '@utils/generateAssetPath'
+import React from 'react'
 
 const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png'
 

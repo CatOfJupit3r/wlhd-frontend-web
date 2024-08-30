@@ -1,77 +1,65 @@
-import { selectChosenMenu } from '@redux/slices/infoSlice'
-import { useCallback, useMemo } from 'react'
+import { Separator } from '@components/ui/separator'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import ActionInput from '../ActionInput/ActionInput'
 import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import LeaveGameOverlay from '../LeaveGameOverlay/LeaveGameOverlay'
 import styles from './MenuContainer.module.css'
-import { Separator } from '@components/ui/separator'
 
-const MenuContainer = () => {
+const GAME_MENUS = {
+    YOUR_ENTITIES: {
+        key: 'your-entities',
+        Component: ControlledEntitiesInfo,
+    },
+    ACTION_SELECT: {
+        key: 'action-select',
+        Component: ActionInput,
+    },
+    HISTORY: {
+        key: 'history',
+        Component: GameMessagesFeed,
+    },
+    GM_SETTINGS: {
+        key: 'gm-settings',
+        Component: GmOptionMenu,
+    },
+}
+
+const MenuContainer = ({ chosen, setChosen }: { chosen: string | null; setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation()
-
-    const chosenMenu = useSelector(selectChosenMenu)
-
-    const menus = useMemo(
-        () => [
-            {
-                key: 'your-entities',
-                Component: () => <ControlledEntitiesInfo />,
-            },
-            {
-                key: 'action-select',
-                Component: () => <ActionInput />,
-            },
-            {
-                key: 'history',
-                Component: () => <GameMessagesFeed />,
-            },
-            {
-                key: 'gm-settings',
-                Component: () => <GmOptionMenu />,
-            },
-            {
-                key: 'leave-game',
-                Component: () => <LeaveGameOverlay />,
-            },
-        ],
-        []
-    )
 
     const ReportThisIssue = useCallback(() => {
         return <div>{t('local:game.action_menus.report_this_issue')}</div>
     }, [])
 
     const displayMenu = useCallback(() => {
-        if (!chosenMenu) {
-            if (menus.length === 0) {
-                return (
-                    <>
-                        <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
-                        <ReportThisIssue />
-                    </>
-                )
-            }
-            const { key, Component } = menus[0]
+        if (chosen === 'leave-game') {
+            return <LeaveGameOverlay setChosen={setChosen} />
+        }
+        let menu: (typeof GAME_MENUS)[keyof typeof GAME_MENUS] | undefined
+        if (!chosen) {
+            menu = GAME_MENUS.YOUR_ENTITIES
+        } else {
+            menu = Object.values(GAME_MENUS).find((m) => m.key === chosen)
+        }
+        if (!menu) {
             return (
                 <>
-                    <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${key}`)}</h1>
-                    {<Component />}
+                    <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
+                    <ReportThisIssue />
                 </>
             )
         }
-        const { Component } = menus.find((menu) => menu.key === chosenMenu) || { Component: () => <ReportThisIssue /> }
         return (
             <>
-                <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${chosenMenu}`)}</h1>
+                <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${menu.key}`)}</h1>
                 <Separator className={'mb-4'} />
-                <Component />
+                <menu.Component />
             </>
         )
-    }, [chosenMenu, menus, t])
+    }, [chosen, t])
 
     return <div className={styles.menuContainer}>{displayMenu()}</div>
 }

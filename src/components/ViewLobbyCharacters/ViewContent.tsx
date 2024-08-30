@@ -1,5 +1,8 @@
 import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
 import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
+import Overlay from '@components/Overlay'
+import { Button } from '@components/ui/button'
+import { Separator } from '@components/ui/separator'
 import {
     buildCharacterEditorProps,
     CharacterEditorContextType,
@@ -7,9 +10,6 @@ import {
 } from '@context/CharacterEditorProvider'
 import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
-import Overlay from '@components/Overlay'
-import { Button } from '@components/ui/button'
-import { Separator } from '@components/ui/separator'
 import { EntityInfoFull } from '@models/Battlefield'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'

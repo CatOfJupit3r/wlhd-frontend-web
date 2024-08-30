@@ -1,6 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { StatusEffectInfo } from '@models/Battlefield'
+import { StatusEffectInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { Button } from '@components/ui/button'
+import { Combobox } from '@components/ui/combobox'
+import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import { EmptyMenuContent } from '@components/ui/menu'
 import {
     Select,
     SelectContent,
@@ -10,20 +14,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { Combobox } from '@components/ui/combobox'
-import { StatusEffectInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
-import { Button } from '@components/ui/button'
-import { isDescriptor } from '@utils'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { MdExposureNeg1, MdPlusOne } from 'react-icons/md'
-import { Input } from '@components/ui/input'
-import { useDataContext } from '@context/GameDataProvider'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { useTranslation } from 'react-i18next'
-import { EmptyMenuContent } from '@components/ui/menu'
+import { useDataContext } from '@context/GameDataProvider'
+import { StatusEffectInfo } from '@models/Battlefield'
+import { isDescriptor } from '@utils'
 import { SUPPORTED_DLCs } from 'config'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { MdExposureNeg1, MdPlusOne } from 'react-icons/md'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 
 function AddNewEffectComponent() {
     const { character, updateCharacter, flags } = useCharacterEditorContext()
@@ -181,7 +181,7 @@ function AddNewEffectComponent() {
 const StatusEffectsEditor = () => {
     const { character, updateCharacter } = useCharacterEditorContext()
 
-    const {t} = useTranslation('local', {
+    const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     })
 
@@ -248,7 +248,7 @@ const StatusEffectsEditor = () => {
                                 <MdExposureNeg1 />
                             </Button>
                             <Button
-                                className={'transition-all h-full w-12'}
+                                className={'h-full w-12 transition-all'}
                                 id={'increase-duration'}
                                 title={t('statusEffects.increase-duration')}
                                 onClick={() => {
@@ -261,7 +261,7 @@ const StatusEffectsEditor = () => {
                                 <MdPlusOne />
                             </Button>
                             <Button
-                                className={'transition-all h-full w-16 hover:bg-red-500'}
+                                className={'h-full w-16 transition-all hover:bg-red-500'}
                                 id={'remove-button'}
                                 title={t('statusEffects.remove')}
                                 onDoubleClick={() => {

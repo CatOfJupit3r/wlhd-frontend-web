@@ -1,8 +1,7 @@
-import React from 'react'
 import { CharacterGameAsset } from '@components/GameAsset'
 import { LocationIcon } from '@components/icons'
-import { useTranslation } from 'react-i18next'
 import { isDescriptor } from '@utils'
+import { useTranslation } from 'react-i18next'
 
 const CharacterBasicInfo = ({
     includeSquare = true,

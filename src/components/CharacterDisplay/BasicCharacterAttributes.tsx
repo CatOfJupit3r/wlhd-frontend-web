@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react'
-import { EntityInfoFull } from '@models/Battlefield'
 import { Progress } from '@components/ui/progress'
+import { EntityInfoFull } from '@models/Battlefield'
+import { useMemo } from 'react'
 import { GiHeartPlus } from 'react-icons/gi'
 import { IoShieldSharp } from 'react-icons/io5'
 import { PiSneakerMoveFill } from 'react-icons/pi'
-
 
 const getPercentage = (current: number, max: number): number => {
     return Math.max(Math.min((current / (max || 1)) * 100, 100), 0)
@@ -116,13 +115,11 @@ const BasicCharacterAttributes = ({
                     {MAIN_ATTRIBUTES.AP.text}
                 </p>
                 <PiSneakerMoveFill
-                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white
-                        opacity-20`}
+                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white opacity-20`}
                 />
             </div>
         </div>
     )
 }
-
 
 export default BasicCharacterAttributes

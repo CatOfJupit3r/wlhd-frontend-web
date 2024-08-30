@@ -1,8 +1,8 @@
+import { UserInformation } from '@models/APIData'
 import { CosmeticsState, LoadingState } from '@models/Redux'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-import { UserInformation } from '@models/APIData'
 import APIService from '@services/APIService'
+import { RootState } from '../store'
 
 const initialState: CosmeticsState = {
     user: {

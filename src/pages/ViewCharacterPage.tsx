@@ -1,5 +1,5 @@
-import { useSearchParams } from 'react-router-dom'
 import ViewCharacterLobby from '@components/ViewLobbyCharacters/ViewLobbyCharacters'
+import { useSearchParams } from 'react-router-dom'
 
 const ViewCharacterPage = () => {
     const [searchParams] = useSearchParams()

@@ -1,14 +1,14 @@
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { IconComponentType } from '@components/icons/icon_factory'
 import { Button } from '@components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
-import React, { useEffect, useRef, useState } from 'react'
-import { IconComponentType } from '@components/icons/icon_factory'
-import { ClassValue } from 'clsx'
 import { cn } from '@utils'
-import { PiDotsThreeOutline } from "react-icons/pi"
-import { IconType } from 'react-icons'
+import { ClassValue } from 'clsx'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IconType } from 'react-icons'
+import { PiDotsThreeOutline } from 'react-icons/pi'
 
 const PlaceholderIcon = PiDotsThreeOutline
 
@@ -61,17 +61,17 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
     const [open, setOpen] = useState(false)
     const buttonRef = useRef<HTMLButtonElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
-    const {t} = useTranslation('local', {
+    const { t } = useTranslation('local', {
         keyPrefix: 'ui',
     })
 
-    const [buttonWidth, setButtonWidth] = useState<string | number>('auto');
+    const [buttonWidth, setButtonWidth] = useState<string | number>('auto')
 
     useEffect(() => {
         if (buttonRef.current) {
-            setButtonWidth(buttonRef.current.offsetWidth);
+            setButtonWidth(buttonRef.current.offsetWidth)
         }
-    }, [buttonRef.current?.offsetWidth]);
+    }, [buttonRef.current?.offsetWidth])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -100,14 +100,12 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                 className={cn('p-1', size?.width || 'w-full')}
                 ref={contentRef}
                 style={{
-                    width: buttonWidth
+                    width: buttonWidth,
                 }}
             >
                 <Command>
                     {includeSearch && <CommandInput placeholder={selectText || t('select')} />}
-                    <CommandEmpty>{
-                        t('empty')
-                    }</CommandEmpty>
+                    <CommandEmpty>{t('empty')}</CommandEmpty>
                     <CommandGroup>
                         <CommandList>
                             {items &&

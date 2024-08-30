@@ -1,8 +1,8 @@
-import { EntityInfoFull } from '@models/Battlefield'
-import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
-import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
+import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
+import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import { Separator } from '@components/ui/separator'
+import { EntityInfoFull } from '@models/Battlefield'
 import { HTMLAttributes } from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -1,7 +1,7 @@
-import { ActionInput as ActionInputInterface } from './ActionInput'
-import { Battlefield, EntityInfoFull, EntityInfoTooltip, GameStateContainer } from './Battlefield'
 import { UserInformation } from '@models/APIData'
 import { IndividualTurnOrder } from '@models/GameHandshake'
+import { ActionInput as ActionInputInterface } from './ActionInput'
+import { Battlefield, EntityInfoFull, GameStateContainer } from './Battlefield'
 
 export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
@@ -13,56 +13,6 @@ export interface CosmeticsState {
 }
 
 export type LobbyState = LobbyInfo
-
-export interface TurnState {
-    playersTurn: boolean
-    needToChooseSquare: boolean
-    entityActions: ActionInputInterface
-    actionOutputs: {
-        [key: string]: string
-    } | null
-    actionResult: {
-        type: 'pending' | 'success' | 'failure'
-        details: string | null
-    }
-    halted: boolean
-}
-
-export interface InfoState {
-    round: string
-    turnOrder: IndividualTurnOrder
-    messages: {
-        start: number
-        end: number
-        length: number
-        loaded: GameStateContainer
-    }
-    gameFlow: {
-        type: 'pending' | 'active' | 'ended' | 'aborted'
-        details: string
-        // pending: 'waiting for GM' | 'waiting for game start'
-        // active: ???
-        // ended: winner
-        // aborted: reason why (if possible)
-    }
-    entityTooltips: {
-        [square: string]: EntityInfoTooltip | null
-    }
-    controlledEntities: Array<EntityInfoFull> | null
-    chosenMenu: string | null
-}
-
-export interface BattlefieldState {
-    currentBattlefield: Battlefield
-    battlefieldMode: 'info' | 'selection'
-    clickedSquare: string | null
-    interactableSquares: {
-        [key: string]: boolean
-    }
-    alreadyClickedSquares: {
-        [key: string]: number
-    }
-}
 
 export interface CombatInfo {
     nickname: string
@@ -100,4 +50,20 @@ export interface CharacterInLobby {
         description: string
         sprite: string
     }
+}
+
+export interface GameScreenState {
+    battlefield: Battlefield
+    actions: null | ActionInputInterface
+    round: {
+        current: string
+        order: IndividualTurnOrder
+    }
+    messages: GameStateContainer
+    gameFlow: {
+        type: 'pending' | 'active' | 'ended' | 'aborted'
+        details: string
+    }
+    controlledEntities: Array<EntityInfoFull> | null
+    yourTurn: boolean
 }

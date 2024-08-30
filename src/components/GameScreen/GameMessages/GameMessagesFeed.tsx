@@ -1,12 +1,12 @@
+import { Separator } from '@components/ui/separator'
 import useTranslatableString from '@hooks/useTranslatableString'
 import { GameStateContainer } from '@models/Battlefield'
 import { GameMessage } from '@models/GameHandshake'
-import { selectAllMessages } from '@redux/slices/infoSlice'
+import { selectAllMessages } from '@redux/slices/gameScreenSlice'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import styles from './GameMessagesFeed.module.css'
-import { Separator } from '@components/ui/separator'
 
 /*
 
@@ -46,9 +46,11 @@ const GameMessagesFeed = () => {
                     return (
                         <>
                             <div key={`msg_cont_${indexBig}`}>
-                                {reverseGameMessages(msg).reverse().map((content, index) => {
-                                    return <p key={index}>{tstring(content)}</p>
-                                })}
+                                {reverseGameMessages(msg)
+                                    .reverse()
+                                    .map((content, index) => {
+                                        return <p key={index}>{tstring(content)}</p>
+                                    })}
                             </div>
                             <Separator key={`sep_${indexBig}`} />
                         </>

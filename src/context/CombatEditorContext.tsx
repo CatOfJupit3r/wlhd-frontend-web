@@ -1,6 +1,6 @@
 import { EntityInfoFull } from '@models/Battlefield'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { ControlledBy } from '@models/EditorConversion'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id })
 export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id })
@@ -29,18 +29,21 @@ const CombatEditorContext = createContext<CombatEditorContextType | undefined>(u
 const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [battlefield, setBattlefield] = useState<CombatEditorContextType['battlefield']>({})
 
-    const addCharacter = useCallback((square: string, character: EntityInfoFull, descriptor: string, control?: ControlledBy) => {
-        setBattlefield((prev) => {
-            return {
-                ...prev,
-                [square]: {
-                    descriptor,
-                    character,
-                    control: control || CONTROLLED_BY_GAME_LOGIC,
-                },
-            }
-        })
-    }, [])
+    const addCharacter = useCallback(
+        (square: string, character: EntityInfoFull, descriptor: string, control?: ControlledBy) => {
+            setBattlefield((prev) => {
+                return {
+                    ...prev,
+                    [square]: {
+                        descriptor,
+                        character,
+                        control: control || CONTROLLED_BY_GAME_LOGIC,
+                    },
+                }
+            })
+        },
+        []
+    )
 
     const removeCharacter = useCallback((square: string) => {
         setBattlefield((prev) => {
@@ -95,7 +98,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 updateCharacter,
                 updateControl,
                 changePreset,
-                resetPreset
+                resetPreset,
             }}
         >
             {children}

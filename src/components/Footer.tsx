@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { apprf, cn } from '@utils'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -11,12 +11,10 @@ const Footer = () => {
             </h1>
             <div
                 id={'footer-links'}
-                className={
-                    cn(
-                      'mt-[1%] flex justify-center gap-[1%] text-t-small',
-                        apprf('max-[512px]', 'flex flex-col justify-center items-center gap-2')
-                    )
-                }
+                className={cn(
+                    'mt-[1%] flex justify-center gap-[1%] text-t-small',
+                    apprf('max-[512px]', 'flex flex-col items-center justify-center gap-2')
+                )}
             >
                 <Link to={'/'}>Home</Link>
                 <Link to={'/about'}>About</Link>

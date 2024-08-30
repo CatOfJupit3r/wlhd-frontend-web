@@ -1,10 +1,4 @@
 import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
-import {
-    buildCharacterEditorProps,
-    CharacterEditorContextType,
-    CharacterEditorProvider,
-} from '@context/CharacterEditorProvider'
-import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
 import {
@@ -16,7 +10,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { selectClickedSquare } from '@redux/slices/battlefieldSlice'
+import {
+    buildCharacterEditorProps,
+    CharacterEditorContextType,
+    CharacterEditorProvider,
+} from '@context/CharacterEditorProvider'
+import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback, useEffect, useState } from 'react'
 import { FaSave } from 'react-icons/fa'
@@ -25,7 +24,6 @@ import { GrContactInfo } from 'react-icons/gr'
 import { HiOutlineArrowUturnLeft } from 'react-icons/hi2'
 import { IoMdPersonAdd } from 'react-icons/io'
 import { useSelector } from 'react-redux'
-import { ControlledBy } from '@models/EditorConversion'
 
 const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     attributes: {
@@ -72,8 +70,7 @@ const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
         weaponry: false,
     },
 }
-export const EditCharacterOnSquare = () => {
-    const clickedSquare = useSelector(selectClickedSquare)
+export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const lobby = useSelector(selectLobbyInfo)
     const { updateCharacter, removeCharacter, updateControl } = useCombatEditorContext()
     const { battlefield } = useCombatEditorContext()

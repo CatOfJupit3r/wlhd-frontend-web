@@ -14,11 +14,10 @@
 
 .clickedEntityBorder {
     --b: 5px; /* thickness of the border */
-    --c: #39BC55; /* color of the border */
+    --c: #39bc55; /* color of the border */
     --r: 11px; /* 1px bigger than borderInCorner because if they overlap there is area of no overlap */
 
-
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     padding: var(--b);
@@ -55,17 +54,17 @@
     --w: 1.75rem; /* width of border */
     --r: 10px; /* radius of the border */
 
-
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     background: var(--c, #ff8400);
     padding: var(--b);
     border-radius: var(--r);
-    -webkit-mask: linear-gradient(0deg, #000 calc(2 * var(--b)), #0000 0) 50% var(--b)/calc(100% - 2 * var(--w)) 100% repeat-y,
-    linear-gradient(-90deg, #000 calc(2 * var(--b)), #0000 0) var(--b) 50%/100% calc(100% - 2 * var(--w)) repeat-x,
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
+    -webkit-mask:
+        linear-gradient(0deg, #000 calc(2 * var(--b)), #0000 0) 50% var(--b) / calc(100% - 2 * var(--w)) 100% repeat-y,
+        linear-gradient(-90deg, #000 calc(2 * var(--b)), #0000 0) var(--b) 50%/100% calc(100% - 2 * var(--w)) repeat-x,
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
 

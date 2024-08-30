@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import APIService from '@services/APIService'
+import { useEffect, useState } from 'react'
 
 const useIsBackendUnavailable = () => {
     const [isBackendUnavailable, setIsBackendUnavailable] = useState(APIService.isBackendUnavailable())

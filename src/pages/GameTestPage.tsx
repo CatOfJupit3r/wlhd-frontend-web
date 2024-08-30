@@ -1,13 +1,18 @@
 import GameScreen from '@components/GameScreen/GameScreen'
-import { EntityInfoFull } from '@models/Battlefield'
-import { IndividualTurnOrder } from '@models/GameHandshake'
-import { setBattlefield } from '@redux/slices/battlefieldSlice'
-import { setControlledEntities, setEntityTooltips, setMessages, setTurnOrder } from '@redux/slices/infoSlice'
+import {
+    resetGameScreenSlice,
+    setActions,
+    setBattlefield,
+    setControlledEntities,
+    setMessages,
+    setRound,
+    setTurnOrder,
+    setYourTurn,
+} from '@redux/slices/gameScreenSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
-import { resetTurnSlice, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
 import { AppDispatch } from '@redux/store'
 import APIService from '@services/APIService'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import example_gamestate from '../data/example_gamestate.json'
@@ -18,18 +23,24 @@ const GameTestPage = () => {
     const [loadedGameState, setLoadedGameState] = useState(false)
     const lobbyId = useSelector(selectLobbyId)
 
-    useEffect(() => {
-        dispatch(resetTurnSlice()) // to prevent any leftover state from previous games
+    const dummySetActionOutput = useCallback(
+        (output: any) => {
+            console.log('DummySetActionOutput', output)
     }, [])
 
     useEffect(() => {
-        dispatch(setEntityTooltips(example_gamestate.tooltips))
-        dispatch(setMessages(example_gamestate.messages as any))
-        dispatch(setControlledEntities(example_gamestate.controlledEntities as EntityInfoFull[]))
+        dispatch(resetGameScreenSlice()) // to prevent any leftover state from previous games
+    }, [])
+
+    useEffect(() => {
         dispatch(setBattlefield(example_gamestate.battlefield))
-        dispatch(setTurnOrder(example_gamestate.turnOrder as IndividualTurnOrder))
-        dispatch(setEntityActions(example_gamestate.actions as any))
-        dispatch(setPlayersTurn(true))
+        dispatch(setRound('999'))
+        dispatch(setControlledEntities(example_gamestate.controlledEntities as any))
+        dispatch(setTurnOrder(example_gamestate.turnOrder as any))
+        dispatch(setMessages(example_gamestate.messages as any))
+        dispatch(setActions(example_gamestate.actions as any))
+        dispatch(setYourTurn(true))
+
         const loadCustom = async () => {
             if (lobbyId) {
                 const customTranslations = await APIService.getCustomLobbyTranslations(lobbyId)
@@ -40,7 +51,7 @@ const GameTestPage = () => {
         setTimeout(() => setLoadedGameState(true), 1000)
     }, [])
 
-    return <div>{loadedGameState ? <GameScreen /> : <div>Loading...</div>}</div>
+    return <div>{loadedGameState ? <GameScreen setActionOutput={dummySetActionOutput} /> : <div>Loading...</div>}</div>
 }
 
 export default GameTestPage

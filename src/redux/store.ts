@@ -1,17 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import battlefieldReducer from './slices/battlefieldSlice'
 import cosmeticsSlice from './slices/cosmeticsSlice'
-import infoReducer from './slices/infoSlice'
+import gameScreenReducer from './slices/gameScreenSlice'
 import lobbyReducer from './slices/lobbySlice'
-import turnReducer from './slices/turnSlice'
 
 export const store = configureStore({
     reducer: {
         cosmetics: cosmeticsSlice,
-        turn: turnReducer,
         lobby: lobbyReducer,
-        info: infoReducer,
-        battlefield: battlefieldReducer,
+        gameScreen: gameScreenReducer,
     },
 })
 

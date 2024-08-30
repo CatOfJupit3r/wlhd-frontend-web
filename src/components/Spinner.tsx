@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { cn } from '@utils'
 
 const Spinner = ({
@@ -17,7 +15,7 @@ const Spinner = ({
         <div
             className={cn(
                 'inline-block',
-                type === 'spin' ? 'animate-spinner-border border-solid border-r-transparent }' : 'animate-spinner-grow',
+                type === 'spin' ? '} animate-spinner-border border-solid border-r-transparent' : 'animate-spinner-grow',
                 className
             )}
             style={{

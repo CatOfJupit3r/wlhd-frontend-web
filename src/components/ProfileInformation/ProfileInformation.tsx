@@ -1,7 +1,7 @@
-import LobbyShortInfo from './LobbyShortInfo'
-import styles from './ProfileInformation.module.css'
 import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
 import { useSelector } from 'react-redux'
+import LobbyShortInfo from './LobbyShortInfo'
+import styles from './ProfileInformation.module.css'
 
 const ProfileInformation = () => {
     const { avatar, handle, joined, createdAt } = useSelector(selectUserInformation)

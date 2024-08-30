@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import { useSelector } from 'react-redux'
-import { cn } from '@utils'
+import GameAsset from '@components/GameAsset'
 import { Button, TimeoutButton } from '@components/ui/button'
 import { Combobox } from '@components/ui/combobox'
-import GameAsset from '@components/GameAsset'
-import { FaEdit } from 'react-icons/fa'
-import { RiAdminFill } from 'react-icons/ri'
-import { GrContactInfo } from 'react-icons/gr'
-import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
 import { Separator } from '@components/ui/separator'
-import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
-import {
-    useViewCharactersContext,
-    ViewCharactersContextProvider,
-} from '@context/ViewCharactersContext'
 import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
+import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext'
+import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
+import { cn } from '@utils'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FaEdit } from 'react-icons/fa'
+import { GrContactInfo } from 'react-icons/gr'
+import { RiAdminFill } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const NoCharactersPresent = () => {
     const lobby = useSelector(selectLobbyInfo)
@@ -97,7 +94,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     }, [current])
 
     return (
-        <div className={cn('flex flex-row justify-center w-full max-[960px]:flex-col')}>
+        <div className={cn('flex w-full flex-row justify-center max-[960px]:flex-col')}>
             {lobby.characters.length === 0 ? (
                 <NoCharactersPresent />
             ) : (
@@ -155,8 +152,8 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                             >
                                 {t('refresh-character')}
                             </TimeoutButton>
-                            {
-                                lobby.layout === 'gm' && (<>
+                            {lobby.layout === 'gm' && (
+                                <>
                                     <Button
                                         variant={'outlineToDefault'}
                                         onClick={() => {
@@ -165,8 +162,8 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                     >
                                         {t('goto-character-creator')}
                                     </Button>
-                                </>)
-                            }
+                                </>
+                            )}
                             <Separator />
                             <CharacterControlInfo />
                         </div>

@@ -1,16 +1,16 @@
+import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { RouteConfig } from '@models/RouteConfig'
 import NotFoundPage from '@pages/NotFoundPage'
 import { PageWrapper } from '@pages/PageWrapper'
+import PseudoPage from '@pages/PseudoPage'
+import UnderMaintenancePage from '@pages/UnderMaintenancePage'
 import { JSX, useCallback } from 'react'
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
 import MainLayout from '../layouts/MainLayout'
 import paths from './paths'
 import routes from './routes'
-import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
-import UnderMaintenancePage from '@pages/UnderMaintenancePage'
-import PseudoPage from '@pages/PseudoPage'
 
 const RootRouter = () => {
     const { isLoggedIn } = useIsLoggedIn()

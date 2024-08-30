@@ -1,16 +1,16 @@
+import { Button } from '@components/ui/button'
+import { Input } from '@components/ui/input'
+import { Label } from '@components/ui/label'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import { useToast } from '@hooks/useToast'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
+import { apprf, checkHandle, checkPassword, cn } from '@utils'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { apprf, checkHandle, checkPassword, cn } from '@utils'
-import { useToast } from '@hooks/useToast'
-import { Input } from '@components/ui/input'
-import { Label } from '@components/ui/label'
-import { Button } from '@components/ui/button'
 
 const SignIn = ({ className = '' }: { className?: string }) => {
     const navigate = useNavigate()
@@ -94,8 +94,8 @@ const SignIn = ({ className = '' }: { className?: string }) => {
             <Button
                 type="submit"
                 className={cn(
-                    'w-full bg-blue-800 text-white p-2 rounded-md transition-all duration-100',
-                    apprf('disabled:', 'bg-blue-400 text-gray-400 cursor-not-allowed')
+                    'w-full rounded-md bg-blue-800 p-2 text-white transition-all duration-100',
+                    apprf('disabled:', 'cursor-not-allowed bg-blue-400 text-gray-400')
                 )}
                 onClick={(e) => onSubmit(e).then()}
                 disabled={!checkInputValidity()}
@@ -109,7 +109,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                         to={paths.signUp}
                         className={cn(
                             'text-blue-800 underline',
-                            apprf('disabled:', 'text-gray-400 cursor-not-allowed'),
+                            apprf('disabled:', 'cursor-not-allowed text-gray-400'),
                             apprf('hover:', 'text-blue-600')
                         )}
                     >

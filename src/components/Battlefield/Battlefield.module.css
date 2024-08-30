@@ -1,6 +1,5 @@
 .battlefield {
     border: 1px solid black;
-    display: grid;
     min-width: fit-content;
     min-height: fit-content;
     max-width: calc(var(--tile-size) * 8);

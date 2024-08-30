@@ -1,6 +1,6 @@
 import { EntityInfoFull } from '@models/Battlefield'
-import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import APIService from '@services/APIService'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 type ProvidedData<T> = {
     [descriptor: string]: T | null

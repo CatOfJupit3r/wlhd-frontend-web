@@ -1,23 +1,24 @@
+import { toast } from '@hooks/useToast'
 import { ActionInput } from '@models/ActionInput'
-import { Battlefield, EntityInfoFull, EntityInfoTooltip, TranslatableString } from '@models/Battlefield'
+import { Battlefield, EntityInfoFull, TranslatableString } from '@models/Battlefield'
 import { ActionResultsPayload } from '@models/Events'
 import { GameHandshake, IndividualTurnOrder } from '@models/GameHandshake'
-import { resetGameComponentsStateAction } from '@redux/highActions'
-import { setBattlefield } from '@redux/slices/battlefieldSlice'
 import {
     addMessage,
+    haltActions,
     resetActiveEntity,
+    resetGameScreenSlice,
+    setActions,
+    setBattlefield,
     setControlledEntities,
-    setEntityTooltips,
     setFlowToAborted,
     setFlowToActive,
     setFlowToEnded,
-    setFlowToPending,
-    setMessages,
+    setGameScreenSliceFromHandshake,
     setRound,
     setTurnOrder,
-} from '@redux/slices/infoSlice'
-import { haltAction, resetTurnSlice, setActionResult, setEntityActions, setPlayersTurn } from '@redux/slices/turnSlice'
+    setYourTurn,
+} from '@redux/slices/gameScreenSlice'
 import { store as ReduxStore } from '@redux/store'
 import { REACT_APP_BACKEND_URL } from 'config'
 import { io, Socket } from 'socket.io-client'
@@ -130,11 +131,11 @@ class SocketService {
                     return
                 }
                 const currentState = ReduxStore.getState()
-                if (currentState.info.gameFlow.type !== 'ended') {
+                if (currentState.gameScreen.gameFlow.type !== 'ended') {
                     ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'))
                 }
-                if (currentState.info.gameFlow.type === 'active') {
-                    ReduxStore.dispatch(resetGameComponentsStateAction())
+                if (currentState.gameScreen.gameFlow.type === 'active') {
+                    ReduxStore.dispatch(resetGameScreenSlice())
                 }
             },
             ['invalid_token']: () => {
@@ -164,14 +165,17 @@ class SocketService {
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message)
-                ReduxStore.dispatch(setActionResult({ type: code === 200 ? 'success' : 'failure', details: message }))
+                toast({
+                    variant: code === 200 ? 'default' : 'destructive',
+                    title: code === 200 ? 'Success' : 'Error',
+                    position: code === 200 ? 'bottom-left' : 'top-center',
+                })
             },
             [SOCKET_EVENTS.HALT_ACTION]: () => {
                 // this action stops any further action from being taken.
                 // emitted to avoid users from taking actions when they shouldn't no longer
                 console.log('Halted action')
-                ReduxStore.dispatch(resetTurnSlice())
-                ReduxStore.dispatch(haltAction())
+                ReduxStore.dispatch(haltActions())
             },
             [SOCKET_EVENTS.BATTLE_ENDED]: ({ battle_result }: { battle_result: string }) => {
                 console.log('Battle ended', battle_result)
@@ -200,71 +204,23 @@ class SocketService {
             },
             [SOCKET_EVENTS.ENTITIES_UPDATED]: ({
                 newControlledEntities,
-                newTooltips,
             }: {
                 newControlledEntities: Array<EntityInfoFull>
-                newTooltips: { [_: string]: EntityInfoTooltip | null }
             }) => {
                 ReduxStore.dispatch(setControlledEntities(newControlledEntities))
-                ReduxStore.dispatch(setEntityTooltips(newTooltips))
             },
-            [SOCKET_EVENTS.GAME_HANDSHAKE]: ({
-                roundCount,
-                messages,
-                currentBattlefield,
-                turnOrder,
-                entityTooltips,
-                controlledEntities,
-                combatStatus,
-            }: GameHandshake) => {
-                const DISPATCHES = [
-                    {
-                        type: resetGameComponentsStateAction,
-                        payload: null,
-                    },
-                    {
-                        type: setRound,
-                        payload: roundCount,
-                    },
-                    {
-                        type: setMessages,
-                        payload: messages,
-                    },
-                    {
-                        type: setBattlefield,
-                        payload: currentBattlefield,
-                    },
-                    {
-                        type: setTurnOrder,
-                        payload: turnOrder,
-                    },
-                    {
-                        type: setEntityTooltips,
-                        payload: entityTooltips,
-                    },
-                    {
-                        type: setControlledEntities,
-                        payload: controlledEntities,
-                    },
-                ]
-                for (const { type, payload } of DISPATCHES) {
-                    ReduxStore.dispatch(type(payload as any))
-                }
-                if (combatStatus === 'pending') {
-                    ReduxStore.dispatch(setFlowToPending())
-                } else {
-                    ReduxStore.dispatch(setFlowToActive())
-                }
+            [SOCKET_EVENTS.GAME_HANDSHAKE]: (handshake: GameHandshake) => {
+                ReduxStore.dispatch(setGameScreenSliceFromHandshake(handshake))
             },
             [SOCKET_EVENTS.TAKE_ACTION]: ({ actions }: { actions: ActionInput }) => {
                 try {
-                    ReduxStore.dispatch(setEntityActions(actions))
+                    ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
                     console.log('Error occurred during fetching of actions: ', e)
                     this.emit(SOCKET_RESPONSES.SKIP)
                     return
                 }
-                ReduxStore.dispatch(setPlayersTurn(true))
+                ReduxStore.dispatch(setYourTurn(true))
             },
             ['*']: (data: unknown) => {
                 console.log('Received unknown event', data)
@@ -277,23 +233,23 @@ class SocketService {
         const listeners = {
             [ELEVATED_RIGHTS_EVENTS.TAKE_UNALLOCATED_ACTION]: ({ actions }: { actions: ActionInput }) => {
                 try {
-                    ReduxStore.dispatch(setEntityActions(actions))
+                    ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
                     console.log('Error occurred during fetching of actions: ', e)
                     this.emit(SOCKET_RESPONSES.SKIP)
                     return
                 }
-                ReduxStore.dispatch(setPlayersTurn(true))
+                ReduxStore.dispatch(setYourTurn(true))
             },
             [ELEVATED_RIGHTS_EVENTS.TAKE_OFFLINE_PLAYER_ACTION]: ({ actions }: { actions: ActionInput }) => {
                 try {
-                    ReduxStore.dispatch(setEntityActions(actions))
+                    ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
                     console.log('Error occurred during fetching of actions: ', e)
                     this.emit(SOCKET_RESPONSES.SKIP)
                     return
                 }
-                ReduxStore.dispatch(setPlayersTurn(true))
+                ReduxStore.dispatch(setYourTurn(true))
             },
         }
         this.addBatchOfEventsListener(listeners)

@@ -1,14 +1,11 @@
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { StaticSkeleton } from '@components/ui/skeleton'
-import { selectEntityTooltips } from '@redux/slices/infoSlice'
+import { EntityInfoTooltip } from '@models/Battlefield'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import styles from './EntityTooltip.module.css'
 
-const EntityTooltip = ({ id }: { id: string }) => {
-    const entities_info = useSelector(selectEntityTooltips)
-    const entity_info = entities_info ? entities_info[id] : undefined
+const EntityTooltip = ({ character }: { character: EntityInfoTooltip }) => {
     const { t } = useTranslation()
 
     const PlaceholderTooltip = useCallback(() => {
@@ -43,10 +40,10 @@ const EntityTooltip = ({ id }: { id: string }) => {
     }, [])
 
     const RealContent = useCallback(() => {
-        if (!entity_info) {
+        if (!character) {
             return <PlaceholderTooltip />
         }
-        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = entity_info
+        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character
         return (
             <>
                 <p className={'text-t-small font-semibold'}>
@@ -75,11 +72,11 @@ const EntityTooltip = ({ id }: { id: string }) => {
                 </p>
             </>
         )
-    }, [entities_info])
+    }, [character])
 
     return (
         <div className={styles.tooltip} style={{ opacity: 0.95 }}>
-            {!entities_info || !entity_info ? <PlaceholderTooltip /> : <RealContent />}
+            {!character ? <PlaceholderTooltip /> : <RealContent />}
         </div>
     )
 }

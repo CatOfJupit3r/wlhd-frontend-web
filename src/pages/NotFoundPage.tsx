@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { GrDocumentMissing } from 'react-icons/gr'
 import { apprf, cn } from '@utils'
 import { useTranslation } from 'react-i18next'
+import { GrDocumentMissing } from 'react-icons/gr'
+import { Link } from 'react-router-dom'
 
 const NotFoundPage = () => {
     const { t } = useTranslation()

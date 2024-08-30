@@ -1,5 +1,5 @@
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { Input } from '@components/ui/input'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { capitalizeFirstLetter } from '@utils'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'

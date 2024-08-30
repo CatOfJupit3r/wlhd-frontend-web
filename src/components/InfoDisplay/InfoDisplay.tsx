@@ -1,12 +1,12 @@
 import ElementWithIcon from '@components/ElementWithIcon'
+import { ActiveIcon, CooldownIcon, HourglassIcon } from '@components/icons'
+import { Separator } from '@components/ui/separator'
 import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import { cn } from '@utils'
 import { HTMLAttributes, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import styles from './InfoDisplay.module.css'
-import { ActiveIcon, CooldownIcon, HourglassIcon } from '@components/icons'
-import { cn } from '@utils'
 import { BiInfinite } from 'react-icons/bi'
-import { Separator } from '@components/ui/separator'
+import styles from './InfoDisplay.module.css'
 
 interface WeaponSegment {
     type: 'weapon'
@@ -31,7 +31,7 @@ interface StatusEffectSegment {
 export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
 
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
-    const { t } = useTranslation('local',{
+    const { t } = useTranslation('local', {
         keyPrefix: 'game.info_display',
     })
     const { t: tNoPrefix } = useTranslation()
@@ -119,14 +119,12 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             return null
         }
         return (
-            <div id={'method-variables'} className={'mt-2 flex flex-col items-center px-8 text-t-small gap-1'}>
+            <div id={'method-variables'} className={'mt-2 flex flex-col items-center gap-1 px-8 text-t-small'}>
                 <ul>
                     {Object.entries(methodVariables).map(([key, value], index) => {
                         return (
                             <li key={index} className={'flex flex-row gap-1'}>
-                                <p>{tNoPrefix(key)}</p>
-                                =
-                                <p>{JSON.stringify(value)}</p>
+                                <p>{tNoPrefix(key)}</p>=<p>{JSON.stringify(value)}</p>
                             </li>
                         )
                     })}
@@ -139,11 +137,9 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         <div className={cn(styles.infoSegmentContainer, 'border-container-medium relative')}>
             <div id={'main-info'} className={styles.infoSegmentHeading}>
                 <div className={'flex flex-row items-center gap-2'}>
-                    {tNoPrefix(decorations?.name, ) ?? '???'}
+                    {tNoPrefix(decorations?.name) ?? '???'}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
-                    {type === 'spell' &&
-                        info.isActive &&
-                        IsActiveDetails({ info } as SpellSegment)}
+                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
                 </div>
                 {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
                 {type !== 'status_effect' &&

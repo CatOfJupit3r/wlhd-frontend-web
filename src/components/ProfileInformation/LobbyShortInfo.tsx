@@ -117,8 +117,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
 
     return (
         <Link
-            className={`border-container-medium flex w-full flex-col gap-2 p-2 text-t-normal text-black no-underline hover:bg-gray-200
-                hover:transition-colors hover:duration-100`}
+            className={`border-container-medium flex w-full flex-col gap-2 p-2 text-t-normal text-black no-underline hover:bg-gray-200 hover:transition-colors hover:duration-100`}
             to={`../lobby-room/${_id}`}
         >
             <DecideWhatToShow />

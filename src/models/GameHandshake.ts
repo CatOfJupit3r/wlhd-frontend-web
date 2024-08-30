@@ -1,4 +1,4 @@
-import { Battlefield, EntityInfoFull, EntityInfoTooltip, TranslatableString } from './Battlefield'
+import { Battlefield, EntityInfoFull, TranslatableString } from './Battlefield'
 
 export type GameMessage = Array<TranslatableString>
 
@@ -8,7 +8,6 @@ export interface GameHandshake {
     combatStatus: 'ongoing' | 'pending'
     currentBattlefield: Battlefield
     controlledEntities: Array<EntityInfoFull> | null
-    entityTooltips: { [square: string]: EntityInfoTooltip | null }
     turnOrder: IndividualTurnOrder
 }
 

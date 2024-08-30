@@ -1,12 +1,5 @@
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { selectLobbyId } from '@redux/slices/lobbySlice'
-import paths from '@router/paths'
-import AuthManager from '@services/AuthManager'
-import { useCallback, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
+import { Button } from '@components/ui/button'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,13 +9,20 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
+import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
+import { selectLobbyId } from '@redux/slices/lobbySlice'
+import paths from '@router/paths'
+import AuthManager from '@services/AuthManager'
+import { apprf, cn } from '@utils'
+import { useCallback, useMemo } from 'react'
+import { IconType } from 'react-icons'
+import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { FaBook, FaBookOpen } from 'react-icons/fa'
 import { IoLogoBuffer } from 'react-icons/io'
-import { BiLogOut, BiSolidCog } from 'react-icons/bi'
-import { Button } from '@components/ui/button'
-import { IconType } from 'react-icons'
 import { LuMenuSquare, LuUser } from 'react-icons/lu'
-import { apprf, cn } from '@utils'
+import { useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
@@ -148,12 +148,10 @@ const Header = () => {
         return (
             <nav
                 id={'header-nav'}
-                className={
-                cn(
+                className={cn(
                     'flex justify-between gap-3 text-white',
                     apprf('max-[512px]', 'flex-col overflow-x-auto align-middle')
-                )
-                }
+                )}
             >
                 {isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}
             </nav>

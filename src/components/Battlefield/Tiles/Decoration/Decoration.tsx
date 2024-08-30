@@ -1,23 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import styles from './Decoration.module.css'
 
+import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { cn } from '@utils'
+import { useSelector } from 'react-redux'
+import { selectActiveEntity } from '@redux/slices/gameScreenSlice'
 
-export interface DecorationConfig {
-    interactable: {
-        flag: boolean
-        type: 'ally' | 'enemy' | 'neutral'
-    } // refers to square if it can be clicked
-    clicked: {
-        flag: boolean // refers to square if it was clicked
-        times: number // refers to how many times it was clicked
-    } // refers to square if it was clicked
-    active: boolean // refers to entity on square
-}
+const Decoration = ({ square }: { square: string }) => {
+    const { battlefield } = useBattlefieldContext()
 
-const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
-    const { interactable, clicked, active } = decoration
-
+    const { interactable, clicked, active } = useMemo(() => battlefield[square].flags, [battlefield, square])
     const [interactivityType, setInteractivityType] = useState('')
 
     useEffect(() => {
@@ -35,16 +27,16 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
         } else {
             interactivityType !== '' ? setInteractivityType('') : null
         }
-    }, [interactable.flag, interactable.type])
+    }, [interactable])
 
     const getClickedNumberIcon = useCallback(() => {
-        if (clicked.times <= 9 && clicked.times >= 0) {
-            return '/assets/local/sel_sqr_' + clicked.times.toString() + '.svg'
-        } else if (clicked.times > 9) {
+        if (clicked <= 9 && clicked >= 0) {
+            return '/assets/local/sel_sqr_' + clicked.toString() + '.svg'
+        } else if (clicked > 9) {
             return '/assets/local/sel_sqr_9extnd.svg'
         }
         return null
-    }, [clicked.times])
+    }, [clicked])
 
     return (
         <>
@@ -52,18 +44,16 @@ const Decoration = ({ decoration }: { decoration: DecorationConfig }) => {
             {active ? (
                 <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="Active Entity Icon" />
             ) : null}
-            {clicked.flag ? (
+            {clicked ? (
                 <>
                     <div className={cn(styles.decoration, styles.clickedEntityBorder)} />
-                    {
-                        clicked.times > 1 ? (
-                            <img
-                                className={styles.clickedSquare}
-                                src={getClickedNumberIcon() || '/assets/local/sel_sqr_1.svg'}
-                                alt={`Clicked ${clicked.times} times icon`}
-                            />
-                        ) : null
-                    }
+                    {clicked > 1 ? (
+                        <img
+                            className={styles.clickedSquare}
+                            src={getClickedNumberIcon() || '/assets/local/sel_sqr_1.svg'}
+                            alt={`Clicked ${clicked} times icon`}
+                        />
+                    ) : null}
                 </>
             ) : null}
         </>

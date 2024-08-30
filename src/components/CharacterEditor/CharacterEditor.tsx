@@ -1,16 +1,15 @@
-import React, { useMemo } from 'react'
-import { Separator } from '@components/ui/separator'
-import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import Menu, { MenuSelection } from '@components/ui/menu'
+import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
 import InventoryEditor from '@components/CharacterEditor/GameComponentEditors/InventoryEditor'
-import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import SpellBookEditor from '@components/CharacterEditor/GameComponentEditors/SpellBookEditor'
 import StatusEffectsEditor from '@components/CharacterEditor/GameComponentEditors/StatusEffectsEditor'
 import WeaponryEditor from '@components/CharacterEditor/GameComponentEditors/WeaponryEditor'
-import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
+import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
+import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
+import Menu, { MenuSelection } from '@components/ui/menu'
+import { Separator } from '@components/ui/separator'
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { cn } from '@utils'
-
+import { useMemo } from 'react'
 
 const CharacterEditor = ({ className }: { className?: string }) => {
     const { flags } = useCharacterEditorContext()

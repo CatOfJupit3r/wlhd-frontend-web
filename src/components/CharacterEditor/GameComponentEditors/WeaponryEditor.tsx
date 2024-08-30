@@ -1,6 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { EntityInfoFull, WeaponInfo } from '@models/Battlefield'
+import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
+import { SpellInfoDisplay, WeaponInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { Button } from '@components/ui/button'
+import { Checkbox } from '@components/ui/checkbox'
+import { Combobox } from '@components/ui/combobox'
+import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import { EmptyMenuContent } from '@components/ui/menu'
 import {
     Select,
     SelectContent,
@@ -10,21 +16,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
-import { Combobox } from '@components/ui/combobox'
-import { SpellInfoDisplay, WeaponInfoDisplay } from '@components/InfoDisplay/InfoDisplay'
-import { Button } from '@components/ui/button'
-import { isDescriptor } from '@utils'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { Checkbox } from '@components/ui/checkbox'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { Input } from '@components/ui/input'
-import { useDataContext } from '@context/GameDataProvider'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { getHandlerChange } from '@components/CharacterEditor/GameComponentEditors/editorUtils'
-import { useTranslation } from 'react-i18next'
-import { EmptyMenuContent } from '@components/ui/menu'
+import { useDataContext } from '@context/GameDataProvider'
+import { EntityInfoFull, WeaponInfo } from '@models/Battlefield'
+import { isDescriptor } from '@utils'
 import { SUPPORTED_DLCs } from 'config'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 
 const checkIfCanActivateMore = (weaponry: EntityInfoFull['weaponry']) => {
     return weaponry.filter((weapon) => weapon.isActive).length === 0

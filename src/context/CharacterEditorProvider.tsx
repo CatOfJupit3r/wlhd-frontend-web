@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { EntityInfoFull } from '@models/Battlefield'
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
 export interface CharacterEditorContextType {
     character: EntityInfoFull

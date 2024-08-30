@@ -1,10 +1,3 @@
-import {
-    CONTROLLED_BY_GAME_LOGIC,
-    CONTROLLED_BY_PLAYER,
-    useCombatEditorContext,
-} from '@context/CombatEditorContext'
-import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
-import { useDataContext } from '@context/GameDataProvider'
 import GameAsset from '@components/GameAsset'
 import { HTMLIconFactoryProps, IconComponentType } from '@components/icons/icon_factory'
 import { Button } from '@components/ui/button'
@@ -19,21 +12,22 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
+import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext'
+import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useDataContext } from '@context/GameDataProvider'
 import { ControlledBy } from '@models/EditorConversion'
-import { selectClickedSquare } from '@redux/slices/battlefieldSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { SUPPORTED_DLCs } from 'config'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
-export const AddNewEntity = () => {
+export const AddNewEntity = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const [dlc, setDlc] = useState<string>('')
     const [descriptor, setDescriptor] = useState<string>('')
     const { entities, fetchAndSetEntities } = useDataContext()
     const { characters, fetchCharacter } = useCoordinatorEntitiesContext()
     const { t } = useTranslation()
-    const clickedSquare = useSelector(selectClickedSquare)
     const lobby = useSelector(selectLobbyInfo)
     const { addCharacter } = useCombatEditorContext()
 

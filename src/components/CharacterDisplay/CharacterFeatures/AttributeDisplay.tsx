@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { EntityAttributes } from '@models/Battlefield'
-import { useTranslation } from 'react-i18next'
-import { capitalizeFirstLetter } from '@utils'
 import { Separator } from '@components/ui/separator'
+import { EntityAttributes } from '@models/Battlefield'
+import { capitalizeFirstLetter } from '@utils'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Attribute = ({ name, value }: { name: string; value: string }) => {
     return (

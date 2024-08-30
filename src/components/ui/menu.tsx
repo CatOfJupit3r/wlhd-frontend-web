@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
 import { Separator } from '@components/ui/separator'
+import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 interface MenuItem {
@@ -44,23 +44,21 @@ const Menu = ({ selection }: { selection: MenuSelection }) => {
                     setCurrentMenu(value)
                 }}
             >
-                {menusToSelect.map(({value, icon, disabled}) => (
-                    <ToggleGroupItem
-                        key={value}
-                        value={value}
-                        disabled={disabled ?? false}
-                    >
-                        {icon({ className: 'size-8' })}
-                    </ToggleGroupItem>
-                )).sort((a, b) => {
-                    if (a.props.disabled) {
-                        return 1
-                    } else if (b.props.disabled) {
-                        return -1
-                    } else {
-                        return a.props.value > b.props.value ? 1 : -1
-                    }
-                })}
+                {menusToSelect
+                    .map(({ value, icon, disabled }) => (
+                        <ToggleGroupItem key={value} value={value} disabled={disabled ?? false}>
+                            {icon({ className: 'size-8' })}
+                        </ToggleGroupItem>
+                    ))
+                    .sort((a, b) => {
+                        if (a.props.disabled) {
+                            return 1
+                        } else if (b.props.disabled) {
+                            return -1
+                        } else {
+                            return a.props.value > b.props.value ? 1 : -1
+                        }
+                    })}
             </ToggleGroup>
             <Separator />
             <CurrentComponent />

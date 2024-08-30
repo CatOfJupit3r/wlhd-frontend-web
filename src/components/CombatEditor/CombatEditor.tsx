@@ -8,24 +8,13 @@ import {
     verifyCombatEditorLocalStorage,
 } from '@components/CombatEditor/CombatEditorLocalStorage'
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare'
-import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { Button } from '@components/ui/button'
 import { Toggle } from '@components/ui/toggle'
+import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
+import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { toastError } from '@hooks/useToast'
-import { EntityInfoTooltip } from '@models/Battlefield'
-import {
-    alreadyClickedOnlyThisSquare,
-    resetState,
-    selectBattlefieldMode,
-    selectClickedSquare,
-    setBattlefieldMode,
-    setClickedSquare,
-    setInteractableSquares,
-    setPawns,
-} from '@redux/slices/battlefieldSlice'
-import { setEntityTooltips } from '@redux/slices/infoSlice'
+import { Battlefield as BattlefieldModel } from '@models/Battlefield'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { minifyCombat } from '@utils/editorPrepareFunction'
@@ -36,7 +25,7 @@ import { FaPlay, FaSave } from 'react-icons/fa'
 import { GrSelect } from 'react-icons/gr'
 import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 interface PresetDetails {
@@ -45,44 +34,104 @@ interface PresetDetails {
     presetID: string
 }
 
-const CombatEditor = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const battlefieldMode = useSelector(selectBattlefieldMode)
-    const clickedSquare = useSelector(selectClickedSquare)
-    const lobby = useSelector(selectLobbyInfo)
-    const { battlefield, changePreset, resetPreset } = useCombatEditorContext()
-    const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null)
-    const navigate = useNavigate()
-    const { t } = useTranslation()
+const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (square: string | null) => void }) => {
+    const { battlefield } = useCombatEditorContext()
+    const {
+        changeBattlefield,
+        setInteractableSquares,
+        changeOnClickTile,
+        incrementClickedSquares,
+        resetClickedSquares,
+    } = useBattlefieldContext()
+
+    const updateBattlefield = useCallback(() => {
+        const newBattlefield: {
+            [square: string]: BattlefieldModel['pawns'][string]
+        } = {}
+        for (const square in battlefield) {
+            const [lineStr, columnStr] = square.split('/')
+            if (!lineStr || !columnStr || !battlefield[square].character) {
+                continue
+            }
+            const line = parseInt(lineStr)
+            const column = parseInt(columnStr)
+            if (isNaN(line) || isNaN(column)) {
+                continue
+            }
+            newBattlefield[square] = {
+                character: {
+                    decorations: battlefield[square].character.decorations,
+                    square: { line, column },
+                    health: {
+                        current: battlefield[square].character.attributes['builtins:current_health'],
+                        max: battlefield[square].character.attributes['builtins:max_health'],
+                    },
+                    action_points: {
+                        current: battlefield[square].character.attributes['builtins:current_action_points'],
+                        max: battlefield[square].character.attributes['builtins:max_action_points'],
+                    },
+                    armor: {
+                        current: battlefield[square].character.attributes['builtins:current_armor'],
+                        base: battlefield[square].character.attributes['builtins:base_armor'],
+                    },
+                    statusEffects: battlefield[square].character.statusEffects.map((effect) => ({
+                        ...effect,
+                        descriptor: undefined,
+                    })),
+                },
+                areaEffects: [],
+            }
+        }
+        changeBattlefield(
+            {
+                pawns: newBattlefield,
+            },
+            { keepActive: true, keepClicked: true, keepInteractable: true }
+        )
+        setInteractableSquares(
+            ...(() => {
+                const interactableSquares: Array<string> = []
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        interactableSquares.push(`${i + 1}/${j + 1}`)
+                    }
+                }
+                return interactableSquares
+            })()
+        )
+        changeOnClickTile((square) => {
+            if (square) {
+                resetClickedSquares()
+                incrementClickedSquares(square)
+            }
+            setClickedSquare(square ?? null)
+        })
+    }, [battlefield])
 
     useEffect(() => {
-        // each time clickedSquare changes, we add green border to the clicked square.
-        if (!clickedSquare) {
-            return
-        }
-        dispatch(alreadyClickedOnlyThisSquare(clickedSquare))
-    }, [clickedSquare])
+        setTimeout(() => {
+            updateBattlefield()
+        })
+    }, [battlefield])
+
+    return <Battlefield />
+}
+
+const CombatEditor = () => {
+    const { t } = useTranslation()
+    const navigate = useNavigate()
+
+    const lobby = useSelector(selectLobbyInfo)
+
+    const { battlefield, changePreset, resetPreset } = useCombatEditorContext()
+
+    const [clickedSquare, setClickedSquare] = useState<string | null>(null)
+    const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null)
 
     const resetCombatEditor = useCallback(() => {
-        dispatch(resetState())
         if (Object.keys(battlefield).length !== 0) {
             resetPreset()
         }
-        dispatch(
-            setInteractableSquares(
-                (() => {
-                    const interactableSquares: { [key: string]: boolean } = {}
-                    for (let i = 0; i < 6; i++) {
-                        for (let j = 0; j < 6; j++) {
-                            interactableSquares[`${i + 1}/${j + 1}`] = true
-                        }
-                    }
-                    return interactableSquares
-                })()
-            )
-        )
-        dispatch(setBattlefieldMode('selection'))
-        dispatch(setClickedSquare(clickedSquare || '1/1'))
     }, [clickedSquare, battlefield])
 
     useEffect(() => {
@@ -104,63 +153,6 @@ const CombatEditor = () => {
             })
         }
     }, [lobby])
-
-    useEffect(() => {
-        const newBattlefield: {
-            pawns: { [key: string]: string }
-            field: string[][]
-        } = {
-            pawns: {
-                '0': 'builtins:tile',
-            },
-            field: [
-                ['0', '0', '0', '0', '0', '0'],
-                ['0', '0', '0', '0', '0', '0'],
-                ['0', '0', '0', '0', '0', '0'],
-                ['0', '0', '0', '0', '0', '0'],
-                ['0', '0', '0', '0', '0', '0'],
-                ['0', '0', '0', '0', '0', '0'],
-            ],
-        }
-        const tooltips: { [square: string]: EntityInfoTooltip | null } = {}
-        let counter: number = 0
-        for (const square in battlefield) {
-            const [lineStr, columnStr] = square.split('/')
-            if (!lineStr || !columnStr || !battlefield[square].character) {
-                continue
-            }
-            const line = parseInt(lineStr)
-            const column = parseInt(columnStr)
-            if (isNaN(line) || isNaN(column)) {
-                continue
-            }
-            counter++
-            newBattlefield.pawns[counter.toString()] = battlefield[square].character.decorations.sprite
-            newBattlefield.field[line - 1][column - 1] = counter.toString()
-            tooltips[square] = {
-                decorations: battlefield[square].character.decorations,
-                square: { line, column },
-                health: {
-                    current: battlefield[square].character.attributes['builtins:current_health'],
-                    max: battlefield[square].character.attributes['builtins:max_health'],
-                },
-                action_points: {
-                    current: battlefield[square].character.attributes['builtins:current_action_points'],
-                    max: battlefield[square].character.attributes['builtins:max_action_points'],
-                },
-                armor: {
-                    current: battlefield[square].character.attributes['builtins:current_armor'],
-                    base: battlefield[square].character.attributes['builtins:base_armor'],
-                },
-                statusEffects: battlefield[square].character.statusEffects.map((effect) => ({
-                    ...effect,
-                    descriptor: undefined,
-                })),
-            }
-        }
-        dispatch(setPawns(newBattlefield))
-        dispatch(setEntityTooltips(tooltips))
-    }, [battlefield])
 
     const handlePlayButton = useCallback(async () => {
         let minifiedCombat
@@ -195,7 +187,9 @@ const CombatEditor = () => {
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
             <div className={'flex h-full w-3/5 items-center justify-center bg-gray-800'}>
-                <Battlefield />
+                <BattlefieldContextProvider>
+                    <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
+                </BattlefieldContextProvider>
             </div>
             <div className={'flex h-screen w-2/5 flex-col bg-white'}>
                 <div className={'flex h-20 w-full flex-row items-center bg-black px-4 text-t-massive'}>
@@ -204,9 +198,9 @@ const CombatEditor = () => {
                             variant={'outline'}
                             className={'size-12 p-1 text-white'}
                             onChange={() => {}}
-                            pressed={battlefieldMode === 'selection'}
-                            onPressedChange={(pressed) => {
-                                dispatch(setBattlefieldMode(pressed ? 'selection' : 'info'))
+                            onPressedChange={() => {
+                                // we might need a way to change the battlefield mode...
+                                // dispatch(setBattlefieldMode(pressed ? 'selection' : 'info'))
                             }}
                         >
                             <GrSelect />
@@ -273,11 +267,11 @@ const CombatEditor = () => {
                                 <div>
                                     <div id={'character-settings'} className={'flex flex-col gap-4'}>
                                         <div className={'flex flex-row gap-2'}>
-                                            <AddNewEntity />
+                                            <AddNewEntity clickedSquare={clickedSquare} />
                                         </div>
                                     </div>
                                     {(clickedSquare ? battlefield[clickedSquare] : null) ? (
-                                        <EditCharacterOnSquare />
+                                        <EditCharacterOnSquare clickedSquare={clickedSquare} />
                                     ) : (
                                         <CharacterDisplayPlaceholder
                                             className={'flex flex-col gap-4 rounded border-2 p-4'}
