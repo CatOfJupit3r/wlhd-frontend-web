@@ -65,18 +65,20 @@ const GameLogicWrapper = () => {
             case 'pending':
                 return (
                     <Overlay>
-                        <ThinkingHn text={t('local:game.pending.not_started')} />
-                        <h2>{t(gameFlow.details || 'local:game.pending.waiting_text')}</h2>
-                        {lobbyInfo.layout === 'gm' ? (
-                            <Button
-                                onClick={() => {
-                                    SocketService.emit('start_combat')
-                                }}
-                            >
-                                {t('local:game.pending.start')}
-                            </Button>
-                        ) : null}
-                        <Button onClick={navigateToLobby}>{t('local:game.pending.exit')}</Button>
+                        <div className={'flex flex-col items-center justify-center gap-4'}>
+                            <ThinkingHn text={t('local:game.pending.not_started')} />
+                            <h2>{t(gameFlow.details || 'local:game.pending.waiting_text')}</h2>
+                            {lobbyInfo.layout === 'gm' ? (
+                                <Button
+                                    onClick={() => {
+                                        SocketService.emit('start_combat')
+                                    }}
+                                >
+                                    {t('local:game.pending.start')}
+                                </Button>
+                            ) : null}
+                            <Button onClick={navigateToLobby}>{t('local:game.pending.exit')}</Button>
+                        </div>
                     </Overlay>
                 )
             case 'active':
@@ -89,22 +91,26 @@ const GameLogicWrapper = () => {
                 )
             case 'ended':
                 return (
-                    <Overlay row={false}>
-                        <h1>{t('local:game.end.title')}</h1>
-                        <h1>
-                            {t('local:game.end.result', {
-                                result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
-                            })}
-                        </h1>
-                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                    <Overlay>
+                        <div className={'flex flex-col items-center justify-center gap-4'}>
+                            <h1>{t('local:game.end.title')}</h1>
+                            <h1>
+                                {t('local:game.end.result', {
+                                    result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
+                                })}
+                            </h1>
+                            <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                        </div>
                     </Overlay>
                 )
             case 'aborted':
                 return (
                     <Overlay>
-                        <h1>{t('local:game.end.aborted')}</h1>
-                        <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
-                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                        <div className={'flex flex-row items-center justify-center gap-4'}>
+                            <h1>{t('local:game.end.aborted')}</h1>
+                            <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
+                            <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                        </div>
                     </Overlay>
                 )
             default:

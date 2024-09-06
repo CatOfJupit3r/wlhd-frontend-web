@@ -1,126 +1,112 @@
-import ElementWithIcon from '@components/ElementWithIcon'
+import { Card, CardContent } from '@components/ui/card'
 import { Skeleton } from '@components/ui/skeleton'
 import { ShortLobbyInformation } from '@models/APIData'
 import APIService from '@services/APIService'
-import { rand } from '@utils'
+import { Crown } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { RiVipCrownLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
+import paths from '@router/paths'
 
 type LoadingType = 'loading' | 'failed' | 'success'
 
 const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
-    const { t } = useTranslation()
-
-    const [{ name, isGm, characters, _id }, setInfo] = useState({
+    const { t } = useTranslation('local', {
+        keyPrefix: 'profile',
+    })
+    const [lobbyInfo, setLobbyInfo] = useState<ShortLobbyInformation>({
         name: '???',
         isGm: false,
         _id: '',
         characters: [],
-    } as ShortLobbyInformation)
-    const [status, setStatus] = useState('loading' as LoadingType)
+    })
+    const [status, setStatus] = useState<LoadingType>('loading')
     const [placeholderParams] = useState({
-        title: rand.randNumber(20, 5),
-        description: Array.from({ length: rand.randNumber(3, 1) }).map(() => rand.randNumber(15, 8)),
+        title: Math.floor(Math.random() * 16) + 5,
+        description: Array.from({ length: Math.floor(Math.random() * 3) + 1 }).map(
+            () => Math.floor(Math.random() * 8) + 8
+        ),
     })
 
     useEffect(() => {
-        setStatus('failed')
         if (!lobbyId) {
+            setStatus('failed')
             return
         }
-        APIService.getShortLobbyInfo(lobbyId)
-            .then((value) => {
-                setInfo(value)
+        const fetchLobbyInfo = async () => {
+            try {
+                const response = await APIService.getShortLobbyInfo(lobbyId)
+                setLobbyInfo(response)
                 setStatus('success')
-            })
-            .catch(() => {
+            } catch (error) {
                 setStatus('failed')
-            })
-    }, [])
+            }
+        }
+        fetchLobbyInfo().then()
+    }, [lobbyId])
 
-    const LinkToLobby = useCallback(() => {
-        return (
-            <p
-                style={{
-                    fontSize: 'var(--text-size-normal)',
-                }}
-            >
-                {name || '???'}
-            </p>
-        )
-    }, [_id, name])
-
-    const Placeholders = useCallback(
-        (props: { pulsating?: boolean }) => {
-            return (
-                <>
-                    <div id={'title-and-icon'} className={'flex gap-1'}>
-                        <Skeleton className={'size-10 bg-gray-500'} pulsating={props.pulsating || true} />
-                        <Skeleton
-                            className={'h-10 bg-gray-500'}
-                            style={{
-                                width: `${placeholderParams.title}rem`,
-                            }}
-                            pulsating={props.pulsating || true}
-                        />
-                    </div>
-                    {placeholderParams.description.map((value, index) => {
-                        return (
-                            <Skeleton
-                                key={index}
-                                className={'h-3 bg-gray-500'}
-                                style={{
-                                    width: `${value}rem`,
-                                }}
-                                pulsating={props.pulsating || false}
-                            />
-                        )
-                    }, [])}
-                </>
-            )
-        },
-        [name, _id]
+    const LinkToLobby = useCallback(
+        () => <p className="text-t-normal font-semibold">{lobbyInfo.name || '???'}</p>,
+        [lobbyInfo.name]
     )
 
-    const LobbyInfoContent = useCallback(() => {
-        return (
-            <>
-                {isGm ? (
-                    <ElementWithIcon icon={<RiVipCrownLine />} element={<LinkToLobby />} iconPosition={'together'} />
-                ) : (
+    const Placeholders = useCallback(
+        ({ pulsating = true }: { pulsating?: boolean }) => (
+            <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                    <Skeleton className="size-10 rounded-full" />
+                    <Skeleton
+                        className={`h-6 ${pulsating ? 'animate-pulse' : ''}`}
+                        style={{ width: `${placeholderParams.title}rem` }}
+                    />
+                </div>
+                {placeholderParams.description.map((width, index) => (
+                    <Skeleton
+                        key={index}
+                        className={`h-4 ${pulsating ? 'animate-pulse' : ''}`}
+                        style={{ width: `${width}rem` }}
+                    />
+                ))}
+            </div>
+        ),
+        [placeholderParams]
+    )
+
+    const LobbyInfoContent = useCallback(
+        () => (
+            <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                    {lobbyInfo.isGm && <Crown className="size-5 text-yellow-500" />}
                     <LinkToLobby />
-                )}
-                <p className={'text-t-small'}>
-                    {characters.length
-                        ? `Playing as ${characters.map((value) => t(value)).join(', ')}`
-                        : 'No character assigned'}
+                </div>
+                <p className="text-t-small text-muted-foreground">
+                    {lobbyInfo.characters.length
+                        ? `${t('playing-as')} ${lobbyInfo.characters.map((char) => char).join(', ')}`
+                        : t('no-character-assigned')}
                 </p>
-            </>
-        )
-    }, [name, isGm, characters, _id])
+            </div>
+        ),
+        [lobbyInfo, t]
+    )
 
     const DecideWhatToShow = useCallback(() => {
         switch (status) {
-            case 'success': {
+            case 'success':
                 return <LobbyInfoContent />
-            }
-            case 'loading': {
+            case 'loading':
                 return <Placeholders pulsating={true} />
-            }
-            default: {
+            default:
                 return <Placeholders pulsating={false} />
-            }
         }
-    }, [status])
+    }, [status, LobbyInfoContent, Placeholders])
 
     return (
-        <Link
-            className={`border-container-medium flex w-full flex-col gap-2 p-2 text-t-normal text-black no-underline hover:bg-gray-200 hover:transition-colors hover:duration-100`}
-            to={`../lobby-room/${_id}`}
-        >
-            <DecideWhatToShow />
+        <Link to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} className="block w-full no-underline">
+            <Card className="transition-colors duration-200 hover:bg-accent">
+                <CardContent className="p-4">
+                    <DecideWhatToShow />
+                </CardContent>
+            </Card>
         </Link>
     )
 }

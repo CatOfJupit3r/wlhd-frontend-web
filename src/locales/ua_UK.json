@@ -199,5 +199,21 @@
         "not_found": "Сторінку не знайдено",
         "loading": "Завантаження...",
         "backend_unavailable": "Сервера недоступні"
+    },
+    "profile": {
+        "joined-on": "Приєднався",
+        "legacy-member": "Олдскул",
+        "joined-lobbies": "Лобі",
+        "no-character-assigned": "Без персонажа",
+        "playing-as": "Граєте за: ",
+        "pending-invites": "Запрошення",
+        "from": "Від",
+        "decline": "Відхилити",
+        "accept": "Прийняти",
+        "join-new": "Приєднатися по коду",
+        "enter-invite-code": "Введіть код запрошення до лобі:",
+        "invite-code": "Код запрошення",
+        "cancel": "Скасувати",
+        "send-invite-request": "Надіслати запит"
     }
 }

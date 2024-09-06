@@ -1,16 +1,17 @@
+import { cn } from '@utils'
 import React from 'react'
 
-const Overlay = ({ row, children }: { row?: boolean; children?: React.ReactNode }) => {
+const Overlay = ({ children, className }: { className?: string; children?: React.ReactNode }) => {
     return (
         <div
             id={'overlay-screen'}
-            className={
-                'fixed inset-0 box-border flex h-full w-full items-center ' +
-                'justify-center overflow-auto whitespace-pre-wrap bg-black ' +
-                'text-lg z-90 bg-opacity-90 px-8 pb-16 pt-8 font-bold leading-snug text-white'
-            }
+            className={cn(
+                'fixed inset-0 z-50 box-border flex size-full items-center justify-center overflow-auto',
+                'whitespace-pre-wrap bg-black bg-opacity-90 px-8 pb-16 pt-8 leading-snug text-white',
+                className
+            )}
         >
-            <div className={`flex items-center justify-center ${row ? 'flex-row' : 'flex-col'} gap-4`}>{children}</div>
+            {children}
         </div>
     )
 }

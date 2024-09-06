@@ -24,15 +24,17 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
 
     return (
         <Overlay>
-            <h1>{t('header')}</h1>
-            <h3 className={'font-normal'}>{t('subheader')}</h3>
-            <div className={styles.buttons}>
-                <Button onClick={leaveGame} variant={'destructive'} className={'font-normal text-white'}>
-                    {t('yes')}
-                </Button>
-                <Button onClick={stayInGame} variant={'ghost'} className={'font-normal'}>
-                    {t('no')}
-                </Button>
+            <div className={'flex flex-col items-center justify-center gap-4'}>
+                <h1>{t('header')}</h1>
+                <h3 className={'font-normal'}>{t('subheader')}</h3>
+                <div className={styles.buttons}>
+                    <Button onClick={leaveGame} variant={'destructive'} className={'font-normal text-white'}>
+                        {t('yes')}
+                    </Button>
+                    <Button onClick={stayInGame} variant={'ghost'} className={'font-normal'}>
+                        {t('no')}
+                    </Button>
+                </div>
             </div>
         </Overlay>
     )
