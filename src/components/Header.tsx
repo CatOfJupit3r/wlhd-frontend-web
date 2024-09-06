@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
 import { Button } from '@components/ui/button'
 import {
     DropdownMenu,
@@ -9,6 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
+import UserAvatar from '@components/UserAvatar'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
@@ -117,10 +117,9 @@ const Header = () => {
             <>
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Avatar className={'unselectable'}>
-                            {avatar && <AvatarImage src={avatar} />}
-                            <AvatarFallback className="text-black">{'<3'}</AvatarFallback>
-                        </Avatar>
+                        <div>
+                            <UserAvatar className={'unselectable cursor-pointer text-black'} />
+                        </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuLabel>@{handle}</DropdownMenuLabel>
