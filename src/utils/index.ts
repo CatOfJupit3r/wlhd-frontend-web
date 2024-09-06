@@ -1,3 +1,6 @@
+import * as editorPrepareFunction from './editorPrepareFunction'
+import * as rand from './rand'
+
 export * from './capitalizeFirstLetter'
 export * from './descriptorTools'
 export * from './getCharacterSide'
@@ -7,5 +10,3 @@ export * from './tailwindHelpers'
 export * from './verifyInputs'
 export { rand }
 export { editorPrepareFunction }
-import * as editorPrepareFunction from './editorPrepareFunction'
-import * as rand from './rand'
