@@ -17,7 +17,7 @@ const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'))
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage'))
 const PseudoPage = lazy(() => import('@pages/PseudoPage'))
 
-function AuthenticatedLayout({ children }: { children: ReactNode }) {
+const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
     return (
         <CoordinatorEntitiesProvider>
             <GameDataProvider>{children}</GameDataProvider>
@@ -25,7 +25,7 @@ function AuthenticatedLayout({ children }: { children: ReactNode }) {
     )
 }
 
-function MainLayout({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) {
+const MainLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
     const isLoggedIn = useIsLoggedIn()
 
     useEffect(() => {
@@ -56,7 +56,7 @@ function MainLayout({ includeHeader, includeFooter }: { includeHeader?: boolean;
     )
 }
 
-function LobbyLayout({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) {
+const LobbyLayout = ({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) => {
     const { lobbyId } = useParams()
     const isLoggedIn = useIsLoggedIn()
 
@@ -92,12 +92,12 @@ function LobbyLayout({ includeHeader, includeFooter }: { includeHeader?: boolean
     )
 }
 
-function ProtectedRoute({ children }: { children: ReactNode }) {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     const { isLoggedIn } = useIsLoggedIn()
     return isLoggedIn ? <>{children}</> : <Navigate to={paths.signIn} replace />
 }
 
-function RootRouter() {
+const RootRouter = () => {
     const { isBackendUnavailable } = useIsBackendUnavailable()
 
     const mapRouteToElement = (route: RouteConfig) => {
