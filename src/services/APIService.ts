@@ -5,16 +5,12 @@ import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } fro
 import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
+import APIHealth, { isServerUnavailableError } from '@services/APIHealth'
 import AuthManager from '@services/AuthManager'
 import { REACT_APP_BACKEND_URL } from 'config'
-import EventEmitter from 'events'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
-}
-
-const isServerUnavailableError = (error: unknown) => {
-    return error instanceof AxiosError && error.code === 'ERR_NETWORK'
 }
 
 const ENDPOINTS = {
@@ -49,20 +45,6 @@ const ENDPOINTS = {
 }
 
 class APIService {
-    private backendRefusedConnection: boolean | null = null
-    private emitter = new EventEmitter()
-    private healthCheckNeeded = true
-    private healthCheckInterval: NodeJS.Timeout | null = null
-    private healthCheckIntervalTime = 1000 * 60 * 5 // 5 minutes
-
-    eventTypes = {
-        BACKEND_STATUS_CHANGED: 'BACKEND_STATUS_CHANGED',
-    }
-
-    public constructor() {
-        this.addHealthCheckInterval()
-    }
-
     private injectResponseMessageToError = (error: AxiosError) => {
         if (!error.response) return
         const message = (error.response?.data as any).message
@@ -121,7 +103,7 @@ class APIService {
                     return retryData
                 }
             } else if (isServerUnavailableError(error)) {
-                this.handleBackendRefusedConnection()
+                APIHealth.handleBackendRefusedConnection()
                 this.injectResponseMessageToError(error)
                 throw error
             } else {
@@ -176,7 +158,7 @@ class APIService {
             response = await axios.post(ENDPOINTS.LOGIN, { handle, password })
         } catch (error) {
             if (isServerUnavailableError(error)) {
-                this.handleBackendRefusedConnection()
+                APIHealth.handleBackendRefusedConnection()
             }
             throw error
         }
@@ -189,7 +171,7 @@ class APIService {
             await axios.post(ENDPOINTS.REGISTER, { handle, password })
         } catch (error) {
             if (isServerUnavailableError(error)) {
-                this.handleBackendRefusedConnection()
+                APIHealth.handleBackendRefusedConnection()
             }
             throw error
         }
@@ -416,65 +398,6 @@ class APIService {
             method: 'put',
             data,
         })
-    }
-
-    private handleBackendRefusedConnection = () => {
-        this.backendRefusedConnection = true
-        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
-        this.addHealthCheckInterval()
-    }
-
-    public isBackendUnavailable = (): boolean | null => {
-        if (this.backendRefusedConnection === null) {
-            return null
-        } else {
-            return this.backendRefusedConnection
-        }
-    }
-
-    public onBackendStatusChange = (callback: (status: boolean) => void) => {
-        this.emitter.on(this.eventTypes.BACKEND_STATUS_CHANGED, callback)
-        return () => {
-            this.emitter.off(this.eventTypes.BACKEND_STATUS_CHANGED, callback)
-        }
-    }
-
-    private healthCheck = async () => {
-        console.log("Checking backend's health")
-        if (!this.healthCheckNeeded) {
-            this.removeHealthCheckInterval()
-        }
-        try {
-            await axios.get(ENDPOINTS.HEALTH_CHECK)
-        } catch (error) {
-            if (isServerUnavailableError(error)) {
-                this.backendRefusedConnection = true
-                this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
-                return
-            }
-        }
-        this.backendRefusedConnection = false
-        this.removeHealthCheckInterval()
-        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
-    }
-
-    private removeHealthCheckInterval = () => {
-        if (this.healthCheckInterval) {
-            clearInterval(this.healthCheckInterval)
-        }
-    }
-
-    private addHealthCheckInterval = () => {
-        if (this.backendRefusedConnection === null) {
-            this.healthCheck().then()
-        } else {
-            if (this.healthCheckInterval) {
-                clearInterval(this.healthCheckInterval)
-            }
-            this.healthCheckInterval = setInterval(() => {
-                this.healthCheck().then()
-            }, this.healthCheckIntervalTime)
-        }
     }
 }
 

@@ -1,11 +1,11 @@
-import APIService from '@services/APIService'
+import APIHealth from '@services/APIHealth'
 import { useEffect, useState } from 'react'
 
 const useIsBackendUnavailable = () => {
-    const [isBackendUnavailable, setIsBackendUnavailable] = useState(APIService.isBackendUnavailable())
+    const [isBackendUnavailable, setIsBackendUnavailable] = useState(APIHealth.isBackendUnavailable())
 
     useEffect(() => {
-        const unsubscribeFromBackendStatusChange = APIService.onBackendStatusChange((status) => {
+        const unsubscribeFromBackendStatusChange = APIHealth.onBackendStatusChange((status) => {
             setIsBackendUnavailable(status)
         })
         return () => {
