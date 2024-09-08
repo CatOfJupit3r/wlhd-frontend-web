@@ -1,5 +1,4 @@
-import { UserInformation } from '@models/APIData'
-import { CosmeticsState, LoadingState } from '@models/Redux'
+import { CosmeticsState } from '@models/Redux'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import APIService from '@services/APIService'
 import { RootState } from '../store'
@@ -23,9 +22,8 @@ const CosmeticsSlice = createSlice({
     name: 'cosmetics',
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<UserInformation & { loading: LoadingState }>) => {
-            const { avatar, handle, joined, loading } = action.payload
-            return { ...state, user: { ...state.user, avatar, handle, joined, loading } }
+        resetUser: (state) => {
+            return { ...state, user: { ...state.user, loading: 'idle' } }
         },
         setPageTitle: (state, action: PayloadAction<string>) => {
             return { ...state, pageTitle: action.payload }
@@ -46,6 +44,5 @@ const CosmeticsSlice = createSlice({
 
 export default CosmeticsSlice.reducer
 
-export const { setPageTitle, setUser } = CosmeticsSlice.actions
-
+export const { setPageTitle, resetUser } = CosmeticsSlice.actions
 export const selectUserInformation = (state: RootState) => state.cosmetics.user

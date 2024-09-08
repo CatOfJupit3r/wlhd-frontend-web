@@ -1,3 +1,5 @@
+import { resetUser } from '@redux/slices/cosmeticsSlice'
+import { store as ReduxStore } from '@redux/store'
 import EventEmitter from 'events'
 import { jwtDecode } from 'jwt-decode'
 
@@ -59,6 +61,8 @@ class AuthManager {
 
         this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, false)
         this.emitter.emit(this.eventTypes.LOGOUT)
+
+        ReduxStore.dispatch(resetUser())
     }
 
     onLoginStatusChange(cb: (isLoggedIn: boolean) => void): () => void {

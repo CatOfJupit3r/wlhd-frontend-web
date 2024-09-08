@@ -147,6 +147,15 @@ const GmOptionMenu = () => {
                         <p className={'mb-2 font-normal italic'}>{t('details')}</p>
                         <div className={'flex flex-row gap-2'}>
                             <Button
+                                variant={'ghost'}
+                                onClick={() => {
+                                    setDisplayOverlay(false)
+                                }}
+                            >
+                                <FaXmark className={'mr-1 text-[1rem]'} />
+                                {t('cancel')}
+                            </Button>
+                            <Button
                                 variant={'destructive'}
                                 onClick={() => {
                                     if (!descriptor || !lobby) {
@@ -163,15 +172,6 @@ const GmOptionMenu = () => {
                             >
                                 <RiDeleteBin6Line className={'mr-1 text-[1rem] text-white'} />
                                 {t('delete')}
-                            </Button>
-                            <Button
-                                variant={'ghost'}
-                                onClick={() => {
-                                    setDisplayOverlay(false)
-                                }}
-                            >
-                                <FaXmark className={'mr-1 text-[1rem]'} />
-                                {t('cancel')}
                             </Button>
                         </div>
                     </div>

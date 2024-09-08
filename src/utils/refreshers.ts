@@ -25,5 +25,9 @@ export const refreshUserInfo = () => {
     if (!AuthManager.getAccessToken()) {
         return
     }
+    const state = ReduxStore.getState()
+    if (state.cosmetics.user.loading === 'pending' || state.cosmetics.user.loading === 'fulfilled') {
+        return
+    }
     ReduxStore.dispatch(fetchUserInformation())
 }

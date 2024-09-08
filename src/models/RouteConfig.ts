@@ -1,8 +1,6 @@
-import { ComponentType } from 'react'
-
 export interface RouteConfig {
     path: string
-    Component: ComponentType
+    Component: () => JSX.Element
     title: string
     includeHeader?: boolean
     includeFooter?: boolean

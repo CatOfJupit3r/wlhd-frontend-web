@@ -28,12 +28,12 @@ const ProfileInformation = () => {
                     <div className="relative flex items-center space-x-4">
                         <UserAvatar className={'size-32'}/>
                         <div className="rounded-2xl bg-white p-2 shadow-lg">
-                            <CardTitle className="text-3xl font-bold">@{handle}</CardTitle>
+                            <CardTitle className="text-t-bigger font-bold">@{handle}</CardTitle>
                         </div>
                     </div>
                 </CardHeader>
                 <CardContent className="mt-6 grid gap-6">
-                    <div className="text-sm flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 text-t-smaller">
                         <Badge variant="secondary" className="px-3 py-1">
                             <Calendar className="mr-2 size-4" />
                             {t('joined-on')} {new Date(createdAt).toLocaleDateString()}

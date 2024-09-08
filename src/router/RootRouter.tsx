@@ -1,124 +1,164 @@
+import { CoordinatorEntitiesProvider } from '@context/CoordinatorEntitiesProvider'
+import { GameDataProvider } from '@context/GameDataProvider'
 import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { RouteConfig } from '@models/RouteConfig'
-import NotFoundPage from '@pages/NotFoundPage'
 import { PageWrapper } from '@pages/PageWrapper'
-import PseudoPage from '@pages/PseudoPage'
-import UnderMaintenancePage from '@pages/UnderMaintenancePage'
-import { JSX, useCallback } from 'react'
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
-import LobbyPagesLayout from '../layouts/LobbyPagesLayout'
-import MainLayout from '../layouts/MainLayout'
+import { refreshLobbyInfo, refreshUserInfo } from '@utils'
+import { lazy, ReactNode, Suspense, useEffect } from 'react'
+import { createBrowserRouter, Navigate, Outlet, RouterProvider, useParams } from 'react-router-dom'
 import paths from './paths'
 import routes from './routes'
 
-const RootRouter = () => {
-    const { isLoggedIn } = useIsLoggedIn()
-    const { isBackendUnavailable } = useIsBackendUnavailable()
+const Header = lazy(() => import('@components/Header'))
+const Footer = lazy(() => import('@components/Footer'))
+const Notify = lazy(() => import('@components/Notify'))
+const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'))
+const NotFoundPage = lazy(() => import('@pages/NotFoundPage'))
+const PseudoPage = lazy(() => import('@pages/PseudoPage'))
 
-    const generateRouteComponent = useCallback(
-        ({ path, Component, title, requiresAuth }: RouteConfig) => {
-            return (
-                <Route
-                    key={path}
-                    path={path}
-                    index={path === paths.home}
-                    element={
-                        requiresAuth ? (
-                            isLoggedIn ? (
-                                <PageWrapper title={title}>
-                                    {Component ? <Component /> : <UnderMaintenancePage />}
-                                </PageWrapper>
-                            ) : (
-                                <Navigate to={paths.signIn} />
-                            )
-                        ) : (
-                            <PageWrapper title={title}>
-                                {Component ? <Component /> : <UnderMaintenancePage />}
-                            </PageWrapper>
-                        )
-                    }
-                />
-            )
-        },
-        [isLoggedIn]
+function AuthenticatedLayout({ children }: { children: ReactNode }) {
+    return (
+        <CoordinatorEntitiesProvider>
+            <GameDataProvider>{children}</GameDataProvider>
+        </CoordinatorEntitiesProvider>
     )
+}
 
-    const generateRoutes = useCallback(
-        (routes: Array<RouteConfig>) => {
-            const routeGroups: { [group: string]: Array<RouteConfig> } = {}
+function MainLayout({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) {
+    const isLoggedIn = useIsLoggedIn()
 
-            routes.forEach((route) => {
-                const key = `${route.requiresLobbyInfo ? 'lobby' : 'main'}${route.includeHeader ? 'WithHeader' : 'WithoutHeader'}${route.includeFooter ? 'WithFooter' : 'WithoutFooter'}`
-                if (!routeGroups[key]) {
-                    routeGroups[key] = []
-                }
-                routeGroups[key].push(route)
-            })
-
-            const layouts: { [config: string]: JSX.Element } = {
-                mainWithHeaderWithFooter: <MainLayout includeHeader includeFooter />,
-                mainWithHeaderWithoutFooter: <MainLayout includeHeader />,
-                mainWithoutHeaderWithFooter: <MainLayout includeFooter />,
-                mainWithoutHeaderWithoutFooter: <MainLayout />,
-                lobbyWithHeaderWithFooter: <LobbyPagesLayout includeHeader includeFooter />,
-                lobbyWithHeaderWithoutFooter: <LobbyPagesLayout includeHeader />,
-                lobbyWithoutHeaderWithFooter: <LobbyPagesLayout includeFooter />,
-                lobbyWithoutHeaderWithoutFooter: <LobbyPagesLayout />,
-            }
-
-            return (
-                <>
-                    {Object.entries(routeGroups).map(([key, routes]) => (
-                        <Route key={key} path="/" element={layouts[key]}>
-                            {routes.map(generateRouteComponent)}
-                        </Route>
-                    ))}
-                </>
-            )
-        },
-        [isLoggedIn]
-    )
+    useEffect(() => {
+        if (isLoggedIn) {
+            refreshUserInfo()
+        }
+    }, [isLoggedIn])
 
     return (
-        <Router>
-            <Routes>
-                {typeof isBackendUnavailable === 'boolean' ? (
-                    isBackendUnavailable ? (
-                        <Route
-                            path="*"
-                            element={
-                                <PageWrapper title={'backend_unavailable'}>
-                                    <UnderMaintenancePage />
-                                </PageWrapper>
-                            }
-                        />
-                    ) : (
-                        <>
-                            {generateRoutes(routes)}
-                            <Route
-                                path="*"
-                                element={
-                                    <PageWrapper title={'not_found'}>
-                                        <NotFoundPage />
-                                    </PageWrapper>
-                                }
-                            />
-                        </>
-                    )
-                ) : (
-                    <Route
-                        path="*"
-                        element={
-                            <PageWrapper title={'loading'}>
-                                <PseudoPage />
-                            </PageWrapper>
-                        }
-                    />
-                )}
-            </Routes>
-        </Router>
+        <AuthenticatedLayout>
+            {includeHeader && (
+                <Suspense fallback={<div>Loading header...</div>}>
+                    <Header />
+                </Suspense>
+            )}
+            <main>
+                <Outlet />
+            </main>
+            {includeFooter && (
+                <Suspense fallback={<div>Loading footer...</div>}>
+                    <Footer />
+                </Suspense>
+            )}
+            <Suspense fallback={null}>
+                <Notify />
+            </Suspense>
+        </AuthenticatedLayout>
     )
+}
+
+function LobbyLayout({ includeHeader, includeFooter }: { includeHeader?: boolean; includeFooter?: boolean }) {
+    const { lobbyId } = useParams()
+    const isLoggedIn = useIsLoggedIn()
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            refreshUserInfo()
+        }
+    }, [isLoggedIn])
+
+    useEffect(() => {
+        refreshLobbyInfo(lobbyId).then()
+    }, [lobbyId])
+
+    return (
+        <AuthenticatedLayout>
+            {includeHeader && (
+                <Suspense fallback={<div>Loading header...</div>}>
+                    <Header />
+                </Suspense>
+            )}
+            <main>
+                <Outlet />
+            </main>
+            {includeFooter && (
+                <Suspense fallback={<div>Loading footer...</div>}>
+                    <Footer />
+                </Suspense>
+            )}
+            <Suspense fallback={null}>
+                <Notify />
+            </Suspense>
+        </AuthenticatedLayout>
+    )
+}
+
+function ProtectedRoute({ children }: { children: ReactNode }) {
+    const { isLoggedIn } = useIsLoggedIn()
+    return isLoggedIn ? <>{children}</> : <Navigate to={paths.signIn} replace />
+}
+
+function RootRouter() {
+    const { isBackendUnavailable } = useIsBackendUnavailable()
+
+    const mapRouteToElement = (route: RouteConfig) => {
+        const Component = route.Component
+        const wrappedComponent = (
+            <PageWrapper title={route.title}>
+                <Component />
+            </PageWrapper>
+        )
+
+        if (route.requiresAuth) {
+            return <ProtectedRoute>{wrappedComponent}</ProtectedRoute>
+        }
+
+        return wrappedComponent
+    }
+
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: (
+                <Suspense fallback={<PseudoPage />}>
+                    {isBackendUnavailable !== null ? (
+                        isBackendUnavailable ? (
+                            <UnderMaintenancePage />
+                        ) : (
+                            <Outlet />
+                        )
+                    ) : (
+                        <PseudoPage />
+                    )}
+                </Suspense>
+            ),
+            children: [
+                {
+                    element: <MainLayout includeHeader includeFooter />,
+                    children: routes
+                        .filter((route) => !route.requiresLobbyInfo)
+                        .map((route) => ({
+                            path: route.path,
+                            element: mapRouteToElement(route),
+                        })),
+                },
+                {
+                    element: <LobbyLayout includeHeader includeFooter />,
+                    children: routes
+                        .filter((route) => route.requiresLobbyInfo)
+                        .map((route) => ({
+                            path: route.path,
+                            element: mapRouteToElement(route),
+                        })),
+                },
+            ],
+        },
+        {
+            path: '*',
+            element: <NotFoundPage />,
+        },
+    ])
+
+    return <RouterProvider router={router} />
 }
 
 export default RootRouter

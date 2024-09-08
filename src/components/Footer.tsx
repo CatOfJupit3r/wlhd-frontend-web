@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Footer = () => {
     return (
         <footer
-            className={'relative bottom-0 z-10 box-border block min-h-fit w-full justify-center bg-[#252525FF] p-8'}
+            className={'relative bottom-0 box-border block min-h-fit w-full justify-center bg-[#252525FF] p-8'}
         >
             <h1 className={'text-center text-t-normal font-bold text-[#d5d5d5]'}>
                 By player, for players... and developers too!
