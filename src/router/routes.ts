@@ -64,6 +64,8 @@ const routes: Array<RouteConfig> = [
         path: paths.signIn,
         Component: SignInPage,
         title: 'signin',
+        includeFooter: false,
+        includeHeader: false,
     },
     {
         path: paths.signUp,
