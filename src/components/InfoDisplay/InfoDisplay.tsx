@@ -1,12 +1,13 @@
-import ElementWithIcon from '@components/ElementWithIcon'
-import { ActiveIcon, CooldownIcon, HourglassIcon } from '@components/icons'
+import { ActiveIcon, LocationIcon } from '@components/icons'
 import { Separator } from '@components/ui/separator'
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { cn } from '@utils'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip'
+import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
 import { HTMLAttributes, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BiInfinite } from 'react-icons/bi'
-import styles from './InfoDisplay.module.css'
+import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
+import { LuTally5 } from 'react-icons/lu'
+import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi'
 
 interface WeaponSegment {
     type: 'weapon'
@@ -30,6 +31,15 @@ interface StatusEffectSegment {
 
 export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
 
+const RADIUS_TO_COMMON_NAMES: { [key: string]: string } = {
+    '3,4': 'any-melee',
+    '2,5': 'any-ranged',
+    '1,6': 'any-safe',
+    '1,2,3': 'any-enemy',
+    '4,5,6': 'any-ally',
+    '1,2,3,4,5,6': 'any',
+}
+
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'game.info_display',
@@ -37,15 +47,22 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t: tNoPrefix } = useTranslation()
     const { decorations } = info
 
-    const ItemExclusives = useCallback(({ info }: ItemSegment | WeaponSegment) => {
-        if (info)
-            return (
-                <p>
-                    {t('quantity', {
-                        quantity: info.quantity ?? '-',
-                    })}
-                </p>
-            )
+    const QuantityInfo = useCallback(({ info }: ItemSegment | WeaponSegment) => {
+        return (
+            <div>
+                <Tooltip>
+                    <TooltipTrigger className={'cursor-default'}>
+                        <div className={'flex flex-row items-center gap-1'}>
+                            <FaBoxes />
+                            <p>{info.quantity ?? '-'}</p>
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{t('tooltips.quantity')}</p>
+                    </TooltipContent>
+                </Tooltip>
+            </div>
+        )
     }, [])
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment | SpellSegment) => {
@@ -54,118 +71,188 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
 
     const UsageDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
-            <div id={'usages'} className={styles.infoSegmentUsageDetails}>
-                <p>
-                    {t('user_must_be', {
-                        range: info.user_needs_range
-                            ? info.user_needs_range
-                                  .map((value: unknown) => {
-                                      if (value && !(value instanceof String)) {
-                                          return value
-                                      }
-                                  })
-                                  .join(', ')
-                            : '???',
-                    })}
-                </p>
-                {info.uses && info.uses.max !== null && (
-                    <p>{t('uses', { uses: `${info.uses.current ?? '-'}|${info.uses.max ?? '-'}` })}</p>
-                )}
-            </div>
+            <>
+                <div className={''}>
+                    <Tooltip>
+                        <TooltipTrigger className={'cursor-default'}>
+                            <div className={'flex flex-row items-center gap-1'}>
+                                <LocationIcon className={'size-4'} />
+                                <p>
+                                    {info.userNeedsRange.toString() in RADIUS_TO_COMMON_NAMES
+                                        ? t(`radius-alias.${RADIUS_TO_COMMON_NAMES[info.userNeedsRange.toString()]}`)
+                                        : info.userNeedsRange.toString()}
+                                </p>
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>{t('tooltips.user-range')}</TooltipContent>
+                    </Tooltip>
+                </div>
+                <div>
+                    <Tooltip>
+                        <TooltipTrigger className={'cursor-default'}>
+                            <div className={'flex flex-row items-center gap-1'}>
+                                <LuTally5 />
+                                {`${info.uses.current ?? '-'}/${info.uses.max ?? '-'}`}
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{t('tooltips.uses')}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </>
         )
     }, [])
+    /*
+    <div>
+        <Tooltip>
+            <TooltipTrigger className={'cursor-default'}>
+                
+            </TooltipTrigger>
+            <TooltipContent>
+                
+            </TooltipContent>
+        </Tooltip>
+    </div>
+     */
 
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
-            <p>
-                {t('cost', {
-                    cost: info.cost ?? '-',
-                })}
-            </p>
+            <div>
+                <Tooltip>
+                    <TooltipTrigger className={'cursor-default'}>
+                        <div className={'flex flex-row items-center gap-1 text-t-small'}>
+                            <PiSneakerMoveFill />
+                            <p>{info.cost ?? '-'}</p>
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>{t('tooltips.cost')}</TooltipContent>
+                </Tooltip>
+            </div>
         )
     }, [])
 
     const CooldownDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
-            <ElementWithIcon
-                icon={<CooldownIcon className={'size-5'} />}
-                element={
-                    <p
-                        style={{
-                            margin: '0',
-                            fontSize: '1rem',
-                            color: 'black',
-                        }}
-                    >
-                        {info.cooldown ? `${info.cooldown.current ?? '-'} | ${info.cooldown.max ?? '-'}` : '-'}
-                    </p>
-                }
-            />
+            <div>
+                <Tooltip>
+                    <TooltipTrigger className={'cursor-default'}>
+                        <div className={'flex flex-row items-center gap-1'}>
+                            <PiClockCountdownBold className={'size-5'} />
+                            <p
+                                style={{
+                                    margin: '0',
+                                    fontSize: '1rem',
+                                    color: 'black',
+                                }}
+                            >
+                                {info.cooldown ? `${info.cooldown.current ?? '-'}/${info.cooldown.max ?? '-'}` : '-'}
+                            </p>
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{t('tooltips.cooldown')}</p>
+                    </TooltipContent>
+                </Tooltip>
+            </div>
         )
     }, [])
 
     const EffectDurationDetails = useCallback(({ info }: StatusEffectSegment) => {
         return (
-            <div className={'flex items-center gap-1'}>
-                <HourglassIcon className={'size-5'} />
-                {info.duration === null ? <BiInfinite className={'size-5'} /> : <p>{info.duration ?? '-'}</p>}
+            <div>
+                <Tooltip>
+                    <TooltipTrigger className={'cursor-default'}>
+                        <div className={'flex items-center gap-1'}>
+                            <FaHourglassHalf className={'size-5'} />
+                            {info.duration === null ? (
+                                <BiInfinite className={'size-5'} />
+                            ) : (
+                                <p>{info.duration ?? '-'}</p>
+                            )}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent className={'text-t-small font-normal'}>
+                        <p>{t('tooltips.duration')}</p>
+                    </TooltipContent>
+                </Tooltip>
             </div>
         )
     }, [])
 
-    const MethodVariableDetails = useCallback(() => {
-        const { methodVariables } = info
-        if (!methodVariables || Object.keys(methodVariables).length === 0) {
+    const ComponentMemories = useCallback(() => {
+        const { memory: memories } = info
+        if (!memories || Object.keys(memories).length === 0) {
             return null
         }
         return (
             <div id={'method-variables'} className={'mt-2 flex flex-col items-center gap-1 px-8 text-t-small'}>
                 <ul>
-                    {Object.entries(methodVariables).map(([key, value], index) => {
-                        return (
-                            <li key={index} className={'flex flex-row gap-1'}>
-                                <p>{tNoPrefix(key)}</p>=<p>{JSON.stringify(value)}</p>
-                            </li>
-                        )
-                    })}
+                    {Object.entries(memories)
+                        .filter(([_, memory]) => !memory.internal)
+                        .map(([_, { display_name, value }], index) => {
+                            return (
+                                <li key={index} className={'flex flex-row gap-1'}>
+                                    <p>{tNoPrefix(display_name)}</p>=<p>{JSON.stringify(value)}</p>
+                                </li>
+                            )
+                        })}
                 </ul>
             </div>
         )
     }, [info])
 
     return (
-        <div className={cn(styles.infoSegmentContainer, 'border-container-medium relative')}>
-            <div id={'main-info'} className={styles.infoSegmentHeading}>
-                <div className={'flex flex-row items-center gap-2'}>
-                    {tNoPrefix(decorations?.name) ?? '???'}
-                    {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
-                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
+        <TooltipProvider>
+            <div
+                className={
+                    'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
+                }
+            >
+                <div
+                    id={'main-info'}
+                    className={'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'}
+                >
+                    <div className={'flex flex-row items-center gap-2'}>
+                        {tNoPrefix(decorations?.name) ?? '???'}
+                        {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
+                        {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
+                    </div>
+                    {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
                 </div>
-                {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
-                {type !== 'status_effect' &&
-                    CooldownDetails({
-                        type,
-                        info,
-                    } as ItemSegment | WeaponSegment | SpellSegment)}
-            </div>
-            <div id={'minor-info'} className={styles.infoSegmentMinorInfo}>
-                <div id={'type-details'} className={styles.infoSegmentTypeDetails}>
+                <Separator />
+                <div id={'minor-info'} className={'relative flex flex-col text-t-small'}>
+                    <div id={'type-details'} className={'absolute right-0 top-0 flex flex-row items-center gap-3'}>
+                        {type !== 'status_effect' &&
+                            CooldownDetails({
+                                type,
+                                info,
+                            } as ItemSegment | WeaponSegment | SpellSegment)}
+                        {type !== 'status_effect' &&
+                            CostDetails({
+                                type,
+                                info,
+                            } as ItemSegment | WeaponSegment | SpellSegment)}
+                    </div>
                     {(type === 'item' || type === 'weapon') &&
-                        ItemExclusives({ type, info } as ItemSegment | WeaponSegment)}
+                        QuantityInfo({
+                            type,
+                            info,
+                        } as ItemSegment | WeaponSegment)}
                     {type !== 'status_effect' &&
-                        CostDetails({
+                        UsageDetails({
                             type,
                             info,
                         } as ItemSegment | WeaponSegment | SpellSegment)}
                 </div>
-                {type !== 'status_effect' && UsageDetails({ type, info } as ItemSegment | WeaponSegment | SpellSegment)}
+                <Separator />
+                <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
+                    {tNoPrefix(decorations?.description) ?? '???'}
+                </div>
+                <Separator />
+                <ComponentMemories />
             </div>
-            <div id={'description'} className={styles.infoSegmentDescription}>
-                {tNoPrefix(decorations?.description) ?? '???'}
-            </div>
-            <Separator />
-            <MethodVariableDetails />
-        </div>
+        </TooltipProvider>
     )
 }
 

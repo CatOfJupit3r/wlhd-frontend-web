@@ -1,4 +1,3 @@
-import { Action } from '@models/ActionInput'
 import { useTranslation } from 'react-i18next'
 import { BsInfoCircle } from 'react-icons/bs'
 import styles from './OptionCard.module.css'
@@ -6,6 +5,7 @@ import styles from './OptionCard.module.css'
 import { useActionContext } from '@context/ActionContext'
 import { cn } from '@utils'
 import { useCallback, useMemo } from 'react'
+import { Action } from '@models/GameModels'
 
 const OptionCard = ({
     option,

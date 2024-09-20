@@ -1,6 +1,6 @@
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { StaticSkeleton } from '@components/ui/skeleton'
-import { EntityInfoTooltip } from '@models/Battlefield'
+import { EntityInfoTooltip } from '@models/GameModels'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from './EntityTooltip.module.css'

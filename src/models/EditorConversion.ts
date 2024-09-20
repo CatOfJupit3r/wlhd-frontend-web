@@ -1,3 +1,6 @@
+import { CharacterDataInSave } from '@models/CombatEditorModels'
+import { GameStateContainer } from '@models/GameModels'
+
 export interface CharacterClassConversion {
     decorations: {
         name: string
@@ -85,6 +88,22 @@ interface CharacterInCombat {
         turns_until_usage: number
         current_consecutive_uses: number
     }>
+}
+
+export interface CreateCombatBody {
+    nickname: string
+    preset: {
+        round: number
+        turnOrder: Array<string | null>
+        messages: GameStateContainer
+        battlefield: {
+            [square: string]: {
+                descriptor: string
+                source: Partial<CharacterDataInSave>
+                control: ControlledBy
+            }
+        }
+    }
 }
 
 export interface MinifiedCombatPreset {

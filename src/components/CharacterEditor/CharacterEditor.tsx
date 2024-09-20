@@ -1,53 +1,93 @@
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
-import InventoryEditor from '@components/CharacterEditor/GameComponentEditors/InventoryEditor'
-import SpellBookEditor from '@components/CharacterEditor/GameComponentEditors/SpellBookEditor'
-import StatusEffectsEditor from '@components/CharacterEditor/GameComponentEditors/StatusEffectsEditor'
-import WeaponryEditor from '@components/CharacterEditor/GameComponentEditors/WeaponryEditor'
+import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor'
 import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
-import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
-import Menu, { MenuSelection } from '@components/ui/menu'
+import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
+import { EmptyMenuContent } from '@components/ui/menu'
 import { Separator } from '@components/ui/separator'
+import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { cn } from '@utils'
-import { useMemo } from 'react'
+import { useState } from 'react'
+
+const CharacterEditorMenus = () => {
+    const { flags } = useCharacterEditorContext()
+    const [menu, setMenu] = useState<null | 'attribute' | 'item' | 'weapon' | 'spell' | 'statusEffect' | string>(null)
+
+    return (
+        <div>
+            <ToggleGroup
+                type={'single'}
+                onValueChange={(value) => {
+                    if (value === menu) {
+                        setMenu(null)
+                    } else if (value !== menu) {
+                        setMenu(value)
+                    }
+                }}
+            >
+                {[
+                    {
+                        value: 'attribute',
+                        icon: AttributesIcon,
+                        disabled: flags.exclude?.attributes,
+                    },
+                    {
+                        value: 'item',
+                        icon: InventoryIcon,
+                        disabled: flags.exclude?.inventory,
+                    },
+                    {
+                        value: 'weapon',
+                        icon: WeaponryIcon,
+                        disabled: flags.exclude?.weaponry,
+                    },
+                    {
+                        value: 'spell',
+                        icon: SpellBookIcon,
+                        disabled: flags.exclude?.spellBook,
+                    },
+                    {
+                        value: 'statusEffect',
+                        icon: StatusEffectsIcon,
+                        disabled: flags.exclude?.statusEffects,
+                    },
+                ]
+                    .map(({ value, icon, disabled }) => (
+                        <ToggleGroupItem key={value} value={value} disabled={disabled ?? false}>
+                            {icon({ className: 'size-8' })}
+                        </ToggleGroupItem>
+                    ))
+                    .sort((a, b) => {
+                        if (a.props.disabled) {
+                            return 1
+                        } else if (b.props.disabled) {
+                            return -1
+                        } else {
+                            return a.props.value > b.props.value ? 1 : -1
+                        }
+                    })}
+            </ToggleGroup>
+            <Separator />
+            <div>
+                {(() => {
+                    switch (menu) {
+                        case 'attribute':
+                            return <AttributesEditor />
+                        case 'item':
+                        case 'weapon':
+                        case 'spell':
+                        case 'statusEffect':
+                            return <ComponentContainerEditor type={menu} />
+                        default:
+                            return <EmptyMenuContent />
+                    }
+                })()}
+            </div>
+        </div>
+    )
+}
 
 const CharacterEditor = ({ className }: { className?: string }) => {
-    const { flags } = useCharacterEditorContext()
-    const { exclude } = flags
-    const menus: MenuSelection = useMemo(() => {
-        return [
-            {
-                value: 'inventory',
-                component: InventoryEditor,
-                icon: InventoryIcon,
-            },
-            {
-                value: 'spellbook',
-                component: SpellBookEditor,
-                icon: SpellsIcon,
-            },
-            {
-                value: 'status_effects',
-                component: StatusEffectsEditor,
-                icon: StatusEffectsIcon,
-            },
-            {
-                value: 'weaponry',
-                component: WeaponryEditor,
-                icon: WeaponryIcon,
-            },
-            {
-                value: 'attributes',
-                component: AttributesEditor,
-                icon: AttributesIcon,
-            },
-        ].map((menu) => {
-            return {
-                ...menu,
-                disabled: !!(exclude && exclude[menu.value]),
-            }
-        }) as MenuSelection
-    }, [flags])
     /*
 
     Editor requires following components:
@@ -62,7 +102,7 @@ const CharacterEditor = ({ className }: { className?: string }) => {
         <div className={cn('relative flex w-[30rem] flex-col gap-4 border-2 p-4 text-left transition-all', className)}>
             <CharacterMainInfoEditor />
             <Separator className={'mt-4'} />
-            <Menu selection={menus} />
+            <CharacterEditorMenus />
         </div>
     )
 }

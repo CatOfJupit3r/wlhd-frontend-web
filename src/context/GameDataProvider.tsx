@@ -1,4 +1,10 @@
-import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
+import {
+    CharacterDataEditable,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@models/CombatEditorModels'
 import APIService from '@services/APIService'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
@@ -6,11 +12,11 @@ type ProvidedData<T> = {
     [dlc: string]: { [descriptor: string]: T }
 }
 
-type ProvidedItems = ProvidedData<ItemInfo>
-type ProvidedWeapons = ProvidedData<WeaponInfo>
-type ProvidedSpells = ProvidedData<SpellInfo>
-type ProvidedStatusEffects = ProvidedData<StatusEffectInfo>
-type ProvidedEntities = ProvidedData<EntityInfoFull>
+type ProvidedItems = ProvidedData<ItemEditable>
+type ProvidedWeapons = ProvidedData<WeaponEditable>
+type ProvidedSpells = ProvidedData<SpellEditable>
+type ProvidedStatusEffects = ProvidedData<StatusEffectEditable>
+type ProvidedEntities = ProvidedData<CharacterDataEditable>
 
 interface DataContextType {
     items: ProvidedItems | null
@@ -23,7 +29,7 @@ interface DataContextType {
     fetchAndSetWeapons: (dlc: string) => Promise<void>
     fetchAndSetSpells: (dlc: string) => Promise<void>
     fetchAndSetStatusEffects: (dlc: string) => Promise<void>
-    fetchAndSetEntities: (dlc: string) => Promise<{ [descriptor: string]: EntityInfoFull }>
+    fetchAndSetEntities: (dlc: string) => Promise<{ [descriptor: string]: CharacterDataEditable }>
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
@@ -150,7 +156,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
     )
 
     const fetchAndSetEntities = useCallback(
-        async (dlc: string): Promise<{ [descriptor: string]: EntityInfoFull }> => {
+        async (dlc: string): Promise<{ [descriptor: string]: CharacterDataEditable }> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.entities ?? false)) {
                     const { characters: fetched } = await APIService.getLoadedCharacters(dlc)

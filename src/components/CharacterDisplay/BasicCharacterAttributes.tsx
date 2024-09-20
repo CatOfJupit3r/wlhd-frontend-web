@@ -1,5 +1,5 @@
 import { Progress } from '@components/ui/progress'
-import { EntityInfoFull } from '@models/Battlefield'
+import { EntityInfoFull } from '@models/GameModels'
 import { useMemo } from 'react'
 import { GiHeartPlus } from 'react-icons/gi'
 import { IoShieldSharp } from 'react-icons/io5'

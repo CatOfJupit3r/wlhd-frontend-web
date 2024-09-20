@@ -2,7 +2,7 @@ import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacte
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import { Separator } from '@components/ui/separator'
-import { EntityInfoFull } from '@models/Battlefield'
+import { EntityInfoFull } from '@models/GameModels'
 import { HTMLAttributes } from 'react'
 import { useTranslation } from 'react-i18next'
 

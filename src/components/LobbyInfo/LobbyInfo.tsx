@@ -6,6 +6,7 @@ import PlayerInfo from './PlayerInfo/PlayerInfo'
 
 const LobbyInfo = () => {
     const { name } = useSelector(selectLobbyInfo)
+
     return (
         <div className={styles.lobbyInfoContainer}>
             <div className={styles.mainSection}>

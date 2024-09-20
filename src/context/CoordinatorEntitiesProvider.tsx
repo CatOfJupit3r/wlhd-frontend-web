@@ -1,17 +1,18 @@
-import { EntityInfoFull } from '@models/Battlefield'
+import { EntityInfoFull } from '@models/GameModels'
 import APIService from '@services/APIService'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { CharacterDataEditable } from '@models/CombatEditorModels'
 
 type ProvidedData<T> = {
     [descriptor: string]: T | null
 }
 
-type ProvidedCharacters = ProvidedData<EntityInfoFull>
+type ProvidedCharacters = ProvidedData<CharacterDataEditable>
 
 interface DataContextType {
     characters: ProvidedCharacters
-    fetchCharacter: (lobbyId: string, descriptor: string, force?: boolean) => Promise<EntityInfoFull | null>
-    getCharacter: (descriptor: string) => EntityInfoFull | null
+    fetchCharacter: (lobbyId: string, descriptor: string, force?: boolean) => Promise<CharacterDataEditable | null>
+    getCharacter: (descriptor: string) => CharacterDataEditable | null
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
@@ -20,7 +21,7 @@ export const CoordinatorEntitiesProvider = ({ children }: { children: ReactNode 
     const [characters, setCharacters] = useState<DataContextType['characters']>({})
 
     const fetchCharacter: DataContextType['fetchCharacter'] = useCallback(
-        async (lobbyId: string, descriptor: string, force?: boolean): Promise<EntityInfoFull | null> => {
+        async (lobbyId: string, descriptor: string, force?: boolean): Promise<CharacterDataEditable | null> => {
             if (characters[descriptor] === undefined || force) {
                 const fetched = await APIService.getCharacterInfo(lobbyId, descriptor)
                 if (fetched) {

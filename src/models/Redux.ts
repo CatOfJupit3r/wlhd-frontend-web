@@ -1,7 +1,12 @@
 import { UserInformation } from '@models/APIData'
-import { IndividualTurnOrder } from '@models/GameHandshake'
-import { ActionInput as ActionInputInterface } from './ActionInput'
-import { Battlefield, EntityInfoFull, GameStateContainer } from './Battlefield'
+import {
+    ActionInput as ActionInputInterface,
+    Battlefield,
+    EntityInfoFull,
+    GameHandshake,
+    GameStateContainer,
+    IndividualTurnOrder,
+} from './GameModels'
 
 export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
 
@@ -56,7 +61,7 @@ export interface GameScreenState {
     battlefield: Battlefield
     actions: null | ActionInputInterface
     round: {
-        current: string
+        current: GameHandshake['roundCount']
         order: IndividualTurnOrder
     }
     messages: GameStateContainer

@@ -1,9 +1,9 @@
-import { CombatEditorContextType } from '@context/CombatEditorContext'
-import { EntityInfoFull } from '@models/Battlefield'
+import { CharacterDataInSave } from '@models/CombatEditorModels'
 import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
+import { EntityInfoFull } from '@models/GameModels'
 import { isDescriptor } from '@utils/descriptorTools'
 
-export const prepareCharacterToClassConversion = (character: EntityInfoFull): CharacterClassConversion => {
+export const prepareCharacterToClassConversion = (character: CharacterDataInSave): CharacterClassConversion => {
     return {
         decorations: character.decorations,
         attributes: Object.entries(character.attributes).map(([descriptor, value]) => ({
@@ -12,7 +12,7 @@ export const prepareCharacterToClassConversion = (character: EntityInfoFull): Ch
         })),
         spellBook: {
             maxActiveSpells: character.spellBook.maxActiveSpells,
-            knownSpells: character.spellBook.spells.map((spell) => ({
+            knownSpells: character.spellBook.knownSpells.map((spell) => ({
                 descriptor: spell.descriptor,
                 isActive: spell.isActive,
             })),
@@ -23,7 +23,7 @@ export const prepareCharacterToClassConversion = (character: EntityInfoFull): Ch
         })),
         statusEffects: character.statusEffects.map((effect) => ({
             descriptor: effect.descriptor,
-            duration: effect.duration === null ? null : parseInt(effect.duration),
+            duration: effect.duration,
         })),
         weaponry: character.weaponry.map((weapon) => ({
             descriptor: weapon.descriptor,
@@ -49,7 +49,7 @@ export const minifyCharacter = (
         attributes: character.attributes,
         spellBook: {
             maxActiveSpells: character.spellBook.maxActiveSpells,
-            knownSpells: character.spellBook.spells.map((spell) => ({
+            knownSpells: character.spellBook.knownSpells.map((spell) => ({
                 descriptor: spell.descriptor,
                 is_active: spell.isActive ?? false,
                 turns_until_usage: spell.cooldown.current,
@@ -64,7 +64,7 @@ export const minifyCharacter = (
         })),
         statusEffects: character.statusEffects.map((effect) => ({
             descriptor: effect.descriptor,
-            duration: effect.duration === null ? null : parseInt(effect.duration),
+            duration: effect.duration,
         })),
         weaponry: character.weaponry.map((weapon) => ({
             descriptor: weapon.descriptor,
@@ -74,26 +74,4 @@ export const minifyCharacter = (
             is_active: weapon.isActive,
         })),
     }
-}
-
-export const minifyCombat = (combat: CombatEditorContextType['battlefield']): MinifiedCombatPreset => {
-    const minified: MinifiedCombatPreset = {
-        nickName: 'stuff',
-        battlefield: {},
-    }
-    const squares = Object.keys(combat)
-    for (const squareKey of squares) {
-        const square = combat[squareKey]
-        const { descriptor, character, control } = square
-        if (character) {
-            minified.battlefield[squareKey] = {
-                descriptor,
-                character: minifyCharacter(character, descriptor),
-                control: control ?? { type: 'game_logic' },
-            }
-            console.log(minified.battlefield[squareKey].character.spellBook.knownSpells)
-        }
-    }
-
-    return minified
 }

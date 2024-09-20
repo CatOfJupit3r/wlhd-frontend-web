@@ -1,4 +1,4 @@
-import { Battlefield } from '@models/Battlefield'
+import { Battlefield } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 export interface BattlefieldContextType {
@@ -67,7 +67,6 @@ export const BattlefieldContextProvider = ({
     children: ReactNode
 }) => {
     const [battlefield, setBattlefield] = useState<BattlefieldContextType['battlefield']>(DEFAULT_BATTLEFIELD())
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [onClickTile, setOnClickTile] = useState<BattlefieldContextType['onClickTile']>((_?: string) => () => {})
 
     const changeOnClickTile = useCallback((onClickTile: (square?: string) => void) => {

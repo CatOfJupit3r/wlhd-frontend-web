@@ -1,24 +1,27 @@
-import { EntityInfoFull } from '@models/Battlefield'
 import { ControlledBy } from '@models/EditorConversion'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { CharacterDataEditable } from '@models/CombatEditorModels'
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id })
 export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id })
 export const CONTROLLED_BY_GAME_LOGIC = { type: 'game_logic' }
 
 export interface CombatEditorContextType {
+    mode: 'save' | 'preset'
     battlefield: {
         [square: string]: {
             descriptor: string
-            character: EntityInfoFull
+            character: CharacterDataEditable
             control: ControlledBy
         }
     }
 
-    addCharacter: (square: string, character: EntityInfoFull, descriptor: string, control?: ControlledBy) => void
+    addCharacter: (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => void
     removeCharacter: (square: string) => void
-    updateCharacter: (square: string, character: EntityInfoFull) => void
+    updateCharacter: (square: string, character: CharacterDataEditable) => void
     updateControl: (square: string, control: ControlledBy) => void
+
+    setMode: (mode: CombatEditorContextType['mode']) => void
 
     changePreset: (newData: CombatEditorContextType['battlefield']) => void
     resetPreset: () => void
@@ -28,9 +31,10 @@ const CombatEditorContext = createContext<CombatEditorContextType | undefined>(u
 
 const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [battlefield, setBattlefield] = useState<CombatEditorContextType['battlefield']>({})
+    const [mode, setMode] = useState<CombatEditorContextType['mode']>('save')
 
     const addCharacter = useCallback(
-        (square: string, character: EntityInfoFull, descriptor: string, control?: ControlledBy) => {
+        (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => {
             setBattlefield((prev) => {
                 return {
                     ...prev,
@@ -53,7 +57,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         })
     }, [])
 
-    const updateCharacter = useCallback((square: string, character: EntityInfoFull) => {
+    const updateCharacter = useCallback((square: string, character: CharacterDataEditable) => {
         setBattlefield((prev) => {
             return {
                 ...prev,
@@ -92,6 +96,8 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     return (
         <CombatEditorContext.Provider
             value={{
+                mode,
+                setMode,
                 battlefield,
                 addCharacter,
                 removeCharacter,

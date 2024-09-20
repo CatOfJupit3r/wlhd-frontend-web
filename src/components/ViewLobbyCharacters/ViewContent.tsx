@@ -10,9 +10,11 @@ import {
 } from '@context/CharacterEditorProvider'
 import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
-import { EntityInfoFull } from '@models/Battlefield'
+import { CharacterDataEditable } from '@models/CombatEditorModels'
+import { EntityInfoFull } from '@models/GameModels'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
+import GameConverters from '@services/GameConverters'
 import { cn, refreshLobbyInfo } from '@utils'
 import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction'
 import { useEffect, useState } from 'react'
@@ -26,26 +28,6 @@ const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     attributes: {
         ignored: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     },
-    inventory: {
-        allowQuantity: true,
-        allowCooldown: false,
-        allowUses: false,
-    },
-    weaponry: {
-        allowQuantity: true,
-        allowCooldown: false,
-        allowUses: false,
-    },
-    statusEffects: {
-        allowDuration: true,
-    },
-    spellBook: {
-        allowUses: false,
-        allowCooldown: false,
-        allowActivation: true,
-
-        allowChangeMaxSpells: true,
-    },
 }
 
 const componentClass = 'flex w-[30rem] flex-col gap-4 rounded border-2 p-4 max-[960px]:w-full'
@@ -57,7 +39,7 @@ const CharacterEditorMenu = () => {
         character: editedCharacter,
         changeEditedCharacter,
         resetCharacter,
-    } = buildCharacterEditorProps(character as EntityInfoFull)
+    } = buildCharacterEditorProps({ ...character } as CharacterDataEditable)
     const { fetchCharacter } = useCoordinatorEntitiesContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
@@ -67,7 +49,7 @@ const CharacterEditorMenu = () => {
         if (!character) {
             return
         }
-        changeEditedCharacter(character)
+        changeEditedCharacter({ ...character })
     }, [character])
 
     return (
@@ -90,7 +72,17 @@ const CharacterEditorMenu = () => {
                         }
                         const wasCharacterChanged: boolean =
                             JSON.stringify(character) !== JSON.stringify(editedCharacter)
+                        // console.log(
+                        //     'Viewed character is the same pointer as edited character',
+                        //     character === editedCharacter
+                        // )
+                        // console.log(
+                        //     'Viewed character is the same as edited character',
+                        //     JSON.stringify(character) === JSON.stringify(editedCharacter)
+                        // )
                         if (wasCharacterChanged) {
+                            // TODO: create omit function to only send changed fields
+
                             APIService.updateCharacter(
                                 lobby.lobbyId,
                                 descriptor as string,
@@ -186,14 +178,6 @@ const GmOptionMenu = () => {
                             return
                         }
                         setDisplayOverlay(true)
-
-                        // APIService.deleteCharacter(lobby.lobbyId, descriptor)
-                        //     .then(() => {
-                        //         refreshLobbyInfo(lobby.lobbyId).then()
-                        //     })
-                        //     .catch((error) => {
-                        //         console.error('Error removing character', error)
-                        //     })
                     }}
                 >
                     <RiDeleteBin6Line />
@@ -206,6 +190,15 @@ const GmOptionMenu = () => {
 
 const LobbyCharacterDisplay = () => {
     const { viewedCharacter } = useViewCharactersContext()
+    const [converted, setConverted] = useState<EntityInfoFull | null>(null)
+
+    useEffect(() => {
+        if (!viewedCharacter) {
+            setConverted(null)
+        } else {
+            setConverted(GameConverters.convertEditableToInfoFull(viewedCharacter))
+        }
+    }, [viewedCharacter])
 
     if (!viewedCharacter) {
         return <CharacterDisplayPlaceholder className={componentClass} />
@@ -213,7 +206,11 @@ const LobbyCharacterDisplay = () => {
 
     return (
         <div>
-            <CharacterDisplayInLobby character={viewedCharacter} className={componentClass} />
+            {converted ? (
+                <CharacterDisplayInLobby character={converted} className={componentClass} />
+            ) : (
+                <CharacterDisplayPlaceholder className={componentClass} />
+            )}
         </div>
     )
 }

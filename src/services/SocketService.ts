@@ -1,12 +1,16 @@
 import { toast } from '@hooks/useToast'
-import { ActionInput } from '@models/ActionInput'
-import { Battlefield, EntityInfoFull, TranslatableString } from '@models/Battlefield'
 import { ActionResultsPayload } from '@models/Events'
-import { GameHandshake, IndividualTurnOrder } from '@models/GameHandshake'
+import {
+    ActionInput,
+    Battlefield,
+    EntityInfoFull,
+    GameHandshake,
+    IndividualTurnOrder,
+    TranslatableString,
+} from '@models/GameModels'
 import {
     addMessage,
     haltActions,
-    resetActiveEntity,
     resetGameScreenSlice,
     setActions,
     setBattlefield,
@@ -168,6 +172,7 @@ class SocketService {
                 toast({
                     variant: code === 200 ? 'default' : 'destructive',
                     title: code === 200 ? 'Success' : 'Error',
+                    description: code === 200 ? 'local:game.actionSuccess' : (message ?? 'local:game.actionError'),
                     position: code === 200 ? 'bottom-left' : 'top-center',
                 })
             },
@@ -185,17 +190,13 @@ class SocketService {
                 console.log('Turn order updated', turnOrder)
                 ReduxStore.dispatch(setTurnOrder(turnOrder))
             },
-            [SOCKET_EVENTS.NO_CURRENT_ENTITY]: () => {
-                console.log('No current entity')
-                ReduxStore.dispatch(resetActiveEntity())
-            },
             [SOCKET_EVENTS.BATTLEFIELD_UPDATE]: ({ battlefield }: { battlefield: Battlefield }) => {
                 ReduxStore.dispatch(setBattlefield(battlefield))
             },
             [SOCKET_EVENTS.NEW_MESSAGE]: ({ message }: { message: Array<TranslatableString> }) => {
                 ReduxStore.dispatch(addMessage(message))
             },
-            [SOCKET_EVENTS.ROUND_UPDATE]: ({ roundCount }: { roundCount: string }) => {
+            [SOCKET_EVENTS.ROUND_UPDATE]: ({ roundCount }: { roundCount: number }) => {
                 ReduxStore.dispatch(setRound(roundCount))
                 console.log('Round update', roundCount)
             },

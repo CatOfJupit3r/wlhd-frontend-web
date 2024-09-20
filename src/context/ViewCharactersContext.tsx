@@ -1,28 +1,28 @@
-import { EntityInfoFull } from '@models/Battlefield'
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { CharacterDataEditable } from '@models/CombatEditorModels'
 
 interface ViewCharactersContextType {
-    viewedCharacter: EntityInfoFull | null
+    viewedCharacter: CharacterDataEditable | null
     descriptor: string | null
 
-    changeViewedCharacter: (character: EntityInfoFull | null, descriptor: string | null) => void
+    changeViewedCharacter: (character: CharacterDataEditable | null, descriptor: string | null) => void
     clearViewedCharacter: () => void
 }
 
 const ViewCharactersContext = createContext<ViewCharactersContextType | undefined>(undefined)
 
 const ViewCharactersContextProvider = ({ children }: { children: ReactNode }) => {
-    const [viewedCharacter, setViewedCharacter] = useState<EntityInfoFull | null>(null)
+    const [viewedCharacter, setViewedCharacter] = useState<CharacterDataEditable | null>(null)
     const [descriptor, setDescriptor] = useState<string | null>(null)
 
-    const changeViewedCharacter = (character: EntityInfoFull | null, descriptor: string | null) => {
+    const changeViewedCharacter = useCallback((character: CharacterDataEditable | null, descriptor: string | null) => {
         setViewedCharacter(character)
         setDescriptor(descriptor)
-    }
+    }, [])
 
-    const clearViewedCharacter = () => {
+    const clearViewedCharacter = useCallback(() => {
         changeViewedCharacter(null, null)
-    }
+    }, [])
 
     return (
         <ViewCharactersContext.Provider

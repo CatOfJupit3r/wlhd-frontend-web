@@ -1,7 +1,7 @@
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
-import { AttributesIcon, InventoryIcon, SpellsIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
+import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import Menu, { MenuSelection } from '@components/ui/menu'
-import { EntityInfoFull } from '@models/Battlefield'
+import { EntityInfoFull } from '@models/GameModels'
 import React, { useMemo } from 'react'
 
 const CharacterMenus: Array<{
@@ -27,7 +27,7 @@ const CharacterMenus: Array<{
     {
         value: 'spells',
         label: 'Spells',
-        icon: SpellsIcon,
+        icon: SpellBookIcon,
     },
     {
         value: 'weaponry',
@@ -46,7 +46,7 @@ const MenuIsDisabled = (type: string, info: EntityInfoFull) => {
             return !info.weaponry || info.weaponry.length === 0
         case 'spells': {
             const spellBook = info.spellBook
-            return !spellBook || spellBook.spells.length === 0
+            return !spellBook || spellBook.knownSpells.length === 0
         }
         default:
             return false

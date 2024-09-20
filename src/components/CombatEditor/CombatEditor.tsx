@@ -13,11 +13,10 @@ import { Toggle } from '@components/ui/toggle'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { toastError } from '@hooks/useToast'
-import { Battlefield as BattlefieldModel } from '@models/Battlefield'
+import { Battlefield as BattlefieldModel } from '@models/GameModels'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
-import { minifyCombat } from '@utils/editorPrepareFunction'
 import { AxiosError } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,6 +26,7 @@ import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import mock_save_file from '@components/CombatEditor/mock_save_file'
 
 interface PresetDetails {
     nickName: string
@@ -76,7 +76,6 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                     },
                     statusEffects: battlefield[square].character.statusEffects.map((effect) => ({
                         ...effect,
-                        descriptor: undefined,
                     })),
                 },
                 areaEffects: [],
@@ -155,25 +154,25 @@ const CombatEditor = () => {
     }, [lobby])
 
     const handlePlayButton = useCallback(async () => {
-        let minifiedCombat
-        try {
-            minifiedCombat = minifyCombat(battlefield)
-            console.log(minifiedCombat)
-        } catch (e: unknown) {
-            console.log(e)
-            toastError({ title: t('local:error'), description: e instanceof Error ? e.message : 'Unknown error' })
-            resetCombatEditor()
-            if (presetDetails) {
-                removeCombatEditorLocalStorage(presetDetails.presetID)
-                setPresetDetails(null)
-            }
-            return
-        }
+        // let minifiedCombat
+        // try {
+            // minifiedCombat = minifyCombat(battlefield)
+            // console.log(minifiedCombat)
+        // } catch (e: unknown) {
+        //     console.log(e)
+        //     toastError({ title: t('local:error'), description: e instanceof Error ? e.message : 'Unknown error' })
+        //     resetCombatEditor()
+        //     if (presetDetails) {
+        //         removeCombatEditorLocalStorage(presetDetails.presetID)
+        //         setPresetDetails(null)
+        //     }
+        //     return
+        // }
         try {
             const { combat_id } = await APIService.createLobbyCombat(
                 lobby.lobbyId,
-                minifiedCombat.nickName,
-                minifiedCombat.battlefield
+                'Combat from Editor',
+                mock_save_file
             )
             navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id))
         } catch (e) {

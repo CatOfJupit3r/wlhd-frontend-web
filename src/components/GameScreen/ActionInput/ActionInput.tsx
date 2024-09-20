@@ -1,4 +1,3 @@
-import { Action } from '@models/ActionInput'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './ActionInput.module.css'
@@ -21,6 +20,7 @@ import {
 import { capitalizeFirstLetter } from '@utils'
 import { RxArrowTopRight } from 'react-icons/rx'
 import OptionCard from './OptionCard/OptionCard'
+import { Action } from '@models/GameModels'
 
 /*
 
@@ -345,11 +345,13 @@ const ActionInput = () => {
                 const selectedAction = action.find((action: Action) => action.id === choices.mechanic[currentAlias])
                 if (selectedAction && selectedAction.requires) {
                     appendScope(selectedAction.requires)
-                    return
                 }
             }
-            const nextRequirements = Object.keys(scopeOfChoice).filter((key: string) => !choices.mechanic[key])
+            const nextRequirements = Object.keys(scopeOfChoice).filter((key: string) => {
+                return choices.mechanic[key] === undefined
+            })
             if (nextRequirements.length > 0) {
+                setReachedFinalDepth(false)
                 setCurrentAlias(nextRequirements[0])
             } else {
                 setReachedFinalDepth(true)

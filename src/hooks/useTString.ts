@@ -1,14 +1,14 @@
-import { TranslatableString } from '@models/Battlefield'
+import { TranslatableString } from '@models/GameModels'
 import { isDescriptor } from '@utils'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const useTranslatableString = () => {
+const useTString = () => {
     const { t } = useTranslation()
 
     const formTranslation = useCallback(
         (msg: TranslatableString): string => {
-            if (msg.format_args === undefined) {
+            if (!('format_args' in msg)) {
                 return t(msg.main_string)
             }
             const keys = Object.keys(msg.format_args)
@@ -16,13 +16,19 @@ const useTranslatableString = () => {
             for (const key of keys) {
                 const arg = msg.format_args[key]
                 if (typeof arg === 'string') {
+                    // only translate if it is a descriptor
                     if (isDescriptor(arg)) {
                         newArgs[key] = t(arg)
                     } else {
                         newArgs[key] = arg
                     }
-                } else {
+                } else if (typeof arg === 'object' && ('main_string' in arg || 'format_args' in arg)) {
+                    // this captures nested translatable strings
                     newArgs[key] = formTranslation(arg)
+                } else {
+                    // however, as of latest update it is possible for number, boolean, etc to be passed as arguments
+                    // in this case, we just pass them as is
+                    newArgs[key] = arg
                 }
             }
             return t(msg.main_string, newArgs)
@@ -31,8 +37,8 @@ const useTranslatableString = () => {
     )
 
     return {
-        tstring: formTranslation,
+        TString: formTranslation,
     }
 }
 
-export default useTranslatableString
+export default useTString

@@ -1,7 +1,6 @@
 import { Separator } from '@components/ui/separator'
-import useTranslatableString from '@hooks/useTranslatableString'
-import { GameStateContainer } from '@models/Battlefield'
-import { GameMessage } from '@models/GameHandshake'
+import useTString from '@hooks/useTString'
+import { GameMessage, GameStateContainer } from '@models/GameModels'
 import { selectAllMessages } from '@redux/slices/gameScreenSlice'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +25,7 @@ For now, support for offloading messages, so for now we keep all messages loaded
 */
 
 const GameMessagesFeed = () => {
-    const { tstring } = useTranslatableString()
+    const { TString } = useTString()
     const { t } = useTranslation()
 
     const messages = useSelector(selectAllMessages)
@@ -49,7 +48,7 @@ const GameMessagesFeed = () => {
                                 {reverseGameMessages(msg)
                                     .reverse()
                                     .map((content, index) => {
-                                        return <p key={index}>{tstring(content)}</p>
+                                        return <p key={index}>{TString(content)}</p>
                                     })}
                             </div>
                             <Separator key={`sep_${indexBig}`} />

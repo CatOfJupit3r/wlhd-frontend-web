@@ -1,5 +1,5 @@
 import { Separator } from '@components/ui/separator'
-import { EntityAttributes } from '@models/Battlefield'
+import { EntityAttributes } from '@models/GameModels'
 import { capitalizeFirstLetter } from '@utils'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

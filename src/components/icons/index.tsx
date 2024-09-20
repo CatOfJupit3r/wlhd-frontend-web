@@ -18,8 +18,8 @@ const Icons = [
     },
     {
         src: '/assets/cr/spell_book.svg',
-        alt: 'spells',
-        displayName: 'SpellsIcon',
+        alt: 'spellBook',
+        displayName: 'SpellBookIcon',
     },
     {
         src: '/assets/cr/weaponry.svg',
@@ -80,7 +80,7 @@ export const {
     AttributesIcon,
     InventoryIcon,
     StatusEffectsIcon,
-    SpellsIcon,
+    SpellBookIcon,
     WeaponryIcon,
     CooldownIcon,
     ActiveIcon,

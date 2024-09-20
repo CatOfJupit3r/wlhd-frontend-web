@@ -6,7 +6,7 @@ import {
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay'
 import { EmptyMenuContent } from '@components/ui/menu'
-import { EntityInfoFull } from '@models/Battlefield'
+import { EntityInfoFull } from '@models/GameModels'
 import { FC } from 'react'
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes'] as const
@@ -53,10 +53,10 @@ const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
         }
         case 'spells': {
             const spellBook = info.spellBook
-            if (spellBook && spellBook.spells.length > 0) {
+            if (spellBook && spellBook.knownSpells.length > 0) {
                 return (
                     <>
-                        {spellBook.spells.map((spell, index) => {
+                        {spellBook.knownSpells.map((spell, index) => {
                             return <SpellInfoDisplay key={index} info={spell} />
                         })}
                     </>

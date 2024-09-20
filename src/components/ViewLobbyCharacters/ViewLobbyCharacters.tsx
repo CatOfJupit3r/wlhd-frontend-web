@@ -54,11 +54,15 @@ const NoCharactersPresent = () => {
 const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     const lobby = useSelector(selectLobbyInfo)
     const { fetchCharacter } = useCoordinatorEntitiesContext()
-    const { changeViewedCharacter, descriptor } = useViewCharactersContext()
+    const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer',
     })
     const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log("Character in View was changed")
+    }, [viewedCharacter])
 
     const [current, setCurrent] = useState<null | number>(null)
     const [characterMenu, setCharacterMenu] = useState<string>('display')

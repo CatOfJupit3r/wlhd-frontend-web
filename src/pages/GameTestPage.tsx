@@ -33,8 +33,8 @@ const GameTestPage = () => {
     }, [])
 
     useEffect(() => {
-        dispatch(setBattlefield(example_gamestate.battlefield))
-        dispatch(setRound('999'))
+        // dispatch(setBattlefield(example_gamestate.battlefield))
+        dispatch(setRound(999))
         dispatch(setControlledEntities(example_gamestate.controlledEntities as any))
         dispatch(setTurnOrder(example_gamestate.turnOrder as any))
         dispatch(setMessages(example_gamestate.messages as any))

@@ -1,219 +1,232 @@
 {
-    "enter_username": "Введи ім'я користувача",
-    "enter_password": "Введи пароль",
-    "submit": "Увійти",
-    "save": "Зберегти",
-    "home_page": "Вітаю на головній сторінці",
-    "exit": "Вийти",
-    "loading": "Завантаження...",
-    "index": {
-        "title": "Ласкаво просимо до Валенхольда",
-        "subtitle": "міста живих легенд і розбитих надій!",
-        "join": {
-            "title": "Приєднатися до гри",
-            "us-input": "Введіть ім'я користувача",
-            "gi-input": "Введіть ID гри",
-            "submit": "Увійти"
+    "enter_username" : "Введи ім'я користувача",
+    "enter_password" : "Введи пароль",
+    "submit" : "Увійти",
+    "save" : "Зберегти",
+    "home_page" : "Вітаю на головній сторінці",
+    "exit" : "Вийти",
+    "loading" : "Завантаження...",
+    "index" : {
+        "title" : "Ласкаво просимо до Валенхольда",
+        "subtitle" : "міста живих легенд і розбитих надій!",
+        "join" : {
+            "title" : "Приєднатися до гри",
+            "us-input" : "Введіть ім'я користувача",
+            "gi-input" : "Введіть ID гри",
+            "submit" : "Увійти"
         },
-        "error": {
-            "username_empty": "Ім'я користувача не може бути порожнім",
-            "game_id_empty": "ID гри не може бути порожнім",
-            "game_not_found": "Гра з таким ID не знайдена",
-            "you_are_in_game": "Ви вже в грі",
-            "no_connection_back": "Немає зв'язку з сервером",
-            "no_connection_game": "Немає зв'язку з ігровими серверами"
+        "error" : {
+            "username_empty" : "Ім'я користувача не може бути порожнім",
+            "game_id_empty" : "ID гри не може бути порожнім",
+            "game_not_found" : "Гра з таким ID не знайдена",
+            "you_are_in_game" : "Ви вже в грі",
+            "no_connection_back" : "Немає зв'язку з сервером",
+            "no_connection_game" : "Немає зв'язку з ігровими серверами"
         }
     },
-    "game": {
-        "title": "Лобі {{game_id}}",
-        "exit": {
-            "header": "Ви впевнені, що хочете вийти?",
-            "subheader": "Завжди можна залишитись...",
-            "yes": "Точно-точно вийти!",
-            "no": "Я передумав"
+    "game" : {
+        "title" : "Лобі {{game_id}}",
+        "exit" : {
+            "header" : "Ви впевнені, що хочете вийти?",
+            "subheader" : "Завжди можна залишитись...",
+            "yes" : "Точно-точно вийти!",
+            "no" : "Я передумав"
         },
-        "components": {
-            "battlefeed": "Журнал бою",
-            "battlefield": "Поле бою",
-            "your_actions": "Ваші дії:",
-            "you_chose": "Ви обрали:",
-            "tooltip": {
-                "no_status_effects": "Немає статус ефектів"
+        "components" : {
+            "battlefeed" : "Журнал бою",
+            "battlefield" : "Поле бою",
+            "your_actions" : "Ваші дії:",
+            "you_chose" : "Ви обрали:",
+            "tooltip" : {
+                "no_status_effects" : "Немає статус ефектів"
             }
         },
-        "action_output": "Результат дії",
-        "not_your_turn": "Не твій хід!",
-        "its_your_turn": "Твій хід!",
-        "round_n": "Раунд {{round}}",
-        "actions": {
-            "no_available_actions": "Немає доступних дій",
-            "you_chose": "Ти обрав",
-            "nothing?": "Нічого?",
-            "reset": "Скинути",
-            "submit": "Підтвердити"
+        "action_output" : "Результат дії",
+        "not_your_turn" : "Не твій хід!",
+        "its_your_turn" : "Твій хід!",
+        "round_n" : "Раунд {{round}}",
+        "actions" : {
+            "no_available_actions" : "Немає доступних дій",
+            "you_chose" : "Ти обрав",
+            "nothing?" : "Нічого?",
+            "reset" : "Скинути",
+            "submit" : "Підтвердити"
         },
-        "error": {
-            "no_connection": "Немає зв'язку з сервером",
-            "connection_lost": "З'єднання з сервером втрачено"
+        "error" : {
+            "no_connection" : "Немає зв'язку з сервером",
+            "connection_lost" : "З'єднання з сервером втрачено"
         },
-        "pending": {
-            "not_started": "Гра ще не почалася",
-            "waiting_text": "Очікування початку гри...",
-            "loading_translations": "Завантаження перекладів...",
-            "loading_battlefield": "Завантаження поля бою...",
-            "loading_actions": "Завантаження дій...",
-            "loading_battlefeed": "Завантаження журналу бою...",
-            "start": "Почати гру",
-            "exit": "Вийти з гри"
+        "pending" : {
+            "not_started" : "Гра ще не почалася",
+            "waiting_text" : "Очікування початку гри...",
+            "loading_translations" : "Завантаження перекладів...",
+            "loading_battlefield" : "Завантаження поля бою...",
+            "loading_actions" : "Завантаження дій...",
+            "loading_battlefeed" : "Завантаження журналу бою...",
+            "start" : "Почати гру",
+            "exit" : "Вийти з гри"
         },
-        "end": {
-            "title": "Гра закінчилася!",
-            "result": "Результат: {{result}}",
-            "exit": "Вийти",
-            "abort": "Гра скасована",
-            "aborted_text": "Через... непередбачувані обставини?.. Зв'яжіться з творцем сайту для отримання додаткової інформації."
+        "end" : {
+            "title" : "Гра закінчилася!",
+            "result" : "Результат: {{result}}",
+            "exit" : "Вийти",
+            "abort" : "Гра скасована",
+            "aborted_text" : "Через... непередбачувані обставини?.. Зв'яжіться з творцем сайту для отримання додаткової інформації."
         },
-        "action_menus": {
-            "no_menu_available": "Меню недоступне",
-            "report_this_issue": "Повідомте про цю проблему!",
-            "your-entities": "Ти керуєш",
-            "action-select": "Вибір дії",
-            "history": "Історія",
-            "gm-settings": "GM меню",
-            "leave-game": "Вийти з гри"
+        "action_menus" : {
+            "no_menu_available" : "Меню недоступне",
+            "report_this_issue" : "Повідомте про цю проблему!",
+            "your-entities" : "Ти керуєш",
+            "action-select" : "Вибір дії",
+            "history" : "Історія",
+            "gm-settings" : "GM меню",
+            "leave-game" : "Вийти з гри"
         },
-        "character_display": {
-            "active_weapon": "Активна зброя — {{weapon}}",
-            "no_active_weapon": "Немає активної зброї!",
-            "nothing_here": "Ого, тут... Нічого немає?",
-            "try_another": "Спробуй обрати інше меню!"
+        "character_display" : {
+            "active_weapon" : "Активна зброя — {{weapon}}",
+            "no_active_weapon" : "Немає активної зброї!",
+            "nothing_here" : "Ого, тут... Нічого немає?",
+            "try_another" : "Спробуй обрати інше меню!"
         },
-        "info_display": {
-            "quantity": "Кількість: {{quantity}}",
-            "cost": "Вартість: {{cost}}",
-            "user_must_be": "Радіус користувача: {{range}}",
-            "uses": "Використання: {{uses}}"
+        "info_display" : {
+            "tooltips" : {
+                "quantity" : "Кількість",
+                "cooldown" : "Кулдаун",
+                "uses" : "Використання",
+                "user-range" : "Радіус, щоб використовувати",
+                "is-active" : "Активний",
+                "duration" : "Тривалість",
+                "cost" : "Вартість"
+            },
+            "radius-alias" : {
+                "any" : "Будь-яка",
+                "any-melee" : "Будь-яка ближня",
+                "any-ranged" : "Будь-яка дальня",
+                "any-safe" : "Будь-яка безпечна",
+                "any-ally" : "Будь-яка союзна",
+                "any-enemy" : "Будь-яка ворожа"
+            }
         }
     },
-    "not_found": {
-        "title": "Сторінку не знайдено",
-        "explanation": "Сторінки, яку ви намагаєтесь знайти, не існує.",
-        "back": "Повернутися на головну."
+    "not_found" : {
+        "title" : "Сторінку не знайдено",
+        "explanation" : "Сторінки, яку ви намагаєтесь знайти, не існує.",
+        "back" : "Повернутися на головну."
     },
-    "under_maintenance": {
-        "title": "Схоже, ваш браузер не може достукатися до наших серверів. Будь ласка, спробуйте пізніше.",
-        "reload": "Попробувати ще раз :(",
-        "explanation": "Якщо ви вважаєте, що це не повинно було трапитися або ця проблема не зникає, будь ласка, зв'яжіться зі мною за адресою",
-        "link": "GitHub",
-        "thanks": "Я вдячний за ваше терпіння і підтримку! Це означає дуже багато для мене."
+    "under_maintenance" : {
+        "title" : "Схоже, ваш браузер не може достукатися до наших серверів. Будь ласка, спробуйте пізніше.",
+        "reload" : "Попробувати ще раз :(",
+        "explanation" : "Якщо ви вважаєте, що це не повинно було трапитися або ця проблема не зникає, будь ласка, зв'яжіться зі мною за адресою",
+        "link" : "GitHub",
+        "thanks" : "Я вдячний за ваше терпіння і підтримку! Це означає дуже багато для мене."
     },
-    "character-viewer": {
-        "refresh-character": "Оновити персонажа",
-        "goto-character-creator": "Створити нового персонажа",
-        "no-characters": {
-            "header": "Ого! Тут немає персонажів!",
-            "explain": "Схоже, що у вашому лобі немає жодного персонажа. Чому б не створити одного?",
-            "create-character": "Створити нового персонажа!",
-            "return-lobby": "Ні, дякую. Повернутися на головну."
+    "character-viewer" : {
+        "refresh-character" : "Оновити персонажа",
+        "goto-character-creator" : "Створити нового персонажа",
+        "no-characters" : {
+            "header" : "Ого! Тут немає персонажів!",
+            "explain" : "Схоже, що у вашому лобі немає жодного персонажа. Чому б не створити одного?",
+            "create-character" : "Створити нового персонажа!",
+            "return-lobby" : "Ні, дякую. Повернутися на головну."
         },
-        "selectors": {
-            "edit-character": "Редагувати",
-            "gm-options": "GM опції",
-            "display": "Характеристики"
+        "selectors" : {
+            "edit-character" : "Редагувати",
+            "gm-options" : "GM опції",
+            "display" : "Характеристики"
         },
-        "control-details": {
-            "controlled-by": "Керується гравцями:",
-            "add-player": "Додати гравця",
-            "remove": "Видалити",
-            "empty": "Ніким... ого..."
+        "control-details" : {
+            "controlled-by" : "Керується гравцями:",
+            "add-player" : "Додати гравця",
+            "remove" : "Видалити",
+            "empty" : "Ніким... ого..."
         },
-        "edit-character": {
-            "save": "Зберегти",
-            "reset": "Скинути"
+        "edit-character" : {
+            "save" : "Зберегти",
+            "reset" : "Скинути"
         },
-        "gm-options": {
-            "delete-character": "Видалити персонажа",
-            "confirmation": "Ви впевнені, що хочете видалити цього персонажа?",
-            "details": "У цієї дії немає повернення!",
-            "delete": "Видалити",
-            "cancel": "Скасувати"
+        "gm-options" : {
+            "delete-character" : "Видалити персонажа",
+            "confirmation" : "Ви впевнені, що хочете видалити цього персонажа?",
+            "details" : "У цієї дії немає повернення!",
+            "delete" : "Видалити",
+            "cancel" : "Скасувати"
         }
     },
-    "ui": {
-        "wait": "Зачекайте...",
-        "select": "Оберіть...",
-        "empty": "Нічого?.. хм?.."
+    "ui" : {
+        "wait" : "Зачекайте...",
+        "select" : "Оберіть...",
+        "empty" : "Нічого?.. хм?.."
     },
-    "editor": {
-        "edit-character": "Редагувати персонажа",
-        "stop-editing": "Зупинити редагування",
-        "general": {
-            "dlc": "DLC",
-            "select-dlc": "Виберіть DLC",
-            "descriptor": "Дескриптор",
-            "quantity": "Кількість",
-            "cooldown": "Поточний кулдаун",
-            "uses": "Використань підряд",
-            "duration": "Тривалість",
-            "is-active": "Є активним?",
-            "preview": "Передогляд",
-            "add": "Додати",
-            "infinity": "Безкінечно"
+    "editor" : {
+        "edit-character" : "Редагувати персонажа",
+        "stop-editing" : "Зупинити редагування",
+        "general" : {
+            "dlc" : "DLC",
+            "select-dlc" : "Виберіть DLC",
+            "descriptor" : "Дескриптор",
+            "quantity" : "Кількість",
+            "cooldown" : "Поточний кулдаун",
+            "uses" : "Використань підряд",
+            "duration" : "Тривалість",
+            "is-active" : "Є активним?",
+            "preview" : "Передогляд",
+            "add" : "Додати",
+            "infinity" : "Безкінечно"
         },
-        "weaponry": {
-            "add": "Додати зброю",
-            "remove": "Видалити зброю"
+        "weaponry" : {
+            "add" : "Додати зброю",
+            "remove" : "Видалити зброю"
         },
-        "spellBook": {
-            "add": "Додати заклинання",
-            "remove": "Видалити заклинання",
-            "max-spells": "Обмеження активних заклять. (не більше {{maxSpells}})"
+        "spellBook" : {
+            "add" : "Додати заклинання",
+            "remove" : "Видалити заклинання",
+            "max-spells" : "Обмеження активних заклять. (не більше {{maxSpells}})"
         },
-        "inventory": {
-            "add": "Додати предмет",
-            "remove": "Видалити предмет",
-            "increase-quantity": "Збільшити кількість",
-            "decrease-quantity": "Зменшити кількість"
+        "inventory" : {
+            "add" : "Додати предмет",
+            "remove" : "Видалити предмет",
+            "increase-quantity" : "Збільшити кількість",
+            "decrease-quantity" : "Зменшити кількість"
         },
-        "statusEffects": {
-            "add": "Додати статусний ефект",
-            "remove": "Видалити статусний ефект",
-            "decrease-duration": "Зменшити тривалість",
-            "increase-duration": "Збільшити тривалість"
+        "statusEffects" : {
+            "add" : "Додати статусний ефект",
+            "remove" : "Видалити статусний ефект",
+            "decrease-duration" : "Зменшити тривалість",
+            "increase-duration" : "Збільшити тривалість"
         }
     },
-    "page_titles": {
-        "unknown": "бріх",
-        "home": "Головна",
-        "profile": "Твій Профіль",
-        "create_combat": "Створити бій",
-        "view_character": "Персонаж",
-        "about": "Про Нас",
-        "signin": "Увійти",
-        "signup": "Зареєструватися",
-        "game_test": "Кімната тестування",
-        "debug": "Кімната Дебагу",
-        "game_room": "Гра",
-        "lobby": "Лобі",
-        "create_character": "Створити персонажа",
-        "not_found": "Сторінку не знайдено",
-        "loading": "Завантаження...",
-        "backend_unavailable": "Сервера недоступні"
+    "page_titles" : {
+        "unknown" : "бріх",
+        "home" : "Головна",
+        "profile" : "Твій Профіль",
+        "create_combat" : "Створити бій",
+        "view_character" : "Персонаж",
+        "about" : "Про Нас",
+        "signin" : "Увійти",
+        "signup" : "Зареєструватися",
+        "game_test" : "Кімната тестування",
+        "debug" : "Кімната Дебагу",
+        "game_room" : "Гра",
+        "lobby" : "Лобі",
+        "create_character" : "Створити персонажа",
+        "not_found" : "Сторінку не знайдено",
+        "loading" : "Завантаження...",
+        "backend_unavailable" : "Сервера недоступні"
     },
-    "profile": {
-        "joined-on": "Приєднався",
-        "legacy-member": "Олдскул",
-        "joined-lobbies": "Лобі",
-        "no-character-assigned": "Без персонажа",
-        "playing-as": "Граєте за: ",
-        "pending-invites": "Запрошення",
-        "from": "Від",
-        "decline": "Відхилити",
-        "accept": "Прийняти",
-        "join-new": "Приєднатися по коду",
-        "enter-invite-code": "Введіть код запрошення до лобі:",
-        "invite-code": "Код запрошення",
-        "cancel": "Скасувати",
-        "send-invite-request": "Надіслати запит"
+    "profile" : {
+        "joined-on" : "Приєднався",
+        "legacy-member" : "Олдскул",
+        "joined-lobbies" : "Лобі",
+        "no-character-assigned" : "Без персонажа",
+        "playing-as" : "Граєте за: ",
+        "pending-invites" : "Запрошення",
+        "from" : "Від",
+        "decline" : "Відхилити",
+        "accept" : "Прийняти",
+        "join-new" : "Приєднатися по коду",
+        "enter-invite-code" : "Введіть код запрошення до лобі:",
+        "invite-code" : "Код запрошення",
+        "cancel" : "Скасувати",
+        "send-invite-request" : "Надіслати запит"
     }
 }

@@ -30,34 +30,6 @@ const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
         ignored: [],
         nonEditable: [],
     },
-    weaponry: {
-        allowCooldown: true,
-        allowQuantity: true,
-        allowUses: true,
-
-        allowActivation: true,
-
-        allowExceedCooldown: true,
-    },
-    inventory: {
-        allowCooldown: true,
-        allowQuantity: true,
-        allowUses: true,
-
-        allowExceedCooldown: true,
-    },
-    statusEffects: {
-        allowDuration: true,
-    },
-    spellBook: {
-        allowCooldown: true,
-        allowUses: true,
-        allowActivation: true,
-
-        allowExceedCooldown: true,
-
-        allowChangeMaxSpells: true,
-    },
     exclude: {
         name: true,
         description: true,

@@ -1,13 +1,14 @@
-import useTranslatableString from '@hooks/useTranslatableString'
-import { GameMessage as GameMessageInterface } from '@models/GameHandshake'
+import useTString from '@hooks/useTString'
+
+import { GameMessage as GameMessageInterface } from '@models/GameModels'
 
 const GameMessage = ({ content }: { content: GameMessageInterface }) => {
-    const { tstring } = useTranslatableString()
+    const { TString } = useTString()
 
     return content.map((msg, index) => {
         return (
             <>
-                <p key={index}>{tstring(msg)}</p>
+                <p key={index}>{TString(msg)}</p>
             </>
         )
     })

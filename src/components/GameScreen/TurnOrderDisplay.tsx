@@ -1,14 +1,12 @@
 import { CharacterGameAsset } from '@components/GameAsset'
 import { Button } from '@components/ui/button'
-import { CharacterInTurnOrder } from '@models/GameHandshake'
-import { selectActiveEntity, selectTurnOrder } from '@redux/slices/gameScreenSlice'
+import { CharacterInTurnOrder } from '@models/GameModels'
+import { selectTurnOrder } from '@redux/slices/gameScreenSlice'
 import { cn, getCharacterSide } from '@utils'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '@redux/store'
-import { useBattlefieldContext } from '@context/BattlefieldContext'
+import { useSelector } from 'react-redux'
 
 const CharacterCard = ({ character, isActive = false }: { character: CharacterInTurnOrder; isActive?: boolean }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -108,9 +106,9 @@ const TurnOrderDisplay = () => {
                     <IoIosArrowUp />
                 </Button>
             )}
-            {turnOrder.order.map((character, index) => (
-                <CharacterCard character={character} key={index} isActive={index === turnOrder.current} />
-            ))}
+            {turnOrder.map((character, index) =>
+                character !== null ? <CharacterCard character={character} key={index} isActive={index === 0} /> : null
+            )}
             {hasOverflow && (
                 <Button className={'sticky bottom-2 w-full border-2'} onClick={scrollDown}>
                     <IoIosArrowDown />

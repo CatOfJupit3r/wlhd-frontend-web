@@ -161,6 +161,13 @@ function toast({ ...props }: Toast) {
         })
     const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id })
 
+    // check if description can be rendered
+
+    if (props.description && typeof props.description !== 'string' && !React.isValidElement(props.description)) {
+        console.error('Toast description received invalid type:', props.description)
+        return
+    }
+
     dispatch({
         type: 'ADD_TOAST',
         toast: {

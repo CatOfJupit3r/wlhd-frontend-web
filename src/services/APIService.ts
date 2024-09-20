@@ -1,8 +1,14 @@
 import axios, { AxiosError } from 'axios'
 
 import { ShortLobbyInformation, UserInformation } from '@models/APIData'
-import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/Battlefield'
-import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
+import {
+    CharacterDataEditable,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@models/CombatEditorModels'
+import { CharacterClassConversion, CreateCombatBody } from '@models/EditorConversion'
 import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth'
@@ -212,7 +218,7 @@ class APIService {
     public getLoadedWeapons = async (
         dlc: string
     ): Promise<{
-        weapons: { [descriptor: string]: WeaponInfo }
+        weapons: { [descriptor: string]: WeaponEditable }
     }> => {
         if (!dlc) {
             return {
@@ -224,7 +230,7 @@ class APIService {
             method: 'get',
         })) as {
             weapons: {
-                [descriptor: string]: WeaponInfo
+                [descriptor: string]: WeaponEditable
             }
         }
     }
@@ -233,7 +239,7 @@ class APIService {
         dlc: string
     ): Promise<{
         items: {
-            [descriptor: string]: ItemInfo
+            [descriptor: string]: ItemEditable
         }
     }> => {
         if (!dlc) {
@@ -246,7 +252,7 @@ class APIService {
             method: 'get',
         })) as {
             items: {
-                [descriptor: string]: ItemInfo
+                [descriptor: string]: ItemEditable
             }
         }
     }
@@ -255,7 +261,7 @@ class APIService {
         dlc: string
     ): Promise<{
         spells: {
-            [descriptor: string]: SpellInfo
+            [descriptor: string]: SpellEditable
         }
     }> => {
         if (!dlc) {
@@ -268,7 +274,7 @@ class APIService {
             method: 'get',
         })) as {
             spells: {
-                [descriptor: string]: SpellInfo
+                [descriptor: string]: SpellEditable
             }
         }
     }
@@ -277,7 +283,7 @@ class APIService {
         dlc: string
     ): Promise<{
         status_effects: {
-            [descriptor: string]: StatusEffectInfo
+            [descriptor: string]: StatusEffectEditable
         }
     }> => {
         if (!dlc) {
@@ -290,7 +296,7 @@ class APIService {
             method: 'get',
         })) as {
             status_effects: {
-                [descriptor: string]: StatusEffectInfo
+                [descriptor: string]: StatusEffectEditable
             }
         }
     }
@@ -299,7 +305,7 @@ class APIService {
         dlc: string
     ): Promise<{
         characters: {
-            [descriptor: string]: EntityInfoFull
+            [descriptor: string]: CharacterDataEditable
         }
     }> => {
         if (!dlc) {
@@ -312,29 +318,29 @@ class APIService {
             method: 'get',
         })) as {
             characters: {
-                [descriptor: string]: EntityInfoFull
+                [descriptor: string]: CharacterDataEditable
             }
         }
     }
 
-    public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<EntityInfoFull> => {
+    public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<CharacterDataEditable> => {
         return (await this.fetch({
             url: ENDPOINTS.LOBBY_CHARACTER_INFO(lobby_id, descriptor),
             method: 'get',
-        })) as EntityInfoFull
+        })) as CharacterDataEditable
     }
 
     public createLobbyCombat = async (
         lobby_id: string,
-        nickName: MinifiedCombatPreset['nickName'],
-        battlefield: MinifiedCombatPreset['battlefield']
+        nickname: CreateCombatBody['nickname'],
+        preset: CreateCombatBody['preset']
     ) => {
         return await this.fetch({
             url: ENDPOINTS.CREATE_LOBBY_COMBAT(lobby_id),
             method: 'post',
             data: {
-                nickName,
-                battlefield,
+                nickname,
+                preset,
             },
         })
     }
