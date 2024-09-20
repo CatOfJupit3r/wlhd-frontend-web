@@ -37,7 +37,7 @@ Before you begin, ensure you have met the following requirements:
 ## Environment Variables
 
 -   HOST — Host on which the server will run _(default: localhost)_
--   REACT_APP_BACKEND_URL — FULL URL to the GAME COORDINATOR server.
+-   VITE_BACKEND_URL — FULL URL to the GAME COORDINATOR server.
 
 ## Usage
 

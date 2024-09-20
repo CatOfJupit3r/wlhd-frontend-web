@@ -1,8 +1,8 @@
 import { splitDescriptor } from '@utils/descriptorTools'
-import { REACT_APP_BACKEND_URL } from 'config'
+import { VITE_BACKEND_APP } from 'config'
 
 export const generateAssetPath = (dlc: string, descriptor: string) => {
-    return `${REACT_APP_BACKEND_URL}/assets/${dlc}/${descriptor}`
+    return `${VITE_BACKEND_APP}/assets/${dlc}/${descriptor}`
 }
 export const generateAssetPathFullDescriptor = (full_descriptor: string) => {
     const [dlc, descriptor] = splitDescriptor(full_descriptor)

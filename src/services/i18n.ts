@@ -1,5 +1,7 @@
-import APIService from '@services/APIService'
+import { TranslationJSON } from '@models/Translation'
 import { getLanguageFiles } from '@utils'
+import axios from 'axios'
+import { VITE_BACKEND_APP } from 'config'
 import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
@@ -33,8 +35,12 @@ i18next
     })
     .then()
 
-APIService.getTranslations([FALLBACK_LANGUAGE, i18next.language], ['builtins', 'nyrzamaer'])
-    .then((translations) => {
+const dlcs = ['builtins', 'nyrzamaer']
+const languages = [FALLBACK_LANGUAGE, i18next.language]
+
+axios
+    .get(`${VITE_BACKEND_APP}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`)
+    .then(({ data: translations }: { data: TranslationJSON }) => {
         for (const language in translations) {
             if (translations[language] === null) continue
             for (const dlc in translations[language]) {
