@@ -14,10 +14,10 @@ export interface Battlefield {
 }
 
 export type TranslatableString =
-    | { main_string: string }
+    | { key: string }
     | {
-          main_string: string
-          format_args: {
+          key: string
+          args: {
               [key: string]: string | TranslatableString
           }
       }

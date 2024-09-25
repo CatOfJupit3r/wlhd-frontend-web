@@ -8,13 +8,13 @@ const useTString = () => {
 
     const formTranslation = useCallback(
         (msg: TranslatableString): string => {
-            if (!('format_args' in msg)) {
-                return t(msg.main_string)
+            if (!('args' in msg)) {
+                return t(msg.key)
             }
-            const keys = Object.keys(msg.format_args)
+            const keys = Object.keys(msg.args)
             const newArgs: { [key: string]: string } = {}
             for (const key of keys) {
-                const arg = msg.format_args[key]
+                const arg = msg.args[key]
                 if (typeof arg === 'string') {
                     // only translate if it is a descriptor
                     if (isDescriptor(arg)) {
@@ -22,7 +22,7 @@ const useTString = () => {
                     } else {
                         newArgs[key] = arg
                     }
-                } else if (typeof arg === 'object' && ('main_string' in arg || 'format_args' in arg)) {
+                } else if (typeof arg === 'object' && ('key' in arg || 'args' in arg)) {
                     // this captures nested translatable strings
                     newArgs[key] = formTranslation(arg)
                 } else {
@@ -31,7 +31,7 @@ const useTString = () => {
                     newArgs[key] = arg
                 }
             }
-            return t(msg.main_string, newArgs)
+            return t(msg.key, newArgs)
         },
         [t]
     )

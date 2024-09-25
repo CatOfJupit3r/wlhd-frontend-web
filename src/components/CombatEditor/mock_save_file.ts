@@ -232,8 +232,8 @@ export default {
     messages: [
         [
             {
-                main_string: 'builtins:creature_skips_turn',
-                format_args: {
+                key: 'builtins:creature_skips_turn',
+                args: {
                     entity_name: 'builtins:target_dummy.name',
                     value: '10',
                 },
@@ -241,23 +241,23 @@ export default {
         ],
         [
             {
-                main_string: 'builtins:spell_usage',
-                format_args: {
+                key: 'builtins:spell_usage',
+                args: {
                     entity_name: 'coordinator:mage.name',
                     spell_name: 'builtins:fireball.name',
                 },
             },
             {
-                main_string: 'builtins:creature_takes_damage',
-                format_args: {
+                key: 'builtins:creature_takes_damage',
+                args: {
                     entity_name: 'builtins:target_dummy.name',
                     damage: '8',
                     element_of_hp_change: 'builtins:fire',
                 },
             },
             {
-                main_string: 'builtins:creature_spent_ap',
-                format_args: {
+                key: 'builtins:creature_spent_ap',
+                args: {
                     entity_name: 'coordinator:mage.name',
                     value: '0',
                 },
