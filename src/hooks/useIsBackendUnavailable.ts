@@ -5,9 +5,14 @@ const useIsBackendUnavailable = () => {
     const [isBackendUnavailable, setIsBackendUnavailable] = useState<boolean | null>(APIHealth.isBackendUnavailable())
 
     useEffect(() => {
-        const unsubscribeFromBackendStatusChange = APIHealth.onBackendStatusChange((status) => {
+        const handleBackendStatusChange = (status: boolean) => {
             setIsBackendUnavailable(status)
-        })
+        }
+
+        setIsBackendUnavailable(APIHealth.isBackendUnavailable())
+
+        const unsubscribeFromBackendStatusChange = APIHealth.onBackendStatusChange(handleBackendStatusChange)
+
         return () => {
             unsubscribeFromBackendStatusChange()
         }

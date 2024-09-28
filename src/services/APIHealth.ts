@@ -52,13 +52,13 @@ class APIHealth {
         } catch (error) {
             if (isServerUnavailableError(error)) {
                 this.backendRefusedConnection = true
-                this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
+                this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, true)
                 return
             }
         }
-        this.backendRefusedConnection = false
         this.removeHealthCheckInterval()
-        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, this.backendRefusedConnection)
+        this.backendRefusedConnection = false
+        this.emitter.emit(this.eventTypes.BACKEND_STATUS_CHANGED, false)
     }
 
     private removeHealthCheckInterval = () => {
