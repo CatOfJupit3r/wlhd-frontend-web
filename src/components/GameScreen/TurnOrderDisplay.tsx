@@ -1,14 +1,15 @@
+import BetterScrollableContainer from '@components/BetterScrollableContainer'
 import { CharacterGameAsset } from '@components/GameAsset'
-import { Button } from '@components/ui/button'
 import { CharacterInTurnOrder } from '@models/GameModels'
 import { selectTurnOrder } from '@redux/slices/gameScreenSlice'
 import { cn, getCharacterSide } from '@utils'
-import { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 
-const CharacterCard = ({ character, isActive = false }: { character: CharacterInTurnOrder; isActive?: boolean }) => {
+const CharacterCard: React.FC<
+    { character: CharacterInTurnOrder; isActive?: boolean } & React.HTMLAttributes<HTMLDivElement>
+> = ({ character, isActive = false, onMouseEnter, onMouseLeave, ...props }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false)
     const { t } = useTranslation()
 
@@ -21,9 +22,20 @@ const CharacterCard = ({ character, isActive = false }: { character: CharacterIn
             style={{
                 transform: `translateX(-${isActive ? 0 : 10}%)`,
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={(e) => {
+                setIsHovered(true)
+                if (onMouseEnter) {
+                    onMouseEnter(e)
+                }
+            }}
+            onMouseLeave={(e) => {
+                setIsHovered(false)
+                if (onMouseLeave) {
+                    onMouseLeave(e)
+                }
+            }}
             title={t(character.decorations.name)}
+            {...props}
         >
             <CharacterGameAsset
                 src={character.decorations.sprite}
@@ -57,65 +69,15 @@ const CharacterCard = ({ character, isActive = false }: { character: CharacterIn
 
 const TurnOrderDisplay = () => {
     const turnOrder = useSelector(selectTurnOrder)
-    const scrollContainerRef = useRef<HTMLDivElement>(null)
-    const [hasOverflow, setHasOverflow] = useState(false)
-    // const activeCharacter = useSelector(selectActiveEntity)
-    // const { setActiveSquares, resetActiveSquares } = useBattlefieldContext()
-
-    // useEffect(() => {
-    //     resetActiveSquares()
-    //     if (activeCharacter === null) {
-    //         return
-    //     } else {
-    //         setActiveSquares(`${activeCharacter.square.line}/${activeCharacter.square.column}`)
-    //     }
-    // }, [activeCharacter])
-
-    useEffect(() => {
-        const checkForOverflow = () => {
-            if (scrollContainerRef.current) {
-                setHasOverflow(scrollContainerRef.current.scrollHeight > scrollContainerRef.current.clientHeight)
-            }
-        }
-        setTimeout(checkForOverflow)
-        window.addEventListener('resize', checkForOverflow)
-        return () => window.removeEventListener('resize', checkForOverflow)
-    }, [])
-
-    const scrollUp = () => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({ top: -400, behavior: 'smooth' })
-        }
-    }
-
-    const scrollDown = () => {
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollBy({ top: 400, behavior: 'smooth' })
-        }
-    }
 
     return (
-        <div
-            className={
-                'no-visible-scrollbar relative flex h-[50rem] w-40 flex-col gap-4 overflow-y-scroll rounded border-2 p-2'
-            }
-            ref={scrollContainerRef}
-        >
-            {hasOverflow && (
-                <Button className={'sticky top-2 z-10 w-full border-2 opacity-100'} onClick={scrollUp}>
-                    <IoIosArrowUp />
-                </Button>
-            )}
+        <BetterScrollableContainer>
             {turnOrder.map((character, index) =>
                 character !== null ? <CharacterCard character={character} key={index} isActive={index === 0} /> : null
             )}
-            {hasOverflow && (
-                <Button className={'sticky bottom-2 w-full border-2'} onClick={scrollDown}>
-                    <IoIosArrowDown />
-                </Button>
-            )}
-        </div>
+        </BetterScrollableContainer>
     )
 }
 
+export { CharacterCard }
 export default TurnOrderDisplay
