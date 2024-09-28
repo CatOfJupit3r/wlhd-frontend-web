@@ -1,13 +1,23 @@
 import { Separator } from '@components/ui/separator'
 import { EntityAttributes } from '@models/GameModels'
-import { capitalizeFirstLetter } from '@utils'
+import { capitalizeFirstLetter, splitDescriptor } from '@utils'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+
+const addPrefix = (prefix: string, value: string): string => {
+    const [dlc, key] = splitDescriptor(value)
+    return `${dlc}:${prefix}.${key}`
+}
+
 const Attribute = ({ name, value }: { name: string; value: string }) => {
+    const { t } = useTranslation()
+
     return (
         <div className={'mb-0.5 flex flex-row justify-between text-t-small'}>
-            <p className={'font-normal'}>{capitalizeFirstLetter(name)}</p>
+            <p className={'font-normal'}>{capitalizeFirstLetter(
+                t(addPrefix('attributes', name))
+            )}</p>
             <p className={'font-bold'}>{value}</p>
         </div>
     )
@@ -150,13 +160,13 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes
             <Separator />
             <div>
                 {singular.map((attribute, index) => (
-                    <Attribute name={t(attribute.key)} value={attribute.value} key={`sing-attr-${index}`} />
+                    <Attribute name={attribute.key} value={attribute.value} key={`sing-attr-${index}`} />
                 ))}
             </div>
             <Separator />
             <div>
                 {dual.map((attribute, index) => (
-                    <Attribute name={t(attribute.key)} value={attribute.value} key={`duo-attr-${index}`} />
+                    <Attribute name={attribute.key} value={attribute.value} key={`duo-attr-${index}`} />
                 ))}
             </div>
             <Separator />

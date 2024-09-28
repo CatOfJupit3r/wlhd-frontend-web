@@ -105,6 +105,9 @@
                 "any-safe" : "Будь-яка безпечна",
                 "any-ally" : "Будь-яка союзна",
                 "any-enemy" : "Будь-яка ворожа"
+            },
+            "memories": {
+                "dice": "{{amount}}к{{sides}}"
             }
         }
     },
@@ -160,6 +163,7 @@
     "editor" : {
         "edit-character" : "Редагувати персонажа",
         "stop-editing" : "Зупинити редагування",
+        "round-count": "Раунд",
         "general" : {
             "dlc" : "DLC",
             "select-dlc" : "Виберіть DLC",

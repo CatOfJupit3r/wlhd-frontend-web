@@ -1,8 +1,9 @@
 import { ActiveIcon, LocationIcon } from '@components/icons'
 import { Separator } from '@components/ui/separator'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip'
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
-import { HTMLAttributes, useCallback } from 'react'
+import { ItemInfo, PossibleMemory, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
+import { capitalizeFirstLetter } from '@utils'
+import React, { HTMLAttributes, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BiInfinite } from 'react-icons/bi'
 import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
@@ -38,6 +39,41 @@ const RADIUS_TO_COMMON_NAMES: { [key: string]: string } = {
     '1,2,3': 'any-enemy',
     '4,5,6': 'any-ally',
     '1,2,3,4,5,6': 'any',
+}
+
+const ComponentMemory: React.FC<
+    {
+        memory: PossibleMemory
+    } & HTMLAttributes<HTMLLIElement>
+> = ({ memory, ...props }) => {
+    const { t } = useTranslation()
+    const { type, value, display_name, internal } = memory
+
+    const DisplayedValue = useCallback(() => {
+        let displayed = ''
+
+        switch (type) {
+            case 'dice':
+                if (typeof value == 'object' && value && 'amount' in value && 'sides' in value) {
+                    displayed = t('local:game.info_display.memories.dice', {
+                        amount: value.amount,
+                        sides: value.sides,
+                    })
+                }
+                break
+            default:
+                displayed = JSON.stringify(value)
+                break
+        }
+
+        return <p className={internal ? 'text-gray-400' : ''}>{displayed}</p>
+    }, [memory])
+
+    return (
+        <li className={'flex flex-row gap-1'} {...props}>
+            <p>{capitalizeFirstLetter(t(display_name))}</p> : <DisplayedValue />
+        </li>
+    )
 }
 
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
@@ -103,18 +139,6 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             </>
         )
     }, [])
-    /*
-    <div>
-        <Tooltip>
-            <TooltipTrigger className={'cursor-default'}>
-                
-            </TooltipTrigger>
-            <TooltipContent>
-                
-            </TooltipContent>
-        </Tooltip>
-    </div>
-     */
 
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
@@ -182,6 +206,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
 
     const ComponentMemories = useCallback(() => {
         const { memory: memories } = info
+
         if (!memories || Object.keys(memories).length === 0) {
             return null
         }
@@ -190,12 +215,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 <ul>
                     {Object.entries(memories)
                         .filter(([_, memory]) => !memory.internal)
-                        .map(([_, { display_name, value }], index) => {
-                            return (
-                                <li key={index} className={'flex flex-row gap-1'}>
-                                    <p>{tNoPrefix(display_name)}</p>=<p>{JSON.stringify(value)}</p>
-                                </li>
-                            )
+                        .map(([_, memory], index) => {
+                            return <ComponentMemory key={index} memory={memory} />
                         })}
                 </ul>
             </div>
