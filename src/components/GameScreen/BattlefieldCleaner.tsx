@@ -19,7 +19,7 @@ const BattlefieldCleaner = () => {
     }, [actions])
 
     useEffect(() => {
-        if (activeCharacter === null) {
+        if (activeCharacter === null || activeCharacter.square === null) {
             resetActiveSquares()
         } else {
             setActiveSquares(`${activeCharacter.square.line}/${activeCharacter.square.column}`)

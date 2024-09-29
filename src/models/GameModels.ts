@@ -1,3 +1,5 @@
+import { OneOf } from '@models/OneOf'
+
 export interface GameComponentDecoration {
     name: string
     sprite: string
@@ -47,7 +49,8 @@ export interface CharacterInTurnOrder {
     square: {
         line: number
         column: number
-    }
+    } | null
+    id_: string
 }
 
 export interface EntityInfoTooltip {
@@ -192,7 +195,9 @@ interface BooleanMemory extends MemoryType {
     value: boolean
 }
 
-type PossibleMemory = DiceMemory | StringMemory | NumberMemory | BooleanMemory | ComponentIDMemory | MemoryType
+export type PossibleMemory = OneOf<
+    [DiceMemory, StringMemory, NumberMemory, BooleanMemory, ComponentIDMemory, MemoryType]
+>
 
 export interface GameComponentMemory {
     [variable: string]: PossibleMemory

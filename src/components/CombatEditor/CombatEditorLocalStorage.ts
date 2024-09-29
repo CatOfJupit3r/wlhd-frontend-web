@@ -3,7 +3,12 @@ import { CombatEditorContextType } from '@context/CombatEditorContext'
 interface SavedPreset {
     nickName: string
     lobbyID: string
-    data: CombatEditorContextType['battlefield']
+    data: {
+        battlefield: CombatEditorContextType['battlefield']
+        turnOrder: CombatEditorContextType['turnOrder']
+        round: CombatEditorContextType['round']
+        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
+    }
 }
 
 type SavedPresetExtracted = SavedPreset & { presetID: string }
@@ -78,11 +83,7 @@ export const getLastUsedCombatEditorPreset = (lobbyID: string): SavedPresetExtra
     return battlefields[lastUsedID] ? { ...battlefields[lastUsedID], presetID: lastUsedID } : null
 }
 
-export const saveCombatEditorPreset = (
-    nickName: string,
-    data: CombatEditorContextType['battlefield'],
-    lobbyID: string
-) => {
+export const saveCombatEditorPreset = (nickName: string, data: SavedPreset['data'], lobbyID: string) => {
     const parsedLocalStorage = getCombatEditorLocalStorage()
     if (!parsedLocalStorage) {
         return

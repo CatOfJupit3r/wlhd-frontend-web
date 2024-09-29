@@ -8,7 +8,10 @@ import {
     verifyCombatEditorLocalStorage,
 } from '@components/CombatEditor/CombatEditorLocalStorage'
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare'
+import mock_save_file from '@components/CombatEditor/mock_save_file'
+import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor'
 import { Button } from '@components/ui/button'
+import { Input } from '@components/ui/input'
 import { Toggle } from '@components/ui/toggle'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
@@ -26,7 +29,6 @@ import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import mock_save_file from '@components/CombatEditor/mock_save_file'
 
 interface PresetDetails {
     nickName: string
@@ -50,7 +52,7 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
         } = {}
         for (const square in battlefield) {
             const [lineStr, columnStr] = square.split('/')
-            if (!lineStr || !columnStr || !battlefield[square].character) {
+            if (!lineStr || !columnStr || !battlefield[square]) {
                 continue
             }
             const line = parseInt(lineStr)
@@ -60,21 +62,21 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
             }
             newBattlefield[square] = {
                 character: {
-                    decorations: battlefield[square].character.decorations,
+                    decorations: battlefield[square].decorations,
                     square: { line, column },
                     health: {
-                        current: battlefield[square].character.attributes['builtins:current_health'],
-                        max: battlefield[square].character.attributes['builtins:max_health'],
+                        current: battlefield[square].attributes['builtins:current_health'],
+                        max: battlefield[square].attributes['builtins:max_health'],
                     },
                     action_points: {
-                        current: battlefield[square].character.attributes['builtins:current_action_points'],
-                        max: battlefield[square].character.attributes['builtins:max_action_points'],
+                        current: battlefield[square].attributes['builtins:current_action_points'],
+                        max: battlefield[square].attributes['builtins:max_action_points'],
                     },
                     armor: {
-                        current: battlefield[square].character.attributes['builtins:current_armor'],
-                        base: battlefield[square].character.attributes['builtins:base_armor'],
+                        current: battlefield[square].attributes['builtins:current_armor'],
+                        base: battlefield[square].attributes['builtins:base_armor'],
                     },
-                    statusEffects: battlefield[square].character.statusEffects.map((effect) => ({
+                    statusEffects: battlefield[square].statusEffects.map((effect) => ({
                         ...effect,
                     })),
                 },
@@ -116,13 +118,87 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
     return <Battlefield />
 }
 
+const RoundHeader = () => {
+    const { t } = useTranslation()
+    const { round, changeRound } = useCombatEditorContext()
+    const [newRound, setNewRound] = useState(round)
+    const [editable, setEditable] = useState(false)
+
+    useEffect(() => {
+        setNewRound(round)
+    }, [round])
+
+    return (
+        <div className={'flex flex-row gap-2'}>
+            <div className={'flex flex-row gap-2'}>
+                <p className={'text-t-big text-white'}>{t('local:editor.round-count')}</p>
+                {editable ? (
+                    <Input
+                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent`}
+                        value={parseInt(newRound.toString()).toString()}
+                        placeholder={round.toString()}
+                        extraClassName={'text-t-big '}
+                        type={'number'}
+                        onBlur={() => {
+                            changeRound(newRound)
+                            setEditable(false)
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                changeRound(newRound)
+                                setEditable(false)
+                            } else if (e.key === 'Escape') {
+                                setNewRound(round)
+                                setEditable(false)
+                            }
+                        }}
+                        autoFocus
+                        onFocus={(event) => {
+                            const value = event.target.value
+                            event.target.value = ''
+                            event.target.value = value
+                        }}
+                        onInput={(e) => {
+                            e.preventDefault()
+                            if (e.currentTarget.value === '') {
+                                setNewRound(0)
+                                return
+                            }
+                            const value = parseInt(e.currentTarget.value)
+                            if (isNaN(value)) {
+                                return
+                            } else if (value <= 0) {
+                                setNewRound(0)
+                            } else if (value > 999) {
+                                setNewRound(999)
+                                return
+                            } else {
+                                setNewRound(parseInt(e.currentTarget.value))
+                            }
+                        }}
+                    />
+                ) : (
+                    <p
+                        className={'text-center text-t-big font-bold text-white'}
+                        onDoubleClick={() => {
+                            setEditable(true)
+                        }}
+                    >
+                        {round}
+                    </p>
+                )}
+            </div>
+        </div>
+    )
+}
+
 const CombatEditor = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
     const lobby = useSelector(selectLobbyInfo)
 
-    const { battlefield, changePreset, resetPreset } = useCombatEditorContext()
+    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round } = useCombatEditorContext()
 
     const [clickedSquare, setClickedSquare] = useState<string | null>(null)
     const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null)
@@ -144,7 +220,8 @@ const CombatEditor = () => {
         verifyCombatEditorLocalStorage()
         const lastUsedPreset = getLastUsedCombatEditorPreset(lobby?.lobbyId)
         if (lastUsedPreset) {
-            changePreset(lastUsedPreset.data)
+            const { data } = lastUsedPreset
+            changePreset(data)
             setPresetDetails({
                 nickName: lastUsedPreset.nickName,
                 lobbyID: lastUsedPreset.lobbyID,
@@ -156,8 +233,8 @@ const CombatEditor = () => {
     const handlePlayButton = useCallback(async () => {
         // let minifiedCombat
         // try {
-            // minifiedCombat = minifyCombat(battlefield)
-            // console.log(minifiedCombat)
+        // minifiedCombat = minifyCombat(battlefield)
+        // console.log(minifiedCombat)
         // } catch (e: unknown) {
         //     console.log(e)
         //     toastError({ title: t('local:error'), description: e instanceof Error ? e.message : 'Unknown error' })
@@ -185,10 +262,16 @@ const CombatEditor = () => {
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
-            <div className={'flex h-full w-3/5 items-center justify-center bg-gray-800'}>
-                <BattlefieldContextProvider>
-                    <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
-                </BattlefieldContextProvider>
+            <div className={'flex h-full w-3/5 flex-col items-center justify-center gap-3 bg-gray-800'}>
+                <div>
+                    <RoundHeader />
+                </div>
+                <div className={'flex flex-row gap-2'}>
+                    <TurnOrderEditor />
+                    <BattlefieldContextProvider>
+                        <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
+                    </BattlefieldContextProvider>
+                </div>
             </div>
             <div className={'flex h-screen w-2/5 flex-col bg-white'}>
                 <div className={'flex h-20 w-full flex-row items-center bg-black px-4 text-t-massive'}>
@@ -210,7 +293,16 @@ const CombatEditor = () => {
                             className={'size-12 p-1'}
                             variant={'outline'}
                             onClick={() => {
-                                saveCombatEditorPreset('Preset from Memory', battlefield, lobby?.lobbyId)
+                                saveCombatEditorPreset(
+                                    'Preset from Memory',
+                                    {
+                                        battlefield,
+                                        turnOrder,
+                                        activeCharacterIndex,
+                                        round,
+                                    },
+                                    lobby?.lobbyId
+                                )
                             }}
                         >
                             <FaSave />

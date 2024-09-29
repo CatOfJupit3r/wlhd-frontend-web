@@ -1,3 +1,4 @@
+import { ControlledBy } from '@models/EditorConversion'
 import { GameComponentDecoration, GameComponentMemory } from '@models/GameModels'
 
 /*
@@ -58,6 +59,7 @@ export type SpellBookEditable = {
 export type StatusEffectsEditable = Array<StatusEffectEditable & { descriptor: string }>
 
 export type CharacterDataEditable = {
+    descriptor: string
     inventory: InventoryEditable
     weaponry: WeaponryEditable
     spellBook: SpellBookEditable
@@ -71,7 +73,12 @@ export type CharacterDataEditable = {
     decorations: GameComponentDecoration
     tags: Array<string>
     memory: GameComponentMemory
-    id_?: string
+    id_: string
+}
+
+export interface CharacterDataEditableInCombat extends CharacterDataEditable {
+    controlInfo: ControlledBy
+    square: { line: number; column: number } | null
 }
 
 /*

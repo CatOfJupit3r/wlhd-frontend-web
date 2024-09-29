@@ -1,29 +1,40 @@
+import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels'
 import { ControlledBy } from '@models/EditorConversion'
+import { CharacterInTurnOrder } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
-import { CharacterDataEditable } from '@models/CombatEditorModels'
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id })
 export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id })
 export const CONTROLLED_BY_GAME_LOGIC = { type: 'game_logic' }
 
+
 export interface CombatEditorContextType {
     mode: 'save' | 'preset'
+    round: number
     battlefield: {
-        [square: string]: {
-            descriptor: string
-            character: CharacterDataEditable
-            control: ControlledBy
-        }
+        [square: string]: CharacterDataEditableInCombat
     }
+    turnOrder: Array<string>
+    activeCharacterIndex: number
 
     addCharacter: (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => void
     removeCharacter: (square: string) => void
-    updateCharacter: (square: string, character: CharacterDataEditable) => void
+    updateCharacter: (square: string, character: CharacterDataEditable | CharacterDataEditableInCombat) => void
     updateControl: (square: string, control: ControlledBy) => void
+
+    changeRound: (newRound: number) => void
+    changeTurnOrder: (newTurnOrder: Array<string>) => void
+    addCharacterToTurnOrder: (characterId: string) => void
+    makeCharacterActive: (index: number) => void
 
     setMode: (mode: CombatEditorContextType['mode']) => void
 
-    changePreset: (newData: CombatEditorContextType['battlefield']) => void
+    changePreset: (newData: {
+        battlefield: CombatEditorContextType['battlefield']
+        turnOrder: CombatEditorContextType['turnOrder']
+        round: CombatEditorContextType['round']
+        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
+    }) => void
     resetPreset: () => void
 }
 
@@ -31,17 +42,23 @@ const CombatEditorContext = createContext<CombatEditorContextType | undefined>(u
 
 const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [battlefield, setBattlefield] = useState<CombatEditorContextType['battlefield']>({})
+    const [round, setRound] = useState(0)
+    const [turnOrder, setTurnOrder] = useState<CombatEditorContextType['turnOrder']>([])
+    const [activeCharacterIndex, setActiveCharacterIndex] = useState(0)
     const [mode, setMode] = useState<CombatEditorContextType['mode']>('save')
 
     const addCharacter = useCallback(
         (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => {
             setBattlefield((prev) => {
+                const [line, column] = square.split(',').map((n) => parseInt(n))
                 return {
                     ...prev,
                     [square]: {
+                        ...character,
                         descriptor,
-                        character,
-                        control: control || CONTROLLED_BY_GAME_LOGIC,
+                        id_: crypto.randomUUID(),
+                        controlInfo: control || CONTROLLED_BY_GAME_LOGIC,
+                        square: { line, column },
                     },
                 }
             })
@@ -63,7 +80,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 ...prev,
                 [square]: {
                     ...prev[square],
-                    character,
+                    ...character,
                 },
             }
         })
@@ -71,7 +88,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
 
     const updateControl = useCallback((square: string, control: ControlledBy) => {
         setBattlefield((prev) => {
-            if (!prev[square] || !prev[square].character) {
+            if (!prev[square]) {
                 return prev
             }
 
@@ -79,32 +96,72 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 ...prev,
                 [square]: {
                     ...prev[square],
-                    control,
+                    controlInfo: control,
                 },
             }
         })
     }, [])
 
-    const changePreset = useCallback((newData: CombatEditorContextType['battlefield']) => {
-        setBattlefield(newData)
+    const changePreset = useCallback((newData: {
+        battlefield: CombatEditorContextType['battlefield']
+        turnOrder: CombatEditorContextType['turnOrder']
+        round: CombatEditorContextType['round']
+        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
+    }) => {
+        setBattlefield(newData.battlefield)
+        setTurnOrder(newData.turnOrder)
+        setRound(Math.max(newData.round, 0))
+        setActiveCharacterIndex(
+            newData.activeCharacterIndex >= 0 && newData.activeCharacterIndex < newData.turnOrder.length
+                ? newData.activeCharacterIndex
+                : 0
+        )
     }, [])
 
     const resetPreset = useCallback(() => {
         setBattlefield({})
     }, [])
 
+    const changeRound = useCallback((newRound: number) => {
+        setRound(newRound)
+    }, [])
+
+    const changeTurnOrder = useCallback((newTurnOrder: Array<string>) => {
+        setTurnOrder(newTurnOrder)
+    }, [])
+
+    const addCharacterToTurnOrder = useCallback((characterId: string) => {
+        setTurnOrder((prev) => {
+            return [...prev, characterId]
+        })
+    }, [])
+
+    const makeCharacterActive = useCallback((index: number) => {
+        if (index < 0 || index >= turnOrder.length) {
+            return
+        }
+        setActiveCharacterIndex(index)
+    }, [turnOrder])
+
     return (
         <CombatEditorContext.Provider
             value={{
-                mode,
-                setMode,
-                battlefield,
+                activeCharacterIndex,
                 addCharacter,
+                addCharacterToTurnOrder,
+                battlefield,
+                changePreset,
+                changeRound,
+                changeTurnOrder,
+                mode,
+                makeCharacterActive,
                 removeCharacter,
+                resetPreset,
+                round,
+                setMode,
+                turnOrder,
                 updateCharacter,
                 updateControl,
-                changePreset,
-                resetPreset,
             }}
         >
             {children}

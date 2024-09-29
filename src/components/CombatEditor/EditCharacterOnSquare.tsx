@@ -42,25 +42,134 @@ const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
         weaponry: false,
     },
 }
+
+const EditCharacterControls = ({
+    newControls,
+    setNewControls,
+    clickedSquare,
+}: {
+    newControls: { type: string; id?: string }
+    setNewControls: (value: { type: string; id?: string }) => void
+    clickedSquare: string | null
+}) => {
+    const lobby = useSelector(selectLobbyInfo)
+    const { battlefield } = useCombatEditorContext()
+
+    return (
+        <div>
+            <div className={'flex flex-col gap-4 rounded border-2 p-4'}>
+                <div className={'flex flex-col gap-2'}>
+                    <div className={'w-full'}>
+                        <Label>Controlled by</Label>
+                        <Select
+                            onValueChange={(value) => {
+                                let changeTo
+                                const character = battlefield[clickedSquare as string].controlInfo
+                                if (character.type === value && (character as any).id) {
+                                    changeTo = {
+                                        type: value,
+                                        id: (character as any).id,
+                                    }
+                                } else {
+                                    changeTo = {
+                                        type: value,
+                                    }
+                                }
+                                setNewControls(changeTo)
+                            }}
+                            value={newControls.type}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder={'Select...'} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Controlled by</SelectLabel>
+                                    <SelectItem value={'player'}>Player</SelectItem>
+                                    <SelectItem value={'ai'}>AI</SelectItem>
+                                    <SelectItem value={'game_logic'}>Game Logic</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div>
+                        {newControls.type === 'player' ? (
+                            <>
+                                <Label>Player</Label>
+                                <Select
+                                    onValueChange={(value) => {
+                                        setNewControls({
+                                            ...newControls,
+                                            id: value,
+                                        })
+                                    }}
+                                    value={newControls.id}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder={'Select player'} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Player</SelectLabel>
+
+                                            {lobby.players.map((player) => (
+                                                <SelectItem key={player.userId} value={player.userId}>
+                                                    {player.nickname} (@{player.handle})
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </>
+                        ) : newControls.type === 'ai' ? ( // for now, game servers do not have a list of AIs
+                            <>
+                                <Label>AI</Label>
+                                <Select
+                                    onValueChange={(value) => {
+                                        setNewControls({
+                                            ...newControls,
+                                            id: value,
+                                        })
+                                    }}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder={'AI'} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>AI</SelectLabel>
+                                            <SelectItem value={'default'}>Not really implemented</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </>
+                        ) : null}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const lobby = useSelector(selectLobbyInfo)
-    const { updateCharacter, removeCharacter, updateControl } = useCombatEditorContext()
+    const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext()
     const { battlefield } = useCombatEditorContext()
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character')
     const { character, changeEditedCharacter, resetCharacter } = buildCharacterEditorProps(
-        battlefield[clickedSquare as string].character
+        battlefield[clickedSquare as string]
     )
     const [newControls, setNewControls] = useState<{
         type: string
         id?: string
-    }>(battlefield[clickedSquare as string].control)
+    }>(battlefield[clickedSquare as string].controlInfo)
 
     useEffect(() => {
         if (clickedSquare) {
             const newCharacter = battlefield[clickedSquare]
-            if (character && newCharacter && JSON.stringify(character) !== JSON.stringify(newCharacter.character)) {
-                changeEditedCharacter(newCharacter.character)
-                setNewControls(newCharacter.control)
+            if (character && newCharacter && JSON.stringify(character) !== JSON.stringify(newCharacter)) {
+                changeEditedCharacter(newCharacter)
+                setNewControls(newCharacter.controlInfo)
                 setIsEditing('character')
             }
         }
@@ -98,7 +207,7 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
 
     const handleResetButton = useCallback(() => {
         if (isEditing === 'controls' && clickedSquare && battlefield[clickedSquare as string]) {
-            setNewControls(battlefield[clickedSquare as string].control)
+            setNewControls(battlefield[clickedSquare as string].controlInfo)
         } else {
             resetCharacter()
         }
@@ -108,25 +217,27 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
         <div className={'mt-4'}>
             <div className={'mb-3 flex w-full justify-between'}>
                 <div className={'flex flex-col gap-3'}>
-                    <Button
-                        className={'flex w-full justify-between gap-2'}
-                        onClick={() => {
-                            setIsEditing(isEditing === 'character' ? 'controls' : 'character')
-                        }}
-                    >
-                        Mode:
-                        {isEditing === 'character' ? (
-                            <div className={'flex items-center gap-1'}>
-                                <GrContactInfo />
-                                Character
-                            </div>
-                        ) : (
-                            <div className={'flex items-center gap-1'}>
-                                <IoMdPersonAdd />
-                                Controls
-                            </div>
-                        )}
-                    </Button>
+                    <div>
+                        <Button
+                            className={'flex w-52 justify-between gap-2'}
+                            onClick={() => {
+                                setIsEditing(isEditing === 'character' ? 'controls' : 'character')
+                            }}
+                        >
+                            Mode:
+                            {isEditing === 'character' ? (
+                                <div className={'flex items-center gap-1'}>
+                                    <GrContactInfo />
+                                    Character
+                                </div>
+                            ) : (
+                                <div className={'flex items-center gap-1'}>
+                                    <IoMdPersonAdd />
+                                    Controls
+                                </div>
+                            )}
+                        </Button>
+                    </div>
                     <div className={'flex gap-2'}>
                         <Button className={'flex w-full'} onClick={handleSaveButton}>
                             <FaSave className={'mr-1'} />
@@ -135,6 +246,17 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
                         <Button className={'flex w-full'} onClick={handleResetButton}>
                             <HiOutlineArrowUturnLeft className={'mr-1'} />
                             Restore
+                        </Button>
+                        <Button
+                            className={'flex w-full'}
+                            onClick={() => {
+                                if (!clickedSquare || !character) {
+                                    return
+                                }
+                                addCharacterToTurnOrder(character.id_)
+                            }}
+                        >
+                            Add to Turn Order
                         </Button>
                     </div>
                 </div>
@@ -162,99 +284,11 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
                 {isEditing === 'character' ? (
                     <CharacterEditor className={'flex w-full flex-col gap-4 rounded border-2 p-4'} />
                 ) : (
-                    <div>
-                        <div className={'flex flex-col gap-4 rounded border-2 p-4'}>
-                            <div className={'flex flex-col gap-2'}>
-                                <div className={'w-full'}>
-                                    <Label>Controlled by</Label>
-                                    <Select
-                                        onValueChange={(value) => {
-                                            let changeTo
-                                            const character = battlefield[clickedSquare as string].control
-                                            if (character.type === value && (character as any).id) {
-                                                changeTo = {
-                                                    type: value,
-                                                    id: (character as any).id,
-                                                }
-                                            } else {
-                                                changeTo = {
-                                                    type: value,
-                                                }
-                                            }
-                                            setNewControls(changeTo)
-                                        }}
-                                        value={newControls.type}
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue placeholder={'Select...'} />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectLabel>Controlled by</SelectLabel>
-                                                <SelectItem value={'player'}>Player</SelectItem>
-                                                <SelectItem value={'ai'}>AI</SelectItem>
-                                                <SelectItem value={'game_logic'}>Game Logic</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div>
-                                    {newControls.type === 'player' ? (
-                                        <>
-                                            <Label>Player</Label>
-                                            <Select
-                                                onValueChange={(value) => {
-                                                    setNewControls({
-                                                        ...newControls,
-                                                        id: value,
-                                                    })
-                                                }}
-                                                value={newControls.id}
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder={'Select player'} />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectGroup>
-                                                        <SelectLabel>Player</SelectLabel>
-                                                        {lobby.players.map((player) => (
-                                                            <SelectItem key={player.userId} value={player.userId}>
-                                                                {player.nickname} (@{player.handle})
-                                                            </SelectItem>
-                                                        ))}
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                        </>
-                                    ) : newControls.type === 'ai' ? ( // for now, game servers do not have a list of AIs
-                                        <>
-                                            <Label>AI</Label>
-                                            <Select
-                                                onValueChange={(value) => {
-                                                    setNewControls({
-                                                        ...newControls,
-                                                        id: value,
-                                                    })
-                                                }}
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder={'AI'} />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectGroup>
-                                                        <SelectLabel>AI</SelectLabel>
-                                                        <SelectItem value={'default'}>
-                                                            Not really implemented
-                                                        </SelectItem>
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                        </>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <EditCharacterControls
+                        newControls={newControls}
+                        setNewControls={setNewControls}
+                        clickedSquare={clickedSquare}
+                    />
                 )}
             </CharacterEditorProvider>
         </div>
