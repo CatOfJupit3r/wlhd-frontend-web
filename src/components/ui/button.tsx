@@ -2,9 +2,11 @@ import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import Spinner from '@components/Spinner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { cn } from '@utils'
 import { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ClassValue } from 'clsx'
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -116,4 +118,24 @@ const AwaitingButton = ({
     )
 }
 
-export { Button, AwaitingButton, TimeoutButton, buttonVariants }
+const ButtonWithTooltip = ({
+    tooltip,
+    tooltipClassname,
+    ...props
+}: {
+    tooltip: string
+    tooltipClassname?: ClassValue
+} & ButtonProps) => {
+    return (
+        <Tooltip>
+            <TooltipTrigger>
+                <Button {...props} asChild/>
+            </TooltipTrigger>
+            <TooltipContent>
+                <p className={cn(tooltipClassname)}>{tooltip}</p>
+            </TooltipContent>
+        </Tooltip>
+    )
+}
+
+export { Button, AwaitingButton, TimeoutButton, buttonVariants, ButtonWithTooltip }
