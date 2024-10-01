@@ -54,7 +54,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
     const fetchAndSetItems = useCallback(
         async (dlc: string): Promise<void> => {
             try {
-                if (!alreadyFetchedContent[dlc]?.items ?? false) {
+                if (!(alreadyFetchedContent[dlc]?.items ?? false)) {
                     const { items: fetched } = await APIService.getLoadedItems(dlc)
                     if (fetched) {
                         setItems({

@@ -32,6 +32,7 @@ export interface ItemEditable extends UsableComponentEditableFields {
 }
 
 export interface WeaponEditable extends ItemEditable {
+    isActive: boolean
     costToSwitch: number
 }
 
@@ -48,7 +49,9 @@ export interface StatusEffectEditable extends CommonEditableField {
     activationType: string
 }
 
-export interface SpellEditable extends UsableComponentEditableFields {}
+export interface SpellEditable extends UsableComponentEditableFields {
+    isActive: boolean
+}
 
 export type InventoryEditable = Array<ItemEditable & { descriptor: string }>
 export type WeaponryEditable = Array<WeaponEditable & { isActive: boolean; descriptor: string }>

@@ -214,35 +214,16 @@ const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                 (() => {
                     switch (props.type) {
                         case 'item':
-                            return (
-                                <ItemEditor
-                                    component={component as ItemEditable}
-                                    setComponent={setComponent}
-                                    mode={mode}
-                                />
-                            )
+                            return <ItemEditor component={component as ItemEditable} setComponent={setComponent} />
                         case 'weapon':
-                            return (
-                                <WeaponEditor
-                                    component={component as WeaponEditable}
-                                    setComponent={setComponent}
-                                    mode={mode}
-                                />
-                            )
+                            return <WeaponEditor component={component as WeaponEditable} setComponent={setComponent} />
                         case 'spell':
-                            return (
-                                <SpellEditor
-                                    component={component as SpellEditable}
-                                    setComponent={setComponent}
-                                    mode={mode}
-                                />
-                            )
+                            return <SpellEditor component={component as SpellEditable} setComponent={setComponent} />
                         case 'statusEffect':
                             return (
                                 <StatusEffectEditor
                                     component={component as StatusEffectEditable}
                                     setComponent={setComponent}
-                                    mode={mode}
                                 />
                             )
                         default:
@@ -275,7 +256,8 @@ interface COMPONENT_TO_INTERFACE {
 type CONTAINER_TYPE = 'item' | 'weapon' | 'spell' | 'statusEffect'
 
 const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
-    const { character, updateCharacter, mode } = useCharacterEditorContext()
+    const { character, updateCharacter } = useCharacterEditorContext()
+    const { type } = props
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     })
@@ -284,7 +266,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
         (index: number) => {
             return (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE]) => {
                 const newCharacter = { ...character }
-                switch (props.type) {
+                switch (type) {
                     case 'item':
                         newCharacter.inventory[index] = component as CharacterDataEditable['inventory'][number]
                         break
@@ -305,7 +287,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
         [props.type, character, updateCharacter]
     )
 
-    switch (props.type) {
+    switch (type) {
         case 'item':
             if (character.inventory.length === 0) {
                 return <EmptyMenuContent />
@@ -318,7 +300,6 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                     <ItemEditor
                                         component={item as ItemEditable}
                                         setComponent={updateComponent(index)}
-                                        mode={mode}
                                     />
                                 </div>
                             )
@@ -338,7 +319,9 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                     <WeaponEditor
                                         component={weapon as WeaponEditable}
                                         setComponent={updateComponent(index)}
-                                        mode={mode}
+                                        canBeActivated={() => {
+                                            return character.weaponry.filter((weapon) => weapon.isActive).length + 1 < 2
+                                        }}
                                     />
                                 </div>
                             )
@@ -398,7 +381,14 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                     <SpellEditor
                                         component={spell as SpellEditable}
                                         setComponent={updateComponent(index)}
-                                        mode={mode}
+                                        canBeActivated={() => {
+                                            return character.spellBook.maxActiveSpells
+                                                ? character.spellBook.knownSpells.filter((spell) => spell.isActive)
+                                                      .length +
+                                                      1 <
+                                                      character.spellBook.maxActiveSpells
+                                                : true
+                                        }}
                                     />
                                 </div>
                             )
@@ -418,7 +408,6 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                     <StatusEffectEditor
                                         component={effect as StatusEffectEditable}
                                         setComponent={updateComponent(index)}
-                                        mode={mode}
                                     />
                                 </div>
                             )

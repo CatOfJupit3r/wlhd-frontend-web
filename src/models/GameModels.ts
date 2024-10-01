@@ -164,28 +164,29 @@ interface MemoryType {
     type: string
     value: unknown
     display_name: string
+    display_value: string
     internal: boolean
 }
 
-interface DiceMemory extends MemoryType {
+export interface DiceMemory extends MemoryType {
     type: 'dice'
     value: {
         sides: number
-        times: number
+        amount: number
     }
 }
 
-interface StringMemory extends MemoryType {
+export interface StringMemory extends MemoryType {
     type: 'string'
     value: string
 }
 
-interface ComponentIDMemory extends MemoryType {
+export interface ComponentIDMemory extends MemoryType {
     type: 'component_id'
     value: string
 }
 
-interface NumberMemory extends MemoryType {
+export interface NumberMemory extends MemoryType {
     type: 'number'
     value: number
 }
