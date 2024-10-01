@@ -1,6 +1,6 @@
 import { ActiveIcon, LocationIcon } from '@components/icons'
 import { Separator } from '@components/ui/separator'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { ItemInfo, PossibleMemory, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
 import { capitalizeFirstLetter } from '@utils'
 import React, { HTMLAttributes, useCallback } from 'react'
@@ -224,56 +224,54 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [info])
 
     return (
-        <TooltipProvider>
+        <div
+            className={
+                'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
+            }
+        >
             <div
-                className={
-                    'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
-                }
+                id={'main-info'}
+                className={'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'}
             >
-                <div
-                    id={'main-info'}
-                    className={'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'}
-                >
-                    <div className={'flex flex-row items-center gap-2'}>
-                        {tNoPrefix(decorations?.name) ?? '???'}
-                        {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
-                        {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
-                    </div>
-                    {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
+                <div className={'flex flex-row items-center gap-2'}>
+                    {tNoPrefix(decorations?.name) ?? '???'}
+                    {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
+                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
                 </div>
-                <Separator />
-                <div id={'minor-info'} className={'relative flex flex-col text-t-small'}>
-                    <div id={'type-details'} className={'absolute right-0 top-0 flex flex-row items-center gap-3'}>
-                        {type !== 'status_effect' &&
-                            CooldownDetails({
-                                type,
-                                info,
-                            } as ItemSegment | WeaponSegment | SpellSegment)}
-                        {type !== 'status_effect' &&
-                            CostDetails({
-                                type,
-                                info,
-                            } as ItemSegment | WeaponSegment | SpellSegment)}
-                    </div>
-                    {(type === 'item' || type === 'weapon') &&
-                        QuantityInfo({
+                {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
+            </div>
+            <Separator />
+            <div id={'minor-info'} className={'relative flex flex-col text-t-small'}>
+                <div id={'type-details'} className={'absolute right-0 top-0 flex flex-row items-center gap-3'}>
+                    {type !== 'status_effect' &&
+                        CooldownDetails({
                             type,
                             info,
-                        } as ItemSegment | WeaponSegment)}
+                        } as ItemSegment | WeaponSegment | SpellSegment)}
                     {type !== 'status_effect' &&
-                        UsageDetails({
+                        CostDetails({
                             type,
                             info,
                         } as ItemSegment | WeaponSegment | SpellSegment)}
                 </div>
-                <Separator />
-                <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
-                    {tNoPrefix(decorations?.description) ?? '???'}
-                </div>
-                <Separator />
-                <ComponentMemories />
+                {(type === 'item' || type === 'weapon') &&
+                    QuantityInfo({
+                        type,
+                        info,
+                    } as ItemSegment | WeaponSegment)}
+                {type !== 'status_effect' &&
+                    UsageDetails({
+                        type,
+                        info,
+                    } as ItemSegment | WeaponSegment | SpellSegment)}
             </div>
-        </TooltipProvider>
+            <Separator />
+            <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
+                {tNoPrefix(decorations?.description) ?? '???'}
+            </div>
+            <Separator />
+            <ComponentMemories />
+        </div>
     )
 }
 

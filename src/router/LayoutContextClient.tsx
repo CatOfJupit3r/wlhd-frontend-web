@@ -4,8 +4,9 @@ import { useLayoutContext } from '@context/LayoutContext'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import paths from '@router/paths'
 import { refreshLobbyInfo, refreshUserInfo } from '@utils'
-import { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
+import React, { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
 import { Navigate, Outlet, useParams } from 'react-router-dom'
+import { TooltipProvider } from '@components/ui/tooltip'
 
 const Header = lazy(() => import('@components/Header'))
 const Footer = lazy(() => import('@components/Footer'))
@@ -58,9 +59,11 @@ const LayoutContextClient = () => {
 
 const GlobalContext = ({ children }: { children: ReactNode }) => {
     return (
-        <CoordinatorEntitiesProvider>
-            <GameDataProvider>{children}</GameDataProvider>
-        </CoordinatorEntitiesProvider>
+        <TooltipProvider>
+            <CoordinatorEntitiesProvider>
+                <GameDataProvider>{children}</GameDataProvider>
+            </CoordinatorEntitiesProvider>
+        </TooltipProvider>
     )
 }
 
