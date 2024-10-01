@@ -140,11 +140,14 @@ const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
 
     useEffect(() => {
         if (!dlc || !descriptor) {
+            setComponent(null)
             return
         }
         const component = getComponentFromLoadedData(dlc, descriptor)
         if (component) {
             setComponent(component)
+        } else {
+            setComponent(null)
         }
     }, [dlc, descriptor])
 
