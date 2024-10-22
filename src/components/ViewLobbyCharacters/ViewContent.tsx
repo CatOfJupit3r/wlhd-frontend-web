@@ -72,14 +72,6 @@ const CharacterEditorMenu = () => {
                         }
                         const wasCharacterChanged: boolean =
                             JSON.stringify(character) !== JSON.stringify(editedCharacter)
-                        // console.log(
-                        //     'Viewed character is the same pointer as edited character',
-                        //     character === editedCharacter
-                        // )
-                        // console.log(
-                        //     'Viewed character is the same as edited character',
-                        //     JSON.stringify(character) === JSON.stringify(editedCharacter)
-                        // )
                         if (wasCharacterChanged) {
                             // TODO: create omit function to only send changed fields
 

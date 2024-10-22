@@ -164,6 +164,15 @@
         "edit-character" : "Редагувати персонажа",
         "stop-editing" : "Зупинити редагування",
         "round-count": "Раунд",
+        "shared": {
+            "quantity": "Кількість",
+            "cooldown": "КД (CUR/MAX)",
+            "duration": "Тривалість",
+            "component-uses": "Використань (CUR/MAX)",
+            "is-active": "Активний",
+            "is-active-tooltip": "Чи цей компонент активний?",
+            "cost-to-use": "Вартість використання"
+        },
         "general" : {
             "dlc" : "DLC",
             "select-dlc" : "Виберіть DLC",
@@ -177,26 +186,67 @@
             "add" : "Додати",
             "infinity" : "Безкінечно"
         },
-        "weaponry" : {
+        "general-component": {
+            "cd:": "КД (CUR/MAX)",
+            "component-uses:": "Використань (CUR/MAX)",
+            "duration:": "Тривалість",
+            "is-active:": "Активний",
+            "is-active-tooltip": "Чи цей компонент активний?",
+            "quantity:": "Кількість",
+            "cost-to-use:": "Вартість використання"
+        },
+        "weapon" : {
             "add" : "Додати зброю",
             "remove" : "Видалити зброю"
         },
-        "spellBook" : {
+        "spell" : {
             "add" : "Додати заклинання",
             "remove" : "Видалити заклинання",
             "max-spells" : "Обмеження активних заклять. (не більше {{maxSpells}})"
         },
-        "inventory" : {
+        "item" : {
             "add" : "Додати предмет",
             "remove" : "Видалити предмет",
             "increase-quantity" : "Збільшити кількість",
             "decrease-quantity" : "Зменшити кількість"
         },
-        "statusEffects" : {
+        "statusEffect" : {
             "add" : "Додати статусний ефект",
             "remove" : "Видалити статусний ефект",
             "decrease-duration" : "Зменшити тривалість",
             "increase-duration" : "Збільшити тривалість"
+        },
+        "memories" : {
+            "title": "Спогади",
+            "add" : "Додати спогад",
+            "btn-add" : "Додати",
+            "remove" : "Видалити спогад",
+            "dice" : "Кількість кубиків",
+            "sides" : "Кількість граней",
+            "simplified": "Спрощено",
+            "internal": "Внутрішній",
+            "internal-postfix": "(внутрішній)",
+            "memory-key": "Ключ спогаду",
+            "display-name": "Відображуване ім'я",
+            "display-value": "Відображуване значення",
+            "type": "Тип",
+            "memory-value": "Значення спогаду",
+            "type-select": {
+                "placeholder": "Оберіть тип спогаду",
+                "supported-types": {
+                    "string": "Рядок",
+                    "number": "Число",
+                    "boolean": "Логічний",
+                    "dice": "Кубик",
+                    "component-id": "ID компонента"
+                }
+            }
+        },
+        "tags" : {
+            "title": "Теги",
+            "add" : "Додати тег",
+            "btn-add" : "Додати",
+            "remove" : "Видалити тег"
         }
     },
     "page_titles" : {

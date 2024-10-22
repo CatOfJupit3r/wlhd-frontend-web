@@ -1,15 +1,35 @@
-import { ButtonWithTooltip } from '@components/ui/button'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
+import { Badge } from '@components/ui/badge'
+import { Button, ButtonWithTooltip } from '@components/ui/button'
 import { Input } from '@components/ui/input'
+import { Label } from '@components/ui/label'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select'
+import { Separator } from '@components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels'
+import useDualTranslation from '@hooks/useDualTranslation'
+import {
+    CharacterDataInSave,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@models/CombatEditorModels'
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels'
 import { OneOf } from '@models/OneOf'
 import { capitalizeFirstLetter, cn } from '@utils'
+import { addPrefixBeforeDLC } from '@utils/stringTools'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
+import { FaX } from 'react-icons/fa6'
 import { LuTally5, LuTriangle } from 'react-icons/lu'
 import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi'
+
+const useComponentEditorTranslation = () => {
+    return useTranslation('local', {
+        keyPrefix: 'editor.shared',
+    })
+}
 
 export const getHandlerChange = (max: number, min: number, set: (value: number) => void, fallbackValue: number = 1) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,14 +53,29 @@ export const getHandlerChange = (max: number, min: number, set: (value: number) 
 export type AllowedEditables = OneOf<[ItemEditable, WeaponEditable, SpellEditable, StatusEffectEditable]>
 type ComponentPartEditorProps = {
     component: AllowedEditables
-    changeComponentField: (key: keyof AllowedEditables, value: number | boolean | GameComponentMemory) => void
+    changeComponentField: (key: keyof AllowedEditables, value: AllowedEditables[keyof AllowedEditables]) => void
 }
+
+const EditorLabel: React.FC<{
+    text: string
+    icon: React.ReactNode
+    className?: string
+}> = ({ text, icon, className }) => {
+    return (
+        <div className={'flex flex-row items-center gap-1 text-t-smaller font-bold ' + className}>
+            {icon}
+            {text}
+        </div>
+    )
+}
+
 export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: boolean }> = ({
     component,
     changeComponentField,
     disabled,
 }) => {
     const usable = component?.isActive ? true : !disabled
+    const { t } = useComponentEditorTranslation()
 
     return (
         <ButtonWithTooltip
@@ -54,7 +89,7 @@ export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: b
                     changeComponentField('isActive', !component?.isActive)
                 }
             }}
-            tooltip={'Make this component active'}
+            tooltip={t('is-active-tooltip')}
             tooltipClassname={'text-t-smaller font-normal'}
             disabled={!usable}
         >
@@ -63,27 +98,26 @@ export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: b
     )
 }
 export const QuantityEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation()
+
     return (
         <div>
-            <div className={'text-t-smaller font-bold'}>Quantity</div>
-            <div className={'flex flex-row items-center gap-2'}>
-                <FaBoxes />
-                <Input
-                    type={'number'}
-                    value={component.quantity}
-                    onChange={getHandlerChange(99, 1, (value) => changeComponentField('quantity', value))}
-                    className={'w-20'}
-                />
-            </div>
+            <EditorLabel text={t('quantity')} icon={<FaBoxes />} />
+            <Input
+                type={'number'}
+                value={component.quantity}
+                onChange={getHandlerChange(99, 1, (value) => changeComponentField('quantity', value))}
+                className={'w-20'}
+            />
         </div>
     )
 }
 export const UsesEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation()
     return (
         <div>
-            <div className={'text-t-smaller font-bold'}>Uses: Current/Max</div>
+            <EditorLabel text={t('component-uses')} icon={<LuTally5 />} />
             <div className={'flex flex-row items-center gap-2'}>
-                <LuTally5 />
                 <div className={'flex flex-row items-center gap-2 text-t-smaller font-normal italic'}>
                     <Input
                         type={'number'}
@@ -106,29 +140,25 @@ export const UsesEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
     )
 }
 export const DurationEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation()
     return (
         <div>
-            <div className={'text-t-smaller font-bold'}>Duration</div>
-            <div className={'flex flex-row items-center gap-2'}>
-                <FaHourglassHalf />
-                <Input
-                    type={'number'}
-                    value={component.duration ?? 0}
-                    onChange={getHandlerChange(99, 0, (value) => changeComponentField('duration', value))}
-                    className={'w-20'}
-                />
-            </div>
+            <EditorLabel text={t('duration')} icon={<FaHourglassHalf />} />
+            <Input
+                type={'number'}
+                value={component.duration ?? 0}
+                onChange={getHandlerChange(99, 0, (value) => changeComponentField('duration', value))}
+                className={'w-20'}
+            />
         </div>
     )
 }
 
 export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation()
     return (
         <div>
-            <div className={'flex flex-row items-center gap-2'}>
-                <PiClockCountdownBold />
-                <div className={'text-t-smaller font-bold'}>Cooldown: Current/Max</div>
-            </div>
+            <EditorLabel text={t('cooldown')} icon={<PiClockCountdownBold />} />
             <div className={'flex flex-row items-center gap-1 text-t-smaller font-normal italic'}>
                 <Input
                     type={'number'}
@@ -148,44 +178,26 @@ export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     )
 }
 export const CostEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation()
+    
     return (
         <div>
-            <div className={'text-t-smaller font-bold'}>Cost to Use</div>
-            <div className={'flex flex-row items-center gap-2'}>
-                <PiSneakerMoveFill />
-                <Input
-                    type={'number'}
-                    value={component.usageCost ?? 0}
-                    onChange={getHandlerChange(99, 0, (value) => changeComponentField('usageCost', value))}
-                    className={'w-20'}
-                />
-            </div>
+            <EditorLabel text={t('cost-to-use')} icon={<PiSneakerMoveFill />} />
+            <Input
+                type={'number'}
+                value={component.usageCost ?? 0}
+                onChange={getHandlerChange(99, 0, (value) => changeComponentField('usageCost', value))}
+                className={'w-20'}
+            />
         </div>
     )
 }
 
-const IndividualMemoryEditor: React.FC<{
-    memory_key: string
-    memory: PossibleMemory
-    change: (key: string, memory: PossibleMemory) => void
-}> = ({ memory_key, memory, change }) => {
-    const { type, value } = memory
-    // if memory type is dice, then we need to show two inputs
-    // else if memory type is string, then we need to show one input for string
-    // else if memory type is number, then we need to show one input for number
-    // else if memory type is boolean, then we need to show one input for boolean (checkbox)
-    // else if memory type is component_id, then we need to show one input for string
-
-    const setMemory = useCallback(
-        (value: PossibleMemory['value']) => {
-            change(memory_key, {
-                ...memory,
-                value,
-            } as PossibleMemory)
-        },
-        [change, memory_key, memory]
-    )
-
+const MemoryValueEditor: React.FC<{
+    value: PossibleMemory['value']
+    type: PossibleMemory['type']
+    change: (value: PossibleMemory['value']) => void
+}> = ({ value, type, change }) => {
     switch (type) {
         case 'dice':
             return (
@@ -195,31 +207,32 @@ const IndividualMemoryEditor: React.FC<{
                         value={(value as DiceMemory['value']).amount}
                         onChange={(e) => {
                             if (e.target.value === '' || isNaN(parseInt(e.target.value))) {
-                                setMemory({
+                                change({
                                     amount: 0,
                                     sides: (value as DiceMemory['value']).sides,
                                 })
                                 return
                             }
-                            setMemory({
+                            change({
                                 amount: parseInt(e.target.value),
                                 sides: (value as DiceMemory['value']).sides,
                             })
                         }}
                         className={'w-20'}
                     />
+                    d
                     <Input
                         type={'number'}
                         value={(value as DiceMemory['value']).sides}
                         onChange={(e) => {
                             if (e.target.value === '' || isNaN(parseInt(e.target.value))) {
-                                setMemory({
+                                change({
                                     amount: (value as DiceMemory['value']).amount,
                                     sides: 0,
                                 })
                                 return
                             }
-                            setMemory({
+                            change({
                                 amount: (value as DiceMemory['value']).amount,
                                 sides: parseInt(e.target.value),
                             })
@@ -234,7 +247,7 @@ const IndividualMemoryEditor: React.FC<{
                     type={'text'}
                     value={value as string}
                     onChange={(e) => {
-                        setMemory(e.target.value)
+                        change(e.target.value)
                     }}
                     className={'w-full'}
                 />
@@ -245,7 +258,7 @@ const IndividualMemoryEditor: React.FC<{
                     type={'number'}
                     value={value as number}
                     onChange={(e) => {
-                        setMemory(parseInt(e.target.value))
+                        change(parseInt(e.target.value))
                     }}
                     className={'w-full'}
                 />
@@ -256,7 +269,7 @@ const IndividualMemoryEditor: React.FC<{
                     type={'checkbox'}
                     checked={value as boolean}
                     onChange={(e) => {
-                        setMemory(e.target.checked)
+                        change(e.target.checked)
                     }}
                 />
             )
@@ -266,7 +279,7 @@ const IndividualMemoryEditor: React.FC<{
                     type={'text'}
                     value={value as string}
                     onChange={(e) => {
-                        setMemory(e.target.value)
+                        change(e.target.value)
                     }}
                     className={'w-full'}
                 />
@@ -275,8 +288,204 @@ const IndividualMemoryEditor: React.FC<{
             return null
     }
 }
-export const MemoriesEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+
+const MemoryTypeEditor: React.FC<{
+    type: PossibleMemory['type']
+    change: (params: { type: PossibleMemory['type']; value: PossibleMemory['value'] }) => void
+}> = ({ type, change }) => {
+    const { t } = useTranslation('local', {
+        keyPrefix: 'editor.memories.type-select',
+    })
+    return (
+        <Select
+            onValueChange={(value) => {
+                if (!value || value === type) {
+                    return
+                }
+                const modifiedMemory: {
+                    type: PossibleMemory['type']
+                    value: PossibleMemory['value']
+                } = { type, value: '' }
+                switch (value) {
+                    case 'string':
+                        modifiedMemory.type = 'string'
+                        modifiedMemory.value = ''
+                        break
+                    case 'number':
+                        modifiedMemory.type = 'number'
+                        modifiedMemory.value = 0
+                        break
+                    case 'boolean':
+                        modifiedMemory.type = 'boolean'
+                        modifiedMemory.value = false
+                        break
+                    case 'dice':
+                        modifiedMemory.type = 'dice'
+                        modifiedMemory.value = {
+                            sides: 0,
+                            amount: 0,
+                        }
+                        break
+                    case 'component_id':
+                        modifiedMemory.type = 'component_id'
+                        modifiedMemory.value = ''
+                        break
+                    default:
+                        break
+                }
+                change(modifiedMemory)
+            }}
+            value={type}
+        >
+            <SelectTrigger>
+                <SelectValue placeholder={t('placeholder')} />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectGroup>
+                    <SelectItem value={'string'}>{t('supported-types.string')}</SelectItem>
+                    <SelectItem value={'number'}>{t("supported-types.number")}</SelectItem>
+                    <SelectItem value={'boolean'}>{t("supported-types.boolean")}</SelectItem>
+                    <SelectItem value={'dice'}>{t("supported-types.dice")}</SelectItem>
+                    <SelectItem value={'component_id'}>{t("supported-types.component-id")}</SelectItem>
+                </SelectGroup>
+            </SelectContent>
+        </Select>
+    )
+}
+
+const IndividualMemoryEditor: React.FC<{
+    memory_key: string
+    memory: PossibleMemory
+    change: (key: string, memory: PossibleMemory) => void
+    defaultSimplified?: boolean
+}> = ({ memory_key, memory, change, defaultSimplified }) => {
+    const { type, value } = memory
+    const { t } = useDualTranslation('local', {
+        keyPrefix: 'editor.memories',
+    })
+    const [simplified, setSimplified] = React.useState<boolean>(defaultSimplified ?? true)
+
+    const setMemory = useCallback(
+        (value: PossibleMemory['value']) => {
+            change(memory_key, {
+                ...memory,
+                value,
+            } as PossibleMemory)
+        },
+        [change, memory_key, memory]
+    )
+
+    return (
+        <div className={'flex w-full flex-col gap-2 border-y-2 p-2'}>
+            <div className={'flex w-full flex-row justify-end gap-1'}>
+                <input
+                    type={'checkbox'}
+                    checked={simplified}
+                    onChange={(e) => {
+                        setSimplified(e.target.checked)
+                    }}
+                />
+                <Label>{t("simplified")}</Label>
+            </div>
+            {simplified ? (
+                <Tooltip>
+                    <TooltipTrigger>
+                        <div className={'cursor-default text-t-small font-bold'}>
+                            {capitalizeFirstLetter(t(memory.display_name, { includePrefix: false })) || memory_key}
+                        </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        {memory_key}
+                        {memory.internal ? ` ${t('internal-postfix')}` : ''}
+                    </TooltipContent>
+                </Tooltip>
+            ) : (
+                <>
+                    <div>
+                        <Label>{t('memory-key')}</Label>
+                        <Input
+                            type={'text'}
+                            value={memory_key}
+                            onChange={(e) => {
+                                change(e.target.value, memory)
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <Label>{t('display-name')}</Label>
+                        <Input
+                            type={'text'}
+                            value={memory.display_name}
+                            onChange={(e) => {
+                                change(memory_key, {
+                                    ...memory,
+                                    display_name: e.target.value,
+                                } as PossibleMemory)
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <Label>{t('display-value')}</Label>
+                        <Input
+                            type={'text'}
+                            value={memory.display_value}
+                            onChange={(e) => {
+                                change(memory_key, {
+                                    ...memory,
+                                    display_value: e.target.value,
+                                } as PossibleMemory)
+                            }}
+                        ></Input>
+                    </div>
+                    <div className={'flex flex-row items-center gap-1'}>
+                        <input
+                            type={'checkbox'}
+                            checked={memory.internal}
+                            onChange={(e) => {
+                                change(memory_key, {
+                                    ...memory,
+                                    internal: e.target.checked,
+                                } as PossibleMemory)
+                            }}
+                        />
+                        <Label>{t('internal')}</Label>
+                    </div>
+                </>
+            )}
+
+            <div className={'flex flex-col gap-1'}>
+                <Label>{t('type')}</Label>
+                <MemoryTypeEditor
+                    type={type}
+                    change={(params) => {
+                        change(memory_key, {
+                            ...memory,
+                            type: params.type,
+                            value: params.value,
+                        } as PossibleMemory)
+                    }}
+                />
+            </div>
+            <div className={'flex flex-col items-start gap-1'}>
+                <Label>{t('memory-value')}</Label>
+                <MemoryValueEditor value={value} type={type} change={setMemory} />
+            </div>
+        </div>
+    )
+}
+
+type CharacterEditorProps = {
+    // characters can have memories too,
+    // however, their structure is a bit different, so we don't pass
+    component: CharacterDataInSave
+    changeComponentField: (key: 'tags' | 'memory', value: GameComponentMemory | string[]) => void
+}
+
+type CharacterSupportedEditorProps = OneOf<[CharacterEditorProps, ComponentPartEditorProps]>
+
+export const MemoriesEditor: React.FC<CharacterSupportedEditorProps> = ({ component, changeComponentField }) => {
     const { t } = useTranslation()
+
     const changeMemory = useCallback(
         (key: string, memory: PossibleMemory) => {
             changeComponentField('memory', {
@@ -292,24 +501,153 @@ export const MemoriesEditor: React.FC<ComponentPartEditorProps> = ({ component, 
 
     return (
         <div className={'flex w-full flex-col items-start gap-2 px-5'}>
-            {Object.entries(component.memory).map(([memory_key, memory], index) => {
-                return (
-                    <div key={index}>
-                        <Tooltip>
-                            <TooltipTrigger>
-                                <div className={'cursor-default text-t-smaller font-bold'}>
-                                    {capitalizeFirstLetter(t(memory.display_name))}
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                {memory_key}
-                                {memory.internal ? ' (internal)' : ''}
-                            </TooltipContent>
-                        </Tooltip>
-                        <IndividualMemoryEditor memory_key={memory_key} memory={memory} change={changeMemory} />
-                    </div>
-                )
-            })}
+            {
+                // if there are no memories, then we show a message
+                Object.entries(component.memory).map(([memory_key, memory], index) => {
+                    return (
+                        <>
+                            <IndividualMemoryEditor
+                                memory_key={memory_key}
+                                memory={memory}
+                                change={changeMemory}
+                                key={index}
+                            />
+                            <Separator key={'sep-' + index} />
+                        </>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+export const CreateNewMemory: React.FC<CharacterSupportedEditorProps> = (props) => {
+    const { t } = useDualTranslation('local', { keyPrefix: 'editor' })
+    const [key, setKey] = React.useState('new_key')
+    const [memory, setMemory] = React.useState<PossibleMemory>({
+        type: 'string',
+        value: '',
+        display_name: '',
+        display_value: '',
+        internal: false,
+    } as PossibleMemory)
+
+    return (
+        <div className={'flex flex-col gap-4'}>
+            <IndividualMemoryEditor
+                memory_key={key}
+                memory={memory}
+                change={(innerKey, memory) => {
+                    setKey(innerKey)
+                    setMemory(memory)
+                }}
+                defaultSimplified={false}
+            />
+            <Button
+                onClick={() => {
+                    if (key === '') {
+                        return
+                    }
+                    props.changeComponentField('memory', {
+                        ...props.component.memory,
+                        [key]: memory,
+                    })
+                }}
+            >
+                {t('memories.btn-add')}
+            </Button>
+        </div>
+    )
+}
+
+export const CreateNewMemoryWithAccordion: React.FC<CharacterSupportedEditorProps> = (props) => {
+    const { t } = useDualTranslation('local', { keyPrefix: 'editor' })
+    return (
+        <Accordion type={'single'} collapsible>
+            <AccordionItem value={'add-new-memory'}>
+                <AccordionTrigger className={'text-t-small'}>{t('memories.add')}</AccordionTrigger>
+                <AccordionContent>
+                    <CreateNewMemory {...props} />
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+    )
+}
+
+const IndividualTagEditor: React.FC<{
+    tag: string
+    deleteSelf: () => void
+}> = ({ tag, deleteSelf }) => {
+    const { t } = useTranslation()
+    return (
+        <Badge variant={'outline'}>
+            <p>{t(addPrefixBeforeDLC(tag, 'tags'))}</p>
+            <Button
+                onClick={() => {
+                    deleteSelf()
+                }}
+                className={'ml-1 h-4 w-4 rounded-none p-0'}
+                variant={'ghost'}
+            >
+                <FaX />
+            </Button>
+        </Badge>
+    )
+}
+
+const AddNewTag: React.FC<{ addTag: (tag: string) => void }> = ({ addTag }) => {
+    const [tag, setTag] = React.useState('')
+    const { t } = useDualTranslation('local', { keyPrefix: 'editor' })
+    return (
+        <div className={'flex flex-row gap-2 p-1'}>
+            <Input
+                type={'text'}
+                value={tag}
+                onChange={(e) => {
+                    setTag(e.target.value)
+                }}
+                placeholder={t('tags.add')}
+            />
+            <Button
+                onClick={() => {
+                    addTag(tag)
+                    setTag('')
+                }}
+            >
+                {t('tags.btn-add')}
+            </Button>
+        </div>
+    )
+}
+
+export const TagsEditor: React.FC<CharacterSupportedEditorProps> = ({ component, changeComponentField }) => {
+    // tags is an array of descriptors, which are help to categorize the component
+    // currently, there is no registry of these tags, so we allow to add any string
+    // when displayed, tags are rendered with prefix `<dlc_tag>:tags.<remaining_tag>`
+
+    return (
+        <div className={'flex flex-col gap-2'}>
+            <div id={'existing-tags'}>
+                {component.tags.map((tag, index) => {
+                    return (
+                        <IndividualTagEditor
+                            key={index}
+                            tag={tag}
+                            deleteSelf={() => {
+                                const newTags = [...component.tags]
+                                newTags.splice(index, 1)
+                                changeComponentField('tags', newTags)
+                            }}
+                        />
+                    )
+                })}
+            </div>
+            {component.tags && component.tags.length > 0 ? <Separator /> : null}
+            <AddNewTag
+                addTag={(tag) => {
+                    changeComponentField('tags', [...component.tags, tag])
+                }}
+            />
         </div>
     )
 }

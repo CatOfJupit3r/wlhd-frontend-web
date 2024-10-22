@@ -8,6 +8,8 @@ import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { cn } from '@utils'
 import { useState } from 'react'
+import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
+import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor'
 
 const CharacterEditorMenus = () => {
     const { flags } = useCharacterEditorContext()
@@ -51,6 +53,11 @@ const CharacterEditorMenus = () => {
                         icon: StatusEffectsIcon,
                         disabled: flags.exclude?.statusEffects,
                     },
+                    {
+                        value: 'misc',
+                        icon: MdOutlineAutoAwesomeMosaic,
+                        disabled: flags.exclude?.characterMemory,
+                    },
                 ]
                     .map(({ value, icon, disabled }) => (
                         <ToggleGroupItem key={value} value={value} disabled={disabled ?? false}>
@@ -73,6 +80,8 @@ const CharacterEditorMenus = () => {
                     switch (menu) {
                         case 'attribute':
                             return <AttributesEditor />
+                        case 'misc':
+                            return <CharacterMiscEditor />
                         case 'item':
                         case 'weapon':
                         case 'spell':
