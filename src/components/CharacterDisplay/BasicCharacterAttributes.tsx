@@ -4,10 +4,7 @@ import { useMemo } from 'react'
 import { GiHeartPlus } from 'react-icons/gi'
 import { IoShieldSharp } from 'react-icons/io5'
 import { PiSneakerMoveFill } from 'react-icons/pi'
-
-const getPercentage = (current: number, max: number): number => {
-    return Math.max(Math.min((current / (max || 1)) * 100, 100), 0)
-}
+import { getPercentage } from '@utils/getPercentage'
 
 const BasicCharacterAttributes = ({
     attributes,

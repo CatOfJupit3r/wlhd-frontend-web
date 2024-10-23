@@ -17,7 +17,7 @@ import {
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels'
 import { OneOf } from '@models/OneOf'
 import { capitalizeFirstLetter, cn } from '@utils'
-import { addPrefixBeforeDLC } from '@utils/stringTools'
+import { PrefixCollection } from '@utils/gameDisplayTools'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
@@ -484,8 +484,6 @@ type CharacterEditorProps = {
 type CharacterSupportedEditorProps = OneOf<[CharacterEditorProps, ComponentPartEditorProps]>
 
 export const MemoriesEditor: React.FC<CharacterSupportedEditorProps> = ({ component, changeComponentField }) => {
-    const { t } = useTranslation()
-
     const changeMemory = useCallback(
         (key: string, memory: PossibleMemory) => {
             changeComponentField('memory', {
@@ -581,7 +579,7 @@ const IndividualTagEditor: React.FC<{
     const { t } = useTranslation()
     return (
         <Badge variant={'outline'}>
-            <p>{t(addPrefixBeforeDLC(tag, 'tags'))}</p>
+            <p>{t(PrefixCollection.tags(tag))}</p>
             <Button
                 onClick={() => {
                     deleteSelf()

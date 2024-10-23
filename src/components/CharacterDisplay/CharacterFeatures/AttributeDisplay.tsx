@@ -1,9 +1,9 @@
 import { Separator } from '@components/ui/separator'
 import { EntityAttributes } from '@models/GameModels'
 import { capitalizeFirstLetter, splitDescriptor } from '@utils'
+import { extractDualAttributes } from '@utils/gameDisplayTools'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
 
 const addPrefix = (prefix: string, value: string): string => {
     const [dlc, key] = splitDescriptor(value)
@@ -15,9 +15,7 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
 
     return (
         <div className={'mb-0.5 flex flex-row justify-between text-t-small'}>
-            <p className={'font-normal'}>{capitalizeFirstLetter(
-                t(addPrefix('attributes', name))
-            )}</p>
+            <p className={'font-normal'}>{capitalizeFirstLetter(t(addPrefix('attributes', name)))}</p>
             <p className={'font-bold'}>{value}</p>
         </div>
     )
@@ -52,40 +50,9 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes
         key: string
         value: string
     }> => {
-        const found_attribute_names = new Set<string>()
-        const found_attributes: Array<{ key: string; value: string }> = []
-        for (const attribute in attributes) {
-            if (ignored.includes(attribute) || found_attribute_names.has(attribute)) continue
-            if (attribute.endsWith('_attack')) {
-                const attribute_name = attribute.slice(0, -7)
-                const defense_attribute = `${attribute_name}_defense`
-                if (attributes[defense_attribute]) {
-                    found_attributes.push({
-                        key: attribute_name,
-                        value: `${attributes[attribute]}/${attributes[defense_attribute]}`,
-                    })
-
-                    found_attribute_names.add(defense_attribute)
-                    found_attribute_names.add(attribute)
-                }
-            } else if (attribute.endsWith('_defense')) {
-                const attribute_name = attribute.slice(0, -8)
-                const attack_attribute = `${attribute_name}_attack`
-                if (attributes[attack_attribute]) {
-                    found_attributes.push({
-                        key: attribute_name,
-                        value: `${attributes[attack_attribute]}/${attributes[attribute]}`,
-                    })
-
-                    found_attribute_names.add(attribute_name)
-                    found_attribute_names.add(`${attribute_name}_attack`)
-                }
-            }
-        }
-
-        addManyIgnored(...found_attribute_names)
-
-        return found_attributes
+        const [extracted, extractedNames] = extractDualAttributes(attributes, ignored)
+        addManyIgnored(...extractedNames)
+        return extracted
     }, [])
 
     const extractSingulars = useCallback((): Array<{ key: string; value: string }> => {
