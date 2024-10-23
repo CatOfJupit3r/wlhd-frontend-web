@@ -1,6 +1,7 @@
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import reactHooksEslint from 'eslint-plugin-react-hooks'
 import tsParser from '@typescript-eslint/parser'
 import globals from 'globals'
 import path from 'node:path'
@@ -19,6 +20,7 @@ export default [
     {
         plugins: {
             '@typescript-eslint': typescriptEslint,
+            'react-hooks': reactHooksEslint,
         },
 
         languageOptions: {
