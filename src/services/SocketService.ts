@@ -78,6 +78,7 @@ class SocketService {
         })
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private addBatchOfEventsListener(listeners: { [key: string]: (...args: any[]) => void }) {
         for (const [event, callback] of Object.entries(listeners)) {
             this.socket.removeListener(event)

@@ -103,7 +103,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                 <div id={'max-active-spells-editor'}>
                     <div>
                         <Label>
-                            {t('spellBook.max-spells', {
+                            {t('spell.max-spells', {
                                 maxSpells: '256',
                             })}
                         </Label>

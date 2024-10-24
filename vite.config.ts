@@ -1,4 +1,5 @@
-import react from '@vitejs/plugin-react-swc'
+// import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { defineConfig } from 'vite'
@@ -33,8 +34,20 @@ function emptySourcemapFix() {
     }
 }
 
+const ReactCompilerConfig = {
+    target: '18',
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
     base: '/',
-    plugins: [react(), tsconfigPaths(), emptySourcemapFix() as unknown as Plugin],
+    plugins: [
+        react({
+            babel: {
+                plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
+            },
+        }),
+        tsconfigPaths(),
+        emptySourcemapFix() as unknown as Plugin,
+    ],
 })

@@ -4,7 +4,7 @@ import Overlay from '@components/Overlay'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'
 import {
-    buildCharacterEditorProps,
+    useBuildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
 } from '@context/CharacterEditorProvider'
@@ -39,7 +39,7 @@ const CharacterEditorMenu = () => {
         character: editedCharacter,
         changeEditedCharacter,
         resetCharacter,
-    } = buildCharacterEditorProps({ ...character } as CharacterDataEditable)
+    } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable)
     const { fetchCharacter } = useCoordinatorEntitiesContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',

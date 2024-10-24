@@ -3,8 +3,6 @@ import styles from './Decoration.module.css'
 
 import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { cn } from '@utils'
-import { useSelector } from 'react-redux'
-import { selectActiveEntity } from '@redux/slices/gameScreenSlice'
 
 const Decoration = ({ square }: { square: string }) => {
     const { battlefield } = useBattlefieldContext()

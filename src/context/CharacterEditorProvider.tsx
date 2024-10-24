@@ -75,7 +75,7 @@ export const CharacterEditorProvider = ({
     return <CharacterEditorContext.Provider value={value}>{children}</CharacterEditorContext.Provider>
 }
 
-export const buildCharacterEditorProps = (character: CharacterDataEditable) => {
+export const useBuildCharacterEditorProps = (character: CharacterDataEditable) => {
     const [editedCharacter, setEditedCharacter] = useState(character)
 
     const resetCharacter = useCallback(() => {

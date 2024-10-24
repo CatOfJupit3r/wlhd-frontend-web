@@ -35,7 +35,7 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     })
-    const { character, updateCharacter, mode } = useCharacterEditorContext()
+    const { character, updateCharacter } = useCharacterEditorContext()
 
     const dataContext = useDataContext()
 

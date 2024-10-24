@@ -1,6 +1,6 @@
 import { CharacterDisplayInGame } from '@components/CharacterDisplay'
 import { selectActiveEntity, selectControlledEntities } from '@redux/slices/gameScreenSlice'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import styles from './ControlledEntitiesInfo.module.css'
 

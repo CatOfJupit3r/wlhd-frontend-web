@@ -53,6 +53,7 @@ const ENDPOINTS = {
 class APIService {
     private injectResponseMessageToError = (error: AxiosError) => {
         if (!error.response) return
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const message = (error.response?.data as any).message
         if (typeof message === 'string') error.message = message
     }
@@ -66,9 +67,11 @@ class APIService {
         url: string
         method: 'get' | 'post' | 'put' | 'delete' | 'patch'
         data?: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [_: string]: any
         }
         _retry?: boolean
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }): Promise<{ [key: string]: any }> => {
         console.log('Checking token expiration')
         if (AuthManager.isAccessTokenExpired()) {

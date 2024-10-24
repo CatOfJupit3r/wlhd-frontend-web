@@ -3,6 +3,7 @@ import js from '@eslint/js'
 import typescriptEslint from '@typescript-eslint/eslint-plugin'
 import reactHooksEslint from 'eslint-plugin-react-hooks'
 import tsParser from '@typescript-eslint/parser'
+import reactCompiler from 'eslint-plugin-react-compiler'
 import globals from 'globals'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -21,6 +22,7 @@ export default [
         plugins: {
             '@typescript-eslint': typescriptEslint,
             'react-hooks': reactHooksEslint,
+            'react-compiler': reactCompiler,
         },
 
         languageOptions: {
@@ -44,6 +46,8 @@ export default [
                 },
             ],
             '@typescript-eslint/no-use-before-defining': 'off',
+            'react-compiler/react-compiler': 'error',
+            'react-hooks/rules-of-hooks': 'error',
         },
     },
     {

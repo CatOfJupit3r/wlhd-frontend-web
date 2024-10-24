@@ -43,7 +43,7 @@ const Player = ({ player }: { player: LobbyState['players'][number] }) => {
 }
 
 const LobbyInformation = () => {
-    const { name, players, lobbyId, characters, combats, gm, layout } = useSelector(selectLobbyInfo)
+    const { name, players } = useSelector(selectLobbyInfo)
 
     return (
         <div className="flex justify-center bg-gradient-to-br p-4">

@@ -4,6 +4,7 @@ import ua_UK from '../locales/ua_UK.json'
 export const getLanguageFiles = (): {
     [key: string]: {
         local: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             [key: string]: string | any
         }
     }

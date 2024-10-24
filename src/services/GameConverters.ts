@@ -92,11 +92,11 @@ class GameConverters {
     : character.decorations,
      */
 
-    public convertEditableToInSave = (character: CharacterDataEditable): CharacterDataInSave => {
+    public convertEditableToInSave = (_character: CharacterDataEditable): CharacterDataInSave => {
         // TODO: implement
         return {} as CharacterDataInSave
     }
-    public convertEditableToInPreset = (character: CharacterDataEditable): CharacterDataInPreset => {
+    public convertEditableToInPreset = (_character: CharacterDataEditable): CharacterDataInPreset => {
         // TODO: implement
         return {} as CharacterDataInPreset
     }

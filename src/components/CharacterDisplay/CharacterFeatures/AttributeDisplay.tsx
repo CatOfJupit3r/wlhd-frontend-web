@@ -22,8 +22,6 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
 }
 
 const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes; ignore: Array<string> }) => {
-    const { t } = useTranslation()
-
     const [ignored, setIgnored] = useState<Array<string>>(ignore)
 
     const [dual, setDuals] = useState<Array<{ key: string; value: string }>>([])

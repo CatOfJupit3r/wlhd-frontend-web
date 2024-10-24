@@ -2,7 +2,6 @@ import GameScreen from '@components/GameScreen/GameScreen'
 import {
     resetGameScreenSlice,
     setActions,
-    setBattlefield,
     setControlledEntities,
     setMessages,
     setRound,
@@ -23,9 +22,9 @@ const GameTestPage = () => {
     const [loadedGameState, setLoadedGameState] = useState(false)
     const lobbyId = useSelector(selectLobbyId)
 
-    const dummySetActionOutput = useCallback(
-        (output: any) => {
-            console.log('DummySetActionOutput', output)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const dummySetActionOutput = useCallback((output: any) => {
+        console.log('DummySetActionOutput', output)
     }, [])
 
     useEffect(() => {
@@ -35,9 +34,13 @@ const GameTestPage = () => {
     useEffect(() => {
         // dispatch(setBattlefield(example_gamestate.battlefield))
         dispatch(setRound(999))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setControlledEntities(example_gamestate.controlledEntities as any))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setTurnOrder(example_gamestate.turnOrder as any))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setMessages(example_gamestate.messages as any))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setActions(example_gamestate.actions as any))
         dispatch(setYourTurn(true))
 

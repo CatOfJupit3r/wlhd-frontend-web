@@ -3,18 +3,15 @@ import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { useToast } from '@hooks/useToast'
-import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { apprf, checkHandle, checkPassword, cn } from '@utils'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 const SignIn = ({ className = '' }: { className?: string }) => {
     const navigate = useNavigate()
-    const dispatch = useDispatch<AppDispatch>()
     const { toastError } = useToast()
 
     const [handle, setHandle] = useState('admin')

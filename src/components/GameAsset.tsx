@@ -35,7 +35,7 @@ const GameAsset = ({ src, fallback, ...props }: GameAssetProps) => {
     )
 }
 
-export const CharacterGameAsset = ({ line, fallback, ...props }: GameAssetProps & { line: number }) => {
+export const CharacterGameAsset = ({ line, ...props }: GameAssetProps & { line: number }) => {
     return (
         <GameAsset
             {...props}

@@ -25,7 +25,7 @@ type ComponentEditorProps<T extends AllowedEditables> = {
 }
 
 const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React.FC<ComponentEditorProps<T>> => {
-    const created: React.FC<ComponentEditorProps<T>> = ({ component, setComponent, canBeActivated }) => {
+    const Created: React.FC<ComponentEditorProps<T>> = ({ component, setComponent, canBeActivated }) => {
         const { t } = useDualTranslation('local', { keyPrefix: 'editor' })
 
         const changeComponentField = useCallback(
@@ -61,7 +61,9 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                         <AccordionContent>
                             {type === 'weapon' || type === 'spell' ? (
                                 <div className={'flex flex-row items-center gap-2'}>
-                                    <Label className={'flex flex-row gap-1'}>Is active?</Label>
+                                    <Label className={'flex flex-row gap-1'}>
+                                        {t('shared.is-active')}
+                                    </Label>
                                     <ActivenessEditor
                                         component={component}
                                         changeComponentField={changeComponentField}
@@ -128,8 +130,8 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
             </div>
         )
     }
-    created.displayName = `${type}Editor`
-    return created
+    Created.displayName = `${type}Editor`
+    return Created
 }
 
 const ItemEditor = ComponentEditorFactory<ItemEditable>('item')

@@ -54,7 +54,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
     )
 
     return (
-        <div className={className.concat(` ${styles.playerInfoContainer}` || '')}>
+        <div className={`${className} ${styles.playerInfoContainer}`}>
             <h1>Players</h1>
             {players && players.length === 0 ? (
                 <p>No players</p>

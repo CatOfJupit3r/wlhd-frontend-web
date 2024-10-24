@@ -1,6 +1,5 @@
 import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels'
 import { ControlledBy } from '@models/EditorConversion'
-import { CharacterInTurnOrder } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id })

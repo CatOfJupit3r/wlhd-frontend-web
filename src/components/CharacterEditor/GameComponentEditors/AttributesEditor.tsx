@@ -62,10 +62,7 @@ const FancyAttributesWithBar = ({
 }) => {
     const { character } = useCharacterEditorContext()
     const { t } = useTranslation()
-    const percentage = useMemo(
-        () => getPercentage(character.attributes[current], character.attributes[max]),
-        [character.attributes[current], character.attributes[max]]
-    )
+    const percentage = getPercentage(character.attributes[current], character.attributes[max])
 
     return (
         <div className={'flex flex-col gap-3 py-2 text-t-small'}>
@@ -231,7 +228,12 @@ const AttributesEditor = () => {
                 <>
                     {duals.map(({ value, key }, index) => {
                         return (
-                            <DualAttributeEditor key={index} attributeKey={key} value={value} setAttribute={setAttribute} />
+                            <DualAttributeEditor
+                                key={index}
+                                attributeKey={key}
+                                value={value}
+                                setAttribute={setAttribute}
+                            />
                         )
                     })}
                     <Separator />

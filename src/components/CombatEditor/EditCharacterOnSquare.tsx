@@ -11,9 +11,9 @@ import {
     SelectValue,
 } from '@components/ui/select'
 import {
-    buildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
+    useBuildCharacterEditorProps,
 } from '@context/CharacterEditorProvider'
 import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
@@ -65,10 +65,10 @@ const EditCharacterControls = ({
                             onValueChange={(value) => {
                                 let changeTo
                                 const character = battlefield[clickedSquare as string].controlInfo
-                                if (character.type === value && (character as any).id) {
+                                if (character.type === value && character.id) {
                                     changeTo = {
                                         type: value,
-                                        id: (character as any).id,
+                                        id: character.id,
                                     }
                                 } else {
                                     changeTo = {
@@ -156,7 +156,7 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
     const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext()
     const { battlefield } = useCombatEditorContext()
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character')
-    const { character, changeEditedCharacter, resetCharacter } = buildCharacterEditorProps(
+    const { character, changeEditedCharacter, resetCharacter } = useBuildCharacterEditorProps(
         battlefield[clickedSquare as string]
     )
     const [newControls, setNewControls] = useState<{

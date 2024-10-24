@@ -71,7 +71,7 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
         if (buttonRef.current) {
             setButtonWidth(buttonRef.current.offsetWidth)
         }
-    }, [buttonRef.current?.offsetWidth])
+    }, [buttonRef])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

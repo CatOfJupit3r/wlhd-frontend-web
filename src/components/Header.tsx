@@ -38,6 +38,62 @@ const Header = () => {
         }
     }, [])
 
+    const sections: Array<
+        Array<{
+            name: string
+            action: () => void
+            icon: IconType
+            className?: string | undefined
+            disabled?: boolean | undefined
+        }>
+    > = useMemo(() => {
+        return [
+            [
+                {
+                    name: 'Profile',
+                    action: redirect(paths.profile, 'path'),
+                    icon: LuUser,
+                },
+                {
+                    name: 'Recent Lobby',
+                    action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
+                    icon: LuMenuSquare,
+                    disabled: !lobbyId,
+                },
+            ],
+            [
+                {
+                    name: 'Rulebook',
+                    action: redirect('rulebook', 'path'),
+                    icon: FaBook,
+                },
+                {
+                    name: 'World Description',
+                    action: redirect('world-description', 'path'),
+                    icon: FaBookOpen,
+                },
+                {
+                    name: 'How to',
+                    action: redirect('how-to', 'path'),
+                    icon: IoLogoBuffer,
+                },
+            ],
+            [
+                {
+                    name: 'Game Test',
+                    action: redirect(paths.gameTest, 'path'),
+                    icon: BiSolidCog,
+                },
+                {
+                    name: 'Logout',
+                    action: () => AuthManager.logout(),
+                    icon: BiLogOut,
+                    className: 'text-red-500 hover:text-red-700',
+                },
+            ],
+        ]
+    }, [redirect])
+
     const AuthLinks = useCallback(() => {
         return (
             <>
@@ -57,62 +113,6 @@ const Header = () => {
     }, [])
 
     const LoggedInLinks = useCallback(() => {
-        const sections: Array<
-            Array<{
-                name: string
-                action: () => void
-                icon: IconType
-                className?: string | undefined
-                disabled?: boolean | undefined
-            }>
-        > = useMemo(() => {
-            return [
-                [
-                    {
-                        name: 'Profile',
-                        action: redirect(paths.profile, 'path'),
-                        icon: LuUser,
-                    },
-                    {
-                        name: 'Recent Lobby',
-                        action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
-                        icon: LuMenuSquare,
-                        disabled: !lobbyId,
-                    },
-                ],
-                [
-                    {
-                        name: 'Rulebook',
-                        action: redirect('rulebook', 'path'),
-                        icon: FaBook,
-                    },
-                    {
-                        name: 'World Description',
-                        action: redirect('world-description', 'path'),
-                        icon: FaBookOpen,
-                    },
-                    {
-                        name: 'How to',
-                        action: redirect('how-to', 'path'),
-                        icon: IoLogoBuffer,
-                    },
-                ],
-                [
-                    {
-                        name: 'Game Test',
-                        action: redirect(paths.gameTest, 'path'),
-                        icon: BiSolidCog,
-                    },
-                    {
-                        name: 'Logout',
-                        action: () => AuthManager.logout(),
-                        icon: BiLogOut,
-                        className: 'text-red-500 hover:text-red-700',
-                    },
-                ],
-            ]
-        }, [redirect])
-
         return (
             <>
                 <DropdownMenu modal={false}>
