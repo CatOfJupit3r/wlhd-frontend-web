@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-import { ShortLobbyInformation, UserInformation } from '@models/APIData'
+import { iUserAvatarProcessed, ShortLobbyInformation, UserInformation } from '@models/APIData'
 import {
     CharacterDataEditable,
     ItemEditable,
@@ -48,6 +48,7 @@ const ENDPOINTS = {
         `${VITE_BACKEND_APP}/lobbies/${lobbyId}/characters/${descriptor}`,
     GET_TRANSLATIONS: (languages: Array<string>, dlcs: Array<string>) =>
         `${VITE_BACKEND_APP}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`,
+    GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_APP}/user/${handle}/avatar`,
 }
 
 class APIService {
@@ -407,6 +408,27 @@ class APIService {
             method: 'put',
             data,
         })
+    }
+
+    public getUserAvatar = async (handle: string): Promise<string> => {
+        const res = (await this.fetch({
+            url: ENDPOINTS.GET_USER_AVATAR(handle),
+            method: 'get',
+        })) as iUserAvatarProcessed | string | unknown
+        if (typeof res === 'string') return res
+        if (
+            typeof res === 'object' &&
+            res !== null &&
+            'type' in res &&
+            'content' in res &&
+            typeof res.content === 'string'
+        ) {
+            if (res.type === 'static') return res.content
+            else if (res.type === 'generated') {
+                return `data:image/png;base64,${res.content}`
+            }
+        }
+        return ''
     }
 }
 

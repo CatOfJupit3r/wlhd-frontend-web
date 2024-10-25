@@ -25,12 +25,6 @@
     gap: 0.5rem;
 }
 
-.player img {
-    float: left;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.5rem;
-}
 
 .player p {
     text-align: justify;

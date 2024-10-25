@@ -5,8 +5,22 @@ export interface ShortLobbyInformation {
     characters: Array<string>
 }
 
+export interface iUserAvatarInDB {
+    preferred: 'static' | 'generated'
+    url: string
+    generated: {
+        pattern: string
+        mainColor: string
+        secondaryColor: string
+    }
+}
+
+export interface iUserAvatarProcessed {
+    type: 'static' | 'generated'
+    content: string // url or base64
+}
+
 export interface UserInformation {
-    avatar: string
     handle: string
     createdAt: string
     joined: Array<string>

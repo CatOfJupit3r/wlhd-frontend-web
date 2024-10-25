@@ -5,7 +5,6 @@ import { RootState } from '../store'
 
 const initialState: CosmeticsState = {
     user: {
-        avatar: '',
         handle: '',
         createdAt: '',
         joined: [],

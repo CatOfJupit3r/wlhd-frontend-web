@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styles from './PlayerInfo.module.css'
+import UserAvatar from '@components/UserAvatars'
 
 const PlayerInfo = ({ className }: { className: string }) => {
     const { players, characters } = useSelector(selectLobbyInfo)
@@ -20,7 +21,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
         ({ player }: { player: LobbyPlayerInfo }) => {
             return (
                 <div className={styles.player}>
-                    <img src={'https://placehold.co/50x50'} alt={player.nickname} />
+                    <UserAvatar handle={player.handle} className={'size-11'} />
                     <div>
                         <p>
                             {player.nickname} (@{player.handle})

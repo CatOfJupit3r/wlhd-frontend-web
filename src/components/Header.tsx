@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
-import UserAvatar from '@components/UserAvatar'
+import { CurrentUserAvatar } from '@components/UserAvatars'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
@@ -26,7 +26,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
-    const { avatar, handle } = useSelector(selectUserInformation)
+    const { handle } = useSelector(selectUserInformation)
     const lobbyId = useSelector(selectLobbyId)
     const navigate = useNavigate()
 
@@ -118,7 +118,7 @@ const Header = () => {
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <div>
-                            <UserAvatar className={'unselectable cursor-pointer text-black'} />
+                            <CurrentUserAvatar className={'unselectable cursor-pointer text-black'} />
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
@@ -141,7 +141,7 @@ const Header = () => {
                 </DropdownMenu>
             </>
         )
-    }, [lobbyId, avatar, handle])
+    }, [lobbyId, handle])
 
     const Navigation = useCallback(() => {
         return (

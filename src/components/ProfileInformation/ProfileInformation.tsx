@@ -5,12 +5,12 @@ import { Button } from '@components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
 import { Input } from '@components/ui/input'
 import { Separator } from '@components/ui/separator'
+import { CurrentUserAvatar } from '@components/UserAvatars'
 import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
 import { Calendar, Gamepad, Trophy } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import UserAvatar from '@components/UserAvatar'
 
 const ProfileInformation = () => {
     const { handle, joined, createdAt } = useSelector(selectUserInformation)
@@ -26,7 +26,7 @@ const ProfileInformation = () => {
                 <CardHeader className="relative pb-0">
                     <div className="absolute left-0 top-0 h-32 w-full rounded-t-lg bg-gradient-to-r from-blue-400 to-purple-400" />
                     <div className="relative flex items-center space-x-4">
-                        <UserAvatar className={'size-32'}/>
+                        <CurrentUserAvatar className={'size-32'} />
                         <div className="rounded-2xl bg-white p-2 shadow-lg">
                             <CardTitle className="text-t-bigger font-bold">@{handle}</CardTitle>
                         </div>

@@ -1,9 +1,9 @@
-import GameAsset from '@components/GameAsset'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { AwaitingButton } from '@components/ui/button'
 import { Combobox } from '@components/ui/combobox'
 import { Separator } from '@components/ui/separator'
 import { StaticSkeleton } from '@components/ui/skeleton'
+import UserAvatar from '@components/UserAvatars'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
@@ -38,11 +38,7 @@ const PlainListOfPlayers = () => {
                 .map((player, index) => {
                     return (
                         <div key={index} className={'relative flex flex-row items-center gap-2'}>
-                            <GameAsset
-                                src={{ dlc: 'coordinator', descriptor: player.avatar }}
-                                alt={player.handle}
-                                className={'size-8'}
-                            />
+                            <UserAvatar handle={player.handle} className={'size-8'} />
                             <p className={'max-w-[75%]'}>@{player.handle}</p>
                             <AwaitingButton
                                 id={'remove-player'}
@@ -90,11 +86,7 @@ const AddNewPlayer = () => {
                         value: player.userId,
                         label: player.handle,
                         icon: () => (
-                            <GameAsset
-                                src={{ dlc: 'coordinator', descriptor: player.avatar }}
-                                alt={player.handle}
-                                className={'size-8'}
-                            />
+                            <UserAvatar handle={player.handle} className={'size-8'} style={{ borderRadius: '50%' }} />
                         ),
                     }))}
                 value={playerToAdd}
