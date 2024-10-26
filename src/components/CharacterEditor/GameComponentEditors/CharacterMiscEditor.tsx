@@ -41,7 +41,7 @@ const CharacterMiscEditor = () => {
             <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
                 <p className={'text-center text-t-normal'}>{t('memories.title')}</p>
                 <CreateNewMemoryWithAccordion component={character} changeComponentField={editMemoryCallback} />
-                {Object.keys(character.memory).length === 0 ? (
+                {character.memory && Object.keys(character.memory).length === 0 ? (
                     <EmptyMenuContent />
                 ) : (
                     <MemoriesEditor component={character} changeComponentField={editMemoryCallback} />

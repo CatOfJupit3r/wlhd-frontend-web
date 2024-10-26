@@ -9,7 +9,7 @@ import { GameComponentDecoration, GameComponentMemory } from '@models/GameModels
 
 interface CommonEditableField {
     decorations: GameComponentDecoration
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
     tags: Array<string>
 }
 
@@ -75,7 +75,7 @@ export type CharacterDataEditable = {
 
     decorations: GameComponentDecoration
     tags: Array<string>
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
     id_: string
 }
 
@@ -137,7 +137,7 @@ export interface CharacterDataInPreset {
 
     decorations: GameComponentDecoration
     tags: Array<string>
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
     id?: string
 }
 
@@ -171,6 +171,6 @@ export interface CharacterDataInSave {
 
     decorations: GameComponentDecoration
     tags: Array<string>
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
     id_?: string
 }

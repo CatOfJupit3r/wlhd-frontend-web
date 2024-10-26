@@ -75,7 +75,7 @@ export interface EntityInfoFull {
     }
     statusEffects: Array<StatusEffectInfo>
     tags: Array<string>
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
 }
 
 export interface EntityAttributes {
@@ -84,7 +84,7 @@ export interface EntityAttributes {
 
 interface CommonGameComponentInfoFields {
     decorations: GameComponentDecoration
-    memory: GameComponentMemory
+    memory: GameComponentMemory | null
     tags: Array<string>
 }
 
