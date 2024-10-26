@@ -10,6 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select'
+import UserAvatar from '@components/UserAvatars'
 import {
     CharacterEditorContextType,
     CharacterEditorProvider,
@@ -114,7 +115,12 @@ const EditCharacterControls = ({
 
                                             {lobby.players.map((player) => (
                                                 <SelectItem key={player.userId} value={player.userId}>
-                                                    {player.nickname} (@{player.handle})
+                                                    <div className={'flex flex-row items-center'}>
+                                                        <UserAvatar handle={player.handle} className={'mr-2 size-8 shadow-none'} />
+                                                        <p>
+                                                            {player.nickname} (@{player.handle})
+                                                        </p>
+                                                    </div>
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
