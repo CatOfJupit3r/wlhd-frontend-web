@@ -47,23 +47,31 @@ const ComponentMemory: React.FC<
     } & HTMLAttributes<HTMLLIElement>
 > = ({ memory, ...props }) => {
     const { t } = useTranslation()
-    const { type, value, display_name, internal } = memory
+    const { type, value, display_name, display_value, internal } = memory
 
     const DisplayedValue = useCallback(() => {
         let displayed = ''
 
-        switch (type) {
-            case 'dice':
-                if (typeof value == 'object' && value && 'amount' in value && 'sides' in value) {
-                    displayed = t('local:game.info_display.memories.dice', {
-                        amount: value.amount,
-                        sides: value.sides,
-                    })
+        if (!value && !display_value) {
+            displayed = '-'
+        } else {
+            if (display_value) {
+                displayed = t(display_value)
+            } else {
+                switch (type) {
+                    case 'dice':
+                        if (typeof value == 'object' && value && 'amount' in value && 'sides' in value) {
+                            displayed = t('local:game.info_display.memories.dice', {
+                                amount: value.amount,
+                                sides: value.sides,
+                            })
+                        }
+                        break
+                    default:
+                        displayed = JSON.stringify(value)
+                        break
                 }
-                break
-            default:
-                displayed = JSON.stringify(value)
-                break
+            }
         }
 
         return <p className={internal ? 'text-gray-400' : ''}>{displayed}</p>
@@ -210,6 +218,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
         if (!memories || Object.keys(memories).length === 0) {
             return null
         }
+        console.log(memories)
         return (
             <div id={'method-variables'} className={'mt-2 flex flex-col items-center gap-1 px-8 text-t-small'}>
                 <ul>

@@ -8,7 +8,6 @@ import {
     verifyCombatEditorLocalStorage,
 } from '@components/CombatEditor/CombatEditorLocalStorage'
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare'
-import mock_save_file from '@components/CombatEditor/mock_save_file'
 import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
@@ -20,6 +19,7 @@ import { Battlefield as BattlefieldModel } from '@models/GameModels'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
+import EditorHelpers from '@utils/editorHelpers'
 import { AxiosError } from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -198,7 +198,8 @@ const CombatEditor = () => {
 
     const lobby = useSelector(selectLobbyInfo)
 
-    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round } = useCombatEditorContext()
+    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages } =
+        useCombatEditorContext()
 
     const [clickedSquare, setClickedSquare] = useState<string | null>(null)
     const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null)
@@ -231,32 +232,29 @@ const CombatEditor = () => {
     }, [lobby])
 
     const handlePlayButton = useCallback(async () => {
-        // let minifiedCombat
-        // try {
-        // minifiedCombat = minifyCombat(battlefield)
-        // console.log(minifiedCombat)
-        // } catch (e: unknown) {
-        //     console.log(e)
-        //     toastError({ title: t('local:error'), description: e instanceof Error ? e.message : 'Unknown error' })
-        //     resetCombatEditor()
-        //     if (presetDetails) {
-        //         removeCombatEditorLocalStorage(presetDetails.presetID)
-        //         setPresetDetails(null)
-        //     }
-        //     return
-        // }
         try {
             const { combat_id } = await APIService.createLobbyCombat(
                 lobby.lobbyId,
                 'Combat from Editor',
-                mock_save_file
+                EditorHelpers.convertGameEditorSaveToExportable({
+                    battlefield,
+                    turnOrder,
+                    activeCharacterIndex,
+                    round,
+                    messages,
+                })
             )
             navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id))
         } catch (e) {
             if (e instanceof AxiosError) {
-                toastError({ title: t('local:error'), description: e.response?.data.message })
+                toastError({
+                    title: t('Something went wrong during save handling'),
+                    description: e.response?.data.message,
+                })
+                console.log(e.response?.data)
+            } else {
+                console.error(e)
             }
-            console.error(e)
         }
     }, [battlefield, lobby, resetCombatEditor, t])
 
@@ -300,6 +298,7 @@ const CombatEditor = () => {
                                         turnOrder,
                                         activeCharacterIndex,
                                         round,
+                                        messages,
                                     },
                                     lobby?.lobbyId
                                 )

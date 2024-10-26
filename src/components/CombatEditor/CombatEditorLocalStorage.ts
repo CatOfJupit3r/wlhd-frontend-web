@@ -1,14 +1,9 @@
-import { CombatEditorContextType } from '@context/CombatEditorContext'
+import { CombatEditorSaveType } from '@context/CombatEditorContext'
 
 interface SavedPreset {
     nickName: string
     lobbyID: string
-    data: {
-        battlefield: CombatEditorContextType['battlefield']
-        turnOrder: CombatEditorContextType['turnOrder']
-        round: CombatEditorContextType['round']
-        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
-    }
+    data: CombatEditorSaveType
 }
 
 type SavedPresetExtracted = SavedPreset & { presetID: string }

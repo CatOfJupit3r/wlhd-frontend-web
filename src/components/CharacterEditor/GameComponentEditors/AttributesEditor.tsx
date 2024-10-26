@@ -186,7 +186,6 @@ const AttributesEditor = () => {
                 .flat(),
             ...dualsKeys,
         ]
-        console.log(handledAttributes)
 
         if (JSON.stringify(handledAttributes) !== JSON.stringify(handledByOther)) {
             setHandledByOther(handledAttributes)

@@ -343,10 +343,10 @@ const MemoryTypeEditor: React.FC<{
             <SelectContent>
                 <SelectGroup>
                     <SelectItem value={'string'}>{t('supported-types.string')}</SelectItem>
-                    <SelectItem value={'number'}>{t("supported-types.number")}</SelectItem>
-                    <SelectItem value={'boolean'}>{t("supported-types.boolean")}</SelectItem>
-                    <SelectItem value={'dice'}>{t("supported-types.dice")}</SelectItem>
-                    <SelectItem value={'component_id'}>{t("supported-types.component-id")}</SelectItem>
+                    <SelectItem value={'number'}>{t('supported-types.number')}</SelectItem>
+                    <SelectItem value={'boolean'}>{t('supported-types.boolean')}</SelectItem>
+                    <SelectItem value={'dice'}>{t('supported-types.dice')}</SelectItem>
+                    <SelectItem value={'component_id'}>{t('supported-types.component-id')}</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>
@@ -385,7 +385,7 @@ const IndividualMemoryEditor: React.FC<{
                         setSimplified(e.target.checked)
                     }}
                 />
-                <Label>{t("simplified")}</Label>
+                <Label>{t('simplified')}</Label>
             </div>
             {simplified ? (
                 <Tooltip>
@@ -503,15 +503,12 @@ export const MemoriesEditor: React.FC<CharacterSupportedEditorProps> = ({ compon
                 // if there are no memories, then we show a message
                 Object.entries(component.memory).map(([memory_key, memory], index) => {
                     return (
-                        <>
-                            <IndividualMemoryEditor
-                                memory_key={memory_key}
-                                memory={memory}
-                                change={changeMemory}
-                                key={index}
-                            />
-                            <Separator key={'sep-' + index} />
-                        </>
+                        <IndividualMemoryEditor
+                            memory_key={memory_key}
+                            memory={memory}
+                            change={changeMemory}
+                            key={index}
+                        />
                     )
                 })
             }

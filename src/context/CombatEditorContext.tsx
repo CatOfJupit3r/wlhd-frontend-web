@@ -1,11 +1,19 @@
 import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels'
 import { ControlledBy } from '@models/EditorConversion'
+import { GameStateContainer } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id })
 export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id })
 export const CONTROLLED_BY_GAME_LOGIC = { type: 'game_logic' }
 
+export type CombatEditorSaveType = {
+    battlefield: CombatEditorContextType['battlefield']
+    turnOrder: CombatEditorContextType['turnOrder']
+    messages: GameStateContainer
+    round: CombatEditorContextType['round']
+    activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
+}
 
 export interface CombatEditorContextType {
     mode: 'save' | 'preset'
@@ -13,6 +21,7 @@ export interface CombatEditorContextType {
     battlefield: {
         [square: string]: CharacterDataEditableInCombat
     }
+    messages: GameStateContainer
     turnOrder: Array<string>
     activeCharacterIndex: number
 
@@ -26,14 +35,13 @@ export interface CombatEditorContextType {
     addCharacterToTurnOrder: (characterId: string) => void
     makeCharacterActive: (index: number) => void
 
+    addGameMessage: (message: GameStateContainer[number]) => void
+    deleteGameMessage: (index: number) => void
+    changeGameMessage: (index: number, message: GameStateContainer[number]) => void
+
     setMode: (mode: CombatEditorContextType['mode']) => void
 
-    changePreset: (newData: {
-        battlefield: CombatEditorContextType['battlefield']
-        turnOrder: CombatEditorContextType['turnOrder']
-        round: CombatEditorContextType['round']
-        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
-    }) => void
+    changePreset: (newData: CombatEditorSaveType) => void
     resetPreset: () => void
 }
 
@@ -44,6 +52,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [round, setRound] = useState(0)
     const [turnOrder, setTurnOrder] = useState<CombatEditorContextType['turnOrder']>([])
     const [activeCharacterIndex, setActiveCharacterIndex] = useState(0)
+    const [messages, setMessages] = useState<GameStateContainer>([])
     const [mode, setMode] = useState<CombatEditorContextType['mode']>('save')
 
     const addCharacter = useCallback(
@@ -75,11 +84,16 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
 
     const updateCharacter = useCallback((square: string, character: CharacterDataEditable) => {
         setBattlefield((prev) => {
+            const [line, column] = square.split(',').map((n) => parseInt(n))
             return {
                 ...prev,
                 [square]: {
                     ...prev[square],
                     ...character,
+                    square: {
+                        line,
+                        column,
+                    },
                 },
             }
         })
@@ -101,12 +115,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         })
     }, [])
 
-    const changePreset = useCallback((newData: {
-        battlefield: CombatEditorContextType['battlefield']
-        turnOrder: CombatEditorContextType['turnOrder']
-        round: CombatEditorContextType['round']
-        activeCharacterIndex: CombatEditorContextType['activeCharacterIndex']
-    }) => {
+    const changePreset = useCallback((newData: CombatEditorSaveType) => {
         setBattlefield(newData.battlefield)
         setTurnOrder(newData.turnOrder)
         setRound(Math.max(newData.round, 0))
@@ -115,6 +124,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 ? newData.activeCharacterIndex
                 : 0
         )
+        setMessages(newData.messages ?? [])
     }, [])
 
     const resetPreset = useCallback(() => {
@@ -135,16 +145,40 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         })
     }, [])
 
-    const makeCharacterActive = useCallback((index: number) => {
-        if (index < 0 || index >= turnOrder.length) {
-            return
-        }
-        setActiveCharacterIndex(index)
-    }, [turnOrder])
+    const makeCharacterActive = useCallback(
+        (index: number) => {
+            if (index < 0 || index >= turnOrder.length) {
+                return
+            }
+            setActiveCharacterIndex(index)
+        },
+        [turnOrder]
+    )
+
+    const addGameMessage = useCallback((message: GameStateContainer[number]) => {
+        setMessages((prev) => [...prev, message])
+    }, [])
+
+    const deleteGameMessage = useCallback((index: number) => {
+        setMessages((prev) => {
+            const newMessages = [...prev]
+            newMessages.splice(index, 1)
+            return newMessages
+        })
+    }, [])
+
+    const changeGameMessage = useCallback((index: number, message: GameStateContainer[number]) => {
+        setMessages((prev) => {
+            const newMessages = [...prev]
+            newMessages[index] = message
+            return newMessages
+        })
+    }, [])
 
     return (
         <CombatEditorContext.Provider
             value={{
+                messages,
                 activeCharacterIndex,
                 addCharacter,
                 addCharacterToTurnOrder,
@@ -161,6 +195,9 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 turnOrder,
                 updateCharacter,
                 updateControl,
+                addGameMessage,
+                deleteGameMessage,
+                changeGameMessage,
             }}
         >
             {children}
