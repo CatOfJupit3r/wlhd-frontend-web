@@ -54,7 +54,6 @@ const ButtonContainerContent = ({
                             onClick={() => {
                                 setChosen(key)
                             }}
-                            className={'z-20'}
                         />
                     </div>
                 )

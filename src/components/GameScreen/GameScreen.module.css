@@ -1,5 +1,6 @@
 .gameScreenContainer {
     display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -11,6 +12,7 @@
     align-items: center;
     height: 100%;
     width: 60%;
+    position: relative;
     background-color: black;
     color: white;
     flex-direction: column;
@@ -21,6 +23,7 @@
     align-items: center;
     height: 100%;
     width: 40%;
+    position: relative;
     background-color: white;
 }
 

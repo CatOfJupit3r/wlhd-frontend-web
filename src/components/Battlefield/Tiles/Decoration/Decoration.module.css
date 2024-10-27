@@ -29,7 +29,6 @@
 
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
-    z-index: 1;
 }
 
 .activeEntity {
@@ -71,7 +70,6 @@
     transition: background-color 0.1s;
 
     cursor: pointer;
-    z-index: 2;
 }
 
 .interactableAlly {
