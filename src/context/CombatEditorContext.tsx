@@ -63,6 +63,24 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                     ...prev,
                     [square]: {
                         ...character,
+                        attributes: {
+                            ...character.attributes,
+                            ...{
+                                // dual attributes like these can be set to -1 in presets indicating that they should be set to their max value on load
+                                'builtins:current_health':
+                                    character.attributes['builtins:current_health'] < 0
+                                        ? character.attributes['builtins:max_health']
+                                        : character.attributes['builtins:current_health'],
+                                'builtins:current_action_points':
+                                    character.attributes['builtins:current_action_points'] < 0
+                                        ? character.attributes['builtins:max_action_points']
+                                        : character.attributes['builtins:current_action_points'],
+                                'builtins:current_armor':
+                                    character.attributes['builtins:current_armor'] < 0
+                                        ? character.attributes['builtins:base_armor']
+                                        : character.attributes['builtins:current_armor'],
+                            },
+                        },
                         descriptor,
                         id_: crypto.randomUUID(),
                         controlInfo: control || CONTROLLED_BY_GAME_LOGIC,
