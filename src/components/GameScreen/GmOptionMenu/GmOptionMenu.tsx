@@ -1,3 +1,5 @@
+import DebugSpecificOptions from '@components/GameScreen/GmOptionMenu/DebugSpecificOptions'
+
 /*
 
 This component is a special tool for GM to interact with game engine via special commands.
@@ -28,7 +30,7 @@ const GmOptionMenu = () => {
 
     return (
         <div>
-            <h1>GM Option Menu</h1>
+            <DebugSpecificOptions />
         </div>
     )
 }

@@ -39,7 +39,7 @@ export interface GameHandshake {
 export type IndividualTurnOrder = Array<CharacterInTurnOrder | null>
 
 export interface CharacterInTurnOrder {
-    controlledByYou: false
+    controlledByYou: boolean
     descriptor: string
     decorations: {
         name: string
