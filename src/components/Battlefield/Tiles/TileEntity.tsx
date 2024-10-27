@@ -26,7 +26,7 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
 
     return (
         <Tooltip>
-            <TooltipTrigger className={squareInfo?.flags.interactable ? 'cursor-pointer' : 'cursor-default'}>
+            <TooltipTrigger className={squareInfo?.flags.interactable?.flag ? 'cursor-pointer' : 'cursor-default'} asChild={true}> 
                 <div
                     className={cn('relative', squareInfo?.info !== null ? 'bg-cover' : '', 'h-[10vh] w-[10vh]')}
                     onDoubleClick={() => {
