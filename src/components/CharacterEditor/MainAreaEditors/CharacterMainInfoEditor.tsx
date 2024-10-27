@@ -31,14 +31,15 @@ const CharacterMainInfoEditor = () => {
         ),
         [editing]
     )
-
+    
     return flags.exclude?.name && flags.exclude?.description && flags.exclude?.sprite ? (
         <CharacterBasicInfo
+            includeSquare={false}
             character={{
                 name: character.decorations.name,
                 sprite: character.decorations.sprite,
                 description: character.decorations.description,
-                square: null,
+                square: character?.square ?? null
             }}
         />
     ) : editing ? (
@@ -54,11 +55,12 @@ const CharacterMainInfoEditor = () => {
         <div className={'relative'}>
             <EditCharacterButton />
             <CharacterBasicInfo
+                includeSquare={false}
                 character={{
                     name: character.decorations.name,
                     sprite: character.decorations.sprite,
                     description: character.decorations.description,
-                    square: null,
+                    square: character?.square ?? null
                 }}
             />
         </div>

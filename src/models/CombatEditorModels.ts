@@ -63,6 +63,7 @@ export type StatusEffectsEditable = Array<StatusEffectEditable & { descriptor: s
 
 export type CharacterDataEditable = {
     descriptor: string
+    square?: { line: number; column: number } | null
     inventory: InventoryEditable
     weaponry: WeaponryEditable
     spellBook: SpellBookEditable
