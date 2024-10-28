@@ -1,4 +1,5 @@
 .battlefield {
+    position: relative;
     border: 1px solid black;
     min-width: fit-content;
     min-height: fit-content;

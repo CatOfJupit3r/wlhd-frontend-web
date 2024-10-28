@@ -1,5 +1,12 @@
 import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
 import { Button } from '@components/ui/button'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from '@components/ui/dropdown-menu'
 import { Label } from '@components/ui/label'
 import {
     Select,
@@ -19,11 +26,11 @@ import {
 import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback, useEffect, useState } from 'react'
-import { FaSave } from 'react-icons/fa'
-import { FaXmark } from 'react-icons/fa6'
+import { BiAddToQueue } from 'react-icons/bi'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import { GrContactInfo } from 'react-icons/gr'
-import { HiOutlineArrowUturnLeft } from 'react-icons/hi2'
 import { IoMdPersonAdd } from 'react-icons/io'
+import { RiDeleteBin6Fill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 
 const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
@@ -116,7 +123,10 @@ const EditCharacterControls = ({
                                             {lobby.players.map((player) => (
                                                 <SelectItem key={player.userId} value={player.userId}>
                                                     <div className={'flex flex-row items-center'}>
-                                                        <UserAvatar handle={player.handle} className={'mr-2 size-8 shadow-none'} />
+                                                        <UserAvatar
+                                                            handle={player.handle}
+                                                            className={'mr-2 size-8 shadow-none'}
+                                                        />
                                                         <p>
                                                             {player.nickname} (@{player.handle})
                                                         </p>
@@ -162,9 +172,7 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
     const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext()
     const { battlefield } = useCombatEditorContext()
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character')
-    const { character, changeEditedCharacter, resetCharacter } = useBuildCharacterEditorProps(
-        battlefield[clickedSquare as string]
-    )
+    const { character, changeEditedCharacter } = useBuildCharacterEditorProps(battlefield[clickedSquare as string])
     const [newControls, setNewControls] = useState<{
         type: string
         id?: string
@@ -209,78 +217,68 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
         } else {
             updateCharacter(clickedSquare, character)
         }
-    }, [isEditing, clickedSquare, character, updateCharacter, resetCharacter, newControls, lobby])
+    }, [character])
 
-    const handleResetButton = useCallback(() => {
-        if (isEditing === 'controls' && clickedSquare && battlefield[clickedSquare as string]) {
-            setNewControls(battlefield[clickedSquare as string].controlInfo)
-        } else {
-            resetCharacter()
-        }
-    }, [isEditing, clickedSquare, battlefield, resetCharacter])
+    useEffect(() => {
+        handleSaveButton()
+    }, [character])
 
     return (
         <div className={'mt-4'}>
-            <div className={'mb-3 flex w-full justify-between'}>
-                <div className={'flex flex-col gap-3'}>
-                    <div>
-                        <Button
-                            className={'flex w-52 justify-between gap-2'}
-                            onClick={() => {
-                                setIsEditing(isEditing === 'character' ? 'controls' : 'character')
+            <div className={'mb-3 flex w-full flex-row justify-between gap-3'}>
+                <Button
+                    className={'flex w-52 justify-between gap-2'}
+                    onClick={() => {
+                        setIsEditing(isEditing === 'character' ? 'controls' : 'character')
+                    }}
+                >
+                    Mode:
+                    {isEditing === 'character' ? (
+                        <div className={'flex items-center gap-1'}>
+                            <GrContactInfo />
+                            Character
+                        </div>
+                    ) : (
+                        <div className={'flex items-center gap-1'}>
+                            <IoMdPersonAdd />
+                            Controls
+                        </div>
+                    )}
+                </Button>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button className={'flex items-center gap-2'}>
+                            <GiHamburgerMenu className={'cursor-pointer'} />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem
+                            onSelect={() => {
+                                if (!clickedSquare) return
+                                removeCharacter(clickedSquare)
                             }}
                         >
-                            Mode:
-                            {isEditing === 'character' ? (
-                                <div className={'flex items-center gap-1'}>
-                                    <GrContactInfo />
-                                    Character
-                                </div>
-                            ) : (
-                                <div className={'flex items-center gap-1'}>
-                                    <IoMdPersonAdd />
-                                    Controls
-                                </div>
-                            )}
-                        </Button>
-                    </div>
-                    <div className={'flex gap-2'}>
-                        <Button className={'flex w-full'} onClick={handleSaveButton}>
-                            <FaSave className={'mr-1'} />
-                            Save
-                        </Button>
-                        <Button className={'flex w-full'} onClick={handleResetButton}>
-                            <HiOutlineArrowUturnLeft className={'mr-1'} />
-                            Restore
-                        </Button>
-                        <Button
-                            className={'flex w-full'}
-                            onClick={() => {
-                                if (!clickedSquare || !character) {
-                                    return
-                                }
+                            <Button variant={'destructive'} className={'w-full justify-normal'}>
+                                <RiDeleteBin6Fill className={'mr-2'} />
+                                Remove
+                            </Button>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onSelect={() => {
+                                if (!clickedSquare) return
+                                const character = battlefield[clickedSquare]
+                                if (!character) return
                                 addCharacterToTurnOrder(character.id_)
                             }}
                         >
-                            Add to Turn Order
-                        </Button>
-                    </div>
-                </div>
-                <div className={'flex h-full'}>
-                    <Button
-                        variant={'destructive'}
-                        className={'flex size-full'}
-                        onClick={() => {
-                            if (!clickedSquare) {
-                                return
-                            }
-                            removeCharacter(clickedSquare)
-                        }}
-                    >
-                        <FaXmark className={'mr-1'} />
-                        Remove
-                    </Button>
-                </div>
+                            <Button>
+                                <BiAddToQueue className={'mr-2'} />
+                                Add to turn order
+                            </Button>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
             <CharacterEditorProvider
                 character={character}

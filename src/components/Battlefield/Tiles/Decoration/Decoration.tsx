@@ -38,13 +38,12 @@ const Decoration = ({ square }: { square: string }) => {
 
     return (
         <>
-            <div className={cn(styles.decoration, interactivityType)} />
             {active ? (
                 <img className={styles.activeEntity} src="/assets/local/active_entity.svg" alt="Active Entity Icon" />
             ) : null}
             {clicked ? (
                 <>
-                    <div className={cn(styles.decoration, styles.clickedEntityBorder)} />
+                    <div className={cn(styles.clickedEntityBorder, styles.decoration)} />
                     {clicked > 1 ? (
                         <img
                             className={styles.clickedSquare}
@@ -54,6 +53,7 @@ const Decoration = ({ square }: { square: string }) => {
                     ) : null}
                 </>
             ) : null}
+            <div className={cn(styles.decoration, interactivityType)} />
         </>
     )
 }

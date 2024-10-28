@@ -5,7 +5,7 @@ import CharacterDisplay, {
 import CharacterDisplayPlaceholder from '@components/CharacterDisplay/CharacterDisplayPlaceholder'
 
 const InGameSettings: CharacterDisplaySettings = {
-    includeDescription: false,
+    includeDescription: true,
     showEquippedWeapon: true,
     showSquareIfPossible: true,
     ignoreAttributes: [

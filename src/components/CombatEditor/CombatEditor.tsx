@@ -1,6 +1,4 @@
 import Battlefield from '@components/Battlefield/Battlefield'
-import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import { AddNewEntity } from '@components/CombatEditor/AddNewEntity'
 import {
     getLastUsedCombatEditorPreset,
     removeCombatEditorLocalStorage,
@@ -11,7 +9,6 @@ import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnS
 import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
-import { Toggle } from '@components/ui/toggle'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { toastError } from '@hooks/useToast'
@@ -21,14 +18,17 @@ import paths from '@router/paths'
 import APIService from '@services/APIService'
 import EditorHelpers from '@utils/editorHelpers'
 import { AxiosError } from 'axios'
-import { useCallback, useEffect, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { BiAddToQueue } from 'react-icons/bi'
 import { FaPlay, FaSave } from 'react-icons/fa'
-import { GrSelect } from 'react-icons/gr'
 import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { AddNewEntity } from '@components/CombatEditor/AddNewEntity'
+import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
 
 interface PresetDetails {
     nickName: string
@@ -37,13 +37,14 @@ interface PresetDetails {
 }
 
 const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (square: string | null) => void }) => {
-    const { battlefield } = useCombatEditorContext()
+    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditorContext()
     const {
         changeBattlefield,
         setInteractableSquares,
         changeOnClickTile,
         incrementClickedSquares,
         resetClickedSquares,
+        changeBonusTileTooltipGenerator,
     } = useBattlefieldContext()
 
     const updateBattlefield = useCallback(() => {
@@ -87,7 +88,7 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
             {
                 pawns: newBattlefield,
             },
-            { keepActive: true, keepClicked: true, keepInteractable: true }
+            { keepActive: true, keepClicked: true, keepInteractable: true },
         )
         setInteractableSquares(
             ...(() => {
@@ -98,7 +99,7 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                     }
                 }
                 return interactableSquares
-            })()
+            })(),
         )
         changeOnClickTile((square) => {
             if (square) {
@@ -106,6 +107,47 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                 incrementClickedSquares(square)
             }
             setClickedSquare(square ?? null)
+        })
+        changeBonusTileTooltipGenerator((square) => {
+            if (!square) return null
+            const characterIsPreset = !!(battlefield[square] && battlefield[square].descriptor)
+            if (!characterIsPreset) return null
+            const buttons: Array<{
+                text: string | ReactNode
+                onClick: () => void
+                variant: 'default' | 'destructive' | 'secondary' | null
+                disabled: boolean
+            }> = [
+                {
+                    text: <BiAddToQueue />,
+                    onClick: () => {
+                        if (!characterIsPreset) return
+                        const characterId = battlefield[square].id_
+                        addCharacterToTurnOrder(characterId)
+                    },
+                    variant: 'default',
+                    disabled: !characterIsPreset,
+                },
+                {
+                    text: <RiDeleteBin6Line />,
+                    onClick: () => {
+                        removeCharacter(square)
+                    },
+                    variant: 'destructive',
+                    disabled: !characterIsPreset,
+                },
+            ]
+            return buttons.map((button, index) => (
+                <Button
+                    key={index}
+                    onClick={button.onClick}
+                    variant={button.variant}
+                    className={'w-full'}
+                    disabled={button.disabled}
+                >
+                    {button.text}
+                </Button>
+            ))
         })
     }, [battlefield])
 
@@ -210,9 +252,9 @@ const CombatEditor = () => {
         }
     }, [clickedSquare, battlefield])
 
-    useEffect(() => {
-        resetCombatEditor()
-    }, [])
+    // useEffect(() => {
+    //     resetCombatEditor()
+    // }, [])
 
     useEffect(() => {
         if (!lobby?.lobbyId || presetDetails !== null) {
@@ -242,7 +284,7 @@ const CombatEditor = () => {
                     activeCharacterIndex,
                     round,
                     messages,
-                })
+                }),
             )
             navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id))
         } catch (e) {
@@ -260,7 +302,7 @@ const CombatEditor = () => {
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
-            <div className={'flex h-full w-3/5 flex-col items-center justify-center gap-3 bg-gray-800'}>
+            <div className={'relative flex h-full w-3/5 flex-col items-center justify-center gap-3 bg-gray-800'}>
                 <div>
                     <RoundHeader />
                 </div>
@@ -271,22 +313,9 @@ const CombatEditor = () => {
                     </BattlefieldContextProvider>
                 </div>
             </div>
-            <div className={'flex h-screen w-2/5 flex-col bg-white'}>
+            <div className={'relative flex h-screen w-2/5 flex-col bg-white'}>
                 <div className={'flex h-20 w-full flex-row items-center bg-black px-4 text-t-massive'}>
-                    <div className={'flex w-full flex-row gap-2'}>
-                        <Toggle
-                            variant={'outline'}
-                            className={'size-12 p-1 text-white'}
-                            onChange={() => {}}
-                            onPressedChange={() => {
-                                // we might need a way to change the battlefield mode...
-                                // dispatch(setBattlefieldMode(pressed ? 'selection' : 'info'))
-                            }}
-                        >
-                            <GrSelect />
-                        </Toggle>
-                    </div>
-                    <div className={'flex w-full flex-row items-center justify-center gap-2'}>
+                    <div className={'flex w-full max-w-[90%] flex-row items-center justify-center gap-2'}>
                         <Button
                             className={'size-12 p-1'}
                             variant={'outline'}
@@ -300,14 +329,14 @@ const CombatEditor = () => {
                                         round,
                                         messages,
                                     },
-                                    lobby?.lobbyId
+                                    lobby?.lobbyId,
                                 )
                             }}
                         >
                             <FaSave />
                         </Button>
                         <p
-                            className={'h-full w-[15ch] truncate text-center text-t-big text-white'}
+                            className={'h-full w-full truncate text-center text-t-big text-white'}
                             title={presetDetails?.nickName || 'Untitled Combat'}
                         >
                             {presetDetails?.nickName || 'Untitled Combat'}
@@ -342,7 +371,7 @@ const CombatEditor = () => {
                             onClick={() =>
                                 navigate(
                                     lobby?.lobbyId ? paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId) : paths.home,
-                                    { relative: 'path' }
+                                    { relative: 'path' },
                                 )
                             }
                         >
@@ -355,17 +384,10 @@ const CombatEditor = () => {
                         <div className={'w-full'}>
                             {clickedSquare ? (
                                 <div>
-                                    <div id={'character-settings'} className={'flex flex-col gap-4'}>
-                                        <div className={'flex flex-row gap-2'}>
-                                            <AddNewEntity clickedSquare={clickedSquare} />
-                                        </div>
-                                    </div>
                                     {(clickedSquare ? battlefield[clickedSquare] : null) ? (
                                         <EditCharacterOnSquare clickedSquare={clickedSquare} />
                                     ) : (
-                                        <CharacterDisplayPlaceholder
-                                            className={'flex flex-col gap-4 rounded border-2 p-4'}
-                                        />
+                                        <AddNewEntity clickedSquare={clickedSquare} />
                                     )}
                                 </div>
                             ) : (

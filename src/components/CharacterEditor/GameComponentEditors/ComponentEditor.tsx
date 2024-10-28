@@ -84,7 +84,7 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                                         <UsesEditor component={component} changeComponentField={changeComponentField} />
                                     ) : null}
                                 </div>
-                                <div id={'type-details'} className={'flex flex-col items-end gap-3'}>
+                                <div id={'type-details'} className={'flex flex-col gap-3'}>
                                     {type === 'statusEffect' ? (
                                         <DurationEditor
                                             component={component}

@@ -11,8 +11,9 @@ import { generateAssetPath } from '@utils/generateAssetPath'
 import { useTranslation } from 'react-i18next'
 
 const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTMLAttributes<HTMLImageElement>) => {
-    const { battlefield, onClickTile } = useBattlefieldContext()
+    const { battlefield, onClickTile, createBonusTileTooltip } = useBattlefieldContext()
     const { t } = useTranslation()
+    const bonusTooltip = useMemo(() => createBonusTileTooltip(square), [createBonusTileTooltip, square])
     const fallback = useMemo(() => {
         const line = square.split('/')[0]
         const side = getCharacterSide(line)
@@ -26,9 +27,16 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
 
     return (
         <Tooltip>
-            <TooltipTrigger className={squareInfo?.flags.interactable?.flag ? 'cursor-pointer' : 'cursor-default'} asChild={true}> 
+            <TooltipTrigger
+                className={squareInfo?.flags.interactable?.flag ? 'cursor-pointer' : 'cursor-default'}
+                asChild={true}
+            >
                 <div
-                    className={cn('relative', squareInfo?.info !== null ? 'bg-cover' : '', 'h-[10vh] w-[10vh]')}
+                    className={cn(
+                        'relative',
+                        squareInfo?.info !== null ? 'bg-cover' : '',
+                        'h-[var(--tile-size)] w-[var(--tile-size)]'
+                    )}
                     onDoubleClick={() => {
                         if (squareInfo?.flags.interactable) {
                             onClickTile(square)
@@ -52,10 +60,17 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
                 </div>
             </TooltipTrigger>
             <TooltipContent
-                className={cn(`border-none bg-transparent p-0`, squareInfo?.info.character ? null : 'hidden')}
-                side={'right'}
+                className={cn(
+                    `flex flex-wrap border-none bg-gray-800 p-2.5 text-white`,
+                    `flex-col gap-2 text-ellipsis whitespace-nowrap`,
+                    `opacity-95`,
+                    squareInfo?.info.character ? 'w-96' : 'w-60',
+                    !squareInfo?.info.character && !bonusTooltip ? 'hidden' : null
+                )}
+                side={squareInfo?.info.character ? 'right' : 'top'}
             >
                 {squareInfo?.info.character ? <EntityTooltip character={squareInfo?.info.character} /> : null}
+                {bonusTooltip ? <div className={'flex flex-row gap-1 w-54'}>{bonusTooltip}</div> : null}
             </TooltipContent>
         </Tooltip>
     )

@@ -1,7 +1,7 @@
 import { Battlefield } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
-export interface BattlefieldContextType {
+export interface iBattlefieldContext {
     battlefield: {
         [square: string]: {
             info: Battlefield['pawns'][string]
@@ -34,12 +34,15 @@ export interface BattlefieldContextType {
 
     onClickTile: (square?: string) => void
     changeOnClickTile: (onClickTile: (square?: string) => void) => void
+
+    createBonusTileTooltip: (square: string) => ReactNode | null
+    changeBonusTileTooltipGenerator: (func: (square: string) => ReactNode | null) => void
 }
 
-const BattlefieldContext = createContext<BattlefieldContextType | undefined>(undefined)
+const BattlefieldContext = createContext<iBattlefieldContext | undefined>(undefined)
 
-const DEFAULT_BATTLEFIELD: () => BattlefieldContextType['battlefield'] = () => {
-    const res: BattlefieldContextType['battlefield'] = {}
+const DEFAULT_BATTLEFIELD: () => iBattlefieldContext['battlefield'] = () => {
+    const res: iBattlefieldContext['battlefield'] = {}
     for (let i = 1; i < 7; i++) {
         for (let j = 1; j < 7; j++) {
             res[`${i}/${j}`] = {
@@ -61,13 +64,12 @@ const DEFAULT_BATTLEFIELD: () => BattlefieldContextType['battlefield'] = () => {
     return res
 }
 
-export const BattlefieldContextProvider = ({
-    children,
-}: {
-    children: ReactNode
-}) => {
-    const [battlefield, setBattlefield] = useState<BattlefieldContextType['battlefield']>(DEFAULT_BATTLEFIELD())
-    const [onClickTile, setOnClickTile] = useState<BattlefieldContextType['onClickTile']>((_?: string) => () => {})
+export const BattlefieldContextProvider = ({ children }: { children: ReactNode }) => {
+    const [battlefield, setBattlefield] = useState<iBattlefieldContext['battlefield']>(DEFAULT_BATTLEFIELD())
+    const [onClickTile, setOnClickTile] = useState<iBattlefieldContext['onClickTile']>((_?: string) => () => {})
+    const [bonusTileTooltipGenerator, setBonusTileTooltipGenerator] = useState<(square: string) => ReactNode | null>(
+        () => () => null
+    )
 
     const changeOnClickTile = useCallback((onClickTile: (square?: string) => void) => {
         setOnClickTile(() => onClickTile)
@@ -218,6 +220,20 @@ export const BattlefieldContextProvider = ({
             return newBattlefield
         })
     }, [])
+    
+    const generateLeftTileTooltip = useCallback(
+        (square: string) => {
+            return bonusTileTooltipGenerator(square)
+        },
+        [bonusTileTooltipGenerator]
+    )
+    
+    const changeBonusTileTooltipGenerator = useCallback(
+        (func: (square: string) => ReactNode | null) => {
+            setBonusTileTooltipGenerator(() => func)
+        },
+        []
+    )
 
     return (
         <BattlefieldContext.Provider
@@ -235,6 +251,9 @@ export const BattlefieldContextProvider = ({
 
                 onClickTile,
                 changeOnClickTile,
+                
+                createBonusTileTooltip: generateLeftTileTooltip,
+                changeBonusTileTooltipGenerator: changeBonusTileTooltipGenerator,
             }}
         >
             {children}
@@ -247,5 +266,5 @@ export const useBattlefieldContext = () => {
     if (context === undefined) {
         throw new Error('useBattlefieldContext must be used within a BattlefieldContextProvider.')
     }
-    return context as BattlefieldContextType
+    return context as iBattlefieldContext
 }
