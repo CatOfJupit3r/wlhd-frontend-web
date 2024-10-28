@@ -1,16 +1,14 @@
 import { cn } from '@utils'
+import { FC } from 'react'
 
-const Spinner = ({
-    type,
-    color,
-    size,
-    className,
-}: {
+interface iSpinnerProps {
     type: 'spin' | 'pulse'
     color?: string
     size?: number
     className?: string
-}) => {
+}
+
+const Spinner: FC<iSpinnerProps> = ({ type, color, size, className }) => {
     return (
         <div
             className={cn(
@@ -40,4 +38,37 @@ const Spinner = ({
     )
 }
 
-export default Spinner
+interface iSVGSpinnerProps {
+    source: string
+    className?: string
+}
+
+type iSVGSpinnerChildProps = Omit<iSVGSpinnerProps, 'source'>
+
+const SVGSpinner: FC<iSVGSpinnerProps> = ({ source, className }) => {
+    return (
+        <img
+            src={source}
+            alt="spinner"
+            className={cn('size-8', className)}
+        />
+    )
+}
+
+const BlocksShuffleSpinner: FC<iSVGSpinnerChildProps> = (props) => {
+    return <SVGSpinner source="/components/spinners/blocks-shuffle.svg" {...props} />
+}
+
+const BlocksWaveSpinner: FC<iSVGSpinnerChildProps> = (props) => {
+    return <SVGSpinner source="/components/spinners/blocks-wave.svg" {...props} />
+}
+
+const RingResizeSpinner: FC<iSVGSpinnerChildProps> = (props) => {
+    return <SVGSpinner source="/components/spinners/ring-size.svg" {...props} />
+}
+
+const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
+    return <SVGSpinner source="/components/spinners/three-in-one.svg" {...props} />
+}
+
+export { Spinner, BlocksShuffleSpinner, BlocksWaveSpinner, RingResizeSpinner, ThreeInOneSpinner, SVGSpinner }
