@@ -1,7 +1,7 @@
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import Spinner from '@components/Spinner'
+import { Spinner } from '@components/Spinner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { cn } from '@utils'
 import { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
