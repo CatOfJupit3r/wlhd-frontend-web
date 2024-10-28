@@ -1,10 +1,16 @@
-import Overlay from '@components/Overlay'
-import { Button } from '@components/ui/button'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogTitle,
+} from '@components/ui/alert-dialog'
 import SocketService from '@services/SocketService'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import styles from './LeaveGameOverlay.module.css'
 
 const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation('local', {
@@ -23,20 +29,27 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
     }, [])
 
     return (
-        <Overlay>
-            <div className={'flex flex-col items-center justify-center gap-4'}>
-                <h1>{t('header')}</h1>
-                <h3 className={'font-normal'}>{t('subheader')}</h3>
-                <div className={styles.buttons}>
-                    <Button onClick={leaveGame} variant={'destructive'} className={'font-normal text-white'}>
-                        {t('yes')}
-                    </Button>
-                    <Button onClick={stayInGame} variant={'ghost'} className={'font-normal'}>
+        <AlertDialog
+            open={true}
+            onOpenChange={(isOpen) => {
+                if (!isOpen) {
+                    setChosen(null)
+                }
+            }}
+        >
+            <AlertDialogContent>
+                <AlertDialogTitle>{t('header')}</AlertDialogTitle>
+                <AlertDialogDescription>{t('subheader')}</AlertDialogDescription>
+                <AlertDialogFooter>
+                    <AlertDialogCancel onClick={stayInGame}>
                         {t('no')}
-                    </Button>
-                </div>
-            </div>
-        </Overlay>
+                    </AlertDialogCancel>
+                    <AlertDialogAction onClick={leaveGame}>
+                        {t('yes')}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     )
 }
 
