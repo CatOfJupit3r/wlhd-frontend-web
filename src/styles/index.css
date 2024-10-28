@@ -70,7 +70,7 @@ code {
 }
 
 :root {
-    --tile-size: 10vh;
+    --tile-size: 5.5rem;
 
     --text-size-giant: 2.5rem;
     --text-size-massive: 2.25rem;
