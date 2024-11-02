@@ -1,5 +1,6 @@
 import { Battlefield } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { getCharacterSideWithSquare } from '@utils'
 
 export interface iBattlefieldContext {
     battlefield: {
@@ -140,7 +141,7 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
                     ...newBattlefield[square],
                     flags: {
                         ...newBattlefield[square]?.flags,
-                        interactable: { flag: true, type: 'ally' },
+                        interactable: { flag: true, type: getCharacterSideWithSquare(square) ?? 'ally' },
                     },
                 }
             })
