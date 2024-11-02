@@ -99,7 +99,7 @@ const TurnOrderDisplay = () => {
             .map((character, index) => ({
                 character,
                 isActive: index === 0,
-                key: character.descriptor,
+                key: character?.descriptor, // tsc --noEmit thinks that this can be null ignoring the filter above
             }))
         const secondHalf = turnOrder
             .slice(endOfTurn + 1)
@@ -111,12 +111,14 @@ const TurnOrderDisplay = () => {
         const found = new Map<string, number>()
 
         const newInnerTurnOrder = [...secondHalf, ...firstHalf].map(({ character, ...rest }) => {
-            const howManyFound = found.get(character.descriptor) ?? 0
-            found.set(character.descriptor, howManyFound + 1)
+            // tsc --noEmit
+            const howManyFound = found.get(character?.descriptor ?? '') ?? 0
+            // tsc --noEmit
+            found.set(character?.descriptor ?? '', howManyFound + 1)
             return {
                 ...rest,
                 character,
-                key: `${character.descriptor}-${howManyFound}`,
+                key: `${character?.descriptor}-${howManyFound}`,
             }
         })
         const howManyAfterEnd = secondHalf.length
