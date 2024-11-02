@@ -3,6 +3,7 @@ import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, Weapon
 import Menu, { MenuSelection } from '@components/ui/menu'
 import { EntityInfoFull } from '@models/GameModels'
 import React, { useMemo } from 'react'
+import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
 
 const CharacterMenus: Array<{
     value: string
@@ -34,6 +35,11 @@ const CharacterMenus: Array<{
         label: 'Weaponry',
         icon: WeaponryIcon,
     },
+    {
+        value: 'misc',
+        label: 'Misc',
+        icon: MdOutlineAutoAwesomeMosaic,
+    }
 ]
 
 const MenuIsDisabled = (type: string, info: EntityInfoFull) => {

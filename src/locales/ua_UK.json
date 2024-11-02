@@ -82,13 +82,17 @@
             "gm-settings" : "GM меню",
             "leave-game" : "Вийти з гри"
         },
-        "character_display" : {
+        "character-display" : {
             "active_weapon" : "Активна зброя — {{weapon}}",
             "no_active_weapon" : "Немає активної зброї!",
             "nothing_here" : "Ого, тут... Нічого немає?",
-            "try_another" : "Спробуй обрати інше меню!"
+            "try_another" : "Спробуй обрати інше меню!",
+            "misc": {
+                "memories-title": "Спогади",
+                "tags-title": "Теги"
+            }
         },
-        "info_display" : {
+        "info-display" : {
             "tooltips" : {
                 "quantity" : "Кількість",
                 "cooldown" : "Кулдаун",

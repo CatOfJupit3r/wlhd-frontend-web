@@ -14,7 +14,7 @@ export type MenuSelection = Array<MenuItem>
 
 export const EmptyMenuContent = () => {
     const { t } = useTranslation('local', {
-        keyPrefix: 'game.character_display',
+        keyPrefix: 'game.character-display',
     })
 
     return (

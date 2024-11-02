@@ -8,8 +8,12 @@ import {
 import { EmptyMenuContent } from '@components/ui/menu'
 import { EntityInfoFull } from '@models/GameModels'
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay'
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
+import { Separator } from '@components/ui/separator'
 
-const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes'] as const
+const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const
 
 type FeatureProps = {
     type: (typeof SupportedFeatures)[number] | string
@@ -20,6 +24,9 @@ type FeatureProps = {
 }
 
 const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
+    const { t } = useTranslation('local', {
+        keyPrefix: 'game.character-display',
+    })
     if (!type || !(SupportedFeatures.indexOf(type as never) > -1)) {
         return <EmptyMenuContent />
     }
@@ -81,6 +88,24 @@ const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
             const { attributes } = info
             if (attributes) {
                 return <AttributeDisplay attributes={attributes} ignore={flags?.ignoreAttributes || []} />
+            }
+            break
+        }
+        case 'misc': {
+            if (info.memory && info.tags) {
+                return (
+                    <div className={'flex w-full flex-col gap-1'}>
+                        <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
+                            <p className={'text-center text-t-normal'}>{t('misc.memories-title')}</p>
+                            <ComponentMemoriesDisplay memories={info.memory} />
+                        </div>
+                        <Separator/>
+                        <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
+                            <p className={'text-center text-t-normal'}>{t('misc.tags-title')}</p>
+                            <TagsDisplay tags={info.tags} />
+                        </div>
+                    </div>
+                )
             }
             break
         }

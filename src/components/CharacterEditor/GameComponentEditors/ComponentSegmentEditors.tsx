@@ -1,5 +1,5 @@
+import { IndividualTagDisplay } from '@components/InfoDisplay/TagsDisplay'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { Badge } from '@components/ui/badge'
 import { Button, ButtonWithTooltip } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
@@ -17,7 +17,6 @@ import {
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels'
 import { OneOf } from '@models/OneOf'
 import { capitalizeFirstLetter, cn } from '@utils'
-import { PrefixCollection } from '@utils/gameDisplayTools'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
@@ -179,7 +178,7 @@ export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, 
 }
 export const CostEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
     const { t } = useComponentEditorTranslation()
-    
+
     return (
         <div>
             <EditorLabel text={t('cost-to-use')} icon={<PiSneakerMoveFill />} />
@@ -573,10 +572,8 @@ const IndividualTagEditor: React.FC<{
     tag: string
     deleteSelf: () => void
 }> = ({ tag, deleteSelf }) => {
-    const { t } = useTranslation()
     return (
-        <Badge variant={'outline'}>
-            <p>{t(PrefixCollection.tags(tag))}</p>
+        <IndividualTagDisplay tag={tag} badgeVariant={'outline'}>
             <Button
                 onClick={() => {
                     deleteSelf()
@@ -586,7 +583,7 @@ const IndividualTagEditor: React.FC<{
             >
                 <FaX />
             </Button>
-        </Badge>
+        </IndividualTagDisplay>
     )
 }
 

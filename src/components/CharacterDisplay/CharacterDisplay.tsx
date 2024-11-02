@@ -29,12 +29,12 @@ const EquippedWeapon = ({
     const { t } = useTranslation()
 
     if (weapons.length === 0) {
-        return <p {...props}>{t('local:game.character_display.no_active_weapon')}</p>
+        return <p {...props}>{t('local:game.character-display.no_active_weapon')}</p>
     }
 
     return (
         <p {...props}>
-            {t('local:game.character_display.active_weapon', {
+            {t('local:game.character-display.active_weapon', {
                 weapon: weapons.map((w) => t(w.decorations.name)).join(', ') || '...',
             })}
         </p>

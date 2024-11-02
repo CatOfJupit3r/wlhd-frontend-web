@@ -108,10 +108,7 @@ const RandomizeTurnOrder = () => {
         for (let i = 0; i < howManyToPop; i++) {
             shuffled.pop()
         }
-        const turnEndInx = RandomUtils.randNumber(0, shuffled.length - 1)
-        // add null at turnEndInx
-        shuffled.splice(turnEndInx, 0, null as any)
-        // const turnOrder = shuffled.slice(turnEndInx).concat(shuffled.slice(0, turnEndInx))
+        shuffled.splice(RandomUtils.randNumber(0, shuffled.length - 1), 0, null as any)
         dispatch(setTurnOrder(shuffled))
     }
 
