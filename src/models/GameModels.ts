@@ -1,3 +1,4 @@
+import { GameTags } from '@models/CombatEditorModels'
 import { OneOf } from '@models/OneOf'
 
 export interface GameComponentDecoration {
@@ -74,7 +75,7 @@ export interface EntityInfoFull {
         maxActiveSpells: number | null
     }
     statusEffects: Array<StatusEffectInfo>
-    tags: Array<string>
+    tags: GameTags
     memory: GameComponentMemory | null
 }
 
@@ -85,7 +86,7 @@ export interface EntityAttributes {
 interface CommonGameComponentInfoFields {
     decorations: GameComponentDecoration
     memory: GameComponentMemory | null
-    tags: Array<string>
+    tags: GameTags
 }
 
 export interface AttributeInfo {

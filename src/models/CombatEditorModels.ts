@@ -10,7 +10,7 @@ import { GameComponentDecoration, GameComponentMemory } from '@models/GameModels
 interface CommonEditableField {
     decorations: GameComponentDecoration
     memory: GameComponentMemory | null
-    tags: Array<string>
+    tags: GameTags
 }
 
 interface UsableComponentEditableFields extends CommonEditableField {
@@ -75,7 +75,7 @@ export type CharacterDataEditable = {
     addedCosts: { [cost: string]: number }
 
     decorations: GameComponentDecoration
-    tags: Array<string>
+    tags: GameTags
     memory: GameComponentMemory | null
     id_: string
 }
@@ -124,7 +124,7 @@ export type SpellBookInPreset = {
     maxActiveSpells: number | null
 }
 export type StatusEffectsInPreset = Array<StatusEffectInPreset>
-
+export type GameTags = Array<string>
 export interface CharacterDataInPreset {
     inventory: InventoryInPreset
     weaponry: WeaponryInPreset
@@ -137,7 +137,7 @@ export interface CharacterDataInPreset {
     addedCosts: { [cost: string]: number }
 
     decorations: GameComponentDecoration
-    tags: Array<string>
+    tags: GameTags
     memory: GameComponentMemory | null
     id?: string
 }
@@ -171,7 +171,7 @@ export interface CharacterDataInSave {
     addedCosts: { [cost: string]: number }
 
     decorations: GameComponentDecoration
-    tags: Array<string>
+    tags: GameTags
     memory: GameComponentMemory | null
     id_?: string
 }
