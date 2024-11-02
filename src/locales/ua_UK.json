@@ -87,9 +87,15 @@
             "no_active_weapon" : "Немає активної зброї!",
             "nothing_here" : "Ого, тут... Нічого немає?",
             "try_another" : "Спробуй обрати інше меню!",
-            "misc": {
-                "memories-title": "Спогади",
-                "tags-title": "Теги"
+            "misc" : {
+                "memories" : {
+                    "title" : "Спогади",
+                    "empty" : "Схоже, що у цього створіння немає спогадів."
+                },
+                "tags" : {
+                    "title" : "Теги",
+                    "empty" : "Цьому створінню не присвоєно жодного тегу."
+                }
             }
         },
         "info-display" : {
@@ -110,8 +116,8 @@
                 "any-ally" : "Будь-яка союзна",
                 "any-enemy" : "Будь-яка ворожа"
             },
-            "memories": {
-                "dice": "{{amount}}к{{sides}}"
+            "memories" : {
+                "dice" : "{{amount}}к{{sides}}"
             }
         }
     },
@@ -167,15 +173,15 @@
     "editor" : {
         "edit-character" : "Редагувати персонажа",
         "stop-editing" : "Зупинити редагування",
-        "round-count": "Раунд",
-        "shared": {
-            "quantity": "Кількість",
-            "cooldown": "КД (CUR/MAX)",
-            "duration": "Тривалість",
-            "component-uses": "Використань (CUR/MAX)",
-            "is-active": "Активний",
-            "is-active-tooltip": "Чи цей компонент активний?",
-            "cost-to-use": "Вартість використання"
+        "round-count" : "Раунд",
+        "shared" : {
+            "quantity" : "Кількість",
+            "cooldown" : "КД (CUR/MAX)",
+            "duration" : "Тривалість",
+            "component-uses" : "Використань (CUR/MAX)",
+            "is-active" : "Активний",
+            "is-active-tooltip" : "Чи цей компонент активний?",
+            "cost-to-use" : "Вартість використання"
         },
         "general" : {
             "dlc" : "DLC",
@@ -190,14 +196,14 @@
             "add" : "Додати",
             "infinity" : "Безкінечно"
         },
-        "general-component": {
-            "cd:": "КД (CUR/MAX)",
-            "component-uses:": "Використань (CUR/MAX)",
-            "duration:": "Тривалість",
-            "is-active:": "Активний",
-            "is-active-tooltip": "Чи цей компонент активний?",
-            "quantity:": "Кількість",
-            "cost-to-use:": "Вартість використання"
+        "general-component" : {
+            "cd:" : "КД (CUR/MAX)",
+            "component-uses:" : "Використань (CUR/MAX)",
+            "duration:" : "Тривалість",
+            "is-active:" : "Активний",
+            "is-active-tooltip" : "Чи цей компонент активний?",
+            "quantity:" : "Кількість",
+            "cost-to-use:" : "Вартість використання"
         },
         "weapon" : {
             "add" : "Додати зброю",
@@ -221,33 +227,33 @@
             "increase-duration" : "Збільшити тривалість"
         },
         "memories" : {
-            "title": "Спогади",
+            "title" : "Спогади",
             "add" : "Додати спогад",
             "btn-add" : "Додати",
             "remove" : "Видалити спогад",
             "dice" : "Кількість кубиків",
             "sides" : "Кількість граней",
-            "simplified": "Спрощено",
-            "internal": "Внутрішній",
-            "internal-postfix": "(внутрішній)",
-            "memory-key": "Ключ спогаду",
-            "display-name": "Відображуване ім'я",
-            "display-value": "Відображуване значення",
-            "type": "Тип",
-            "memory-value": "Значення спогаду",
-            "type-select": {
-                "placeholder": "Оберіть тип спогаду",
-                "supported-types": {
-                    "string": "Рядок",
-                    "number": "Число",
-                    "boolean": "Логічний",
-                    "dice": "Кубик",
-                    "component-id": "ID компонента"
+            "simplified" : "Спрощено",
+            "internal" : "Внутрішній",
+            "internal-postfix" : "(внутрішній)",
+            "memory-key" : "Ключ спогаду",
+            "display-name" : "Відображуване ім'я",
+            "display-value" : "Відображуване значення",
+            "type" : "Тип",
+            "memory-value" : "Значення спогаду",
+            "type-select" : {
+                "placeholder" : "Оберіть тип спогаду",
+                "supported-types" : {
+                    "string" : "Рядок",
+                    "number" : "Число",
+                    "boolean" : "Логічний",
+                    "dice" : "Кубик",
+                    "component-id" : "ID компонента"
                 }
             }
         },
         "tags" : {
-            "title": "Теги",
+            "title" : "Теги",
             "add" : "Додати тег",
             "btn-add" : "Додати",
             "remove" : "Видалити тег"

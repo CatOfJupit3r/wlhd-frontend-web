@@ -1,17 +1,17 @@
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
+import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay'
 import {
     ItemInfoDisplay,
     SpellInfoDisplay,
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay'
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
 import { EmptyMenuContent } from '@components/ui/menu'
+import { Separator } from '@components/ui/separator'
 import { EntityInfoFull } from '@models/GameModels'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay'
-import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
-import { Separator } from '@components/ui/separator'
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const
 
@@ -92,22 +92,29 @@ const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
             break
         }
         case 'misc': {
-            if (info.memory && info.tags) {
-                return (
-                    <div className={'flex w-full flex-col gap-1'}>
-                        <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                            <p className={'text-center text-t-normal'}>{t('misc.memories-title')}</p>
+            return (
+                <div className={'flex w-full flex-col gap-1'}>
+                    <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
+                        <p className={'text-center text-t-normal'}>{t('misc.memories.title')}</p>
+                        {info?.memory && Object.keys(info.memory).length > 0 ? (
                             <ComponentMemoriesDisplay memories={info.memory} />
-                        </div>
-                        <Separator/>
-                        <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                            <p className={'text-center text-t-normal'}>{t('misc.tags-title')}</p>
-                            <TagsDisplay tags={info.tags} />
-                        </div>
+                        ) : (
+                            <p className={'text-center text-t-smaller italic text-gray-400'}>
+                                {t('misc.memories.empty')}
+                            </p>
+                        )}
                     </div>
-                )
-            }
-            break
+                    <Separator />
+                    <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
+                        <p className={'text-center text-t-normal'}>{t('misc.tags.title')}</p>
+                        {info.tags && info.tags.length > 0 ? (
+                            <TagsDisplay tags={info.tags} />
+                        ) : (
+                            <p className={'text-center text-t-smaller italic text-gray-400'}>{t('misc.tags.empty')}</p>
+                        )}
+                    </div>
+                </div>
+            )
         }
         default: {
             console.log('Default value was triggered with this:', type)
