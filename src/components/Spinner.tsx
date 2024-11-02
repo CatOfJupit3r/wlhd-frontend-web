@@ -38,6 +38,14 @@ const Spinner: FC<iSpinnerProps> = ({ type, color, size, className }) => {
     )
 }
 
+const TrueSpinner: FC<Omit<iSpinnerProps, 'type'>> = (props) => {
+    return <Spinner type="spin" {...props} />
+}
+
+const PulsingSpinner: FC<Omit<iSpinnerProps, 'type'>> = (props) => {
+    return <Spinner type="pulse" {...props} />
+}
+
 interface iSVGSpinnerProps {
     source: string
     className?: string
@@ -71,4 +79,4 @@ const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
     return <SVGSpinner source="/components/spinners/three-in-one.svg" {...props} />
 }
 
-export { Spinner, BlocksShuffleSpinner, BlocksWaveSpinner, RingResizeSpinner, ThreeInOneSpinner, SVGSpinner }
+export { Spinner, BlocksShuffleSpinner, BlocksWaveSpinner, RingResizeSpinner, ThreeInOneSpinner, SVGSpinner, TrueSpinner, PulsingSpinner }
