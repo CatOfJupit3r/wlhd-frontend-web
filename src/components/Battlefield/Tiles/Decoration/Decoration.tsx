@@ -42,7 +42,7 @@ const Decoration = ({ square }: { square: string }) => {
         <>
             <img
                 className={cn(
-                    styles.decoration,
+                    styles.activeEntity,
                     'transition-opacity',
                     active ? 'opacity-100' : 'pointer-events-none opacity-0'
                 )}
