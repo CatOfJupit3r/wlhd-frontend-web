@@ -11,7 +11,7 @@ const TileFactory = (src: string, displayName: string) => {
 }
 const prefix = '/assets/local/default_battlefield/'
 
-export const ConnectorTile = TileFactory(prefix + 'connector.png', 'ConnectorTile')
+export const ConnectorTile = TileFactory(prefix + 'connector.svg', 'ConnectorTile')
 export const SeparatorTile = TileFactory(prefix + 'separator.png', 'SeparatorTile')
 export const Tile = TileFactory(prefix + 'tile.png', 'Tile')
 

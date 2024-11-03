@@ -1,5 +1,14 @@
 import Overlay from '@components/Overlay'
 import LobbyShortInfo from '@components/ProfileInformation/LobbyShortInfo'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogTitle,
+} from '@components/ui/alert-dialog'
 import { Badge } from '@components/ui/badge'
 import { Button } from '@components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
@@ -87,40 +96,30 @@ const ProfileInformation = () => {
                     </Button>
                 </CardContent>
             </Card>
-            {showInviteOverlay && (
-                <Overlay>
-                    <Card className="relative w-full max-w-2xl">
-                        <CardHeader>
-                            <CardTitle>{t('join-new')}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                <p>{t('enter-invite-code')}</p>
-                                <Input
-                                    type="text"
-                                    placeholder={t('invite-code')}
-                                    value={inviteCode}
-                                    onChange={(e) => setInviteCode(e.target.value)}
-                                />
-                                <div className="flex justify-end space-x-2">
-                                    <Button variant="outline" onClick={() => setShowInviteOverlay(false)}>
-                                        {t('cancel')}
-                                    </Button>
-                                    <Button
-                                        onClick={() => {
-                                            console.log('Inviting with code:', inviteCode)
-                                            setShowInviteOverlay(false)
-                                            setInviteCode('')
-                                        }}
-                                    >
-                                        {t('send-invite-request')}
-                                    </Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Overlay>
-            )}
+            <AlertDialog open={showInviteOverlay}>
+                <AlertDialogContent className={'w-full max-w-2xl'}>
+                    <AlertDialogTitle>{t('join-new')}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        <p>{t('enter-invite-code')}</p>
+                        <Input
+                            type="text"
+                            placeholder={t('invite-code')}
+                            value={inviteCode}
+                            onChange={(e) => setInviteCode(e.target.value)}
+                        />
+                    </AlertDialogDescription>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => setShowInviteOverlay(false)}>{t('cancel')}</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => {
+                            console.log('Inviting with code:', inviteCode)
+                            setShowInviteOverlay(false)
+                            setInviteCode('')
+                        }}>
+                            {t('send-invite-request')}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }

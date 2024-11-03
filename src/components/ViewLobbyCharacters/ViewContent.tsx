@@ -1,12 +1,21 @@
 import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
 import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
-import Overlay from '@components/Overlay'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@components/ui/alert-dialog'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'
 import {
-    useBuildCharacterEditorProps,
     CharacterEditorContextType,
     CharacterEditorProvider,
+    useBuildCharacterEditorProps,
 } from '@context/CharacterEditorProvider'
 import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
@@ -116,7 +125,6 @@ const CharacterEditorMenu = () => {
 
 const GmOptionMenu = () => {
     const lobby = useSelector(selectLobbyInfo)
-    const [displayOverlay, setDisplayOverlay] = useState(false)
     const { descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.gm-options',
@@ -124,23 +132,37 @@ const GmOptionMenu = () => {
 
     return (
         <div className={cn(componentClass, 'justify-end')}>
-            {displayOverlay ? (
-                <Overlay>
-                    <div className={'flex max-w-[30rem] flex-col items-center gap-2 text-center'}>
-                        <h3>{t('confirmation')}</h3>
-                        <p className={'mb-2 font-normal italic'}>{t('details')}</p>
-                        <div className={'flex flex-row gap-2'}>
-                            <Button
-                                variant={'ghost'}
-                                onClick={() => {
-                                    setDisplayOverlay(false)
-                                }}
-                            >
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button
+                        id={'remove-character'}
+                        className={'gap-1'}
+                        variant={'destructive'}
+                        onClick={() => {
+                            if (!descriptor || !lobby) {
+                                return
+                            }
+                        }}
+                        disabled={!descriptor || !lobby}
+                    >
+                        <RiDeleteBin6Line />
+                        {t('delete-character')}
+                    </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className={'flex max-w-[30rem] flex-col items-center gap-2 text-center'}>
+                    <AlertDialogTitle>{t('confirmation')}</AlertDialogTitle>
+                    <AlertDialogDescription className={'font-normal italic'}>{t('details')}</AlertDialogDescription>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel asChild>
+                            <Button variant={'ghost'}>
                                 <FaXmark className={'mr-1 text-[1rem]'} />
                                 {t('cancel')}
                             </Button>
+                        </AlertDialogCancel>
+                        <AlertDialogAction asChild>
                             <Button
                                 variant={'destructive'}
+                                disabled={!descriptor || !lobby}
                                 onClick={() => {
                                     if (!descriptor || !lobby) {
                                         return
@@ -157,25 +179,10 @@ const GmOptionMenu = () => {
                                 <RiDeleteBin6Line className={'mr-1 text-[1rem] text-white'} />
                                 {t('delete')}
                             </Button>
-                        </div>
-                    </div>
-                </Overlay>
-            ) : (
-                <Button
-                    id={'remove-character'}
-                    className={'gap-1'}
-                    variant={'destructive'}
-                    onClick={() => {
-                        if (!descriptor || !lobby) {
-                            return
-                        }
-                        setDisplayOverlay(true)
-                    }}
-                >
-                    <RiDeleteBin6Line />
-                    {t('delete-character')}
-                </Button>
-            )}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
