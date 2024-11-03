@@ -1,10 +1,10 @@
 import { Progress } from '@components/ui/progress'
 import { EntityInfoFull } from '@models/GameModels'
+import { getPercentage } from '@utils/getPercentage'
 import { useMemo } from 'react'
 import { GiHeartPlus } from 'react-icons/gi'
 import { IoShieldSharp } from 'react-icons/io5'
 import { PiSneakerMoveFill } from 'react-icons/pi'
-import { getPercentage } from '@utils/getPercentage'
 
 const BasicCharacterAttributes = ({
     attributes,
@@ -112,7 +112,8 @@ const BasicCharacterAttributes = ({
                     {MAIN_ATTRIBUTES.AP.text}
                 </p>
                 <PiSneakerMoveFill
-                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white opacity-20`}
+                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white
+                        opacity-20`}
                 />
             </div>
         </div>

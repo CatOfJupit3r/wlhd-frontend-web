@@ -1,6 +1,6 @@
+import { CharacterDataEditable } from '@models/CombatEditorModels'
 import APIService from '@services/APIService'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
-import { CharacterDataEditable } from '@models/CombatEditorModels'
 
 type ProvidedData<T> = {
     [descriptor: string]: T | null

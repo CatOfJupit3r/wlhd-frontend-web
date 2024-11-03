@@ -1,4 +1,9 @@
 import {
+    AddNewComponent,
+    COMPONENT_TO_INTERFACE,
+    CONTAINER_TYPE,
+} from '@components/CharacterEditor/GameComponentEditors/ComponentCreation'
+import {
     ItemEditor,
     SpellEditor,
     StatusEffectEditor,
@@ -18,11 +23,6 @@ import {
 } from '@models/CombatEditorModels'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-    AddNewComponent,
-    COMPONENT_TO_INTERFACE,
-    CONTAINER_TYPE,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentCreation'
 
 const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
     const { character, updateCharacter } = useCharacterEditorContext()

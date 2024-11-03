@@ -1,10 +1,10 @@
+import UserAvatar from '@components/UserAvatars'
 import { CharacterInLobby, LobbyPlayerInfo } from '@models/Redux'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styles from './PlayerInfo.module.css'
-import UserAvatar from '@components/UserAvatars'
 
 const PlayerInfo = ({ className }: { className: string }) => {
     const { players, characters } = useSelector(selectLobbyInfo)

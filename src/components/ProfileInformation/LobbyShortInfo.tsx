@@ -1,12 +1,12 @@
 import { Card, CardContent } from '@components/ui/card'
 import { Skeleton } from '@components/ui/skeleton'
 import { ShortLobbyInformation } from '@models/APIData'
+import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { Crown } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import paths from '@router/paths'
 
 type LoadingType = 'loading' | 'failed' | 'success'
 

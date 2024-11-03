@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { CharacterDataEditable } from '@models/CombatEditorModels'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 interface ViewCharactersContextType {
     viewedCharacter: CharacterDataEditable | null

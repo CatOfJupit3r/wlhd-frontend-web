@@ -1,76 +1,38 @@
 {
-    "compilerOptions" : {
-        "target" : "ESNext",
-        "lib" : [
-            "dom",
-            "dom.iterable",
-            "esnext"
-        ],
-        "allowJs" : false,
-        "skipLibCheck" : true,
-        "esModuleInterop" : true,
-        "allowSyntheticDefaultImports" : true,
-        "strict" : true,
-        "forceConsistentCasingInFileNames" : true,
-        "module" : "esnext",
-        "moduleResolution" : "node",
-        "resolveJsonModule" : true,
-        "isolatedModules" : true,
-        "noEmit" : true,
-        "noFallthroughCasesInSwitch" : true,
-        "jsx" : "react-jsx",
-        "types" : [
-            "vite/client",
-            "vite-plugin-svgr/client",
-            "node"
-        ],
-        "baseUrl" : "./src",
-        "paths" : {
-            "@components/*" : [
-                "./components/*"
-            ],
-            "@pages/*" : [
-                "./pages/*"
-            ],
-            "@styles/*" : [
-                "./styles/*"
-            ],
-            "@utils" : [
-                "./utils"
-            ],
-            "@utils/*" : [
-                "./utils/*"
-            ],
-            "@services/*" : [
-                "./services/*"
-            ],
-            "@hooks/*" : [
-                "./hooks/*"
-            ],
-            "@redux/*" : [
-                "./redux/*"
-            ],
-            "@models/*" : [
-                "./models/*"
-            ],
-            "@router/*" : [
-                "./router/*"
-            ],
-            "@lib/*" : [
-                "./lib/*"
-            ],
-            "@context/*" : [
-                "./context/*"
-            ],
-            "config" : [
-                "./config"
-            ]
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "jsx": "react-jsx",
+        "types": ["vite/client", "vite-plugin-svgr/client", "node"],
+        "baseUrl": "./src",
+        "paths": {
+            "@components/*": ["./components/*"],
+            "@pages/*": ["./pages/*"],
+            "@styles/*": ["./styles/*"],
+            "@utils": ["./utils"],
+            "@utils/*": ["./utils/*"],
+            "@services/*": ["./services/*"],
+            "@hooks/*": ["./hooks/*"],
+            "@redux/*": ["./redux/*"],
+            "@models/*": ["./models/*"],
+            "@router/*": ["./router/*"],
+            "@lib/*": ["./lib/*"],
+            "@context/*": ["./context/*"],
+            "config": ["./config"]
         }
     },
-    "include" : [
-        "src"
-    ],
-    "exclude" : [
-        "vite.config.ts"
-    ]
+    "include": ["src"],
+    "exclude": ["vite.config.ts"]
 }

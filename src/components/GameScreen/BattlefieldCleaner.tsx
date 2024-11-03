@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux'
+import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { selectActions, selectActiveEntity } from '@redux/slices/gameScreenSlice'
 import { useEffect } from 'react'
-import { useBattlefieldContext } from '@context/BattlefieldContext'
+import { useSelector } from 'react-redux'
 
 const BattlefieldCleaner = () => {
     /*
@@ -9,7 +9,8 @@ const BattlefieldCleaner = () => {
      */
     const actions = useSelector(selectActions)
     const activeCharacter = useSelector(selectActiveEntity)
-    const { setActiveSquares, resetActiveSquares, resetInteractableSquares, resetClickedSquares } = useBattlefieldContext()
+    const { setActiveSquares, resetActiveSquares, resetInteractableSquares, resetClickedSquares } =
+        useBattlefieldContext()
 
     useEffect(() => {
         if (actions === null) {

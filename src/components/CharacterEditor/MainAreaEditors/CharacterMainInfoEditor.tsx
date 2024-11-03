@@ -31,7 +31,7 @@ const CharacterMainInfoEditor = () => {
         ),
         [editing]
     )
-    
+
     return flags.exclude?.name && flags.exclude?.description && flags.exclude?.sprite ? (
         <CharacterBasicInfo
             includeSquare={false}
@@ -39,7 +39,7 @@ const CharacterMainInfoEditor = () => {
                 name: character.decorations.name,
                 sprite: character.decorations.sprite,
                 description: character.decorations.description,
-                square: character?.square ?? null
+                square: character?.square ?? null,
             }}
         />
     ) : editing ? (
@@ -60,7 +60,7 @@ const CharacterMainInfoEditor = () => {
                     name: character.decorations.name,
                     sprite: character.decorations.sprite,
                     description: character.decorations.description,
-                    square: character?.square ?? null
+                    square: character?.square ?? null,
                 }}
             />
         </div>

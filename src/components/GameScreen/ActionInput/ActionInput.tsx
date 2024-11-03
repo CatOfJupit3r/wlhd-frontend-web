@@ -11,6 +11,7 @@ import { useActionContext } from '@context/ActionContext'
 import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { useToast } from '@hooks/useToast'
 
+import { Action } from '@models/GameModels'
 import {
     selectActionAliases,
     selectActionAliasTranslations,
@@ -20,7 +21,6 @@ import {
 import { capitalizeFirstLetter } from '@utils'
 import { RxArrowTopRight } from 'react-icons/rx'
 import OptionCard from './OptionCard/OptionCard'
-import { Action } from '@models/GameModels'
 
 /*
 

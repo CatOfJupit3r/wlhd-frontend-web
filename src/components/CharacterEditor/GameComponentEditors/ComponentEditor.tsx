@@ -13,10 +13,10 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { Label } from '@components/ui/label'
 import { Separator } from '@components/ui/separator'
+import useDualTranslation from '@hooks/useDualTranslation'
 import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels'
 import React, { useCallback } from 'react'
 import { FaTags } from 'react-icons/fa'
-import useDualTranslation from '@hooks/useDualTranslation'
 
 type ComponentEditorProps<T extends AllowedEditables> = {
     component: T
@@ -61,9 +61,7 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                         <AccordionContent>
                             {type === 'weapon' || type === 'spell' ? (
                                 <div className={'flex flex-row items-center gap-2'}>
-                                    <Label className={'flex flex-row gap-1'}>
-                                        {t('shared.is-active')}
-                                    </Label>
+                                    <Label className={'flex flex-row gap-1'}>{t('shared.is-active')}</Label>
                                     <ActivenessEditor
                                         component={component}
                                         changeComponentField={changeComponentField}

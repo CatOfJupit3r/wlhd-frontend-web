@@ -5,5 +5,5 @@
     "singleQuote": true,
     "printWidth": 120,
     "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-classnames", "prettier-plugin-tailwindcss"],
-    "pluginSearchDirs": false
+    "endOfLine": "crlf",
 }

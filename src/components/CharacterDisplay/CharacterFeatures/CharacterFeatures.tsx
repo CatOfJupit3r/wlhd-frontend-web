@@ -39,7 +39,7 @@ const CharacterMenus: Array<{
         value: 'misc',
         label: 'Misc',
         icon: MdOutlineAutoAwesomeMosaic,
-    }
+    },
 ]
 
 const MenuIsDisabled = (type: string, info: EntityInfoFull) => {

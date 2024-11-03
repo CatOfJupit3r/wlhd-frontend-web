@@ -1,6 +1,6 @@
 import { Battlefield } from '@models/GameModels'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { getCharacterSideWithSquare } from '@utils'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 export interface iBattlefieldContext {
     battlefield: {
@@ -221,20 +221,17 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
             return newBattlefield
         })
     }, [])
-    
+
     const generateLeftTileTooltip = useCallback(
         (square: string) => {
             return bonusTileTooltipGenerator(square)
         },
         [bonusTileTooltipGenerator]
     )
-    
-    const changeBonusTileTooltipGenerator = useCallback(
-        (func: (square: string) => ReactNode | null) => {
-            setBonusTileTooltipGenerator(() => func)
-        },
-        []
-    )
+
+    const changeBonusTileTooltipGenerator = useCallback((func: (square: string) => ReactNode | null) => {
+        setBonusTileTooltipGenerator(() => func)
+    }, [])
 
     return (
         <BattlefieldContext.Provider
@@ -252,7 +249,7 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
 
                 onClickTile,
                 changeOnClickTile,
-                
+
                 createBonusTileTooltip: generateLeftTileTooltip,
                 changeBonusTileTooltipGenerator: changeBonusTileTooltipGenerator,
             }}

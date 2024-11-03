@@ -4,7 +4,6 @@ import { EntityInfoTooltip } from '@models/GameModels'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-
 export const PlaceholderTooltip = () => {
     return (
         <>
@@ -35,7 +34,6 @@ export const PlaceholderTooltip = () => {
         </>
     )
 }
-
 
 const EntityTooltip = ({ character }: { character: EntityInfoTooltip }) => {
     const { t } = useTranslation()
@@ -75,11 +73,7 @@ const EntityTooltip = ({ character }: { character: EntityInfoTooltip }) => {
         )
     }, [character])
 
-    return (
-        <div>
-            {!character ? <PlaceholderTooltip /> : <RealContent />}
-        </div>
-    )
+    return <div>{!character ? <PlaceholderTooltip /> : <RealContent />}</div>
 }
 
 export default EntityTooltip

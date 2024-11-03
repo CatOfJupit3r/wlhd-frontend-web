@@ -1,7 +1,8 @@
 import GameScreen from '@components/GameScreen/GameScreen'
 import {
     resetGameScreenSlice,
-    setActions, setBattlefield,
+    setActions,
+    setBattlefield,
     setControlledEntities,
     setMessages,
     setRound,

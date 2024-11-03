@@ -1,4 +1,4 @@
-import { Spinner, TrueSpinner } from '@components/Spinner'
+import { TrueSpinner } from '@components/Spinner'
 
 const ThinkingHn = (props: { text: string }) => {
     return (

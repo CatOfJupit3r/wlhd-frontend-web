@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { CharacterDataEditable } from '@models/CombatEditorModels'
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
 export interface CharacterEditorFlags {
     attributes?: {

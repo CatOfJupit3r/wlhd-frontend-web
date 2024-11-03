@@ -1,5 +1,6 @@
 import { ActiveIcon, LocationIcon } from '@components/icons'
 import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay'
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
 import { Separator } from '@components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
@@ -9,7 +10,6 @@ import { BiInfinite } from 'react-icons/bi'
 import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
 import { LuTally5 } from 'react-icons/lu'
 import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi'
-import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
 
 interface WeaponSegment {
     type: 'weapon'

@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { ActionInput as ActionInputInterface } from '@models/GameModels'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 type Choices = {
     mechanic: { [key: string]: string }

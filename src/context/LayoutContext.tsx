@@ -1,11 +1,11 @@
-import React, { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import { RouteConfig } from '@models/RouteConfig'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 interface LayoutContextType {
-    header: boolean,
-    footer: boolean,
-    auth: boolean,
-    lobbyInfo: boolean,
+    header: boolean
+    footer: boolean
+    auth: boolean
+    lobbyInfo: boolean
 
     changeConfig: (config: RouteConfig) => void
 }

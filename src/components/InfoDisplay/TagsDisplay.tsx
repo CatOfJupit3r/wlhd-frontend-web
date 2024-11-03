@@ -1,9 +1,9 @@
-import React, { FC, ReactNode } from 'react'
-import { GameTags } from '@models/CombatEditorModels'
-import { FaTags } from 'react-icons/fa'
 import { Badge, BadgeVariants } from '@components/ui/badge'
+import { GameTags } from '@models/CombatEditorModels'
 import { PrefixCollection } from '@utils/gameDisplayTools'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { FaTags } from 'react-icons/fa'
 
 interface iTag {
     tag: string
@@ -27,15 +27,11 @@ const TagsDisplay: FC<{ tags: GameTags }> = ({ tags }) => {
         return null
     }
     return (
-        <div className={'flex flex-row gap-1 text-t-smaller flex-wrap w-full'}>
-            <FaTags className={'text-t-big'}/>
-            {
-                tags.map((tag, index) => {
-                    return (
-                        <IndividualTagDisplay key={index} tag={tag} badgeVariant={'secondary'} />
-                    )
-                })
-            }
+        <div className={'flex w-full flex-row flex-wrap gap-1 text-t-smaller'}>
+            <FaTags className={'text-t-big'} />
+            {tags.map((tag, index) => {
+                return <IndividualTagDisplay key={index} tag={tag} badgeVariant={'secondary'} />
+            })}
         </div>
     )
 }

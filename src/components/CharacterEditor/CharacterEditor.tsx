@@ -1,4 +1,5 @@
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
+import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor'
 import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor'
 import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
 import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
@@ -9,7 +10,6 @@ import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { cn } from '@utils'
 import { useState } from 'react'
 import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
-import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor'
 
 const CharacterEditorMenus = () => {
     const { flags } = useCharacterEditorContext()

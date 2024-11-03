@@ -54,13 +54,7 @@ interface iSVGSpinnerProps {
 type iSVGSpinnerChildProps = Omit<iSVGSpinnerProps, 'source'>
 
 const SVGSpinner: FC<iSVGSpinnerProps> = ({ source, className }) => {
-    return (
-        <img
-            src={source}
-            alt="spinner"
-            className={cn('size-8', className)}
-        />
-    )
+    return <img src={source} alt="spinner" className={cn('size-8', className)} />
 }
 
 const BlocksShuffleSpinner: FC<iSVGSpinnerChildProps> = (props) => {
@@ -79,4 +73,13 @@ const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
     return <SVGSpinner source="/components/spinners/three-in-one.svg" {...props} />
 }
 
-export { Spinner, BlocksShuffleSpinner, BlocksWaveSpinner, RingResizeSpinner, ThreeInOneSpinner, SVGSpinner, TrueSpinner, PulsingSpinner }
+export {
+    Spinner,
+    BlocksShuffleSpinner,
+    BlocksWaveSpinner,
+    RingResizeSpinner,
+    ThreeInOneSpinner,
+    SVGSpinner,
+    TrueSpinner,
+    PulsingSpinner,
+}

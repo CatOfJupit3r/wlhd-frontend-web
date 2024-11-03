@@ -40,10 +40,29 @@ const Decoration = ({ square }: { square: string }) => {
         // this might effect the performance because components are still in the DOM
         // will see
         <>
-            <img className={cn(styles.decoration, 'transition-opacity', (active ? 'opacity-100': 'opacity-0 pointer-events-none'))} src="/assets/local/active_entity.svg" alt="Decoration" />
-            <div className={cn(styles.decoration, styles.clickedEntityBorder, 'transition-opacity', (clicked ? 'opacity-100': 'opacity-0 pointer-events-none'))} />
             <img
-                className={cn(styles.clickedSquare, 'transition-opacity', (clicked > 1 ? 'opacity-100': 'opacity-0 pointer-events-none'))}
+                className={cn(
+                    styles.decoration,
+                    'transition-opacity',
+                    active ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
+                src="/assets/local/active_entity.svg"
+                alt="Decoration"
+            />
+            <div
+                className={cn(
+                    styles.decoration,
+                    styles.clickedEntityBorder,
+                    'transition-opacity',
+                    clicked ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
+            />
+            <img
+                className={cn(
+                    styles.clickedSquare,
+                    'transition-opacity',
+                    clicked > 1 ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
                 src={getClickedNumberIcon() || '/assets/local/sel_sqr_1.svg'}
                 alt={`Clicked ${clicked} times icon`}
             />

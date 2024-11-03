@@ -1,4 +1,5 @@
 import Battlefield from '@components/Battlefield/Battlefield'
+import BattlefieldCleaner from '@components/GameScreen/BattlefieldCleaner'
 import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay'
 import { ActionContextProvider, ActionContextType } from '@context/ActionContext'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
@@ -9,7 +10,6 @@ import styles from './GameScreen.module.css'
 import MenuContainer from './MenuContainer/MenuContainer'
 import MenuNavigator from './MenuNavigator/MenuNavigator'
 import RoundHeader from './RoundHeader'
-import BattlefieldCleaner from '@components/GameScreen/BattlefieldCleaner'
 
 const BattlefieldSection = () => {
     const battlefield = useSelector(selectBattlefield)

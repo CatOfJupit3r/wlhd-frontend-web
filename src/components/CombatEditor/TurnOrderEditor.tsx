@@ -1,8 +1,8 @@
 import BetterScrollableContainer from '@components/BetterScrollableContainer'
 import { CharacterCard } from '@components/GameScreen/TurnOrderDisplay'
+import { Button } from '@components/ui/button'
 import { useCombatEditorContext } from '@context/CombatEditorContext'
 import React, { useCallback, useMemo } from 'react'
-import { Button } from '@components/ui/button'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 

@@ -3,9 +3,9 @@ import { BsInfoCircle } from 'react-icons/bs'
 import styles from './OptionCard.module.css'
 
 import { useActionContext } from '@context/ActionContext'
+import { Action } from '@models/GameModels'
 import { cn } from '@utils'
 import { useCallback, useMemo } from 'react'
-import { Action } from '@models/GameModels'
 
 const OptionCard = ({
     option,

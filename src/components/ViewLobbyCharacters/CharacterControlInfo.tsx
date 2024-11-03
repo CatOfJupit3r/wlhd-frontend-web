@@ -60,7 +60,8 @@ const PlainListOfPlayers = () => {
                                     console.error('Error removing player', error)
                                 }}
                                 variant={'destructiveGhost'}
-                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600 active:text-red-600`}
+                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600
+                                active:text-red-600`}
                             >
                                 <FaXmark className={'mr-1 size-4'} />
                                 <p>{t('remove')}</p>

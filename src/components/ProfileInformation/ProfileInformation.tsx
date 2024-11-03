@@ -1,4 +1,3 @@
-import Overlay from '@components/Overlay'
 import LobbyShortInfo from '@components/ProfileInformation/LobbyShortInfo'
 import {
     AlertDialog,
@@ -110,11 +109,13 @@ const ProfileInformation = () => {
                     </AlertDialogDescription>
                     <AlertDialogFooter>
                         <AlertDialogCancel onClick={() => setShowInviteOverlay(false)}>{t('cancel')}</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => {
-                            console.log('Inviting with code:', inviteCode)
-                            setShowInviteOverlay(false)
-                            setInviteCode('')
-                        }}>
+                        <AlertDialogAction
+                            onClick={() => {
+                                console.log('Inviting with code:', inviteCode)
+                                setShowInviteOverlay(false)
+                                setInviteCode('')
+                            }}
+                        >
                             {t('send-invite-request')}
                         </AlertDialogAction>
                     </AlertDialogFooter>

@@ -1,4 +1,6 @@
 import Battlefield from '@components/Battlefield/Battlefield'
+import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
+import { AddNewEntity } from '@components/CombatEditor/AddNewEntity'
 import {
     getLastUsedCombatEditorPreset,
     removeCombatEditorLocalStorage,
@@ -20,15 +22,12 @@ import EditorHelpers from '@utils/editorHelpers'
 import { AxiosError } from 'axios'
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AiOutlinePlus } from 'react-icons/ai'
 import { BiAddToQueue } from 'react-icons/bi'
 import { FaPlay, FaSave } from 'react-icons/fa'
 import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { AddNewEntity } from '@components/CombatEditor/AddNewEntity'
-import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
 
 interface PresetDetails {
     nickName: string
@@ -88,7 +87,7 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
             {
                 pawns: newBattlefield,
             },
-            { keepActive: true, keepClicked: true, keepInteractable: true },
+            { keepActive: true, keepClicked: true, keepInteractable: true }
         )
         setInteractableSquares(
             ...(() => {
@@ -99,7 +98,7 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                     }
                 }
                 return interactableSquares
-            })(),
+            })()
         )
         changeOnClickTile((square) => {
             if (square) {
@@ -176,7 +175,9 @@ const RoundHeader = () => {
                 <p className={'text-t-big text-white'}>{t('local:editor.round-count')}</p>
                 {editable ? (
                     <Input
-                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent`}
+                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline
+                            ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0
+                            focus-visible:ring-offset-transparent`}
                         value={parseInt(newRound.toString()).toString()}
                         placeholder={round.toString()}
                         extraClassName={'text-t-big '}
@@ -284,7 +285,7 @@ const CombatEditor = () => {
                     activeCharacterIndex,
                     round,
                     messages,
-                }),
+                })
             )
             navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id))
         } catch (e) {
@@ -329,7 +330,7 @@ const CombatEditor = () => {
                                         round,
                                         messages,
                                     },
-                                    lobby?.lobbyId,
+                                    lobby?.lobbyId
                                 )
                             }}
                         >
@@ -371,7 +372,7 @@ const CombatEditor = () => {
                             onClick={() =>
                                 navigate(
                                     lobby?.lobbyId ? paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId) : paths.home,
-                                    { relative: 'path' },
+                                    { relative: 'path' }
                                 )
                             }
                         >

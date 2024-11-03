@@ -61,16 +61,16 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
             </TooltipTrigger>
             <TooltipContent
                 className={cn(
-                    `flex flex-wrap border-none bg-gray-800 p-2.5 text-white`,
-                    `flex-col gap-2 text-ellipsis whitespace-nowrap`,
-                    `opacity-95`,
+                    'flex flex-wrap border-none bg-gray-800 p-2.5 text-white',
+                    'flex-col gap-2 text-ellipsis whitespace-nowrap',
+                    'opacity-95',
                     squareInfo?.info.character ? 'w-96' : 'w-60',
                     !squareInfo?.info.character && !bonusTooltip ? 'hidden' : null
                 )}
                 side={squareInfo?.info.character ? 'right' : 'top'}
             >
                 {squareInfo?.info.character ? <EntityTooltip character={squareInfo?.info.character} /> : null}
-                {bonusTooltip ? <div className={'flex flex-row gap-1 w-54'}>{bonusTooltip}</div> : null}
+                {bonusTooltip ? <div className={'w-54 flex flex-row gap-1'}>{bonusTooltip}</div> : null}
             </TooltipContent>
         </Tooltip>
     )

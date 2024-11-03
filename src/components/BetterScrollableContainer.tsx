@@ -3,11 +3,7 @@ import { cn } from '@utils'
 import React, { HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 
-const BetterScrollableContainer: React.FC<HTMLAttributes<HTMLDivElement>> = ({
-    children,
-    className,
-    ...props
-}) => {
+const BetterScrollableContainer: React.FC<HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const [hasOverflow, setHasOverflow] = useState(false)
 

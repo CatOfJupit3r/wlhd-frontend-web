@@ -61,7 +61,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("Character in View was changed")
+        console.log('Character in View was changed')
     }, [viewedCharacter])
 
     const [current, setCurrent] = useState<null | number>(null)

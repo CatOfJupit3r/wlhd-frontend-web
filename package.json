@@ -68,7 +68,7 @@
         "lint": "eslint . --fix",
         "ts": "tsc --noEmit",
         "prepare": "husky",
-        "pretty": "prettier --write ."
+        "pretty": "prettier --plugin=prettier-plugin-organize-imports --plugin=prettier-plugin-tailwindcss --plugin=prettier-plugin-classnames --write ."
     },
     "eslintConfig": {
         "extends": [

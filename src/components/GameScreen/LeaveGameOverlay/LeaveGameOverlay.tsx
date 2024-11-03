@@ -41,12 +41,8 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
                 <AlertDialogTitle>{t('header')}</AlertDialogTitle>
                 <AlertDialogDescription>{t('subheader')}</AlertDialogDescription>
                 <AlertDialogFooter>
-                    <AlertDialogCancel onClick={stayInGame}>
-                        {t('no')}
-                    </AlertDialogCancel>
-                    <AlertDialogAction onClick={leaveGame}>
-                        {t('yes')}
-                    </AlertDialogAction>
+                    <AlertDialogCancel onClick={stayInGame}>{t('no')}</AlertDialogCancel>
+                    <AlertDialogAction onClick={leaveGame}>{t('yes')}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
