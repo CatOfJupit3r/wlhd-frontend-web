@@ -35,6 +35,7 @@ export interface GameHandshake {
     currentBattlefield: Battlefield
     controlledEntities: Array<EntityInfoFull> | null
     turnOrder: IndividualTurnOrder
+    gameLobbyState: iGameLobbyState
 }
 
 export type IndividualTurnOrder = Array<CharacterInTurnOrder | null>
@@ -203,4 +204,12 @@ export type PossibleMemory = OneOf<
 
 export interface GameComponentMemory {
     [variable: string]: PossibleMemory
+}
+
+export interface iGameLobbyState {
+    players: Array<{
+        userId: string
+        isGm: boolean
+        isConnected: boolean
+    }>
 }

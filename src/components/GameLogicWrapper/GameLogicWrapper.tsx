@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection'
 import GameScreen from '@components/GameScreen/GameScreen'
 import Overlay from '@components/Overlay'
-import ThinkingHn from '@components/ThinkingHn'
+import { ThreeInOneSpinner } from '@components/Spinner'
 import { Button } from '@components/ui/button'
+import { Separator } from '@components/ui/separator'
 import { ActionContextType } from '@context/ActionContext'
 import { useToast } from '@hooks/useToast'
 import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
@@ -39,7 +41,7 @@ const GameLogicWrapper = () => {
             lobbyId,
             combatId: gameId,
         })
-    }, [gameId, dispatch, t, navigate])
+    }, [gameId, t, navigate])
 
     useEffect(() => {
         if (actionOutput) {
@@ -51,23 +53,36 @@ const GameLogicWrapper = () => {
             dispatch(setActions(null))
             SocketService.emit('take_action', actionOutput)
         }
-    }, [actionOutput, dispatch])
+    }, [actionOutput])
 
     const navigateToLobby = useCallback(() => {
         if (!lobbyId) {
             return
         }
+        SocketService.disconnect()
         navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
     }, [lobbyId, navigate])
 
-    const CurrentScreen = useCallback((): JSX.Element => {
-        switch (gameFlow?.type) {
-            case 'pending':
-                return (
-                    <Overlay>
-                        <div className={'flex flex-col items-center justify-center gap-4'}>
-                            <ThinkingHn text={t('local:game.pending.not_started')} />
-                            <h2>{t(gameFlow.details || 'local:game.pending.waiting_text')}</h2>
+    switch (gameFlow?.type) {
+        case 'pending':
+            return (
+                <Overlay>
+                    <div
+                        className={
+                            'flex w-full max-w-3xl flex-col items-center justify-center gap-4 rounded-2xl bg-white p-8 text-black'
+                        }
+                    >
+                        <div className={'flex flex-row items-center justify-center gap-3'}>
+                            <h1>{t('local:game.pending.not_started')}</h1>
+                            <ThreeInOneSpinner className={'size-14'} />
+                        </div>
+                        <p className={'text-t-normal italic'}>
+                            {t(gameFlow.details || 'local:game.pending.waiting_text')}
+                        </p>
+                        <div className={'flex flex-row gap-4'}>
+                            <Button variant={'secondary'} onClick={navigateToLobby}>
+                                {t('local:game.pending.exit')}
+                            </Button>
                             {lobbyInfo.layout === 'gm' ? (
                                 <Button
                                     onClick={() => {
@@ -77,52 +92,54 @@ const GameLogicWrapper = () => {
                                     {t('local:game.pending.start')}
                                 </Button>
                             ) : null}
-                            <Button onClick={navigateToLobby}>{t('local:game.pending.exit')}</Button>
                         </div>
-                    </Overlay>
-                )
-            case 'active':
-                return (
-                    <GameScreen
-                        setActionOutput={(output) => {
-                            setActionOutput(output)
-                        }}
-                    />
-                )
-            case 'ended':
-                return (
-                    <Overlay>
-                        <div className={'flex flex-col items-center justify-center gap-4'}>
-                            <h1>{t('local:game.end.title')}</h1>
-                            <h1>
-                                {t('local:game.end.result', {
-                                    result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
-                                })}
-                            </h1>
-                            <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
-                        </div>
-                    </Overlay>
-                )
-            case 'aborted':
-                return (
-                    <Overlay>
-                        <div className={'flex flex-row items-center justify-center gap-4'}>
-                            <h1>{t('local:game.end.aborted')}</h1>
-                            <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
-                            <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
-                        </div>
-                    </Overlay>
-                )
-            default:
-                return (
-                    <Overlay>
-                        <ThinkingHn text={t('local:game.pending.not_started')} />
-                    </Overlay>
-                )
-        }
-    }, [gameFlow, navigate, t])
-
-    return <CurrentScreen />
+                        <Separator />
+                        <ConnectedPlayersSection />
+                    </div>
+                </Overlay>
+            )
+        case 'active':
+            return (
+                <GameScreen
+                    setActionOutput={(output) => {
+                        setActionOutput(output)
+                    }}
+                />
+            )
+        case 'ended':
+            return (
+                <Overlay>
+                    <div className={'flex flex-col items-center justify-center gap-4'}>
+                        <h1>{t('local:game.end.title')}</h1>
+                        <h1>
+                            {t('local:game.end.result', {
+                                result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
+                            })}
+                        </h1>
+                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                    </div>
+                </Overlay>
+            )
+        case 'aborted':
+            return (
+                <Overlay>
+                    <div className={'flex flex-row items-center justify-center gap-4'}>
+                        <h1>{t('local:game.end.aborted')}</h1>
+                        <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
+                        <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
+                    </div>
+                </Overlay>
+            )
+        default:
+            return (
+                <Overlay>
+                    <div className={'flex flex-row items-center justify-center gap-4'}>
+                        <h1>{t('local:game.awaiting-flow.title')}</h1>
+                        <ThreeInOneSpinner className={'5rem'} />
+                    </div>
+                </Overlay>
+            )
+    }
 }
 
 export default GameLogicWrapper

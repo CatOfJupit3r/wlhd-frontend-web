@@ -30,7 +30,11 @@ const initialState: GameScreenState = {
     },
     controlledEntities: null,
     yourTurn: false,
+    gameLobbyState: {
+        players: [],
+    },
 }
+
 const GameScreenSlice = createSlice({
     name: 'gameScreen',
     initialState,
@@ -69,6 +73,7 @@ const GameScreenSlice = createSlice({
                     type: action.payload.combatStatus === 'pending' ? 'pending' : 'active',
                     details: '',
                 },
+                gameLobbyState: action.payload.gameLobbyState,
             }
         },
         addMessage: (state, action: PayloadAction<GameStateContainer[number]>) => {
@@ -107,6 +112,9 @@ const GameScreenSlice = createSlice({
                 details: action.payload,
             }
         },
+        setGameLobbyState: (state, action: PayloadAction<GameScreenState['gameLobbyState']>) => {
+            state.gameLobbyState = action.payload
+        },
     },
 })
 export default GameScreenSlice.reducer
@@ -126,6 +134,7 @@ export const {
     setYourTurn,
     haltActions,
     fromHandshake: setGameScreenSliceFromHandshake,
+    setGameLobbyState,
 } = GameScreenSlice.actions
 
 export const selectCurrentRoundCount = (state: RootState) => state.gameScreen.round.current
@@ -136,6 +145,7 @@ export const selectTurnOrder = (state: RootState) => state.gameScreen.round.orde
 export const selectBattlefield = (state: RootState) => state.gameScreen.battlefield
 export const selectActions = (state: RootState) => state.gameScreen.actions
 export const selectIsYourTurn = (state: RootState) => state.gameScreen.yourTurn
+export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameLobbyState
 
 export const selectActiveEntity = createSelector([(state: RootState) => state.gameScreen.round.order], (turnOrder) => {
     return turnOrder[0] // the first entity in the turn order is the active entity. if none, then it's round end.

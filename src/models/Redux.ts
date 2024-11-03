@@ -5,6 +5,7 @@ import {
     EntityInfoFull,
     GameHandshake,
     GameStateContainer,
+    iGameLobbyState,
     IndividualTurnOrder,
 } from './GameModels'
 
@@ -69,6 +70,7 @@ export interface GameScreenState {
         type: 'pending' | 'active' | 'ended' | 'aborted'
         details: string
     }
+    gameLobbyState: iGameLobbyState
     controlledEntities: Array<EntityInfoFull> | null
     yourTurn: boolean
 }

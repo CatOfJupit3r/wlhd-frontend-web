@@ -5,6 +5,7 @@ import {
     Battlefield,
     EntityInfoFull,
     GameHandshake,
+    iGameLobbyState,
     IndividualTurnOrder,
     TranslatableString,
 } from '@models/GameModels'
@@ -18,6 +19,7 @@ import {
     setFlowToAborted,
     setFlowToActive,
     setFlowToEnded,
+    setGameLobbyState,
     setGameScreenSliceFromHandshake,
     setRound,
     setTurnOrder,
@@ -42,6 +44,8 @@ const SOCKET_EVENTS = {
     BATTLEFIELD_UPDATE: 'battlefield_updated',
     ENTITIES_UPDATED: 'entities_updated',
     TURN_ORDER_UPDATED: 'turn_order_updated',
+    GAME_LOBBY_STATE: 'game_lobby_state',
+    ERROR: 'error',
 }
 
 const ELEVATED_RIGHTS_EVENTS = {
@@ -156,8 +160,17 @@ class SocketService {
                     })
                 }
             },
-            error: (error: unknown) => {
+            [SOCKET_EVENTS.ERROR]: (error: unknown) => {
                 console.error('Socket error', error)
+                if (error !== null && typeof error === 'object' && 'message' in error) {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Error',
+                        description: (error['message'] as string) ?? '???',
+                        position: 'top-center',
+                    })
+                    return
+                }
                 if (this.retries > 0) {
                     console.log('Reconnecting...')
                     this.retries--
@@ -167,6 +180,10 @@ class SocketService {
                     ReduxStore.dispatch(setFlowToAborted('local:game.connection_lost'))
                     this.retries = 3
                 }
+            },
+            [SOCKET_EVENTS.GAME_LOBBY_STATE]: (gameLobbyState: iGameLobbyState) => {
+                console.log('Game lobby state', gameLobbyState)
+                ReduxStore.dispatch(setGameLobbyState(gameLobbyState))
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message)

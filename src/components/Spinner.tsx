@@ -70,7 +70,7 @@ const RingResizeSpinner: FC<iSVGSpinnerChildProps> = (props) => {
 }
 
 const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
-    return <SVGSpinner source="/components/spinners/three-in-one.svg" {...props} />
+    return <SVGSpinner source="/components/spinners/three-in-one-spinner.svg" {...props} />
 }
 
 export {
