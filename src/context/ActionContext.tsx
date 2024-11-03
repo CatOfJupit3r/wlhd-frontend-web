@@ -40,6 +40,20 @@ export const ActionContextProvider = ({
         })
     }, [])
 
+    const setChoice: ActionContextType['setChoice'] = useCallback((key, mechanic, displayed) => {
+        setChoices((prevChoices) => ({
+            ...prevChoices,
+            mechanic: {
+                ...prevChoices.mechanic,
+                [key]: mechanic,
+            },
+            displayed: {
+                ...prevChoices.displayed,
+                [key]: displayed,
+            },
+        }))
+    }, [])
+
     return (
         <ActionContext.Provider
             value={{
@@ -47,19 +61,7 @@ export const ActionContextProvider = ({
                 setOutput,
                 choices,
                 resetChoices,
-                setChoice: (key, mechanic, displayed) => {
-                    setChoices({
-                        ...choices,
-                        mechanic: {
-                            ...choices.mechanic,
-                            [key]: mechanic,
-                        },
-                        displayed: {
-                            ...choices.displayed,
-                            [key]: displayed,
-                        },
-                    })
-                },
+                setChoice,
             }}
         >
             {children}
