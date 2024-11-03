@@ -24,6 +24,7 @@ import {
     useBuildCharacterEditorProps,
 } from '@context/CharacterEditorProvider'
 import { useCombatEditorContext } from '@context/CombatEditorContext'
+import { ControlledBy } from '@models/EditorConversion'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { useCallback, useEffect, useState } from 'react'
 import { BiAddToQueue } from 'react-icons/bi'
@@ -173,10 +174,7 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
     const { battlefield } = useCombatEditorContext()
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character')
     const { character, changeEditedCharacter } = useBuildCharacterEditorProps(battlefield[clickedSquare as string])
-    const [newControls, setNewControls] = useState<{
-        type: string
-        id?: string
-    }>(battlefield[clickedSquare as string].controlInfo)
+    const [newControls, setNewControls] = useState<ControlledBy>(battlefield[clickedSquare as string].controlInfo)
 
     useEffect(() => {
         if (clickedSquare) {
@@ -184,15 +182,12 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
             if (character && newCharacter && JSON.stringify(character) !== JSON.stringify(newCharacter)) {
                 changeEditedCharacter(newCharacter)
                 setNewControls(newCharacter.controlInfo)
-                setIsEditing('character')
             }
         }
     }, [clickedSquare, battlefield])
 
     const handleSaveButton = useCallback(() => {
-        if (!clickedSquare || !character) {
-            return
-        }
+        if (!clickedSquare || !character) return
         if (isEditing === 'controls') {
             if (newControls.type === 'player') {
                 if (
@@ -217,11 +212,11 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
         } else {
             updateCharacter(clickedSquare, character)
         }
-    }, [character])
+    }, [character, newControls, clickedSquare, isEditing, lobby])
 
     useEffect(() => {
         handleSaveButton()
-    }, [character])
+    }, [character, newControls])
 
     return (
         <div className={'mt-4'}>
