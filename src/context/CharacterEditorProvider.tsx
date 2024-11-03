@@ -17,7 +17,7 @@ export interface CharacterEditorFlags {
         spellBook?: boolean
         statusEffects?: boolean
         weaponry?: boolean
-        characterMemory?: boolean
+        misc?: boolean
 
         [key: string]: unknown // in order for flags to be accessible by key
     }

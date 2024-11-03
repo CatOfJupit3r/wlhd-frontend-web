@@ -30,31 +30,37 @@ export const CharacterEditorMenus = () => {
                         value: 'attribute',
                         icon: AttributesIcon,
                         disabled: flags.exclude?.attributes,
-                    },
-                    {
-                        value: 'item',
-                        icon: InventoryIcon,
-                        disabled: flags.exclude?.inventory,
-                    },
-                    {
-                        value: 'weapon',
-                        icon: WeaponryIcon,
-                        disabled: flags.exclude?.weaponry,
+                        hide: flags.exclude?.attributes,
                     },
                     {
                         value: 'spell',
                         icon: SpellBookIcon,
                         disabled: flags.exclude?.spellBook,
+                        hide: flags.exclude?.spellBook,
+                    },
+                    {
+                        value: 'misc',
+                        icon: MdOutlineAutoAwesomeMosaic,
+                        disabled: flags.exclude?.misc,
+                        hide: flags.exclude?.misc,
+                    },
+                    {
+                        value: 'item',
+                        icon: InventoryIcon,
+                        disabled: flags.exclude?.inventory,
+                        hide: flags.exclude?.inventory,
+                    },
+                    {
+                        value: 'weapon',
+                        icon: WeaponryIcon,
+                        disabled: flags.exclude?.weaponry,
+                        hide: flags.exclude?.weaponry,
                     },
                     {
                         value: 'statusEffect',
                         icon: StatusEffectsIcon,
                         disabled: flags.exclude?.statusEffects,
-                    },
-                    {
-                        value: 'misc',
-                        icon: MdOutlineAutoAwesomeMosaic,
-                        disabled: flags.exclude?.characterMemory,
+                        hide: flags.exclude?.statusEffects,
                     },
                 ]
                     .map(({ value, icon, disabled }) => (
@@ -67,9 +73,8 @@ export const CharacterEditorMenus = () => {
                             return 1
                         } else if (b.props.disabled) {
                             return -1
-                        } else {
-                            return a.props.value > b.props.value ? 1 : -1
                         }
+                        return 0
                     })}
             </ToggleGroup>
             <Separator />
