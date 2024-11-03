@@ -121,7 +121,7 @@
         "vite-tsconfig-paths": "^5.0.1"
     },
     "lint-staged": {
-        "*.{ts, tsx, js, jsx}": [
+        "*.{ts,tsx,js,jsx}": [
             "eslint --fix",
             "prettier --write",
             "bash -c 'npm run ts'"
