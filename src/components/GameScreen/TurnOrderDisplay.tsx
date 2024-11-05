@@ -4,29 +4,24 @@ import { CharacterInTurnOrder } from '@models/GameModels'
 import { selectTurnOrder } from '@redux/slices/gameScreenSlice'
 import { cn, getCharacterSide } from '@utils'
 import { AnimatePresence, motion, MotionProps } from 'framer-motion'
-import { forwardRef, HTMLAttributes, Ref, useEffect, useState } from 'react'
+import { forwardRef, Ref, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
+interface iCharacterCard extends MotionProps {
+    character: CharacterInTurnOrder
+    isActive?: boolean
+    className?: string
+    onDoubleClick?: () => void
+}
+
 const CharacterCard = forwardRef(
-    (
-        {
-            character,
-            isActive = false,
-            className,
-            ...props
-        }: {
-            character: CharacterInTurnOrder
-            isActive?: boolean
-        } & HTMLAttributes<HTMLDivElement> &
-            MotionProps,
-        ref: Ref<HTMLDivElement>
-    ) => {
+    ({ character, isActive = false, className, ...props }: iCharacterCard, ref: Ref<HTMLDivElement>) => {
         const { t } = useTranslation()
         return (
             <motion.div
                 className={cn(
-                    'flex h-12 w-full flex-row gap-1 hover:opacity-100 hover:grayscale-0',
+                    'flex h-10 w-full flex-row items-center gap-1 overflow-y-hidden hover:opacity-100 hover:grayscale-0',
                     isActive ? 'opacity-100' : 'opacity-70 grayscale',
                     className
                 )}
@@ -37,8 +32,8 @@ const CharacterCard = forwardRef(
                 title={t(character.decorations.name)}
                 ref={ref}
                 initial={{ x: -100, opacity: 0 }}
-                animate={{ x: isActive ? 0 : -10, opacity: 1 }} // active characters are a bit to the right
-                exit={{ x: 100, opacity: 0 }}
+                animate={{ x: isActive ? 0 : -5, opacity: 1 }} // active characters are a bit to the right
+                exit={{ x: -100, opacity: 0 }}
                 layout
                 transition={{
                     layout: {
@@ -52,12 +47,12 @@ const CharacterCard = forwardRef(
                 <CharacterGameAsset
                     src={character.decorations.sprite}
                     alt={character.descriptor}
-                    className={cn('h-full w-4/5 overflow-y-hidden object-cover')}
+                    className={cn('h-20 w-28 overflow-y-hidden object-cover')}
                     line={character.square?.line ?? 4}
                 />
                 <div
                     className={cn(
-                        'relative flex h-full w-1/5 items-center justify-center overflow-hidden rounded opacity-90',
+                        'relative flex h-full w-3 items-center justify-center overflow-hidden rounded opacity-90',
                         getCharacterSide(character.square?.line ?? 4) === 'ally'
                             ? isActive
                                 ? character.controlledByYou
@@ -135,7 +130,7 @@ const TurnOrderDisplay = () => {
     }, [turnOrder])
 
     return (
-        <BetterScrollableContainer>
+        <BetterScrollableContainer className={'w-20'}>
             <AnimatePresence>
                 {innerTurnOrder
                     .filter((character) => character !== null)
