@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styles from './ActionInput.module.css'
 
 import { useTranslation } from 'react-i18next'
 
 import { BsArrowBarLeft } from 'react-icons/bs'
 
-import ElementWithIcon from '@components/ElementWithIcon'
 import { useActionContext } from '@context/ActionContext'
 import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { useToast } from '@hooks/useToast'
 
+import { Button } from '@components/ui/button'
 import { Action } from '@models/GameModels'
 import {
     selectActionAliases,
@@ -20,7 +19,7 @@ import {
 } from '@redux/slices/gameScreenSlice'
 import { capitalizeFirstLetter } from '@utils'
 import { RxArrowTopRight } from 'react-icons/rx'
-import OptionCard from './OptionCard/OptionCard'
+import { OptionCardWithLogic } from './OptionCard'
 
 /*
 
@@ -117,12 +116,11 @@ const ActionInput = () => {
             }
         }
 
-        return (
-            action?.map((action: Action, index: number) => {
+        return action
+            .map((action: Action, index: number) => {
                 return (
-                    <OptionCard
+                    <OptionCardWithLogic
                         option={action}
-                        index={index}
                         key={index}
                         alias={currentAlias}
                         aliasTranslated={
@@ -134,12 +132,9 @@ const ActionInput = () => {
                         }
                     />
                 )
-            }) ?? []
-        )
+            })
             .sort((a: JSX.Element, b: JSX.Element) => {
-                return b?.props.option.translation_info.descriptor.localeCompare(
-                    a?.props.option.translation_info.descriptor
-                )
+                return b?.props.option.decorations.name.localeCompare(a?.props.option.decorations.name)
             })
             .sort((a: JSX.Element) => {
                 return a?.props.option.available ? -1 : 1
@@ -165,10 +160,10 @@ const ActionInput = () => {
 
     const ResetButton = useCallback(() => {
         return (
-            <ElementWithIcon
-                icon={<BsArrowBarLeft onClick={handleReset} />}
-                element={<p>{t('local:game.actions.reset')}</p>}
-            />
+            <Button onClick={handleReset} variant={'destructive'} className={'flex w-full flex-row gap-1'}>
+                <BsArrowBarLeft className={'size-6'} />
+                {t('local:game.actions.reset')}
+            </Button>
         )
     }, [handleReset, t])
 
@@ -188,10 +183,10 @@ const ActionInput = () => {
 
     const ConfirmButton = useCallback(() => {
         return (
-            <ElementWithIcon
-                icon={<RxArrowTopRight onClick={handleSend} />}
-                element={<p>{t('local:game.actions.submit')}</p>}
-            />
+            <Button onClick={handleSend} variant={'default'} className={'flex w-full flex-row gap-1'}>
+                <RxArrowTopRight className={'size-6'} />
+                {t('local:game.actions.submit')}
+            </Button>
         )
     }, [choices, handleReset])
 
@@ -226,19 +221,10 @@ const ActionInput = () => {
     const ShallowDepthScreen = useCallback(() => {
         return (
             <>
-                <div
-                    id={'buttons'}
-                    className={styles.buttonContainer}
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                    }}
-                >
-                    <div id={'manipulators'}>
-                        <ResetButton />
-                    </div>
+                <div id={'buttons'} className={'flex justify-between'}>
+                    <ResetButton />
                 </div>
-                <div id={'options'} className={styles.options}>
+                <div id={'options'} className={'flex h-full flex-col overflow-auto'}>
                     <ShallowDepthScreenContent />
                 </div>
             </>
@@ -249,6 +235,8 @@ const ActionInput = () => {
         return (
             <>
                 <h1>{t('local:game.actions.you_chose')}</h1>
+                {/*<OptionCardPlaceholder />*/}
+                {/*<div>{}</div>*/}
                 {choices.displayed ? (
                     <p>
                         {Object.entries(choices.displayed)
@@ -258,9 +246,9 @@ const ActionInput = () => {
                 ) : (
                     <h2>{t('local:game.actions.nothing?')}</h2>
                 )}
-                <div className={styles.buttonContainer}>
-                    <ConfirmButton />
+                <div className={'flex w-full flex-row justify-center gap-2'}>
                     <ResetButton />
+                    <ConfirmButton />
                 </div>
             </>
         )
@@ -360,7 +348,7 @@ const ActionInput = () => {
     }, [choices, currentAlias, scopeOfChoice, initialActionLevel])
 
     return (
-        <div id={'action-input'} className={styles.inputsContainer}>
+        <div id={'action-input'} className={'h-full w-full overflow-y-auto overflow-x-hidden px-5 pb-5'}>
             {isPlayerTurn ? (
                 <div id={'current-depth-visual'}>
                     {reachedFinalDepth ? <FinalDepthScreen /> : <ShallowDepthScreen />}

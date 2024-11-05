@@ -34,11 +34,11 @@ const GameTestPage = () => {
 
     useEffect(() => {
         dispatch(setBattlefield(example_gamestate.battlefield))
-        dispatch(setRound(example_gamestate.turnOrder.current as any))
+        dispatch(setRound(example_gamestate.round.current as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setControlledEntities(example_gamestate.controlledEntities as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        dispatch(setTurnOrder(example_gamestate.turnOrder.order as any))
+        dispatch(setTurnOrder(example_gamestate.round.order as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setMessages(example_gamestate.messages as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

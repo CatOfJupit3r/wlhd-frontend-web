@@ -1,4 +1,4 @@
-import { ActionInput as ActionInputInterface } from '@models/GameModels'
+import { ActionInput as iActionInput } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 type Choices = {
@@ -6,29 +6,27 @@ type Choices = {
     displayed: { [key: string]: string }
 }
 
-export interface ActionContextType {
-    actions: ActionInputInterface | null
+export interface iActionContext {
+    actions: iActionInput | null
     setOutput: (output: Choices['mechanic']) => void
     choices: Choices
     setChoice: (key: keyof Choices['mechanic'], mechanic: string, displayed: string) => void
 
     resetChoices: () => void
-
-    [key: string]: unknown
 }
 
-const ActionContext = createContext<ActionContextType | undefined>(undefined)
+const ActionContext = createContext<iActionContext | undefined>(undefined)
 
 export const ActionContextProvider = ({
     actions,
     setOutput,
     children,
 }: {
-    actions: ActionContextType['actions']
-    setOutput: ActionContextType['setOutput']
+    actions: iActionContext['actions']
+    setOutput: iActionContext['setOutput']
     children: ReactNode
 }) => {
-    const [choices, setChoices] = useState<ActionContextType['choices']>({
+    const [choices, setChoices] = useState<iActionContext['choices']>({
         mechanic: {},
         displayed: {},
     })
@@ -40,7 +38,7 @@ export const ActionContextProvider = ({
         })
     }, [])
 
-    const setChoice: ActionContextType['setChoice'] = useCallback((key, mechanic, displayed) => {
+    const setChoice: iActionContext['setChoice'] = useCallback((key, mechanic, displayed) => {
         setChoices((prevChoices) => ({
             ...prevChoices,
             mechanic: {
@@ -74,5 +72,5 @@ export const useActionContext = () => {
     if (context === undefined) {
         throw new Error('useActionContext must be used within a ActionContextProvider.')
     }
-    return context as ActionContextType
+    return context as iActionContext
 }

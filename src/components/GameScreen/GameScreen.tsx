@@ -1,7 +1,7 @@
 import Battlefield from '@components/Battlefield/Battlefield'
 import BattlefieldCleaner from '@components/GameScreen/BattlefieldCleaner'
 import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay'
-import { ActionContextProvider, ActionContextType } from '@context/ActionContext'
+import { ActionContextProvider, iActionContext } from '@context/ActionContext'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
 import { selectActions, selectBattlefield } from '@redux/slices/gameScreenSlice'
 import { useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ const BattlefieldSection = () => {
     return <Battlefield />
 }
 
-const GameScreen = ({ setActionOutput }: { setActionOutput?: ActionContextType['setOutput'] }) => {
+const GameScreen = ({ setActionOutput }: { setActionOutput?: iActionContext['setOutput'] }) => {
     const [chosen, setChosen] = useState<string | null>(null)
     const actions = useSelector(selectActions)
 

@@ -18,10 +18,11 @@ interface GameAssetProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>,
     }
 }
 
-const GameAsset = ({ src, fallback, ...props }: GameAssetProps) => {
+const GameAsset = ({ src, fallback, alt, ...props }: GameAssetProps) => {
     return (
         <img
             {...props}
+            alt={alt || 'asset'}
             src={
                 typeof src === 'string'
                     ? generateAssetPathFullDescriptor(src)

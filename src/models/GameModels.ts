@@ -138,14 +138,13 @@ export interface StatusEffectInfo extends CommonGameComponentInfoFields {
     duration: number | null
 }
 
-export interface TranslationInfoAction {
-    descriptor: string
-    co_descriptor: string | null
+export interface iActionDecoration extends GameComponentDecoration {
+    cost: string
 }
 
 export interface Action {
     id: string
-    translation_info: TranslationInfoAction
+    decorations: iActionDecoration
     available: boolean
     requires: null | {
         [argument: string]: string

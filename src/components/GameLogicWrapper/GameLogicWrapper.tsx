@@ -9,7 +9,7 @@ import Overlay from '@components/Overlay'
 import { ThreeInOneSpinner } from '@components/Spinner'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'
-import { ActionContextType } from '@context/ActionContext'
+import { iActionContext } from '@context/ActionContext'
 import { useToast } from '@hooks/useToast'
 import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
@@ -19,7 +19,7 @@ import SocketService from '@services/SocketService'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const [actionOutput, setActionOutput] = useState<ActionContextType['choices']['mechanic'] | null>(null)
+    const [actionOutput, setActionOutput] = useState<iActionContext['choices']['mechanic'] | null>(null)
     const { t } = useTranslation()
     const { toast } = useToast()
     const navigate = useNavigate()
