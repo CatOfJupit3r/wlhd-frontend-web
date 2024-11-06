@@ -10,16 +10,10 @@ import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { useToast } from '@hooks/useToast'
 
 import { Button } from '@components/ui/button'
-import { Action } from '@models/GameModels'
-import {
-    selectActionAliases,
-    selectActionAliasTranslations,
-    selectActions,
-    selectIsYourTurn,
-} from '@redux/slices/gameScreenSlice'
-import { capitalizeFirstLetter } from '@utils'
+import { iAction } from '@models/GameModels'
+import { selectActions, selectIsYourTurn } from '@redux/slices/gameScreenSlice'
 import { RxArrowTopRight } from 'react-icons/rx'
-import { OptionCardWithLogic } from './OptionCard'
+import OptionCard, { OptionCardPlaceholder, OptionCardWithLogic } from './OptionCard'
 
 /*
 
@@ -60,10 +54,11 @@ const EmptyActionInputContent = () => {
         </h1>
     )
 }
+type ScopeOfChoice = [string, string]
 
 const ActionInput = () => {
     const dispatch = useDispatch()
-    const { actions, setOutput } = useActionContext()
+    const { setOutput } = useActionContext()
     const {
         incrementClickedSquares,
         changeOnClickTile,
@@ -73,30 +68,24 @@ const ActionInput = () => {
     } = useBattlefieldContext()
     const { t } = useTranslation()
     const { toastError } = useToast()
-
-    const initialActionLevel = useSelector(selectActions)
-
-    const aliases = useSelector(selectActionAliases)
-    const aliasesTranslations = useSelector(selectActionAliasTranslations)
-
+    const actions = useSelector(selectActions)
     const isPlayerTurn = useSelector(selectIsYourTurn)
-
     const [currentAlias, setCurrentAlias] = useState('action')
-    const [scopeOfChoice, setScopeOfChoice] = useState(
-        {} as {
-            [key: string]: string
-        }
-    )
     const { choices, resetChoices, setChoice } = useActionContext()
+    const [scopeOfChoice, setScopeOfChoice] = useState<Array<ScopeOfChoice>>([['action', 'action']])
+    const aliasValue = useMemo(() => {
+        return scopeOfChoice.find((scope) => scope[0] === currentAlias)?.[1] ?? ''
+    }, [scopeOfChoice, currentAlias])
+    const action = useMemo(() => (actions && actions[aliasValue] ? actions[aliasValue] : []), [actions, aliasValue])
 
     const [needToAddInteractableTiles, setNeedToAddInteractableTiles] = useState<
         | {
               flag: false
-              action?: Action[]
+              action?: iAction[]
           }
         | {
               flag: true
-              action: Action[]
+              action: iAction[]
           }
     >({
         flag: false,
@@ -105,33 +94,9 @@ const ActionInput = () => {
     const [reachedFinalDepth, setReachedFinalDepth] = useState(false)
 
     const options = useMemo(() => {
-        let action: Action[] = []
-        let aliasValue = ''
-        if (currentAlias) {
-            if (currentAlias === 'action') {
-                action = initialActionLevel?.action ?? []
-            } else {
-                aliasValue = scopeOfChoice[currentAlias]
-                action = aliases?.[aliasValue] ?? []
-            }
-        }
-
         return action
-            .map((action: Action, index: number) => {
-                return (
-                    <OptionCardWithLogic
-                        option={action}
-                        key={index}
-                        alias={currentAlias}
-                        aliasTranslated={
-                            aliasesTranslations
-                                ? currentAlias && currentAlias !== 'action'
-                                    ? aliasesTranslations[scopeOfChoice[currentAlias]]
-                                    : aliasesTranslations[currentAlias]
-                                : ''
-                        }
-                    />
-                )
+            .map((action: iAction, index: number) => {
+                return <OptionCardWithLogic option={action} key={index} alias={currentAlias} />
             })
             .sort((a: JSX.Element, b: JSX.Element) => {
                 return b?.props.option.decorations.name.localeCompare(a?.props.option.decorations.name)
@@ -139,11 +104,7 @@ const ActionInput = () => {
             .sort((a: JSX.Element) => {
                 return a?.props.option.available ? -1 : 1
             })
-    }, [actions, currentAlias, scopeOfChoice, aliasesTranslations])
-
-    const appendScope = useCallback((scope: { [key: string]: string }) => {
-        setScopeOfChoice((prev) => ({ ...prev, ...scope }))
-    }, [])
+    }, [actions, currentAlias, choices, aliasValue])
 
     const handleReset = useCallback(() => {
         resetInputs()
@@ -151,7 +112,7 @@ const ActionInput = () => {
 
     const resetInputs = useCallback(() => {
         setCurrentAlias('action')
-        setScopeOfChoice({})
+        setScopeOfChoice([['action', 'action']])
         resetChoices()
         setReachedFinalDepth(false)
         resetInteractableSquares()
@@ -167,16 +128,22 @@ const ActionInput = () => {
         )
     }, [handleReset, t])
 
-    const handleErrorCase = useCallback(() => {
-        console.debug('It seems like choices.mechanic is undefined. Investigate.', choices)
-        setOutput({ action: 'builtins:skip' })
-    }, [t])
+    const handleErrorCase = useCallback(
+        (doSetOutput?: boolean) => {
+            console.debug('It seems like choices is undefined. Investigate.', choices)
+            if (doSetOutput) {
+                setOutput({ action: 'builtins:skip' })
+            }
+            resetInputs()
+        },
+        [t, resetInputs]
+    )
 
     const handleSend = useCallback(() => {
-        if (choices.mechanic === undefined) {
+        if (!choices) {
             handleErrorCase()
         } else {
-            setOutput(choices.mechanic)
+            setOutput(choices)
         }
         resetInputs()
     }, [choices, handleReset])
@@ -191,19 +158,8 @@ const ActionInput = () => {
     }, [choices, handleReset])
 
     const ShallowDepthScreenContent = useCallback(() => {
-        let action: Action[] = []
-        let aliasValue = ''
-        if (aliases && currentAlias) {
-            if (currentAlias === 'action') {
-                action = initialActionLevel?.action ?? []
-            } else {
-                aliasValue = scopeOfChoice[currentAlias]
-                action = aliases[aliasValue]
-            }
-        }
-
-        if (initialActionLevel === null) {
-            return <h1 className={'mt-2 text-center text-t-big font-bold'}>Loading...</h1>
+        if (actions === null) {
+            return <h1 className={'mt-2 text-center text-t-big font-bold'}>Seems something is missing...</h1>
         } else if (!action || action.length === 0 || options.length === 0) {
             setTimeout(handleErrorCase)
             toastError({
@@ -216,7 +172,7 @@ const ActionInput = () => {
         } else {
             return <>{options}</>
         }
-    }, [initialActionLevel, currentAlias, scopeOfChoice, aliases, options, handleErrorCase])
+    }, [currentAlias, scopeOfChoice, actions, options, handleErrorCase, aliasValue])
 
     const ShallowDepthScreen = useCallback(() => {
         return (
@@ -229,30 +185,38 @@ const ActionInput = () => {
                 </div>
             </>
         )
-    }, [currentAlias, scopeOfChoice, aliases, options])
+    }, [currentAlias, scopeOfChoice, actions, options])
 
     const FinalDepthScreen = useCallback(() => {
         return (
             <>
-                <h1>{t('local:game.actions.you_chose')}</h1>
-                {/*<OptionCardPlaceholder />*/}
-                {/*<div>{}</div>*/}
-                {choices.displayed ? (
-                    <p>
-                        {Object.entries(choices.displayed)
-                            .map(([key, value]) => `${capitalizeFirstLetter(t(key))}: ${t(value)}`)
-                            .join(', ')}
-                    </p>
-                ) : (
-                    <h2>{t('local:game.actions.nothing?')}</h2>
-                )}
-                <div className={'flex w-full flex-row justify-center gap-2'}>
-                    <ResetButton />
-                    <ConfirmButton />
+                <p className={'text-t-big font-bold'}>{t('local:game.actions.you_chose')}</p>
+                <div className={'flex flex-col gap-2'}>
+                    {choices ? (
+                        scopeOfChoice.map(([key, value]) => {
+                            if (value.startsWith('Square')) {
+                                return null
+                            }
+                            if (!choices[key] || !actions) {
+                                return <OptionCardPlaceholder />
+                            }
+                            const selected = actions[value].find((action) => action.id === choices[key])
+                            if (!selected) {
+                                return <OptionCardPlaceholder />
+                            }
+                            return <OptionCard decorations={selected.decorations} key={key} disabled={true} />
+                        })
+                    ) : (
+                        <h2>{t('local:game.actions.nothing?')}</h2>
+                    )}
+                    <div className={'flex w-full flex-row justify-center gap-2'}>
+                        <ResetButton />
+                        <ConfirmButton />
+                    </div>
                 </div>
             </>
         )
-    }, [dispatch, t, choices, handleReset])
+    }, [dispatch, t, choices, handleReset, scopeOfChoice])
 
     useEffect(() => {
         if (!needToAddInteractableTiles.flag) {
@@ -267,7 +231,7 @@ const ActionInput = () => {
                 console.log('No square was provided despite it being required.')
                 return
             }
-            setChoice(currentAlias, square, square)
+            setChoice(currentAlias, square)
             incrementClickedSquares(square)
         })
         setInteractableSquares(...interactableSquares)
@@ -282,70 +246,40 @@ const ActionInput = () => {
     }, [actions])
 
     useEffect(() => {
-        let action: Action[] = []
-        let aliasValue = ''
-        if (aliases && currentAlias) {
-            if (currentAlias === 'action') {
-                action = initialActionLevel?.action ?? []
-            } else {
-                aliasValue = scopeOfChoice[currentAlias]
-                action = aliases[aliasValue]
-            }
-        }
         if (aliasValue.startsWith('Square')) {
             setNeedToAddInteractableTiles({
                 flag: true,
                 action,
             })
         }
-    }, [currentAlias, scopeOfChoice, aliases])
+    }, [currentAlias, aliasValue, scopeOfChoice, actions])
 
     useEffect(() => {
-        if (initialActionLevel === null || !currentAlias || choices.mechanic[currentAlias] === undefined) {
+        if (actions === null || !currentAlias || choices[currentAlias] === undefined) {
             return
         }
-        if (currentAlias === 'action') {
-            const choice = choices.mechanic[currentAlias]
-            const action = initialActionLevel.action.find((action: Action) => action.id === choice)
-            if (action) {
-                const nextRequirements = action.requires
-                if (nextRequirements) {
-                    appendScope(nextRequirements)
-                    setCurrentAlias(Object.keys(nextRequirements)[0])
-                } else {
-                    if (!reachedFinalDepth) {
-                        setReachedFinalDepth(true)
-                    }
-                }
-            } else {
-                toastError({
-                    title: t('local:game.actions.you_chose'),
-                    description: t('local:error.invalid_choice'),
-                })
-            }
-        } else {
-            // scope keeps track of requirements to process.
-            // if we have chosen an action and there is another requirement in scope that haven't been defined, we move to next requirement
-            // else, we set reached final depth, and it is possible to submit input
-            const action = aliases?.[scopeOfChoice[currentAlias]]
-            resetInteractableSquares()
-            if (action) {
-                const selectedAction = action.find((action: Action) => action.id === choices.mechanic[currentAlias])
-                if (selectedAction && selectedAction.requires) {
-                    appendScope(selectedAction.requires)
-                }
-            }
-            const nextRequirements = Object.keys(scopeOfChoice).filter((key: string) => {
-                return choices.mechanic[key] === undefined
-            })
-            if (nextRequirements.length > 0) {
-                setReachedFinalDepth(false)
-                setCurrentAlias(nextRequirements[0])
-            } else {
-                setReachedFinalDepth(true)
+        // scope keeps track of requirements to process.
+        // if we have chosen an action and there is another requirement in scope that haven't been defined, we move to next requirement
+        // else, we set reached final depth, and it is possible to submit input
+        resetInteractableSquares()
+        const scope = [...scopeOfChoice]
+        if (action) {
+            const selectedAction = action.find((action: iAction) => action.id === choices[currentAlias])
+            if (selectedAction && selectedAction.requires) {
+                scope.push(...Object.entries(selectedAction.requires))
             }
         }
-    }, [choices, currentAlias, scopeOfChoice, initialActionLevel])
+        const nextRequirements = scope.filter(([alias]) => choices[alias] === undefined)
+        if (nextRequirements.length > 0) {
+            setReachedFinalDepth(false)
+            const [nextAlias] = nextRequirements[0]
+            setCurrentAlias(nextAlias)
+            setScopeOfChoice(scope)
+        } else {
+            console.log('Reached final depth')
+            setReachedFinalDepth(true)
+        }
+    }, [choices, currentAlias, scopeOfChoice, aliasValue, actions])
 
     return (
         <div id={'action-input'} className={'h-full w-full overflow-y-auto overflow-x-hidden px-5 pb-5'}>

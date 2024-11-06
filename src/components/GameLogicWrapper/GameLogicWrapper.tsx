@@ -19,7 +19,7 @@ import SocketService from '@services/SocketService'
 
 const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const [actionOutput, setActionOutput] = useState<iActionContext['choices']['mechanic'] | null>(null)
+    const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null)
     const { t } = useTranslation()
     const { toast } = useToast()
     const navigate = useNavigate()

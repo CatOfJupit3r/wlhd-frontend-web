@@ -1,10 +1,10 @@
 import { UserInformation } from '@models/APIData'
 import {
-    ActionInput as ActionInputInterface,
     Battlefield,
     EntityInfoFull,
     GameHandshake,
     GameStateContainer,
+    iCharacterActions as ActionInputInterface,
     iGameLobbyState,
     IndividualTurnOrder,
 } from './GameModels'

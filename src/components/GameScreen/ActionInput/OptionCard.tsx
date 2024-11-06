@@ -4,7 +4,7 @@ import { BsInfoCircle } from 'react-icons/bs'
 import GameAsset from '@components/GameAsset'
 import { StaticSkeleton } from '@components/ui/skeleton'
 import { useActionContext } from '@context/ActionContext'
-import { Action, iActionDecoration } from '@models/GameModels'
+import { iAction, iActionDecoration } from '@models/GameModels'
 import { cn } from '@utils'
 import { FC, useCallback, useMemo } from 'react'
 
@@ -65,25 +65,20 @@ const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handl
 }
 
 interface iOptionCardWithLogic {
-    option: Action
+    option: iAction
     alias: string
-    aliasTranslated: string
     highlighted?: boolean
 }
 
 export const OptionCardWithLogic: FC<iOptionCardWithLogic> = ({ option, highlighted, alias }) => {
-    const { t } = useTranslation()
     const { setChoice } = useActionContext()
-    const {
-        decorations: { name },
-    } = option
 
     const handleDoubleClick = useCallback(() => {
         if (!option.available) {
             return
         }
-        setChoice(alias, option.id, t(name))
-    }, [option, setChoice, name])
+        setChoice(alias, option.id)
+    }, [option, setChoice])
 
     return (
         <OptionCard

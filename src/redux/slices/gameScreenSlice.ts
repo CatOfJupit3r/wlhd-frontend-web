@@ -150,20 +150,3 @@ export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameL
 export const selectActiveEntity = createSelector([(state: RootState) => state.gameScreen.round.order], (turnOrder) => {
     return turnOrder[0] // the first entity in the turn order is the active entity. if none, then it's round end.
 })
-export const selectActionAliases = createSelector([(state: RootState) => state.gameScreen.actions], (actions) => {
-    if (actions === null || actions.aliases === undefined) {
-        return null
-    } else {
-        return actions.aliases
-    }
-})
-export const selectActionAliasTranslations = createSelector(
-    [(state: RootState) => state.gameScreen.actions],
-    (actions) => {
-        if (actions === null || actions.alias_translations === undefined) {
-            return null
-        } else {
-            return actions.alias_translations
-        }
-    }
-)

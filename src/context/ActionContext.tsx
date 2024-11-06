@@ -1,16 +1,15 @@
-import { ActionInput as iActionInput } from '@models/GameModels'
+import { iCharacterActions as iActionInput } from '@models/GameModels'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
-type Choices = {
-    mechanic: { [key: string]: string }
-    displayed: { [key: string]: string }
+interface iActionChoices {
+    [key: keyof iActionInput]: iActionInput[keyof iActionInput][number]['id']
 }
 
 export interface iActionContext {
     actions: iActionInput | null
-    setOutput: (output: Choices['mechanic']) => void
-    choices: Choices
-    setChoice: (key: keyof Choices['mechanic'], mechanic: string, displayed: string) => void
+    setOutput: (output: iActionChoices) => void
+    choices: iActionChoices
+    setChoice: (key: keyof iActionChoices, value: iActionChoices[string]) => void
 
     resetChoices: () => void
 }
@@ -26,29 +25,16 @@ export const ActionContextProvider = ({
     setOutput: iActionContext['setOutput']
     children: ReactNode
 }) => {
-    const [choices, setChoices] = useState<iActionContext['choices']>({
-        mechanic: {},
-        displayed: {},
-    })
+    const [choices, setChoices] = useState<iActionContext['choices']>({})
 
     const resetChoices = useCallback(() => {
-        setChoices({
-            mechanic: {},
-            displayed: {},
-        })
+        setChoices({})
     }, [])
 
-    const setChoice: iActionContext['setChoice'] = useCallback((key, mechanic, displayed) => {
+    const setChoice: iActionContext['setChoice'] = useCallback((key, value) => {
         setChoices((prevChoices) => ({
             ...prevChoices,
-            mechanic: {
-                ...prevChoices.mechanic,
-                [key]: mechanic,
-            },
-            displayed: {
-                ...prevChoices.displayed,
-                [key]: displayed,
-            },
+            [key]: value,
         }))
     }, [])
 

@@ -142,23 +142,17 @@ export interface iActionDecoration extends GameComponentDecoration {
     cost: string
 }
 
-export interface Action {
+export interface iAction {
     id: string
     decorations: iActionDecoration
     available: boolean
     requires: null | {
-        [argument: string]: string
+        [argument: keyof iCharacterActions]: string
     }
 }
 
-export interface ActionInput {
-    action: Array<Action>
-    aliases: {
-        [key: string]: Array<Action>
-    }
-    alias_translations: {
-        [key: string]: string
-    }
+export interface iCharacterActions {
+    [key: string]: Array<iAction>
 }
 
 interface MemoryType {

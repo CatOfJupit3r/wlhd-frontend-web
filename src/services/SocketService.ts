@@ -1,10 +1,10 @@
 import { toast } from '@hooks/useToast'
 import { ActionResultsPayload } from '@models/Events'
 import {
-    ActionInput,
     Battlefield,
     EntityInfoFull,
     GameHandshake,
+    iCharacterActions,
     iGameLobbyState,
     IndividualTurnOrder,
     TranslatableString,
@@ -231,7 +231,7 @@ class SocketService {
             [SOCKET_EVENTS.GAME_HANDSHAKE]: (handshake: GameHandshake) => {
                 ReduxStore.dispatch(setGameScreenSliceFromHandshake(handshake))
             },
-            [SOCKET_EVENTS.TAKE_ACTION]: ({ actions }: { actions: ActionInput }) => {
+            [SOCKET_EVENTS.TAKE_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
                 try {
                     ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
@@ -250,7 +250,7 @@ class SocketService {
 
     private setupElevatedRightsListeners() {
         const listeners = {
-            [ELEVATED_RIGHTS_EVENTS.TAKE_UNALLOCATED_ACTION]: ({ actions }: { actions: ActionInput }) => {
+            [ELEVATED_RIGHTS_EVENTS.TAKE_UNALLOCATED_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
                 try {
                     ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
@@ -260,7 +260,7 @@ class SocketService {
                 }
                 ReduxStore.dispatch(setYourTurn(true))
             },
-            [ELEVATED_RIGHTS_EVENTS.TAKE_OFFLINE_PLAYER_ACTION]: ({ actions }: { actions: ActionInput }) => {
+            [ELEVATED_RIGHTS_EVENTS.TAKE_OFFLINE_PLAYER_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
                 try {
                     ReduxStore.dispatch(setActions(actions))
                 } catch (e) {
