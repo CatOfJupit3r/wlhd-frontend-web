@@ -19,17 +19,8 @@ Maybe a form?...
 */
 
 const GmOptionMenu = () => {
-    // const dispatch = useDispatch()
-    // const { t } = useTranslation()
-
-    // const gmOptions = [
-    //     {
-    //
-    //     }
-    // ]
-
     return (
-        <div>
+        <div className={'flex flex-col gap-3'}>
             <DebugSpecificOptions />
         </div>
     )

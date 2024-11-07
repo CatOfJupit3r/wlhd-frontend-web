@@ -135,7 +135,7 @@ const ShiftTurnOrder = () => {
 
 const DebugSpecificOptions = () => {
     return (
-        <div>
+        <div className={'flex w-full flex-col gap-2'}>
             <RandomizeTurnOrder />
             <ShiftTurnOrder />
         </div>
