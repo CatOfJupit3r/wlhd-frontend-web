@@ -1,11 +1,10 @@
+import GameMessage from '@components/GameScreen/GameMessages/GameMessage'
 import { Separator } from '@components/ui/separator'
-import useTString from '@hooks/useTString'
 import { GameStateContainer } from '@models/GameModels'
 import { selectAllMessages } from '@redux/slices/gameScreenSlice'
 import { Fragment, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import styles from './GameMessagesFeed.module.css'
 
 /*
 
@@ -25,7 +24,6 @@ For now, support for offloading messages, so for now we keep all messages loaded
 */
 
 const GameMessagesFeed = () => {
-    const { TString } = useTString()
     const { t } = useTranslation()
 
     const messages = useSelector(selectAllMessages)
@@ -35,16 +33,12 @@ const GameMessagesFeed = () => {
     }, [])
 
     return (
-        <div className={styles.stateFeed}>
+        <div className={'flex h-full w-full flex-col gap-2 overflow-auto px-4'}>
             {messages ? (
                 reverseMessageContainer(messages).map((msg, indexBig) => {
                     return (
                         <Fragment key={indexBig}>
-                            <div>
-                                {msg.map((content, index) => {
-                                    return <p key={index}>{TString(content)}</p>
-                                })}
-                            </div>
+                            <GameMessage content={msg} />
                             <Separator />
                         </Fragment>
                     )
