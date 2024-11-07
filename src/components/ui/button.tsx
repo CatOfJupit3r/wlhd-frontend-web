@@ -121,6 +121,8 @@ const AwaitingButton = ({
 const ButtonWithTooltip = ({
     tooltip,
     tooltipClassname,
+    tooltipProps,
+    tooltipContentProps,
     ...props
 }: {
     tooltip: string
@@ -129,11 +131,11 @@ const ButtonWithTooltip = ({
     tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>
 } & ButtonProps) => {
     return (
-        <Tooltip {...props.tooltipProps}>
+        <Tooltip {...tooltipProps}>
             <TooltipTrigger>
                 <Button {...props} asChild />
             </TooltipTrigger>
-            <TooltipContent {...props.tooltipContentProps}>
+            <TooltipContent {...tooltipContentProps}>
                 <p className={cn(tooltipClassname)}>{tooltip}</p>
             </TooltipContent>
         </Tooltip>
