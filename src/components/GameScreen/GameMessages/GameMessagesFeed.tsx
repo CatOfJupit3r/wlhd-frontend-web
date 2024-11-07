@@ -1,8 +1,8 @@
 import { Separator } from '@components/ui/separator'
 import useTString from '@hooks/useTString'
-import { GameMessage, GameStateContainer } from '@models/GameModels'
+import { GameStateContainer } from '@models/GameModels'
 import { selectAllMessages } from '@redux/slices/gameScreenSlice'
-import { useCallback } from 'react'
+import { Fragment, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import styles from './GameMessagesFeed.module.css'
@@ -34,25 +34,19 @@ const GameMessagesFeed = () => {
         return messages.slice().reverse()
     }, [])
 
-    const reverseGameMessages = useCallback((messages: GameMessage): GameMessage => {
-        return messages.slice().reverse()
-    }, [])
-
     return (
         <div className={styles.stateFeed}>
             {messages ? (
                 reverseMessageContainer(messages).map((msg, indexBig) => {
                     return (
-                        <>
-                            <div key={`msg_cont_${indexBig}`}>
-                                {reverseGameMessages(msg)
-                                    .reverse()
-                                    .map((content, index) => {
-                                        return <p key={index}>{TString(content)}</p>
-                                    })}
+                        <Fragment key={indexBig}>
+                            <div>
+                                {msg.map((content, index) => {
+                                    return <p key={index}>{TString(content)}</p>
+                                })}
                             </div>
-                            <Separator key={`sep_${indexBig}`} />
-                        </>
+                            <Separator />
+                        </Fragment>
                     )
                 })
             ) : (
