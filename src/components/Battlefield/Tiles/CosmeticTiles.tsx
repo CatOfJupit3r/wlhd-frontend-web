@@ -1,10 +1,12 @@
 import { cn } from '@utils'
 import { ImgHTMLAttributes } from 'react'
-import styles from './Tiles.module.css'
+
+export const tileClassName =
+    'transition-colors w-[var(--tile-size)] h-[var(--tile-size)] max-w-[var(--tile-size)] max-h-[var(--tile-size)]'
 
 const TileFactory = (src: string, displayName: string) => {
     const TileComponent = ({ alt, className, ...props }: Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'>) => (
-        <img src={src} alt={alt} className={cn(className ? className : '', styles.tile)} {...props} />
+        <img src={src} alt={alt} className={cn(className ? className : '', tileClassName)} {...props} />
     )
     TileComponent.displayName = displayName
     return TileComponent

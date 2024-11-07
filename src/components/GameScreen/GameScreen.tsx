@@ -3,7 +3,7 @@ import GameUtilityComponent from '@components/GameScreen/GameUtilityComponent'
 import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay'
 import { ActionContextProvider, iActionContext } from '@context/ActionContext'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
-import { selectActions, selectBattlefield } from '@redux/slices/gameScreenSlice'
+import { selectActions, selectActionTimestamp, selectBattlefield } from '@redux/slices/gameScreenSlice'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styles from './GameScreen.module.css'
@@ -14,12 +14,13 @@ import RoundHeader from './RoundHeader'
 const BattlefieldSection = () => {
     const battlefield = useSelector(selectBattlefield)
     const { changeBattlefield } = useBattlefieldContext()
+    const actionTimestamp = useSelector(selectActionTimestamp)
 
     useEffect(() => {
         changeBattlefield(battlefield)
     }, [battlefield])
 
-    return <Battlefield />
+    return <Battlefield separatorTimestamp={actionTimestamp} />
 }
 
 const GameScreen = ({ setActionOutput }: { setActionOutput?: iActionContext['setOutput'] }) => {

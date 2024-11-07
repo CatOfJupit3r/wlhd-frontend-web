@@ -1,3 +1,4 @@
+import SeparatorRowWithTimestamp from '@components/Battlefield/SeparatorRowWithTimestamp'
 import {
     ConnectorTile,
     FifthColumnTile,
@@ -19,8 +20,11 @@ import styles from './Battlefield.module.css'
 // const BATTLEFIELD_BLUR_HASH: string =
 //     '{7H2i;WB00j[9Ft7M{ofofazoLayoLayfQay00WB-;j[%gt7xuofoffQWBj[WBj[WBj[00WB~qfQ?cof%MfQt7j[ayj[ayfQayj[MxayofayoffQofayayj[t7ayt7WBofWBWBay%MfQxuj[t7j['
 
-const Battlefield = () => {
+const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | null }) => {
     const SeparatorRow = useCallback(() => {
+        if (separatorTimestamp) {
+            return <SeparatorRowWithTimestamp timestamp={separatorTimestamp} />
+        }
         return (
             <div id={'separator-row'} className={'flex'}>
                 <ConnectorTile />
@@ -33,7 +37,7 @@ const Battlefield = () => {
                 <ConnectorTile />
             </div>
         )
-    }, [])
+    }, [separatorTimestamp])
 
     const NavigationHelpRow = useCallback(() => {
         return (

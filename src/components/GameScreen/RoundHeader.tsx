@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 const RoundHeader = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('local', {
+        keyPrefix: 'game',
+    })
 
     const isPlayerTurn = useSelector(selectIsYourTurn)
     const round = useSelector(selectCurrentRoundCount)
 
     return (
         <div>
-            <h1>
-                {isPlayerTurn
-                    ? `${t('local:game.round_n', { round })}. ${t('local:game.its_your_turn')}`
-                    : `${t('local:game.round_n', { round })}`}
+            <h1 className={'text-t-bigger font-bold'}>
+                {isPlayerTurn ? `${t('round_n', { round })}. ${t('its_your_turn')}` : `${t('round_n', { round })}`}
             </h1>
         </div>
     )

@@ -14,6 +14,7 @@ import {
     haltActions,
     resetGameScreenSlice,
     setActions,
+    setActionTimestamp,
     setBattlefield,
     setControlledEntities,
     setFlowToAborted,
@@ -46,6 +47,7 @@ const SOCKET_EVENTS = {
     TURN_ORDER_UPDATED: 'turn_order_updated',
     GAME_LOBBY_STATE: 'game_lobby_state',
     ERROR: 'error',
+    ACTION_TIMESTAMP: 'action_timestamp',
 }
 
 const ELEVATED_RIGHTS_EVENTS = {
@@ -227,6 +229,9 @@ class SocketService {
                 newControlledEntities: Array<EntityInfoFull>
             }) => {
                 ReduxStore.dispatch(setControlledEntities(newControlledEntities))
+            },
+            [SOCKET_EVENTS.ACTION_TIMESTAMP]: ({ timestamp }: { timestamp: number | null }) => {
+                ReduxStore.dispatch(setActionTimestamp(timestamp))
             },
             [SOCKET_EVENTS.GAME_HANDSHAKE]: (handshake: GameHandshake) => {
                 ReduxStore.dispatch(setGameScreenSliceFromHandshake(handshake))

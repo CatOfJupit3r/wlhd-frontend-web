@@ -10,7 +10,6 @@ import { ThreeInOneSpinner } from '@components/Spinner'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'
 import { iActionContext } from '@context/ActionContext'
-import { useToast } from '@hooks/useToast'
 import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
@@ -21,7 +20,6 @@ const GameLogicWrapper = () => {
     const dispatch = useDispatch<AppDispatch>()
     const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null)
     const { t } = useTranslation()
-    const { toast } = useToast()
     const navigate = useNavigate()
 
     const { gameId, lobbyId } = useParams()
@@ -45,11 +43,6 @@ const GameLogicWrapper = () => {
 
     useEffect(() => {
         if (actionOutput) {
-            toast({
-                title: t('local:game.action_output'),
-                description: JSON.stringify(actionOutput),
-                position: 'bottom-left',
-            })
             dispatch(setActions(null))
             SocketService.emit('take_action', actionOutput)
         }

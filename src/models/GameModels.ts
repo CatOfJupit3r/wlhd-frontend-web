@@ -36,6 +36,7 @@ export interface GameHandshake {
     controlledEntities: Array<EntityInfoFull> | null
     turnOrder: IndividualTurnOrder
     gameLobbyState: iGameLobbyState
+    actionTimestamp: number | null
 }
 
 export type IndividualTurnOrder = Array<CharacterInTurnOrder | null>

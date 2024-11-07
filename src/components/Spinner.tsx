@@ -1,5 +1,5 @@
 import { cn } from '@utils'
-import { FC } from 'react'
+import { FC, HtmlHTMLAttributes } from 'react'
 
 interface iSpinnerProps {
     type: 'spin' | 'pulse'
@@ -46,15 +46,14 @@ const PulsingSpinner: FC<Omit<iSpinnerProps, 'type'>> = (props) => {
     return <Spinner type="pulse" {...props} />
 }
 
-interface iSVGSpinnerProps {
+interface iSVGSpinnerProps extends Omit<HtmlHTMLAttributes<HTMLImageElement>, 'src'> {
     source: string
-    className?: string
 }
 
 type iSVGSpinnerChildProps = Omit<iSVGSpinnerProps, 'source'>
 
-const SVGSpinner: FC<iSVGSpinnerProps> = ({ source, className }) => {
-    return <img src={source} alt="spinner" className={cn('size-8', className)} />
+const SVGSpinner: FC<iSVGSpinnerProps> = ({ source, className, ...props }) => {
+    return <img src={source} alt="spinner" className={cn('size-8', className)} {...props} />
 }
 
 const BlocksShuffleSpinner: FC<iSVGSpinnerChildProps> = (props) => {

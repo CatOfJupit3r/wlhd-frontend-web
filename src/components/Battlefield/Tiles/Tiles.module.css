@@ -1,10 +1,4 @@
-.tile {
-    transition: background-color 0.3s;
-    width: var(--tile-size);
-    height: var(--tile-size);
-    max-width: var(--tile-size);
-    max-height: var(--tile-size);
-}
+
 
 .withEntity {
     background-size: cover;

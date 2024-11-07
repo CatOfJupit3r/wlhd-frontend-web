@@ -33,6 +33,7 @@ const initialState: GameScreenState = {
     gameLobbyState: {
         players: [],
     },
+    actionTimestamp: null,
 }
 
 const GameScreenSlice = createSlice({
@@ -74,6 +75,7 @@ const GameScreenSlice = createSlice({
                     details: '',
                 },
                 gameLobbyState: action.payload.gameLobbyState,
+                actionTimestamp: action.payload.actionTimestamp,
             }
         },
         addMessage: (state, action: PayloadAction<GameStateContainer[number]>) => {
@@ -115,6 +117,9 @@ const GameScreenSlice = createSlice({
         setGameLobbyState: (state, action: PayloadAction<GameScreenState['gameLobbyState']>) => {
             state.gameLobbyState = action.payload
         },
+        setActionTimestamp: (state, action: PayloadAction<number | null>) => {
+            state.actionTimestamp = action.payload
+        },
     },
 })
 export default GameScreenSlice.reducer
@@ -135,6 +140,7 @@ export const {
     haltActions,
     fromHandshake: setGameScreenSliceFromHandshake,
     setGameLobbyState,
+    setActionTimestamp,
 } = GameScreenSlice.actions
 
 export const selectCurrentRoundCount = (state: RootState) => state.gameScreen.round.current
@@ -145,6 +151,7 @@ export const selectTurnOrder = (state: RootState) => state.gameScreen.round.orde
 export const selectBattlefield = (state: RootState) => state.gameScreen.battlefield
 export const selectActions = (state: RootState) => state.gameScreen.actions
 export const selectIsYourTurn = (state: RootState) => state.gameScreen.yourTurn
+export const selectActionTimestamp = (state: RootState) => state.gameScreen.actionTimestamp
 export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameLobbyState
 
 export const selectActiveEntity = createSelector([(state: RootState) => state.gameScreen.round.order], (turnOrder) => {

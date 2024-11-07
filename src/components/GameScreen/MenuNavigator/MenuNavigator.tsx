@@ -63,7 +63,7 @@ const ButtonContainerContent = ({
                             side: tooltipPosition,
                         }}
                     >
-                        <Component className={'size-full'} />
+                        <Component className={'size-16'} />
                     </ButtonWithTooltip>
                 )
             })}

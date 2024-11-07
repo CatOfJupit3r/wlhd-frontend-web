@@ -2,6 +2,7 @@ import GameScreen from '@components/GameScreen/GameScreen'
 import {
     resetGameScreenSlice,
     setActions,
+    setActionTimestamp,
     setBattlefield,
     setControlledEntities,
     setMessages,
@@ -43,6 +44,7 @@ const GameTestPage = () => {
         dispatch(setMessages(example_gamestate.messages as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setActions(example_gamestate.actions as any))
+        dispatch(setActionTimestamp(Date.now()))
         dispatch(setYourTurn(true))
 
         const loadCustom = async () => {

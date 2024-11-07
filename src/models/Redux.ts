@@ -73,4 +73,5 @@ export interface GameScreenState {
     gameLobbyState: iGameLobbyState
     controlledEntities: Array<EntityInfoFull> | null
     yourTurn: boolean
+    actionTimestamp: number | null
 }
