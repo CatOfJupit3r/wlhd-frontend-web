@@ -1,5 +1,5 @@
 import Battlefield from '@components/Battlefield/Battlefield'
-import BattlefieldCleaner from '@components/GameScreen/BattlefieldCleaner'
+import GameUtilityComponent from '@components/GameScreen/GameUtilityComponent'
 import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay'
 import { ActionContextProvider, iActionContext } from '@context/ActionContext'
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
@@ -46,7 +46,7 @@ const GameScreen = ({ setActionOutput }: { setActionOutput?: iActionContext['set
                         <MenuNavigator setChosen={setChosen} />
                     </div>
                 </div>
-                <BattlefieldCleaner />
+                <GameUtilityComponent />
             </BattlefieldContextProvider>
         </div>
     )
