@@ -1,5 +1,5 @@
 import { iCharacterActions as iActionInput } from '@models/GameModels'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
 
 interface iActionChoices {
     [key: keyof iActionInput]: iActionInput[keyof iActionInput][number]['id']
@@ -37,6 +37,10 @@ export const ActionContextProvider = ({
             [key]: value,
         }))
     }, [])
+
+    useEffect(() => {
+        resetChoices()
+    }, [actions])
 
     return (
         <ActionContext.Provider
