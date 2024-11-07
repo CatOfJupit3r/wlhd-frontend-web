@@ -46,11 +46,12 @@
         "its_your_turn": "Твій хід!",
         "round_n": "Раунд {{round}}",
         "actions": {
-            "no_available_actions": "Немає доступних дій",
-            "you_chose": "Ти обрав",
+            "no-available-actions": "Немає доступних дій",
+            "you-chose": "Ти обрав",
             "nothing?": "Нічого?",
             "reset": "Скинути",
-            "submit": "Підтвердити"
+            "submit": "Підтвердити",
+            "choose-square": "Оберіть клітинку"
         },
         "error": {
             "no_connection": "Немає зв'язку з сервером",

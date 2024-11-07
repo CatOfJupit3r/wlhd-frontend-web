@@ -168,7 +168,7 @@ const ActionInput = () => {
             })
             return <h1 className={'mt-2 text-center text-t-big font-bold'}>Loading...</h1>
         } else if (aliasValue.startsWith('Square')) {
-            return <h1 className={'mt-2 text-center text-t-big font-bold'}>{t('local:game.actions.choose_square')}</h1>
+            return <h1 className={'mt-2 text-center text-t-big font-bold'}>{t('local:game.actions.choose-square')}</h1>
         } else {
             return <>{options}</>
         }
@@ -190,7 +190,7 @@ const ActionInput = () => {
     const FinalDepthScreen = useCallback(() => {
         return (
             <>
-                <p className={'text-t-big font-bold'}>{t('local:game.actions.you_chose')}</p>
+                <p className={'text-t-big font-bold'}>{t('local:game.actions.you-chose')}</p>
                 <div className={'flex flex-col gap-2'}>
                     {choices ? (
                         scopeOfChoice.map(([key, value]) => {
