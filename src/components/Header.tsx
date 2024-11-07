@@ -16,10 +16,10 @@ import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
 import { apprf, cn } from '@utils'
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IconType } from 'react-icons'
 import { BiLogOut, BiSolidCog } from 'react-icons/bi'
-import { FaBook, FaBookOpen } from 'react-icons/fa'
-import { IoLogoBuffer } from 'react-icons/io'
+import { FaBook } from 'react-icons/fa'
 import { LuMenuSquare, LuUser } from 'react-icons/lu'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -29,6 +29,9 @@ const Header = () => {
     const { handle } = useSelector(selectUserInformation)
     const lobbyId = useSelector(selectLobbyId)
     const navigate = useNavigate()
+    const { t } = useTranslation('local', {
+        keyPrefix: 'header',
+    })
 
     const redirect = useCallback((to: string, relative: 'path' | 'route' = 'path') => {
         return () => {
@@ -50,12 +53,12 @@ const Header = () => {
         return [
             [
                 {
-                    name: 'Profile',
+                    name: 'profile',
                     action: redirect(paths.profile, 'path'),
                     icon: LuUser,
                 },
                 {
-                    name: 'Recent Lobby',
+                    name: 'recent-lobby',
                     action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
                     icon: LuMenuSquare,
                     disabled: !lobbyId,
@@ -63,29 +66,19 @@ const Header = () => {
             ],
             [
                 {
-                    name: 'Rulebook',
-                    action: redirect('rulebook', 'path'),
+                    name: 'game-wiki',
+                    action: redirect('wiki', 'path'),
                     icon: FaBook,
-                },
-                {
-                    name: 'World Description',
-                    action: redirect('world-description', 'path'),
-                    icon: FaBookOpen,
-                },
-                {
-                    name: 'How to',
-                    action: redirect('how-to', 'path'),
-                    icon: IoLogoBuffer,
                 },
             ],
             [
                 {
-                    name: 'Game Test',
+                    name: 'game-test',
                     action: redirect(paths.gameTest, 'path'),
                     icon: BiSolidCog,
                 },
                 {
-                    name: 'Logout',
+                    name: 'logout',
                     action: () => AuthManager.logout(),
                     icon: BiLogOut,
                     className: 'text-red-500 hover:text-red-700',
@@ -98,7 +91,7 @@ const Header = () => {
         return (
             <>
                 <Button onClick={redirect(paths.signIn, 'path')} variant={'ghost'} size={'sm'}>
-                    Sign In
+                    {t('sign-in')}
                 </Button>
                 <Button
                     onClick={redirect(paths.signUp, 'path')}
@@ -106,7 +99,7 @@ const Header = () => {
                     size={'sm'}
                     className={'bg-accent text-accent-foreground hover:bg-accent/90'}
                 >
-                    Register
+                    {t('sign-up')}
                 </Button>
             </>
         )
@@ -130,7 +123,7 @@ const Header = () => {
                                     {section.map(({ name, action, icon: Icon, className, disabled }, index) => (
                                         <DropdownMenuItem key={`item_${index}`} onClick={action} disabled={disabled}>
                                             <Icon className="mr-2 size-5" />
-                                            <span className={className}>{name}</span>
+                                            <span className={className}>{t(name)}</span>
                                         </DropdownMenuItem>
                                     ))}
                                 </DropdownMenuGroup>
