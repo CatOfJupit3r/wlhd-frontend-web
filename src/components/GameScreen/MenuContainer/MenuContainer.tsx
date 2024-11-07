@@ -6,7 +6,6 @@ import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntities
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import LeaveGameOverlay from '../LeaveGameOverlay/LeaveGameOverlay'
-import styles from './MenuContainer.module.css'
 
 const GAME_MENUS = {
     YOUR_ENTITIES: {
@@ -28,10 +27,12 @@ const GAME_MENUS = {
 }
 
 const MenuContainer = ({ chosen, setChosen }: { chosen: string | null; setChosen: (value: string | null) => void }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('local', {
+        keyPrefix: 'game.action_menus',
+    })
 
     const ReportThisIssue = useCallback(() => {
-        return <div>{t('local:game.action_menus.report_this_issue')}</div>
+        return <div>{t('report_this_issue')}</div>
     }, [])
 
     const displayMenu = useCallback(() => {
@@ -47,21 +48,21 @@ const MenuContainer = ({ chosen, setChosen }: { chosen: string | null; setChosen
         if (!menu) {
             return (
                 <>
-                    <h1 className={styles.menuHeader}>{t('local:game.action_menus.no_menu_available')}</h1>
+                    <h1 className={'w-full text-center text-t-big'}>{t('no_menu_available')}</h1>
                     <ReportThisIssue />
                 </>
             )
         }
         return (
             <>
-                <h1 className={styles.menuHeader}>{t(`local:game.action_menus.${menu.key}`)}</h1>
+                <h1 className={'mt-2 w-full text-center text-t-bigger font-bold'}>{t(`${menu.key}`)}</h1>
                 <Separator className={'mb-4'} />
                 <menu.Component />
             </>
         )
     }, [chosen, t])
 
-    return <div className={styles.menuContainer}>{displayMenu()}</div>
+    return <div className={'flex w-full flex-col gap-2'}>{displayMenu()}</div>
 }
 
 export default MenuContainer
