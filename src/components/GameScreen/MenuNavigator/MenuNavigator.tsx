@@ -1,9 +1,9 @@
+import { ButtonWithTooltip } from '@components/ui/button'
 import { useTranslation } from 'react-i18next'
 import { FaUsers } from 'react-icons/fa'
 import { FaUncharted } from 'react-icons/fa6'
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
-import styles from './MenuNavigator.module.css'
 
 const UPPER_BUTTONS = {
     YOUR_ENTITIES: {
@@ -33,12 +33,12 @@ const LOWER_BUTTONS = {
 
 const ButtonContainerContent = ({
     buttons,
-    componentKeyAlias,
     setChosen,
+    tooltipPosition,
 }: {
     buttons: typeof LOWER_BUTTONS | typeof UPPER_BUTTONS
-    componentKeyAlias: string
     setChosen: (value: string) => void
+    tooltipPosition?: 'top' | 'bottom'
 }) => {
     const { t } = useTranslation()
 
@@ -47,15 +47,24 @@ const ButtonContainerContent = ({
             {Object.values(buttons).map((pageNavigator, index) => {
                 const { Component, key } = pageNavigator
                 return (
-                    <div key={index} className={'relative mb-2'}>
-                        <Component
-                            key={`${componentKeyAlias}-${index}`}
-                            title={key && t(`local:game.action_menus.${key}`)}
-                            onClick={() => {
-                                setChosen(key)
-                            }}
-                        />
-                    </div>
+                    <ButtonWithTooltip
+                        key={index}
+                        className={
+                            'relative m-0 size-16 p-0 transition-colors duration-100 hover:text-[#d9d9d9] active:text-[#b7b7b7]'
+                        }
+                        onClick={() => {
+                            setChosen(key)
+                        }}
+                        tooltip={key && t(`local:game.action_menus.${key}`)}
+                        tooltipProps={{
+                            delayDuration: 1500,
+                        }}
+                        tooltipContentProps={{
+                            side: tooltipPosition,
+                        }}
+                    >
+                        <Component className={'size-full'} />
+                    </ButtonWithTooltip>
                 )
             })}
         </>
@@ -64,20 +73,12 @@ const ButtonContainerContent = ({
 
 const MenuNavigator = ({ setChosen }: { setChosen: (value: string) => void }) => {
     return (
-        <div className={styles.navigationContainer}>
-            <div id={'option-navigators'} className={styles.navigationButtonContainer}>
-                <ButtonContainerContent
-                    buttons={UPPER_BUTTONS}
-                    componentKeyAlias={'option-navigator'}
-                    setChosen={setChosen}
-                />
+        <div className={'flex h-full flex-col items-center justify-between p-3'}>
+            <div className={'flex flex-col items-center gap-3'}>
+                <ButtonContainerContent buttons={UPPER_BUTTONS} setChosen={setChosen} tooltipPosition={'bottom'} />
             </div>
-            <div className={styles.navigationButtonContainer} id={'page-navigators'}>
-                <ButtonContainerContent
-                    buttons={LOWER_BUTTONS}
-                    componentKeyAlias={'page-navigator'}
-                    setChosen={setChosen}
-                />
+            <div className={'flex flex-col items-center gap-3'}>
+                <ButtonContainerContent buttons={LOWER_BUTTONS} setChosen={setChosen} tooltipPosition={'top'} />
             </div>
         </div>
     )

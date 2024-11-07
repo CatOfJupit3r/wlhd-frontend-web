@@ -5,7 +5,7 @@ import { PulsingSpinner } from '@components/Spinner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { cn } from '@utils'
 import { ClassValue } from 'clsx'
-import { ButtonHTMLAttributes, forwardRef, MouseEvent, useCallback, useState } from 'react'
+import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const buttonVariants = cva(
@@ -125,13 +125,15 @@ const ButtonWithTooltip = ({
 }: {
     tooltip: string
     tooltipClassname?: ClassValue
+    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>
+    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>
 } & ButtonProps) => {
     return (
-        <Tooltip>
+        <Tooltip {...props.tooltipProps}>
             <TooltipTrigger>
                 <Button {...props} asChild />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent {...props.tooltipContentProps}>
                 <p className={cn(tooltipClassname)}>{tooltip}</p>
             </TooltipContent>
         </Tooltip>
