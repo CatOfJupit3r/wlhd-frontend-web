@@ -8,6 +8,7 @@ const InGameSettings: CharacterDisplaySettings = {
     includeDescription: true,
     showEquippedWeapon: true,
     showSquareIfPossible: true,
+    displayBasicInfo: true,
     ignoreAttributes: [
         'builtins:current_health',
         'builtins:max_health',
@@ -22,6 +23,17 @@ const InLobbySettings: CharacterDisplaySettings = {
     includeDescription: true,
     showEquippedWeapon: false,
     showSquareIfPossible: false,
+    displayBasicInfo: true,
+    ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
+    displayBasicAttributes: true,
+    ignoreCurrentValuesInBasicAttributes: true,
+}
+
+const GameWikiSettings: CharacterDisplaySettings = {
+    includeDescription: true,
+    showEquippedWeapon: false,
+    showSquareIfPossible: false,
+    displayBasicInfo: false,
     ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     displayBasicAttributes: true,
     ignoreCurrentValuesInBasicAttributes: true,
@@ -37,4 +49,10 @@ const CharacterDisplayInLobby = (props: displayWithoutSettings) => (
     <CharacterDisplay {...props} settings={InLobbySettings} />
 )
 
-export { CharacterDisplayInGame, CharacterDisplayInLobby, CharacterDisplay, CharacterDisplayPlaceholder }
+export {
+    CharacterDisplayInGame,
+    CharacterDisplayInLobby,
+    CharacterDisplay,
+    CharacterDisplayPlaceholder,
+    GameWikiSettings,
+}

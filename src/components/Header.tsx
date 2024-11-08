@@ -67,7 +67,7 @@ const Header = () => {
             [
                 {
                     name: 'game-wiki',
-                    action: redirect('wiki', 'path'),
+                    action: redirect(paths.wiki, 'path'),
                     icon: FaBook,
                 },
             ],

@@ -31,7 +31,7 @@ const CharacterBasicInfo = ({
                 line={character?.square?.line || 0}
             />
             <div>
-                <div className={'text-ellipsis text-t-normal font-bold'}>
+                <div className={'text-ellipsis text-left text-t-normal font-bold'}>
                     {isDescriptor(character.name) ? t(character.name) : character.name}
                 </div>
                 {includeSquare && character.square && (
@@ -43,7 +43,7 @@ const CharacterBasicInfo = ({
                     </div>
                 )}
                 {includeDescription && (
-                    <div className={'text-wrap text-t-smaller italic text-gray-400'}>
+                    <div className={'text-wrap text-left text-t-smaller italic text-gray-400'}>
                         {character.description
                             ? isDescriptor(character.description)
                                 ? t(character.description)

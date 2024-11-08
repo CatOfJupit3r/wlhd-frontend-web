@@ -9,3 +9,4 @@ export const SUPPORTED_DLCs = [
         descriptor: 'nyrzamaer',
     },
 ]
+export const SUPPORTED_DLCS_DESCRIPTORS = SUPPORTED_DLCs.map(({ descriptor }) => descriptor)

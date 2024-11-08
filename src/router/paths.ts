@@ -10,4 +10,6 @@ export default {
     gameRoom: '/lobby-room/:lobbyId/game-room/:gameId',
     createCombatRoom: '/lobby-room/:lobbyId/create-combat',
     createCharacter: '/lobby-room/:lobbyId/create-character',
+    wiki: '/game-wiki',
+    wikiWithDLC: '/game-wiki/:dlc',
 }

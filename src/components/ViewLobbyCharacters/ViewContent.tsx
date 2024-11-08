@@ -195,7 +195,7 @@ const LobbyCharacterDisplay = () => {
         if (!viewedCharacter) {
             setConverted(null)
         } else {
-            setConverted(GameConverters.convertEditableToInfoFull(viewedCharacter))
+            setConverted(GameConverters.convertCharacterEditableToInfoFull(viewedCharacter))
         }
     }, [viewedCharacter])
 

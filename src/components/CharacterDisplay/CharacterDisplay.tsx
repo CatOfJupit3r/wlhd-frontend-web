@@ -12,6 +12,7 @@ export interface CharacterDisplaySettings {
     showSquareIfPossible?: boolean
     ignoreAttributes?: Array<string>
     displayBasicAttributes?: boolean
+    displayBasicInfo?: boolean
     ignoreCurrentValuesInBasicAttributes?: boolean
 }
 
@@ -44,16 +45,18 @@ const EquippedWeapon = ({
 const CharacterDisplay = ({ character, settings, ...props }: CharacterDisplayProps) => {
     return (
         <div {...props}>
-            <CharacterBasicInfo
-                character={{
-                    name: character.decorations.name,
-                    description: character.decorations.description || null,
-                    sprite: character.decorations.sprite,
-                    square: character.square || null,
-                }}
-                includeSquare={settings?.showSquareIfPossible}
-                includeDescription={settings?.includeDescription}
-            />
+            {settings?.displayBasicInfo && (
+                <CharacterBasicInfo
+                    character={{
+                        name: character.decorations.name,
+                        description: character.decorations.description || null,
+                        sprite: character.decorations.sprite,
+                        square: character.square || null,
+                    }}
+                    includeSquare={settings?.showSquareIfPossible}
+                    includeDescription={settings?.includeDescription}
+                />
+            )}
             {settings?.displayBasicAttributes && (
                 <BasicCharacterAttributes
                     attributes={character.attributes}

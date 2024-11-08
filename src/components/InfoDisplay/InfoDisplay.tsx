@@ -1,7 +1,7 @@
 import { ActiveIcon, LocationIcon } from '@components/icons'
 import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay'
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
-import { Separator } from '@components/ui/separator'
+import SeparatedDiv from '@components/ui/separated-div'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
 import { HTMLAttributes, useCallback } from 'react'
@@ -171,7 +171,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, [])
 
     return (
-        <div
+        <SeparatedDiv
             className={
                 'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
             }
@@ -185,11 +185,22 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
                 </div>
-                {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
             </div>
-            <Separator />
-            <div id={'minor-info'} className={'relative flex flex-col text-t-small'}>
-                <div id={'type-details'} className={'absolute right-0 top-0 flex flex-row items-center gap-3'}>
+            <div id={'minor-info'} className={'relative flex flex-row justify-between text-t-small'}>
+                <div>
+                    {(type === 'item' || type === 'weapon') &&
+                        QuantityInfo({
+                            type,
+                            info,
+                        } as ItemSegment | WeaponSegment)}
+                    {type !== 'status_effect' &&
+                        UsageDetails({
+                            type,
+                            info,
+                        } as ItemSegment | WeaponSegment | SpellSegment)}
+                </div>
+                <div id={'type-details'} className={'flex-col items-end gap-3'}>
+                    {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
                     {type !== 'status_effect' &&
                         CooldownDetails({
                             type,
@@ -201,26 +212,21 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             info,
                         } as ItemSegment | WeaponSegment | SpellSegment)}
                 </div>
-                {(type === 'item' || type === 'weapon') &&
-                    QuantityInfo({
-                        type,
-                        info,
-                    } as ItemSegment | WeaponSegment)}
-                {type !== 'status_effect' &&
-                    UsageDetails({
-                        type,
-                        info,
-                    } as ItemSegment | WeaponSegment | SpellSegment)}
             </div>
-            <Separator />
             <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
                 {tNoPrefix(decorations?.description) ?? '???'}
             </div>
-            <Separator />
-            <TagsDisplay tags={info.tags} />
-            <Separator />
-            <ComponentMemories memories={info.memory} />
-        </div>
+            {info.tags && info.tags.length > 0 ? (
+                <>
+                    <TagsDisplay tags={info.tags} />
+                </>
+            ) : null}
+            {info.memory ? (
+                <>
+                    <ComponentMemories memories={info.memory} />
+                </>
+            ) : null}
+        </SeparatedDiv>
     )
 }
 

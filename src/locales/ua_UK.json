@@ -291,18 +291,19 @@
         "home": "Головна",
         "profile": "Твій Профіль",
         "create_combat": "Створити бій",
-        "view_character": "Персонаж",
+        "view-character": "Персонаж",
         "about": "Про Нас",
-        "signin": "Увійти",
-        "signup": "Зареєструватися",
-        "game_test": "Кімната тестування",
+        "sign-in": "Увійти",
+        "sign-up": "Зареєструватися",
+        "game-test": "Кімната тестування",
         "debug": "Кімната Дебагу",
-        "game_room": "Гра",
+        "game-room": "Гра",
         "lobby": "Лобі",
         "create_character": "Створити персонажа",
-        "not_found": "Сторінку не знайдено",
+        "not-found": "Сторінку не знайдено",
         "loading": "Завантаження...",
-        "backend_unavailable": "Сервера недоступні"
+        "backend-unavailable": "Сервера недоступні",
+        "game-wiki": "Wiki гри"
     },
     "profile": {
         "joined-on": "Приєднався",
@@ -319,5 +320,29 @@
         "invite-code": "Код запрошення",
         "cancel": "Скасувати",
         "send-invite-request": "Надіслати запит"
+    },
+    "wiki": {
+        "choose-dlc": "Виберіть DLC",
+        "dlcs": {
+            "builtins": {
+                "name": "Вбудовані",
+                "description": "Компоненти, які йдуть разом з ігровим двигуном. БЕЗПЛАТНО? БЕЗПЛАТНО!"
+            },
+            "nyrzamaer": {
+                "name": "Балади Нірзамаїру",
+                "description": "Обширна колекція компонентів від творця Валенхольдскої Бойової Системи. Використовує всі чудеса і заморочки ігрового двигуна."
+            },
+            "general": {
+                "created-by": "Створено {{author}}"
+            }
+        },
+        "buttons": {
+            "back-to-dlc-select": "Назад до вибору DLC",
+            "characters": "Персонажі",
+            "weapons": "Зброя",
+            "spells": "Закляття",
+            "items": "Предмети",
+            "status-effects": "Статусні ефекти"
+        }
     }
 }

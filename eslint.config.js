@@ -45,6 +45,12 @@ export default [
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            '@typescript-eslint/no-empty-object-type': [
+                'error',
+                {
+                    allowWithName: '^i',
+                },
+            ],
             '@typescript-eslint/no-use-before-defining': 'off',
             'react-compiler/react-compiler': 'error',
             'react-hooks/rules-of-hooks': 'error',

@@ -4,6 +4,7 @@ import CreateCharacterPage from '@pages/CreateCharacterPage'
 import CreateCombatPage from '@pages/CreateCombatPage'
 import GameRoomPage from '@pages/GameRoomPage'
 import GameTestPage from '@pages/GameTestPage'
+import GameWikiPage from '@pages/GameWikiPage'
 import HomePage from '@pages/HomePage'
 import LobbyPage from '@pages/LobbyPage'
 import ProfilePage from '@pages/ProfilePage'
@@ -33,14 +34,14 @@ const routes: Array<RouteConfig> = [
     {
         path: paths.createCombatRoom,
         Component: CreateCombatPage,
-        title: 'create_combat',
+        title: 'create-combat',
         requiresAuth: true,
         requiresLobbyInfo: true,
     },
     {
         path: paths.viewCharacter,
         Component: viewCharacterPage,
-        title: 'view_character',
+        title: 'view-character',
         includeHeader: true,
         requiresAuth: true,
         requiresLobbyInfo: true,
@@ -63,25 +64,25 @@ const routes: Array<RouteConfig> = [
     {
         path: paths.signIn,
         Component: SignInPage,
-        title: 'signin',
+        title: 'sign-in',
         includeFooter: false,
         includeHeader: false,
     },
     {
         path: paths.signUp,
         Component: SignUpPage,
-        title: 'signup',
+        title: 'sign-up',
     },
     {
         path: paths.gameRoom,
         Component: GameRoomPage,
-        title: 'game_room',
+        title: 'game-room',
         requiresLobbyInfo: true,
     },
     {
         path: paths.createCharacter,
         Component: CreateCharacterPage,
-        title: 'create_character',
+        title: 'create-character',
         requiresLobbyInfo: true,
         includeFooter: true,
         includeHeader: true,
@@ -91,7 +92,23 @@ const routes: Array<RouteConfig> = [
         // this room is only to view how game screen components will look without connecting to the backend
         path: paths.gameTest,
         Component: GameTestPage,
-        title: 'game_test',
+        title: 'game-test',
+    },
+    {
+        path: paths.wiki,
+        Component: GameWikiPage,
+        title: 'game-wiki',
+        requiresAuth: true,
+        includeHeader: true,
+        includeFooter: true,
+    },
+    {
+        path: paths.wikiWithDLC,
+        Component: GameWikiPage,
+        title: 'game-wiki',
+        requiresAuth: true,
+        includeHeader: true,
+        includeFooter: true,
     },
 ]
 
