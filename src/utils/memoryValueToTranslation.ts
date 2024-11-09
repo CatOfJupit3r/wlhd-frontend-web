@@ -2,7 +2,7 @@ import { DiceMemory, MemoryType } from '@models/GameModels'
 
 type TranslationType = [string, Record<string, string>]
 
-export const memoryValueToTranslation = (value: Partial<MemoryType>): TranslationType => {
+export const memoryValueToTranslation = (value: Partial<MemoryType>, key?: string): TranslationType => {
     const { type, value: memoryValue, display_value } = value
 
     if (display_value) return [display_value as string, {}]
@@ -25,7 +25,14 @@ export const memoryValueToTranslation = (value: Partial<MemoryType>): Translatio
         case 'number':
             return [(memoryValue as number).toString(), {}]
         case 'string':
-            return [(memoryValue as string) || '???', {}]
+            switch (key) {
+                case 'type_of_hp_change': // some special keys that is good to have a translation
+                    if (memoryValue === 'damage') return ['builtins:hp_change_types.damage', {}]
+                    if (memoryValue === 'heal') return ['builtins:hp_change_types.heal', {}]
+                    return [(memoryValue as string) || '???', {}]
+                default:
+                    return [(memoryValue as string) || '???', {}]
+            }
         default:
             return ['???', {}]
     }

@@ -65,7 +65,7 @@ const DescriptionWithMemories: FC<iDescriptionWithMemories> = ({ className, desc
             const memory: Partial<MemoryType> =
                 memories && memories[matchKey] ? memories[matchKey] : captureToMemory(matchValue)
 
-            const [memoryKey, args] = memoryValueToTranslation(memory)
+            const [memoryKey, args] = memoryValueToTranslation(memory, matchKey)
             newDescription = newDescription.replace(fullMatch, t(memoryKey, args))
         })
         return newDescription

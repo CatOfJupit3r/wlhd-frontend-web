@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next'
 
 const ComponentMemory: React.FC<
     {
+        memoryKey: string
         memory: PossibleMemory
     } & HTMLAttributes<HTMLLIElement>
-> = ({ memory, ...props }) => {
+> = ({ memoryKey, memory, ...props }) => {
     const { t } = useTranslation()
     const { display_name, internal } = memory
-    const [key, args] = useMemo(() => memoryValueToTranslation(memory), [memory])
+    const [key, args] = useMemo(() => memoryValueToTranslation(memory, memoryKey), [memory, memoryKey])
 
     return (
         <li className={'flex flex-row gap-1'} {...props}>
@@ -30,8 +31,8 @@ const ComponentMemories: FC<{ memories: GameComponentMemory | null }> = ({ memor
             <ul>
                 {Object.entries(memories)
                     .filter(([_, memory]) => !memory.internal)
-                    .map(([_, memory], index) => {
-                        return <ComponentMemory key={index} memory={memory} />
+                    .map(([key, memory], index) => {
+                        return <ComponentMemory key={index} memory={memory} memoryKey={key} />
                     })}
             </ul>
         </div>
