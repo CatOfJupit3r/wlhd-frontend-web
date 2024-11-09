@@ -1,6 +1,7 @@
 import { GameComponentMemory, PossibleMemory } from '@models/GameModels'
 import { capitalizeFirstLetter } from '@utils'
-import React, { FC, HTMLAttributes, useCallback } from 'react'
+import { memoryValueToTranslation } from '@utils/memoryValueToTranslation'
+import React, { FC, HTMLAttributes, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const ComponentMemory: React.FC<
@@ -9,39 +10,13 @@ const ComponentMemory: React.FC<
     } & HTMLAttributes<HTMLLIElement>
 > = ({ memory, ...props }) => {
     const { t } = useTranslation()
-    const { type, value, display_name, display_value, internal } = memory
-
-    const DisplayedValue = useCallback(() => {
-        let displayed = ''
-
-        if (!value && !display_value) {
-            displayed = '-'
-        } else {
-            if (display_value) {
-                displayed = t(display_value)
-            } else {
-                switch (type) {
-                    case 'dice':
-                        if (typeof value == 'object' && value && 'amount' in value && 'sides' in value) {
-                            displayed = t('local:game.info-display.memories.dice', {
-                                amount: value.amount,
-                                sides: value.sides,
-                            })
-                        }
-                        break
-                    default:
-                        displayed = JSON.stringify(value)
-                        break
-                }
-            }
-        }
-
-        return <p className={internal ? 'text-gray-400' : ''}>{displayed}</p>
-    }, [memory])
+    const { display_name, internal } = memory
+    const [key, args] = useMemo(() => memoryValueToTranslation(memory), [memory])
 
     return (
         <li className={'flex flex-row gap-1'} {...props}>
-            <p>{capitalizeFirstLetter(t(display_name))}</p> : <DisplayedValue />
+            <p>{capitalizeFirstLetter(t(display_name))}</p> :{' '}
+            <p className={internal ? 'text-gray-400' : ''}>{t(key, args)}</p>
         </li>
     )
 }

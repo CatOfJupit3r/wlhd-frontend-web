@@ -85,7 +85,7 @@ export interface EntityAttributes {
     [attribute: string]: number
 }
 
-interface CommonGameComponentInfoFields {
+export interface CommonGameComponentInfoFields {
     decorations: GameComponentDecoration
     memory: GameComponentMemory | null
     tags: GameTags
@@ -156,7 +156,7 @@ export interface iCharacterActions {
     [key: string]: Array<iAction>
 }
 
-interface MemoryType {
+export interface MemoryType {
     type: string
     value: unknown
     display_name: string

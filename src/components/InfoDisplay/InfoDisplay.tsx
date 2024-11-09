@@ -1,5 +1,6 @@
 import { ActiveIcon, LocationIcon } from '@components/icons'
 import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay'
+import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories'
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
 import SeparatedDiv from '@components/ui/separated-div'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
@@ -213,9 +214,11 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                         } as ItemSegment | WeaponSegment | SpellSegment)}
                 </div>
             </div>
-            <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
-                {tNoPrefix(decorations?.description) ?? '???'}
-            </div>
+            <DescriptionWithMemories
+                description={decorations?.description}
+                memory={info.memory}
+                className={'break-words text-t-smaller italic text-gray-400'}
+            />
             {info.tags && info.tags.length > 0 ? (
                 <>
                     <TagsDisplay tags={info.tags} />

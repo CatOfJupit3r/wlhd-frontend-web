@@ -10,6 +10,7 @@ import {
     TagsEditor,
     UsesEditor,
 } from '@components/CharacterEditor/GameComponentEditors/ComponentSegmentEditors'
+import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
 import { Label } from '@components/ui/label'
 import { Separator } from '@components/ui/separator'
@@ -103,9 +104,11 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                                 </div>
                             </div>
                             <Separator />
-                            <div id={'description'} className={'break-words text-t-smaller italic text-gray-400'}>
-                                {t(component.decorations?.description, { includePrefix: false }) ?? '???'}
-                            </div>
+                            <DescriptionWithMemories
+                                memory={component.memory}
+                                description={component.decorations?.description}
+                                className={'break-words text-t-smaller italic text-gray-400'}
+                            />
                             <Separator />
                             <div className={'flex flex-col gap-3'}>
                                 <Label className={'flex flex-row gap-1'}>
