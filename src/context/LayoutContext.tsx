@@ -1,4 +1,4 @@
-import { RouteConfig } from '@models/RouteConfig'
+import { iRouteConfig } from '@models/IRouteConfig'
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 interface LayoutContextType {
@@ -7,7 +7,7 @@ interface LayoutContextType {
     auth: boolean
     lobbyInfo: boolean
 
-    changeConfig: (config: RouteConfig) => void
+    changeConfig: (config: iRouteConfig) => void
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined)
@@ -18,7 +18,7 @@ export const LayoutContextProvider = ({ children }: { children: ReactNode }) => 
     const [auth, setAuth] = useState<boolean>(false)
     const [lobbyInfo, setLobbyInfo] = useState<boolean>(false)
 
-    const changeConfig = useCallback((config: RouteConfig) => {
+    const changeConfig = useCallback((config: iRouteConfig) => {
         setHeader(config.includeHeader ?? false)
         setFooter(config.includeFooter ?? false)
         setAuth(config.requiresAuth ?? false)

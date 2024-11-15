@@ -1,4 +1,4 @@
-import { RouteConfig } from '@models/RouteConfig'
+import { iRouteConfig } from '@models/IRouteConfig'
 import AboutPage from '@pages/AboutPage'
 import CreateCharacterPage from '@pages/CreateCharacterPage'
 import CreateCombatPage from '@pages/CreateCombatPage'
@@ -11,9 +11,10 @@ import ProfilePage from '@pages/ProfilePage'
 import SignInPage from '@pages/SignInPage'
 import SignUpPage from '@pages/SignUpPage'
 import viewCharacterPage from '@pages/ViewCharacterPage'
+import { IS_DEVELOPMENT } from 'config'
 import paths from './paths'
 
-const routes: Array<RouteConfig> = [
+const routes: Array<iRouteConfig> = [
     {
         path: paths.profile,
         Component: ProfilePage,
@@ -92,6 +93,7 @@ const routes: Array<RouteConfig> = [
         // this room is only to view how game screen components will look without connecting to the backend
         path: paths.gameTest,
         Component: GameTestPage,
+        devOnly: true,
         title: 'game-test',
     },
     {
@@ -111,5 +113,10 @@ const routes: Array<RouteConfig> = [
         includeFooter: true,
     },
 ]
-
-export default routes
+console.log(IS_DEVELOPMENT, import.meta.env.NODE_ENV)
+export const authRoutes = routes
+    .filter((route) => route.requiresAuth)
+    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT))
+export const generalRoutes = routes
+    .filter((route) => !route.requiresAuth)
+    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT))

@@ -1,12 +1,12 @@
 import { useLayoutContext } from '@context/LayoutContext'
-import { RouteConfig } from '@models/RouteConfig'
+import { iRouteConfig } from '@models/IRouteConfig'
 import { setPageTitle } from '@redux/slices/cosmeticsSlice'
 import { AppDispatch } from '@redux/store'
 import { ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
-export const PageWrapper = ({ config, children }: { config: RouteConfig; children: ReactNode }): JSX.Element => {
+export const PageWrapper = ({ config, children }: { config: iRouteConfig; children: ReactNode }): JSX.Element => {
     const { t } = useTranslation()
     const dispatch = useDispatch<AppDispatch>()
     const { changeConfig } = useLayoutContext()

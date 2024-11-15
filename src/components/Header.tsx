@@ -15,7 +15,8 @@ import { selectLobbyId } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
 import { apprf, cn } from '@utils'
-import { useCallback, useMemo } from 'react'
+import { IS_DEVELOPMENT } from 'config'
+import { startTransition, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IconType } from 'react-icons'
 import { BiLogOut, BiSolidCog } from 'react-icons/bi'
@@ -23,6 +24,16 @@ import { FaBook } from 'react-icons/fa'
 import { LuMenuSquare, LuUser } from 'react-icons/lu'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+
+interface iSection {
+    name: string
+    action: () => void
+    icon: IconType
+    className?: string
+    disabled?: boolean
+}
+
+type SectionsType = Array<Array<iSection>>
 
 const Header = () => {
     const { isLoggedIn } = useIsLoggedIn()
@@ -35,21 +46,15 @@ const Header = () => {
 
     const redirect = useCallback((to: string, relative: 'path' | 'route' = 'path') => {
         return () => {
-            navigate(to, {
-                relative,
+            startTransition(() => {
+                navigate(to, {
+                    relative,
+                })
             })
         }
     }, [])
 
-    const sections: Array<
-        Array<{
-            name: string
-            action: () => void
-            icon: IconType
-            className?: string | undefined
-            disabled?: boolean | undefined
-        }>
-    > = useMemo(() => {
+    const sections: SectionsType = useMemo(() => {
         return [
             [
                 {
@@ -72,19 +77,21 @@ const Header = () => {
                 },
             ],
             [
-                {
-                    name: 'game-test',
-                    action: redirect(paths.gameTest, 'path'),
-                    icon: BiSolidCog,
-                },
+                IS_DEVELOPMENT
+                    ? {
+                          name: 'game-test',
+                          action: redirect(paths.gameTest, 'path'),
+                          icon: BiSolidCog,
+                      }
+                    : null,
                 {
                     name: 'logout',
                     action: () => AuthManager.logout(),
                     icon: BiLogOut,
                     className: 'text-red-500 hover:text-red-700',
                 },
-            ],
-        ]
+            ].filter((item) => item),
+        ] as SectionsType
     }, [redirect])
 
     const AuthLinks = useCallback(() => {

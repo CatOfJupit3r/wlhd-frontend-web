@@ -3,10 +3,9 @@ import { CoordinatorEntitiesProvider } from '@context/CoordinatorEntitiesProvide
 import { GameDataProvider } from '@context/GameDataProvider'
 import { useLayoutContext } from '@context/LayoutContext'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import paths from '@router/paths'
 import { apprf, cn, refreshLobbyInfo, refreshUserInfo } from '@utils'
 import { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
-import { Navigate, Outlet, useParams } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 
 const Header = lazy(() => import('@components/Header'))
 const Footer = lazy(() => import('@components/Footer'))
@@ -69,9 +68,7 @@ const LayoutContextClient = () => {
                 </Suspense>
             )}
             <main>
-                <RouteProtection>
-                    <Outlet />
-                </RouteProtection>
+                <Outlet />
             </main>
             {footer && (
                 <Suspense fallback={<FooterPlaceholder />}>
@@ -93,21 +90,6 @@ const GlobalContext = ({ children }: { children: ReactNode }) => {
             </CoordinatorEntitiesProvider>
         </TooltipProvider>
     )
-}
-
-const RouteProtection = ({ children }: { children: ReactNode }) => {
-    const { isLoggedIn } = useIsLoggedIn()
-    const { auth } = useLayoutContext()
-
-    if (!auth) {
-        return <>{children}</>
-    } else {
-        if (!isLoggedIn) {
-            return <Navigate to={paths.signIn} replace />
-        } else {
-            return <>{children}</>
-        }
-    }
 }
 
 export default LayoutContextClient
