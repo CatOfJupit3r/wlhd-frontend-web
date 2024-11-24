@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import { merge } from 'lodash'
 
 import { iUserAvatarProcessed, ShortLobbyInformation, UserInformation } from '@models/APIData'
 import {
@@ -13,42 +14,42 @@ import { LobbyInfo } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth'
 import AuthManager from '@services/AuthManager'
-import { VITE_BACKEND_APP } from 'config'
+import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config'
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
 }
 
 const ENDPOINTS = {
-    LOGIN: `${VITE_BACKEND_APP}/login`,
-    LOGOUT: `${VITE_BACKEND_APP}/logout`,
-    REGISTER: `${VITE_BACKEND_APP}/register`,
-    REFRESH_TOKEN: `${VITE_BACKEND_APP}/token`,
-    HEALTH_CHECK: `${VITE_BACKEND_APP}/health`,
-    USER_INFO: `${VITE_BACKEND_APP}/user/profile`,
+    LOGIN: `${VITE_BACKEND_URL}/login`,
+    LOGOUT: `${VITE_BACKEND_URL}/logout`,
+    REGISTER: `${VITE_BACKEND_URL}/register`,
+    REFRESH_TOKEN: `${VITE_BACKEND_URL}/token`,
+    HEALTH_CHECK: `${VITE_BACKEND_URL}/health`,
+    USER_INFO: `${VITE_BACKEND_URL}/user/profile`,
 
-    CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_APP}/lobbies/${lobby_id}/custom_translations`,
-    LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_APP}/lobbies/${lobby_id}`,
-    GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_APP}/game/weapons?dlc=${dlc}`,
-    GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_APP}/game/items?dlc=${dlc}`,
-    GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_APP}/game/spells?dlc=${dlc}`,
-    GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_APP}/game/status_effects?dlc=${dlc}`,
-    GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_APP}/game/characters?dlc=${dlc}`,
+    CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
+    LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}`,
+    GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_URL}/game/weapons?dlc=${dlc}`,
+    GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_URL}/game/items?dlc=${dlc}`,
+    GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_URL}/game/spells?dlc=${dlc}`,
+    GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/status_effects?dlc=${dlc}`,
+    GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_URL}/game/characters?dlc=${dlc}`,
     LOBBY_CHARACTER_INFO: (lobby_id: string, descriptor: string) =>
-        `${VITE_BACKEND_APP}/lobbies/${lobby_id}/characters/${descriptor}/`,
-    CREATE_LOBBY_COMBAT: (lobby_id: string) => `${VITE_BACKEND_APP}/lobbies/${lobby_id}/combats`,
-    SHORT_LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_APP}/lobbies/${lobby_id}?short=true`,
+        `${VITE_BACKEND_URL}/lobbies/${lobby_id}/characters/${descriptor}/`,
+    CREATE_LOBBY_COMBAT: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/combats`,
+    SHORT_LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}?short=true`,
     ASSIGN_PLAYER_TO_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_APP}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
     REMOVE_PLAYER_FROM_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_APP}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
     DELETE_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_APP}/lobbies/${lobbyId}/characters/${descriptor}`,
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
     UPDATE_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_APP}/lobbies/${lobbyId}/characters/${descriptor}`,
-    GET_TRANSLATIONS: (languages: Array<string>, dlcs: Array<string>) =>
-        `${VITE_BACKEND_APP}/translations?dlc=${dlcs.join(',')}&language=${languages.join(',')}`,
-    GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_APP}/user/${handle}/avatar`,
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
+    CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
+        `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
+    GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_URL}/user/${handle}/avatar`,
 }
 
 class APIService {
@@ -189,15 +190,22 @@ class APIService {
     }
 
     public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
-        try {
-            return await this.fetch({
-                url: ENDPOINTS.GET_TRANSLATIONS(languages, dlcs),
-                method: 'get',
-            })
-        } catch (e) {
-            console.log(e)
-            return {}
+        const result = {}
+        for (const dlc of dlcs) {
+            try {
+                const translations = await this.fetch({
+                    url: ENDPOINTS.CDN_GET_TRANSLATIONS(
+                        languages.map((lan) => lan.replace('-', '_')),
+                        dlc
+                    ),
+                    method: 'get',
+                })
+                merge(result, translations)
+            } catch (e) {
+                console.log(e)
+            }
         }
+        return result
     }
 
     public getCustomLobbyTranslations = async (lobby_id: string): Promise<TranslationJSON> => {

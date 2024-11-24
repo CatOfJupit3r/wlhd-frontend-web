@@ -44,11 +44,11 @@ export const CharacterGameAsset = ({ line, ...props }: GameAssetProps & { line: 
                 line
                     ? getCharacterSide(line) === 'enemy'
                         ? {
-                              src: generateAssetPathFullDescriptor('builtins:enemy'),
+                              src: generateAssetPathFullDescriptor('builtins:characters.enemy'),
                               alt: 'Unknown enemy',
                           }
                         : {
-                              src: generateAssetPathFullDescriptor('builtins:ally'),
+                              src: generateAssetPathFullDescriptor('builtins:characters.ally'),
                               alt: 'Unknown ally',
                           }
                     : undefined

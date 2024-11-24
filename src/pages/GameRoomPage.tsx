@@ -13,7 +13,7 @@ const GameRoomPage = () => {
     const navigate = useNavigate()
 
     const loadTranslations = useCallback(async () => {
-        const translations = await APIService.getTranslations([i18n.language, 'uk-UA'], ['builtins', 'nyrzamaer'])
+        const translations = await APIService.getTranslations([i18n.language, 'uk_UA'], ['builtins', 'nyrzamaer'])
         for (const language in translations) {
             if (translations[language] === null) continue
             for (const dlc in translations[language]) {

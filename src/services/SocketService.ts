@@ -27,7 +27,7 @@ import {
     setYourTurn,
 } from '@redux/slices/gameScreenSlice'
 import { store as ReduxStore } from '@redux/store'
-import { VITE_BACKEND_APP } from 'config'
+import { VITE_BACKEND_URL } from 'config'
 import { io, Socket } from 'socket.io-client'
 import APIService from './APIService'
 import AuthManager from './AuthManager'
@@ -78,7 +78,7 @@ class SocketService {
     private triedToRefreshToken = false
 
     constructor() {
-        this.socket = io(VITE_BACKEND_APP, {
+        this.socket = io(VITE_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
         })

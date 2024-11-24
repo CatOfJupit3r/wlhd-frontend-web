@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { VITE_BACKEND_APP } from 'config'
+import { VITE_BACKEND_URL } from 'config'
 import EventEmitter from 'events'
 
 const isServerUnavailableError = (error: unknown) => {
@@ -48,7 +48,7 @@ class APIHealth {
             this.removeHealthCheckInterval()
         }
         try {
-            await axios.get(`${VITE_BACKEND_APP}/health`)
+            await axios.get(`${VITE_BACKEND_URL}/health`)
         } catch (error) {
             if (isServerUnavailableError(error)) {
                 this.backendRefusedConnection = true

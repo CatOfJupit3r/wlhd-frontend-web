@@ -6,7 +6,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.use_item.name",
                     "description" : "builtins:actions.use_item.desc",
-                    "sprite" : "builtins:use_item",
+                    "sprite" : "builtins:actions.use_item",
                     "cost" : "-"
                 },
                 "available" : true,
@@ -19,7 +19,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.attack.name",
                     "description" : "builtins:actions.attack.desc",
-                    "sprite" : "builtins:attack",
+                    "sprite" : "builtins:actions.attack",
                     "cost" : "1"
                 },
                 "available" : true,
@@ -32,7 +32,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.use_spell.name",
                     "description" : "builtins:actions.use_spell.desc",
-                    "sprite" : "builtins:use_spell",
+                    "sprite" : "builtins:actions.use_spell",
                     "cost" : "-"
                 },
                 "available" : false,
@@ -43,7 +43,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.defend.name",
                     "description" : "builtins:actions.defend.desc",
-                    "sprite" : "builtins:defend",
+                    "sprite" : "builtins:actions.defend",
                     "cost" : "-"
                 },
                 "available" : false,
@@ -54,7 +54,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.move.name",
                     "description" : "builtins:actions.move.desc",
-                    "sprite" : "builtins:move",
+                    "sprite" : "builtins:actions.move",
                     "cost" : "1"
                 },
                 "available" : true,
@@ -67,7 +67,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.skip.name",
                     "description" : "builtins:actions.skip.desc",
-                    "sprite" : "builtins:skip",
+                    "sprite" : "builtins:actions.skip",
                     "cost" : "-"
                 },
                 "available" : true,
@@ -78,7 +78,7 @@
                 "decorations" : {
                     "name" : "builtins:actions.change_weapon.name",
                     "description" : "builtins:actions.change_weapon.desc",
-                    "sprite" : "builtins:change_weapon",
+                    "sprite" : "builtins:actions.change_weapon",
                     "cost" : "-"
                 },
                 "available" : true,
@@ -2005,7 +2005,7 @@
                     "decorations" : {
                         "name" : "builtins:characters.target_dummy.name",
                         "description" : "builtins:characters.target_dummy.desc",
-                        "sprite" : "builtins:target_dummy"
+                        "sprite" : "builtins:characters.target_dummy"
                     },
                     "square" : {
                         "line" : 3,
@@ -2032,7 +2032,7 @@
                     "decorations" : {
                         "name" : "builtins:characters.target_dummy_large.name",
                         "description" : "builtins:characters.target_dummy_large.desc",
-                        "sprite" : "builtins:target_dummy"
+                        "sprite" : "builtins:characters.target_dummy"
                     },
                     "square" : {
                         "line" : 3,
@@ -2095,7 +2095,7 @@
                 "decorations" : {
                     "name" : "The Hero",
                     "description" : "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
-                    "sprite" : "ally"
+                    "sprite" : "coordinator:ally"
                 },
                 "square" : {
                     "line" : 4,
@@ -2112,7 +2112,7 @@
                 "decorations" : {
                     "name" : "builtins:characters.target_dummy.name",
                     "description" : "builtins:characters.target_dummy.desc",
-                    "sprite" : "builtins:target_dummy"
+                    "sprite" : "builtins:characters.target_dummy"
                 },
                 "square" : {
                     "line" : 3,
