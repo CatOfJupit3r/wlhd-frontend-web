@@ -36,8 +36,9 @@ Before you begin, ensure you have met the following requirements:
 
 ## Environment Variables
 
--   HOST — Host on which the server will run _(default: localhost)_
--   VITE_BACKEND_URL — FULL URL to the GAME COORDINATOR server.
+-   `HOST` — Host on which the server will run _(default: localhost)_
+-   `VITE_BACKEND_URL` — FULL URL to the GAME COORDINATOR server.
+-   `VITE_CDN_URL` — FULL URL to the CDN server.
 
 ## Usage
 
