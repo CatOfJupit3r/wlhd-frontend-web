@@ -34,6 +34,30 @@ function emptySourcemapFix() {
     }
 }
 
+// https://stackoverflow.com/questions/75839993/vite-build-hangs-forever/76920975#76920975
+function ClosePlugin() {
+    return {
+        name: 'ClosePlugin', // required, will show up in warnings and errors
+
+        // use this to catch errors when building
+        buildEnd(error: any) {
+            if (error) {
+                console.error('Error bundling')
+                console.error(error)
+                process.exit(1)
+            } else {
+                console.log('Build ended')
+            }
+        },
+
+        // use this to catch the end of a build without errors
+        closeBundle(id: any) {
+            console.log('Bundle closed')
+            process.exit(0)
+        },
+    }
+}
+
 const ReactCompilerConfig = {
     target: '18',
 }
@@ -49,5 +73,7 @@ export default defineConfig({
         }),
         tsconfigPaths(),
         emptySourcemapFix() as unknown as Plugin,
+        ClosePlugin() as unknown as Plugin,
     ],
+    build: {},
 })

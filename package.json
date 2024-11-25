@@ -65,7 +65,7 @@
     "scripts": {
         "start": "vite",
         "build": "tsc && vite build",
-        "serve": "vite preview",
+        "serve": "vite preview --host",
         "lint": "eslint . --fix",
         "ts": "tsc --noEmit",
         "prepare": "husky",
