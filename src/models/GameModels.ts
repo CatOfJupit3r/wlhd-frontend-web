@@ -141,6 +141,7 @@ export interface StatusEffectInfo extends CommonGameComponentInfoFields {
 
 export interface iActionDecoration extends GameComponentDecoration {
     cost: string
+    memories: GameComponentMemory
 }
 
 export interface iAction {

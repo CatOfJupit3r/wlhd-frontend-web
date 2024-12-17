@@ -4,6 +4,7 @@ import { BsInfoCircle } from 'react-icons/bs'
 import GameAsset from '@components/GameAsset'
 import { StaticSkeleton } from '@components/ui/skeleton'
 import { useActionContext } from '@context/ActionContext'
+import { useDescriptionWithMemories } from '@hooks/UseDescriptionWithMemories'
 import { iAction, iActionDecoration } from '@models/GameModels'
 import { cn } from '@utils'
 import { FC, useCallback, useMemo } from 'react'
@@ -30,8 +31,9 @@ interface iOptionCard {
 const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handleDoubleClick }) => {
     const { t } = useTranslation()
 
-    const { name, description, sprite, cost } = useMemo(() => decorations, [decorations])
-    const translatedText = useMemo(() => t(description), [description])
+    const { name, description, sprite, cost = '-', memories = {} } = decorations
+    const { formated: translatedText } = useDescriptionWithMemories({ description, memory: memories })
+
     const textNeedsTruncating = useMemo(() => translatedText.length > 250, [translatedText])
     const displayedText = useMemo(
         () => (textNeedsTruncating ? translatedText.substring(0, 250) + '...' : translatedText),
