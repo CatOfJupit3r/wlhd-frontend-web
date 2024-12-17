@@ -16,7 +16,7 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
 
-export const CoordinatorEntitiesProvider = ({ children }: { children: ReactNode }) => {
+export const CoordinatorCharactersProvider = ({ children }: { children: ReactNode }) => {
     const [characters, setCharacters] = useState<DataContextType['characters']>({})
 
     const fetchCharacter: DataContextType['fetchCharacter'] = useCallback(
@@ -58,10 +58,10 @@ export const CoordinatorEntitiesProvider = ({ children }: { children: ReactNode 
     )
 }
 
-export const useCoordinatorEntitiesContext = () => {
+export const useCoordinatorCharactersContext = () => {
     const context = useContext(DataContext)
     if (context === undefined) {
-        throw new Error('useCoordinatorEntitiesContext must be used within a CoordinatorEntitiesProvider.')
+        throw new Error('useCoordinatorCharactersContext must be used within a CoordinatorCharactersProvider.')
     }
     return context as DataContextType
 }

@@ -24,7 +24,7 @@ import {
     SelectValue,
 } from '@components/ui/select'
 import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext'
-import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useDataContext } from '@context/GameDataProvider'
 import { ControlledBy } from '@models/EditorConversion'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
@@ -33,29 +33,29 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
-const AddNewEntityDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
+const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const [dlc, setDlc] = useState<string>('')
     const [descriptor, setDescriptor] = useState<string>('')
-    const { entities, fetchAndSetEntities } = useDataContext()
-    const { characters, fetchCharacter } = useCoordinatorEntitiesContext()
+    const { characters, fetchAndSetCharacters } = useDataContext()
+    const { characters: characterFromCoordinator, fetchCharacter } = useCoordinatorCharactersContext()
     const { t } = useTranslation()
     const lobby = useSelector(selectLobbyInfo)
     const { addCharacter } = useCombatEditorContext()
 
     useEffect(() => {
-        if (dlc && (entities === null || entities?.[dlc] === undefined)) {
+        if (dlc && (characters === null || characters?.[dlc] === undefined)) {
             if (dlc !== 'coordinator') {
-                fetchAndSetEntities(dlc).catch(console.error)
+                fetchAndSetCharacters(dlc).catch(console.error)
             }
         }
-    }, [dlc, entities])
+    }, [dlc, characters])
 
     return (
         <AlertDialogContent className={'max-w-3xl'}>
             <AlertDialogHeader>
-                <AlertDialogTitle>Add new entity</AlertDialogTitle>
+                <AlertDialogTitle>Add new character</AlertDialogTitle>
                 <AlertDialogDescription>
-                    Choose DLC and descriptor of the entity you want to add to square {clickedSquare}
+                    Choose DLC and descriptor of the character you want to add to square {clickedSquare}
                 </AlertDialogDescription>
                 <div id={'inputs'} className={'flex w-full flex-row'}>
                     <div className={'w-full'}>
@@ -86,7 +86,7 @@ const AddNewEntityDialogContent = ({ clickedSquare }: { clickedSquare: string | 
                         <Combobox
                             items={[
                                 ...(dlc !== 'coordinator'
-                                    ? Object.entries(entities?.[dlc] ?? {}).map(([descriptor, character]) => ({
+                                    ? Object.entries(characters?.[dlc] ?? {}).map(([descriptor, character]) => ({
                                           value: descriptor,
                                           label: t(character.decorations.name),
                                           icon: ((props: HTMLIconFactoryProps) => (
@@ -117,7 +117,7 @@ const AddNewEntityDialogContent = ({ clickedSquare }: { clickedSquare: string | 
                         !dlc ||
                         !descriptor ||
                         (dlc !== 'coordinator' &&
-                            !entities?.[dlc]?.[descriptor] &&
+                            !characters?.[dlc]?.[descriptor] &&
                             dlc === 'coordinator' &&
                             !lobby.characters?.find((character) => character.descriptor === descriptor))
                     }
@@ -126,26 +126,26 @@ const AddNewEntityDialogContent = ({ clickedSquare }: { clickedSquare: string | 
                             return
                         }
                         if (dlc !== 'coordinator') {
-                            const entity = entities?.[dlc]?.[descriptor]
-                            if (entity) {
-                                addCharacter(clickedSquare, entity, `${dlc}:${descriptor}`)
+                            const character = characters?.[dlc]?.[descriptor]
+                            if (character) {
+                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`)
                             } else {
-                                fetchAndSetEntities(dlc).then((fetched) => {
-                                    const entity = fetched[descriptor]
-                                    if (entity) {
-                                        addCharacter(clickedSquare, entity, `${dlc}:${descriptor}`)
+                                fetchAndSetCharacters(dlc).then((fetched) => {
+                                    const character = fetched[descriptor]
+                                    if (character) {
+                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`)
                                     }
                                 })
                             }
                         } else {
-                            const entity = characters?.[descriptor]
+                            const character = characterFromCoordinator?.[descriptor]
                             const player = lobby.players.find((player) => player.characters.includes(descriptor))
                             const controlled: ControlledBy = player
                                 ? CONTROLLED_BY_PLAYER(player.userId)
                                 : CONTROLLED_BY_GAME_LOGIC
 
-                            if (entity) {
-                                addCharacter(clickedSquare, entity, `${dlc}:${descriptor}`, controlled)
+                            if (character) {
+                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled)
                             } else {
                                 const TryFetchCharacter = async () => {
                                     const character = await fetchCharacter(lobby.lobbyId, descriptor, true)
@@ -165,7 +165,7 @@ const AddNewEntityDialogContent = ({ clickedSquare }: { clickedSquare: string | 
     )
 }
 
-export const AddNewEntity = ({ clickedSquare }: { clickedSquare: string | null }) => {
+export const AddNewCharacter = ({ clickedSquare }: { clickedSquare: string | null }) => {
     return (
         <AlertDialog>
             <AlertDialogTrigger className={'w-full'} asChild>
@@ -181,7 +181,7 @@ export const AddNewEntity = ({ clickedSquare }: { clickedSquare: string | null }
                     </p>
                 </div>
             </AlertDialogTrigger>
-            <AddNewEntityDialogContent clickedSquare={clickedSquare} />
+            <AddNewCharacterDialogContent clickedSquare={clickedSquare} />
         </AlertDialog>
     )
 }

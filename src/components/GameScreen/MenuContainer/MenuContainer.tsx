@@ -1,16 +1,16 @@
+import ControlledCharactersInfo from '@components/GameScreen/ControlledCharactersInfo/ControlledCharactersInfo'
 import { Separator } from '@components/ui/separator'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import ActionInput from '../ActionInput/ActionInput'
-import ControlledEntitiesInfo from '../ControlledEntitiesInfo/ControlledEntitiesInfo'
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed'
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu'
 import LeaveGameOverlay from '../LeaveGameOverlay/LeaveGameOverlay'
 
 const GAME_MENUS = {
-    YOUR_ENTITIES: {
-        key: 'your-entities',
-        Component: ControlledEntitiesInfo,
+    YOUR_CHARACTERS: {
+        key: 'your-characters',
+        Component: ControlledCharactersInfo,
     },
     ACTION_SELECT: {
         key: 'action-select',
@@ -41,7 +41,7 @@ const MenuContainer = ({ chosen, setChosen }: { chosen: string | null; setChosen
         }
         let menu: (typeof GAME_MENUS)[keyof typeof GAME_MENUS] | undefined
         if (!chosen) {
-            menu = GAME_MENUS.YOUR_ENTITIES
+            menu = GAME_MENUS.YOUR_CHARACTERS
         } else {
             menu = Object.values(GAME_MENUS).find((m) => m.key === chosen)
         }

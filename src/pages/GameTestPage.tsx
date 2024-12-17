@@ -4,7 +4,7 @@ import {
     setActions,
     setActionTimestamp,
     setBattlefield,
-    setControlledEntities,
+    setControlledCharacters,
     setMessages,
     setRound,
     setTurnOrder,
@@ -35,9 +35,10 @@ const GameTestPage = () => {
 
     useEffect(() => {
         dispatch(setBattlefield(example_gamestate.battlefield))
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setRound(example_gamestate.round.current as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        dispatch(setControlledEntities(example_gamestate.controlledEntities as any))
+        dispatch(setControlledCharacters(example_gamestate.controlledCharacters as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(setTurnOrder(example_gamestate.round.order as any))
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

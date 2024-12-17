@@ -1236,9 +1236,9 @@
     "messages" : [
         [
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "value" : "10"
                 }
             }
@@ -1247,22 +1247,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "12",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1271,22 +1271,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "12",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1295,22 +1295,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "9",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1319,22 +1319,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "17",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1343,22 +1343,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "13",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1367,22 +1367,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "21",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1391,22 +1391,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "13",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1415,22 +1415,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "10",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1439,22 +1439,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "17",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1463,22 +1463,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "19",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1487,22 +1487,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "12",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1511,22 +1511,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "11",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1535,22 +1535,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "8",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1559,22 +1559,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "11",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1583,22 +1583,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "18",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1607,22 +1607,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "18",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1631,22 +1631,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "18",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1655,22 +1655,22 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "13",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
@@ -1679,41 +1679,41 @@
             {
                 "key" : "builtins:game_events.spell_usage",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "spell_name" : "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_takes_damage",
+                "key" : "builtins:game_events.character_takes_damage",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "damage" : "20",
                     "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.entity_activated_status_effect",
+                "key" : "builtins:game_events.character_activated_status_effect",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name",
+                    "character_name" : "builtins:characters.target_dummy.name",
                     "effect_name" : "builtins:status_effects.fainted.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_fainted",
+                "key" : "builtins:game_events.character_fainted",
                 "args" : {
-                    "entity_name" : "builtins:characters.target_dummy.name"
+                    "character_name" : "builtins:characters.target_dummy.name"
                 }
             },
             {
-                "key" : "builtins:game_events.creature_spent_ap",
+                "key" : "builtins:game_events.character_spent_ap",
                 "args" : {
-                    "entity_name" : "coordinator:mage.name",
+                    "character_name" : "coordinator:mage.name",
                     "value" : "0"
                 }
             }
         ]
     ],
-    "controlledEntities" : [
+    "controlledCharacters" : [
         {
             "descriptor" : "builtins:target_dummy",
             "decorations" : {

@@ -10,7 +10,7 @@ export interface GameComponentDecoration {
 export interface Battlefield {
     pawns: {
         [key: string]: {
-            character: EntityInfoTooltip | null
+            character: CharacterInfoTooltip | null
             areaEffects: Array<unknown>
         }
     }
@@ -33,7 +33,7 @@ export interface GameHandshake {
     messages: GameStateContainer // but only last 10 instead of all
     combatStatus: 'ongoing' | 'pending'
     currentBattlefield: Battlefield
-    controlledEntities: Array<EntityInfoFull> | null
+    controlledCharacters: Array<CharacterInfoFull> | null
     turnOrder: IndividualTurnOrder
     gameLobbyState: iGameLobbyState
     actionTimestamp: number | null
@@ -56,7 +56,7 @@ export interface CharacterInTurnOrder {
     id_: string
 }
 
-export interface EntityInfoTooltip {
+export interface CharacterInfoTooltip {
     decorations: GameComponentDecoration
     square: { line: number; column: number }
     health: { current: number; max: number }
@@ -65,7 +65,7 @@ export interface EntityInfoTooltip {
     statusEffects: Array<StatusEffectInfo>
 }
 
-export interface EntityInfoFull {
+export interface CharacterInfoFull {
     decorations: GameComponentDecoration
     square: { line: number; column: number } | null
     attributes: AttributeInfo
@@ -81,7 +81,7 @@ export interface EntityInfoFull {
     memory: GameComponentMemory | null
 }
 
-export interface EntityAttributes {
+export interface CharacterAttributes {
     [attribute: string]: number
 }
 
@@ -118,7 +118,7 @@ export interface ItemInfo extends CommonGameComponentInfoFields {
     }
     userNeedsRange: Array<number>
     cooldown: { current: number; max: number | null }
-    quantity: number // how many of given item entity has
+    quantity: number // how many of given item character has
     consumable: boolean // if item is consumable
 }
 

@@ -12,7 +12,7 @@ import {
     SixthColumnTile,
     ThirdColumnTile,
 } from '@components/Battlefield/Tiles/CosmeticTiles'
-import TileEntity from '@components/Battlefield/Tiles/TileEntity'
+import TileWithCharacter from '@components/Battlefield/Tiles/TileWithCharacter'
 import { cn } from '@utils'
 import { useCallback } from 'react'
 import styles from './Battlefield.module.css'
@@ -57,12 +57,12 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
     const CharactersOnRow = useCallback(({ line }: { line: string }) => {
         return (
             <>
-                <TileEntity square={`${line}/1`} />
-                <TileEntity square={`${line}/2`} />
-                <TileEntity square={`${line}/3`} />
-                <TileEntity square={`${line}/4`} />
-                <TileEntity square={`${line}/5`} />
-                <TileEntity square={`${line}/6`} />
+                <TileWithCharacter square={`${line}/1`} />
+                <TileWithCharacter square={`${line}/2`} />
+                <TileWithCharacter square={`${line}/3`} />
+                <TileWithCharacter square={`${line}/4`} />
+                <TileWithCharacter square={`${line}/5`} />
+                <TileWithCharacter square={`${line}/6`} />
             </>
         )
     }, [])

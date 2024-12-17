@@ -9,7 +9,7 @@ import {
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
 import { EmptyMenuContent } from '@components/ui/menu'
 import { Separator } from '@components/ui/separator'
-import { EntityInfoFull } from '@models/GameModels'
+import { CharacterInfoFull } from '@models/GameModels'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,7 +17,7 @@ const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', '
 
 type FeatureProps = {
     type: (typeof SupportedFeatures)[number] | string
-    info: EntityInfoFull
+    info: CharacterInfoFull
     flags: {
         ignoreAttributes?: Array<string>
     }

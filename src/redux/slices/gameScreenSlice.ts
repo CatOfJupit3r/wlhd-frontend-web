@@ -1,4 +1,10 @@
-import { Battlefield, EntityInfoFull, GameHandshake, GameStateContainer, IndividualTurnOrder } from '@models/GameModels'
+import {
+    Battlefield,
+    CharacterInfoFull,
+    GameHandshake,
+    GameStateContainer,
+    IndividualTurnOrder,
+} from '@models/GameModels'
 import { GameScreenState } from '@models/Redux'
 import { RootState } from '@redux/store'
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -28,7 +34,7 @@ const initialState: GameScreenState = {
         type: 'pending',
         details: '',
     },
-    controlledEntities: null,
+    controlledCharacters: null,
     yourTurn: false,
     gameLobbyState: {
         players: [],
@@ -69,7 +75,7 @@ const GameScreenSlice = createSlice({
                     order: action.payload.turnOrder ?? [],
                 },
                 messages: action.payload.messages,
-                controlledEntities: action.payload.controlledEntities,
+                controlledCharacters: action.payload.controlledCharacters,
                 gameFlow: {
                     type: action.payload.combatStatus === 'pending' ? 'pending' : 'active',
                     details: '',
@@ -81,8 +87,8 @@ const GameScreenSlice = createSlice({
         addMessage: (state, action: PayloadAction<GameStateContainer[number]>) => {
             state.messages.push(action.payload)
         },
-        setControlledEntities: (state, action: PayloadAction<Array<EntityInfoFull> | null>) => {
-            state.controlledEntities = action.payload
+        setControlledCharacters: (state, action: PayloadAction<Array<CharacterInfoFull> | null>) => {
+            state.controlledCharacters = action.payload
         },
         setMessages: (state, action: PayloadAction<GameStateContainer>) => {
             state.messages = action.payload
@@ -133,7 +139,7 @@ export const {
     setActions,
     addMessage,
     setMessages,
-    setControlledEntities,
+    setControlledCharacters,
     setTurnOrder,
     reset: resetGameScreenSlice,
     setYourTurn,
@@ -146,7 +152,7 @@ export const {
 export const selectCurrentRoundCount = (state: RootState) => state.gameScreen.round.current
 export const selectAllMessages = (state: RootState) => state.gameScreen.messages
 export const selectGameFlow = (state: RootState) => state.gameScreen.gameFlow
-export const selectControlledEntities = (state: RootState) => state.gameScreen.controlledEntities
+export const selectControlledCharacters = (state: RootState) => state.gameScreen.controlledCharacters
 export const selectTurnOrder = (state: RootState) => state.gameScreen.round.order
 export const selectBattlefield = (state: RootState) => state.gameScreen.battlefield
 export const selectActions = (state: RootState) => state.gameScreen.actions
@@ -154,6 +160,9 @@ export const selectIsYourTurn = (state: RootState) => state.gameScreen.yourTurn
 export const selectActionTimestamp = (state: RootState) => state.gameScreen.actionTimestamp
 export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameLobbyState
 
-export const selectActiveEntity = createSelector([(state: RootState) => state.gameScreen.round.order], (turnOrder) => {
-    return turnOrder[0] // the first entity in the turn order is the active entity. if none, then it's round end.
-})
+export const selectActiveCharacter = createSelector(
+    [(state: RootState) => state.gameScreen.round.order],
+    (turnOrder) => {
+        return turnOrder[0] // the first character in the turn order is the active character. if none, then it's round end.
+    }
+)

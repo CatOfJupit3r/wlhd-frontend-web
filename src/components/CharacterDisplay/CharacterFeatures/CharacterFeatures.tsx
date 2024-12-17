@@ -1,7 +1,7 @@
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
 import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
 import Menu, { MenuSelection } from '@components/ui/menu'
-import { EntityInfoFull } from '@models/GameModels'
+import { CharacterInfoFull } from '@models/GameModels'
 import React, { useMemo } from 'react'
 import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
 
@@ -42,7 +42,7 @@ const CharacterMenus: Array<{
     },
 ]
 
-const MenuIsDisabled = (type: string, info: EntityInfoFull) => {
+const MenuIsDisabled = (type: string, info: CharacterInfoFull) => {
     switch (type) {
         case 'inventory':
             return !info.inventory || info.inventory.length === 0
@@ -63,7 +63,7 @@ interface CharacterFeaturesProps {
     flags: {
         ignoreAttributes?: Array<string>
     }
-    character: EntityInfoFull
+    character: CharacterInfoFull
 }
 
 const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {

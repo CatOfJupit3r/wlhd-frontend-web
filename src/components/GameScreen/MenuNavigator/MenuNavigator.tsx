@@ -6,8 +6,8 @@ import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { TbManualGearbox } from 'react-icons/tb'
 
 const UPPER_BUTTONS = {
-    YOUR_ENTITIES: {
-        key: 'your-entities',
+    YOUR_CHARACTERS: {
+        key: 'your-characters',
         Component: FaUsers,
     },
     ACTION_SELECT: {

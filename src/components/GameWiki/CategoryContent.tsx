@@ -32,10 +32,10 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         items,
         spells,
         weapons,
-        entities: characters,
+        characters: characters,
         statusEffects,
         fetchAndSetItems,
-        fetchAndSetEntities,
+        fetchAndSetCharacters,
         fetchAndSetSpells,
         fetchAndSetStatusEffects,
         fetchAndSetWeapons,
@@ -44,7 +44,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
     useEffect(() => {
         switch (category) {
             case 'characters':
-                fetchAndSetEntities(dlc).then(() => {})
+                fetchAndSetCharacters(dlc).then(() => {})
                 break
             case 'spells':
                 fetchAndSetSpells(dlc).then(() => {})

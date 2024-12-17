@@ -1,5 +1,5 @@
 export interface TakeActionPayload {
-    entity_id: 'string'
+    character_id: 'string'
 }
 
 export interface ActionResultsPayload {

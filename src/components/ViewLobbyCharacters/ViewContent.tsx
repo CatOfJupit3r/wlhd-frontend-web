@@ -17,10 +17,10 @@ import {
     CharacterEditorProvider,
     useBuildCharacterEditorProps,
 } from '@context/CharacterEditorProvider'
-import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import { CharacterDataEditable } from '@models/CombatEditorModels'
-import { EntityInfoFull } from '@models/GameModels'
+import { CharacterInfoFull } from '@models/GameModels'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import APIService from '@services/APIService'
 import GameConverters from '@services/GameConverters'
@@ -49,7 +49,7 @@ const CharacterEditorMenu = () => {
         changeEditedCharacter,
         resetCharacter,
     } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable)
-    const { fetchCharacter } = useCoordinatorEntitiesContext()
+    const { fetchCharacter } = useCoordinatorCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
     })
@@ -189,7 +189,7 @@ const GmOptionMenu = () => {
 
 const LobbyCharacterDisplay = () => {
     const { viewedCharacter } = useViewCharactersContext()
-    const [converted, setConverted] = useState<EntityInfoFull | null>(null)
+    const [converted, setConverted] = useState<CharacterInfoFull | null>(null)
 
     useEffect(() => {
         if (!viewedCharacter) {

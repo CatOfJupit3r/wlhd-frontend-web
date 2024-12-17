@@ -1,6 +1,6 @@
 import { CharacterDataInSave } from '@models/CombatEditorModels'
 import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
-import { EntityInfoFull } from '@models/GameModels'
+import { CharacterInfoFull } from '@models/GameModels'
 import { isDescriptor } from '@utils/descriptorTools'
 
 export const prepareCharacterToClassConversion = (character: CharacterDataInSave): CharacterClassConversion => {
@@ -33,7 +33,7 @@ export const prepareCharacterToClassConversion = (character: CharacterDataInSave
 }
 
 export const minifyCharacter = (
-    character: EntityInfoFull,
+    character: CharacterInfoFull,
     descriptor: string
 ): MinifiedCombatPreset['battlefield'][string]['character'] => {
     return {

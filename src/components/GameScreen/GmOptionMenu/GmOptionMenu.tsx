@@ -12,7 +12,7 @@ However, if the mistake is made, it is not a big deal, as game-controller will c
 For now will leave as a placeholder, as this will require quite a work to implement.
 
 Ideally, GMOptionMenu will not be just "click to request".
-I will make it possible to enter parameters (e.g. entity to summon, damage to deal to entity on square, etc.)
+I will make it possible to enter parameters (e.g. character to summon, damage to deal to character on square, etc.)
 
 Maybe a form?...
 

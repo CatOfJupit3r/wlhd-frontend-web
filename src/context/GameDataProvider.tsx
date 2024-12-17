@@ -16,20 +16,20 @@ type ProvidedItems = ProvidedData<ItemEditable>
 type ProvidedWeapons = ProvidedData<WeaponEditable>
 type ProvidedSpells = ProvidedData<SpellEditable>
 type ProvidedStatusEffects = ProvidedData<StatusEffectEditable>
-type ProvidedEntities = ProvidedData<CharacterDataEditable>
+type ProvidedCharacters = ProvidedData<CharacterDataEditable>
 
 interface DataContextType {
     items: ProvidedItems | null
     weapons: ProvidedWeapons | null
     spells: ProvidedSpells | null
     statusEffects: ProvidedStatusEffects | null
-    entities: ProvidedEntities | null
+    characters: ProvidedCharacters | null
 
     fetchAndSetItems: (dlc: string) => Promise<void>
     fetchAndSetWeapons: (dlc: string) => Promise<void>
     fetchAndSetSpells: (dlc: string) => Promise<void>
     fetchAndSetStatusEffects: (dlc: string) => Promise<void>
-    fetchAndSetEntities: (dlc: string) => Promise<{ [descriptor: string]: CharacterDataEditable }>
+    fetchAndSetCharacters: (dlc: string) => Promise<{ [descriptor: string]: CharacterDataEditable }>
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined)
@@ -39,7 +39,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
     const [weapons, setWeapons] = useState<DataContextType['weapons']>(null)
     const [spells, setSpells] = useState<DataContextType['spells']>(null)
     const [statusEffects, setStatusEffects] = useState<DataContextType['statusEffects']>(null)
-    const [entities, setEntities] = useState<DataContextType['entities']>(null)
+    const [characters, setCharacters] = useState<DataContextType['characters']>(null)
 
     const [alreadyFetchedContent, setAlreadyFetchedContent] = useState<{
         [dlc: string]: {
@@ -47,7 +47,7 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
             weapons: boolean
             spells: boolean
             status_effects: boolean
-            entities: boolean
+            characters: boolean
         }
     }>({})
 
@@ -155,14 +155,14 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
         [alreadyFetchedContent, statusEffects]
     )
 
-    const fetchAndSetEntities = useCallback(
+    const fetchAndSetCharacters = useCallback(
         async (dlc: string): Promise<{ [descriptor: string]: CharacterDataEditable }> => {
             try {
-                if (!(alreadyFetchedContent[dlc]?.entities ?? false)) {
+                if (!(alreadyFetchedContent[dlc]?.characters ?? false)) {
                     const { characters: fetched } = await APIService.getLoadedCharacters(dlc)
                     if (fetched) {
-                        setEntities({
-                            ...entities,
+                        setCharacters({
+                            ...characters,
                             [dlc]: fetched,
                         })
                     }
@@ -170,17 +170,17 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                         ...alreadyFetchedContent,
                         [dlc]: {
                             ...alreadyFetchedContent[dlc],
-                            entities: true,
+                            characters: true,
                         },
                     })
                     return fetched
                 }
             } catch (error) {
-                console.error('Failed to fetch entities:', error)
+                console.error('Failed to fetch characters:', error)
             }
             return {}
         },
-        [alreadyFetchedContent, entities]
+        [alreadyFetchedContent, characters]
     )
 
     return (
@@ -190,12 +190,12 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                 weapons,
                 spells,
                 statusEffects,
-                entities,
+                characters,
                 fetchAndSetItems,
                 fetchAndSetWeapons,
                 fetchAndSetSpells,
                 fetchAndSetStatusEffects,
-                fetchAndSetEntities,
+                fetchAndSetCharacters,
             }}
         >
             {children}

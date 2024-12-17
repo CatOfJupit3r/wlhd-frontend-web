@@ -7,7 +7,7 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels'
-import { EntityInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
+import { CharacterInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
 
 class GameConverters {
     public convertSpellEditableToInfo = (descriptor: string, spell: SpellEditable): SpellInfo => {
@@ -84,7 +84,7 @@ class GameConverters {
         }
     }
 
-    public convertCharacterEditableToInfoFull = (character: CharacterDataEditable): EntityInfoFull => {
+    public convertCharacterEditableToInfoFull = (character: CharacterDataEditable): CharacterInfoFull => {
         return {
             decorations: character.decorations,
             square: null,

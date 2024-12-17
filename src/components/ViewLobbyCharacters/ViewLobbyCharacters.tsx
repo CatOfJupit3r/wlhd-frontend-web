@@ -4,7 +4,7 @@ import { Combobox } from '@components/ui/combobox'
 import { Separator } from '@components/ui/separator'
 import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo'
 import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
-import { useCoordinatorEntitiesContext } from '@context/CoordinatorEntitiesProvider'
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
@@ -53,7 +53,7 @@ const NoCharactersPresent = () => {
 
 const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     const lobby = useSelector(selectLobbyInfo)
-    const { fetchCharacter } = useCoordinatorEntitiesContext()
+    const { fetchCharacter } = useCoordinatorCharactersContext()
     const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer',

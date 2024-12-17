@@ -2,7 +2,7 @@ import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacte
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import CharacterFeatures from '@components/CharacterDisplay/CharacterFeatures/CharacterFeatures'
 import { Separator } from '@components/ui/separator'
-import { EntityInfoFull } from '@models/GameModels'
+import { CharacterInfoFull } from '@models/GameModels'
 import { HTMLAttributes } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -17,7 +17,7 @@ export interface CharacterDisplaySettings {
 }
 
 export type CharacterDisplayProps = {
-    character: EntityInfoFull
+    character: CharacterInfoFull
     settings?: CharacterDisplaySettings
 } & HTMLAttributes<HTMLDivElement>
 
@@ -25,7 +25,7 @@ const EquippedWeapon = ({
     weapons,
     ...props
 }: {
-    weapons: EntityInfoFull['weaponry']
+    weapons: CharacterInfoFull['weaponry']
 } & HTMLAttributes<HTMLDivElement>) => {
     const { t } = useTranslation()
 

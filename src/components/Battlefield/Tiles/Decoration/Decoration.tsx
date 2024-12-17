@@ -23,7 +23,9 @@ const Decoration = ({ square }: { square: string }) => {
                 }
             })
         } else {
-            interactivityType !== '' ? setInteractivityType('') : null
+            if (interactivityType !== '') {
+                setInteractivityType('')
+            }
         }
     }, [interactable])
 
@@ -42,17 +44,17 @@ const Decoration = ({ square }: { square: string }) => {
         <>
             <img
                 className={cn(
-                    styles.activeEntity,
+                    styles.activeCharacter,
                     'transition-opacity',
                     active ? 'opacity-100' : 'pointer-events-none opacity-0'
                 )}
-                src="/assets/local/active_entity.svg"
+                src="/assets/local/active_character.svg"
                 alt="Decoration"
             />
             <div
                 className={cn(
                     styles.decoration,
-                    styles.clickedEntityBorder,
+                    styles.clickedCharacterBorder,
                     'transition-opacity',
                     clicked ? 'opacity-100' : 'pointer-events-none opacity-0'
                 )}

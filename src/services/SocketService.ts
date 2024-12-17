@@ -2,7 +2,7 @@ import { toast } from '@hooks/useToast'
 import { ActionResultsPayload } from '@models/Events'
 import {
     Battlefield,
-    EntityInfoFull,
+    CharacterInfoFull,
     GameHandshake,
     iCharacterActions,
     iGameLobbyState,
@@ -16,7 +16,7 @@ import {
     setActions,
     setActionTimestamp,
     setBattlefield,
-    setControlledEntities,
+    setControlledCharacters,
     setFlowToAborted,
     setFlowToActive,
     setFlowToEnded,
@@ -38,12 +38,12 @@ const SOCKET_EVENTS = {
     GAME_HANDSHAKE: 'game_handshake',
     ACTION_RESULT: 'action_result',
     BATTLE_ENDED: 'battle_ended',
-    NO_CURRENT_ENTITY: 'no_current_entity',
+    NO_CURRENT_CHARACTER: 'no_current_character',
     HALT_ACTION: 'halt_action',
     TAKE_ACTION: 'take_action',
     NEW_MESSAGE: 'new_message',
     BATTLEFIELD_UPDATE: 'battlefield_updated',
-    ENTITIES_UPDATED: 'entities_updated',
+    CHARACTERS_UPDATED: 'characters_updated',
     TURN_ORDER_UPDATED: 'turn_order_updated',
     GAME_LOBBY_STATE: 'game_lobby_state',
     ERROR: 'error',
@@ -52,7 +52,7 @@ const SOCKET_EVENTS = {
 
 const ELEVATED_RIGHTS_EVENTS = {
     TAKE_UNALLOCATED_ACTION: 'take_unallocated_action',
-    // if player is not present, but GM is, then GM can take action and is notified about unallocated entity.
+    // if player is not present, but GM is, then GM can take action and is notified about unallocated character.
     TAKE_OFFLINE_PLAYER_ACTION: 'take_offline_player_action',
 }
 
@@ -223,12 +223,12 @@ class SocketService {
             [SOCKET_EVENTS.BATTLE_STARTED]: () => {
                 ReduxStore.dispatch(setFlowToActive())
             },
-            [SOCKET_EVENTS.ENTITIES_UPDATED]: ({
-                newControlledEntities,
+            [SOCKET_EVENTS.CHARACTERS_UPDATED]: ({
+                newControlledCharacters,
             }: {
-                newControlledEntities: Array<EntityInfoFull>
+                newControlledCharacters: Array<CharacterInfoFull>
             }) => {
-                ReduxStore.dispatch(setControlledEntities(newControlledEntities))
+                ReduxStore.dispatch(setControlledCharacters(newControlledCharacters))
             },
             [SOCKET_EVENTS.ACTION_TIMESTAMP]: ({ timestamp }: { timestamp: number | null }) => {
                 ReduxStore.dispatch(setActionTimestamp(timestamp))

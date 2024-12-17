@@ -1,7 +1,7 @@
 import { UserInformation } from '@models/APIData'
 import {
     Battlefield,
-    EntityInfoFull,
+    CharacterInfoFull,
     GameHandshake,
     GameStateContainer,
     iCharacterActions as ActionInputInterface,
@@ -71,7 +71,7 @@ export interface GameScreenState {
         details: string
     }
     gameLobbyState: iGameLobbyState
-    controlledEntities: Array<EntityInfoFull> | null
+    controlledCharacters: Array<CharacterInfoFull> | null
     yourTurn: boolean
     actionTimestamp: number | null
 }

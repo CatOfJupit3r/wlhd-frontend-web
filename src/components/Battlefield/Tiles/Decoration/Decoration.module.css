@@ -12,7 +12,7 @@
     pointer-events: none;
 }
 
-.clickedEntityBorder {
+.clickedCharacterBorder {
     --b: 5px; /* thickness of the border */
     --c: #39bc55; /* color of the border */
     --r: 11px; /* 1px bigger than borderInCorner because if they overlap there is area of no overlap */
@@ -31,7 +31,7 @@
     mask-composite: exclude;
 }
 
-.activeEntity {
+.activeCharacter {
     position: absolute;
     width: calc(var(--tile-size) * 0.35);
     height: calc(var(--tile-size) * 0.35);

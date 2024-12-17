@@ -1,5 +1,5 @@
 import { TooltipProvider } from '@components/ui/tooltip'
-import { CoordinatorEntitiesProvider } from '@context/CoordinatorEntitiesProvider'
+import { CoordinatorCharactersProvider } from '@context/CoordinatorCharactersProvider'
 import { GameDataProvider } from '@context/GameDataProvider'
 import { useLayoutContext } from '@context/LayoutContext'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
@@ -85,9 +85,9 @@ const LayoutContextClient = () => {
 const GlobalContext = ({ children }: { children: ReactNode }) => {
     return (
         <TooltipProvider>
-            <CoordinatorEntitiesProvider>
+            <CoordinatorCharactersProvider>
                 <GameDataProvider>{children}</GameDataProvider>
-            </CoordinatorEntitiesProvider>
+            </CoordinatorCharactersProvider>
         </TooltipProvider>
     )
 }

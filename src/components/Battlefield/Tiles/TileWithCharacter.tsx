@@ -1,15 +1,18 @@
+import CharacterTooltip from '@components/Battlefield/Tiles/CharacterTooltip/CharacterTooltip'
 import { CharacterGameAsset } from '@components/GameAsset'
 import { ImgHTMLAttributes, useMemo } from 'react'
 import Decoration from './Decoration/Decoration'
-import EntityTooltip from './EntityTooltip/EntityTooltip'
-import styles from './Tiles.module.css'
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { cn } from '@utils'
 import { useTranslation } from 'react-i18next'
 
-const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTMLAttributes<HTMLImageElement>) => {
+const TileWithCharacter = ({
+    square,
+    className,
+    ...props
+}: { square: string } & ImgHTMLAttributes<HTMLImageElement>) => {
     const { battlefield, onClickTile, createBonusTileTooltip } = useBattlefieldContext()
     const { t } = useTranslation()
     const bonusTooltip = useMemo(() => createBonusTileTooltip(square), [createBonusTileTooltip, square])
@@ -46,7 +49,7 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
                             line={line}
                             src={squareInfo?.info.character?.decorations.sprite}
                             alt={t(squareInfo?.info.character?.decorations.name)}
-                            className={cn(styles.tile, className)}
+                            className={className}
                         />
                     ) : null}
                 </div>
@@ -61,11 +64,11 @@ const TileEntity = ({ square, className, ...props }: { square: string } & ImgHTM
                 )}
                 side={squareInfo?.info.character ? 'right' : 'top'}
             >
-                {squareInfo?.info.character ? <EntityTooltip character={squareInfo?.info.character} /> : null}
+                {squareInfo?.info.character ? <CharacterTooltip character={squareInfo?.info.character} /> : null}
                 {bonusTooltip ? <div className={'w-54 flex flex-row gap-1'}>{bonusTooltip}</div> : null}
             </TooltipContent>
         </Tooltip>
     )
 }
 
-export default TileEntity
+export default TileWithCharacter

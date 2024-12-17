@@ -1,6 +1,6 @@
 import Battlefield from '@components/Battlefield/Battlefield'
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import { AddNewEntity } from '@components/CombatEditor/AddNewEntity'
+import { AddNewCharacter } from '@components/CombatEditor/AddNewCharacter'
 import {
     getLastUsedCombatEditorPreset,
     removeCombatEditorLocalStorage,
@@ -175,9 +175,7 @@ const RoundHeader = () => {
                 <p className={'text-t-big text-white'}>{t('local:editor.round-count')}</p>
                 {editable ? (
                     <Input
-                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline
-                            ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0
-                            focus-visible:ring-offset-transparent`}
+                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent`}
                         value={parseInt(newRound.toString()).toString()}
                         placeholder={round.toString()}
                         extraClassName={'text-t-big '}
@@ -388,7 +386,7 @@ const CombatEditor = () => {
                                     {(clickedSquare ? battlefield[clickedSquare] : null) ? (
                                         <EditCharacterOnSquare clickedSquare={clickedSquare} />
                                     ) : (
-                                        <AddNewEntity clickedSquare={clickedSquare} />
+                                        <AddNewCharacter clickedSquare={clickedSquare} />
                                     )}
                                 </div>
                             ) : (

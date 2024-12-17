@@ -1,14 +1,14 @@
 import GameMessage from '@components/GameScreen/GameMessages/GameMessage'
 import { useBattlefieldContext } from '@context/BattlefieldContext'
 import { toast } from '@hooks/useToast'
-import { selectActions, selectActiveEntity, selectAllMessages } from '@redux/slices/gameScreenSlice'
+import { selectActions, selectActiveCharacter, selectAllMessages } from '@redux/slices/gameScreenSlice'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 const GameUtilityComponent = () => {
     const actions = useSelector(selectActions)
-    const activeCharacter = useSelector(selectActiveEntity)
+    const activeCharacter = useSelector(selectActiveCharacter)
     const { setActiveSquares, resetActiveSquares, resetInteractableSquares, resetClickedSquares } =
         useBattlefieldContext()
     const { t } = useTranslation('local', {

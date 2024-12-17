@@ -1,6 +1,6 @@
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
 import { StaticSkeleton } from '@components/ui/skeleton'
-import { EntityInfoTooltip } from '@models/GameModels'
+import { CharacterInfoTooltip } from '@models/GameModels'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -35,7 +35,7 @@ export const PlaceholderTooltip = () => {
     )
 }
 
-const EntityTooltip = ({ character }: { character: EntityInfoTooltip }) => {
+const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) => {
     const { t } = useTranslation()
 
     const RealContent = useCallback(() => {
@@ -76,4 +76,4 @@ const EntityTooltip = ({ character }: { character: EntityInfoTooltip }) => {
     return <div>{!character ? <PlaceholderTooltip /> : <RealContent />}</div>
 }
 
-export default EntityTooltip
+export default CharacterTooltip

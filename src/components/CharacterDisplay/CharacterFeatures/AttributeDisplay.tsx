@@ -1,5 +1,5 @@
 import { Separator } from '@components/ui/separator'
-import { EntityAttributes } from '@models/GameModels'
+import { CharacterAttributes } from '@models/GameModels'
 import { capitalizeFirstLetter, splitDescriptor } from '@utils'
 import { extractDualAttributes } from '@utils/gameDisplayTools'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -21,7 +21,7 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
     )
 }
 
-const AttributeDisplay = ({ attributes, ignore }: { attributes: EntityAttributes; ignore: Array<string> }) => {
+const AttributeDisplay = ({ attributes, ignore }: { attributes: CharacterAttributes; ignore: Array<string> }) => {
     const [ignored, setIgnored] = useState<Array<string>>(ignore)
 
     const [dual, setDuals] = useState<Array<{ key: string; value: string }>>([])
