@@ -240,6 +240,8 @@ const MemoryValueEditor: React.FC<{
                     />
                 </div>
             )
+        case 'element_of_hp_change':
+        case 'state':
         case 'string':
             return (
                 <Input
@@ -271,6 +273,37 @@ const MemoryValueEditor: React.FC<{
                         change(e.target.checked)
                     }}
                 />
+            )
+        case 'state_change_mode':
+            return (
+                <input
+                    type={'checkbox'}
+                    checked={value as boolean}
+                    onChange={(e) => {
+                        change(e.target.checked ? '+' : '-')
+                    }}
+                />
+            )
+        case 'type_of_hp_change':
+            return (
+                <Select
+                    onValueChange={(value) => {
+                        if (value) {
+                            change(value as 'damage' | 'heal')
+                        }
+                    }}
+                    value={value as string}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder={'Select type of hp change'} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectItem value={'damage'}>Damage</SelectItem>
+                            <SelectItem value={'heal'}>Heal</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
             )
         case 'component_id':
             return (
@@ -329,6 +362,22 @@ const MemoryTypeEditor: React.FC<{
                         modifiedMemory.type = 'component_id'
                         modifiedMemory.value = ''
                         break
+                    case 'element_of_hp_change':
+                        modifiedMemory.type = 'element_of_hp_change'
+                        modifiedMemory.value = 'builtins:physical'
+                        break
+                    case 'type_of_hp_change':
+                        modifiedMemory.type = 'type_of_hp_change'
+                        modifiedMemory.value = 'damage'
+                        break
+                    case 'state':
+                        modifiedMemory.type = 'state'
+                        modifiedMemory.value = ''
+                        break
+                    case 'state_change_mode':
+                        modifiedMemory.type = 'state_change_mode'
+                        modifiedMemory.value = '+'
+                        break
                     default:
                         break
                 }
@@ -346,6 +395,10 @@ const MemoryTypeEditor: React.FC<{
                     <SelectItem value={'boolean'}>{t('supported-types.boolean')}</SelectItem>
                     <SelectItem value={'dice'}>{t('supported-types.dice')}</SelectItem>
                     <SelectItem value={'component_id'}>{t('supported-types.component-id')}</SelectItem>
+                    <SelectItem value={'element_of_hp_change'}>{t('supported-types.element-of-hp-change')}</SelectItem>
+                    <SelectItem value={'type_of_hp_change'}>{t('supported-types.type-of-hp-change')}</SelectItem>
+                    <SelectItem value={'state'}>{t('supported-types.state')}</SelectItem>
+                    <SelectItem value={'state_change_mode'}>{t('supported-types.state-change-mode')}</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>

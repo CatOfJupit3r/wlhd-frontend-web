@@ -183,6 +183,26 @@ export interface ComponentIDMemory extends MemoryType {
     value: string
 }
 
+export interface ElementOfHpChangeMemory extends MemoryType {
+    type: 'element_of_hp_change'
+    value: string
+}
+
+export interface TypeOfHpChangeMemory extends MemoryType {
+    type: 'type_of_hp_change'
+    value: 'heal' | 'damage'
+}
+
+export interface StateMemory extends MemoryType {
+    type: 'state'
+    value: string
+}
+
+export interface StateChangeModeMemory extends MemoryType {
+    type: 'state_change_mode'
+    value: '+' | '-'
+}
+
 export interface NumberMemory extends MemoryType {
     type: 'number'
     value: number
@@ -194,7 +214,18 @@ interface BooleanMemory extends MemoryType {
 }
 
 export type PossibleMemory = OneOf<
-    [DiceMemory, StringMemory, NumberMemory, BooleanMemory, ComponentIDMemory, MemoryType]
+    [
+        DiceMemory,
+        StringMemory,
+        NumberMemory,
+        BooleanMemory,
+        ComponentIDMemory,
+        MemoryType,
+        ElementOfHpChangeMemory,
+        TypeOfHpChangeMemory,
+        StateMemory,
+        StateChangeModeMemory,
+    ]
 >
 
 export interface GameComponentMemory {

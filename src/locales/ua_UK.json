@@ -275,7 +275,11 @@
                     "number": "Число",
                     "boolean": "Логічний",
                     "dice": "Кубик",
-                    "component-id": "ID компонента"
+                    "component-id": "ID компонента",
+                    "element-of-hp-change":  "Елемент зміни HP",
+                    "type-of-hp-change": "Тип зміни HP",
+                    "state":  "Стан",
+                    "state-change-mode": "Режим зміни стану"
                 }
             }
         },
