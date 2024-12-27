@@ -1,6 +1,9 @@
+import { ComponentType, LazyExoticComponent } from 'react'
+
 export interface iRouteConfig {
     path: string
-    Component: () => JSX.Element
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Component: LazyExoticComponent<ComponentType<any>>
     requiresAuth?: boolean
     devOnly?: boolean
     title: string

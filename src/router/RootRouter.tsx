@@ -1,17 +1,18 @@
 import { LayoutContextProvider } from '@context/LayoutContext'
 import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
+import PseudoPage from '@pages/PseudoPage'
+import UnderMaintenanceNoDepsPage from '@pages/UnderMaintenanceNoDepsPage'
 import LayoutContextClient from '@router/LayoutContextClient'
 import { PageWrapper } from '@router/PageWrapper'
 import paths from '@router/paths'
-import { FC, lazy, ReactNode } from 'react'
+import { FC, lazy, ReactNode, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
 import { BrowserRouter, Navigate } from 'react-router-dom'
 import { authRoutes, generalRoutes } from './routes'
 
 const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'))
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage'))
-const PseudoPage = lazy(() => import('@pages/PseudoPage'))
 
 const BackendStatusHandler: FC<{ children: ReactNode }> = ({ children }) => {
     const { isBackendUnavailable } = useIsBackendUnavailable()
@@ -20,7 +21,11 @@ const BackendStatusHandler: FC<{ children: ReactNode }> = ({ children }) => {
         case null:
             return <PseudoPage />
         case true:
-            return <UnderMaintenancePage />
+            return (
+                <Suspense fallback={<UnderMaintenanceNoDepsPage />}>
+                    <UnderMaintenancePage />
+                </Suspense>
+            )
         case false:
             return <>{children}</>
     }
@@ -69,7 +74,14 @@ const RootRouter = () => {
                         />
                     ))}
                 </Route>
-                <Route path="*" element={<NotFoundPage />} />
+                <Route
+                    path="*"
+                    element={
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <NotFoundPage />
+                        </Suspense>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )

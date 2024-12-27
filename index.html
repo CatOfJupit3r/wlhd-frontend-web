@@ -1,20 +1,81 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="stylesheet" href="/styles/fonts.css" />
-        <meta name="description" content="Don't look here, I'm shy..." />
-        <title>WCS</title>
-    </head>
-    <body>
-        <noscript>You need to enable JavaScript to run this app, dummy.</noscript>
-        <div id="root"></div>
-        <script type="module" src="/src/index.tsx"></script>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/styles/fonts.css" />
+    <meta name="description" content="WebPage for Walenholde Combat System Project" />
+    <title>Walenholde Combat System</title>
+    <style>
+        #loading-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #loading-indicator #svg-container {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        #loading-indicator svg {
+            animation: rotate 2s linear infinite;
+        }
+
+        #loading-indicator circle {
+            stroke: currentColor;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 80 150;
+            stroke-dashoffset: 0;
+            animation: dash 1.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -125;
+            }
+        }
+    </style>
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app, dummy.</noscript>
+<div id="root">
+    <!-- 
+     Inspired by
+     https://stackoverflow.com/questions/40987309/react-display-loading-screen-while-dom-is-rendering
+     Specifically,
+     https://stackoverflow.com/a/56046868  
+     -->
+    <div class="container" id="loading-indicator">
+        <div id="svg-container">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9.5" />
+            </svg>
+        </div>
+    </div>
+</div>
+<script type="module" src="/src/index.tsx"></script>
+</body>
 </html>

@@ -7,7 +7,7 @@ interface LayoutContextType {
     auth: boolean
     lobbyInfo: boolean
 
-    changeConfig: (config: iRouteConfig) => void
+    changeConfig: (config: iRouteConfig | null) => void
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined)
@@ -18,11 +18,11 @@ export const LayoutContextProvider = ({ children }: { children: ReactNode }) => 
     const [auth, setAuth] = useState<boolean>(false)
     const [lobbyInfo, setLobbyInfo] = useState<boolean>(false)
 
-    const changeConfig = useCallback((config: iRouteConfig) => {
-        setHeader(config.includeHeader ?? false)
-        setFooter(config.includeFooter ?? false)
-        setAuth(config.requiresAuth ?? false)
-        setLobbyInfo(config.requiresLobbyInfo ?? false)
+    const changeConfig = useCallback((config: iRouteConfig | null) => {
+        setHeader((config ? config.includeHeader : null) ?? false)
+        setFooter((config ? config.includeFooter : null) ?? false)
+        setAuth((config ? config.requiresAuth : null) ?? false)
+        setLobbyInfo((config ? config.requiresLobbyInfo : null) ?? false)
     }, [])
 
     return (

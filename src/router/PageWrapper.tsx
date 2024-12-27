@@ -1,8 +1,9 @@
 import { useLayoutContext } from '@context/LayoutContext'
 import { iRouteConfig } from '@models/IRouteConfig'
+import PseudoPage from '@pages/PseudoPage'
 import { setPageTitle } from '@redux/slices/cosmeticsSlice'
 import { AppDispatch } from '@redux/store'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
@@ -11,19 +12,24 @@ export const PageWrapper = ({ config, children }: { config: iRouteConfig; childr
     const dispatch = useDispatch<AppDispatch>()
     const { changeConfig } = useLayoutContext()
 
+    // Group related effects together
     useEffect(() => {
-        document.title = t(`local:page_titles.${config.title}`)
-    }, [config.title])
+        // Set both document title and redux state
+        const translatedTitle = t(`local:page_titles.${config.title}`)
+        document.title = translatedTitle
+        dispatch(setPageTitle(translatedTitle))
+    }, [config.title, t, dispatch])
 
     useEffect(() => {
         changeConfig(config)
-    }, [config])
 
-    useEffect(() => {
-        // the reason for this "effect" is to allow external components to change the page title
-        // (for example, game pages that have a dynamic title)
-        dispatch(setPageTitle(t(config.title)))
-    }, [])
+        // Add cleanup function
+        return () => {
+            // Reset layout config when component unmounts
+            changeConfig(null)
+        }
+    }, [config, changeConfig])
 
-    return <>{children}</>
+    return <Suspense fallback={<PseudoPage />}>{children}</Suspense>
+    // return <>{children}</>
 }

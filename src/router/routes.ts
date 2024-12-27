@@ -1,18 +1,20 @@
 import { iRouteConfig } from '@models/IRouteConfig'
-import AboutPage from '@pages/AboutPage'
-import CreateCharacterPage from '@pages/CreateCharacterPage'
-import CreateCombatPage from '@pages/CreateCombatPage'
-import GameRoomPage from '@pages/GameRoomPage'
-import GameTestPage from '@pages/GameTestPage'
-import GameWikiPage from '@pages/GameWikiPage'
-import HomePage from '@pages/HomePage'
-import LobbyPage from '@pages/LobbyPage'
-import ProfilePage from '@pages/ProfilePage'
-import SignInPage from '@pages/SignInPage'
-import SignUpPage from '@pages/SignUpPage'
-import viewCharacterPage from '@pages/ViewCharacterPage'
 import { IS_DEVELOPMENT } from 'config'
+import { lazy } from 'react'
 import paths from './paths'
+
+const AboutPage = lazy(() => import('@pages/AboutPage'))
+const CreateCharacterPage = lazy(() => import('@pages/CreateCharacterPage'))
+const CreateCombatPage = lazy(() => import('@pages/CreateCombatPage'))
+const GameRoomPage = lazy(() => import('@pages/GameRoomPage'))
+const GameTestPage = lazy(() => import('@pages/GameTestPage'))
+const GameWikiPage = lazy(() => import('@pages/GameWikiPage'))
+const HomePage = lazy(() => import('@pages/HomePage'))
+const LobbyPage = lazy(() => import('@pages/LobbyPage'))
+const ProfilePage = lazy(() => import('@pages/ProfilePage'))
+const SignInPage = lazy(() => import('@pages/SignInPage'))
+const SignUpPage = lazy(() => import('@pages/SignUpPage'))
+const ViewCharacterPage = lazy(() => import('@pages/ViewCharacterPage'))
 
 const routes: Array<iRouteConfig> = [
     {
@@ -41,7 +43,7 @@ const routes: Array<iRouteConfig> = [
     },
     {
         path: paths.viewCharacter,
-        Component: viewCharacterPage,
+        Component: ViewCharacterPage,
         title: 'view-character',
         includeHeader: true,
         requiresAuth: true,
@@ -113,7 +115,7 @@ const routes: Array<iRouteConfig> = [
         includeFooter: true,
     },
 ]
-console.log(IS_DEVELOPMENT, import.meta.env.NODE_ENV)
+
 export const authRoutes = routes
     .filter((route) => route.requiresAuth)
     .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT))
