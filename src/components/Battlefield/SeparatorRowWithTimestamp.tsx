@@ -82,7 +82,7 @@ const SeparatorRowWithTimestamp: FC<iSeparatorWithTimestamp> = ({ timestamp }) =
                         tileClassName,
                         'flex items-center justify-center font-bold',
                         timeToColor(timeLeft, percentageLeft)
-                    ) + ' text-t-big'
+                    ) + ' text-2xl'
                 }
             >
                 {timestamp === null ? 'No timestamp' : `${formatTime(timeLeft)}`}

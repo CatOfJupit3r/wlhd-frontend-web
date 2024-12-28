@@ -27,7 +27,7 @@ const NoCharactersPresent = () => {
     return (
         <div className={'flex flex-col items-center gap-2 p-4'}>
             <h1>{t('header')}</h1>
-            <div className={'flex max-w-[50%] flex-col gap-1 text-t-normal max-[960px]:max-w-full'}>
+            <div className={'flex max-w-[50%] flex-col gap-1 text-xl max-[960px]:max-w-full'}>
                 <p>{t('explain')}</p>
                 <div className={'mt-4 flex w-full flex-col gap-1'}>
                     <Button

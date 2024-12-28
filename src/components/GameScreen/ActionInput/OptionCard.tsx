@@ -55,7 +55,7 @@ const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handl
         >
             <div className={'flex flex-row items-center gap-2'}>
                 {sprite ? <GameAsset src={sprite} className={'h-12 w-12 rounded-lg'} /> : null}
-                <p className={'text-t-normal font-semibold'}>
+                <p className={'text-xl font-semibold'}>
                     {t(name)} {cost ? `(${cost})` : ''}
                 </p>
             </div>

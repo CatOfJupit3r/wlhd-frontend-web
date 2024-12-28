@@ -160,7 +160,7 @@ const Header = () => {
     return (
         <header
             className={cn(
-                'relative top-0 flex w-full justify-between bg-black p-4 text-t-normal text-white',
+                'relative top-0 flex w-full justify-between bg-black p-4 text-xl text-white',
                 apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle')
             )}
         >

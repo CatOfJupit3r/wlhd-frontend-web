@@ -12,7 +12,7 @@ const RoundHeader = () => {
 
     return (
         <div>
-            <h1 className={'text-t-bigger font-bold'}>
+            <h1 className={'text-3.5xl font-bold'}>
                 {isPlayerTurn ? `${t('round_n', { round })}. ${t('its_your_turn')}` : `${t('round_n', { round })}`}
             </h1>
         </div>

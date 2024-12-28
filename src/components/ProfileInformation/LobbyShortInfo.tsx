@@ -38,7 +38,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                 const response = await APIService.getShortLobbyInfo(lobbyId)
                 setLobbyInfo(response)
                 setStatus('success')
-            } catch (error) {
+            } catch (_) {
                 setStatus('failed')
             }
         }
@@ -46,7 +46,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     }, [lobbyId])
 
     const LinkToLobby = useCallback(
-        () => <p className="text-t-normal font-semibold">{lobbyInfo.name || '???'}</p>,
+        () => <p className="text-xl font-semibold">{lobbyInfo.name || '???'}</p>,
         [lobbyInfo.name]
     )
 
@@ -79,7 +79,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                     {lobbyInfo.isGm && <Crown className="size-5 text-yellow-500" />}
                     <LinkToLobby />
                 </div>
-                <p className="text-t-small text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                     {lobbyInfo.characters.length
                         ? `${t('playing-as')} ${lobbyInfo.characters.map((char) => char).join(', ')}`
                         : t('no-character-assigned')}

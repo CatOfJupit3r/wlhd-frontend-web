@@ -14,7 +14,7 @@ const CharacterLimit = ({
     characterLimit,
     text,
     className,
-    textSizeClass = 'text-t-smaller',
+    textSizeClass = 'text-sm',
 }: {
     characterLimit: number
     text: string
@@ -24,8 +24,7 @@ const CharacterLimit = ({
     return (
         <p
             // turns out that `cn` is a function does not support custom text sizes. Damn it.
-            className={`${cn('transition-colors', PERCENTAGE_TO_COLORS((text.length / (characterLimit || 1)) * 100), className)}
-                ${textSizeClass}`}
+            className={`${cn('transition-colors', PERCENTAGE_TO_COLORS((text.length / (characterLimit || 1)) * 100), className)} ${textSizeClass}`}
         >
             {text.length}/{characterLimit}
         </p>

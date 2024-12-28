@@ -45,7 +45,7 @@ const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) =>
         const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character
         return (
             <>
-                <p className={'text-t-small font-semibold'}>
+                <p className={'text-base font-semibold'}>
                     {t(decorations.name)} ({square.line}/{square.column})
                 </p>
                 <BasicCharacterAttributes

@@ -60,8 +60,7 @@ const PlainListOfPlayers = () => {
                                     console.error('Error removing player', error)
                                 }}
                                 variant={'destructiveGhost'}
-                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600
-                                active:text-red-600`}
+                                className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600 active:text-red-600`}
                             >
                                 <FaXmark className={'mr-1 size-4'} />
                                 <p>{t('remove')}</p>
@@ -145,7 +144,7 @@ export const CharacterControlInfo = () => {
         <div className={'flex flex-col gap-2 rounded border-2 px-4 py-2'}>
             <Accordion type={'single'} collapsible className={'border-0'}>
                 <AccordionItem value={'controlled-by'} className={'border-b-0'}>
-                    <AccordionTrigger className={'text-t-small'}>
+                    <AccordionTrigger className={'text-base'}>
                         <div className={'flex flex-row items-center gap-1'}>
                             <p className={'text-wrap'}>{t('controlled-by')}</p>
                         </div>
@@ -161,7 +160,7 @@ export const CharacterControlInfo = () => {
                             {lobby.layout === 'gm' && (
                                 <Accordion type={'single'} collapsible>
                                     <AccordionItem value={'add-new-player'}>
-                                        <AccordionTrigger className={'text-t-small'}>
+                                        <AccordionTrigger className={'text-base'}>
                                             <div className={'flex flex-row items-center gap-1'}>
                                                 <IoMdPersonAdd />
                                                 {t('add-player')}

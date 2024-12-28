@@ -72,7 +72,7 @@ const SignUp = ({ className }: { className?: string }) => {
 
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
-            <h2 className={'border-b-2 text-t-bigger'}>Create an account</h2>
+            <h2 className={'text-3.5xl border-b-2'}>Create an account</h2>
             <form className={'flex w-full flex-col gap-2'}>
                 <div>
                     <Label htmlFor="handle">Handle</Label>

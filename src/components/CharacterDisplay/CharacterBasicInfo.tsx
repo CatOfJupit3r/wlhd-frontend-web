@@ -31,19 +31,19 @@ const CharacterBasicInfo = ({
                 line={character?.square?.line || 0}
             />
             <div>
-                <div className={'text-ellipsis text-left text-t-normal font-bold'}>
+                <div className={'text-ellipsis text-left text-xl font-bold'}>
                     {isDescriptor(character.name) ? t(character.name) : character.name}
                 </div>
                 {includeSquare && character.square && (
                     <div className={'flex flex-row items-center gap-1'}>
                         <LocationIcon className={'size-5'} />
-                        <p className={'text-t-smaller font-semibold'}>
+                        <p className={'text-sm font-semibold'}>
                             {character.square.line}/{character.square.column}
                         </p>
                     </div>
                 )}
                 {includeDescription && (
-                    <div className={'text-wrap text-left text-t-smaller italic text-gray-400'}>
+                    <div className={'text-wrap text-left text-sm italic text-gray-400'}>
                         {character.description
                             ? isDescriptor(character.description)
                                 ? t(character.description)

@@ -27,8 +27,8 @@ const TagsDisplay: FC<{ tags: GameTags }> = ({ tags }) => {
         return null
     }
     return (
-        <div className={'flex w-full flex-row flex-wrap gap-1 text-t-smaller'}>
-            <FaTags className={'text-t-big'} />
+        <div className={'flex w-full flex-row flex-wrap gap-1 text-sm'}>
+            <FaTags className={'text-2xl'} />
             {tags.map((tag, index) => {
                 return <IndividualTagDisplay key={index} tag={tag} badgeVariant={'secondary'} />
             })}

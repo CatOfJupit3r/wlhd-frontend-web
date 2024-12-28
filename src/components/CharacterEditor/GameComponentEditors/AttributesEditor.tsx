@@ -65,7 +65,7 @@ const FancyAttributesWithBar = ({
     const percentage = getPercentage(character.attributes[current], character.attributes[max])
 
     return (
-        <div className={'flex flex-col gap-3 py-2 text-t-small'}>
+        <div className={'flex flex-col gap-3 py-2 text-base'}>
             <div id={'label-and-input'} className={'flex w-full flex-row justify-between'}>
                 <div className={'flex max-w-[50%] flex-row items-center gap-1'}>
                     <p className={'w-full max-w-[70%] break-words'}>
@@ -132,7 +132,7 @@ const DualAttributeEditor = ({
     const { t } = useTranslation()
 
     return (
-        <div className={'flex flex-col gap-3 py-2 text-t-small'}>
+        <div className={'flex flex-col gap-3 py-2 text-base'}>
             <div id={'label-and-input'} className={'flex w-full flex-row justify-between'}>
                 <div className={'flex max-w-[50%] flex-row items-center gap-1'}>
                     <Input
@@ -206,7 +206,7 @@ const AttributesEditor = () => {
     )
 
     return (
-        <div className={'flex flex-col gap-4 border-2 px-4 py-2 text-t-small'}>
+        <div className={'flex flex-col gap-4 border-2 px-4 py-2 text-base'}>
             {fancyCanBeCreatedFor ? (
                 <>
                     {fancyCanBeCreatedFor.map((fancyAttribute, index) => {

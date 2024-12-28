@@ -71,7 +71,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
 
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
-            <h2 className={'border-b-2 text-t-bigger'}>Welcome back</h2>
+            <h2 className={'text-3.5xl border-b-2'}>Welcome back</h2>
             <form className={'flex w-full flex-col items-center gap-2'}>
                 <div className={'w-full'}>
                     <Label htmlFor={'login'}>Handle</Label>

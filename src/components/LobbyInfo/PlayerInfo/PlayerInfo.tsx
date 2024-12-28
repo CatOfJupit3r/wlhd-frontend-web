@@ -29,7 +29,7 @@ const PlayerInfo = ({ className }: { className: string }) => {
                         {player.characters.length ? (
                             <span
                                 style={{
-                                    fontSize: 'var(--text-size-small)',
+                                    fontSize: 'text-base',
                                     margin: '0',
                                     color: 'gray',
                                 }}

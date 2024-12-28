@@ -16,16 +16,13 @@ const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, 
             )}
             {...props}
         >
-            <div
-                id={'main-info'}
-                className={'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'}
-            >
+            <div id={'main-info'} className={'flex w-full flex-row justify-between overflow-hidden text-xl font-bold'}>
                 <div className={'flex w-full flex-row items-center gap-2'}>
                     <StaticSkeleton className={'h-10 w-full max-w-64'} />
                     {type === 'weapon' || type === 'spell' ? <StaticSkeleton className={'size-10'} /> : null}
                 </div>
             </div>
-            <div id={'minor-info'} className={'relative flex flex-row justify-between text-t-small'}>
+            <div id={'minor-info'} className={'relative flex flex-row justify-between text-base'}>
                 <div className={'flex flex-col gap-2'}>
                     {(type === 'item' || type === 'weapon') && (
                         <div className={'flex flex-row items-center gap-1'}>
@@ -58,7 +55,7 @@ const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, 
                                 <StaticSkeleton className={'size-6'} />
                                 <StaticSkeleton className={'h-6 w-16'} />
                             </div>
-                            <div className={'flex flex-row items-center gap-1 text-t-small'}>
+                            <div className={'flex flex-row items-center gap-1 text-base'}>
                                 <StaticSkeleton className={'size-6'} />
                                 <StaticSkeleton className={'h-6 w-16'} />
                             </div>
@@ -66,7 +63,7 @@ const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, 
                     )}
                 </div>
             </div>
-            <div id={'description'} className={'flex flex-col gap-1 break-words text-t-smaller italic text-gray-400'}>
+            <div id={'description'} className={'flex flex-col gap-1 break-words text-sm italic text-gray-400'}>
                 <StaticSkeleton className={'h-6 w-full max-w-full'} />
                 <StaticSkeleton className={'h-6 w-full max-w-full'} />
                 <StaticSkeleton className={'h-6 w-full max-w-[75%]'} />

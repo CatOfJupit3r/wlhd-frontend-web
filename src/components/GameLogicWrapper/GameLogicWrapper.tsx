@@ -69,9 +69,7 @@ const GameLogicWrapper = () => {
                             <h1>{t('local:game.pending.not_started')}</h1>
                             <ThreeInOneSpinner className={'size-14'} />
                         </div>
-                        <p className={'text-t-normal italic'}>
-                            {t(gameFlow.details || 'local:game.pending.waiting_text')}
-                        </p>
+                        <p className={'text-xl italic'}>{t(gameFlow.details || 'local:game.pending.waiting_text')}</p>
                         <div className={'flex flex-row gap-4'}>
                             <Button variant={'secondary'} onClick={navigateToLobby}>
                                 {t('local:game.pending.exit')}

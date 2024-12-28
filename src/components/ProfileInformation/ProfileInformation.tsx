@@ -36,12 +36,12 @@ const ProfileInformation = () => {
                     <div className="relative flex items-center space-x-4">
                         <CurrentUserAvatar className={'size-32'} />
                         <div className="rounded-2xl bg-white p-2 shadow-lg">
-                            <CardTitle className="text-t-bigger font-bold">@{handle}</CardTitle>
+                            <CardTitle className="text-3.5xl font-bold">@{handle}</CardTitle>
                         </div>
                     </div>
                 </CardHeader>
                 <CardContent className="mt-6 grid gap-6">
-                    <div className="flex items-center space-x-4 text-t-smaller">
+                    <div className="flex items-center space-x-4 text-sm">
                         <Badge variant="secondary" className="px-3 py-1">
                             <Calendar className="mr-2 size-4" />
                             {t('joined-on')} {new Date(createdAt).toLocaleDateString()}
@@ -53,7 +53,7 @@ const ProfileInformation = () => {
                     </div>
                     <Separator />
                     <div className="grid gap-4">
-                        <div className="text-t-big font-semibold">{t('joined-lobbies')}</div>
+                        <div className="text-2xl font-semibold">{t('joined-lobbies')}</div>
                         <div className="grid gap-4">
                             {joined.map((lobbyId) => (
                                 <LobbyShortInfo key={lobbyId} lobbyId={lobbyId} />

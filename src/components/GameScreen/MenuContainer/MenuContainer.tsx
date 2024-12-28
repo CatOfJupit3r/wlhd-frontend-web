@@ -48,14 +48,14 @@ const MenuContainer = ({ chosen, setChosen }: { chosen: string | null; setChosen
         if (!menu) {
             return (
                 <>
-                    <h1 className={'w-full text-center text-t-big'}>{t('no_menu_available')}</h1>
+                    <h1 className={'w-full text-center text-2xl'}>{t('no_menu_available')}</h1>
                     <ReportThisIssue />
                 </>
             )
         }
         return (
             <>
-                <h1 className={'mt-2 w-full text-center text-t-bigger font-bold'}>{t(`${menu.key}`)}</h1>
+                <h1 className={'text-3.5xl mt-2 w-full text-center font-bold'}>{t(`${menu.key}`)}</h1>
                 <Separator className={'mb-4'} />
                 <menu.Component />
             </>

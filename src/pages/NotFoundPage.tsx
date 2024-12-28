@@ -17,7 +17,7 @@ const NotFoundPage = () => {
                 <p className={'opacity-60 hover:opacity-100'}>
                     {t('local:not_found.explanation')} <Link to={'/'}>{t('local:not_found.back')}</Link>
                 </p>
-                <GrDocumentMissing className={'mt-5 text-t-bigger text-gray-400'} />
+                <GrDocumentMissing className={'text-3.5xl mt-5 text-gray-400'} />
             </div>
         </div>
     )

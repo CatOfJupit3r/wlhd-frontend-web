@@ -14,7 +14,7 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
     const { t } = useTranslation()
 
     return (
-        <div className={'mb-0.5 flex flex-row justify-between text-t-small'}>
+        <div className={'mb-0.5 flex flex-row justify-between text-base'}>
             <p className={'font-normal'}>{capitalizeFirstLetter(t(addPrefix('attributes', name)))}</p>
             <p className={'font-bold'}>{value}</p>
         </div>
@@ -101,7 +101,7 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: CharacterAttribu
     }, [processedDuals])
 
     return processedDuals && processedSingulars ? (
-        <div className={'flex flex-col gap-2 text-t-small'}>
+        <div className={'flex flex-col gap-2 text-base'}>
             <div>
                 {!ignored.includes('builtins:current_health') && !ignored.includes('builtins:max_health') && (
                     <Attribute

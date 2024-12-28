@@ -236,7 +236,7 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                 className={'mt-2'}
                 disabled={!dlc || !descriptor || !isDescriptor(`${dlc}:${descriptor}`)}
             >
-                <AiOutlinePlus className={'mr-2 text-t-big text-white'} />
+                <AiOutlinePlus className={'mr-2 text-2xl text-white'} />
                 {t('general.add')}
             </Button>
         </div>

@@ -22,7 +22,7 @@
 }
 
 .joinedPlayerContainer p {
-    font-size: var(--text-size-small);
+    font-size: 1rem;
 }
 
 .combatStateContainer {

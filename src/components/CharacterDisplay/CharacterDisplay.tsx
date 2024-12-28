@@ -66,7 +66,7 @@ const CharacterDisplay = ({ character, settings, ...props }: CharacterDisplayPro
                 />
             )}
             {settings?.showEquippedWeapon && (
-                <EquippedWeapon weapons={character.weaponry} className={'text-t-small italic'} id={'active-weapon'} />
+                <EquippedWeapon weapons={character.weaponry} className={'text-base italic'} id={'active-weapon'} />
             )}
             <Separator />
             <CharacterFeatures

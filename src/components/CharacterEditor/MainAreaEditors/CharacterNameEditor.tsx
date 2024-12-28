@@ -33,7 +33,7 @@ const CharacterNameEditor = () => {
                 placeholder={'Character name'}
                 value={character.decorations.name}
                 onChange={handleChange}
-                className={'text-ellipsis text-t-normal font-bold'}
+                className={'text-ellipsis text-xl font-bold'}
             />
             <div className={'mt-1 flex justify-between'}>
                 <CharacterLimit characterLimit={MAX_NAME_LENGTH} text={character.decorations.name} />

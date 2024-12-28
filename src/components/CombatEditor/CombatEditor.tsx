@@ -172,13 +172,13 @@ const RoundHeader = () => {
     return (
         <div className={'flex flex-row gap-2'}>
             <div className={'flex flex-row gap-2'}>
-                <p className={'text-t-big text-white'}>{t('local:editor.round-count')}</p>
+                <p className={'text-2xl text-white'}>{t('local:editor.round-count')}</p>
                 {editable ? (
                     <Input
                         className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent`}
                         value={parseInt(newRound.toString()).toString()}
                         placeholder={round.toString()}
-                        extraClassName={'text-t-big '}
+                        extraClassName={'text-2xl '}
                         type={'number'}
                         onBlur={() => {
                             changeRound(newRound)
@@ -220,7 +220,7 @@ const RoundHeader = () => {
                     />
                 ) : (
                     <p
-                        className={'text-center text-t-big font-bold text-white'}
+                        className={'text-center text-2xl font-bold text-white'}
                         onDoubleClick={() => {
                             setEditable(true)
                         }}
@@ -313,10 +313,10 @@ const CombatEditor = () => {
                 </div>
             </div>
             <div className={'relative flex h-screen w-2/5 flex-col bg-white'}>
-                <div className={'flex h-20 w-full flex-row items-center bg-black px-4 text-t-massive'}>
+                <div className={'text-t-4xl flex h-20 w-full flex-row items-center bg-black px-4'}>
                     <div className={'flex w-full max-w-[90%] flex-row items-center justify-center gap-2'}>
                         <Button
-                            className={'size-12 p-1'}
+                            className={'size-12 p-3 text-2xl'}
                             variant={'outline'}
                             onClick={() => {
                                 saveCombatEditorPreset(
@@ -335,13 +335,13 @@ const CombatEditor = () => {
                             <FaSave />
                         </Button>
                         <p
-                            className={'h-full w-full truncate text-center text-t-big text-white'}
+                            className={'h-full w-full truncate text-center text-2xl text-white'}
                             title={presetDetails?.nickName || 'Untitled Combat'}
                         >
                             {presetDetails?.nickName || 'Untitled Combat'}
                         </p>
                         <Button
-                            className={'size-12 p-1'}
+                            className={'size-12 p-3 text-2xl'}
                             variant={'outline'}
                             onClick={() => {
                                 handlePlayButton().then()
@@ -351,7 +351,7 @@ const CombatEditor = () => {
                         </Button>
                         <Button
                             variant={'outline'}
-                            className={'size-12 p-1'}
+                            className={'size-12 p-3 text-2xl'}
                             onClick={() => {
                                 resetCombatEditor()
                                 if (presetDetails) {
@@ -366,7 +366,7 @@ const CombatEditor = () => {
                     <div className={'flex w-full flex-row justify-end gap-2'}>
                         <Button
                             variant={'outline'}
-                            className={'size-12 p-1'}
+                            className={'size-12 p-3 text-2xl'}
                             onClick={() =>
                                 navigate(
                                     lobby?.lobbyId ? paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId) : paths.home,

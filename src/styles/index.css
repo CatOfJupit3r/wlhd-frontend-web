@@ -4,20 +4,19 @@
 
 body {
     margin: 0;
-    font-family:
-        'Poppins',
-        'Open Sans',
-        'Montserrat',
-        -apple-system,
-        BlinkMacSystemFont,
-        'Roboto',
-        'Oxygen',
-        'Ubuntu',
-        'Cantarell',
-        'Fira Sans',
-        'Droid Sans',
-        'Helvetica Neue',
-        sans-serif;
+    font-family: 'Poppins',
+    'Open Sans',
+    'Montserrat',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     --color-background: #fafafa;
@@ -71,14 +70,6 @@ code {
 
 :root {
     --tile-size: 5.5rem;
-
-    --text-size-giant: 2.5rem;
-    --text-size-massive: 2.25rem;
-    --text-size-bigger: 2rem;
-    --text-size-big: 1.5rem;
-    --text-size-normal: 1.25rem;
-    --text-size-small: 1rem;
-    --text-size-smaller: 0.875rem;
 }
 
 .border-container-biggest {
@@ -185,12 +176,12 @@ code {
     }
 
     h1 {
-        font-size: var(--text-size-giant);
+        font-size: 2.5rem;
         font-weight: bold;
     }
 
     h2 {
-        font-size: var(--text-size-massive);
+        font-size: 2.25rem;
         font-weight: bold;
     }
 
@@ -200,12 +191,12 @@ code {
     }
 
     h4 {
-        font-size: var(--text-size-big);
+        font-size: 1.5rem;
         font-weight: bold;
     }
 
     h5 {
-        font-size: var(--text-size-normal);
+        font-size: 1.25rem;
         font-weight: bold;
     }
 

@@ -39,7 +39,6 @@ const UnderMaintenanceNoDepsPage = () => {
                     <span style={{ marginRight: '16px', display: 'inline-block', transform: 'rotate(90deg)' }}>
                         &#8635;
                     </span>{' '}
-                    {/* Simple rotate icon */}
                     Try Again :(
                 </button>
                 <p style={{ maxWidth: '30rem', opacity: 0.6 }}>

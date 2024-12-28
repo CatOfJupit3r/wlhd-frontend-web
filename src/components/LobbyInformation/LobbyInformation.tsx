@@ -17,7 +17,7 @@ const Player = ({ player }: { player: LobbyState['players'][number] }) => {
                 {player.characters.length ? (
                     <span
                         style={{
-                            fontSize: 'var(--text-size-small)',
+                            fontSize: 'text-base',
                             margin: '0',
                             color: 'gray',
                         }}
@@ -53,7 +53,7 @@ const LobbyInformation = () => {
                 </CardHeader>
                 <CardContent>
                     <div id={'players'}>
-                        <p className="text-t-big font-semibold">Players</p>
+                        <p className="text-2xl font-semibold">Players</p>
                         <div>
                             {players && players.length === 0 ? (
                                 <p>No players</p>
@@ -71,10 +71,10 @@ const LobbyInformation = () => {
                         </div>
                     </div>
                     <div id={'combats'}>
-                        <p className="text-t-big font-semibold">Combats</p>
+                        <p className="text-2xl font-semibold">Combats</p>
                     </div>
                     <div id={'characters'}>
-                        <p className="text-t-big font-semibold">Characters</p>
+                        <p className="text-2xl font-semibold">Characters</p>
                     </div>
                 </CardContent>
             </Card>

@@ -112,7 +112,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             <div>
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
-                        <div className={'flex flex-row items-center gap-1 text-t-small'}>
+                        <div className={'flex flex-row items-center gap-1 text-base'}>
                             <PiSneakerMoveFill />
                             <p>{info.cost ?? '-'}</p>
                         </div>
@@ -163,7 +163,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             )}
                         </div>
                     </TooltipTrigger>
-                    <TooltipContent className={'text-t-small font-normal'}>
+                    <TooltipContent className={'text-base font-normal'}>
                         <p>{t('tooltips.duration')}</p>
                     </TooltipContent>
                 </Tooltip>
@@ -177,17 +177,14 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
             }
         >
-            <div
-                id={'main-info'}
-                className={'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'}
-            >
+            <div id={'main-info'} className={'flex w-full flex-row justify-between overflow-hidden text-xl font-bold'}>
                 <div className={'flex flex-row items-center gap-2'}>
                     {tNoPrefix(decorations?.name) ?? '???'}
                     {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
                     {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
                 </div>
             </div>
-            <div id={'minor-info'} className={'relative flex flex-row justify-between text-t-small'}>
+            <div id={'minor-info'} className={'relative flex flex-row justify-between text-base'}>
                 <div>
                     {(type === 'item' || type === 'weapon') &&
                         QuantityInfo({
@@ -217,7 +214,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             <DescriptionWithMemories
                 description={decorations?.description}
                 memory={info.memory}
-                className={'break-words text-t-smaller italic text-gray-400'}
+                className={'break-words text-sm italic text-gray-400'}
             />
             {info.tags && info.tags.length > 0 ? (
                 <>

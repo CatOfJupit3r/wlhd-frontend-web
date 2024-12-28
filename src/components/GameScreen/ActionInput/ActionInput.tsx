@@ -159,16 +159,16 @@ const ActionInput = () => {
 
     const ShallowDepthScreenContent = useCallback(() => {
         if (actions === null) {
-            return <h1 className={'mt-2 text-center text-t-big font-bold'}>Seems something is missing...</h1>
+            return <h1 className={'mt-2 text-center text-2xl font-bold'}>Seems something is missing...</h1>
         } else if (!action || action.length === 0 || options.length === 0) {
             setTimeout(handleErrorCase)
             toastError({
                 title: t('local:game.actions.error'),
                 description: t('local:error.no_actions'),
             })
-            return <h1 className={'mt-2 text-center text-t-big font-bold'}>Loading...</h1>
+            return <h1 className={'mt-2 text-center text-2xl font-bold'}>Loading...</h1>
         } else if (aliasValue.startsWith('Square')) {
-            return <h1 className={'mt-2 text-center text-t-big font-bold'}>{t('local:game.actions.choose-square')}</h1>
+            return <h1 className={'mt-2 text-center text-2xl font-bold'}>{t('local:game.actions.choose-square')}</h1>
         } else {
             return <>{options}</>
         }
@@ -190,7 +190,7 @@ const ActionInput = () => {
     const FinalDepthScreen = useCallback(() => {
         return (
             <>
-                <p className={'text-t-big font-bold'}>{t('local:game.actions.you-chose')}</p>
+                <p className={'text-2xl font-bold'}>{t('local:game.actions.you-chose')}</p>
                 <div className={'flex flex-col gap-2'}>
                     {choices ? (
                         scopeOfChoice.map(([key, value]) => {

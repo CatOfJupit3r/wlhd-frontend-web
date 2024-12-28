@@ -19,8 +19,8 @@ export const EmptyMenuContent = () => {
 
     return (
         <div className={'flex flex-col items-center p-4'}>
-            <p className={'text-t-normal font-medium'}>{t('nothing_here')}</p>
-            <p className={'text-t-small italic text-gray-700'}>{t('try_another')}</p>
+            <p className={'text-xl font-medium'}>{t('nothing_here')}</p>
+            <p className={'text-base italic text-gray-700'}>{t('try_another')}</p>
         </div>
     )
 }

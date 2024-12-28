@@ -39,7 +39,7 @@ const CharacterMiscEditor = () => {
     return (
         <div className={'flex w-full flex-col gap-2'}>
             <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                <p className={'text-center text-t-normal'}>{t('memories.title')}</p>
+                <p className={'text-center text-xl'}>{t('memories.title')}</p>
                 <CreateNewMemoryWithAccordion component={character} changeComponentField={editMemoryCallback} />
                 {character.memory && Object.keys(character.memory).length === 0 ? (
                     <EmptyMenuContent />
@@ -48,7 +48,7 @@ const CharacterMiscEditor = () => {
                 )}
             </div>
             <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                <p className={'text-center text-t-normal'}>{t('tags.title')}</p>
+                <p className={'text-center text-xl'}>{t('tags.title')}</p>
                 <TagsEditor component={character} changeComponentField={editMemoryCallback} />
             </div>
         </div>

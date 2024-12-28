@@ -61,7 +61,7 @@ const EditorLabel: React.FC<{
     className?: string
 }> = ({ text, icon, className }) => {
     return (
-        <div className={'flex flex-row items-center gap-1 text-t-smaller font-bold ' + className}>
+        <div className={'flex flex-row items-center gap-1 text-sm font-bold ' + className}>
             {icon}
             {text}
         </div>
@@ -79,7 +79,7 @@ export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: b
     return (
         <ButtonWithTooltip
             className={cn(
-                'text-lg size-8 bg-transparent p-0 text-green-600 hover:bg-green-200',
+                'size-8 bg-transparent p-0 text-lg text-green-600 hover:bg-green-200',
                 'transform transition-colors duration-200 ease-in-out hover:text-green-800',
                 component?.isActive ? 'opacity-100' : 'opacity-40'
             )}
@@ -89,7 +89,7 @@ export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: b
                 }
             }}
             tooltip={t('is-active-tooltip')}
-            tooltipClassname={'text-t-smaller font-normal'}
+            tooltipClassname={'text-sm font-normal'}
             disabled={!usable}
         >
             <LuTriangle />
@@ -117,7 +117,7 @@ export const UsesEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
         <div>
             <EditorLabel text={t('component-uses')} icon={<LuTally5 />} />
             <div className={'flex flex-row items-center gap-2'}>
-                <div className={'flex flex-row items-center gap-2 text-t-smaller font-normal italic'}>
+                <div className={'flex flex-row items-center gap-2 text-sm font-normal italic'}>
                     <Input
                         type={'number'}
                         value={component.currentConsecutiveUses}
@@ -158,7 +158,7 @@ export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     return (
         <div>
             <EditorLabel text={t('cooldown')} icon={<PiClockCountdownBold />} />
-            <div className={'flex flex-row items-center gap-1 text-t-smaller font-normal italic'}>
+            <div className={'flex flex-row items-center gap-1 text-sm font-normal italic'}>
                 <Input
                     type={'number'}
                     value={component.turnsUntilUsage}
@@ -442,7 +442,7 @@ const IndividualMemoryEditor: React.FC<{
             {simplified ? (
                 <Tooltip>
                     <TooltipTrigger>
-                        <div className={'cursor-default text-t-small font-bold'}>
+                        <div className={'cursor-default text-base font-bold'}>
                             {capitalizeFirstLetter(t(memory.display_name, { includePrefix: false })) || memory_key}
                         </div>
                     </TooltipTrigger>
@@ -612,7 +612,7 @@ export const CreateNewMemoryWithAccordion: React.FC<CharacterSupportedEditorProp
     return (
         <Accordion type={'single'} collapsible>
             <AccordionItem value={'add-new-memory'}>
-                <AccordionTrigger className={'text-t-small'}>{t('memories.add')}</AccordionTrigger>
+                <AccordionTrigger className={'text-base'}>{t('memories.add')}</AccordionTrigger>
                 <AccordionContent>
                     <CreateNewMemory {...props} />
                 </AccordionContent>

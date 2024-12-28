@@ -11,7 +11,7 @@
 
 .lobbyName {
     background-color: lightgray;
-    font-size: var(--text-size-giant);
+    font-size: 2.5rem;
     grid-area: LobbyName;
     padding: 0.75rem;
     text-align: center;

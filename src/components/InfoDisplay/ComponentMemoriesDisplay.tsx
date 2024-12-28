@@ -27,7 +27,7 @@ const ComponentMemories: FC<{ memories: GameComponentMemory | null }> = ({ memor
         return null
     }
     return (
-        <div id={'method-variables'} className={'mt-2 flex flex-col items-center gap-1 px-8 text-t-small'}>
+        <div id={'method-variables'} className={'mt-2 flex flex-col items-center gap-1 px-8 text-base'}>
             <ul>
                 {Object.entries(memories)
                     .filter(([_, memory]) => !memory.internal)

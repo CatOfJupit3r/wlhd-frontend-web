@@ -171,7 +171,7 @@ export const AddNewCharacter = ({ clickedSquare }: { clickedSquare: string | nul
             <AlertDialogTrigger className={'w-full'} asChild>
                 <div className={'relative w-full cursor-pointer'}>
                     <CharacterDisplayPlaceholder className={'flex flex-col gap-4 rounded border-2 p-4 opacity-60'} />
-                    <p className={'absolute top-[30%] flex w-full flex-col p-4 text-center text-t-big'}>
+                    <p className={'absolute top-[30%] flex w-full flex-col p-4 text-center text-2xl'}>
                         <span>
                             Seems like there is <strong>no character on square {clickedSquare}</strong>...
                         </span>

@@ -7,15 +7,6 @@ export default {
         fontFamily: {
             poppins: ['Poppins', 'sans-serif'],
         },
-        fontSize: {
-            't-giant': 'var(--text-size-giant)',
-            't-massive': 'var(--text-size-massive)',
-            't-bigger': 'var(--text-size-bigger)',
-            't-big': 'var(--text-size-big)',
-            't-normal': 'var(--text-size-normal)',
-            't-small': 'var(--text-size-small)',
-            't-smaller': 'var(--text-size-smaller)',
-        },
         container: {
             center: true,
             padding: '2rem',
@@ -24,6 +15,10 @@ export default {
             },
         },
         extend: {
+            fontSize: {
+                '4.5xl': 'font-size: 2.5rem; line-height: 3rem;', // t-giant
+                '3.5xl': 'font-size: 2rem; line-height: 2.5rem;', // t-bigger
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
@@ -92,6 +87,6 @@ export default {
             },
         },
     },
-    // eslint-disable-next-line no-undef
+    // eslint-disable-next-line no-undef,@typescript-eslint/no-require-imports
     plugins: [require('tailwindcss-animate')],
 }

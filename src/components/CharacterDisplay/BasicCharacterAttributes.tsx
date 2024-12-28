@@ -61,7 +61,7 @@ const BasicCharacterAttributes = ({
                         width={'w-full'}
                         height={'h-2'}
                     />
-                    <p className={'min-w-[4ch] text-right text-t-small font-semibold'}>{MAIN_ATTRIBUTES.ARMOR.text}</p>
+                    <p className={'min-w-[4ch] text-right text-base font-semibold'}>{MAIN_ATTRIBUTES.ARMOR.text}</p>
                 </div>
                 <div className={'relative flex w-full flex-row items-center gap-2'}>
                     <Progress
@@ -80,7 +80,7 @@ const BasicCharacterAttributes = ({
                     />
                     <p
                         className={
-                            'absolute inset-0 flex items-center justify-center gap-1 text-t-small font-semibold text-white'
+                            'absolute inset-0 flex items-center justify-center gap-1 text-base font-semibold text-white'
                         }
                     >
                         {MAIN_ATTRIBUTES.HEALTH.text}
@@ -106,13 +106,13 @@ const BasicCharacterAttributes = ({
                 />
                 <p
                     className={
-                        'absolute inset-0 flex items-center justify-center gap-2 text-t-small font-semibold text-white'
+                        'absolute inset-0 flex items-center justify-center gap-2 text-base font-semibold text-white'
                     }
                 >
                     {MAIN_ATTRIBUTES.AP.text}
                 </p>
                 <PiSneakerMoveFill
-                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-t-small font-semibold text-white opacity-20`}
+                    className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-base font-semibold text-white opacity-20`}
                 />
             </div>
         </div>

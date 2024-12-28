@@ -198,7 +198,7 @@ const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
         <div id={'component-container'} className={'flex flex-col gap-4'}>
             <Accordion type={'single'} collapsible>
                 <AccordionItem value={'add-new-component'}>
-                    <AccordionTrigger className={'text-t-normal'}>{t(`${type}.add`)}</AccordionTrigger>
+                    <AccordionTrigger className={'text-xl'}>{t(`${type}.add`)}</AccordionTrigger>
                     <AccordionContent>
                         <AddNewComponent type={type} />
                     </AccordionContent>

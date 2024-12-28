@@ -95,22 +95,20 @@ const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
             return (
                 <div className={'flex w-full flex-col gap-1'}>
                     <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                        <p className={'text-center text-t-normal'}>{t('misc.memories.title')}</p>
+                        <p className={'text-center text-xl'}>{t('misc.memories.title')}</p>
                         {info?.memory && Object.keys(info.memory).length > 0 ? (
                             <ComponentMemoriesDisplay memories={info.memory} />
                         ) : (
-                            <p className={'text-center text-t-smaller italic text-gray-400'}>
-                                {t('misc.memories.empty')}
-                            </p>
+                            <p className={'text-center text-sm italic text-gray-400'}>{t('misc.memories.empty')}</p>
                         )}
                     </div>
                     <Separator />
                     <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
-                        <p className={'text-center text-t-normal'}>{t('misc.tags.title')}</p>
+                        <p className={'text-center text-xl'}>{t('misc.tags.title')}</p>
                         {info.tags && info.tags.length > 0 ? (
                             <TagsDisplay tags={info.tags} />
                         ) : (
-                            <p className={'text-center text-t-smaller italic text-gray-400'}>{t('misc.tags.empty')}</p>
+                            <p className={'text-center text-sm italic text-gray-400'}>{t('misc.tags.empty')}</p>
                         )}
                     </div>
                 </div>

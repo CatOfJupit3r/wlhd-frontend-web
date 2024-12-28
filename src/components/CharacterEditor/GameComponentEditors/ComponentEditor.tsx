@@ -50,9 +50,7 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                         <AccordionTrigger>
                             <div
                                 id={'main-info'}
-                                className={
-                                    'flex w-full flex-row justify-between overflow-hidden text-t-normal font-bold'
-                                }
+                                className={'flex w-full flex-row justify-between overflow-hidden text-xl font-bold'}
                             >
                                 <div className={'flex flex-row items-center gap-2'}>
                                     {t(component.decorations?.name, { includePrefix: false }) ?? '???'}
@@ -71,7 +69,7 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                                 </div>
                             ) : null}
                             <Separator />
-                            <div id={'minor-info'} className={'flex flex-row justify-between text-t-small'}>
+                            <div id={'minor-info'} className={'flex flex-row justify-between text-base'}>
                                 <div className={'flex flex-col gap-3'}>
                                     {type === 'item' || type === 'weapon' ? (
                                         <QuantityEditor
@@ -107,7 +105,7 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                             <DescriptionWithMemories
                                 memory={component.memory}
                                 description={component.decorations?.description}
-                                className={'break-words text-t-smaller italic text-gray-400'}
+                                className={'break-words text-sm italic text-gray-400'}
                             />
                             <Separator />
                             <div className={'flex flex-col gap-3'}>
