@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
+import StyledLink from '@components/ui/styled-link'
 import { CurrentUserAvatar } from '@components/UserAvatars'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
@@ -21,9 +22,9 @@ import { useTranslation } from 'react-i18next'
 import { IconType } from 'react-icons'
 import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { FaBook } from 'react-icons/fa'
-import { LuMenuSquare, LuUser } from 'react-icons/lu'
+import { LuSquareMenu, LuUser } from 'react-icons/lu'
 import { useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface iSection {
     name: string
@@ -65,7 +66,7 @@ const Header = () => {
                 {
                     name: 'recent-lobby',
                     action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
-                    icon: LuMenuSquare,
+                    icon: LuSquareMenu,
                     disabled: !lobbyId,
                 },
             ],
@@ -164,9 +165,9 @@ const Header = () => {
                 apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle')
             )}
         >
-            <Link to="." relative={'route'} id={'header-logo'} className={'font-bold text-white no-underline'}>
+            <StyledLink to="." relative={'route'} id={'header-logo'} className={'font-bold text-white no-underline'}>
                 Walenholde
-            </Link>
+            </StyledLink>
             {/* you served well, o' feline. For this, you will be engraved here until the end of times. */}
             {/*<img src={"assets/local/cat_eat.gif"} alt="cat" style={{*/}
             {/*    height: "400px",*/}

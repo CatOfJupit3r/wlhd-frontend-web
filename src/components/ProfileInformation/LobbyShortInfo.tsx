@@ -1,12 +1,13 @@
 import { Card, CardContent } from '@components/ui/card'
+import CommaSeparatedList from '@components/ui/coma-separated-list'
 import { Skeleton } from '@components/ui/skeleton'
+import StyledLink from '@components/ui/styled-link'
 import { ShortLobbyInformation } from '@models/APIData'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { Crown } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
 type LoadingType = 'loading' | 'failed' | 'success'
 
@@ -79,11 +80,12 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                     {lobbyInfo.isGm && <Crown className="size-5 text-yellow-500" />}
                     <LinkToLobby />
                 </div>
-                <p className="text-base text-muted-foreground">
-                    {lobbyInfo.characters.length
-                        ? `${t('playing-as')} ${lobbyInfo.characters.map((char) => char).join(', ')}`
-                        : t('no-character-assigned')}
-                </p>
+                <CommaSeparatedList
+                    className="text-base text-muted-foreground"
+                    items={lobbyInfo.characters}
+                    renderItem={(char) => char}
+                    emptyMessage={t('no-character-assigned')}
+                />
             </div>
         ),
         [lobbyInfo, t]
@@ -101,13 +103,13 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     }, [status, LobbyInfoContent, Placeholders])
 
     return (
-        <Link to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} className="block w-full no-underline">
+        <StyledLink to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} className="block w-full no-underline">
             <Card className="transition-colors duration-200 hover:bg-accent">
                 <CardContent className="p-4">
                     <DecideWhatToShow />
                 </CardContent>
             </Card>
-        </Link>
+        </StyledLink>
     )
 }
 

@@ -1,6 +1,7 @@
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import StyledLink from '@components/ui/styled-link'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { useToast } from '@hooks/useToast'
 import paths from '@router/paths'
@@ -8,7 +9,7 @@ import APIService from '@services/APIService'
 import { apprf, checkHandle, checkPassword, cn } from '@utils'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SignIn = ({ className = '' }: { className?: string }) => {
     const navigate = useNavigate()
@@ -102,7 +103,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
             <div>
                 <p>
                     New around here?{' '}
-                    <Link
+                    <StyledLink
                         to={paths.signUp}
                         className={cn(
                             'text-blue-800 underline',
@@ -111,7 +112,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                         )}
                     >
                         Sign up!
-                    </Link>
+                    </StyledLink>
                 </p>
             </div>
         </div>

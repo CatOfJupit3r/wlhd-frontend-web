@@ -139,7 +139,9 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                             }
                         } else {
                             const character = characterFromCoordinator?.[descriptor]
-                            const player = lobby.players.find((player) => player.characters.includes(descriptor))
+                            const player = lobby.players.find((player) =>
+                                player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor)
+                            )
                             const controlled: ControlledBy = player
                                 ? CONTROLLED_BY_PLAYER(player.userId)
                                 : CONTROLLED_BY_GAME_LOGIC

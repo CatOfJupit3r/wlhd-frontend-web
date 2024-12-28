@@ -1,7 +1,7 @@
 import { Button } from '@components/ui/button'
+import StyledLink from '@components/ui/styled-link'
 import { useTranslation } from 'react-i18next'
 import { FaArrowRotateRight } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
 
 const UnderMaintenancePage = () => {
     const { t } = useTranslation()
@@ -21,13 +21,13 @@ const UnderMaintenancePage = () => {
                 </Button>
                 <p className="max-w-[30rem] opacity-60">
                     {t('local:under_maintenance.explanation')}{' '}
-                    <Link
+                    <StyledLink
                         to={'https://github.com/CatOfJupit3r'}
                         className={'font-extrabold text-blue-800'}
                         target={'_blank'}
                     >
                         {t('local:under_maintenance.link')}
-                    </Link>
+                    </StyledLink>
                     . {t('local:under_maintenance.thanks')}
                 </p>
             </div>

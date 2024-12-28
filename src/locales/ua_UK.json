@@ -348,5 +348,28 @@
             "items": "Предмети",
             "status-effects": "Статусні ефекти"
         }
+    },
+    "lobby-info": {
+        "players": {
+            "title": "Гравці",
+            "empty": "Немає гравців",
+            "invite-players": "Запросити гравців",
+            "no-characters": "нікого...",
+            "playing-as": "Грає за:"
+        },
+        "combats": {
+            "title": "Бої",
+            "no-combats": "Немає боїв",
+            "new-combat": "Новий бій",
+            "round-count": "Раунд {{round}}",
+            "no-players": "Немає гравців",
+            "join": "Приєднатися"
+        },
+        "all-characters": {
+            "title": "Всі персонажі",
+            "no-characters": "Немає персонажів",
+            "goto-view-characters": "Переглянути всіх персонажів",
+            "view-specific": "Переглянути"
+        }
     }
 }

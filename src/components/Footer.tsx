@@ -1,6 +1,6 @@
+import StyledLink from '@components/ui/styled-link'
 import { cn } from '@utils'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
 const Footer = () => {
     const { t } = useTranslation('local', {
@@ -16,10 +16,10 @@ const Footer = () => {
                     'max-[512px]:flex-col max-[512px]:items-center max-[512px]:justify-center max-[512px]:gap-2'
                 )}
             >
-                <Link to={'/'}>{t('home')}</Link>
-                <Link to={'/about'}>{t('about')}</Link>
-                <Link to={'/contact'}>{t('contact')}</Link>
-                <Link to={'/privacy'}>{t('privacy')}</Link>
+                <StyledLink to={'/'}>{t('home')}</StyledLink>
+                <StyledLink to={'/about'}>{t('about')}</StyledLink>
+                <StyledLink to={'/contact'}>{t('contact')}</StyledLink>
+                <StyledLink to={'/privacy'}>{t('privacy')}</StyledLink>
             </div>
         </footer>
     )

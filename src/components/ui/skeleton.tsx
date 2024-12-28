@@ -3,7 +3,7 @@ import { HTMLAttributes } from 'react'
 
 function Skeleton({
     className,
-    pulsating,
+    pulsating = true,
     ...props
 }: {
     pulsating?: boolean

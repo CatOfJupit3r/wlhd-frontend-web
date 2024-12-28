@@ -18,9 +18,9 @@ export interface CosmeticsState {
     pageTitle: string
 }
 
-export type LobbyState = LobbyInfo
+export type LobbyState = iLobbyInformation
 
-export interface CombatInfo {
+export interface iCombatInfo {
     nickname: string
     isActive: boolean
     roundCount: number
@@ -31,25 +31,24 @@ export interface CombatInfo {
     _id: string
 }
 
-export interface LobbyPlayerInfo {
+export interface iLobbyPlayerInfo {
     handle: string
     nickname: string
-    avatar: string
     userId: string
-    characters: Array<string>
+    characters: Array<[string, string]>
 }
 
-export interface LobbyInfo {
+export interface iLobbyInformation {
     name: string
     lobbyId: string
-    combats: Array<CombatInfo>
-    players: Array<LobbyPlayerInfo>
-    characters: Array<CharacterInLobby>
+    combats: Array<iCombatInfo>
+    players: Array<iLobbyPlayerInfo>
+    characters: Array<iCharacterInLobby>
     gm: string
     layout: 'default' | 'gm'
 }
 
-export interface CharacterInLobby {
+export interface iCharacterInLobby {
     descriptor: string
     decorations: {
         name: string

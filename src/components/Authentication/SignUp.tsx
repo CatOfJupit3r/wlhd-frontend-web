@@ -1,6 +1,7 @@
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import StyledLink from '@components/ui/styled-link'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { useToast } from '@hooks/useToast'
 import paths from '@router/paths'
@@ -9,7 +10,7 @@ import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@ut
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = ({ className }: { className?: string }) => {
     const navigate = useNavigate()
@@ -121,7 +122,7 @@ const SignUp = ({ className }: { className?: string }) => {
             </Button>
             <p id={'to-signin'}>
                 Already have an account?{' '}
-                <Link
+                <StyledLink
                     to={paths.signIn}
                     className={cn(
                         'text-blue-800 underline',
@@ -130,7 +131,7 @@ const SignUp = ({ className }: { className?: string }) => {
                     )}
                 >
                     Sign In!
-                </Link>
+                </StyledLink>
             </p>
         </div>
     )

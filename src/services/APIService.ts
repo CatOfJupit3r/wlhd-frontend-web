@@ -10,7 +10,7 @@ import {
     WeaponEditable,
 } from '@models/CombatEditorModels'
 import { CharacterClassConversion, CreateCombatBody } from '@models/EditorConversion'
-import { LobbyInfo } from '@models/Redux'
+import { iLobbyInformation } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth'
 import AuthManager from '@services/AuthManager'
@@ -220,11 +220,11 @@ class APIService {
         }
     }
 
-    public getLobbyInfo = async (lobby_id: string): Promise<LobbyInfo> => {
+    public getLobbyInfo = async (lobby_id: string): Promise<iLobbyInformation> => {
         return (await this.fetch({
             url: ENDPOINTS.LOBBY_INFO(lobby_id),
             method: 'get',
-        })) as LobbyInfo
+        })) as iLobbyInformation
     }
 
     public getLoadedWeapons = async (

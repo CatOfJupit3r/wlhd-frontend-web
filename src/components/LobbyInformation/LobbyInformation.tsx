@@ -1,83 +1,25 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { LobbyState } from '@models/Redux'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { iLobbyInformation } from '@models/Redux'
+import { FC } from 'react'
+import ActiveCombatsList from './ActiveCombatsList'
+import CharactersInLobby from './CharactersInLobby'
+import LobbyInformationHeader from './LobbyInformationHeader'
+import PlayersList from './PlayersList'
 
-const Player = ({ player }: { player: LobbyState['players'][number] }) => {
-    const { characters } = useSelector(selectLobbyInfo)
-
-    return (
-        <div>
-            <img src={'https://placehold.co/50x50'} alt={player.nickname} />
-            <div>
-                <p>
-                    {player.nickname} (@{player.handle})
-                </p>
-                {player.characters.length ? (
-                    <span
-                        style={{
-                            fontSize: 'text-base',
-                            margin: '0',
-                            color: 'gray',
-                        }}
-                    >
-                        Playing as{' '}
-                        {characters
-                            .filter((char) => player.characters.includes(char.descriptor))
-                            .map((value, index, array) => (
-                                <span key={index}>
-                                    <Link to={`./view-character?character=${value.descriptor}`} key={index}>
-                                        {value.decorations.name} (@{value.descriptor})
-                                    </Link>
-                                    {index === array.length - 1 ? '.' : ', '}
-                                </span>
-                            ))}
-                    </span>
-                ) : (
-                    <span>No character assigned</span>
-                )}
-            </div>
-        </div>
-    )
+interface iLobbyInformationProps {
+    info: iLobbyInformation
 }
 
-const LobbyInformation = () => {
-    const { name, players } = useSelector(selectLobbyInfo)
-
+const LobbyInformation: FC<iLobbyInformationProps> = ({
+    info: { name, players, combats, layout, lobbyId, characters },
+}) => {
     return (
-        <div className="flex justify-center bg-gradient-to-br p-4">
-            <Card className="relative w-full max-w-7xl shadow-2xl">
-                <CardHeader>
-                    <CardTitle className={'text-center'}>{name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div id={'players'}>
-                        <p className="text-2xl font-semibold">Players</p>
-                        <div>
-                            {players && players.length === 0 ? (
-                                <p>No players</p>
-                            ) : (
-                                <div>
-                                    {players && players.length !== 0 ? (
-                                        players.map((info, index) => <Player player={info} key={index} />)
-                                    ) : (
-                                        <div>
-                                            <p>There are no players in this lobby</p>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div id={'combats'}>
-                        <p className="text-2xl font-semibold">Combats</p>
-                    </div>
-                    <div id={'characters'}>
-                        <p className="text-2xl font-semibold">Characters</p>
-                    </div>
-                </CardContent>
-            </Card>
+        <div className={'mx-auto flex w-full flex-col space-y-6 p-4 lg:max-w-[1400px]'}>
+            <LobbyInformationHeader header={name} />
+            <div className={'grid grid-cols-1 gap-6 md:grid-cols-2'}>
+                <PlayersList className={'col-span-1'} players={players} layout={layout} />
+                <ActiveCombatsList className={'col-span-1'} combats={combats} layout={layout} lobbyId={lobbyId} />
+            </div>
+            <CharactersInLobby characters={characters} lobbyId={lobbyId} />
         </div>
     )
 }

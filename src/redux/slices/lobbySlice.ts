@@ -1,4 +1,4 @@
-import { LobbyInfo, LobbyState } from '@models/Redux'
+import { iLobbyInformation, LobbyState } from '@models/Redux'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
@@ -16,7 +16,7 @@ const LobbySlice = createSlice({
     name: 'lobby',
     initialState,
     reducers: {
-        setLobbyInfo: (state, action: PayloadAction<LobbyInfo>) => {
+        setLobbyInfo: (state, action: PayloadAction<iLobbyInformation>) => {
             return { ...state, ...action.payload }
         },
     },

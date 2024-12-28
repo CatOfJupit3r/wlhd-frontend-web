@@ -7,6 +7,7 @@ import { cn } from '@utils'
 import { ClassValue } from 'clsx'
 import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -15,7 +16,7 @@ const buttonVariants = cva(
             variant: {
                 default: 'bg-primary text-primary-foreground hover:bg-primary/90',
                 destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-                outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+                outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground text-primary',
                 outlineToDefault: 'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
@@ -142,4 +143,17 @@ const ButtonWithTooltip = ({
     )
 }
 
-export { Button, AwaitingButton, TimeoutButton, buttonVariants, ButtonWithTooltip }
+const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }) => {
+    return (
+        <Button
+            asChild
+            className={cn(buttonVariants({ variant: props.variant, size: props.size, className: props.className }))}
+        >
+            <Link to={href} className={'transition-auto hover:text-auto'}>
+                {props.children}
+            </Link>
+        </Button>
+    )
+}
+
+export { Button, AwaitingButton, TimeoutButton, buttonVariants, ButtonWithTooltip, ButtonLink }
