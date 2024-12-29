@@ -1,6 +1,5 @@
 import { Input } from '@components/ui/input'
 import { Progress } from '@components/ui/progress'
-import { Separator } from '@components/ui/separator'
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import { capitalizeFirstLetter, getPercentage } from '@utils'
 import {
@@ -220,22 +219,6 @@ const AttributesEditor = () => {
                             />
                         )
                     })}
-                    <Separator />
-                </>
-            ) : null}
-            {duals && duals.length > 0 ? (
-                <>
-                    {duals.map(({ value, key }, index) => {
-                        return (
-                            <DualAttributeEditor
-                                key={index}
-                                attributeKey={key}
-                                value={value}
-                                setAttribute={setAttribute}
-                            />
-                        )
-                    })}
-                    <Separator />
                 </>
             ) : null}
             {Object.entries(character.attributes).map(([attribute, value]) => {
@@ -257,6 +240,20 @@ const AttributesEditor = () => {
                     </div>
                 )
             })}
+            {duals && duals.length > 0 ? (
+                <>
+                    {duals.map(({ value, key }, index) => {
+                        return (
+                            <DualAttributeEditor
+                                key={index}
+                                attributeKey={key}
+                                value={value}
+                                setAttribute={setAttribute}
+                            />
+                        )
+                    })}
+                </>
+            ) : null}
         </div>
     )
 }
