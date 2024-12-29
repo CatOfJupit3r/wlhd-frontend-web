@@ -83,7 +83,13 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                 <CommaSeparatedList
                     className="text-base text-muted-foreground"
                     items={lobbyInfo.characters}
-                    renderItem={(char) => char}
+                    renderItem={([descriptor, name]) => {
+                        return (
+                            <p>
+                                {t(name)} ({descriptor})
+                            </p>
+                        )
+                    }}
                     emptyMessage={t('no-character-assigned')}
                 />
             </div>

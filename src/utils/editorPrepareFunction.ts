@@ -6,10 +6,7 @@ import { isDescriptor } from '@utils/descriptorTools'
 export const prepareCharacterToClassConversion = (character: CharacterDataInSave): CharacterClassConversion => {
     return {
         decorations: character.decorations,
-        attributes: Object.entries(character.attributes).map(([descriptor, value]) => ({
-            descriptor,
-            value: value,
-        })),
+        attributes: character.attributes,
         spellBook: {
             maxActiveSpells: character.spellBook.maxActiveSpells,
             knownSpells: character.spellBook.knownSpells.map((spell) => ({

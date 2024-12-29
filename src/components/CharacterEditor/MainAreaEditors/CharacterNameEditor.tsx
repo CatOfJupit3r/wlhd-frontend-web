@@ -6,7 +6,7 @@ import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
 import React from 'react'
 import { RxReset } from 'react-icons/rx'
 
-const MAX_NAME_LENGTH = 32
+const MAX_NAME_LENGTH = 64
 
 const CharacterNameEditor = () => {
     const { character, updateCharacter, initial } = useCharacterEditorContext()

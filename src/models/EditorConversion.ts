@@ -1,5 +1,5 @@
 import { CharacterDataInSave } from '@models/CombatEditorModels'
-import { GameStateContainer } from '@models/GameModels'
+import { AttributeInfo, GameStateContainer } from '@models/GameModels'
 
 export interface CharacterClassConversion {
     decorations: {
@@ -7,10 +7,7 @@ export interface CharacterClassConversion {
         description: string
         sprite: string
     }
-    attributes: Array<{
-        descriptor: string
-        value: number
-    }>
+    attributes: AttributeInfo
     spellBook: {
         maxActiveSpells: number | null
         knownSpells: Array<{
