@@ -19,6 +19,7 @@ import {
 } from '@context/CharacterEditorProvider'
 import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
+import { toastError } from '@hooks/useToast'
 import { CharacterDataEditable } from '@models/CombatEditorModels'
 import { CharacterInfoFull } from '@models/GameModels'
 import { selectLobbyInfo } from '@redux/slices/lobbySlice'
@@ -39,7 +40,7 @@ const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     },
 }
 
-const componentClass = 'flex w-[30rem] flex-col gap-4 rounded border-2 p-4 max-[960px]:w-full'
+const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4'
 
 const CharacterEditorMenu = () => {
     const { viewedCharacter: character, descriptor, changeViewedCharacter } = useViewCharactersContext()
@@ -103,7 +104,10 @@ const CharacterEditorMenu = () => {
                                     })
                                 })
                                 .catch((error) => {
-                                    console.error('Error updating character', error.response.data)
+                                    toastError({
+                                        title: error?.title || t('error'),
+                                        description: error?.details ?? error?.message ?? t('error-message'),
+                                    })
                                 })
                         }
                     }}
@@ -203,14 +207,10 @@ const LobbyCharacterDisplay = () => {
         return <CharacterDisplayPlaceholder className={componentClass} />
     }
 
-    return (
-        <div>
-            {converted ? (
-                <CharacterDisplayInLobby character={converted} className={componentClass} />
-            ) : (
-                <CharacterDisplayPlaceholder className={componentClass} />
-            )}
-        </div>
+    return converted ? (
+        <CharacterDisplayInLobby character={converted} className={componentClass} />
+    ) : (
+        <CharacterDisplayPlaceholder className={componentClass} />
     )
 }
 

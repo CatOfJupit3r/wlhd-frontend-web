@@ -43,7 +43,7 @@ const BasicCharacterAttributes = ({
     )
 
     return (
-        <div className={'flex size-full gap-2'}>
+        <div className={'flex w-full gap-2'}>
             <div className={'w-10/12 items-center'}>
                 <div className={'flex w-full flex-row items-center gap-1'}>
                     <IoShieldSharp className={'size-5 text-gray-700'} />
