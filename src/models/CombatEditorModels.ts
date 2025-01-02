@@ -19,7 +19,7 @@ interface UsableComponentEditableFields extends CommonEditableField {
     cooldownValue: number | null
     currentConsecutiveUses: number
     maxConsecutiveUses: number | null
-    consecutiveUseResetOnCooldownUpdate: boolean
+    consecutiveUsesResetOnCooldownUpdate: boolean
     casterMustBeInRange: Array<number>
 
     requirements: unknown // for now unknown
