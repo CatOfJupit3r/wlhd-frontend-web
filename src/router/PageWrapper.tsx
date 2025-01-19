@@ -3,7 +3,7 @@ import { iRouteConfig } from '@models/IRouteConfig'
 import PseudoPage from '@pages/PseudoPage'
 import { setPageTitle } from '@redux/slices/cosmeticsSlice'
 import { AppDispatch } from '@redux/store'
-import { ReactNode, Suspense, useEffect } from 'react'
+import { JSX, ReactNode, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 

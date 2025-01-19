@@ -4,7 +4,7 @@ import { useGameWikiContext } from '@context/GameWikiContext'
 import paths from '@router/paths'
 import { SUPPORTED_DLCS_DESCRIPTORS } from 'config'
 import { FC, useEffect, useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 
 interface iGameWiki {}
 

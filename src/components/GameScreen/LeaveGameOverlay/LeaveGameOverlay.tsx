@@ -10,7 +10,7 @@ import {
 import SocketService from '@services/SocketService'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation('local', {

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 
 import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection'
 import GameScreen from '@components/GameScreen/GameScreen'

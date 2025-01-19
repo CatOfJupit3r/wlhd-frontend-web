@@ -7,8 +7,7 @@ import LayoutContextClient from '@router/LayoutContextClient'
 import { PageWrapper } from '@router/PageWrapper'
 import paths from '@router/paths'
 import { FC, lazy, ReactNode, Suspense } from 'react'
-import { Route, Routes } from 'react-router'
-import { BrowserRouter, Navigate } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { authRoutes, generalRoutes } from './routes'
 
 const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'))

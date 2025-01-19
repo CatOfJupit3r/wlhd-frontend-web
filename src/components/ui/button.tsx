@@ -7,7 +7,7 @@ import { cn } from '@utils'
 import { ClassValue } from 'clsx'
 import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',

@@ -1,6 +1,5 @@
-import { KeyboardEvent, MouseEvent } from 'react'
-
 import { cn } from '@utils'
+import { JSX, KeyboardEvent, MouseEvent } from 'react'
 
 const ElementWithIcon = ({
     icon,

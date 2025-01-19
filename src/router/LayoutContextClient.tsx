@@ -5,7 +5,7 @@ import { useLayoutContext } from '@context/LayoutContext'
 import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { apprf, cn, refreshLobbyInfo, refreshUserInfo } from '@utils'
 import { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
-import { Outlet, useParams } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router'
 
 const Header = lazy(() => import('@components/Header'))
 const Footer = lazy(() => import('@components/Footer'))

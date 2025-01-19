@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes } from 'react'
+import { ImgHTMLAttributes, JSX } from 'react'
 
 export type HTMLIconFactoryProps = ImgHTMLAttributes<HTMLImageElement>
 export type IconComponentType = (props: HTMLIconFactoryProps) => JSX.Element

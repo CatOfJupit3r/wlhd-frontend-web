@@ -9,7 +9,7 @@ import APIService from '@services/APIService'
 import { apprf, checkHandle, checkPassword, cn } from '@utils'
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const SignIn = ({ className = '' }: { className?: string }) => {
     const navigate = useNavigate()

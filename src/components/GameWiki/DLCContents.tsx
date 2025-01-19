@@ -8,7 +8,7 @@ import { FaAddressCard } from 'react-icons/fa'
 import { GiKnapsack, GiSpellBook, GiSwordsEmblem } from 'react-icons/gi'
 import { IoMdReturnLeft } from 'react-icons/io'
 import { IoLayersSharp } from 'react-icons/io5'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 interface iDLCContents {}
 

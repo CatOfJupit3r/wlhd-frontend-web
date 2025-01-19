@@ -4,7 +4,7 @@ import ThinkingHn from '@components/ThinkingHn'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 
 const GameRoomPage = () => {
     const { lobbyId } = useParams()

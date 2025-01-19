@@ -27,7 +27,7 @@ import { FaPlay, FaSave } from 'react-icons/fa'
 import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 interface PresetDetails {
     nickName: string

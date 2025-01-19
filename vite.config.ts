@@ -59,7 +59,7 @@ function ClosePlugin() {
 }
 
 const ReactCompilerConfig = {
-    target: '18',
+    target: '19',
 }
 
 // https://vitejs.dev/config/

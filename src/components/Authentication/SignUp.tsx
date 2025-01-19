@@ -10,7 +10,7 @@ import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@ut
 import { AxiosError } from 'axios'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const SignUp = ({ className }: { className?: string }) => {
     const navigate = useNavigate()

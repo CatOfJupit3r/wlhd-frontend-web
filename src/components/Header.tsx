@@ -24,7 +24,7 @@ import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { FaBook } from 'react-icons/fa'
 import { LuSquareMenu, LuUser } from 'react-icons/lu'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 interface iSection {
     name: string

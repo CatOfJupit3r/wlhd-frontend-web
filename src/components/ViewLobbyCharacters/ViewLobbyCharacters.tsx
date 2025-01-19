@@ -15,7 +15,7 @@ import { FaEdit } from 'react-icons/fa'
 import { GrContactInfo } from 'react-icons/gr'
 import { RiAdminFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const NoCharactersPresent = () => {
     const lobby = useSelector(selectLobbyInfo)
