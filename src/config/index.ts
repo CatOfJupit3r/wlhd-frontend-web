@@ -11,4 +11,5 @@ export const SUPPORTED_DLCs = [
         descriptor: 'nyrzamaer',
     },
 ]
+export const FALLBACK_LANGUAGE = 'uk-UA'
 export const SUPPORTED_DLCS_DESCRIPTORS = SUPPORTED_DLCs.map(({ descriptor }) => descriptor)
