@@ -131,7 +131,6 @@ const TurnOrderDisplay = () => {
 
     return (
         <BetterScrollableContainer className={'w-20'}>
-            {/* @ts-expect-error framer-motion is not typed */}
             <AnimatePresence>
                 {innerTurnOrder.filter(Boolean).map(({ key, character, isActive }) => (
                     <CharacterCard key={key} character={character} isActive={isActive} />
