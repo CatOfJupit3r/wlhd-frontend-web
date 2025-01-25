@@ -1,14 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar'
-import { CosmeticsState } from '@models/Redux'
-import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
+import { UserInformation } from '@models/APIData'
+import useMe from '@queries/useMe'
 import APIService from '@services/APIService'
 import { cn } from '@utils'
 import { LRUCache } from 'lru-cache'
 import { HTMLAttributes, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 interface iUserAvatarProps extends HTMLAttributes<HTMLDivElement> {
-    handle: CosmeticsState['user']['handle']
+    handle: UserInformation['handle'] | null
 }
 
 const avatarCache = new LRUCache<string, string>({ max: 25 }) // Cache up to 100 avatars
@@ -37,7 +36,7 @@ const UserAvatar = ({ className, handle, ...props }: iUserAvatarProps) => {
     return (
         <Avatar className={cn('border-4 border-white shadow-lg', className)} {...props}>
             {avatar ? (
-                <AvatarImage src={avatar} alt={handle} />
+                <AvatarImage src={avatar} alt={handle ?? 'avatar'} />
             ) : (
                 <AvatarFallback>{(handle || '<3').slice(0, 2).toUpperCase()}</AvatarFallback>
             )}
@@ -46,9 +45,13 @@ const UserAvatar = ({ className, handle, ...props }: iUserAvatarProps) => {
 }
 
 export const CurrentUserAvatar = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
-    const { handle } = useSelector(selectUserInformation)
+    const { user, isLoggedIn } = useMe()
 
-    return <UserAvatar className={className} handle={handle} {...props} />
+    if (!isLoggedIn) {
+        return <UserAvatar className={className} handle={null} {...props} />
+    }
+
+    return <UserAvatar className={className} handle={user.handle} {...props} />
 }
 
 export default UserAvatar

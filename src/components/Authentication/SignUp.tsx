@@ -2,8 +2,8 @@ import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
 import StyledLink from '@components/ui/styled-link'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { useToast } from '@hooks/useToast'
+import useMe from '@queries/useMe'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@utils'
@@ -20,20 +20,12 @@ const SignUp = ({ className }: { className?: string }) => {
     const [handle, setHandle] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [readyToNav, setReadyToNav] = useState(false)
-    const { isLoggedIn } = useIsLoggedIn()
+    const { isLoggedIn, isLoading } = useMe()
 
     useEffect(() => {
-        if (isLoggedIn) {
-            setReadyToNav(true)
-        }
-    }, [isLoggedIn])
-
-    useEffect(() => {
-        if (readyToNav) {
-            navigate(paths.profile)
-        }
-    }, [readyToNav])
+        if (!isLoggedIn || isLoading) return
+        navigate(paths.profile)
+    }, [isLoggedIn, isLoading])
 
     const checkInputValidity = useCallback(() => {
         for (const check of [

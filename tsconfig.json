@@ -30,7 +30,9 @@
             "@router/*": ["./router/*"],
             "@lib/*": ["./lib/*"],
             "@context/*": ["./context/*"],
-            "config": ["./config"]
+            "config": ["./config"],
+            "@queries/*": ["./queries/*"],
+            "@mutations/*": ["./mutations/*"],
         }
     },
     "include": ["src"],

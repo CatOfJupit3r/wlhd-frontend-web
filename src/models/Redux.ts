@@ -1,4 +1,3 @@
-import { UserInformation } from '@models/APIData'
 import {
     Battlefield,
     CharacterInfoFull,
@@ -9,12 +8,7 @@ import {
     IndividualTurnOrder,
 } from './GameModels'
 
-export type LoadingState = 'idle' | 'pending' | 'fulfilled' | 'rejected'
-
 export interface CosmeticsState {
-    user: UserInformation & {
-        loading: LoadingState
-    }
     pageTitle: string
 }
 
@@ -36,6 +30,7 @@ export interface iLobbyPlayerInfo {
     nickname: string
     userId: string
     characters: Array<[string, string]>
+    isApproved: boolean
 }
 
 export interface iLobbyInformation {

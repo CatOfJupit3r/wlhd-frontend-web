@@ -2,8 +2,8 @@ import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
 import StyledLink from '@components/ui/styled-link'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import { useToast } from '@hooks/useToast'
+import useMe from '@queries/useMe'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import { apprf, checkHandle, checkPassword, cn } from '@utils'
@@ -12,25 +12,17 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 const SignIn = ({ className = '' }: { className?: string }) => {
-    const navigate = useNavigate()
     const { toastError } = useToast()
+    const navigate = useNavigate()
 
     const [handle, setHandle] = useState('admin')
     const [password, setPassword] = useState('motherfucker')
-    const [readyToNav, setReadyToNav] = useState(false)
-    const { isLoggedIn } = useIsLoggedIn()
+    const { isLoggedIn, isLoading } = useMe()
 
     useEffect(() => {
-        if (isLoggedIn) {
-            setReadyToNav(true)
-        }
-    }, [isLoggedIn])
-
-    useEffect(() => {
-        if (readyToNav) {
-            navigate(paths.profile)
-        }
-    }, [readyToNav])
+        if (!isLoggedIn || isLoading) return
+        navigate(paths.profile)
+    }, [isLoggedIn, isLoading])
 
     const checkInputValidity = useCallback(() => {
         for (const check of [checkHandle(handle), checkPassword(password)]) {

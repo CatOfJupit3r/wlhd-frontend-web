@@ -2,8 +2,7 @@ import { TooltipProvider } from '@components/ui/tooltip'
 import { CoordinatorCharactersProvider } from '@context/CoordinatorCharactersProvider'
 import { GameDataProvider } from '@context/GameDataProvider'
 import { useLayoutContext } from '@context/LayoutContext'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { apprf, cn, refreshLobbyInfo, refreshUserInfo } from '@utils'
+import { apprf, cn, refreshLobbyInfo } from '@utils'
 import { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
 import { Outlet, useParams } from 'react-router'
 
@@ -42,15 +41,6 @@ const FooterPlaceholder = () => (
 const LayoutContextClient = () => {
     const { lobbyId } = useParams()
     const { footer, header, lobbyInfo } = useLayoutContext()
-    const isLoggedIn = useIsLoggedIn()
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            startTransition(() => {
-                refreshUserInfo()
-            })
-        }
-    }, [isLoggedIn])
 
     useEffect(() => {
         if (lobbyInfo && lobbyId) {

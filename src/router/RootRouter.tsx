@@ -1,8 +1,8 @@
 import { LayoutContextProvider } from '@context/LayoutContext'
 import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
 import PseudoPage from '@pages/PseudoPage'
 import UnderMaintenanceNoDepsPage from '@pages/UnderMaintenanceNoDepsPage'
+import useMe from '@queries/useMe'
 import LayoutContextClient from '@router/LayoutContextClient'
 import { PageWrapper } from '@router/PageWrapper'
 import paths from '@router/paths'
@@ -31,7 +31,7 @@ const BackendStatusHandler: FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const RootRouter = () => {
-    const { isLoggedIn } = useIsLoggedIn()
+    const { isLoggedIn } = useMe()
 
     return (
         <BrowserRouter>

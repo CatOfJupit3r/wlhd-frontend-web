@@ -1,19 +1,19 @@
-import { resetUser } from '@redux/slices/cosmeticsSlice'
-import { store as ReduxStore } from '@redux/store'
 import EventEmitter from 'events'
 import { jwtDecode } from 'jwt-decode'
 
+export const LOGIN_STATUS = {
+    LOGGED_IN: 'logged-in',
+    LOGGED_OUT: 'logged-out',
+}
+export type eLoginStatus = (typeof LOGIN_STATUS)[keyof typeof LOGIN_STATUS]
+
 class AuthManager {
     accessTokenKey = 'WALENHOLDE_ACCESS_TOKEN'
-
     refreshTokenKey = 'WALENHOLDE_REFRESH_TOKEN'
-
     emitter = new EventEmitter()
 
     eventTypes = {
         LOGIN_STATUS_CHANGED: 'LOGIN_STATUS_CHANGED',
-        LOGIN: 'LOGIN',
-        LOGOUT: 'LOGOUT',
     }
 
     isLoggedIn() {
@@ -51,41 +51,21 @@ class AuthManager {
         this.setAccessToken(accessToken)
         this.setRefreshToken(refreshToken)
 
-        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, true)
-        this.emitter.emit(this.eventTypes.LOGIN)
+        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_IN)
     }
 
     logout() {
         localStorage.removeItem(this.accessTokenKey)
         localStorage.removeItem(this.refreshTokenKey)
 
-        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, false)
-        this.emitter.emit(this.eventTypes.LOGOUT)
-
-        ReduxStore.dispatch(resetUser())
+        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_OUT)
     }
 
-    onLoginStatusChange(cb: (isLoggedIn: boolean) => void): () => void {
+    onLoginStatusChange(cb: (status: eLoginStatus) => void): () => void {
         this.emitter.on(this.eventTypes.LOGIN_STATUS_CHANGED, cb)
 
         return () => {
             this.emitter.off(this.eventTypes.LOGIN_STATUS_CHANGED, cb)
-        }
-    }
-
-    onLogin(cb: (isLoggedIn: boolean) => void): () => void {
-        this.emitter.on(this.eventTypes.LOGIN, cb)
-
-        return () => {
-            this.emitter.off(this.eventTypes.LOGIN, cb)
-        }
-    }
-
-    onLogout(cb: (isLoggedIn: boolean) => void): () => void {
-        this.emitter.on(this.eventTypes.LOGOUT, cb)
-
-        return () => {
-            this.emitter.off(this.eventTypes.LOGOUT, cb)
         }
     }
 

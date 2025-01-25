@@ -50,6 +50,11 @@ const ENDPOINTS = {
     CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
         `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
     GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_URL}/user/${handle}/avatar`,
+
+    APPROVE_LOBBY_PLAYER: (userId: string, handle: string) => `${VITE_BACKEND_URL}/lobbies/${userId}/${handle}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}`,
+    USE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
+    DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
 }
 
 class APIService {
@@ -60,7 +65,7 @@ class APIService {
         if (typeof message === 'string') error.message = message
     }
 
-    private fetch = async ({
+    private fetch = async <T>({
         url,
         method,
         data,
@@ -73,8 +78,7 @@ class APIService {
             [_: string]: any
         }
         _retry?: boolean
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }): Promise<{ [key: string]: any }> => {
+    }): Promise<T> => {
         console.log('Checking token expiration')
         if (AuthManager.isAccessTokenExpired()) {
             console.log('Token is expired')
@@ -103,7 +107,7 @@ class APIService {
                     console.log('Trying to refresh the access token')
                     await this.tryRefreshingTokenOrLogoutAndThrow()
                     console.log('Retrying original request with new access token', url)
-                    const retryData = await this.fetch({
+                    const retryData = await this.fetch<T>({
                         url,
                         method,
                         data,
@@ -347,7 +351,7 @@ class APIService {
         nickname: CreateCombatBody['nickname'],
         preset: CreateCombatBody['preset']
     ) => {
-        return await this.fetch({
+        return await this.fetch<{ combat_id: string }>({
             url: ENDPOINTS.CREATE_LOBBY_COMBAT(lobby_id),
             method: 'post',
             data: {
@@ -357,11 +361,11 @@ class APIService {
         })
     }
 
-    public getUserInformation = async (): Promise<UserInformation> => {
-        return (await this.fetch({
+    public getUserInformation = async () => {
+        return this.fetch<UserInformation>({
             url: ENDPOINTS.USER_INFO,
             method: 'get',
-        })) as UserInformation
+        })
     }
 
     public getShortLobbyInfo = async (lobby_id: string): Promise<ShortLobbyInformation> => {

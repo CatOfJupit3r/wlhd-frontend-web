@@ -10,8 +10,7 @@ import {
 } from '@components/ui/dropdown-menu'
 import StyledLink from '@components/ui/styled-link'
 import { CurrentUserAvatar } from '@components/UserAvatars'
-import useIsLoggedIn from '@hooks/useIsLoggedIn'
-import { selectUserInformation } from '@redux/slices/cosmeticsSlice'
+import useMe from '@queries/useMe'
 import { selectLobbyId } from '@redux/slices/lobbySlice'
 import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
@@ -37,8 +36,7 @@ interface iSection {
 type SectionsType = Array<Array<iSection>>
 
 const Header = () => {
-    const { isLoggedIn } = useIsLoggedIn()
-    const { handle } = useSelector(selectUserInformation)
+    const { user, isLoggedIn } = useMe()
     const lobbyId = useSelector(selectLobbyId)
     const navigate = useNavigate()
     const { t } = useTranslation('local', {
@@ -123,7 +121,7 @@ const Header = () => {
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>@{handle}</DropdownMenuLabel>
+                        <DropdownMenuLabel>@{user?.handle}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {sections.map((section, index) => (
                             <div key={index}>
@@ -142,7 +140,7 @@ const Header = () => {
                 </DropdownMenu>
             </>
         )
-    }, [lobbyId, handle])
+    }, [lobbyId, user?.handle])
 
     const Navigation = useCallback(() => {
         return (

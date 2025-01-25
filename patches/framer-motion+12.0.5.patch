@@ -1,0 +1,38 @@
+diff --git a/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs b/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
+index 95260a4..14d2f0e 100644
+--- a/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
++++ b/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs
+@@ -119,7 +119,8 @@ const AnimatePresence = ({ children, custom, initial = true, onExitComplete, pre
+          * Early return to ensure once we've set state with the latest diffed
+          * children, we can immediately re-render.
+          */
+-        return;
++        // https://github.com/motiondivision/motion/issues/3027
++        return null;
+     }
+     if (process.env.NODE_ENV !== "production" &&
+         mode === "wait" &&
+@@ -158,8 +159,8 @@ const AnimatePresence = ({ children, custom, initial = true, onExitComplete, pre
+                 }
+             };
+             return (jsx(PresenceChild, { isPresent: isPresent, initial: !isInitialRender.current || initial
+-                    ? undefined
+-                    : false, custom: isPresent ? undefined : custom, presenceAffectsLayout: presenceAffectsLayout, mode: mode, onExitComplete: isPresent ? undefined : onExit, anchorX: anchorX, children: child }, key));
++                    ? null
++                    : false, custom: isPresent ? null : custom, presenceAffectsLayout: presenceAffectsLayout, mode: mode, onExitComplete: isPresent ? null : onExit, anchorX: anchorX, children: child }, key));
+         }) }));
+ };
+ 
+diff --git a/node_modules/framer-motion/dist/index.d.ts b/node_modules/framer-motion/dist/index.d.ts
+index 3fb4478..9f4ab41 100644
+--- a/node_modules/framer-motion/dist/index.d.ts
++++ b/node_modules/framer-motion/dist/index.d.ts
+@@ -108,7 +108,7 @@ interface AnimatePresenceProps {
+  *
+  * @public
+  */
+-declare const AnimatePresence: ({ children, custom, initial, onExitComplete, presenceAffectsLayout, mode, propagate, anchorX, }: React$1.PropsWithChildren<AnimatePresenceProps>) => react_jsx_runtime.JSX.Element | undefined;
++declare const AnimatePresence: ({ children, custom, initial, onExitComplete, presenceAffectsLayout, mode, propagate, anchorX, }: React$1.PropsWithChildren<AnimatePresenceProps>) => react_jsx_runtime.JSX.Element | null;
+ 
+ type InheritOption = boolean | "id";
+ interface Props$2 {
