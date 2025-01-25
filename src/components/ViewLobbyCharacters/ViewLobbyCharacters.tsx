@@ -6,7 +6,7 @@ import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterC
 import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
 import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import paths from '@router/paths'
 import { cn } from '@utils'
 import { useEffect, useState } from 'react'
@@ -14,11 +14,10 @@ import { useTranslation } from 'react-i18next'
 import { FaEdit } from 'react-icons/fa'
 import { GrContactInfo } from 'react-icons/gr'
 import { RiAdminFill } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 const NoCharactersPresent = () => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.no-characters',
     })
@@ -52,7 +51,7 @@ const NoCharactersPresent = () => {
 }
 
 const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { fetchCharacter } = useCoordinatorCharactersContext()
     const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {

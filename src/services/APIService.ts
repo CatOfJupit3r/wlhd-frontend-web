@@ -224,11 +224,11 @@ class APIService {
         }
     }
 
-    public getLobbyInfo = async (lobby_id: string): Promise<iLobbyInformation> => {
-        return (await this.fetch({
+    public getLobbyInfo = async (lobby_id: string) => {
+        return this.fetch<iLobbyInformation>({
             url: ENDPOINTS.LOBBY_INFO(lobby_id),
             method: 'get',
-        })) as iLobbyInformation
+        })
     }
 
     public getLoadedWeapons = async (

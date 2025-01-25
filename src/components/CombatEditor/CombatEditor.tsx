@@ -15,7 +15,7 @@ import { BattlefieldContextProvider, useBattlefieldContext } from '@context/Batt
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
 import { toastError } from '@hooks/useToast'
 import { Battlefield as BattlefieldModel } from '@models/GameModels'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import paths from '@router/paths'
 import APIService from '@services/APIService'
 import EditorHelpers from '@utils/editorHelpers'
@@ -26,7 +26,6 @@ import { BiAddToQueue } from 'react-icons/bi'
 import { FaPlay, FaSave } from 'react-icons/fa'
 import { MdOutlineVideogameAssetOff } from 'react-icons/md'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 interface PresetDetails {
@@ -237,7 +236,7 @@ const CombatEditor = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
 
     const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages } =
         useCombatEditorContext()

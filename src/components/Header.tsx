@@ -11,7 +11,7 @@ import {
 import StyledLink from '@components/ui/styled-link'
 import { CurrentUserAvatar } from '@components/UserAvatars'
 import useMe from '@queries/useMe'
-import { selectLobbyId } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import paths from '@router/paths'
 import AuthManager from '@services/AuthManager'
 import { apprf, cn } from '@utils'
@@ -22,7 +22,6 @@ import { IconType } from 'react-icons'
 import { BiLogOut, BiSolidCog } from 'react-icons/bi'
 import { FaBook } from 'react-icons/fa'
 import { LuSquareMenu, LuUser } from 'react-icons/lu'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 interface iSection {
@@ -37,7 +36,7 @@ type SectionsType = Array<Array<iSection>>
 
 const Header = () => {
     const { user, isLoggedIn } = useMe()
-    const lobbyId = useSelector(selectLobbyId)
+    const { lobbyId } = useThisLobby()
     const navigate = useNavigate()
     const { t } = useTranslation('local', {
         keyPrefix: 'header',

@@ -2,9 +2,9 @@ import { TooltipProvider } from '@components/ui/tooltip'
 import { CoordinatorCharactersProvider } from '@context/CoordinatorCharactersProvider'
 import { GameDataProvider } from '@context/GameDataProvider'
 import { useLayoutContext } from '@context/LayoutContext'
-import { apprf, cn, refreshLobbyInfo } from '@utils'
-import { lazy, ReactNode, startTransition, Suspense, useEffect } from 'react'
-import { Outlet, useParams } from 'react-router'
+import { apprf, cn } from '@utils'
+import { lazy, ReactNode, Suspense } from 'react'
+import { Outlet } from 'react-router'
 
 const Header = lazy(() => import('@components/Header'))
 const Footer = lazy(() => import('@components/Footer'))
@@ -39,16 +39,7 @@ const FooterPlaceholder = () => (
 )
 
 const LayoutContextClient = () => {
-    const { lobbyId } = useParams()
-    const { footer, header, lobbyInfo } = useLayoutContext()
-
-    useEffect(() => {
-        if (lobbyInfo && lobbyId) {
-            startTransition(() => {
-                refreshLobbyInfo(lobbyId).then()
-            })
-        }
-    }, [lobbyInfo, lobbyId])
+    const { footer, header } = useLayoutContext()
 
     return (
         <GlobalContext>

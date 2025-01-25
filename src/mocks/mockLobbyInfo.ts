@@ -1,6 +1,6 @@
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import { iLobbyInformation } from '@models/Redux'
 
-export const mockLobbyInfo: ReturnType<typeof selectLobbyInfo> = {
+export const mockLobbyInfo: iLobbyInformation = {
     lobbyId: '123456',
     name: "Dragon's Lair Adventure",
     combats: [

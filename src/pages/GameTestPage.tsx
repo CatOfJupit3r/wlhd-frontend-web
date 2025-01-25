@@ -1,4 +1,5 @@
 import GameScreen from '@components/GameScreen/GameScreen'
+import useThisLobby from '@queries/useThisLobby'
 import {
     resetGameScreenSlice,
     setActions,
@@ -10,19 +11,18 @@ import {
     setTurnOrder,
     setYourTurn,
 } from '@redux/slices/gameScreenSlice'
-import { selectLobbyId } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
 import APIService from '@services/APIService'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import example_gamestate from '../data/example_gamestate.json'
 
 const GameTestPage = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { i18n } = useTranslation()
     const [loadedGameState, setLoadedGameState] = useState(false)
-    const lobbyId = useSelector(selectLobbyId)
+    const { lobbyId } = useThisLobby()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dummySetActionOutput = useCallback((output: any) => {

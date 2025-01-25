@@ -100,7 +100,7 @@ class SocketService {
         this.socket.disconnect()
     }
 
-    public connect({ lobbyId, combatId }: { lobbyId: string; combatId: string }) {
+    public connect({ lobbyId, combatId, isGm = false }: { lobbyId: string; combatId: string; isGm?: boolean }) {
         // connect should only be called on /game-room
         // if (window.location.pathname !== '/game-room') {
         //     return
@@ -114,7 +114,7 @@ class SocketService {
             this.disconnect()
         }
         this.setupRegularListeners()
-        if (ReduxStore.getState().lobby.layout === 'gm') {
+        if (isGm) {
             // if page displayed is for GM, then we can assume that user IS GM
             this.setupElevatedRightsListeners()
         }

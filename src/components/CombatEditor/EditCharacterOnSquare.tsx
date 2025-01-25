@@ -25,14 +25,13 @@ import {
 } from '@context/CharacterEditorProvider'
 import { useCombatEditorContext } from '@context/CombatEditorContext'
 import { ControlledBy } from '@models/EditorConversion'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import { useCallback, useEffect, useState } from 'react'
 import { BiAddToQueue } from 'react-icons/bi'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { GrContactInfo } from 'react-icons/gr'
 import { IoMdPersonAdd } from 'react-icons/io'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 
 const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     attributes: {
@@ -61,7 +60,7 @@ const EditCharacterControls = ({
     setNewControls: (value: { type: string; id?: string }) => void
     clickedSquare: string | null
 }) => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { battlefield } = useCombatEditorContext()
 
     return (
@@ -169,7 +168,7 @@ const EditCharacterControls = ({
 }
 
 export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string | null }) => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext()
     const { battlefield } = useCombatEditorContext()
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character')

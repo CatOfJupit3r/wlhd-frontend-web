@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import UserAvatar from '@components/UserAvatars'
 import { iGameLobbyState } from '@models/GameModels'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import { cn } from '@utils'
 import { useTranslation } from 'react-i18next'
 import { FaCrown } from 'react-icons/fa'
@@ -15,7 +15,7 @@ interface iPlayerCard {
 }
 
 const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const userInLobby = lobby.players.find((player) => player.userId === userId)
     if (!userInLobby) {
         return null

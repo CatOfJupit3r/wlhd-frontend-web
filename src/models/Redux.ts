@@ -12,8 +12,6 @@ export interface CosmeticsState {
     pageTitle: string
 }
 
-export type LobbyState = iLobbyInformation
-
 export interface iCombatInfo {
     nickname: string
     isActive: boolean

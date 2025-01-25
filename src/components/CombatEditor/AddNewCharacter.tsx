@@ -27,11 +27,10 @@ import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext 
 import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
 import { useDataContext } from '@context/GameDataProvider'
 import { ControlledBy } from '@models/EditorConversion'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import { SUPPORTED_DLCs } from 'config'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const [dlc, setDlc] = useState<string>('')
@@ -39,7 +38,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
     const { characters, fetchAndSetCharacters } = useDataContext()
     const { characters: characterFromCoordinator, fetchCharacter } = useCoordinatorCharactersContext()
     const { t } = useTranslation()
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { addCharacter } = useCombatEditorContext()
 
     useEffect(() => {

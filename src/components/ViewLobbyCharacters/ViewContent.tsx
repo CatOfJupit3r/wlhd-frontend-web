@@ -22,16 +22,15 @@ import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import { toastError } from '@hooks/useToast'
 import { CharacterDataEditable } from '@models/CombatEditorModels'
 import { CharacterInfoFull } from '@models/GameModels'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import APIService from '@services/APIService'
 import GameConverters from '@services/GameConverters'
-import { cn, refreshLobbyInfo } from '@utils'
+import { cn } from '@utils'
 import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaXmark } from 'react-icons/fa6'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
 
 const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     exclude: {},
@@ -44,7 +43,7 @@ const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-co
 
 const CharacterEditorMenu = () => {
     const { viewedCharacter: character, descriptor, changeViewedCharacter } = useViewCharactersContext()
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby, refetch } = useThisLobby()
     const {
         character: editedCharacter,
         changeEditedCharacter,
@@ -92,7 +91,7 @@ const CharacterEditorMenu = () => {
                             )
                                 .then(() => {
                                     console.log('Character was updated')
-                                    refreshLobbyInfo(lobby.lobbyId).then(() => {
+                                    refetch().then(() => {
                                         fetchCharacter(lobby.lobbyId, descriptor, true)
                                             .then((data) => {
                                                 changeViewedCharacter(data, descriptor)
@@ -128,7 +127,7 @@ const CharacterEditorMenu = () => {
 }
 
 const GmOptionMenu = () => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby, refetch } = useThisLobby()
     const { descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.gm-options',
@@ -173,7 +172,7 @@ const GmOptionMenu = () => {
                                     }
                                     APIService.deleteCharacter(lobby.lobbyId, descriptor)
                                         .then(() => {
-                                            refreshLobbyInfo(lobby.lobbyId).then()
+                                            refetch().then()
                                         })
                                         .catch((error) => {
                                             console.error('Error removing character', error)

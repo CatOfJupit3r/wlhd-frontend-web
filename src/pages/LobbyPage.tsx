@@ -1,12 +1,11 @@
 import LobbyInformation from '@components/LobbyInformation/LobbyInformation'
 import PseudoLobbyInfo from '@components/LobbyInformation/PseudoLobbyInfo'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
-import { useSelector } from 'react-redux'
+import useThisLobby from '@queries/useThisLobby'
 
 const LobbyPage = () => {
-    const lobbyInfo = useSelector(selectLobbyInfo)
+    const { lobby, isLoading, isInLobbyPage, isError } = useThisLobby()
 
-    return lobbyInfo.lobbyId ? <LobbyInformation info={lobbyInfo} /> : <PseudoLobbyInfo />
+    return isInLobbyPage && !isLoading && !isError ? <LobbyInformation info={lobby} /> : <PseudoLobbyInfo />
 }
 
 export default LobbyPage

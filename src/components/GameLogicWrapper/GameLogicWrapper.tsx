@@ -10,8 +10,8 @@ import { ThreeInOneSpinner } from '@components/Spinner'
 import { Button } from '@components/ui/button'
 import { Separator } from '@components/ui/separator'
 import { iActionContext } from '@context/ActionContext'
+import useThisLobby from '@queries/useThisLobby'
 import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
 import { AppDispatch } from '@redux/store'
 import paths from '@router/paths'
 import SocketService from '@services/SocketService'
@@ -25,7 +25,7 @@ const GameLogicWrapper = () => {
     const { gameId, lobbyId } = useParams()
 
     const gameFlow = useSelector(selectGameFlow)
-    const lobbyInfo = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
 
     useEffect(() => {
         if (!lobbyId || !gameId) {
@@ -38,6 +38,7 @@ const GameLogicWrapper = () => {
         SocketService.connect({
             lobbyId,
             combatId: gameId,
+            isGm: lobby.layout === 'gm',
         })
     }, [gameId, t, navigate])
 
@@ -74,7 +75,7 @@ const GameLogicWrapper = () => {
                             <Button variant={'secondary'} onClick={navigateToLobby}>
                                 {t('local:game.pending.exit')}
                             </Button>
-                            {lobbyInfo.layout === 'gm' ? (
+                            {lobby.layout === 'gm' ? (
                                 <Button
                                     onClick={() => {
                                         SocketService.emit('start_combat')

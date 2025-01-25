@@ -6,15 +6,13 @@ import { StaticSkeleton } from '@components/ui/skeleton'
 import UserAvatar from '@components/UserAvatars'
 import { useViewCharactersContext } from '@context/ViewCharactersContext'
 import { iLobbyPlayerInfo } from '@models/Redux'
-import { selectLobbyInfo } from '@redux/slices/lobbySlice'
+import useThisLobby from '@queries/useThisLobby'
 import APIService from '@services/APIService'
-import { refreshLobbyInfo } from '@utils'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaXmark } from 'react-icons/fa6'
 import { IoMdPersonAdd } from 'react-icons/io'
 import { IoAdd } from 'react-icons/io5'
-import { useSelector } from 'react-redux'
 
 const Placeholder = () => {
     return (
@@ -35,7 +33,7 @@ const filterPlayersByControlledDescriptor = (descriptor: string | null) => {
 }
 
 const PlainListOfPlayers = () => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby, refetch } = useThisLobby()
     const { descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.control-details',
@@ -62,7 +60,7 @@ const PlainListOfPlayers = () => {
                                     : undefined
                             }
                             thenCase={() => {
-                                refreshLobbyInfo(lobby.lobbyId).then()
+                                refetch().then()
                             }}
                             catchCase={(error) => {
                                 console.error('Error removing player', error)
@@ -82,7 +80,7 @@ const PlainListOfPlayers = () => {
 
 const AddNewPlayer = () => {
     const [playerToAdd, setPlayerToAdd] = useState<string>('')
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby, refetch } = useThisLobby()
     const { descriptor } = useViewCharactersContext()
 
     return (
@@ -116,7 +114,7 @@ const AddNewPlayer = () => {
                         : undefined
                 }
                 thenCase={() => {
-                    refreshLobbyInfo(lobby.lobbyId).then()
+                    refetch().then()
                 }}
                 catchCase={(error) => {
                     console.error('Error adding player', error)
@@ -131,7 +129,7 @@ const AddNewPlayer = () => {
 }
 
 export const CharacterControlInfo = () => {
-    const lobby = useSelector(selectLobbyInfo)
+    const { lobby } = useThisLobby()
     const { descriptor } = useViewCharactersContext()
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.control-details',
