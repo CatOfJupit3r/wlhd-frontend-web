@@ -31,7 +31,7 @@ const BackendStatusHandler: FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const RootRouter = () => {
-    const { isLoggedIn } = useMe()
+    const { isLoggedIn, isLoading } = useMe()
 
     return (
         <BrowserRouter>
@@ -49,13 +49,18 @@ const RootRouter = () => {
                     {authRoutes.map((route) => (
                         <Route
                             path={route.path}
+                            caseSensitive
                             element={
-                                isLoggedIn ? (
-                                    <PageWrapper config={route}>
-                                        <route.Component />
-                                    </PageWrapper>
+                                !isLoading ? (
+                                    isLoggedIn ? (
+                                        <PageWrapper config={route}>
+                                            <route.Component />
+                                        </PageWrapper>
+                                    ) : (
+                                        <Navigate to={paths.signIn} />
+                                    )
                                 ) : (
-                                    <Navigate to={paths.signIn} />
+                                    <PseudoPage />
                                 )
                             }
                             key={route.path}
@@ -64,6 +69,7 @@ const RootRouter = () => {
                     {generalRoutes.map((route) => (
                         <Route
                             path={route.path}
+                            caseSensitive
                             element={
                                 <PageWrapper config={route}>
                                     <route.Component />

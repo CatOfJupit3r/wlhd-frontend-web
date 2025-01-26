@@ -41,6 +41,7 @@ export const useMe = () => {
     const {
         data: user,
         isLoading,
+        isFetching,
         isError,
         error,
         refetch,
@@ -62,9 +63,9 @@ export const useMe = () => {
     })
 
     const isLoggedIn = useMemo(() => {
-        if (loggedIn && isLoading) return loggedIn
-        return Boolean(loggedIn && isSuccess && !!user?.handle && !isLoading)
-    }, [loggedIn, isSuccess, user?.handle, isLoading])
+        if (isFetching) return loggedIn
+        return Boolean(loggedIn && isSuccess)
+    }, [loggedIn, isSuccess, isFetching])
 
     return {
         user: user ?? PLACEHOLDER_USER,
