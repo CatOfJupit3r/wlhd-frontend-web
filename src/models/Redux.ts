@@ -28,7 +28,19 @@ export interface iLobbyPlayerInfo {
     nickname: string
     userId: string
     characters: Array<[string, string]>
-    isApproved: boolean
+}
+
+export interface iWaitingApprovalPlayer {
+    handle: string
+    userId: string
+}
+
+export interface iInviteCode {
+    code: string
+    createdAt: Date
+    validUntil: Date
+    uses: number
+    maxUses: number
 }
 
 export interface iLobbyInformation {
@@ -36,6 +48,7 @@ export interface iLobbyInformation {
     lobbyId: string
     combats: Array<iCombatInfo>
     players: Array<iLobbyPlayerInfo>
+    waitingApproval: Array<iWaitingApprovalPlayer>
     characters: Array<iCharacterInLobby>
     gm: string
     layout: 'default' | 'gm'

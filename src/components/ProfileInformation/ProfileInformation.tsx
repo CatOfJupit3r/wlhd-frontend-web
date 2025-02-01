@@ -9,11 +9,12 @@ import {
     AlertDialogTitle,
 } from '@components/ui/alert-dialog'
 import { Badge } from '@components/ui/badge'
-import { Button } from '@components/ui/button'
+import { Button, MutationButton } from '@components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
 import { Input } from '@components/ui/input'
 import { Separator } from '@components/ui/separator'
 import { CurrentUserAvatar } from '@components/UserAvatars'
+import useJoinLobbyUsingInviteCode from '@mutations/useJoinLobbyUsingInviteCode'
 import useMe from '@queries/useMe'
 import { Calendar, Gamepad, Trophy } from 'lucide-react'
 import { useState } from 'react'
@@ -26,6 +27,7 @@ const ProfileInformation = () => {
     })
     const [showInviteOverlay, setShowInviteOverlay] = useState(false)
     const [inviteCode, setInviteCode] = useState('')
+    const { joinLobbyUsingInviteCode, isPending } = useJoinLobbyUsingInviteCode()
 
     return (
         <div className="flex justify-center bg-gradient-to-br p-4">
@@ -34,7 +36,7 @@ const ProfileInformation = () => {
                     <div className="absolute left-0 top-0 h-32 w-full rounded-t-lg bg-gradient-to-r from-blue-400 to-purple-400" />
                     <div className="relative flex items-center space-x-4">
                         <CurrentUserAvatar className={'size-32'} />
-                        <div className="rounded-2xl bg-white p-2 shadow-lg">
+                        <div className="rounded-lg bg-white px-2 py-1 shadow-lg">
                             <CardTitle className="text-3.5xl font-bold">@{user.handle}</CardTitle>
                         </div>
                     </div>
@@ -59,35 +61,6 @@ const ProfileInformation = () => {
                             ))}
                         </div>
                     </div>
-                    {
-                        // <div className="grid gap-4">
-                        //     <div className="text-lg font-semibold">{t('profile.pendingInvites')}</div>
-                        //     {userInfo.pendingInvites.map((invite) => (
-                        //         <Card key={invite.id}>
-                        //             <CardContent className="flex items-center justify-between p-4">
-                        //                 <div>
-                        //                     <p className="font-semibold">{invite.lobby}</p>
-                        //                     <p className="text-sm text-muted-foreground">
-                        //                         {t('profile.from')}: {invite.from}
-                        //                     </p>
-                        //                 </div>
-                        //                 <div className="flex space-x-2">
-                        //                     <Button
-                        //                         size="sm"
-                        //                         variant="destructive"
-                        //                         onClick={() => console.log('Declined invite:', invite.id)}
-                        //                     >
-                        //                         {t('profile.decline')}
-                        //                     </Button>
-                        //                     <Button size="sm" onClick={() => console.log('Accepted invite:', invite.id)}>
-                        //                         {t('profile.accept')}
-                        //                     </Button>
-                        //                 </div>
-                        //             </CardContent>
-                        //         </Card>
-                        //     ))}
-                        // </div>
-                    }
                     <Button className="w-full" onClick={() => setShowInviteOverlay(true)}>
                         <Gamepad className="mr-2 size-4" />
                         {t('join-new')}
@@ -95,10 +68,10 @@ const ProfileInformation = () => {
                 </CardContent>
             </Card>
             <AlertDialog open={showInviteOverlay}>
-                <AlertDialogContent className={'w-full max-w-2xl'}>
+                <AlertDialogContent className={'flex w-full max-w-2xl flex-col gap-6'}>
                     <AlertDialogTitle>{t('join-new')}</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        <p>{t('enter-invite-code')}</p>
+                    <AlertDialogDescription className={'flex flex-col gap-2'}>
+                        {t('enter-invite-code')}
                         <Input
                             type="text"
                             placeholder={t('invite-code')}
@@ -107,15 +80,19 @@ const ProfileInformation = () => {
                         />
                     </AlertDialogDescription>
                     <AlertDialogFooter>
-                        <AlertDialogCancel onClick={() => setShowInviteOverlay(false)}>{t('cancel')}</AlertDialogCancel>
-                        <AlertDialogAction
-                            onClick={() => {
-                                console.log('Inviting with code:', inviteCode)
-                                setShowInviteOverlay(false)
-                                setInviteCode('')
-                            }}
-                        >
-                            {t('send-invite-request')}
+                        <AlertDialogCancel onClick={() => setShowInviteOverlay(false)} className={'w-full'}>
+                            {t('close')}
+                        </AlertDialogCancel>
+                        <AlertDialogAction asChild>
+                            <MutationButton
+                                mutate={() => {
+                                    joinLobbyUsingInviteCode(inviteCode)
+                                }}
+                                isPending={isPending}
+                                className={'w-full'}
+                            >
+                                {t('send-invite-request')}
+                            </MutationButton>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

@@ -1,12 +1,20 @@
+import { cn } from '@utils'
 import React from 'react'
 import { Link, LinkProps } from 'react-router'
-import { twMerge } from 'tailwind-merge'
 
 const baseStyles = 'text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200'
 
-const StyledLink: React.FC<LinkProps> = ({ className, children, ...props }) => {
+interface StyledLinkProps extends LinkProps {
+    disabled?: boolean
+}
+
+const StyledLink: React.FC<StyledLinkProps> = ({ className, children, disabled, to, ...props }) => {
     return (
-        <Link className={twMerge(baseStyles, className)} {...props}>
+        <Link
+            className={cn(baseStyles, disabled ? 'pointer-events-none' : '', className)}
+            to={disabled ? '' : to}
+            {...props}
+        >
             {children}
         </Link>
     )

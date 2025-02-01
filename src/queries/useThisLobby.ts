@@ -8,6 +8,7 @@ const defaultLobbyState: iLobbyInformation = {
     lobbyId: '',
     combats: [],
     players: [],
+    waitingApproval: [],
     characters: [],
     gm: '',
     layout: 'default',

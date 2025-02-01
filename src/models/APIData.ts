@@ -3,6 +3,7 @@ export interface ShortLobbyInformation {
     isGm: boolean
     _id: string
     characters: Array<[string, string]>
+    needsApproval: boolean
 }
 
 export interface iUserAvatarProcessed {

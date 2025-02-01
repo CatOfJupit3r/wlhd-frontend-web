@@ -10,7 +10,7 @@ import {
     WeaponEditable,
 } from '@models/CombatEditorModels'
 import { CharacterClassConversion, CreateCombatBody } from '@models/EditorConversion'
-import { iLobbyInformation } from '@models/Redux'
+import { iInviteCode, iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/Redux'
 import { TranslationJSON } from '@models/Translation'
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth'
 import AuthManager from '@services/AuthManager'
@@ -27,9 +27,11 @@ const ENDPOINTS = {
     REFRESH_TOKEN: `${VITE_BACKEND_URL}/token`,
     HEALTH_CHECK: `${VITE_BACKEND_URL}/health`,
     USER_INFO: `${VITE_BACKEND_URL}/user/profile`,
+    USE_INVITE_CODE: `${VITE_BACKEND_URL}/user/join`,
 
     CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
     LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}`,
+    LOBBY_PLAYERS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/players`,
     GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_URL}/game/weapons?dlc=${dlc}`,
     GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_URL}/game/items?dlc=${dlc}`,
     GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_URL}/game/spells?dlc=${dlc}`,
@@ -51,10 +53,12 @@ const ENDPOINTS = {
         `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
     GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_URL}/user/${handle}/avatar`,
 
-    APPROVE_LOBBY_PLAYER: (userId: string, handle: string) => `${VITE_BACKEND_URL}/lobbies/${userId}/${handle}/approve`,
-    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}`,
-    USE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
+    APPROVE_LOBBY_PLAYER: (lobbyId: string, handle: string) =>
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${handle}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, handle: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${handle}`,
     DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
+    GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
+    CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
 }
 
 class APIService {
@@ -368,11 +372,11 @@ class APIService {
         })
     }
 
-    public getShortLobbyInfo = async (lobby_id: string): Promise<ShortLobbyInformation> => {
-        return (await this.fetch({
+    public getShortLobbyInfo = async (lobby_id: string) => {
+        return this.fetch<ShortLobbyInformation>({
             url: ENDPOINTS.SHORT_LOBBY_INFO(lobby_id),
             method: 'get',
-        })) as ShortLobbyInformation
+        })
     }
 
     public assignPlayerToCharacter = async (
@@ -441,6 +445,83 @@ class APIService {
             }
         }
         return ''
+    }
+
+    public async approveLobbyPlayer(lobbyId: string, handle: string) {
+        return this.fetch<{
+            players: Array<iLobbyPlayerInfo>
+            waitingApproval: Array<iWaitingApprovalPlayer>
+            message: string
+        }>({
+            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, handle),
+            method: 'patch',
+        })
+    }
+
+    public async getInviteCodes({ lobbyId }: { lobbyId: string }) {
+        const { codes } = await this.fetch<{ codes: Array<iInviteCode> }>({
+            url: ENDPOINTS.GET_INVITE_CODES(lobbyId),
+            method: 'get',
+        })
+        return (codes ?? []).map((code) => ({
+            ...code,
+            createdAt: new Date(code.createdAt),
+            validUntil: new Date(code.validUntil),
+        }))
+    }
+
+    public async createInviteCode({
+        lobbyId,
+        data,
+    }: {
+        lobbyId: string
+        data: { max_uses: number; valid_for: string }
+    }) {
+        const { codes } = await this.fetch<{ codes: Array<iInviteCode> }>({
+            url: ENDPOINTS.CREATE_INVITE_CODE(lobbyId),
+            method: 'post',
+            data,
+        })
+        return (codes ?? []).map((code) => ({
+            ...code,
+            createdAt: new Date(code.createdAt),
+            validUntil: new Date(code.validUntil),
+        }))
+    }
+
+    public async deleteInviteCode({ lobbyId, code }: { lobbyId: string; code: string }) {
+        const { codes } = await this.fetch<{ codes: Array<iInviteCode> }>({
+            url: ENDPOINTS.DELETE_INVITE_CODE(lobbyId, code),
+            method: 'delete',
+        })
+        return (codes ?? []).map((code) => ({
+            ...code,
+            createdAt: new Date(code.createdAt),
+            validUntil: new Date(code.validUntil),
+        }))
+    }
+
+    public async removeLobbyMember(lobbyId: string, handle: string) {
+        return this.fetch<{ players: Array<iLobbyPlayerInfo>; waitingApproval: Array<iWaitingApprovalPlayer> }>({
+            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, handle),
+            method: 'delete',
+        })
+    }
+
+    public async joinLobbyUsingInviteCode({ inviteCode }: { inviteCode: string }) {
+        const { profile } = await this.fetch<{ profile: UserInformation }>({
+            url: ENDPOINTS.USE_INVITE_CODE,
+            method: 'post',
+            data: { inviteCode },
+        })
+        return profile
+    }
+
+    public async getLobbyPlayers(lobbyId: string) {
+        return this.fetch<{ players: Array<iLobbyPlayerInfo>; waitingApproval: Array<iWaitingApprovalPlayer> }>({
+            url: ENDPOINTS.LOBBY_PLAYERS(lobbyId),
+            method: 'get',
+        })
     }
 }
 

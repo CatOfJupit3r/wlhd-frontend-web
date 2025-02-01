@@ -5,7 +5,7 @@ import { PulsingSpinner } from '@components/Spinner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { cn } from '@utils'
 import { ClassValue } from 'clsx'
-import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, useCallback, useState } from 'react'
+import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -21,7 +21,7 @@ const buttonVariants = cva(
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
                 destructiveGhost:
-                    'border border-transparent hover:border-destructive hover:text-destructive-foreground',
+                    'border border-transparent hover:border-destructive hover:text-destructive-foreground hover:bg-destructive/90',
                 link: 'text-primary underline-offset-4 hover:underline',
             },
             size: {
@@ -79,6 +79,7 @@ const AwaitingButton = ({
     thenCase,
     catchCase,
     finallyCase,
+    disabled,
     ...props
 }: {
     onClick?: () => Promise<unknown>
@@ -88,8 +89,8 @@ const AwaitingButton = ({
 } & Omit<ButtonProps, 'onClick'>) => {
     const [isAwaiting, setIsAwaiting] = useState(false)
 
-    const handleClick = async () => {
-        if (isAwaiting) {
+    const handleClick = useCallback(async () => {
+        if (isAwaiting || disabled) {
             return
         }
         setIsAwaiting(true)
@@ -110,10 +111,10 @@ const AwaitingButton = ({
                 finallyCase()
             }
         }
-    }
+    }, [disabled, isAwaiting, onClick, thenCase, catchCase, finallyCase])
 
     return (
-        <Button {...props} onClick={handleClick} disabled={isAwaiting}>
+        <Button {...props} onClick={handleClick} disabled={isAwaiting || disabled}>
             {isAwaiting ? <PulsingSpinner /> : props.children}
         </Button>
     )
@@ -143,6 +144,44 @@ const ButtonWithTooltip = ({
     )
 }
 
+const AwaitingButtonWithTooltip = ({
+    onClick,
+    thenCase,
+    catchCase,
+    finallyCase,
+    tooltip,
+    tooltipClassname,
+    tooltipProps,
+    tooltipContentProps,
+    ...props
+}: {
+    onClick?: () => Promise<unknown>
+    thenCase?: () => void
+    catchCase?: (error: unknown) => void
+    finallyCase?: () => void
+    tooltip: string
+    tooltipClassname?: ClassValue
+    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>
+    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>
+} & ButtonProps) => {
+    return (
+        <Tooltip {...tooltipProps}>
+            <TooltipTrigger asChild>
+                <AwaitingButton
+                    {...props}
+                    onClick={onClick}
+                    thenCase={thenCase}
+                    catchCase={catchCase}
+                    finallyCase={finallyCase}
+                />
+            </TooltipTrigger>
+            <TooltipContent {...tooltipContentProps}>
+                <p className={cn(tooltipClassname)}>{tooltip}</p>
+            </TooltipContent>
+        </Tooltip>
+    )
+}
+
 const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }) => {
     return (
         <Button
@@ -156,4 +195,33 @@ const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }
     )
 }
 
-export { Button, AwaitingButton, TimeoutButton, buttonVariants, ButtonWithTooltip, ButtonLink }
+type MutationButtonProps = {
+    mutate: () => void
+    isPending: boolean
+    children?: ReactNode
+} & Omit<ButtonProps, 'onClick'>
+
+function MutationButton({ mutate, children, isPending, disabled, ...props }: MutationButtonProps) {
+    const handleClick = () => {
+        if (!isPending && !disabled) {
+            mutate()
+        }
+    }
+
+    return (
+        <Button {...props} onClick={handleClick} disabled={disabled || isPending}>
+            {isPending ? <PulsingSpinner /> : children}
+        </Button>
+    )
+}
+
+export {
+    Button,
+    AwaitingButton,
+    TimeoutButton,
+    buttonVariants,
+    ButtonWithTooltip,
+    ButtonLink,
+    AwaitingButtonWithTooltip,
+    MutationButton,
+}

@@ -2,49 +2,24 @@ import { Card, CardContent } from '@components/ui/card'
 import CommaSeparatedList from '@components/ui/coma-separated-list'
 import { Skeleton } from '@components/ui/skeleton'
 import StyledLink from '@components/ui/styled-link'
-import { ShortLobbyInformation } from '@models/APIData'
+import useLobbyShortInfo from '@queries/useLobbyShortInfo'
 import paths from '@router/paths'
-import APIService from '@services/APIService'
+import { cn } from '@utils'
 import { Crown } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-
-type LoadingType = 'loading' | 'failed' | 'success'
 
 const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'profile',
     })
-    const [lobbyInfo, setLobbyInfo] = useState<ShortLobbyInformation>({
-        name: '???',
-        isGm: false,
-        _id: '',
-        characters: [],
-    })
-    const [status, setStatus] = useState<LoadingType>('loading')
+    const { lobbyInfo, isLoading, isError } = useLobbyShortInfo(lobbyId)
     const [placeholderParams] = useState({
         title: Math.floor(Math.random() * 16) + 5,
         description: Array.from({ length: Math.floor(Math.random() * 3) + 1 }).map(
             () => Math.floor(Math.random() * 8) + 8
         ),
     })
-
-    useEffect(() => {
-        if (!lobbyId) {
-            setStatus('failed')
-            return
-        }
-        const fetchLobbyInfo = async () => {
-            try {
-                const response = await APIService.getShortLobbyInfo(lobbyId)
-                setLobbyInfo(response)
-                setStatus('success')
-            } catch (_) {
-                setStatus('failed')
-            }
-        }
-        fetchLobbyInfo().then()
-    }, [lobbyId])
 
     const LinkToLobby = useCallback(
         () => <p className="text-xl font-semibold">{lobbyInfo.name || '???'}</p>,
@@ -98,18 +73,17 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     )
 
     const DecideWhatToShow = useCallback(() => {
-        switch (status) {
-            case 'success':
-                return <LobbyInfoContent />
-            case 'loading':
-                return <Placeholders pulsating={true} />
-            default:
-                return <Placeholders pulsating={false} />
-        }
-    }, [status, LobbyInfoContent, Placeholders])
+        if (isLoading) return <Placeholders pulsating={true} />
+        if (!isError) return <LobbyInfoContent />
+        return <Placeholders pulsating={false} />
+    }, [isError, isLoading, LobbyInfoContent, Placeholders])
 
     return (
-        <StyledLink to={paths.lobbyRoom.replace(':lobbyId', lobbyId)} className="block w-full no-underline">
+        <StyledLink
+            to={paths.lobbyRoom.replace(':lobbyId', lobbyId)}
+            className={cn('block w-full no-underline')}
+            disabled={lobbyInfo?.needsApproval}
+        >
             <Card className="transition-colors duration-200 hover:bg-accent">
                 <CardContent className="p-4">
                     <DecideWhatToShow />
