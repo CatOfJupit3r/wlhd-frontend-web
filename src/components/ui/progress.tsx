@@ -2,7 +2,7 @@ import * as ProgressPrimitive from '@radix-ui/react-progress'
 
 import { cn } from '@utils'
 import { ClassValue } from 'clsx'
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 
 type ProgressProps = {
     colored?: {
@@ -15,7 +15,7 @@ type ProgressProps = {
 }
 
 const Progress = forwardRef<
-    ElementRef<typeof ProgressPrimitive.Root>,
+    ComponentRef<typeof ProgressPrimitive.Root>,
     ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & ProgressProps
 >(({ className, value, colored, width, height, direction, ...props }, ref) => (
     <ProgressPrimitive.Root

@@ -2,12 +2,12 @@ import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDown } from 'lucide-react'
 
 import { cn } from '@utils'
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 
 const Accordion = AccordionPrimitive.Root
 
 const AccordionItem = forwardRef<
-    ElementRef<typeof AccordionPrimitive.Item>,
+    ComponentRef<typeof AccordionPrimitive.Item>,
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => (
     <AccordionPrimitive.Item ref={ref} className={cn('border-b', className)} {...props} />
@@ -15,15 +15,14 @@ const AccordionItem = forwardRef<
 AccordionItem.displayName = 'AccordionItem'
 
 const AccordionTrigger = forwardRef<
-    ElementRef<typeof AccordionPrimitive.Trigger>,
+    ComponentRef<typeof AccordionPrimitive.Trigger>,
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Header className="flex">
         <AccordionPrimitive.Trigger
             ref={ref}
             className={cn(
-                `flex flex-1 items-center justify-between py-3 font-medium transition-all hover:underline
-                [&[data-state=open]>svg]:rotate-180`,
+                `flex flex-1 items-center justify-between py-3 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180`,
                 className
             )}
             {...props}
@@ -36,12 +35,12 @@ const AccordionTrigger = forwardRef<
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
 const AccordionContent = forwardRef<
-    ElementRef<typeof AccordionPrimitive.Content>,
+    ComponentRef<typeof AccordionPrimitive.Content>,
     ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
     <AccordionPrimitive.Content
         ref={ref}
-        className="text-sm overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+        className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
         {...props}
     >
         <div className={cn('flex flex-col gap-2 pb-4 pt-0', className)}>{children}</div>
