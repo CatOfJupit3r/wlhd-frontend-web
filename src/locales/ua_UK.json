@@ -222,7 +222,8 @@
             "is-active": "Є активним?",
             "preview": "Передогляд",
             "add": "Додати",
-            "infinity": "Безкінечно"
+            "infinity": "Безкінечно",
+            "remove": "Видалити"
         },
         "general-component": {
             "cd:": "КД (CUR/MAX)",
