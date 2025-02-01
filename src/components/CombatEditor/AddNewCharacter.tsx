@@ -24,9 +24,9 @@ import {
     SelectValue,
 } from '@components/ui/select';
 import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext';
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
 import { useDataContext } from '@context/GameDataProvider';
 import { ControlledBy } from '@models/EditorConversion';
+import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import { SUPPORTED_DLCs } from 'config';
 import { useEffect, useState } from 'react';
@@ -36,9 +36,9 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
     const [dlc, setDlc] = useState<string>('');
     const [descriptor, setDescriptor] = useState<string>('');
     const { characters, fetchAndSetCharacters } = useDataContext();
-    const { characters: characterFromCoordinator, fetchCharacter } = useCoordinatorCharactersContext();
-    const { t } = useTranslation();
     const { lobby } = useThisLobby();
+    const { character: characterFromCoordinator, isPending } = useCoordinatorCharacter(lobby.lobbyId, descriptor);
+    const { t } = useTranslation();
     const { addCharacter } = useCombatEditorContext();
 
     useEffect(() => {
@@ -114,6 +114,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                 <AlertDialogAction
                     disabled={
                         !dlc ||
+                        isPending ||
                         !descriptor ||
                         (dlc !== 'coordinator' &&
                             !characters?.[dlc]?.[descriptor] &&
@@ -137,7 +138,6 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                                 });
                             }
                         } else {
-                            const character = characterFromCoordinator?.[descriptor];
                             const player = lobby.players.find((player) =>
                                 player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor),
                             );
@@ -145,16 +145,13 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                                 ? CONTROLLED_BY_PLAYER(player.userId)
                                 : CONTROLLED_BY_GAME_LOGIC;
 
-                            if (character) {
-                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled);
-                            } else {
-                                const TryFetchCharacter = async () => {
-                                    const character = await fetchCharacter(lobby.lobbyId, descriptor, true);
-                                    if (character) {
-                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled);
-                                    }
-                                };
-                                TryFetchCharacter().then();
+                            if (characterFromCoordinator) {
+                                addCharacter(
+                                    clickedSquare,
+                                    characterFromCoordinator,
+                                    `${dlc}:${descriptor}`,
+                                    controlled,
+                                );
                             }
                         }
                     }}

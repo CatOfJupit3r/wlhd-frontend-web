@@ -4,8 +4,8 @@ import { Combobox } from '@components/ui/combobox';
 import { Separator } from '@components/ui/separator';
 import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo';
 import ViewContent from '@components/ViewLobbyCharacters/ViewContent';
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
 import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
+import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import paths from '@router/paths';
 import { cn } from '@utils';
@@ -52,49 +52,31 @@ const NoCharactersPresent = () => {
 
 const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     const { lobby } = useThisLobby();
-    const { fetchCharacter } = useCoordinatorCharactersContext();
-    const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext();
+    const { changeViewedCharacter } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer',
     });
     const navigate = useNavigate();
+    const [descriptor, setDescriptor] = useState<string>(initial ?? '');
+    const { character, refetch, isError } = useCoordinatorCharacter(lobby.lobbyId, descriptor);
 
-    useEffect(() => {
-        console.log('Character in View was changed');
-    }, [viewedCharacter]);
-
-    const [current, setCurrent] = useState<null | number>(null);
     const [characterMenu, setCharacterMenu] = useState<string>('display');
 
     useEffect(() => {
-        if (descriptor !== null && !lobby.characters.map((c) => c.descriptor).includes(descriptor)) {
+        if (!descriptor) {
             changeViewedCharacter(null, null);
-            setCurrent(null);
+            return;
         }
-    }, [lobby.characters]);
+        if (!character) return;
+        if (descriptor === character.descriptor) return;
+        changeViewedCharacter(character, descriptor);
+    }, [character, descriptor]);
 
     useEffect(() => {
-        if (initial && lobby && lobby.characters) {
-            setCurrent(lobby.characters.findIndex((c) => c.descriptor === initial));
-        }
-    }, [initial, lobby]);
-
-    useEffect(() => {
-        if (current === null || current === -1) {
-            console.log('No character selected');
+        if (isError) {
             changeViewedCharacter(null, null);
-        } else if (lobby && lobby.characters && lobby.characters[current]) {
-            const descriptor = lobby.characters[current].descriptor;
-            fetchCharacter(lobby.lobbyId, descriptor)
-                .then((data) => {
-                    changeViewedCharacter(data, descriptor);
-                })
-                .catch((e) => {
-                    console.error(e);
-                    changeViewedCharacter(null, null);
-                });
         }
-    }, [current]);
+    }, [isError]);
 
     return (
         <div className={cn('flex w-full flex-row justify-center max-[960px]:flex-col')}>
@@ -105,8 +87,8 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                     <div className={'flex w-96 flex-col gap-2 p-4 max-[960px]:w-full'}>
                         <div className={'flex flex-col gap-1'}>
                             <Combobox
-                                items={lobby.characters.map((c, index) => ({
-                                    value: index.toString(),
+                                items={lobby.characters.map((c) => ({
+                                    value: c.descriptor,
                                     label: c.decorations ? `${c.decorations.name} (@${c.descriptor})` : c.descriptor,
                                     icon: c.decorations
                                         ? () => (
@@ -119,18 +101,9 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                         : undefined,
                                 }))}
                                 includeSearch={true}
-                                value={current === null ? '' : current.toString()}
+                                value={descriptor}
                                 onChange={(value) => {
-                                    const valueAsNumber = parseInt(value);
-                                    if (isNaN(valueAsNumber)) {
-                                        setCurrent(null);
-                                    } else if (valueAsNumber < 0 || valueAsNumber >= lobby.characters.length) {
-                                        setCurrent(null);
-                                    } else if (valueAsNumber === current) {
-                                        return;
-                                    } else {
-                                        setCurrent(parseInt(value));
-                                    }
+                                    setDescriptor(value);
                                 }}
                             />
                             <Separator />
@@ -138,19 +111,10 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                 variant={'secondary'}
                                 className={'w-full'}
                                 timeoutTime={10000}
-                                disabled={current === null || current === -1}
+                                disabled={!descriptor}
                                 onClick={() => {
-                                    if (current === null || current === -1) {
-                                        return;
-                                    }
-                                    fetchCharacter(lobby.lobbyId, lobby.characters[current].descriptor, true)
-                                        .then((data) => {
-                                            changeViewedCharacter(data, lobby.characters[current].descriptor);
-                                        })
-                                        .catch((e) => {
-                                            console.error(e);
-                                            changeViewedCharacter(null, null);
-                                        });
+                                    if (!descriptor) return;
+                                    refetch().then();
                                 }}
                             >
                                 {t('refresh-character')}
@@ -202,7 +166,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                                       setCharacterMenu(item.value);
                                                   }
                                         }
-                                        disabled={current === null || item.disabled || false}
+                                        disabled={!descriptor || item.disabled || false}
                                         className={
                                             'flex flex-row justify-normal gap-1 text-left max-[960px]:justify-center'
                                         }

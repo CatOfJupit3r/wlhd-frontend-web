@@ -343,11 +343,11 @@ class APIService {
         };
     };
 
-    public getCharacterInfo = async (lobby_id: string, descriptor: string): Promise<CharacterDataEditable> => {
-        return (await this.fetch({
+    public getCharacterInfo = async (lobby_id: string, descriptor: string) => {
+        return this.fetch<CharacterDataEditable>({
             url: ENDPOINTS.LOBBY_CHARACTER_INFO(lobby_id, descriptor),
             method: 'get',
-        })) as CharacterDataEditable;
+        });
     };
 
     public createLobbyCombat = async (

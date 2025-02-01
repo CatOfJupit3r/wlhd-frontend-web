@@ -10,18 +10,17 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@components/ui/alert-dialog';
-import { Button } from '@components/ui/button';
+import { Button, MutationButton } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
 import {
     CharacterEditorContextType,
     CharacterEditorProvider,
     useBuildCharacterEditorProps,
 } from '@context/CharacterEditorProvider';
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
-import { toastError } from '@hooks/useToast';
 import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { CharacterInfoFull } from '@models/GameModels';
+import useUpdateCharacter from '@mutations/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import APIService from '@services/APIService';
 import GameConverters from '@services/GameConverters';
@@ -42,14 +41,14 @@ const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
 const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4';
 
 const CharacterEditorMenu = () => {
-    const { viewedCharacter: character, descriptor, changeViewedCharacter } = useViewCharactersContext();
-    const { lobby, refetch } = useThisLobby();
+    const { viewedCharacter: character, descriptor } = useViewCharactersContext();
+    const { lobby } = useThisLobby();
     const {
         character: editedCharacter,
         changeEditedCharacter,
         resetCharacter,
     } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable);
-    const { fetchCharacter } = useCoordinatorCharactersContext();
+    const { updateCharacter, isPending } = useUpdateCharacter();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
     });
@@ -73,9 +72,10 @@ const CharacterEditorMenu = () => {
                 >
                     {t('reset')}
                 </Button>
-                <Button
+                <MutationButton
                     className={'w-full'}
-                    onClick={() => {
+                    isPending={isPending}
+                    mutate={() => {
                         if (!descriptor) {
                             return;
                         }
@@ -83,36 +83,16 @@ const CharacterEditorMenu = () => {
                             JSON.stringify(character) !== JSON.stringify(editedCharacter);
                         if (wasCharacterChanged) {
                             // TODO: create omit function to only send changed fields
-
-                            APIService.updateCharacter(
-                                lobby.lobbyId,
-                                descriptor as string,
-                                prepareCharacterToClassConversion(editedCharacter),
-                            )
-                                .then(() => {
-                                    console.log('Character was updated');
-                                    refetch().then(() => {
-                                        fetchCharacter(lobby.lobbyId, descriptor, true)
-                                            .then((data) => {
-                                                changeViewedCharacter(data, descriptor);
-                                            })
-                                            .catch((e) => {
-                                                console.error(e);
-                                                changeViewedCharacter(null, null);
-                                            });
-                                    });
-                                })
-                                .catch((error) => {
-                                    toastError({
-                                        title: error?.title || t('error'),
-                                        description: error?.details ?? error?.message ?? t('error-message'),
-                                    });
-                                });
+                            updateCharacter({
+                                lobbyId: lobby.lobbyId,
+                                descriptor: descriptor as string,
+                                character: prepareCharacterToClassConversion(editedCharacter),
+                            });
                         }
                     }}
                 >
                     {t('save')}
-                </Button>
+                </MutationButton>
             </div>
             <Separator />
             <CharacterEditorProvider
