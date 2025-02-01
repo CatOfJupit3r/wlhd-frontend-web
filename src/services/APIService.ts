@@ -10,7 +10,13 @@ import {
     WeaponEditable,
 } from '@models/CombatEditorModels';
 import { CharacterClassConversion, CreateCombatBody } from '@models/EditorConversion';
-import { iInviteCode, iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/Redux';
+import {
+    iCharacterInLobby,
+    iInviteCode,
+    iLobbyInformation,
+    iLobbyPlayerInfo,
+    iWaitingApprovalPlayer,
+} from '@models/Redux';
 import { TranslationJSON } from '@models/Translation';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthManager from '@services/AuthManager';
@@ -308,26 +314,25 @@ class APIService {
         });
     };
 
-    public deleteCharacter = async (lobbyId: string, descriptor: string): Promise<unknown> => {
-        return await this.fetch({
+    public deleteCharacter = async (lobbyId: string, descriptor: string) => {
+        return this.fetch<{
+            characters: Array<iCharacterInLobby>;
+            players: Array<iLobbyPlayerInfo>;
+        }>({
             url: ENDPOINTS.DELETE_CHARACTER(lobbyId, descriptor),
             method: 'delete',
         });
     };
 
-    public updateCharacter = async (
-        lobbyId: string,
-        descriptor: string,
-        data: CharacterClassConversion,
-    ): Promise<unknown> => {
-        return await this.fetch({
+    public updateCharacter = async (lobbyId: string, descriptor: string, data: CharacterClassConversion) => {
+        return this.fetch({
             url: ENDPOINTS.UPDATE_CHARACTER(lobbyId, descriptor),
             method: 'put',
             data,
         });
     };
 
-    public getUserAvatar = async (handle: string): Promise<string> => {
+    public getUserAvatar = async (handle: string) => {
         const res = (await this.fetch({
             url: ENDPOINTS.GET_USER_AVATAR(handle),
             method: 'get',

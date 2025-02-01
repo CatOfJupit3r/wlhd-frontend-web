@@ -20,9 +20,9 @@ import {
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { CharacterInfoFull } from '@models/GameModels';
+import useDeleteCharacter from '@mutations/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
-import APIService from '@services/APIService';
 import GameConverters from '@services/GameConverters';
 import { cn } from '@utils';
 import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction';
@@ -107,11 +107,12 @@ const CharacterEditorMenu = () => {
 };
 
 const GmOptionMenu = () => {
-    const { lobby, refetch } = useThisLobby();
+    const { lobby } = useThisLobby();
     const { descriptor } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.gm-options',
     });
+    const { deleteCharacter, isPending } = useDeleteCharacter();
 
     return (
         <div className={cn(componentClass, 'h-[350px] justify-between')}>
@@ -146,25 +147,22 @@ const GmOptionMenu = () => {
                             </Button>
                         </AlertDialogCancel>
                         <AlertDialogAction asChild>
-                            <Button
-                                variant={'destructive'}
-                                disabled={!descriptor || !lobby}
-                                onClick={() => {
+                            <MutationButton
+                                isPending={isPending}
+                                mutate={() => {
                                     if (!descriptor || !lobby) {
                                         return;
                                     }
-                                    APIService.deleteCharacter(lobby.lobbyId, descriptor)
-                                        .then(() => {
-                                            refetch().then();
-                                        })
-                                        .catch((error) => {
-                                            console.error('Error removing character', error);
-                                        });
+                                    deleteCharacter({
+                                        lobbyId: lobby.lobbyId,
+                                        descriptor,
+                                    });
                                 }}
+                                disabled={!descriptor || !lobby}
                             >
                                 <RiDeleteBin6Line className={'mr-1 text-[1rem] text-white'} />
                                 {t('delete')}
-                            </Button>
+                            </MutationButton>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
