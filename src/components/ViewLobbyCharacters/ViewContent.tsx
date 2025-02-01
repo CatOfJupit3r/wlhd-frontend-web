@@ -38,7 +38,7 @@ const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     },
 };
 
-const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4';
+const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4 h-full';
 
 const CharacterEditorMenu = () => {
     const { viewedCharacter: character, descriptor } = useViewCharactersContext();
@@ -114,7 +114,10 @@ const GmOptionMenu = () => {
     });
 
     return (
-        <div className={cn(componentClass, 'justify-end')}>
+        <div className={cn(componentClass, 'h-[350px] justify-between')}>
+            <div>
+                <h2 className={'w-full text-center text-3xl'}>{t('title')}</h2>
+            </div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <Button
@@ -195,6 +198,7 @@ const LobbyCharacterDisplay = () => {
 
 const ViewContent = ({ type }: { type: string }) => {
     const { viewedCharacter } = useViewCharactersContext();
+    const { lobby } = useThisLobby();
 
     if (!viewedCharacter) {
         return <CharacterDisplayPlaceholder className={componentClass} />;
@@ -204,9 +208,18 @@ const ViewContent = ({ type }: { type: string }) => {
         case 'display':
             return <LobbyCharacterDisplay />;
         case 'edit':
-            return <CharacterEditorMenu />;
-        case 'gm-options':
-            return <GmOptionMenu />;
+            return lobby.layout === 'gm' ? (
+                <CharacterEditorMenu />
+            ) : (
+                <CharacterDisplayPlaceholder className={componentClass} />
+            );
+        case 'gm-options': {
+            return lobby.layout === 'gm' ? (
+                <GmOptionMenu />
+            ) : (
+                <CharacterDisplayPlaceholder className={componentClass} />
+            );
+        }
         default:
             return <CharacterDisplayPlaceholder className={componentClass} />;
     }

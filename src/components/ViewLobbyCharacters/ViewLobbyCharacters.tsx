@@ -79,12 +79,12 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
     }, [isError]);
 
     return (
-        <div className={cn('flex w-full flex-row justify-center max-[960px]:flex-col')}>
+        <div className={cn('flex w-full flex-row justify-center gap-4 py-4 max-[960px]:flex-col')}>
             {lobby.characters.length === 0 ? (
                 <NoCharactersPresent />
             ) : (
                 <>
-                    <div className={'flex w-96 flex-col gap-2 p-4 max-[960px]:w-full'}>
+                    <div className={'flex w-96 flex-col gap-2 max-[960px]:w-full'}>
                         <div className={'flex flex-col gap-1'}>
                             <Combobox
                                 items={lobby.characters.map((c) => ({
@@ -154,6 +154,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                     disabled: lobby.layout !== 'gm',
                                 },
                             ].map((item, index) => {
+                                if (item.disabled) return null;
                                 return (
                                     <Button
                                         key={index}
