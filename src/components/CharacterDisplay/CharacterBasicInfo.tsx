@@ -1,26 +1,26 @@
-import { CharacterGameAsset } from '@components/GameAsset'
-import { LocationIcon } from '@components/icons'
-import { isDescriptor } from '@utils'
-import { useTranslation } from 'react-i18next'
+import { CharacterGameAsset } from '@components/GameAsset';
+import { LocationIcon } from '@components/icons';
+import { isDescriptor } from '@utils';
+import { useTranslation } from 'react-i18next';
 
 const CharacterBasicInfo = ({
     includeSquare = true,
     includeDescription = true,
     character,
 }: {
-    includeSquare?: boolean
-    includeDescription?: boolean
+    includeSquare?: boolean;
+    includeDescription?: boolean;
     character: {
-        name: string
-        sprite: string
-        description: string | null
+        name: string;
+        sprite: string;
+        description: string | null;
         square: {
-            line: number
-            column: number
-        } | null
-    }
+            line: number;
+            column: number;
+        } | null;
+    };
 }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
         <div className={'flex flex-row gap-4'}>
@@ -53,7 +53,7 @@ const CharacterBasicInfo = ({
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CharacterBasicInfo
+export default CharacterBasicInfo;

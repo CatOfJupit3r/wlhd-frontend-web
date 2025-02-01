@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { FC } from 'react';
 
 interface iLobbyInformationHeader {
-    header: string
+    header: string;
 }
 
 const LobbyInformationHeader: FC<iLobbyInformationHeader> = ({ header }) => {
@@ -9,7 +9,7 @@ const LobbyInformationHeader: FC<iLobbyInformationHeader> = ({ header }) => {
         <div className={'flex flex-row justify-between'}>
             <h2>{header}</h2>
         </div>
-    )
-}
+    );
+};
 
-export default LobbyInformationHeader
+export default LobbyInformationHeader;

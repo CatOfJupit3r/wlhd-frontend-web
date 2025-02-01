@@ -1,12 +1,12 @@
-import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId'
-import { iInviteCode } from '@models/Redux'
-import APIService from '@services/APIService'
-import { useQuery } from '@tanstack/react-query'
+import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
+import { iInviteCode } from '@models/Redux';
+import APIService from '@services/APIService';
+import { useQuery } from '@tanstack/react-query';
 
-const placeholder: Array<iInviteCode> = []
+const placeholder: Array<iInviteCode> = [];
 
 const useLobbyInviteCodes = () => {
-    const lobbyId = useCurrentLobbyId()
+    const lobbyId = useCurrentLobbyId();
 
     const { data: codes } = useQuery<Array<iInviteCode>>({
         enabled: true,
@@ -14,8 +14,8 @@ const useLobbyInviteCodes = () => {
 
         // Query function to fetch user data
         queryFn: async () => {
-            if (!lobbyId) throw new Error('No lobby ID provided')
-            return APIService.getInviteCodes({ lobbyId })
+            if (!lobbyId) throw new Error('No lobby ID provided');
+            return APIService.getInviteCodes({ lobbyId });
         },
 
         staleTime: 5 * 60 * 1000,
@@ -23,10 +23,10 @@ const useLobbyInviteCodes = () => {
         retry: 1,
 
         placeholderData: placeholder,
-    })
+    });
     return {
         codes: codes ?? placeholder,
-    }
-}
+    };
+};
 
-export default useLobbyInviteCodes
+export default useLobbyInviteCodes;

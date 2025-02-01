@@ -1,9 +1,9 @@
 export interface TranslationJSON {
     [languageCode: string]: {
-        [dlc: string]: TranslationSnippet
-    }
+        [dlc: string]: TranslationSnippet;
+    };
 }
 
 export interface TranslationSnippet {
-    [key: string]: TranslationSnippet | string
+    [key: string]: TranslationSnippet | string;
 }

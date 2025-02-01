@@ -48,7 +48,7 @@ const PseudoPage = () => {
                 </svg>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default PseudoPage
+export default PseudoPage;

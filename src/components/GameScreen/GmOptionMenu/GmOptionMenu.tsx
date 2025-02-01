@@ -1,4 +1,4 @@
-import DebugSpecificOptions from '@components/GameScreen/GmOptionMenu/DebugSpecificOptions'
+import DebugSpecificOptions from '@components/GameScreen/GmOptionMenu/DebugSpecificOptions';
 
 /*
 
@@ -23,7 +23,7 @@ const GmOptionMenu = () => {
         <div className={'flex flex-col gap-3 px-3'}>
             <DebugSpecificOptions />
         </div>
-    )
-}
+    );
+};
 
-export default GmOptionMenu
+export default GmOptionMenu;

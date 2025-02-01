@@ -1,5 +1,5 @@
 export interface iDLCData {
-    creator: string
+    creator: string;
 }
 
 const DLCData: { [key: string]: iDLCData } = {
@@ -9,6 +9,6 @@ const DLCData: { [key: string]: iDLCData } = {
     nyrzamaer: {
         creator: 'CatOfJupit3r',
     },
-}
+};
 
-export default DLCData
+export default DLCData;

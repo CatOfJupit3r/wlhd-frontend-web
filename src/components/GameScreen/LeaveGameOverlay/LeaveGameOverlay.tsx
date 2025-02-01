@@ -6,34 +6,34 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogTitle,
-} from '@components/ui/alert-dialog'
-import SocketService from '@services/SocketService'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+} from '@components/ui/alert-dialog';
+import SocketService from '@services/SocketService';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'game.exit',
-    })
-    const navigate = useNavigate()
+    });
+    const navigate = useNavigate();
 
     const leaveGame = useCallback(() => {
-        SocketService.disconnect()
-        setChosen(null)
-        navigate('..')
-    }, [])
+        SocketService.disconnect();
+        setChosen(null);
+        navigate('..');
+    }, []);
 
     const stayInGame = useCallback(() => {
-        setChosen(null)
-    }, [])
+        setChosen(null);
+    }, []);
 
     return (
         <AlertDialog
             open={true}
             onOpenChange={(isOpen) => {
                 if (!isOpen) {
-                    setChosen(null)
+                    setChosen(null);
                 }
             }}
         >
@@ -46,7 +46,7 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
-    )
-}
+    );
+};
 
-export default LeaveGameOverlay
+export default LeaveGameOverlay;

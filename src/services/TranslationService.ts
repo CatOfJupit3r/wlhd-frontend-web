@@ -1,11 +1,11 @@
-import en_US from '../locales/en_US.json'
-import ua_UK from '../locales/ua_UK.json'
-import { TranslationJSON } from '@models/Translation'
-import axios from 'axios'
-import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from 'config'
-import i18next, { ResourceLanguage } from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import { initReactI18next } from 'react-i18next'
+import { TranslationJSON } from '@models/Translation';
+import axios from 'axios';
+import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from 'config';
+import i18next, { ResourceLanguage } from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
+import en_US from '../locales/en_US.json';
+import ua_UK from '../locales/ua_UK.json';
 
 class TranslationService {
     constructor(fallbackLng: string = FALLBACK_LANGUAGE) {
@@ -19,28 +19,28 @@ class TranslationService {
                     'uk-UA': this.getDefaultLanguageResourcePack('uk-UA'),
                 },
             })
-            .then()
+            .then();
 
         this.loadTranslations().then(
             () => {
-                console.log('Custom translations loaded')
+                console.log('Custom translations loaded');
             },
             (error) => {
-                console.log('Error loading translations', error)
-            }
-        )
+                console.log('Error loading translations', error);
+            },
+        );
     }
 
     public async loadTranslations() {
         await Promise.all(
             SUPPORTED_DLCs.map(async ({ descriptor: dlc }) => {
-                await this.spawnDLCTranslations(dlc)
-            })
-        )
+                await this.spawnDLCTranslations(dlc);
+            }),
+        );
     }
 
     private createLanguageDetector() {
-        const detector = new LanguageDetector()
+        const detector = new LanguageDetector();
         detector.init({
             order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
             lookupQuerystring: 'lng',
@@ -54,43 +54,43 @@ class TranslationService {
             cookieDomain: 'myDomain',
             htmlTag: document.documentElement,
             checkWhitelist: true,
-        })
-        return detector
+        });
+        return detector;
     }
 
     private getLanguages = () => {
-        return [FALLBACK_LANGUAGE, i18next.language]
-    }
+        return [FALLBACK_LANGUAGE, i18next.language];
+    };
 
     private spawnDLCTranslations = async (dlc: string) => {
         try {
             const { data: translations }: { data: TranslationJSON } = await axios.get(
                 `${VITE_CDN_URL}/game/${dlc}/translations?languages=${this.getLanguages()
                     .map((language) => language.replace('-', '_'))
-                    .join(',')}`
-            )
+                    .join(',')}`,
+            );
             for (const language in translations) {
-                if (translations[language] === null) continue
+                if (translations[language] === null) continue;
                 for (const dlc in translations[language]) {
-                    if (translations[language][dlc] === null) continue
-                    i18next.addResourceBundle(language.replace('_', '-'), dlc, translations[language][dlc], true, true)
+                    if (translations[language][dlc] === null) continue;
+                    i18next.addResourceBundle(language.replace('_', '-'), dlc, translations[language][dlc], true, true);
                 }
-                console.log(`Translations for ${dlc} loaded`)
+                console.log(`Translations for ${dlc} loaded`);
             }
         } catch (error) {
-            console.log('Failed to fetch game DLC translations', error)
+            console.log('Failed to fetch game DLC translations', error);
         }
-    }
+    };
 
     private getDefaultLanguageResourcePack = (lang: string): ResourceLanguage => {
         switch (lang) {
             case 'uk-UA':
-                return { local: ua_UK }
+                return { local: ua_UK };
             case 'en-US':
-                return { local: en_US }
+                return { local: en_US };
         }
-        return { local: {} }
-    }
+        return { local: {} };
+    };
 }
 
-export default new TranslationService()
+export default new TranslationService();

@@ -1,46 +1,46 @@
-import { CharacterDataEditable } from '@models/CombatEditorModels'
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { CharacterDataEditable } from '@models/CombatEditorModels';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 export interface CharacterEditorFlags {
     attributes?: {
-        ignored?: Array<string>
-        nonEditable?: Array<string>
-    }
+        ignored?: Array<string>;
+        nonEditable?: Array<string>;
+    };
 
     exclude?: {
-        name?: boolean
-        description?: boolean
-        sprite?: boolean
+        name?: boolean;
+        description?: boolean;
+        sprite?: boolean;
 
-        attributes?: boolean
-        inventory?: boolean
-        spellBook?: boolean
-        statusEffects?: boolean
-        weaponry?: boolean
-        misc?: boolean
+        attributes?: boolean;
+        inventory?: boolean;
+        spellBook?: boolean;
+        statusEffects?: boolean;
+        weaponry?: boolean;
+        misc?: boolean;
 
-        [key: string]: unknown // in order for flags to be accessible by key
-    }
+        [key: string]: unknown; // in order for flags to be accessible by key
+    };
 }
 
 export interface CharacterEditorContextType {
-    character: CharacterDataEditable
-    initial: CharacterDataEditable
-    updateCharacter: (character: CharacterDataEditable) => void
-    resetCharacter: () => void
-    flags: CharacterEditorFlags
-    mode: 'save' | 'preset'
-    changeMode: (mode: 'save' | 'preset') => void
+    character: CharacterDataEditable;
+    initial: CharacterDataEditable;
+    updateCharacter: (character: CharacterDataEditable) => void;
+    resetCharacter: () => void;
+    flags: CharacterEditorFlags;
+    mode: 'save' | 'preset';
+    changeMode: (mode: 'save' | 'preset') => void;
 }
 
-const CharacterEditorContext = createContext<CharacterEditorContextType | undefined>(undefined)
+const CharacterEditorContext = createContext<CharacterEditorContextType | undefined>(undefined);
 
 type CharacterEditorProviderProps = {
-    children: React.ReactNode
-    character: CharacterEditorContextType['character']
-    setEditedCharacter: CharacterEditorContextType['updateCharacter']
-    flags?: CharacterEditorFlags
-}
+    children: React.ReactNode;
+    character: CharacterEditorContextType['character'];
+    setEditedCharacter: CharacterEditorContextType['updateCharacter'];
+    flags?: CharacterEditorFlags;
+};
 
 export const CharacterEditorProvider = ({
     children,
@@ -48,16 +48,16 @@ export const CharacterEditorProvider = ({
     setEditedCharacter,
     flags,
 }: CharacterEditorProviderProps) => {
-    const [initial] = useState(character)
-    const [mode, setMode] = useState<CharacterEditorContextType['mode']>('save')
+    const [initial] = useState(character);
+    const [mode, setMode] = useState<CharacterEditorContextType['mode']>('save');
 
     const resetCharacter = useCallback(() => {
-        setEditedCharacter(initial)
-    }, [initial, setEditedCharacter])
+        setEditedCharacter(initial);
+    }, [initial, setEditedCharacter]);
 
     const changeMode = useCallback((newMode: CharacterEditorContextType['mode']) => {
-        setMode(newMode)
-    }, [])
+        setMode(newMode);
+    }, []);
 
     const value = useMemo(
         () => ({
@@ -69,34 +69,34 @@ export const CharacterEditorProvider = ({
             changeMode,
             flags: flags || {},
         }),
-        [character, initial, setEditedCharacter, resetCharacter, flags, mode, changeMode]
-    )
+        [character, initial, setEditedCharacter, resetCharacter, flags, mode, changeMode],
+    );
 
-    return <CharacterEditorContext.Provider value={value}>{children}</CharacterEditorContext.Provider>
-}
+    return <CharacterEditorContext.Provider value={value}>{children}</CharacterEditorContext.Provider>;
+};
 
 export const useBuildCharacterEditorProps = (character: CharacterDataEditable) => {
-    const [editedCharacter, setEditedCharacter] = useState(character)
+    const [editedCharacter, setEditedCharacter] = useState(character);
 
     const resetCharacter = useCallback(() => {
-        setEditedCharacter(character)
-    }, [character])
+        setEditedCharacter(character);
+    }, [character]);
 
     const changeEditedCharacter = useCallback((newCharacter: CharacterDataEditable) => {
-        setEditedCharacter(newCharacter)
-    }, [])
+        setEditedCharacter(newCharacter);
+    }, []);
 
     return {
         character: editedCharacter,
         changeEditedCharacter,
         resetCharacter,
-    }
-}
+    };
+};
 
 export const useCharacterEditorContext = () => {
-    const context = useContext(CharacterEditorContext)
+    const context = useContext(CharacterEditorContext);
     if (!context) {
-        throw new Error('useCharacterEditorContext must be used within a CharacterEditorProvider')
+        throw new Error('useCharacterEditorContext must be used within a CharacterEditorProvider');
     }
-    return context
-}
+    return context;
+};

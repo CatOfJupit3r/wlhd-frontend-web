@@ -4,63 +4,63 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels'
-import APIService from '@services/APIService'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+} from '@models/CombatEditorModels';
+import APIService from '@services/APIService';
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
 type ProvidedData<T> = {
-    [dlc: string]: { [descriptor: string]: T }
-}
+    [dlc: string]: { [descriptor: string]: T };
+};
 
-type ProvidedItems = ProvidedData<ItemEditable>
-type ProvidedWeapons = ProvidedData<WeaponEditable>
-type ProvidedSpells = ProvidedData<SpellEditable>
-type ProvidedStatusEffects = ProvidedData<StatusEffectEditable>
-type ProvidedCharacters = ProvidedData<CharacterDataEditable>
+type ProvidedItems = ProvidedData<ItemEditable>;
+type ProvidedWeapons = ProvidedData<WeaponEditable>;
+type ProvidedSpells = ProvidedData<SpellEditable>;
+type ProvidedStatusEffects = ProvidedData<StatusEffectEditable>;
+type ProvidedCharacters = ProvidedData<CharacterDataEditable>;
 
 interface DataContextType {
-    items: ProvidedItems | null
-    weapons: ProvidedWeapons | null
-    spells: ProvidedSpells | null
-    statusEffects: ProvidedStatusEffects | null
-    characters: ProvidedCharacters | null
+    items: ProvidedItems | null;
+    weapons: ProvidedWeapons | null;
+    spells: ProvidedSpells | null;
+    statusEffects: ProvidedStatusEffects | null;
+    characters: ProvidedCharacters | null;
 
-    fetchAndSetItems: (dlc: string) => Promise<void>
-    fetchAndSetWeapons: (dlc: string) => Promise<void>
-    fetchAndSetSpells: (dlc: string) => Promise<void>
-    fetchAndSetStatusEffects: (dlc: string) => Promise<void>
-    fetchAndSetCharacters: (dlc: string) => Promise<{ [descriptor: string]: CharacterDataEditable }>
+    fetchAndSetItems: (dlc: string) => Promise<void>;
+    fetchAndSetWeapons: (dlc: string) => Promise<void>;
+    fetchAndSetSpells: (dlc: string) => Promise<void>;
+    fetchAndSetStatusEffects: (dlc: string) => Promise<void>;
+    fetchAndSetCharacters: (dlc: string) => Promise<{ [descriptor: string]: CharacterDataEditable }>;
 }
 
-const DataContext = createContext<DataContextType | undefined>(undefined)
+const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const GameDataProvider = ({ children }: { children: ReactNode }) => {
-    const [items, setItems] = useState<DataContextType['items']>(null)
-    const [weapons, setWeapons] = useState<DataContextType['weapons']>(null)
-    const [spells, setSpells] = useState<DataContextType['spells']>(null)
-    const [statusEffects, setStatusEffects] = useState<DataContextType['statusEffects']>(null)
-    const [characters, setCharacters] = useState<DataContextType['characters']>(null)
+    const [items, setItems] = useState<DataContextType['items']>(null);
+    const [weapons, setWeapons] = useState<DataContextType['weapons']>(null);
+    const [spells, setSpells] = useState<DataContextType['spells']>(null);
+    const [statusEffects, setStatusEffects] = useState<DataContextType['statusEffects']>(null);
+    const [characters, setCharacters] = useState<DataContextType['characters']>(null);
 
     const [alreadyFetchedContent, setAlreadyFetchedContent] = useState<{
         [dlc: string]: {
-            items: boolean
-            weapons: boolean
-            spells: boolean
-            status_effects: boolean
-            characters: boolean
-        }
-    }>({})
+            items: boolean;
+            weapons: boolean;
+            spells: boolean;
+            status_effects: boolean;
+            characters: boolean;
+        };
+    }>({});
 
     const fetchAndSetItems = useCallback(
         async (dlc: string): Promise<void> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.items ?? false)) {
-                    const { items: fetched } = await APIService.getLoadedItems(dlc)
+                    const { items: fetched } = await APIService.getLoadedItems(dlc);
                     if (fetched) {
                         setItems({
                             ...items,
                             [dlc]: fetched,
-                        })
+                        });
                     }
                     setAlreadyFetchedContent({
                         ...alreadyFetchedContent,
@@ -68,25 +68,25 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             ...alreadyFetchedContent[dlc],
                             items: true,
                         },
-                    })
+                    });
                 }
             } catch (error) {
-                console.error('Failed to fetch items:', error)
+                console.error('Failed to fetch items:', error);
             }
         },
-        [items, alreadyFetchedContent]
-    )
+        [items, alreadyFetchedContent],
+    );
 
     const fetchAndSetWeapons = useCallback(
         async (dlc: string): Promise<void> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.weapons ?? false)) {
-                    const { weapons: fetched } = await APIService.getLoadedWeapons(dlc)
+                    const { weapons: fetched } = await APIService.getLoadedWeapons(dlc);
                     if (fetched) {
                         setWeapons({
                             ...weapons,
                             [dlc]: fetched,
-                        })
+                        });
                     }
                     setAlreadyFetchedContent({
                         ...alreadyFetchedContent,
@@ -94,25 +94,25 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             ...alreadyFetchedContent[dlc],
                             weapons: true,
                         },
-                    })
+                    });
                 }
             } catch (error) {
-                console.error('Failed to fetch weapons:', error)
+                console.error('Failed to fetch weapons:', error);
             }
         },
-        [weapons, alreadyFetchedContent]
-    )
+        [weapons, alreadyFetchedContent],
+    );
 
     const fetchAndSetSpells = useCallback(
         async (dlc: string): Promise<void> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.spells ?? false)) {
-                    const { spells: fetched } = await APIService.getLoadedSpells(dlc)
+                    const { spells: fetched } = await APIService.getLoadedSpells(dlc);
                     if (fetched) {
                         setSpells({
                             ...spells,
                             [dlc]: fetched,
-                        })
+                        });
                     }
                     setAlreadyFetchedContent({
                         ...alreadyFetchedContent,
@@ -120,25 +120,25 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             ...alreadyFetchedContent[dlc],
                             spells: true,
                         },
-                    })
+                    });
                 }
             } catch (error) {
-                console.error('Failed to fetch spells:', error)
+                console.error('Failed to fetch spells:', error);
             }
         },
-        [alreadyFetchedContent, spells]
-    )
+        [alreadyFetchedContent, spells],
+    );
 
     const fetchAndSetStatusEffects = useCallback(
         async (dlc: string): Promise<void> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.status_effects ?? false)) {
-                    const { status_effects: fetched } = await APIService.getLoadedStatusEffects(dlc)
+                    const { status_effects: fetched } = await APIService.getLoadedStatusEffects(dlc);
                     if (fetched) {
                         setStatusEffects({
                             ...statusEffects,
                             [dlc]: fetched,
-                        })
+                        });
                     }
                     setAlreadyFetchedContent({
                         ...alreadyFetchedContent,
@@ -146,25 +146,25 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             ...alreadyFetchedContent[dlc],
                             status_effects: true,
                         },
-                    })
+                    });
                 }
             } catch (error) {
-                console.error('Failed to fetch status effects:', error)
+                console.error('Failed to fetch status effects:', error);
             }
         },
-        [alreadyFetchedContent, statusEffects]
-    )
+        [alreadyFetchedContent, statusEffects],
+    );
 
     const fetchAndSetCharacters = useCallback(
         async (dlc: string): Promise<{ [descriptor: string]: CharacterDataEditable }> => {
             try {
                 if (!(alreadyFetchedContent[dlc]?.characters ?? false)) {
-                    const { characters: fetched } = await APIService.getLoadedCharacters(dlc)
+                    const { characters: fetched } = await APIService.getLoadedCharacters(dlc);
                     if (fetched) {
                         setCharacters({
                             ...characters,
                             [dlc]: fetched,
-                        })
+                        });
                     }
                     setAlreadyFetchedContent({
                         ...alreadyFetchedContent,
@@ -172,16 +172,16 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
                             ...alreadyFetchedContent[dlc],
                             characters: true,
                         },
-                    })
-                    return fetched
+                    });
+                    return fetched;
                 }
             } catch (error) {
-                console.error('Failed to fetch characters:', error)
+                console.error('Failed to fetch characters:', error);
             }
-            return {}
+            return {};
         },
-        [alreadyFetchedContent, characters]
-    )
+        [alreadyFetchedContent, characters],
+    );
 
     return (
         <DataContext.Provider
@@ -200,13 +200,13 @@ export const GameDataProvider = ({ children }: { children: ReactNode }) => {
         >
             {children}
         </DataContext.Provider>
-    )
-}
+    );
+};
 
 export const useDataContext = () => {
-    const context = useContext(DataContext)
+    const context = useContext(DataContext);
     if (context === undefined) {
-        throw new Error('useDataContext must be used within a GameDataProvider.')
+        throw new Error('useDataContext must be used within a GameDataProvider.');
     }
-    return context as DataContextType
-}
+    return context as DataContextType;
+};

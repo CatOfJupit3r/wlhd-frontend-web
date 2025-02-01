@@ -32,7 +32,7 @@
             "@context/*": ["./context/*"],
             "config": ["./config"],
             "@queries/*": ["./queries/*"],
-            "@mutations/*": ["./mutations/*"],
+            "@mutations/*": ["./mutations/*"]
         }
     },
     "include": ["src"],

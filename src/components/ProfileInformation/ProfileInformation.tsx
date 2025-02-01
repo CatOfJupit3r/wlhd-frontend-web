@@ -1,4 +1,4 @@
-import LobbyShortInfo from '@components/ProfileInformation/LobbyShortInfo'
+import LobbyShortInfo from '@components/ProfileInformation/LobbyShortInfo';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -7,27 +7,27 @@ import {
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogTitle,
-} from '@components/ui/alert-dialog'
-import { Badge } from '@components/ui/badge'
-import { Button, MutationButton } from '@components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { Input } from '@components/ui/input'
-import { Separator } from '@components/ui/separator'
-import { CurrentUserAvatar } from '@components/UserAvatars'
-import useJoinLobbyUsingInviteCode from '@mutations/useJoinLobbyUsingInviteCode'
-import useMe from '@queries/useMe'
-import { Calendar, Gamepad, Trophy } from 'lucide-react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@components/ui/alert-dialog';
+import { Badge } from '@components/ui/badge';
+import { Button, MutationButton } from '@components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { Input } from '@components/ui/input';
+import { Separator } from '@components/ui/separator';
+import { CurrentUserAvatar } from '@components/UserAvatars';
+import useJoinLobbyUsingInviteCode from '@mutations/useJoinLobbyUsingInviteCode';
+import useMe from '@queries/useMe';
+import { Calendar, Gamepad, Trophy } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ProfileInformation = () => {
-    const { user } = useMe()
+    const { user } = useMe();
     const { t } = useTranslation('local', {
         keyPrefix: 'profile',
-    })
-    const [showInviteOverlay, setShowInviteOverlay] = useState(false)
-    const [inviteCode, setInviteCode] = useState('')
-    const { joinLobbyUsingInviteCode, isPending } = useJoinLobbyUsingInviteCode()
+    });
+    const [showInviteOverlay, setShowInviteOverlay] = useState(false);
+    const [inviteCode, setInviteCode] = useState('');
+    const { joinLobbyUsingInviteCode, isPending } = useJoinLobbyUsingInviteCode();
 
     return (
         <div className="flex justify-center bg-gradient-to-br p-4">
@@ -86,7 +86,7 @@ const ProfileInformation = () => {
                         <AlertDialogAction asChild>
                             <MutationButton
                                 mutate={() => {
-                                    joinLobbyUsingInviteCode(inviteCode)
+                                    joinLobbyUsingInviteCode(inviteCode);
                                 }}
                                 isPending={isPending}
                                 className={'w-full'}
@@ -98,7 +98,7 @@ const ProfileInformation = () => {
                 </AlertDialogContent>
             </AlertDialog>
         </div>
-    )
-}
+    );
+};
 
-export default ProfileInformation
+export default ProfileInformation;

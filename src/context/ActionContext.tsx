@@ -1,46 +1,46 @@
-import { iCharacterActions as iActionInput } from '@models/GameModels'
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
+import { iCharacterActions as iActionInput } from '@models/GameModels';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
 interface iActionChoices {
-    [key: keyof iActionInput]: iActionInput[keyof iActionInput][number]['id']
+    [key: keyof iActionInput]: iActionInput[keyof iActionInput][number]['id'];
 }
 
 export interface iActionContext {
-    actions: iActionInput | null
-    setOutput: (output: iActionChoices) => void
-    choices: iActionChoices
-    setChoice: (key: keyof iActionChoices, value: iActionChoices[string]) => void
+    actions: iActionInput | null;
+    setOutput: (output: iActionChoices) => void;
+    choices: iActionChoices;
+    setChoice: (key: keyof iActionChoices, value: iActionChoices[string]) => void;
 
-    resetChoices: () => void
+    resetChoices: () => void;
 }
 
-const ActionContext = createContext<iActionContext | undefined>(undefined)
+const ActionContext = createContext<iActionContext | undefined>(undefined);
 
 export const ActionContextProvider = ({
     actions,
     setOutput,
     children,
 }: {
-    actions: iActionContext['actions']
-    setOutput: iActionContext['setOutput']
-    children: ReactNode
+    actions: iActionContext['actions'];
+    setOutput: iActionContext['setOutput'];
+    children: ReactNode;
 }) => {
-    const [choices, setChoices] = useState<iActionContext['choices']>({})
+    const [choices, setChoices] = useState<iActionContext['choices']>({});
 
     const resetChoices = useCallback(() => {
-        setChoices({})
-    }, [])
+        setChoices({});
+    }, []);
 
     const setChoice: iActionContext['setChoice'] = useCallback((key, value) => {
         setChoices((prevChoices) => ({
             ...prevChoices,
             [key]: value,
-        }))
-    }, [])
+        }));
+    }, []);
 
     useEffect(() => {
-        resetChoices()
-    }, [actions])
+        resetChoices();
+    }, [actions]);
 
     return (
         <ActionContext.Provider
@@ -54,13 +54,13 @@ export const ActionContextProvider = ({
         >
             {children}
         </ActionContext.Provider>
-    )
-}
+    );
+};
 
 export const useActionContext = () => {
-    const context = useContext(ActionContext)
+    const context = useContext(ActionContext);
     if (context === undefined) {
-        throw new Error('useActionContext must be used within a ActionContextProvider.')
+        throw new Error('useActionContext must be used within a ActionContextProvider.');
     }
-    return context as iActionContext
-}
+    return context as iActionContext;
+};

@@ -1,29 +1,29 @@
-import { iRouteConfig } from '@models/IRouteConfig'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { iRouteConfig } from '@models/IRouteConfig';
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
 interface LayoutContextType {
-    header: boolean
-    footer: boolean
-    auth: boolean
-    lobbyInfo: boolean
+    header: boolean;
+    footer: boolean;
+    auth: boolean;
+    lobbyInfo: boolean;
 
-    changeConfig: (config: iRouteConfig | null) => void
+    changeConfig: (config: iRouteConfig | null) => void;
 }
 
-const LayoutContext = createContext<LayoutContextType | undefined>(undefined)
+const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
 
 export const LayoutContextProvider = ({ children }: { children: ReactNode }) => {
-    const [header, setHeader] = useState<boolean>(false)
-    const [footer, setFooter] = useState<boolean>(false)
-    const [auth, setAuth] = useState<boolean>(false)
-    const [lobbyInfo, setLobbyInfo] = useState<boolean>(false)
+    const [header, setHeader] = useState<boolean>(false);
+    const [footer, setFooter] = useState<boolean>(false);
+    const [auth, setAuth] = useState<boolean>(false);
+    const [lobbyInfo, setLobbyInfo] = useState<boolean>(false);
 
     const changeConfig = useCallback((config: iRouteConfig | null) => {
-        setHeader((config ? config.includeHeader : null) ?? false)
-        setFooter((config ? config.includeFooter : null) ?? false)
-        setAuth((config ? config.requiresAuth : null) ?? false)
-        setLobbyInfo((config ? config.requiresLobbyInfo : null) ?? false)
-    }, [])
+        setHeader((config ? config.includeHeader : null) ?? false);
+        setFooter((config ? config.includeFooter : null) ?? false);
+        setAuth((config ? config.requiresAuth : null) ?? false);
+        setLobbyInfo((config ? config.requiresLobbyInfo : null) ?? false);
+    }, []);
 
     return (
         <LayoutContext.Provider
@@ -37,13 +37,13 @@ export const LayoutContextProvider = ({ children }: { children: ReactNode }) => 
         >
             {children}
         </LayoutContext.Provider>
-    )
-}
+    );
+};
 
 export const useLayoutContext = () => {
-    const context = useContext(LayoutContext)
+    const context = useContext(LayoutContext);
     if (context === undefined) {
-        throw new Error('useLayoutContext must be used within a LayoutContextProvider.')
+        throw new Error('useLayoutContext must be used within a LayoutContextProvider.');
     }
-    return context as LayoutContextType
-}
+    return context as LayoutContextType;
+};

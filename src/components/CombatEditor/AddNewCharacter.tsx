@@ -1,6 +1,6 @@
-import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import GameAsset from '@components/GameAsset'
-import { HTMLIconFactoryProps, IconComponentType } from '@components/icons/icon_factory'
+import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
+import GameAsset from '@components/GameAsset';
+import { HTMLIconFactoryProps, IconComponentType } from '@components/icons/icon_factory';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,9 +11,9 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '@components/ui/alert-dialog'
-import { Combobox } from '@components/ui/combobox'
-import { Label } from '@components/ui/label'
+} from '@components/ui/alert-dialog';
+import { Combobox } from '@components/ui/combobox';
+import { Label } from '@components/ui/label';
 import {
     Select,
     SelectContent,
@@ -22,32 +22,32 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from '@components/ui/select'
-import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext'
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
-import { useDataContext } from '@context/GameDataProvider'
-import { ControlledBy } from '@models/EditorConversion'
-import useThisLobby from '@queries/useThisLobby'
-import { SUPPORTED_DLCs } from 'config'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@components/ui/select';
+import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
+import { useDataContext } from '@context/GameDataProvider';
+import { ControlledBy } from '@models/EditorConversion';
+import useThisLobby from '@queries/useThisLobby';
+import { SUPPORTED_DLCs } from 'config';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
-    const [dlc, setDlc] = useState<string>('')
-    const [descriptor, setDescriptor] = useState<string>('')
-    const { characters, fetchAndSetCharacters } = useDataContext()
-    const { characters: characterFromCoordinator, fetchCharacter } = useCoordinatorCharactersContext()
-    const { t } = useTranslation()
-    const { lobby } = useThisLobby()
-    const { addCharacter } = useCombatEditorContext()
+    const [dlc, setDlc] = useState<string>('');
+    const [descriptor, setDescriptor] = useState<string>('');
+    const { characters, fetchAndSetCharacters } = useDataContext();
+    const { characters: characterFromCoordinator, fetchCharacter } = useCoordinatorCharactersContext();
+    const { t } = useTranslation();
+    const { lobby } = useThisLobby();
+    const { addCharacter } = useCombatEditorContext();
 
     useEffect(() => {
         if (dlc && (characters === null || characters?.[dlc] === undefined)) {
             if (dlc !== 'coordinator') {
-                fetchAndSetCharacters(dlc).catch(console.error)
+                fetchAndSetCharacters(dlc).catch(console.error);
             }
         }
-    }, [dlc, characters])
+    }, [dlc, characters]);
 
     return (
         <AlertDialogContent className={'max-w-3xl'}>
@@ -61,7 +61,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                         <Label>DLC</Label>
                         <Select
                             onValueChange={(value) => {
-                                setDlc(value)
+                                setDlc(value);
                             }}
                         >
                             <SelectTrigger>
@@ -103,7 +103,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                             includeSearch={true}
                             value={descriptor}
                             onChange={(e) => {
-                                setDescriptor(e)
+                                setDescriptor(e);
                             }}
                         />
                     </div>
@@ -122,39 +122,39 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                     }
                     onClick={() => {
                         if (!clickedSquare) {
-                            return
+                            return;
                         }
                         if (dlc !== 'coordinator') {
-                            const character = characters?.[dlc]?.[descriptor]
+                            const character = characters?.[dlc]?.[descriptor];
                             if (character) {
-                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`)
+                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`);
                             } else {
                                 fetchAndSetCharacters(dlc).then((fetched) => {
-                                    const character = fetched[descriptor]
+                                    const character = fetched[descriptor];
                                     if (character) {
-                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`)
+                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`);
                                     }
-                                })
+                                });
                             }
                         } else {
-                            const character = characterFromCoordinator?.[descriptor]
+                            const character = characterFromCoordinator?.[descriptor];
                             const player = lobby.players.find((player) =>
-                                player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor)
-                            )
+                                player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor),
+                            );
                             const controlled: ControlledBy = player
                                 ? CONTROLLED_BY_PLAYER(player.userId)
-                                : CONTROLLED_BY_GAME_LOGIC
+                                : CONTROLLED_BY_GAME_LOGIC;
 
                             if (character) {
-                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled)
+                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled);
                             } else {
                                 const TryFetchCharacter = async () => {
-                                    const character = await fetchCharacter(lobby.lobbyId, descriptor, true)
+                                    const character = await fetchCharacter(lobby.lobbyId, descriptor, true);
                                     if (character) {
-                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled)
+                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`, controlled);
                                     }
-                                }
-                                TryFetchCharacter().then()
+                                };
+                                TryFetchCharacter().then();
                             }
                         }
                     }}
@@ -163,8 +163,8 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                 </AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
-    )
-}
+    );
+};
 
 export const AddNewCharacter = ({ clickedSquare }: { clickedSquare: string | null }) => {
     return (
@@ -184,5 +184,5 @@ export const AddNewCharacter = ({ clickedSquare }: { clickedSquare: string | nul
             </AlertDialogTrigger>
             <AddNewCharacterDialogContent clickedSquare={clickedSquare} />
         </AlertDialog>
-    )
-}
+    );
+};

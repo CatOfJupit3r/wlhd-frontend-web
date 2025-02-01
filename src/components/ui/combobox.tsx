@@ -1,42 +1,42 @@
-import { IconComponentType } from '@components/icons/icon_factory'
-import { Button } from '@components/ui/button'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
-import { cn } from '@utils'
-import { ClassValue } from 'clsx'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { IconType } from 'react-icons'
-import { PiDotsThreeOutline } from 'react-icons/pi'
+import { IconComponentType } from '@components/icons/icon_factory';
+import { Button } from '@components/ui/button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover';
+import { cn } from '@utils';
+import { ClassValue } from 'clsx';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconType } from 'react-icons';
+import { PiDotsThreeOutline } from 'react-icons/pi';
 
-const PlaceholderIcon = PiDotsThreeOutline
+const PlaceholderIcon = PiDotsThreeOutline;
 
 interface Item {
-    value: string
-    label: string
-    icon?: IconComponentType
-    disabled?: boolean
+    value: string;
+    label: string;
+    icon?: IconComponentType;
+    disabled?: boolean;
 }
 
-export type ComboboxItemArray = Array<Item>
+export type ComboboxItemArray = Array<Item>;
 
 export interface ComboboxProps {
-    items: ComboboxItemArray
-    value: string
-    onChange: (value: string) => void
-    selectText?: string
-    includeSearch?: boolean
+    items: ComboboxItemArray;
+    value: string;
+    onChange: (value: string) => void;
+    selectText?: string;
+    includeSearch?: boolean;
     size?: {
-        width?: ClassValue
-        height?: ClassValue
-    }
+        width?: ClassValue;
+        height?: ClassValue;
+    };
 }
 
-const iconSizeClassName = 'size-10'
+const iconSizeClassName = 'size-10';
 
 const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType | IconType; label: string }) => {
-    const [badIcon, setBadIcon] = useState(false)
+    const [badIcon, setBadIcon] = useState(false);
 
     return (
         <div className="flex max-w-[90%] items-center">
@@ -46,7 +46,7 @@ const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType | IconType; la
                 ) : (
                     icon({
                         onError: () => {
-                            setBadIcon(true)
+                            setBadIcon(true);
                         },
                         className: iconSizeClassName,
                     })
@@ -54,24 +54,24 @@ const ComboBoxItem = ({ icon, label }: { icon?: IconComponentType | IconType; la
             ) : null}
             <p className={cn('truncate', icon ? 'ml-2' : '')}>{label}</p>
         </div>
-    )
-}
+    );
+};
 
 export const Combobox = ({ items, value, onChange, selectText, size, includeSearch }: ComboboxProps) => {
-    const [open, setOpen] = useState(false)
-    const buttonRef = useRef<HTMLButtonElement>(null)
-    const contentRef = useRef<HTMLDivElement>(null)
+    const [open, setOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const { t } = useTranslation('local', {
         keyPrefix: 'ui',
-    })
+    });
 
-    const [buttonWidth, setButtonWidth] = useState<string | number>('auto')
+    const [buttonWidth, setButtonWidth] = useState<string | number>('auto');
 
     useEffect(() => {
         if (buttonRef.current) {
-            setButtonWidth(buttonRef.current.offsetWidth)
+            setButtonWidth(buttonRef.current.offsetWidth);
         }
-    }, [buttonRef])
+    }, [buttonRef]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -115,14 +115,14 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                                         key={item.value}
                                         value={item.value}
                                         onSelect={(currentValue) => {
-                                            onChange(currentValue === value ? '' : currentValue)
-                                            setOpen(false)
+                                            onChange(currentValue === value ? '' : currentValue);
+                                            setOpen(false);
                                         }}
                                     >
                                         <Check
                                             className={cn(
                                                 'mx-2 size-4',
-                                                value === item.value ? 'opacity-100' : 'opacity-0'
+                                                value === item.value ? 'opacity-100' : 'opacity-0',
                                             )}
                                         />
                                         <ComboBoxItem icon={item.icon} label={item.label} />
@@ -133,5 +133,5 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                 </Command>
             </PopoverContent>
         </Popover>
-    )
-}
+    );
+};

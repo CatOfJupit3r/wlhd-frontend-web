@@ -1,19 +1,19 @@
-import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
-import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEditors/CharacterDescriptionEditor'
-import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor'
-import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor'
-import { Button } from '@components/ui/button'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { PencilIcon } from 'lucide-react'
-import React, { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
+import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo';
+import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEditors/CharacterDescriptionEditor';
+import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor';
+import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor';
+import { Button } from '@components/ui/button';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { PencilIcon } from 'lucide-react';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CharacterMainInfoEditor = () => {
-    const { flags, character } = useCharacterEditorContext()
+    const { flags, character } = useCharacterEditorContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
-    })
-    const [editing, setEditing] = React.useState(false)
+    });
+    const [editing, setEditing] = React.useState(false);
 
     const EditCharacterButton = useCallback(
         () => (
@@ -21,7 +21,7 @@ const CharacterMainInfoEditor = () => {
                 variant={'ghost'}
                 size={'icon'}
                 onClick={() => {
-                    setEditing(!editing)
+                    setEditing(!editing);
                 }}
                 title={editing ? t('stop-editing') : t('edit-character')}
                 className={'absolute right-0 top-0 size-8 opacity-50 transition-all hover:opacity-100'}
@@ -29,8 +29,8 @@ const CharacterMainInfoEditor = () => {
                 <PencilIcon />
             </Button>
         ),
-        [editing]
-    )
+        [editing],
+    );
 
     return flags.exclude?.name && flags.exclude?.description && flags.exclude?.sprite ? (
         <CharacterBasicInfo
@@ -64,7 +64,7 @@ const CharacterMainInfoEditor = () => {
                 }}
             />
         </div>
-    )
-}
+    );
+};
 
-export default CharacterMainInfoEditor
+export default CharacterMainInfoEditor;

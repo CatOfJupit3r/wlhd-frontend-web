@@ -1,7 +1,7 @@
-import { CharacterEditorMenus } from '@components/CharacterEditor/CharacterEditorMenus'
-import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor'
-import { Separator } from '@components/ui/separator'
-import { cn } from '@utils'
+import { CharacterEditorMenus } from '@components/CharacterEditor/CharacterEditorMenus';
+import CharacterMainInfoEditor from '@components/CharacterEditor/MainAreaEditors/CharacterMainInfoEditor';
+import { Separator } from '@components/ui/separator';
+import { cn } from '@utils';
 
 const CharacterEditor = ({ className }: { className?: string }) => {
     /*
@@ -20,7 +20,7 @@ const CharacterEditor = ({ className }: { className?: string }) => {
             <Separator className={'mt-4'} />
             <CharacterEditorMenus />
         </div>
-    )
-}
+    );
+};
 
-export default CharacterEditor
+export default CharacterEditor;

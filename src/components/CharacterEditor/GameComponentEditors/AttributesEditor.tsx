@@ -1,52 +1,52 @@
-import { Input } from '@components/ui/input'
-import { Progress } from '@components/ui/progress'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { capitalizeFirstLetter, getPercentage } from '@utils'
+import { Input } from '@components/ui/input';
+import { Progress } from '@components/ui/progress';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { capitalizeFirstLetter, getPercentage } from '@utils';
 import {
     extractCurrentMaxBaseAttributes,
     extractDualAttributes,
     FancyAttributeArray,
     PrefixCollection,
-} from '@utils/gameDisplayTools'
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@utils/gameDisplayTools';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-type setAttributeFuncType = (attribute: string, value: number) => void
+type setAttributeFuncType = (attribute: string, value: number) => void;
 
 interface iCreateInputHandlerOptions {
-    maxVal?: number
-    allowNegative?: boolean
+    maxVal?: number;
+    allowNegative?: boolean;
 }
 
 const createInputHandler = (
     setAttribute: setAttributeFuncType,
     attribute: string,
-    options: iCreateInputHandlerOptions = {}
+    options: iCreateInputHandlerOptions = {},
 ) => {
     return (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value === '') {
-            setAttribute(attribute, 0)
+            setAttribute(attribute, 0);
         }
-        const parsedValue = parseInt(e.target.value)
+        const parsedValue = parseInt(e.target.value);
         if (!isNaN(parsedValue) && parsedValue <= 99999) {
             if (!options?.allowNegative) {
                 if (parsedValue < 0) {
-                    setAttribute(attribute, 0)
-                    return
+                    setAttribute(attribute, 0);
+                    return;
                 }
             } else {
                 if (parsedValue < -99999) {
-                    return
+                    return;
                 }
             }
             if (options?.maxVal !== undefined) {
-                setAttribute(attribute, Math.min(options.maxVal, parsedValue))
+                setAttribute(attribute, Math.min(options.maxVal, parsedValue));
             } else {
-                setAttribute(attribute, parsedValue)
+                setAttribute(attribute, parsedValue);
             }
         }
-    }
-}
+    };
+};
 
 const FancyAttributesWithBar = ({
     current,
@@ -54,14 +54,14 @@ const FancyAttributesWithBar = ({
     color,
     setAttribute,
 }: {
-    current: string
-    max: string
-    color: string
-    setAttribute: setAttributeFuncType
+    current: string;
+    max: string;
+    color: string;
+    setAttribute: setAttributeFuncType;
 }) => {
-    const { character } = useCharacterEditorContext()
-    const { t } = useTranslation()
-    const percentage = getPercentage(character.attributes[current], character.attributes[max])
+    const { character } = useCharacterEditorContext();
+    const { t } = useTranslation();
+    const percentage = getPercentage(character.attributes[current], character.attributes[max]);
 
     return (
         <div className={'flex flex-col gap-3 py-2 text-base'}>
@@ -90,10 +90,10 @@ const FancyAttributesWithBar = ({
                         onChange={(e) => {
                             const handler = createInputHandler(setAttribute, max, {
                                 allowNegative: false,
-                            })
-                            handler(e)
+                            });
+                            handler(e);
                             if (character.attributes[current] > character.attributes[max]) {
-                                setAttribute(current, character.attributes[max])
+                                setAttribute(current, character.attributes[max]);
                             }
                         }}
                     />
@@ -115,20 +115,20 @@ const FancyAttributesWithBar = ({
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
 const DualAttributeEditor = ({
     attributeKey,
     value,
     setAttribute,
 }: {
-    attributeKey: string
-    value: string
-    setAttribute: setAttributeFuncType
+    attributeKey: string;
+    value: string;
+    setAttribute: setAttributeFuncType;
 }) => {
-    const [attack, defense] = value.split('/')
-    const { t } = useTranslation()
+    const [attack, defense] = value.split('/');
+    const { t } = useTranslation();
 
     return (
         <div className={'flex flex-col gap-3 py-2 text-base'}>
@@ -161,35 +161,35 @@ const DualAttributeEditor = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const AttributesEditor = () => {
-    const { character, updateCharacter, flags } = useCharacterEditorContext()
-    const { attributes: attributesFlags } = flags
-    const { t } = useTranslation()
-    const [handledByOther, setHandledByOther] = useState<Array<string>>([])
+    const { character, updateCharacter, flags } = useCharacterEditorContext();
+    const { attributes: attributesFlags } = flags;
+    const { t } = useTranslation();
+    const [handledByOther, setHandledByOther] = useState<Array<string>>([]);
     const [duals, dualsKeys] = useMemo(() => {
-        return extractDualAttributes(character.attributes, attributesFlags?.ignored || [])
-    }, [character, attributesFlags, handledByOther])
+        return extractDualAttributes(character.attributes, attributesFlags?.ignored || []);
+    }, [character, attributesFlags, handledByOther]);
     const fancyCanBeCreatedFor: FancyAttributeArray = useMemo(() => {
-        return extractCurrentMaxBaseAttributes(character.attributes, attributesFlags?.ignored || [])
-    }, [character, attributesFlags, handledByOther])
+        return extractCurrentMaxBaseAttributes(character.attributes, attributesFlags?.ignored || []);
+    }, [character, attributesFlags, handledByOther]);
 
     useEffect(() => {
         const handledAttributes = [
             ...fancyCanBeCreatedFor
                 .map((fancyAttribute) => {
-                    return [fancyAttribute.current, fancyAttribute.max]
+                    return [fancyAttribute.current, fancyAttribute.max];
                 })
                 .flat(),
             ...dualsKeys,
-        ]
+        ];
 
         if (JSON.stringify(handledAttributes) !== JSON.stringify(handledByOther)) {
-            setHandledByOther(handledAttributes)
+            setHandledByOther(handledAttributes);
         }
-    }, [fancyCanBeCreatedFor, handledByOther])
+    }, [fancyCanBeCreatedFor, handledByOther]);
 
     const setAttribute = useCallback(
         (attribute: string, value: number) => {
@@ -199,10 +199,10 @@ const AttributesEditor = () => {
                     ...character.attributes,
                     [attribute]: value,
                 },
-            })
+            });
         },
-        [character, updateCharacter]
-    )
+        [character, updateCharacter],
+    );
 
     return (
         <div className={'flex flex-col gap-4 border-2 px-4 py-2 text-base'}>
@@ -217,12 +217,12 @@ const AttributesEditor = () => {
                                 color={fancyAttribute.color}
                                 setAttribute={setAttribute}
                             />
-                        )
+                        );
                     })}
                 </>
             ) : null}
             {Object.entries(character.attributes).map(([attribute, value]) => {
-                if (attributesFlags?.ignored?.includes(attribute) || handledByOther.includes(attribute)) return null
+                if (attributesFlags?.ignored?.includes(attribute) || handledByOther.includes(attribute)) return null;
                 return (
                     <div key={attribute} className={'flex items-center justify-between'} id={'changeable'}>
                         <p className={'w-full max-w-[70%] break-words'}>
@@ -238,7 +238,7 @@ const AttributesEditor = () => {
                             disabled={attributesFlags?.nonEditable?.includes(attribute)}
                         />
                     </div>
-                )
+                );
             })}
             {duals && duals.length > 0 ? (
                 <>
@@ -250,12 +250,12 @@ const AttributesEditor = () => {
                                 value={value}
                                 setAttribute={setAttribute}
                             />
-                        )
+                        );
                     })}
                 </>
             ) : null}
         </div>
-    )
-}
+    );
+};
 
-export default AttributesEditor
+export default AttributesEditor;

@@ -1,11 +1,11 @@
-import { Fragment, ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react';
 
 interface iCommaSeparatedListProps<T> {
-    items: T[]
-    renderItem: (item: T) => ReactNode
-    emptyMessage: string
-    pointAtEnd?: boolean
-    className?: string
+    items: T[];
+    renderItem: (item: T) => ReactNode;
+    emptyMessage: string;
+    pointAtEnd?: boolean;
+    className?: string;
 }
 
 const CommaSeparatedList = <T,>({
@@ -16,7 +16,7 @@ const CommaSeparatedList = <T,>({
     pointAtEnd = false,
 }: iCommaSeparatedListProps<T>) => {
     if (!items || items.length === 0) {
-        return <p className={className}>{emptyMessage}</p>
+        return <p className={className}>{emptyMessage}</p>;
     }
 
     return (
@@ -29,7 +29,7 @@ const CommaSeparatedList = <T,>({
                 </Fragment>
             ))}
         </p>
-    )
-}
+    );
+};
 
-export default CommaSeparatedList
+export default CommaSeparatedList;

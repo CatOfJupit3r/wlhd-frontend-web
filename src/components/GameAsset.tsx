@@ -1,21 +1,21 @@
-import { getCharacterSide } from '@utils'
-import { generateAssetPath, generateAssetPathFullDescriptor } from '@utils/generateAssetPath'
-import React from 'react'
+import { getCharacterSide } from '@utils';
+import { generateAssetPath, generateAssetPathFullDescriptor } from '@utils/generateAssetPath';
+import React from 'react';
 
-const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png'
+const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png';
 
 const SET_ASSET_PROPS = (img: HTMLImageElement, fallback: { src: string; alt: string }) => {
-    if (img.src === fallback.src || img.src === INVALID_ASSET_PATH) return
-    img.src = fallback.src || INVALID_ASSET_PATH
-    img.alt = fallback.alt || 'invalid asset'
-}
+    if (img.src === fallback.src || img.src === INVALID_ASSET_PATH) return;
+    img.src = fallback.src || INVALID_ASSET_PATH;
+    img.alt = fallback.alt || 'invalid asset';
+};
 
 interface GameAssetProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src'> {
-    src: string | { dlc: string; descriptor: string }
+    src: string | { dlc: string; descriptor: string };
     fallback?: {
-        src: string
-        alt: string
-    }
+        src: string;
+        alt: string;
+    };
 }
 
 const GameAsset = ({ src, fallback, alt, ...props }: GameAssetProps) => {
@@ -29,12 +29,12 @@ const GameAsset = ({ src, fallback, alt, ...props }: GameAssetProps) => {
                     : generateAssetPath(src.dlc, src.descriptor)
             }
             onError={(e) => {
-                if (e.currentTarget.src === INVALID_ASSET_PATH) return
-                SET_ASSET_PROPS(e.currentTarget, fallback || { src: INVALID_ASSET_PATH, alt: 'invalid asset' })
+                if (e.currentTarget.src === INVALID_ASSET_PATH) return;
+                SET_ASSET_PROPS(e.currentTarget, fallback || { src: INVALID_ASSET_PATH, alt: 'invalid asset' });
             }}
         />
-    )
-}
+    );
+};
 
 export const CharacterGameAsset = ({ line, ...props }: GameAssetProps & { line: number }) => {
     return (
@@ -54,7 +54,7 @@ export const CharacterGameAsset = ({ line, ...props }: GameAssetProps & { line: 
                     : undefined
             }
         />
-    )
-}
+    );
+};
 
-export default GameAsset
+export default GameAsset;

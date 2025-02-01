@@ -1,6 +1,6 @@
-import { Separator } from '@components/ui/separator'
-import { StaticSkeleton } from '@components/ui/skeleton'
-import { HTMLProps } from 'react'
+import { Separator } from '@components/ui/separator';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import { HTMLProps } from 'react';
 
 const CharacterDisplayPlaceholder = (props: HTMLProps<HTMLDivElement>) => {
     return (
@@ -28,7 +28,7 @@ const CharacterDisplayPlaceholder = (props: HTMLProps<HTMLDivElement>) => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CharacterDisplayPlaceholder
+export default CharacterDisplayPlaceholder;

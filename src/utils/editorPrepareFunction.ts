@@ -1,7 +1,7 @@
-import { CharacterDataInSave } from '@models/CombatEditorModels'
-import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion'
-import { CharacterInfoFull } from '@models/GameModels'
-import { isDescriptor } from '@utils/descriptorTools'
+import { CharacterDataInSave } from '@models/CombatEditorModels';
+import { CharacterClassConversion, MinifiedCombatPreset } from '@models/EditorConversion';
+import { CharacterInfoFull } from '@models/GameModels';
+import { isDescriptor } from '@utils/descriptorTools';
 
 export const prepareCharacterToClassConversion = (character: CharacterDataInSave): CharacterClassConversion => {
     return {
@@ -26,12 +26,12 @@ export const prepareCharacterToClassConversion = (character: CharacterDataInSave
             descriptor: weapon.descriptor,
             quantity: weapon.quantity,
         })),
-    } as CharacterClassConversion
-}
+    } as CharacterClassConversion;
+};
 
 export const minifyCharacter = (
     character: CharacterInfoFull,
-    descriptor: string
+    descriptor: string,
 ): MinifiedCombatPreset['battlefield'][string]['character'] => {
     return {
         decorations: descriptor.startsWith('coordinator:')
@@ -70,5 +70,5 @@ export const minifyCharacter = (
             current_consecutive_uses: weapon.uses.current,
             is_active: weapon.isActive,
         })),
-    }
-}
+    };
+};

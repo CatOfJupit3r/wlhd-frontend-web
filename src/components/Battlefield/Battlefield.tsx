@@ -1,4 +1,4 @@
-import SeparatorRowWithTimestamp from '@components/Battlefield/SeparatorRowWithTimestamp'
+import SeparatorRowWithTimestamp from '@components/Battlefield/SeparatorRowWithTimestamp';
 import {
     ConnectorTile,
     FifthColumnTile,
@@ -11,11 +11,11 @@ import {
     SeparatorTile,
     SixthColumnTile,
     ThirdColumnTile,
-} from '@components/Battlefield/Tiles/CosmeticTiles'
-import TileWithCharacter from '@components/Battlefield/Tiles/TileWithCharacter'
-import { cn } from '@utils'
-import { useCallback } from 'react'
-import styles from './Battlefield.module.css'
+} from '@components/Battlefield/Tiles/CosmeticTiles';
+import TileWithCharacter from '@components/Battlefield/Tiles/TileWithCharacter';
+import { cn } from '@utils';
+import { useCallback } from 'react';
+import styles from './Battlefield.module.css';
 
 // const BATTLEFIELD_BLUR_HASH: string =
 //     '{7H2i;WB00j[9Ft7M{ofofazoLayoLayfQay00WB-;j[%gt7xuofoffQWBj[WBj[WBj[00WB~qfQ?cof%MfQt7j[ayj[ayfQayj[MxayofayoffQofayayj[t7ayt7WBofWBWBay%MfQxuj[t7j['
@@ -23,7 +23,7 @@ import styles from './Battlefield.module.css'
 const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | null }) => {
     const SeparatorRow = useCallback(() => {
         if (separatorTimestamp) {
-            return <SeparatorRowWithTimestamp timestamp={separatorTimestamp} />
+            return <SeparatorRowWithTimestamp timestamp={separatorTimestamp} />;
         }
         return (
             <div id={'separator-row'} className={'flex'}>
@@ -36,8 +36,8 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <SeparatorTile />
                 <ConnectorTile />
             </div>
-        )
-    }, [separatorTimestamp])
+        );
+    }, [separatorTimestamp]);
 
     const NavigationHelpRow = useCallback(() => {
         return (
@@ -51,8 +51,8 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <SixthColumnTile />
                 <ConnectorTile />
             </div>
-        )
-    }, [])
+        );
+    }, []);
 
     const CharactersOnRow = useCallback(({ line }: { line: string }) => {
         return (
@@ -64,8 +64,8 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <TileWithCharacter square={`${line}/5`} />
                 <TileWithCharacter square={`${line}/6`} />
             </>
-        )
-    }, [])
+        );
+    }, []);
 
     return (
         <div className={cn(styles.battlefield, 'flex flex-col')} id={'battlefield-div'}>
@@ -103,7 +103,7 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
             </div>
             <NavigationHelpRow />
         </div>
-    )
-}
+    );
+};
 
-export default Battlefield
+export default Battlefield;

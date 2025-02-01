@@ -1,97 +1,97 @@
-import { CombatEditorSaveType } from '@context/CombatEditorContext'
+import { CombatEditorSaveType } from '@context/CombatEditorContext';
 
 interface SavedPreset {
-    nickName: string
-    lobbyID: string
-    data: CombatEditorSaveType
+    nickName: string;
+    lobbyID: string;
+    data: CombatEditorSaveType;
 }
 
-type SavedPresetExtracted = SavedPreset & { presetID: string }
+type SavedPresetExtracted = SavedPreset & { presetID: string };
 
 interface CombatEditorLocalStorage {
-    lastUsed: string | null
+    lastUsed: string | null;
     battlefields: {
-        [key: string]: SavedPreset
-    }
+        [key: string]: SavedPreset;
+    };
 }
 
-const LOCAL_STORAGE_KEY = 'combat-editor'
+const LOCAL_STORAGE_KEY = 'combat-editor';
 
 const createLocalStorage = (): CombatEditorLocalStorage => ({
     lastUsed: null,
     battlefields: {},
-})
+});
 
 export const verifyCombatEditorLocalStorage = () => {
-    const localStorage = window.localStorage.getItem(LOCAL_STORAGE_KEY)
+    const localStorage = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!localStorage) {
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()))
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()));
     }
-}
+};
 
 export const removeCombatEditorLocalStorage = (battlefieldID: string) => {
-    const parsedLocalStorage = getCombatEditorLocalStorage()
+    const parsedLocalStorage = getCombatEditorLocalStorage();
     if (!parsedLocalStorage) {
-        return
+        return;
     }
-    delete parsedLocalStorage.battlefields[battlefieldID]
+    delete parsedLocalStorage.battlefields[battlefieldID];
     if (parsedLocalStorage.lastUsed === battlefieldID) {
-        parsedLocalStorage.lastUsed = null
+        parsedLocalStorage.lastUsed = null;
     }
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedLocalStorage))
-}
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedLocalStorage));
+};
 
 const getCombatEditorLocalStorage = (): CombatEditorLocalStorage | null => {
-    const localStorage = window.localStorage.getItem(LOCAL_STORAGE_KEY)
+    const localStorage = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!localStorage) {
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()))
-        return null
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()));
+        return null;
     }
-    let parsedLocalStorage: CombatEditorLocalStorage
+    let parsedLocalStorage: CombatEditorLocalStorage;
     try {
-        parsedLocalStorage = JSON.parse(localStorage)
+        parsedLocalStorage = JSON.parse(localStorage);
     } catch (e) {
-        console.log('Local storage is corrupted', e)
-        console.log('Input:', localStorage)
+        console.log('Local storage is corrupted', e);
+        console.log('Input:', localStorage);
 
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()))
-        return null
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(createLocalStorage()));
+        return null;
     }
-    return parsedLocalStorage
-}
+    return parsedLocalStorage;
+};
 
 export const getLastUsedCombatEditorPreset = (lobbyID: string): SavedPresetExtracted | null => {
-    const parsedLocalStorage = getCombatEditorLocalStorage()
+    const parsedLocalStorage = getCombatEditorLocalStorage();
     if (!parsedLocalStorage) {
-        return null
+        return null;
     }
-    const { lastUsed: lastUsedID, battlefields } = parsedLocalStorage
+    const { lastUsed: lastUsedID, battlefields } = parsedLocalStorage;
     if (!lastUsedID) {
-        return null
+        return null;
     } else if (!battlefields[lastUsedID]) {
-        return null
+        return null;
     }
     if (battlefields[lastUsedID].lobbyID !== lobbyID) {
-        removeCombatEditorLocalStorage(lastUsedID)
-        return null
+        removeCombatEditorLocalStorage(lastUsedID);
+        return null;
     }
-    return battlefields[lastUsedID] ? { ...battlefields[lastUsedID], presetID: lastUsedID } : null
-}
+    return battlefields[lastUsedID] ? { ...battlefields[lastUsedID], presetID: lastUsedID } : null;
+};
 
 export const saveCombatEditorPreset = (nickName: string, data: SavedPreset['data'], lobbyID: string) => {
-    const parsedLocalStorage = getCombatEditorLocalStorage()
+    const parsedLocalStorage = getCombatEditorLocalStorage();
     if (!parsedLocalStorage) {
-        return
+        return;
     }
-    const { battlefields } = parsedLocalStorage
-    const newID = Object.keys(battlefields).length.toString()
+    const { battlefields } = parsedLocalStorage;
+    const newID = Object.keys(battlefields).length.toString();
     battlefields[newID] = {
         nickName,
         data,
         lobbyID,
-    }
-    parsedLocalStorage.lastUsed = newID
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedLocalStorage))
-}
+    };
+    parsedLocalStorage.lastUsed = newID;
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedLocalStorage));
+};
 
-export { createLocalStorage }
+export { createLocalStorage };

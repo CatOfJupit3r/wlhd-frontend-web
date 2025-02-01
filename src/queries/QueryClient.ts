@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query';
 
 export default new QueryClient({
     defaultOptions: {
@@ -13,4 +13,4 @@ export default new QueryClient({
             refetchInterval: 30 * 60 * 1000, // 5 minutes
         },
     },
-})
+});

@@ -1,23 +1,23 @@
-import CategoryContent from '@components/GameWiki/CategoryContent'
-import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent'
-import { Button } from '@components/ui/button'
-import paths from '@router/paths'
-import React, { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaAddressCard } from 'react-icons/fa'
-import { GiKnapsack, GiSpellBook, GiSwordsEmblem } from 'react-icons/gi'
-import { IoMdReturnLeft } from 'react-icons/io'
-import { IoLayersSharp } from 'react-icons/io5'
-import { useNavigate } from 'react-router'
+import CategoryContent from '@components/GameWiki/CategoryContent';
+import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
+import { Button } from '@components/ui/button';
+import paths from '@router/paths';
+import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaAddressCard } from 'react-icons/fa';
+import { GiKnapsack, GiSpellBook, GiSwordsEmblem } from 'react-icons/gi';
+import { IoMdReturnLeft } from 'react-icons/io';
+import { IoLayersSharp } from 'react-icons/io5';
+import { useNavigate } from 'react-router';
 
 interface iDLCContents {}
 
 const DLCContents: FC<iDLCContents> = () => {
-    const [selected, setSelected] = React.useState<string | null>(null)
-    const navigate = useNavigate()
+    const [selected, setSelected] = React.useState<string | null>(null);
+    const navigate = useNavigate();
     const { t } = useTranslation('local', {
         keyPrefix: 'wiki.buttons',
-    })
+    });
 
     return (
         <div className={'flex h-full w-full flex-row p-4'}>
@@ -25,10 +25,10 @@ const DLCContents: FC<iDLCContents> = () => {
                 <div>
                     <Button
                         onClick={() => {
-                            navigate(paths.wiki)
+                            navigate(paths.wiki);
                         }}
                         variant={'default'}
-                        className={`flex w-full flex-row gap-2`}
+                        className={'flex w-full flex-row gap-2'}
                     >
                         <IoMdReturnLeft className={'size-6'} />
                         {t('back-to-dlc-select')}
@@ -67,20 +67,20 @@ const DLCContents: FC<iDLCContents> = () => {
                                 key={index}
                                 onClick={() => {
                                     if (selected === value) {
-                                        setSelected(null)
+                                        setSelected(null);
                                     } else {
-                                        setSelected(value)
+                                        setSelected(value);
                                     }
                                 }}
                                 variant={selected === value ? 'default' : 'secondary'}
-                                className={`w-full`}
+                                className={'w-full'}
                             >
                                 {icon({
                                     className: 'inline-block mr-2 size-6',
                                 })}
                                 {t(name)}
                             </Button>
-                        )
+                        );
                     })}
                 </div>
             </div>
@@ -88,7 +88,7 @@ const DLCContents: FC<iDLCContents> = () => {
                 {selected ? <CategoryContent category={selected} /> : <PseudoCategoryContent />}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default DLCContents
+export default DLCContents;

@@ -6,8 +6,8 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels'
-import { CharacterInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
+} from '@models/CombatEditorModels';
+import { CharacterInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
 
 class GameConverters {
     public convertSpellEditableToInfo = (descriptor: string, spell: SpellEditable): SpellInfo => {
@@ -27,8 +27,8 @@ class GameConverters {
             },
             memory: spell.memory,
             tags: spell.tags,
-        }
-    }
+        };
+    };
 
     public convertItemEditableToInfo = (descriptor: string, item: ItemEditable): ItemInfo => {
         return {
@@ -48,8 +48,8 @@ class GameConverters {
             userNeedsRange: item.casterMustBeInRange,
             tags: item.tags,
             memory: item.memory,
-        }
-    }
+        };
+    };
 
     public convertWeaponEditableToInfo = (descriptor: string, weapon: WeaponEditable): WeaponInfo => {
         return {
@@ -71,8 +71,8 @@ class GameConverters {
             userNeedsRange: weapon.casterMustBeInRange,
             tags: weapon.tags,
             memory: weapon.memory,
-        }
-    }
+        };
+    };
 
     public convertStatusEffectEditableToInfo = (descriptor: string, effect: StatusEffectEditable): StatusEffectInfo => {
         return {
@@ -81,8 +81,8 @@ class GameConverters {
             duration: effect.duration,
             memory: effect.memory,
             tags: effect.tags,
-        }
-    }
+        };
+    };
 
     public convertCharacterEditableToInfoFull = (character: CharacterDataEditable): CharacterInfoFull => {
         return {
@@ -93,27 +93,27 @@ class GameConverters {
             spellBook: {
                 maxActiveSpells: character.spellBook.maxActiveSpells,
                 knownSpells: character.spellBook.knownSpells.map((spell) =>
-                    this.convertSpellEditableToInfo(spell.descriptor, spell)
+                    this.convertSpellEditableToInfo(spell.descriptor, spell),
                 ),
             },
             inventory: character.inventory.map((item) => this.convertItemEditableToInfo(item.descriptor, item)),
             statusEffects: character.statusEffects.map((effect) =>
-                this.convertStatusEffectEditableToInfo(effect.descriptor, effect)
+                this.convertStatusEffectEditableToInfo(effect.descriptor, effect),
             ),
             weaponry: character.weaponry.map((weapon) => this.convertWeaponEditableToInfo(weapon.descriptor, weapon)),
             tags: [],
             memory: {},
-        }
-    }
+        };
+    };
 
     public convertEditableToInSave = (_character: CharacterDataEditable): CharacterDataInSave => {
         // TODO: implement
-        return {} as CharacterDataInSave
-    }
+        return {} as CharacterDataInSave;
+    };
     public convertEditableToInPreset = (_character: CharacterDataEditable): CharacterDataInPreset => {
         // TODO: implement
-        return {} as CharacterDataInPreset
-    }
+        return {} as CharacterDataInPreset;
+    };
 }
 
-export default new GameConverters()
+export default new GameConverters();

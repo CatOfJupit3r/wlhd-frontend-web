@@ -1,4 +1,4 @@
-import createIconComponent, { IconComponentType } from '@components/icons/icon_factory'
+import createIconComponent, { IconComponentType } from '@components/icons/icon_factory';
 
 const Icons = [
     {
@@ -66,15 +66,15 @@ const Icons = [
         alt: 'Hourglass',
         displayName: 'HourglassIcon',
     },
-]
+];
 
 const iconExports = Icons.reduce(
     (acc, { src, alt, displayName }) => {
-        acc[displayName] = createIconComponent(src, alt, displayName)
-        return acc
+        acc[displayName] = createIconComponent(src, alt, displayName);
+        return acc;
     },
-    {} as { [key: string]: IconComponentType }
-)
+    {} as { [key: string]: IconComponentType },
+);
 
 export const {
     AttributesIcon,
@@ -90,4 +90,4 @@ export const {
     APIcon,
     LocationIcon,
     HourglassIcon,
-} = iconExports
+} = iconExports;

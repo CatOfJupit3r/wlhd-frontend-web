@@ -1,8 +1,8 @@
-import { Separator } from '@components/ui/separator'
-import { Children, FC, HTMLAttributes, ReactNode } from 'react'
+import { Separator } from '@components/ui/separator';
+import { Children, FC, HTMLAttributes, ReactNode } from 'react';
 
 interface iSeparatedDiv extends HTMLAttributes<HTMLDivElement> {
-    children: ReactNode
+    children: ReactNode;
 }
 
 /**
@@ -20,7 +20,7 @@ const SeparatedDiv: FC<iSeparatedDiv> = ({ children, ...props }) => {
                     </>
                 ))}
         </div>
-    )
-}
+    );
+};
 
-export default SeparatedDiv
+export default SeparatedDiv;

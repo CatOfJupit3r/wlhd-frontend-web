@@ -1,20 +1,20 @@
-import { iRouteConfig } from '@models/IRouteConfig'
-import { IS_DEVELOPMENT } from 'config'
-import { lazy } from 'react'
-import paths from './paths'
+import { iRouteConfig } from '@models/IRouteConfig';
+import { IS_DEVELOPMENT } from 'config';
+import { lazy } from 'react';
+import paths from './paths';
 
-const AboutPage = lazy(() => import('@pages/AboutPage'))
-const CreateCharacterPage = lazy(() => import('@pages/CreateCharacterPage'))
-const CreateCombatPage = lazy(() => import('@pages/CreateCombatPage'))
-const GameRoomPage = lazy(() => import('@pages/GameRoomPage'))
-const GameTestPage = lazy(() => import('@pages/GameTestPage'))
-const GameWikiPage = lazy(() => import('@pages/GameWikiPage'))
-const HomePage = lazy(() => import('@pages/HomePage'))
-const LobbyPage = lazy(() => import('@pages/LobbyPage'))
-const ProfilePage = lazy(() => import('@pages/ProfilePage'))
-const SignInPage = lazy(() => import('@pages/SignInPage'))
-const SignUpPage = lazy(() => import('@pages/SignUpPage'))
-const ViewCharacterPage = lazy(() => import('@pages/ViewCharacterPage'))
+const AboutPage = lazy(() => import('@pages/AboutPage'));
+const CreateCharacterPage = lazy(() => import('@pages/CreateCharacterPage'));
+const CreateCombatPage = lazy(() => import('@pages/CreateCombatPage'));
+const GameRoomPage = lazy(() => import('@pages/GameRoomPage'));
+const GameTestPage = lazy(() => import('@pages/GameTestPage'));
+const GameWikiPage = lazy(() => import('@pages/GameWikiPage'));
+const HomePage = lazy(() => import('@pages/HomePage'));
+const LobbyPage = lazy(() => import('@pages/LobbyPage'));
+const ProfilePage = lazy(() => import('@pages/ProfilePage'));
+const SignInPage = lazy(() => import('@pages/SignInPage'));
+const SignUpPage = lazy(() => import('@pages/SignUpPage'));
+const ViewCharacterPage = lazy(() => import('@pages/ViewCharacterPage'));
 
 const routes: Array<iRouteConfig> = [
     {
@@ -114,11 +114,11 @@ const routes: Array<iRouteConfig> = [
         includeHeader: true,
         includeFooter: true,
     },
-]
+];
 
 export const authRoutes = routes
     .filter((route) => route.requiresAuth)
-    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT))
+    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT));
 export const generalRoutes = routes
     .filter((route) => !route.requiresAuth)
-    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT))
+    .filter((route) => !route.devOnly || (route.devOnly && IS_DEVELOPMENT));

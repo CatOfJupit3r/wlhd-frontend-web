@@ -1,4 +1,4 @@
-import { Toaster } from '@components/ui/toaster'
+import { Toaster } from '@components/ui/toaster';
 
 const Notify = () => {
     return (
@@ -6,7 +6,7 @@ const Notify = () => {
             <Toaster variant={'top-center'} />
             <Toaster variant={'bottom-left'} />
         </>
-    )
-}
+    );
+};
 
-export default Notify
+export default Notify;

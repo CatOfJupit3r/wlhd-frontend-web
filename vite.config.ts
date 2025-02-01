@@ -1,37 +1,37 @@
 // import react from '@vitejs/plugin-react-swc'
-import react from '@vitejs/plugin-react'
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import react from '@vitejs/plugin-react';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 function emptySourcemapFix() {
-    let currentInterval = null
+    let currentInterval = null;
     return {
         name: 'empty-sourcemap-fix',
         enforce: 'post',
         transform(source: string) {
-            if (currentInterval) return
+            if (currentInterval) return;
             currentInterval = setInterval(() => {
-                const nodeModulesPath = path.join(__dirname, 'node_modules', '.vite', 'deps')
-                if (!fs.existsSync(nodeModulesPath)) return
-                clearInterval(currentInterval)
-                currentInterval = null
-                const files = fs.readdirSync(nodeModulesPath)
+                const nodeModulesPath = path.join(__dirname, 'node_modules', '.vite', 'deps');
+                if (!fs.existsSync(nodeModulesPath)) return;
+                clearInterval(currentInterval);
+                currentInterval = null;
+                const files = fs.readdirSync(nodeModulesPath);
                 files.forEach((file) => {
-                    const mapFile = file + '.map'
-                    const mapPath = path.join(nodeModulesPath, mapFile)
-                    if (!fs.existsSync(mapPath)) return
-                    const mapData = JSON.parse(fs.readFileSync(mapPath, 'utf8'))
+                    const mapFile = file + '.map';
+                    const mapPath = path.join(nodeModulesPath, mapFile);
+                    if (!fs.existsSync(mapPath)) return;
+                    const mapData = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
                     if (!mapData.sources || mapData.sources.length == 0) {
-                        mapData.sources = [path.relative(mapPath, path.join(nodeModulesPath, file))]
-                        fs.writeFileSync(mapPath, JSON.stringify(mapData), 'utf8')
+                        mapData.sources = [path.relative(mapPath, path.join(nodeModulesPath, file))];
+                        fs.writeFileSync(mapPath, JSON.stringify(mapData), 'utf8');
                     }
-                })
-            }, 100)
-            return source
+                });
+            }, 100);
+            return source;
         },
-    }
+    };
 }
 
 // https://stackoverflow.com/questions/75839993/vite-build-hangs-forever/76920975#76920975
@@ -42,25 +42,25 @@ function ClosePlugin() {
         // use this to catch errors when building
         buildEnd(error: any) {
             if (error) {
-                console.error('Error bundling')
-                console.error(error)
-                process.exit(1)
+                console.error('Error bundling');
+                console.error(error);
+                process.exit(1);
             } else {
-                console.log('Build ended')
+                console.log('Build ended');
             }
         },
 
         // use this to catch the end of a build without errors
         closeBundle(id: any) {
-            console.log('Bundle closed')
-            process.exit(0)
+            console.log('Bundle closed');
+            process.exit(0);
         },
-    }
+    };
 }
 
 const ReactCompilerConfig = {
     target: '19',
-}
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -76,4 +76,4 @@ export default defineConfig({
         ClosePlugin() as unknown as Plugin,
     ],
     build: {},
-})
+});

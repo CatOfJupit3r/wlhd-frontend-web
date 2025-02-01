@@ -1,8 +1,8 @@
-import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes'
-import { StaticSkeleton } from '@components/ui/skeleton'
-import { CharacterInfoTooltip } from '@models/GameModels'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
+import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import { CharacterInfoTooltip } from '@models/GameModels';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const PlaceholderTooltip = () => {
     return (
@@ -32,17 +32,17 @@ export const PlaceholderTooltip = () => {
                 <StaticSkeleton className={'h-4 w-[12ch]'} />
             </div>
         </>
-    )
-}
+    );
+};
 
 const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     const RealContent = useCallback(() => {
         if (!character) {
-            return <PlaceholderTooltip />
+            return <PlaceholderTooltip />;
         }
-        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character
+        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character;
         return (
             <>
                 <p className={'text-base font-semibold'}>
@@ -64,16 +64,16 @@ const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) =>
                               .map((value) =>
                                   value.duration !== null
                                       ? `${t(value.decorations.name)} (${value.duration})`
-                                      : t(value.decorations.name)
+                                      : t(value.decorations.name),
                               )
                               .join(', ')
                         : t('local:game.components.tooltip.no_status_effects')}
                 </p>
             </>
-        )
-    }, [character])
+        );
+    }, [character]);
 
-    return <div>{!character ? <PlaceholderTooltip /> : <RealContent />}</div>
-}
+    return <div>{!character ? <PlaceholderTooltip /> : <RealContent />}</div>;
+};
 
-export default CharacterTooltip
+export default CharacterTooltip;

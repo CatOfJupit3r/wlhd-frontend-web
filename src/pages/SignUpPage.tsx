@@ -1,4 +1,4 @@
-import SignUp from '@components/Authentication/SignUp'
+import SignUp from '@components/Authentication/SignUp';
 
 const SignUpPage = () => {
     return (
@@ -17,7 +17,7 @@ const SignUpPage = () => {
                 }}
             />
         </div>
-    )
-}
+    );
+};
 
-export default SignUpPage
+export default SignUpPage;

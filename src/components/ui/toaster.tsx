@@ -1,8 +1,8 @@
-import { useToast } from '@hooks/useToast'
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from 'components/ui/toast'
+import { useToast } from '@hooks/useToast';
+import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from 'components/ui/toast';
 
 export function Toaster({ variant }: { variant?: 'bottom-left' | 'top-center' | undefined }) {
-    const { toasts, dismiss } = useToast()
+    const { toasts, dismiss } = useToast();
 
     return (
         <ToastProvider>
@@ -14,7 +14,7 @@ export function Toaster({ variant }: { variant?: 'bottom-left' | 'top-center' | 
                         onClick={
                             clickToDismiss
                                 ? () => {
-                                      dismiss(id)
+                                      dismiss(id);
                                   }
                                 : undefined
                         }
@@ -27,9 +27,9 @@ export function Toaster({ variant }: { variant?: 'bottom-left' | 'top-center' | 
                         {action}
                         <ToastClose />
                     </Toast>
-                ) : null
+                ) : null;
             })}
             <ToastViewport variant={variant} />
         </ToastProvider>
-    )
+    );
 }

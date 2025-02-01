@@ -1,19 +1,19 @@
-import DLCData, { iDLCData } from '@components/GameWiki/data'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card'
-import StyledLink from '@components/ui/styled-link'
-import paths from '@router/paths'
-import { SUPPORTED_DLCS_DESCRIPTORS } from 'config'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import DLCData, { iDLCData } from '@components/GameWiki/data';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
+import StyledLink from '@components/ui/styled-link';
+import paths from '@router/paths';
+import { SUPPORTED_DLCS_DESCRIPTORS } from 'config';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface iDLCCard {
-    title: string
-    description: string
-    creator: string
+    title: string;
+    description: string;
+    creator: string;
 }
 
 const DLCCard: FC<iDLCCard> = ({ title, description, creator }) => {
-    const { t } = useTranslation('local', { keyPrefix: 'wiki.dlcs' })
+    const { t } = useTranslation('local', { keyPrefix: 'wiki.dlcs' });
 
     return (
         <Card className={'h-full p-4 transition-all duration-200 hover:bg-gray-100 hover:shadow-lg'}>
@@ -29,13 +29,13 @@ const DLCCard: FC<iDLCCard> = ({ title, description, creator }) => {
                 })}
             </CardFooter>
         </Card>
-    )
-}
+    );
+};
 
 interface iWikiDLCChoice {}
 
 const WikiDLCChoice: FC<iWikiDLCChoice> = () => {
-    const { t } = useTranslation('local', { keyPrefix: 'wiki' })
+    const { t } = useTranslation('local', { keyPrefix: 'wiki' });
     return (
         <div className={'mt-4 flex size-full justify-center'}>
             <div className={'flex w-full max-w-6xl flex-col justify-center gap-4'}>
@@ -55,7 +55,7 @@ const WikiDLCChoice: FC<iWikiDLCChoice> = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default WikiDLCChoice
+export default WikiDLCChoice;

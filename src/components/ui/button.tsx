@@ -1,13 +1,13 @@
-import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { PulsingSpinner } from '@components/Spinner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import { cn } from '@utils'
-import { ClassValue } from 'clsx'
-import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { PulsingSpinner } from '@components/Spinner';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { cn } from '@utils';
+import { ClassValue } from 'clsx';
+import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 
 const buttonVariants = cva(
     'text-sm inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -35,44 +35,44 @@ const buttonVariants = cva(
             variant: 'default',
             size: 'default',
         },
-    }
-)
+    },
+);
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-    asChild?: boolean
+    asChild?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, size, asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : 'button'
-        return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
-    }
-)
-Button.displayName = 'Button'
+        const Comp = asChild ? Slot : 'button';
+        return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+    },
+);
+Button.displayName = 'Button';
 
 const TimeoutButton = ({ timeoutTime, onClick, disabled, ...props }: { timeoutTime: number } & ButtonProps) => {
-    const [isTimeout, setIsTimeout] = useState(false)
+    const [isTimeout, setIsTimeout] = useState(false);
     const { t } = useTranslation('local', {
         keyPrefix: 'ui',
-    })
+    });
 
     const handleClick = useCallback(
         (e: MouseEvent<HTMLButtonElement>) => {
-            setIsTimeout(true)
+            setIsTimeout(true);
             if (onClick) {
-                onClick(e)
+                onClick(e);
             }
-            setTimeout(() => setIsTimeout(false), timeoutTime)
+            setTimeout(() => setIsTimeout(false), timeoutTime);
         },
-        [onClick, timeoutTime]
-    )
+        [onClick, timeoutTime],
+    );
 
     return (
         <Button {...props} onClick={handleClick} disabled={disabled || isTimeout}>
             {isTimeout ? t('wait') : props.children}
         </Button>
-    )
-}
+    );
+};
 
 const AwaitingButton = ({
     onClick,
@@ -82,43 +82,43 @@ const AwaitingButton = ({
     disabled,
     ...props
 }: {
-    onClick?: () => Promise<unknown>
-    thenCase?: () => void
-    catchCase?: (error: unknown) => void
-    finallyCase?: () => void
+    onClick?: () => Promise<unknown>;
+    thenCase?: () => void;
+    catchCase?: (error: unknown) => void;
+    finallyCase?: () => void;
 } & Omit<ButtonProps, 'onClick'>) => {
-    const [isAwaiting, setIsAwaiting] = useState(false)
+    const [isAwaiting, setIsAwaiting] = useState(false);
 
     const handleClick = useCallback(async () => {
         if (isAwaiting || disabled) {
-            return
+            return;
         }
-        setIsAwaiting(true)
+        setIsAwaiting(true);
         try {
             if (onClick) {
-                await onClick()
+                await onClick();
             }
             if (thenCase) {
-                thenCase()
+                thenCase();
             }
         } catch (error) {
             if (catchCase) {
-                catchCase(error)
+                catchCase(error);
             }
         } finally {
-            setIsAwaiting(false)
+            setIsAwaiting(false);
             if (finallyCase) {
-                finallyCase()
+                finallyCase();
             }
         }
-    }, [disabled, isAwaiting, onClick, thenCase, catchCase, finallyCase])
+    }, [disabled, isAwaiting, onClick, thenCase, catchCase, finallyCase]);
 
     return (
         <Button {...props} onClick={handleClick} disabled={isAwaiting || disabled}>
             {isAwaiting ? <PulsingSpinner /> : props.children}
         </Button>
-    )
-}
+    );
+};
 
 const ButtonWithTooltip = ({
     tooltip,
@@ -127,10 +127,10 @@ const ButtonWithTooltip = ({
     tooltipContentProps,
     ...props
 }: {
-    tooltip: string
-    tooltipClassname?: ClassValue
-    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>
-    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>
+    tooltip: string;
+    tooltipClassname?: ClassValue;
+    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>;
+    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>;
 } & ButtonProps) => {
     return (
         <Tooltip {...tooltipProps}>
@@ -141,8 +141,8 @@ const ButtonWithTooltip = ({
                 <p className={cn(tooltipClassname)}>{tooltip}</p>
             </TooltipContent>
         </Tooltip>
-    )
-}
+    );
+};
 
 const AwaitingButtonWithTooltip = ({
     onClick,
@@ -155,14 +155,14 @@ const AwaitingButtonWithTooltip = ({
     tooltipContentProps,
     ...props
 }: {
-    onClick?: () => Promise<unknown>
-    thenCase?: () => void
-    catchCase?: (error: unknown) => void
-    finallyCase?: () => void
-    tooltip: string
-    tooltipClassname?: ClassValue
-    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>
-    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>
+    onClick?: () => Promise<unknown>;
+    thenCase?: () => void;
+    catchCase?: (error: unknown) => void;
+    finallyCase?: () => void;
+    tooltip: string;
+    tooltipClassname?: ClassValue;
+    tooltipProps?: Omit<ComponentProps<typeof Tooltip>, 'children'>;
+    tooltipContentProps?: Omit<ComponentProps<typeof TooltipContent>, 'children'>;
 } & ButtonProps) => {
     return (
         <Tooltip {...tooltipProps}>
@@ -179,8 +179,8 @@ const AwaitingButtonWithTooltip = ({
                 <p className={cn(tooltipClassname)}>{tooltip}</p>
             </TooltipContent>
         </Tooltip>
-    )
-}
+    );
+};
 
 const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }) => {
     return (
@@ -192,27 +192,27 @@ const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }
                 {props.children}
             </Link>
         </Button>
-    )
-}
+    );
+};
 
 type MutationButtonProps = {
-    mutate: () => void
-    isPending: boolean
-    children?: ReactNode
-} & Omit<ButtonProps, 'onClick'>
+    mutate: () => void;
+    isPending: boolean;
+    children?: ReactNode;
+} & Omit<ButtonProps, 'onClick'>;
 
 function MutationButton({ mutate, children, isPending, disabled, ...props }: MutationButtonProps) {
     const handleClick = () => {
         if (!isPending && !disabled) {
-            mutate()
+            mutate();
         }
-    }
+    };
 
     return (
         <Button {...props} onClick={handleClick} disabled={disabled || isPending}>
             {isPending ? <PulsingSpinner /> : children}
         </Button>
-    )
+    );
 }
 
 export {
@@ -224,4 +224,4 @@ export {
     ButtonLink,
     AwaitingButtonWithTooltip,
     MutationButton,
-}
+};

@@ -1,104 +1,104 @@
-import { Separator } from '@components/ui/separator'
-import { CharacterAttributes } from '@models/GameModels'
-import { capitalizeFirstLetter, splitDescriptor } from '@utils'
-import { extractDualAttributes } from '@utils/gameDisplayTools'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Separator } from '@components/ui/separator';
+import { CharacterAttributes } from '@models/GameModels';
+import { capitalizeFirstLetter, splitDescriptor } from '@utils';
+import { extractDualAttributes } from '@utils/gameDisplayTools';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const addPrefix = (prefix: string, value: string): string => {
-    const [dlc, key] = splitDescriptor(value)
-    return `${dlc}:${prefix}.${key}`
-}
+    const [dlc, key] = splitDescriptor(value);
+    return `${dlc}:${prefix}.${key}`;
+};
 
 const Attribute = ({ name, value }: { name: string; value: string }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
         <div className={'mb-0.5 flex flex-row justify-between text-base'}>
             <p className={'font-normal'}>{capitalizeFirstLetter(t(addPrefix('attributes', name)))}</p>
             <p className={'font-bold'}>{value}</p>
         </div>
-    )
-}
+    );
+};
 
 const AttributeDisplay = ({ attributes, ignore }: { attributes: CharacterAttributes; ignore: Array<string> }) => {
-    const [ignored, setIgnored] = useState<Array<string>>(ignore)
+    const [ignored, setIgnored] = useState<Array<string>>(ignore);
 
-    const [dual, setDuals] = useState<Array<{ key: string; value: string }>>([])
-    const [singular, setSingulars] = useState<Array<{ key: string; value: string }>>([])
+    const [dual, setDuals] = useState<Array<{ key: string; value: string }>>([]);
+    const [singular, setSingulars] = useState<Array<{ key: string; value: string }>>([]);
 
-    const [processedDuals, setProcessedDuals] = useState<boolean>(false)
-    const [processedSingulars, setProcessedSingulars] = useState<boolean>(false)
+    const [processedDuals, setProcessedDuals] = useState<boolean>(false);
+    const [processedSingulars, setProcessedSingulars] = useState<boolean>(false);
 
     const addIgnored = useCallback(
         (attribute: string) => {
-            setIgnored([...ignored, attribute])
+            setIgnored([...ignored, attribute]);
         },
-        [ignored]
-    )
+        [ignored],
+    );
 
     const addManyIgnored = useCallback(
         (...attributes: string[]) => {
-            setIgnored([...ignored, ...attributes])
+            setIgnored([...ignored, ...attributes]);
         },
-        [ignored]
-    )
+        [ignored],
+    );
 
     const extractDuals = useCallback((): Array<{
-        key: string
-        value: string
+        key: string;
+        value: string;
     }> => {
-        const [extracted, extractedNames] = extractDualAttributes(attributes, ignored)
-        addManyIgnored(...extractedNames)
-        return extracted
-    }, [])
+        const [extracted, extractedNames] = extractDualAttributes(attributes, ignored);
+        addManyIgnored(...extractedNames);
+        return extracted;
+    }, []);
 
     const extractSingulars = useCallback((): Array<{ key: string; value: string }> => {
-        const found_attributes: Array<{ key: string; value: string }> = []
+        const found_attributes: Array<{ key: string; value: string }> = [];
         for (const attribute in attributes) {
-            if (ignored.includes(attribute)) continue
+            if (ignored.includes(attribute)) continue;
             if (!attribute.endsWith('_attack') && !attribute.endsWith('_defense')) {
-                found_attributes.push({ key: attribute, value: `${attributes[attribute]}` })
-                addIgnored(attribute)
+                found_attributes.push({ key: attribute, value: `${attributes[attribute]}` });
+                addIgnored(attribute);
             }
         }
-        return found_attributes
-    }, [])
+        return found_attributes;
+    }, []);
 
     const healthAPDefenseValues = useMemo((): { [p: string]: string } => {
         return {
             health: `${attributes['builtins:current_health'] || '-'}/${attributes['builtins:max_health'] || '-'}`,
             actionPoints: `${attributes['builtins:current_action_points'] || '-'}/${attributes['builtins:max_action_points'] || '-'}`,
             armor: `${attributes['builtins:current_armor'] || '-'}/${attributes['builtins:base_armor'] || '-'}`,
-        }
-    }, [attributes])
+        };
+    }, [attributes]);
 
     useEffect(() => {
-        setProcessedDuals(false)
-        setProcessedSingulars(false)
-    }, [attributes])
+        setProcessedDuals(false);
+        setProcessedSingulars(false);
+    }, [attributes]);
 
     useEffect(() => {
-        setIgnored(ignore)
-    }, [ignore])
+        setIgnored(ignore);
+    }, [ignore]);
 
     useEffect(() => {
-        setDuals(extractDuals())
-    }, [attributes])
+        setDuals(extractDuals());
+    }, [attributes]);
 
     useEffect(() => {
         if (!processedSingulars && processedDuals) {
-            setSingulars(extractSingulars())
-            setProcessedSingulars(true)
+            setSingulars(extractSingulars());
+            setProcessedSingulars(true);
         }
-    }, [processedSingulars, processedDuals])
+    }, [processedSingulars, processedDuals]);
 
     useEffect(() => {
         if (!processedDuals) {
-            setDuals(extractDuals())
-            setProcessedDuals(true)
+            setDuals(extractDuals());
+            setProcessedDuals(true);
         }
-    }, [processedDuals])
+    }, [processedDuals]);
 
     return processedDuals && processedSingulars ? (
         <div className={'flex flex-col gap-2 text-base'}>
@@ -136,7 +136,7 @@ const AttributeDisplay = ({ attributes, ignore }: { attributes: CharacterAttribu
             </div>
             <Separator />
         </div>
-    ) : null
-}
+    ) : null;
+};
 
-export default AttributeDisplay
+export default AttributeDisplay;

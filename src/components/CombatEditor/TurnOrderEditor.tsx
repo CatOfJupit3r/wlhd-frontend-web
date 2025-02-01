@@ -1,60 +1,60 @@
-import BetterScrollableContainer from '@components/BetterScrollableContainer'
-import { CharacterCard } from '@components/GameScreen/TurnOrderDisplay'
-import { Button } from '@components/ui/button'
-import { useCombatEditorContext } from '@context/CombatEditorContext'
-import React, { useCallback, useMemo } from 'react'
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import BetterScrollableContainer from '@components/BetterScrollableContainer';
+import { CharacterCard } from '@components/GameScreen/TurnOrderDisplay';
+import { Button } from '@components/ui/button';
+import { useCombatEditorContext } from '@context/CombatEditorContext';
+import React, { useCallback, useMemo } from 'react';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const CharacterCardInEditor: React.FC<{
-    characterID: string
-    index: number
+    characterID: string;
+    index: number;
 }> = ({ characterID, index, ...props }) => {
     const { battlefield, makeCharacterActive, activeCharacterIndex, changeTurnOrder, turnOrder } =
-        useCombatEditorContext()
+        useCombatEditorContext();
 
     const character = useMemo(
         () => Object.values(battlefield).find((character) => character.id_ === characterID),
-        [battlefield, characterID]
-    )
+        [battlefield, characterID],
+    );
 
     const handleUpArrow = useCallback(() => {
-        if (index === 0) return
-        const newTurnOrder = [...turnOrder]
-        newTurnOrder[index] = turnOrder[index - 1]
-        newTurnOrder[index - 1] = turnOrder[index]
-        changeTurnOrder(newTurnOrder)
+        if (index === 0) return;
+        const newTurnOrder = [...turnOrder];
+        newTurnOrder[index] = turnOrder[index - 1];
+        newTurnOrder[index - 1] = turnOrder[index];
+        changeTurnOrder(newTurnOrder);
         if (activeCharacterIndex === index) {
-            makeCharacterActive(index - 1)
+            makeCharacterActive(index - 1);
         } else if (activeCharacterIndex === index - 1) {
-            makeCharacterActive(index)
+            makeCharacterActive(index);
         }
-    }, [index, turnOrder, activeCharacterIndex])
+    }, [index, turnOrder, activeCharacterIndex]);
 
     const handleDownArrow = useCallback(() => {
-        if (index === turnOrder.length - 1) return
-        const newTurnOrder = [...turnOrder]
-        newTurnOrder[index] = turnOrder[index + 1]
-        newTurnOrder[index + 1] = turnOrder[index]
-        changeTurnOrder(newTurnOrder)
+        if (index === turnOrder.length - 1) return;
+        const newTurnOrder = [...turnOrder];
+        newTurnOrder[index] = turnOrder[index + 1];
+        newTurnOrder[index + 1] = turnOrder[index];
+        changeTurnOrder(newTurnOrder);
         if (activeCharacterIndex === index) {
-            makeCharacterActive(index + 1)
+            makeCharacterActive(index + 1);
         } else if (activeCharacterIndex === index + 1) {
-            makeCharacterActive(index)
+            makeCharacterActive(index);
         }
-    }, [index, turnOrder, activeCharacterIndex])
+    }, [index, turnOrder, activeCharacterIndex]);
 
     const handleDelete = useCallback(() => {
-        const newTurnOrder = [...turnOrder]
-        newTurnOrder.splice(index, 1)
-        changeTurnOrder(newTurnOrder)
+        const newTurnOrder = [...turnOrder];
+        newTurnOrder.splice(index, 1);
+        changeTurnOrder(newTurnOrder);
         if (activeCharacterIndex === index && activeCharacterIndex >= newTurnOrder.length) {
-            makeCharacterActive(index - 1)
+            makeCharacterActive(index - 1);
         }
-    }, [index, turnOrder, activeCharacterIndex])
+    }, [index, turnOrder, activeCharacterIndex]);
 
     if (!character) {
-        return null
+        return null;
     }
 
     return (
@@ -66,7 +66,7 @@ const CharacterCardInEditor: React.FC<{
                 }}
                 isActive={index === activeCharacterIndex}
                 onDoubleClick={() => {
-                    makeCharacterActive(index ?? 1)
+                    makeCharacterActive(index ?? 1);
                 }}
                 {...props}
             />
@@ -82,11 +82,11 @@ const CharacterCardInEditor: React.FC<{
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const TurnOrderEditor = () => {
-    const { turnOrder } = useCombatEditorContext()
+    const { turnOrder } = useCombatEditorContext();
 
     return (
         <BetterScrollableContainer>
@@ -94,7 +94,7 @@ const TurnOrderEditor = () => {
                 <CharacterCardInEditor key={index} characterID={characterID} index={index} />
             ))}
         </BetterScrollableContainer>
-    )
-}
+    );
+};
 
-export default TurnOrderEditor
+export default TurnOrderEditor;

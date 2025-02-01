@@ -1,14 +1,14 @@
-import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer'
-import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
-import Menu, { MenuSelection } from '@components/ui/menu'
-import { CharacterInfoFull } from '@models/GameModels'
-import React, { useMemo } from 'react'
-import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
+import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer';
+import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
+import Menu, { MenuSelection } from '@components/ui/menu';
+import { CharacterInfoFull } from '@models/GameModels';
+import React, { useMemo } from 'react';
+import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 
 const CharacterMenus: Array<{
-    value: string
-    label: string
-    icon: React.FC<{ className: string }>
+    value: string;
+    label: string;
+    icon: React.FC<{ className: string }>;
 }> = [
     {
         value: 'attributes',
@@ -40,30 +40,30 @@ const CharacterMenus: Array<{
         label: 'Misc',
         icon: MdOutlineAutoAwesomeMosaic,
     },
-]
+];
 
 const MenuIsDisabled = (type: string, info: CharacterInfoFull) => {
     switch (type) {
         case 'inventory':
-            return !info.inventory || info.inventory.length === 0
+            return !info.inventory || info.inventory.length === 0;
         case 'statusEffects':
-            return !info.statusEffects || info.statusEffects.length === 0
+            return !info.statusEffects || info.statusEffects.length === 0;
         case 'weaponry':
-            return !info.weaponry || info.weaponry.length === 0
+            return !info.weaponry || info.weaponry.length === 0;
         case 'spells': {
-            const spellBook = info.spellBook
-            return !spellBook || spellBook.knownSpells.length === 0
+            const spellBook = info.spellBook;
+            return !spellBook || spellBook.knownSpells.length === 0;
         }
         default:
-            return false
+            return false;
     }
-}
+};
 
 interface CharacterFeaturesProps {
     flags: {
-        ignoreAttributes?: Array<string>
-    }
-    character: CharacterInfoFull
+        ignoreAttributes?: Array<string>;
+    };
+    character: CharacterInfoFull;
 }
 
 const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {
@@ -75,12 +75,12 @@ const CharacterFeatures = ({ character, flags }: CharacterFeaturesProps) => {
                     component: () => <FeatureContainer type={menu.value} info={character} flags={flags} />,
                     icon: menu.icon,
                     disabled: MenuIsDisabled(menu.value, character),
-                }
+                };
             }),
-        [character, flags]
-    )
+        [character, flags],
+    );
 
-    return <Menu selection={menus} />
-}
+    return <Menu selection={menus} />;
+};
 
-export default CharacterFeatures
+export default CharacterFeatures;

@@ -1,9 +1,9 @@
-import { Button } from '@components/ui/button'
-import { CharacterInTurnOrder } from '@models/GameModels'
-import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice'
-import { AppDispatch } from '@redux/store'
-import { RandomUtils } from '@utils'
-import { useDispatch, useSelector } from 'react-redux'
+import { Button } from '@components/ui/button';
+import { CharacterInTurnOrder } from '@models/GameModels';
+import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice';
+import { AppDispatch } from '@redux/store';
+import { RandomUtils } from '@utils';
+import { useDispatch, useSelector } from 'react-redux';
 
 /*
 
@@ -96,42 +96,42 @@ const MOCK_TURN_ORDER_CHARACTERS: Array<CharacterInTurnOrder> = [
         },
         id_: '6',
     },
-]
+];
 
 const RandomizeTurnOrder = () => {
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleRandomizeButtonClick = () => {
-        const newOrder = [...MOCK_TURN_ORDER_CHARACTERS]
-        const shuffled = newOrder.sort(() => 0.5 - Math.random())
-        const howManyToPop = RandomUtils.randNumber(0, 2)
+        const newOrder = [...MOCK_TURN_ORDER_CHARACTERS];
+        const shuffled = newOrder.sort(() => 0.5 - Math.random());
+        const howManyToPop = RandomUtils.randNumber(0, 2);
         for (let i = 0; i < howManyToPop; i++) {
-            shuffled.pop()
+            shuffled.pop();
         }
-        shuffled.splice(RandomUtils.randNumber(0, shuffled.length - 1), 0, null as any)
-        dispatch(setTurnOrder(shuffled))
-    }
+        shuffled.splice(RandomUtils.randNumber(0, shuffled.length - 1), 0, null as any);
+        dispatch(setTurnOrder(shuffled));
+    };
 
-    return <Button onClick={handleRandomizeButtonClick}>Randomize Turn Order</Button>
-}
+    return <Button onClick={handleRandomizeButtonClick}>Randomize Turn Order</Button>;
+};
 
 const ShiftTurnOrder = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const turnOrder = useSelector(selectTurnOrder)
+    const dispatch = useDispatch<AppDispatch>();
+    const turnOrder = useSelector(selectTurnOrder);
 
     const handleShiftButtonClick = () => {
-        const newOrder = [...turnOrder]
-        const first = newOrder.shift()
-        newOrder.push(first as any)
+        const newOrder = [...turnOrder];
+        const first = newOrder.shift();
+        newOrder.push(first as any);
         if (newOrder[0] === null) {
-            const second = newOrder.shift()
-            newOrder.push(second as any)
+            const second = newOrder.shift();
+            newOrder.push(second as any);
         }
-        dispatch(setTurnOrder(newOrder))
-    }
+        dispatch(setTurnOrder(newOrder));
+    };
 
-    return <Button onClick={handleShiftButtonClick}>Shift Turn Order</Button>
-}
+    return <Button onClick={handleShiftButtonClick}>Shift Turn Order</Button>;
+};
 
 const DebugSpecificOptions = () => {
     return (
@@ -139,7 +139,7 @@ const DebugSpecificOptions = () => {
             <RandomizeTurnOrder />
             <ShiftTurnOrder />
         </div>
-    )
-}
+    );
+};
 
-export default DebugSpecificOptions
+export default DebugSpecificOptions;

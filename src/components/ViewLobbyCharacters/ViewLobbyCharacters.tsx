@@ -1,27 +1,27 @@
-import GameAsset from '@components/GameAsset'
-import { Button, TimeoutButton } from '@components/ui/button'
-import { Combobox } from '@components/ui/combobox'
-import { Separator } from '@components/ui/separator'
-import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo'
-import ViewContent from '@components/ViewLobbyCharacters/ViewContent'
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
-import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext'
-import useThisLobby from '@queries/useThisLobby'
-import paths from '@router/paths'
-import { cn } from '@utils'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaEdit } from 'react-icons/fa'
-import { GrContactInfo } from 'react-icons/gr'
-import { RiAdminFill } from 'react-icons/ri'
-import { useNavigate } from 'react-router'
+import GameAsset from '@components/GameAsset';
+import { Button, TimeoutButton } from '@components/ui/button';
+import { Combobox } from '@components/ui/combobox';
+import { Separator } from '@components/ui/separator';
+import { CharacterControlInfo } from '@components/ViewLobbyCharacters/CharacterControlInfo';
+import ViewContent from '@components/ViewLobbyCharacters/ViewContent';
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
+import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
+import useThisLobby from '@queries/useThisLobby';
+import paths from '@router/paths';
+import { cn } from '@utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaEdit } from 'react-icons/fa';
+import { GrContactInfo } from 'react-icons/gr';
+import { RiAdminFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router';
 
 const NoCharactersPresent = () => {
-    const { lobby } = useThisLobby()
+    const { lobby } = useThisLobby();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.no-characters',
-    })
-    const navigate = useNavigate()
+    });
+    const navigate = useNavigate();
 
     return (
         <div className={'flex flex-col items-center gap-2 p-4'}>
@@ -31,14 +31,14 @@ const NoCharactersPresent = () => {
                 <div className={'mt-4 flex w-full flex-col gap-1'}>
                     <Button
                         onClick={() => {
-                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId))
+                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId));
                         }}
                     >
                         {t('create-character')}
                     </Button>
                     <Button
                         onClick={() => {
-                            navigate(paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId))
+                            navigate(paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId));
                         }}
                         variant={'outline'}
                     >
@@ -47,54 +47,54 @@ const NoCharactersPresent = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
-    const { lobby } = useThisLobby()
-    const { fetchCharacter } = useCoordinatorCharactersContext()
-    const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext()
+    const { lobby } = useThisLobby();
+    const { fetchCharacter } = useCoordinatorCharactersContext();
+    const { viewedCharacter, changeViewedCharacter, descriptor } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer',
-    })
-    const navigate = useNavigate()
+    });
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Character in View was changed')
-    }, [viewedCharacter])
+        console.log('Character in View was changed');
+    }, [viewedCharacter]);
 
-    const [current, setCurrent] = useState<null | number>(null)
-    const [characterMenu, setCharacterMenu] = useState<string>('display')
+    const [current, setCurrent] = useState<null | number>(null);
+    const [characterMenu, setCharacterMenu] = useState<string>('display');
 
     useEffect(() => {
         if (descriptor !== null && !lobby.characters.map((c) => c.descriptor).includes(descriptor)) {
-            changeViewedCharacter(null, null)
-            setCurrent(null)
+            changeViewedCharacter(null, null);
+            setCurrent(null);
         }
-    }, [lobby.characters])
+    }, [lobby.characters]);
 
     useEffect(() => {
         if (initial && lobby && lobby.characters) {
-            setCurrent(lobby.characters.findIndex((c) => c.descriptor === initial))
+            setCurrent(lobby.characters.findIndex((c) => c.descriptor === initial));
         }
-    }, [initial, lobby])
+    }, [initial, lobby]);
 
     useEffect(() => {
         if (current === null || current === -1) {
-            console.log('No character selected')
-            changeViewedCharacter(null, null)
+            console.log('No character selected');
+            changeViewedCharacter(null, null);
         } else if (lobby && lobby.characters && lobby.characters[current]) {
-            const descriptor = lobby.characters[current].descriptor
+            const descriptor = lobby.characters[current].descriptor;
             fetchCharacter(lobby.lobbyId, descriptor)
                 .then((data) => {
-                    changeViewedCharacter(data, descriptor)
+                    changeViewedCharacter(data, descriptor);
                 })
                 .catch((e) => {
-                    console.error(e)
-                    changeViewedCharacter(null, null)
-                })
+                    console.error(e);
+                    changeViewedCharacter(null, null);
+                });
         }
-    }, [current])
+    }, [current]);
 
     return (
         <div className={cn('flex w-full flex-row justify-center max-[960px]:flex-col')}>
@@ -121,15 +121,15 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                 includeSearch={true}
                                 value={current === null ? '' : current.toString()}
                                 onChange={(value) => {
-                                    const valueAsNumber = parseInt(value)
+                                    const valueAsNumber = parseInt(value);
                                     if (isNaN(valueAsNumber)) {
-                                        setCurrent(null)
+                                        setCurrent(null);
                                     } else if (valueAsNumber < 0 || valueAsNumber >= lobby.characters.length) {
-                                        setCurrent(null)
+                                        setCurrent(null);
                                     } else if (valueAsNumber === current) {
-                                        return
+                                        return;
                                     } else {
-                                        setCurrent(parseInt(value))
+                                        setCurrent(parseInt(value));
                                     }
                                 }}
                             />
@@ -141,16 +141,16 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                 disabled={current === null || current === -1}
                                 onClick={() => {
                                     if (current === null || current === -1) {
-                                        return
+                                        return;
                                     }
                                     fetchCharacter(lobby.lobbyId, lobby.characters[current].descriptor, true)
                                         .then((data) => {
-                                            changeViewedCharacter(data, lobby.characters[current].descriptor)
+                                            changeViewedCharacter(data, lobby.characters[current].descriptor);
                                         })
                                         .catch((e) => {
-                                            console.error(e)
-                                            changeViewedCharacter(null, null)
-                                        })
+                                            console.error(e);
+                                            changeViewedCharacter(null, null);
+                                        });
                                 }}
                             >
                                 {t('refresh-character')}
@@ -160,7 +160,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                     <Button
                                         variant={'outlineToDefault'}
                                         onClick={() => {
-                                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId))
+                                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId));
                                         }}
                                     >
                                         {t('goto-character-creator')}
@@ -196,10 +196,10 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                         onClick={
                                             item.disabled
                                                 ? () => {
-                                                      return
+                                                      return;
                                                   }
                                                 : () => {
-                                                      setCharacterMenu(item.value)
+                                                      setCharacterMenu(item.value);
                                                   }
                                         }
                                         disabled={current === null || item.disabled || false}
@@ -210,7 +210,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                         <item.icon className={'size-4'} />
                                         <p>{item.label}</p>
                                     </Button>
-                                )
+                                );
                             })}
                         </div>
                     </div>
@@ -218,15 +218,15 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                 </>
             )}
         </div>
-    )
-}
+    );
+};
 
 const ViewCharacterLobbyUsable = ({ initial }: { initial?: string | null }) => {
     return (
         <ViewCharactersContextProvider>
             <ViewLobbyCharacters initial={initial || null} />
         </ViewCharactersContextProvider>
-    )
-}
+    );
+};
 
-export default ViewCharacterLobbyUsable
+export default ViewCharacterLobbyUsable;

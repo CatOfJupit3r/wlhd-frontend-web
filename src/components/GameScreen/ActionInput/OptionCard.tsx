@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next'
-import { BsInfoCircle } from 'react-icons/bs'
+import { useTranslation } from 'react-i18next';
+import { BsInfoCircle } from 'react-icons/bs';
 
-import GameAsset from '@components/GameAsset'
-import { StaticSkeleton } from '@components/ui/skeleton'
-import { useActionContext } from '@context/ActionContext'
-import { useDescriptionWithMemories } from '@hooks/UseDescriptionWithMemories'
-import { iAction, iActionDecoration } from '@models/GameModels'
-import { cn } from '@utils'
-import { FC, useCallback, useMemo } from 'react'
+import GameAsset from '@components/GameAsset';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import { useActionContext } from '@context/ActionContext';
+import { useDescriptionWithMemories } from '@hooks/UseDescriptionWithMemories';
+import { iAction, iActionDecoration } from '@models/GameModels';
+import { cn } from '@utils';
+import { FC, useCallback, useMemo } from 'react';
 
 export const OptionCardPlaceholder: FC = () => {
     return (
@@ -18,27 +18,27 @@ export const OptionCardPlaceholder: FC = () => {
                 <StaticSkeleton className="h-4 w-full" />
             </div>
         </div>
-    )
-}
+    );
+};
 
 interface iOptionCard {
-    decorations: iActionDecoration
-    disabled?: boolean
-    highlighted?: boolean
-    handleDoubleClick?: () => void
+    decorations: iActionDecoration;
+    disabled?: boolean;
+    highlighted?: boolean;
+    handleDoubleClick?: () => void;
 }
 
 const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handleDoubleClick }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
-    const { name, description, sprite, cost = '-', memories = {} } = decorations
-    const { formated: translatedText } = useDescriptionWithMemories({ description, memory: memories })
+    const { name, description, sprite, cost = '-', memories = {} } = decorations;
+    const { formated: translatedText } = useDescriptionWithMemories({ description, memory: memories });
 
-    const textNeedsTruncating = useMemo(() => translatedText.length > 250, [translatedText])
+    const textNeedsTruncating = useMemo(() => translatedText.length > 250, [translatedText]);
     const displayedText = useMemo(
         () => (textNeedsTruncating ? translatedText.substring(0, 250) + '...' : translatedText),
-        [translatedText, textNeedsTruncating]
-    )
+        [translatedText, textNeedsTruncating],
+    );
 
     return (
         <div
@@ -49,7 +49,7 @@ const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handl
                     ? 'bg-gray-100 text-gray-400'
                     : 'hover:cursor-pointer hover:bg-blue-400 hover:text-white hover:transition-colors',
                 'unselectable',
-                highlighted && 'bg-blue-500 text-white'
+                highlighted && 'bg-blue-500 text-white',
             )}
             onDoubleClick={handleDoubleClick}
         >
@@ -63,24 +63,24 @@ const OptionCard: FC<iOptionCard> = ({ decorations, disabled, highlighted, handl
                 {displayedText} {textNeedsTruncating && <BsInfoCircle onClick={() => alert(t(description))} />}
             </p>
         </div>
-    )
-}
+    );
+};
 
 interface iOptionCardWithLogic {
-    option: iAction
-    alias: string
-    highlighted?: boolean
+    option: iAction;
+    alias: string;
+    highlighted?: boolean;
 }
 
 export const OptionCardWithLogic: FC<iOptionCardWithLogic> = ({ option, highlighted, alias }) => {
-    const { setChoice } = useActionContext()
+    const { setChoice } = useActionContext();
 
     const handleDoubleClick = useCallback(() => {
         if (!option.available) {
-            return
+            return;
         }
-        setChoice(alias, option.id)
-    }, [option, setChoice])
+        setChoice(alias, option.id);
+    }, [option, setChoice]);
 
     return (
         <OptionCard
@@ -89,7 +89,7 @@ export const OptionCardWithLogic: FC<iOptionCardWithLogic> = ({ option, highligh
             highlighted={highlighted}
             handleDoubleClick={handleDoubleClick}
         />
-    )
-}
+    );
+};
 
-export default OptionCard
+export default OptionCard;

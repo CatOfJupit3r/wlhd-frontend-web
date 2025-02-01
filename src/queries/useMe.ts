@@ -1,42 +1,42 @@
-import APIService from '@services/APIService'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import APIService from '@services/APIService';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useState } from 'react';
 
-import { UserInformation } from '@models/APIData'
-import AuthManager, { LOGIN_STATUS } from '@services/AuthManager'
+import { UserInformation } from '@models/APIData';
+import AuthManager, { LOGIN_STATUS } from '@services/AuthManager';
 
 const PLACEHOLDER_USER: UserInformation = {
     handle: '',
     createdAt: '',
     joined: [],
-}
+};
 
 // Custom hook for fetching user information
 export const useMe = () => {
-    const queryClient = useQueryClient()
-    const [loggedIn, setLoggedIn] = useState(AuthManager.isLoggedIn())
+    const queryClient = useQueryClient();
+    const [loggedIn, setLoggedIn] = useState(AuthManager.isLoggedIn());
 
     useEffect(() => {
         const unsubscribeFromLoginStatusChange = AuthManager.onLoginStatusChange((token) => {
             if (token === LOGIN_STATUS.LOGGED_OUT) {
-                setLoggedIn(false)
+                setLoggedIn(false);
                 queryClient.removeQueries({
                     queryKey: ['user', 'me'],
                     refetchActive: true,
-                })
+                });
             } else if (token === LOGIN_STATUS.LOGGED_IN) {
-                setLoggedIn(true)
+                setLoggedIn(true);
                 queryClient.invalidateQueries({
                     queryKey: ['user', 'me'],
                     refetchType: 'active',
                     refetchActive: true,
-                })
+                });
             }
-        })
+        });
         return () => {
-            unsubscribeFromLoginStatusChange()
-        }
-    }, [queryClient])
+            unsubscribeFromLoginStatusChange();
+        };
+    }, [queryClient]);
 
     const {
         data: user,
@@ -52,7 +52,7 @@ export const useMe = () => {
 
         // Query function to fetch user data
         queryFn: async () => {
-            return APIService.getUserInformation()
+            return APIService.getUserInformation();
         },
         // Caching and retry configurations
         staleTime: 5 * 60 * 1000, // Data considered fresh for 5 minutes
@@ -60,12 +60,12 @@ export const useMe = () => {
         retry: 1, // Retry once on failure
 
         placeholderData: { ...PLACEHOLDER_USER },
-    })
+    });
 
     const isLoggedIn = useMemo(() => {
-        if (isFetching) return loggedIn
-        return Boolean(loggedIn && isSuccess)
-    }, [loggedIn, isSuccess, isFetching])
+        if (isFetching) return loggedIn;
+        return Boolean(loggedIn && isSuccess);
+    }, [loggedIn, isSuccess, isFetching]);
 
     return {
         user: user ?? PLACEHOLDER_USER,
@@ -74,7 +74,7 @@ export const useMe = () => {
         error,
         refetch,
         isLoggedIn,
-    }
-}
+    };
+};
 
-export default useMe
+export default useMe;

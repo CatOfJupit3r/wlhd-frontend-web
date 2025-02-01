@@ -1,37 +1,37 @@
-import { LayoutContextProvider } from '@context/LayoutContext'
-import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable'
-import PseudoPage from '@pages/PseudoPage'
-import UnderMaintenanceNoDepsPage from '@pages/UnderMaintenanceNoDepsPage'
-import useMe from '@queries/useMe'
-import LayoutContextClient from '@router/LayoutContextClient'
-import { PageWrapper } from '@router/PageWrapper'
-import paths from '@router/paths'
-import { FC, lazy, ReactNode, Suspense } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
-import { authRoutes, generalRoutes } from './routes'
+import { LayoutContextProvider } from '@context/LayoutContext';
+import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable';
+import PseudoPage from '@pages/PseudoPage';
+import UnderMaintenanceNoDepsPage from '@pages/UnderMaintenanceNoDepsPage';
+import useMe from '@queries/useMe';
+import LayoutContextClient from '@router/LayoutContextClient';
+import { PageWrapper } from '@router/PageWrapper';
+import paths from '@router/paths';
+import { FC, lazy, ReactNode, Suspense } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { authRoutes, generalRoutes } from './routes';
 
-const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'))
-const NotFoundPage = lazy(() => import('@pages/NotFoundPage'))
+const UnderMaintenancePage = lazy(() => import('@pages/UnderMaintenancePage'));
+const NotFoundPage = lazy(() => import('@pages/NotFoundPage'));
 
 const BackendStatusHandler: FC<{ children: ReactNode }> = ({ children }) => {
-    const { isBackendUnavailable } = useIsBackendUnavailable()
+    const { isBackendUnavailable } = useIsBackendUnavailable();
 
     switch (isBackendUnavailable) {
         case null:
-            return <PseudoPage />
+            return <PseudoPage />;
         case true:
             return (
                 <Suspense fallback={<UnderMaintenanceNoDepsPage />}>
                     <UnderMaintenancePage />
                 </Suspense>
-            )
+            );
         case false:
-            return <>{children}</>
+            return <>{children}</>;
     }
-}
+};
 
 const RootRouter = () => {
-    const { isLoggedIn, isLoading } = useMe()
+    const { isLoggedIn, isLoading } = useMe();
 
     return (
         <BrowserRouter>
@@ -89,7 +89,7 @@ const RootRouter = () => {
                 />
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};
 
-export default RootRouter
+export default RootRouter;

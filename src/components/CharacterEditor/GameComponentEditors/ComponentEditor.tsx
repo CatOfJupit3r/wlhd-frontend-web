@@ -9,35 +9,35 @@ import {
     QuantityEditor,
     TagsEditor,
     UsesEditor,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentSegmentEditors'
-import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { Label } from '@components/ui/label'
-import { Separator } from '@components/ui/separator'
-import useDualTranslation from '@hooks/useDualTranslation'
-import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels'
-import React, { useCallback } from 'react'
-import { FaTags } from 'react-icons/fa'
+} from '@components/CharacterEditor/GameComponentEditors/ComponentSegmentEditors';
+import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { Label } from '@components/ui/label';
+import { Separator } from '@components/ui/separator';
+import useDualTranslation from '@hooks/useDualTranslation';
+import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
+import React, { useCallback } from 'react';
+import { FaTags } from 'react-icons/fa';
 
 type ComponentEditorProps<T extends AllowedEditables> = {
-    component: T
-    setComponent: (component: T) => void
-    canBeActivated?: (component?: T) => boolean
-}
+    component: T;
+    setComponent: (component: T) => void;
+    canBeActivated?: (component?: T) => boolean;
+};
 
 const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React.FC<ComponentEditorProps<T>> => {
     const Created: React.FC<ComponentEditorProps<T>> = ({ component, setComponent, canBeActivated }) => {
-        const { t } = useDualTranslation('local', { keyPrefix: 'editor' })
+        const { t } = useDualTranslation('local', { keyPrefix: 'editor' });
 
         const changeComponentField = useCallback(
             (key: string, value: AllowedEditables[keyof AllowedEditables]) => {
                 setComponent({
                     ...component,
                     [key]: value,
-                })
+                });
             },
-            [component, setComponent]
-        )
+            [component, setComponent],
+        );
 
         return (
             <div
@@ -127,19 +127,19 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
                     </AccordionItem>
                 </Accordion>
             </div>
-        )
-    }
-    Created.displayName = `${type}Editor`
-    return Created
-}
+        );
+    };
+    Created.displayName = `${type}Editor`;
+    return Created;
+};
 
-const ItemEditor = ComponentEditorFactory<ItemEditable>('item')
+const ItemEditor = ComponentEditorFactory<ItemEditable>('item');
 
-const WeaponEditor = ComponentEditorFactory<WeaponEditable>('weapon')
+const WeaponEditor = ComponentEditorFactory<WeaponEditable>('weapon');
 
-const SpellEditor = ComponentEditorFactory<SpellEditable>('spell')
+const SpellEditor = ComponentEditorFactory<SpellEditable>('spell');
 
-const StatusEffectEditor = ComponentEditorFactory<StatusEffectEditable>('statusEffect')
+const StatusEffectEditor = ComponentEditorFactory<StatusEffectEditable>('statusEffect');
 
-export { ItemEditor, WeaponEditor, SpellEditor, StatusEffectEditor }
-export type { ComponentEditorProps }
+export { ItemEditor, WeaponEditor, SpellEditor, StatusEffectEditor };
+export type { ComponentEditorProps };

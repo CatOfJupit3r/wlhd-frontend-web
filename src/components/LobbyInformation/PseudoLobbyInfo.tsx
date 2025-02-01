@@ -1,7 +1,7 @@
-import { Button } from '@components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { Skeleton } from '@components/ui/skeleton'
-import { FC } from 'react'
+import { Button } from '@components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { Skeleton } from '@components/ui/skeleton';
+import { FC } from 'react';
 
 interface iPseudoLobbyInfo {}
 
@@ -92,7 +92,7 @@ const PseudoLobbyInfo: FC<iPseudoLobbyInfo> = () => {
                 </CardContent>
             </Card>
         </div>
-    )
-}
+    );
+};
 
-export default PseudoLobbyInfo
+export default PseudoLobbyInfo;

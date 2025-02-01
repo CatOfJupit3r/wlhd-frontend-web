@@ -2,64 +2,64 @@ import {
     AddNewComponent,
     COMPONENT_TO_INTERFACE,
     CONTAINER_TYPE,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentCreation'
+} from '@components/CharacterEditor/GameComponentEditors/ComponentCreation';
 import {
     ItemEditor,
     SpellEditor,
     StatusEffectEditor,
     WeaponEditor,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { Input } from '@components/ui/input'
-import { Label } from '@components/ui/label'
-import { EmptyMenuContent } from '@components/ui/menu'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
+} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
+import { EmptyMenuContent } from '@components/ui/menu';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
 import {
     CharacterDataEditable,
     ItemEditable,
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@models/CombatEditorModels';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
-    const { character, updateCharacter } = useCharacterEditorContext()
-    const { type } = props
+    const { character, updateCharacter } = useCharacterEditorContext();
+    const { type } = props;
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
-    })
+    });
 
     const updateComponent = useCallback(
         (index: number) => {
             return (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE]) => {
-                const newCharacter = { ...character }
+                const newCharacter = { ...character };
                 switch (type) {
                     case 'item':
-                        newCharacter.inventory[index] = component as CharacterDataEditable['inventory'][number]
-                        break
+                        newCharacter.inventory[index] = component as CharacterDataEditable['inventory'][number];
+                        break;
                     case 'weapon':
-                        newCharacter.weaponry[index] = component as CharacterDataEditable['weaponry'][number]
-                        break
+                        newCharacter.weaponry[index] = component as CharacterDataEditable['weaponry'][number];
+                        break;
                     case 'spell':
                         newCharacter.spellBook.knownSpells[index] =
-                            component as CharacterDataEditable['spellBook']['knownSpells'][number]
-                        break
+                            component as CharacterDataEditable['spellBook']['knownSpells'][number];
+                        break;
                     case 'statusEffect':
-                        newCharacter.statusEffects[index] = component as CharacterDataEditable['statusEffects'][number]
-                        break
+                        newCharacter.statusEffects[index] = component as CharacterDataEditable['statusEffects'][number];
+                        break;
                 }
-                updateCharacter(newCharacter)
-            }
+                updateCharacter(newCharacter);
+            };
         },
-        [props.type, character, updateCharacter]
-    )
+        [props.type, character, updateCharacter],
+    );
 
     switch (type) {
         case 'item':
             if (character.inventory.length === 0) {
-                return <EmptyMenuContent />
+                return <EmptyMenuContent />;
             } else {
                 return (
                     <>
@@ -71,14 +71,14 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         setComponent={updateComponent(index)}
                                     />
                                 </div>
-                            )
+                            );
                         })}
                     </>
-                )
+                );
             }
         case 'weapon':
             if (character.weaponry.length === 0) {
-                return <EmptyMenuContent />
+                return <EmptyMenuContent />;
             } else {
                 return (
                     <>
@@ -89,14 +89,16 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         component={weapon as WeaponEditable}
                                         setComponent={updateComponent(index)}
                                         canBeActivated={() => {
-                                            return character.weaponry.filter((weapon) => weapon.isActive).length + 1 < 2
+                                            return (
+                                                character.weaponry.filter((weapon) => weapon.isActive).length + 1 < 2
+                                            );
                                         }}
                                     />
                                 </div>
-                            )
+                            );
                         })}
                     </>
-                )
+                );
             }
         case 'spell':
             return (
@@ -119,13 +121,13 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                             ...character.spellBook,
                                             maxActiveSpells: null,
                                         },
-                                    })
-                                    return
+                                    });
+                                    return;
                                 }
-                                const value = parseInt(e.target.value)
+                                const value = parseInt(e.target.value);
 
                                 if (isNaN(value) || value < 0 || value > 256) {
-                                    return
+                                    return;
                                 } else {
                                     updateCharacter({
                                         ...character,
@@ -136,7 +138,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                             })),
                                             maxActiveSpells: value,
                                         },
-                                    })
+                                    });
                                 }
                             }}
                         />
@@ -156,18 +158,18 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                                       .length +
                                                       1 <
                                                       character.spellBook.maxActiveSpells
-                                                : true
+                                                : true;
                                         }}
                                     />
                                 </div>
-                            )
+                            );
                         })
                     )}
                 </div>
-            )
+            );
         case 'statusEffect':
             if (character.statusEffects.length === 0) {
-                return <EmptyMenuContent />
+                return <EmptyMenuContent />;
             } else {
                 return (
                     <>
@@ -179,20 +181,20 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         setComponent={updateComponent(index)}
                                     />
                                 </div>
-                            )
+                            );
                         })}
                     </>
-                )
+                );
             }
         default:
-            return <EmptyMenuContent />
+            return <EmptyMenuContent />;
     }
-}
+};
 
 const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
-    })
+    });
 
     return (
         <div id={'component-container'} className={'flex flex-col gap-4'}>
@@ -206,7 +208,7 @@ const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
             </Accordion>
             <ContainerContent type={type} />
         </div>
-    )
-}
+    );
+};
 
-export default ComponentContainerEditor
+export default ComponentContainerEditor;

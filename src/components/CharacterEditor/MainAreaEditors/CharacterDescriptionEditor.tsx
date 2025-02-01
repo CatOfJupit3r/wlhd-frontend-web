@@ -1,16 +1,16 @@
-import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
-import { Button } from '@components/ui/button'
-import { Label } from '@components/ui/label'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import React, { useCallback, useEffect, useRef } from 'react'
-import { RxReset } from 'react-icons/rx'
+import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
+import { Button } from '@components/ui/button';
+import { Label } from '@components/ui/label';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { RxReset } from 'react-icons/rx';
 
-const MAX_DESCRIPTION_LENGTH = 256
+const MAX_DESCRIPTION_LENGTH = 256;
 
 const CharacterDescriptionEditor = () => {
-    const { character, updateCharacter, initial } = useCharacterEditorContext()
+    const { character, updateCharacter, initial } = useCharacterEditorContext();
 
-    const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const setCharacterDescription = useCallback(
         (description: string) => {
@@ -20,23 +20,23 @@ const CharacterDescriptionEditor = () => {
                     ...character.decorations,
                     description,
                 },
-            })
+            });
         },
-        [character, updateCharacter]
-    )
+        [character, updateCharacter],
+    );
     useEffect(() => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = 'auto'
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
-    }, [character.decorations.description])
+    }, [character.decorations.description]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value
+        const value = e.target.value;
         if (value.length <= MAX_DESCRIPTION_LENGTH) {
-            setCharacterDescription(value)
+            setCharacterDescription(value);
         }
-    }
+    };
 
     return (
         <div className={'w-full'}>
@@ -62,7 +62,7 @@ const CharacterDescriptionEditor = () => {
                                 ...character.decorations,
                                 description: initial.decorations.description,
                             },
-                        })
+                        });
                     }}
                     className={'h-5 text-gray-400 hover:text-gray-600'}
                 >
@@ -70,7 +70,7 @@ const CharacterDescriptionEditor = () => {
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CharacterDescriptionEditor
+export default CharacterDescriptionEditor;

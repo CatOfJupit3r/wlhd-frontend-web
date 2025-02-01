@@ -1,66 +1,66 @@
-import { Button } from '@components/ui/button'
-import { Input } from '@components/ui/input'
-import { Label } from '@components/ui/label'
-import StyledLink from '@components/ui/styled-link'
-import { useToast } from '@hooks/useToast'
-import useMe from '@queries/useMe'
-import paths from '@router/paths'
-import APIService from '@services/APIService'
-import { apprf, checkHandle, checkPassword, cn } from '@utils'
-import { AxiosError } from 'axios'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Button } from '@components/ui/button';
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
+import StyledLink from '@components/ui/styled-link';
+import { useToast } from '@hooks/useToast';
+import useMe from '@queries/useMe';
+import paths from '@router/paths';
+import APIService from '@services/APIService';
+import { apprf, checkHandle, checkPassword, cn } from '@utils';
+import { AxiosError } from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const SignIn = ({ className = '' }: { className?: string }) => {
-    const { toastError } = useToast()
-    const navigate = useNavigate()
+    const { toastError } = useToast();
+    const navigate = useNavigate();
 
-    const [handle, setHandle] = useState('admin')
-    const [password, setPassword] = useState('motherfucker')
-    const { isLoggedIn, isLoading } = useMe()
+    const [handle, setHandle] = useState('admin');
+    const [password, setPassword] = useState('motherfucker');
+    const { isLoggedIn, isLoading } = useMe();
 
     useEffect(() => {
-        if (!isLoggedIn || isLoading) return
-        navigate(paths.profile)
-    }, [isLoggedIn, isLoading])
+        if (!isLoggedIn || isLoading) return;
+        navigate(paths.profile);
+    }, [isLoggedIn, isLoading]);
 
     const checkInputValidity = useCallback(() => {
         for (const check of [checkHandle(handle), checkPassword(password)]) {
-            const { valid } = check
+            const { valid } = check;
             if (!valid) {
-                return false
+                return false;
             }
         }
-        return true
-    }, [password, handle])
+        return true;
+    }, [password, handle]);
 
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
+        e.preventDefault();
         if (!handle || !password) {
             toastError({
                 title: 'local:error',
                 description: 'local:error.missingParams',
-            })
-            return
+            });
+            return;
         }
 
         try {
-            await APIService.login(handle, password)
+            await APIService.login(handle, password);
         } catch (err: unknown) {
-            if (!err) return
+            if (!err) return;
             if (err instanceof AxiosError) {
                 toastError({
                     title: 'local:error',
                     description: err?.response?.data.message || 'local:error.connectionError',
-                })
+                });
             } else if (err instanceof Error) {
                 toastError({
                     title: 'local:error',
                     description: err.message || 'local:error.connectionError',
-                })
+                });
             }
         }
-    }
+    };
 
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
@@ -85,7 +85,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                 type="submit"
                 className={cn(
                     'w-full rounded-md bg-blue-800 p-2 text-white transition-all duration-100',
-                    apprf('disabled:', 'cursor-not-allowed bg-blue-400 text-gray-400')
+                    apprf('disabled:', 'cursor-not-allowed bg-blue-400 text-gray-400'),
                 )}
                 onClick={(e) => onSubmit(e).then()}
                 disabled={!checkInputValidity()}
@@ -100,7 +100,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                         className={cn(
                             'text-blue-800 underline',
                             apprf('disabled:', 'cursor-not-allowed text-gray-400'),
-                            apprf('hover:', 'text-blue-600')
+                            apprf('hover:', 'text-blue-600'),
                         )}
                     >
                         Sign up!
@@ -108,7 +108,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SignIn
+export default SignIn;

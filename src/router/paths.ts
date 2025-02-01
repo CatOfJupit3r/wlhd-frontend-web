@@ -12,4 +12,4 @@ export default {
     createCharacter: '/lobby-room/:lobbyId/create-character',
     wiki: '/game-wiki',
     wikiWithDLC: '/game-wiki/:dlc',
-}
+};

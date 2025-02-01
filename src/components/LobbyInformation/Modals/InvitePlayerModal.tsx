@@ -5,47 +5,47 @@ import {
     AlertDialogHeader,
     AlertDialogInteractableArea,
     AlertDialogTitle,
-} from '@components/ui/alert-dialog'
-import { Button, ButtonWithTooltip } from '@components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form'
-import { Input } from '@components/ui/input'
-import { ScrollArea } from '@components/ui/scroll-area'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId'
-import { toast } from '@hooks/useToast'
-import useCreateInviteCode from '@mutations/useCreateInviteCode'
-import useDeleteInviteCode from '@mutations/useDeleteInviteCode'
-import useLobbyInviteCodes from '@queries/useLobbyInviteCodes'
-import { FC } from 'react'
-import { useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
-import { FaPlus, FaTrashAlt } from 'react-icons/fa'
-import { FiCopy } from 'react-icons/fi'
-import { z } from 'zod'
+} from '@components/ui/alert-dialog';
+import { Button, ButtonWithTooltip } from '@components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
+import { Input } from '@components/ui/input';
+import { ScrollArea } from '@components/ui/scroll-area';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
+import { toast } from '@hooks/useToast';
+import useCreateInviteCode from '@mutations/useCreateInviteCode';
+import useDeleteInviteCode from '@mutations/useDeleteInviteCode';
+import useLobbyInviteCodes from '@queries/useLobbyInviteCodes';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { FaPlus, FaTrashAlt } from 'react-icons/fa';
+import { FiCopy } from 'react-icons/fi';
+import { z } from 'zod';
 
 interface iInvitePlayerModal {
-    closeModal: () => void
+    closeModal: () => void;
 }
 
 const validDays = (createdAt: Date, validUntil: Date) => {
-    const Difference_In_Time = createdAt.getTime() - validUntil.getTime()
-    return Math.abs(Math.round(Difference_In_Time / (1000 * 3600 * 24)))
-}
+    const Difference_In_Time = createdAt.getTime() - validUntil.getTime();
+    return Math.abs(Math.round(Difference_In_Time / (1000 * 3600 * 24)));
+};
 
 const newInviteCodeSchema = z.object({
     max_uses: z.coerce.number().min(1).max(100).default(1),
     valid_for: z.enum(['1d', '2d', '3d', '5d', '7d']).default('1d'),
-})
+});
 
 const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
-    'use no memo;'
+    'use no memo;';
     // https://github.com/react-hook-form/react-hook-form/issues/12298
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.players.invite-code-modal',
-    })
-    const lobbyId = useCurrentLobbyId()
-    const { codes } = useLobbyInviteCodes()
+    });
+    const lobbyId = useCurrentLobbyId();
+    const { codes } = useLobbyInviteCodes();
     const form = useForm<z.infer<typeof newInviteCodeSchema>>({
         resolver: zodResolver(newInviteCodeSchema),
         defaultValues: {
@@ -53,19 +53,19 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
             valid_for: '1d',
         },
         reValidateMode: 'onBlur',
-    })
-    const { deleteInviteCode, isPending: isPendingDeletion } = useDeleteInviteCode()
-    const { createInviteCode, isPending: isPendingCreation } = useCreateInviteCode()
+    });
+    const { deleteInviteCode, isPending: isPendingDeletion } = useDeleteInviteCode();
+    const { createInviteCode, isPending: isPendingCreation } = useCreateInviteCode();
 
     const handleSubmit = (data: z.infer<typeof newInviteCodeSchema>) => {
-        if (isPendingCreation || !lobbyId) return
-        createInviteCode({ lobbyId, data })
-    }
+        if (isPendingCreation || !lobbyId) return;
+        createInviteCode({ lobbyId, data });
+    };
 
     const handleCodeDeletion = (code: string) => {
-        if (isPendingDeletion || !lobbyId) return
-        deleteInviteCode({ lobbyId, code })
-    }
+        if (isPendingDeletion || !lobbyId) return;
+        deleteInviteCode({ lobbyId, code });
+    };
 
     return (
         <>
@@ -103,15 +103,15 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
                                                             toast({
                                                                 title: t('code-copied'),
                                                                 position: 'top-center',
-                                                            })
+                                                            });
                                                         })
                                                         .catch((e) => {
-                                                            console.debug(e)
+                                                            console.debug(e);
                                                             toast({
                                                                 title: t('code-could-not-be-copied'),
                                                                 position: 'top-center',
-                                                            })
-                                                        })
+                                                            });
+                                                        });
                                                 }}
                                                 variant={'ghost'}
                                             >
@@ -194,7 +194,7 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
                 <AlertDialogCancel onClick={() => closeModal()}>{t('close')}</AlertDialogCancel>
             </AlertDialogFooter>
         </>
-    )
-}
+    );
+};
 
-export default InvitePlayerModal
+export default InvitePlayerModal;

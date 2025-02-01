@@ -1,4 +1,4 @@
-import SignIn from '@components/Authentication/SignIn'
+import SignIn from '@components/Authentication/SignIn';
 
 const SignInPage = () => {
     return (
@@ -17,7 +17,7 @@ const SignInPage = () => {
                 }}
             />
         </div>
-    )
-}
+    );
+};
 
-export default SignInPage
+export default SignInPage;

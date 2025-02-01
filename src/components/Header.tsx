@@ -1,4 +1,4 @@
-import { Button } from '@components/ui/button'
+import { Button } from '@components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,50 +7,50 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@components/ui/dropdown-menu'
-import StyledLink from '@components/ui/styled-link'
-import { CurrentUserAvatar } from '@components/UserAvatars'
-import useMe from '@queries/useMe'
-import useThisLobby from '@queries/useThisLobby'
-import paths from '@router/paths'
-import AuthManager from '@services/AuthManager'
-import { apprf, cn } from '@utils'
-import { IS_DEVELOPMENT } from 'config'
-import { startTransition, useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { IconType } from 'react-icons'
-import { BiLogOut, BiSolidCog } from 'react-icons/bi'
-import { FaBook } from 'react-icons/fa'
-import { LuSquareMenu, LuUser } from 'react-icons/lu'
-import { useNavigate } from 'react-router'
+} from '@components/ui/dropdown-menu';
+import StyledLink from '@components/ui/styled-link';
+import { CurrentUserAvatar } from '@components/UserAvatars';
+import useMe from '@queries/useMe';
+import useThisLobby from '@queries/useThisLobby';
+import paths from '@router/paths';
+import AuthManager from '@services/AuthManager';
+import { apprf, cn } from '@utils';
+import { IS_DEVELOPMENT } from 'config';
+import { startTransition, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconType } from 'react-icons';
+import { BiLogOut, BiSolidCog } from 'react-icons/bi';
+import { FaBook } from 'react-icons/fa';
+import { LuSquareMenu, LuUser } from 'react-icons/lu';
+import { useNavigate } from 'react-router';
 
 interface iSection {
-    name: string
-    action: () => void
-    icon: IconType
-    className?: string
-    disabled?: boolean
+    name: string;
+    action: () => void;
+    icon: IconType;
+    className?: string;
+    disabled?: boolean;
 }
 
-type SectionsType = Array<Array<iSection>>
+type SectionsType = Array<Array<iSection>>;
 
 const Header = () => {
-    const { user, isLoggedIn } = useMe()
-    const { lobbyId } = useThisLobby()
-    const navigate = useNavigate()
+    const { user, isLoggedIn } = useMe();
+    const { lobbyId } = useThisLobby();
+    const navigate = useNavigate();
     const { t } = useTranslation('local', {
         keyPrefix: 'header',
-    })
+    });
 
     const redirect = useCallback((to: string, relative: 'path' | 'route' = 'path') => {
         return () => {
             startTransition(() => {
                 navigate(to, {
                     relative,
-                })
-            })
-        }
-    }, [])
+                });
+            });
+        };
+    }, []);
 
     const sections: SectionsType = useMemo(() => {
         return [
@@ -89,8 +89,8 @@ const Header = () => {
                     className: 'text-red-500 hover:text-red-700',
                 },
             ].filter((item) => item),
-        ] as SectionsType
-    }, [redirect])
+        ] as SectionsType;
+    }, [redirect]);
 
     const AuthLinks = useCallback(() => {
         return (
@@ -107,8 +107,8 @@ const Header = () => {
                     {t('sign-up')}
                 </Button>
             </>
-        )
-    }, [])
+        );
+    }, []);
 
     const LoggedInLinks = useCallback(() => {
         return (
@@ -138,8 +138,8 @@ const Header = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </>
-        )
-    }, [lobbyId, user?.handle])
+        );
+    }, [lobbyId, user?.handle]);
 
     const Navigation = useCallback(() => {
         return (
@@ -147,19 +147,19 @@ const Header = () => {
                 id={'header-nav'}
                 className={cn(
                     'flex justify-between gap-3 text-white',
-                    apprf('max-[512px]', 'flex-col overflow-x-auto align-middle')
+                    apprf('max-[512px]', 'flex-col overflow-x-auto align-middle'),
                 )}
             >
                 {isLoggedIn ? <LoggedInLinks /> : <AuthLinks />}
             </nav>
-        )
-    }, [LoggedInLinks, AuthLinks, isLoggedIn])
+        );
+    }, [LoggedInLinks, AuthLinks, isLoggedIn]);
 
     return (
         <header
             className={cn(
                 'relative top-0 flex w-full justify-between bg-black p-4 text-xl text-white',
-                apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle')
+                apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle'),
             )}
         >
             <StyledLink to="." relative={'route'} id={'header-logo'} className={'font-bold text-white no-underline'}>
@@ -172,7 +172,7 @@ const Header = () => {
             {/*}}/>*/}
             <Navigation />
         </header>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

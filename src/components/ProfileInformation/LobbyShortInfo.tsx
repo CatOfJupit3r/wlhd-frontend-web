@@ -1,30 +1,30 @@
-import { Card, CardContent } from '@components/ui/card'
-import CommaSeparatedList from '@components/ui/coma-separated-list'
-import { Skeleton } from '@components/ui/skeleton'
-import StyledLink from '@components/ui/styled-link'
-import useLobbyShortInfo from '@queries/useLobbyShortInfo'
-import paths from '@router/paths'
-import { cn } from '@utils'
-import { Crown } from 'lucide-react'
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Card, CardContent } from '@components/ui/card';
+import CommaSeparatedList from '@components/ui/coma-separated-list';
+import { Skeleton } from '@components/ui/skeleton';
+import StyledLink from '@components/ui/styled-link';
+import useLobbyShortInfo from '@queries/useLobbyShortInfo';
+import paths from '@router/paths';
+import { cn } from '@utils';
+import { Crown } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'profile',
-    })
-    const { lobbyInfo, isLoading, isError } = useLobbyShortInfo(lobbyId)
+    });
+    const { lobbyInfo, isLoading, isError } = useLobbyShortInfo(lobbyId);
     const [placeholderParams] = useState({
         title: Math.floor(Math.random() * 16) + 5,
         description: Array.from({ length: Math.floor(Math.random() * 3) + 1 }).map(
-            () => Math.floor(Math.random() * 8) + 8
+            () => Math.floor(Math.random() * 8) + 8,
         ),
-    })
+    });
 
     const LinkToLobby = useCallback(
         () => <p className="text-xl font-semibold">{lobbyInfo.name || '???'}</p>,
-        [lobbyInfo.name]
-    )
+        [lobbyInfo.name],
+    );
 
     const Placeholders = useCallback(
         ({ pulsating = true }: { pulsating?: boolean }) => (
@@ -45,8 +45,8 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                 ))}
             </div>
         ),
-        [placeholderParams]
-    )
+        [placeholderParams],
+    );
 
     const LobbyInfoContent = useCallback(
         () => (
@@ -63,20 +63,20 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                             <p>
                                 {t(name)} ({descriptor})
                             </p>
-                        )
+                        );
                     }}
                     emptyMessage={t('no-character-assigned')}
                 />
             </div>
         ),
-        [lobbyInfo, t]
-    )
+        [lobbyInfo, t],
+    );
 
     const DecideWhatToShow = useCallback(() => {
-        if (isLoading) return <Placeholders pulsating={true} />
-        if (!isError) return <LobbyInfoContent />
-        return <Placeholders pulsating={false} />
-    }, [isError, isLoading, LobbyInfoContent, Placeholders])
+        if (isLoading) return <Placeholders pulsating={true} />;
+        if (!isError) return <LobbyInfoContent />;
+        return <Placeholders pulsating={false} />;
+    }, [isError, isLoading, LobbyInfoContent, Placeholders]);
 
     return (
         <StyledLink
@@ -90,7 +90,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
                 </CardContent>
             </Card>
         </StyledLink>
-    )
-}
+    );
+};
 
-export default LobbyShortInfo
+export default LobbyShortInfo;

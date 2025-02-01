@@ -1,2124 +1,2097 @@
 {
-    "actions" : {
-        "action" : [
+    "actions": {
+        "action": [
             {
-                "id" : "builtins:item",
-                "decorations" : {
-                    "name" : "builtins:actions.use_item.name",
-                    "description" : "builtins:actions.use_item.desc",
-                    "sprite" : "builtins:actions.use_item",
-                    "cost" : "-"
+                "id": "builtins:item",
+                "decorations": {
+                    "name": "builtins:actions.use_item.name",
+                    "description": "builtins:actions.use_item.desc",
+                    "sprite": "builtins:actions.use_item",
+                    "cost": "-"
                 },
-                "available" : true,
-                "requires" : {
-                    "item_id" : "Item_-6949061438500970782"
+                "available": true,
+                "requires": {
+                    "item_id": "Item_-6949061438500970782"
                 }
             },
             {
-                "id" : "builtins:attack",
-                "decorations" : {
-                    "name" : "builtins:actions.attack.name",
-                    "description" : "builtins:actions.attack.desc",
-                    "sprite" : "builtins:actions.attack",
-                    "cost" : "1"
+                "id": "builtins:attack",
+                "decorations": {
+                    "name": "builtins:actions.attack.name",
+                    "description": "builtins:actions.attack.desc",
+                    "sprite": "builtins:actions.attack",
+                    "cost": "1"
                 },
-                "available" : true,
-                "requires" : {
-                    "square" : "Square_-3821655432467488801"
+                "available": true,
+                "requires": {
+                    "square": "Square_-3821655432467488801"
                 }
             },
             {
-                "id" : "builtins:spell",
-                "decorations" : {
-                    "name" : "builtins:actions.use_spell.name",
-                    "description" : "builtins:actions.use_spell.desc",
-                    "sprite" : "builtins:actions.use_spell",
-                    "cost" : "-"
+                "id": "builtins:spell",
+                "decorations": {
+                    "name": "builtins:actions.use_spell.name",
+                    "description": "builtins:actions.use_spell.desc",
+                    "sprite": "builtins:actions.use_spell",
+                    "cost": "-"
                 },
-                "available" : false,
-                "requires" : null
+                "available": false,
+                "requires": null
             },
             {
-                "id" : "builtins:defend",
-                "decorations" : {
-                    "name" : "builtins:actions.defend.name",
-                    "description" : "builtins:actions.defend.desc",
-                    "sprite" : "builtins:actions.defend",
-                    "cost" : "-"
+                "id": "builtins:defend",
+                "decorations": {
+                    "name": "builtins:actions.defend.name",
+                    "description": "builtins:actions.defend.desc",
+                    "sprite": "builtins:actions.defend",
+                    "cost": "-"
                 },
-                "available" : false,
-                "requires" : null
+                "available": false,
+                "requires": null
             },
             {
-                "id" : "builtins:move",
-                "decorations" : {
-                    "name" : "builtins:actions.move.name",
-                    "description" : "builtins:actions.move.desc",
-                    "sprite" : "builtins:actions.move",
-                    "cost" : "1"
+                "id": "builtins:move",
+                "decorations": {
+                    "name": "builtins:actions.move.name",
+                    "description": "builtins:actions.move.desc",
+                    "sprite": "builtins:actions.move",
+                    "cost": "1"
                 },
-                "available" : true,
-                "requires" : {
-                    "square" : "Square_-7894722973414075759"
+                "available": true,
+                "requires": {
+                    "square": "Square_-7894722973414075759"
                 }
             },
             {
-                "id" : "builtins:skip",
-                "decorations" : {
-                    "name" : "builtins:actions.skip.name",
-                    "description" : "builtins:actions.skip.desc",
-                    "sprite" : "builtins:actions.skip",
-                    "cost" : "-"
+                "id": "builtins:skip",
+                "decorations": {
+                    "name": "builtins:actions.skip.name",
+                    "description": "builtins:actions.skip.desc",
+                    "sprite": "builtins:actions.skip",
+                    "cost": "-"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "builtins:change_weapon",
-                "decorations" : {
-                    "name" : "builtins:actions.change_weapon.name",
-                    "description" : "builtins:actions.change_weapon.desc",
-                    "sprite" : "builtins:actions.change_weapon",
-                    "cost" : "-"
+                "id": "builtins:change_weapon",
+                "decorations": {
+                    "name": "builtins:actions.change_weapon.name",
+                    "description": "builtins:actions.change_weapon.desc",
+                    "sprite": "builtins:actions.change_weapon",
+                    "cost": "-"
                 },
-                "available" : true,
-                "requires" : {
-                    "weapon_id" : "Weapon_5171745203408089041"
+                "available": true,
+                "requires": {
+                    "weapon_id": "Weapon_5171745203408089041"
                 }
             }
         ],
-        "Square_-6949061438500970782" : [
+        "Square_-6949061438500970782": [
             {
-                "id" : "1/1",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/1",
+                "decorations": {
+                    "name": "builtins:1/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/2",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/2",
+                "decorations": {
+                    "name": "builtins:1/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/3",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/3",
+                "decorations": {
+                    "name": "builtins:1/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/4",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/4",
+                "decorations": {
+                    "name": "builtins:1/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/5",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/5",
+                "decorations": {
+                    "name": "builtins:1/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/6",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/6",
+                "decorations": {
+                    "name": "builtins:1/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/1",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/1",
+                "decorations": {
+                    "name": "builtins:2/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/2",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/2",
+                "decorations": {
+                    "name": "builtins:2/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/3",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/3",
+                "decorations": {
+                    "name": "builtins:2/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/4",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/4",
+                "decorations": {
+                    "name": "builtins:2/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/5",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/5",
+                "decorations": {
+                    "name": "builtins:2/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/6",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/6",
+                "decorations": {
+                    "name": "builtins:2/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/1",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/1",
+                "decorations": {
+                    "name": "builtins:3/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/2",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/2",
+                "decorations": {
+                    "name": "builtins:3/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/3",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/3",
+                "decorations": {
+                    "name": "builtins:3/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/4",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/4",
+                "decorations": {
+                    "name": "builtins:3/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/5",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/5",
+                "decorations": {
+                    "name": "builtins:3/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/6",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/6",
+                "decorations": {
+                    "name": "builtins:3/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/1",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/1",
+                "decorations": {
+                    "name": "builtins:4/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/2",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/2",
+                "decorations": {
+                    "name": "builtins:4/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/3",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/3",
+                "decorations": {
+                    "name": "builtins:4/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/4",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/4",
+                "decorations": {
+                    "name": "builtins:4/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/5",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/5",
+                "decorations": {
+                    "name": "builtins:4/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/6",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/6",
+                "decorations": {
+                    "name": "builtins:4/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/1",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/1",
+                "decorations": {
+                    "name": "builtins:5/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/2",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/2",
+                "decorations": {
+                    "name": "builtins:5/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/3",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/3",
+                "decorations": {
+                    "name": "builtins:5/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/4",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/4",
+                "decorations": {
+                    "name": "builtins:5/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/5",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/5",
+                "decorations": {
+                    "name": "builtins:5/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/6",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/6",
+                "decorations": {
+                    "name": "builtins:5/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/1",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:0",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/1",
+                "decorations": {
+                    "name": "builtins:6/builtins:0",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/2",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/2",
+                "decorations": {
+                    "name": "builtins:6/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/3",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/3",
+                "decorations": {
+                    "name": "builtins:6/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/4",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/4",
+                "decorations": {
+                    "name": "builtins:6/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/5",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/5",
+                "decorations": {
+                    "name": "builtins:6/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/6",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/6",
+                "decorations": {
+                    "name": "builtins:6/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/1",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/1",
+                "decorations": {
+                    "name": "builtins:1/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/2",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/2",
+                "decorations": {
+                    "name": "builtins:1/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/3",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/3",
+                "decorations": {
+                    "name": "builtins:1/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/4",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/4",
+                "decorations": {
+                    "name": "builtins:1/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/5",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/5",
+                "decorations": {
+                    "name": "builtins:1/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "1/6",
-                "decorations" : {
-                    "name" : "builtins:1/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "1/6",
+                "decorations": {
+                    "name": "builtins:1/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/1",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/1",
+                "decorations": {
+                    "name": "builtins:2/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/2",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/2",
+                "decorations": {
+                    "name": "builtins:2/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/3",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/3",
+                "decorations": {
+                    "name": "builtins:2/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/4",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/4",
+                "decorations": {
+                    "name": "builtins:2/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/5",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/5",
+                "decorations": {
+                    "name": "builtins:2/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "2/6",
-                "decorations" : {
-                    "name" : "builtins:2/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "2/6",
+                "decorations": {
+                    "name": "builtins:2/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/1",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/1",
+                "decorations": {
+                    "name": "builtins:3/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/2",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/2",
+                "decorations": {
+                    "name": "builtins:3/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/3",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/3",
+                "decorations": {
+                    "name": "builtins:3/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/4",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/4",
+                "decorations": {
+                    "name": "builtins:3/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/5",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/5",
+                "decorations": {
+                    "name": "builtins:3/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/6",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/6",
+                "decorations": {
+                    "name": "builtins:3/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/1",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/1",
+                "decorations": {
+                    "name": "builtins:4/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/2",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/2",
+                "decorations": {
+                    "name": "builtins:4/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/3",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/3",
+                "decorations": {
+                    "name": "builtins:4/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/4",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/4",
+                "decorations": {
+                    "name": "builtins:4/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/5",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/5",
+                "decorations": {
+                    "name": "builtins:4/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/6",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/6",
+                "decorations": {
+                    "name": "builtins:4/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/1",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/1",
+                "decorations": {
+                    "name": "builtins:5/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/2",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/2",
+                "decorations": {
+                    "name": "builtins:5/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/3",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/3",
+                "decorations": {
+                    "name": "builtins:5/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/4",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/4",
+                "decorations": {
+                    "name": "builtins:5/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/5",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/5",
+                "decorations": {
+                    "name": "builtins:5/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/6",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/6",
+                "decorations": {
+                    "name": "builtins:5/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/1",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/1",
+                "decorations": {
+                    "name": "builtins:6/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/2",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/2",
+                "decorations": {
+                    "name": "builtins:6/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/3",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/3",
+                "decorations": {
+                    "name": "builtins:6/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/4",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/4",
+                "decorations": {
+                    "name": "builtins:6/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/5",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/5",
+                "decorations": {
+                    "name": "builtins:6/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/6",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/6",
+                "decorations": {
+                    "name": "builtins:6/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             }
         ],
-        "Item_-6949061438500970782" : [
+        "Item_-6949061438500970782": [
             {
-                "id" : "6df89bf8-3cd4-48ae-ae1f-fcf26c8353da",
-                "decorations" : {
-                    "name" : "builtins:items.healing_potion.name",
-                    "description" : "builtins:items.healing_potion.desc",
-                    "sprite" : "builtins:items.healing_potion",
-                    "cost" : "1"
+                "id": "6df89bf8-3cd4-48ae-ae1f-fcf26c8353da",
+                "decorations": {
+                    "name": "builtins:items.healing_potion.name",
+                    "description": "builtins:items.healing_potion.desc",
+                    "sprite": "builtins:items.healing_potion",
+                    "cost": "1"
                 },
-                "available" : true,
-                "requires" : {
-                    "square" : "Square_-6949061438500970782"
+                "available": true,
+                "requires": {
+                    "square": "Square_-6949061438500970782"
                 }
             }
         ],
-        "Square_-3821655432467488801" : [
+        "Square_-3821655432467488801": [
             {
-                "id" : "3/1",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/1",
+                "decorations": {
+                    "name": "builtins:3/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/2",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/2",
+                "decorations": {
+                    "name": "builtins:3/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/3",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/3",
+                "decorations": {
+                    "name": "builtins:3/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/4",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/4",
+                "decorations": {
+                    "name": "builtins:3/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/5",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/5",
+                "decorations": {
+                    "name": "builtins:3/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "3/6",
-                "decorations" : {
-                    "name" : "builtins:3/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "3/6",
+                "decorations": {
+                    "name": "builtins:3/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/1",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/1",
+                "decorations": {
+                    "name": "builtins:4/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/2",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/2",
+                "decorations": {
+                    "name": "builtins:4/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/3",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/3",
+                "decorations": {
+                    "name": "builtins:4/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/4",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/4",
+                "decorations": {
+                    "name": "builtins:4/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/5",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/5",
+                "decorations": {
+                    "name": "builtins:4/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/6",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/6",
+                "decorations": {
+                    "name": "builtins:4/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             }
         ],
-        "Square_-7894722973414075759" : [
+        "Square_-7894722973414075759": [
             {
-                "id" : "4/1",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/1",
+                "decorations": {
+                    "name": "builtins:4/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/3",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/3",
+                "decorations": {
+                    "name": "builtins:4/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/4",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/4",
+                "decorations": {
+                    "name": "builtins:4/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/5",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/5",
+                "decorations": {
+                    "name": "builtins:4/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "4/6",
-                "decorations" : {
-                    "name" : "builtins:4/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "4/6",
+                "decorations": {
+                    "name": "builtins:4/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/1",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/1",
+                "decorations": {
+                    "name": "builtins:5/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/2",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/2",
+                "decorations": {
+                    "name": "builtins:5/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/3",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/3",
+                "decorations": {
+                    "name": "builtins:5/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/4",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/4",
+                "decorations": {
+                    "name": "builtins:5/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/5",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/5",
+                "decorations": {
+                    "name": "builtins:5/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "5/6",
-                "decorations" : {
-                    "name" : "builtins:5/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "5/6",
+                "decorations": {
+                    "name": "builtins:5/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/1",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:1",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/1",
+                "decorations": {
+                    "name": "builtins:6/builtins:1",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/2",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:2",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/2",
+                "decorations": {
+                    "name": "builtins:6/builtins:2",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/3",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:3",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/3",
+                "decorations": {
+                    "name": "builtins:6/builtins:3",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/4",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:4",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/4",
+                "decorations": {
+                    "name": "builtins:6/builtins:4",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/5",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:5",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/5",
+                "decorations": {
+                    "name": "builtins:6/builtins:5",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             },
             {
-                "id" : "6/6",
-                "decorations" : {
-                    "name" : "builtins:6/builtins:6",
-                    "description" : "",
-                    "sprite" : "",
-                    "cost" : "0"
+                "id": "6/6",
+                "decorations": {
+                    "name": "builtins:6/builtins:6",
+                    "description": "",
+                    "sprite": "",
+                    "cost": "0"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             }
         ],
-        "Weapon_5171745203408089041" : [
+        "Weapon_5171745203408089041": [
             {
-                "id" : "1742869a-c3cc-49b4-a851-e18421bb50ec",
-                "decorations" : {
-                    "name" : "builtins:weapons.hero_sword.name",
-                    "description" : "builtins:weapons.hero_sword.desc",
-                    "sprite" : "builtins:weapons.hero_sword",
-                    "cost" : "1"
+                "id": "1742869a-c3cc-49b4-a851-e18421bb50ec",
+                "decorations": {
+                    "name": "builtins:weapons.hero_sword.name",
+                    "description": "builtins:weapons.hero_sword.desc",
+                    "sprite": "builtins:weapons.hero_sword",
+                    "cost": "1"
                 },
-                "available" : true,
-                "requires" : null
+                "available": true,
+                "requires": null
             }
         ]
     },
-    "messages" : [
+    "messages": [
         [
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "value" : "10"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "value": "10"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "12",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "12",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "12",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "12",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "9",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "9",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "17",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "17",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "13",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "13",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "21",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "21",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "13",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "13",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "10",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "10",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "17",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "17",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "19",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "19",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "12",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "12",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "11",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "11",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "8",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "8",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "11",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "11",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "18",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "18",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "18",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "18",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "18",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "18",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "13",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "13",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ],
         [
             {
-                "key" : "builtins:game_events.spell_usage",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "spell_name" : "builtins:spells.fireball.name"
+                "key": "builtins:game_events.spell_usage",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "spell_name": "builtins:spells.fireball.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_takes_damage",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "damage" : "20",
-                    "element_of_hp_change" : "builtins:elements_of_hp_change.fire"
+                "key": "builtins:game_events.character_takes_damage",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "damage": "20",
+                    "element_of_hp_change": "builtins:elements_of_hp_change.fire"
                 }
             },
             {
-                "key" : "builtins:game_events.character_activated_status_effect",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name",
-                    "effect_name" : "builtins:status_effects.fainted.name"
+                "key": "builtins:game_events.character_activated_status_effect",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name",
+                    "effect_name": "builtins:status_effects.fainted.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_fainted",
-                "args" : {
-                    "character_name" : "builtins:characters.target_dummy.name"
+                "key": "builtins:game_events.character_fainted",
+                "args": {
+                    "character_name": "builtins:characters.target_dummy.name"
                 }
             },
             {
-                "key" : "builtins:game_events.character_spent_ap",
-                "args" : {
-                    "character_name" : "coordinator:mage.name",
-                    "value" : "0"
+                "key": "builtins:game_events.character_spent_ap",
+                "args": {
+                    "character_name": "coordinator:mage.name",
+                    "value": "0"
                 }
             }
         ]
     ],
-    "controlledCharacters" : [
+    "controlledCharacters": [
         {
-            "descriptor" : "builtins:target_dummy",
-            "decorations" : {
-                "name" : "builtins:characters.target_dummy.name",
-                "description" : "builtins:characters.target_dummy.desc",
-                "sprite" : "builtins:target_dummy"
+            "descriptor": "builtins:target_dummy",
+            "decorations": {
+                "name": "builtins:characters.target_dummy.name",
+                "description": "builtins:characters.target_dummy.desc",
+                "sprite": "builtins:target_dummy"
             },
-            "tags" : [
-                "builtins:mechanoid"
-            ],
-            "memory" : {},
-            "attributes" : {
-                "builtins:current_health" : 34,
-                "builtins:max_health" : 120,
-                "builtins:current_action_points" : 4,
-                "builtins:max_action_points" : 10,
-                "builtins:current_armor" : 0,
-                "builtins:base_armor" : 50,
-                "builtins:athletics" : 0,
-                "builtins:caution" : 0,
-                "builtins:dexterity" : 0,
-                "builtins:persuasion" : 0,
-                "builtins:medicine" : 0,
-                "builtins:reflexes" : 0,
-                "builtins:strength" : 0,
-                "builtins:will" : 0,
-                "builtins:physical_attack" : 10,
-                "builtins:physical_defense" : 5,
-                "builtins:fire_attack" : 0,
-                "builtins:fire_defense" : 0,
-                "builtins:air_attack" : 0,
-                "builtins:air_defense" : 0,
-                "builtins:water_attack" : 0,
-                "builtins:water_defense" : 0,
-                "builtins:earth_attack" : 0,
-                "builtins:earth_defense" : 0,
-                "builtins:nature_attack" : 0,
-                "builtins:nature_defense" : 0,
-                "builtins:light_defense" : 0,
-                "builtins:light_attack" : 0,
-                "builtins:dark_defense" : 0,
-                "builtins:dark_attack" : 0
+            "tags": ["builtins:mechanoid"],
+            "memory": {},
+            "attributes": {
+                "builtins:current_health": 34,
+                "builtins:max_health": 120,
+                "builtins:current_action_points": 4,
+                "builtins:max_action_points": 10,
+                "builtins:current_armor": 0,
+                "builtins:base_armor": 50,
+                "builtins:athletics": 0,
+                "builtins:caution": 0,
+                "builtins:dexterity": 0,
+                "builtins:persuasion": 0,
+                "builtins:medicine": 0,
+                "builtins:reflexes": 0,
+                "builtins:strength": 0,
+                "builtins:will": 0,
+                "builtins:physical_attack": 10,
+                "builtins:physical_defense": 5,
+                "builtins:fire_attack": 0,
+                "builtins:fire_defense": 0,
+                "builtins:air_attack": 0,
+                "builtins:air_defense": 0,
+                "builtins:water_attack": 0,
+                "builtins:water_defense": 0,
+                "builtins:earth_attack": 0,
+                "builtins:earth_defense": 0,
+                "builtins:nature_attack": 0,
+                "builtins:nature_defense": 0,
+                "builtins:light_defense": 0,
+                "builtins:light_attack": 0,
+                "builtins:dark_defense": 0,
+                "builtins:dark_attack": 0
             },
-            "inventory" : [
+            "inventory": [
                 {
-                    "descriptor" : "builtins:healing_potion",
-                    "decorations" : {
-                        "name" : "builtins:items.healing_potion.name",
-                        "description" : "builtins:items.healing_potion.desc",
-                        "sprite" : "builtins:items.healing_potion"
+                    "descriptor": "builtins:healing_potion",
+                    "decorations": {
+                        "name": "builtins:items.healing_potion.name",
+                        "description": "builtins:items.healing_potion.desc",
+                        "sprite": "builtins:items.healing_potion"
                     },
-                    "tags" : [
-                        "builtins:healing",
-                        "builtins:physical"
-                    ],
-                    "memory" : {
-                        "dice" : {
-                            "type" : "dice",
-                            "value" : {
-                                "sides" : 1,
-                                "amount" : 6
+                    "tags": ["builtins:healing", "builtins:physical"],
+                    "memory": {
+                        "dice": {
+                            "type": "dice",
+                            "value": {
+                                "sides": 1,
+                                "amount": 6
                             },
-                            "display_name" : "builtins:memories.dice",
-                            "internal" : false
+                            "display_name": "builtins:memories.dice",
+                            "internal": false
                         },
-                        "type_of_hp_change" : {
-                            "type" : "string",
-                            "value" : null,
-                            "display_name" : "builtins:memories.type_of_hp_change",
-                            "internal" : false,
-                            "display_value" : "heal"
+                        "type_of_hp_change": {
+                            "type": "string",
+                            "value": null,
+                            "display_name": "builtins:memories.type_of_hp_change",
+                            "internal": false,
+                            "display_value": "heal"
                         },
-                        "element_of_hp_change" : {
-                            "type" : "string",
-                            "value" : null,
-                            "display_name" : "builtins:memories.element_of_hp_change",
-                            "internal" : false,
-                            "display_value" : "builtins:elements_of_hp_change.physical"
+                        "element_of_hp_change": {
+                            "type": "string",
+                            "value": null,
+                            "display_name": "builtins:memories.element_of_hp_change",
+                            "internal": false,
+                            "display_value": "builtins:elements_of_hp_change.physical"
                         }
                     },
-                    "cost" : 1,
-                    "uses" : {
-                        "current" : 0,
-                        "max" : null
+                    "cost": 1,
+                    "uses": {
+                        "current": 0,
+                        "max": null
                     },
-                    "userNeedsRange" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "cooldown" : {
-                        "current" : 0,
-                        "max" : 0
+                    "userNeedsRange": [1, 2, 3, 4, 5, 6],
+                    "cooldown": {
+                        "current": 0,
+                        "max": 0
                     },
-                    "quantity" : 1,
-                    "consumable" : true
+                    "quantity": 1,
+                    "consumable": true
                 }
             ],
-            "weaponry" : [],
-            "spellBook" : {
-                "knownSpells" : [],
-                "maxActiveSpells" : 0
+            "weaponry": [],
+            "spellBook": {
+                "knownSpells": [],
+                "maxActiveSpells": 0
             },
-            "statusEffects" : [],
-            "square" : {
-                "line" : 3,
-                "column" : 3
+            "statusEffects": [],
+            "square": {
+                "line": 3,
+                "column": 3
             }
         },
         {
-            "descriptor" : "coordinator:hero",
-            "decorations" : {
-                "name" : "The Hero",
-                "description" : "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
-                "sprite" : "ally"
+            "descriptor": "coordinator:hero",
+            "decorations": {
+                "name": "The Hero",
+                "description": "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
+                "sprite": "ally"
             },
-            "tags" : [],
-            "memory" : {
-                "summon" : {
-                    "type" : "string",
-                    "value" : null,
-                    "display_name" : "Your Pet",
-                    "internal" : false,
-                    "display_value" : ""
+            "tags": [],
+            "memory": {
+                "summon": {
+                    "type": "string",
+                    "value": null,
+                    "display_name": "Your Pet",
+                    "internal": false,
+                    "display_value": ""
                 }
             },
-            "attributes" : {
-                "builtins:current_health" : 150,
-                "builtins:max_health" : 150,
-                "builtins:current_action_points" : 1,
-                "builtins:max_action_points" : 4,
-                "builtins:current_armor" : 25,
-                "builtins:base_armor" : 25,
-                "builtins:athletics" : 0,
-                "builtins:caution" : 0,
-                "builtins:dexterity" : 0,
-                "builtins:persuasion" : 0,
-                "builtins:medicine" : 0,
-                "builtins:reflexes" : 0,
-                "builtins:strength" : 0,
-                "builtins:will" : 0,
-                "builtins:physical_attack" : 0,
-                "builtins:physical_defense" : 0,
-                "builtins:fire_attack" : 0,
-                "builtins:fire_defense" : 0,
-                "builtins:air_attack" : 0,
-                "builtins:air_defense" : 0,
-                "builtins:water_attack" : 0,
-                "builtins:water_defense" : 0,
-                "builtins:earth_attack" : 0,
-                "builtins:earth_defense" : 0,
-                "builtins:nature_attack" : 0,
-                "builtins:nature_defense" : 0,
-                "builtins:light_defense" : 0,
-                "builtins:light_attack" : 0,
-                "builtins:dark_defense" : 0,
-                "builtins:dark_attack" : 0
+            "attributes": {
+                "builtins:current_health": 150,
+                "builtins:max_health": 150,
+                "builtins:current_action_points": 1,
+                "builtins:max_action_points": 4,
+                "builtins:current_armor": 25,
+                "builtins:base_armor": 25,
+                "builtins:athletics": 0,
+                "builtins:caution": 0,
+                "builtins:dexterity": 0,
+                "builtins:persuasion": 0,
+                "builtins:medicine": 0,
+                "builtins:reflexes": 0,
+                "builtins:strength": 0,
+                "builtins:will": 0,
+                "builtins:physical_attack": 0,
+                "builtins:physical_defense": 0,
+                "builtins:fire_attack": 0,
+                "builtins:fire_defense": 0,
+                "builtins:air_attack": 0,
+                "builtins:air_defense": 0,
+                "builtins:water_attack": 0,
+                "builtins:water_defense": 0,
+                "builtins:earth_attack": 0,
+                "builtins:earth_defense": 0,
+                "builtins:nature_attack": 0,
+                "builtins:nature_defense": 0,
+                "builtins:light_defense": 0,
+                "builtins:light_attack": 0,
+                "builtins:dark_defense": 0,
+                "builtins:dark_attack": 0
             },
-            "inventory" : [
+            "inventory": [
                 {
-                    "descriptor" : "builtins:healing_potion",
-                    "decorations" : {
-                        "name" : "builtins:items.healing_potion.name",
-                        "description" : "builtins:items.healing_potion.desc",
-                        "sprite" : "builtins:items.healing_potion"
+                    "descriptor": "builtins:healing_potion",
+                    "decorations": {
+                        "name": "builtins:items.healing_potion.name",
+                        "description": "builtins:items.healing_potion.desc",
+                        "sprite": "builtins:items.healing_potion"
                     },
-                    "tags" : [
-                        "builtins:healing",
-                        "builtins:physical"
-                    ],
-                    "memory" : {
-                        "dice" : {
-                            "type" : "dice",
-                            "value" : {
-                                "sides" : 4,
-                                "amount" : 8
+                    "tags": ["builtins:healing", "builtins:physical"],
+                    "memory": {
+                        "dice": {
+                            "type": "dice",
+                            "value": {
+                                "sides": 4,
+                                "amount": 8
                             },
-                            "display_name" : "builtins:memories.dice",
-                            "internal" : false
+                            "display_name": "builtins:memories.dice",
+                            "internal": false
                         },
-                        "type_of_hp_change" : {
-                            "type" : "string",
-                            "value" : null,
-                            "display_name" : "builtins:memories.type_of_hp_change",
-                            "internal" : false,
-                            "display_value" : "heal"
+                        "type_of_hp_change": {
+                            "type": "string",
+                            "value": null,
+                            "display_name": "builtins:memories.type_of_hp_change",
+                            "internal": false,
+                            "display_value": "heal"
                         },
-                        "element_of_hp_change" : {
-                            "type" : "string",
-                            "value" : null,
-                            "display_name" : "builtins:memories.element_of_hp_change",
-                            "internal" : false,
-                            "display_value" : "builtins:elements_of_hp_change.physical"
+                        "element_of_hp_change": {
+                            "type": "string",
+                            "value": null,
+                            "display_name": "builtins:memories.element_of_hp_change",
+                            "internal": false,
+                            "display_value": "builtins:elements_of_hp_change.physical"
                         }
                     },
-                    "cost" : 1,
-                    "uses" : {
-                        "current" : 0,
-                        "max" : null
+                    "cost": 1,
+                    "uses": {
+                        "current": 0,
+                        "max": null
                     },
-                    "userNeedsRange" : [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5,
-                        6
-                    ],
-                    "cooldown" : {
-                        "current" : 0,
-                        "max" : 0
+                    "userNeedsRange": [1, 2, 3, 4, 5, 6],
+                    "cooldown": {
+                        "current": 0,
+                        "max": 0
                     },
-                    "quantity" : 3,
-                    "consumable" : true
+                    "quantity": 3,
+                    "consumable": true
                 }
             ],
-            "weaponry" : [
+            "weaponry": [
                 {
-                    "descriptor" : "builtins:hero_sword",
-                    "decorations" : {
-                        "name" : "builtins:weapons.hero_sword.name",
-                        "description" : "builtins:weapons.hero_sword.desc",
-                        "sprite" : "builtins:weapons.hero_sword"
+                    "descriptor": "builtins:hero_sword",
+                    "decorations": {
+                        "name": "builtins:weapons.hero_sword.name",
+                        "description": "builtins:weapons.hero_sword.desc",
+                        "sprite": "builtins:weapons.hero_sword"
                     },
-                    "tags" : [
-                        "builtins:fire"
-                    ],
-                    "memory" : {
-                        "dice" : {
-                            "type" : "dice",
-                            "value" : {
-                                "sides" : 1,
-                                "amount" : 6
+                    "tags": ["builtins:fire"],
+                    "memory": {
+                        "dice": {
+                            "type": "dice",
+                            "value": {
+                                "sides": 1,
+                                "amount": 6
                             },
-                            "display_name" : "builtins:memories.dice",
-                            "internal" : false
+                            "display_name": "builtins:memories.dice",
+                            "internal": false
                         },
-                        "type_of_hp_change" : {
-                            "type" : "string",
-                            "value" : "damage",
-                            "display_name" : "builtins:memories.type_of_hp_change",
-                            "internal" : false
+                        "type_of_hp_change": {
+                            "type": "string",
+                            "value": "damage",
+                            "display_name": "builtins:memories.type_of_hp_change",
+                            "internal": false
                         },
-                        "element_of_hp_change" : {
-                            "type" : "string",
-                            "value" : null,
-                            "display_name" : "builtins:memories.element_of_hp_change",
-                            "internal" : false,
-                            "display_value" : "builtins:hp_change_types.fire"
+                        "element_of_hp_change": {
+                            "type": "string",
+                            "value": null,
+                            "display_name": "builtins:memories.element_of_hp_change",
+                            "internal": false,
+                            "display_value": "builtins:hp_change_types.fire"
                         }
                     },
-                    "cost" : 1,
-                    "uses" : {
-                        "current" : 1,
-                        "max" : null
+                    "cost": 1,
+                    "uses": {
+                        "current": 1,
+                        "max": null
                     },
-                    "userNeedsRange" : [
-                        3,
-                        4
-                    ],
-                    "cooldown" : {
-                        "current" : 0,
-                        "max" : 0
+                    "userNeedsRange": [3, 4],
+                    "cooldown": {
+                        "current": 0,
+                        "max": 0
                     },
-                    "quantity" : 2,
-                    "consumable" : false,
-                    "costToSwitch" : 1,
-                    "isActive" : true
+                    "quantity": 2,
+                    "consumable": false,
+                    "costToSwitch": 1,
+                    "isActive": true
                 }
             ],
-            "spellBook" : {
-                "knownSpells" : [],
-                "maxActiveSpells" : 0
+            "spellBook": {
+                "knownSpells": [],
+                "maxActiveSpells": 0
             },
-            "statusEffects" : [],
-            "square" : {
-                "line" : 4,
-                "column" : 2
+            "statusEffects": [],
+            "square": {
+                "line": 4,
+                "column": 2
             }
         }
     ],
-    "battlefield" : {
-        "pawns" : {
-            "3/3" : {
-                "character" : {
-                    "decorations" : {
-                        "name" : "builtins:characters.target_dummy.name",
-                        "description" : "builtins:characters.target_dummy.desc",
-                        "sprite" : "builtins:characters.target_dummy"
+    "battlefield": {
+        "pawns": {
+            "3/3": {
+                "character": {
+                    "decorations": {
+                        "name": "builtins:characters.target_dummy.name",
+                        "description": "builtins:characters.target_dummy.desc",
+                        "sprite": "builtins:characters.target_dummy"
                     },
-                    "square" : {
-                        "line" : 3,
-                        "column" : 3
+                    "square": {
+                        "line": 3,
+                        "column": 3
                     },
-                    "health" : {
-                        "current" : 34,
-                        "max" : 120
+                    "health": {
+                        "current": 34,
+                        "max": 120
                     },
-                    "action_points" : {
-                        "current" : 4,
-                        "max" : 10
+                    "action_points": {
+                        "current": 4,
+                        "max": 10
                     },
-                    "armor" : {
-                        "current" : 0,
-                        "base" : 50
+                    "armor": {
+                        "current": 0,
+                        "base": 50
                     },
-                    "statusEffects" : []
+                    "statusEffects": []
                 },
-                "areaEffects" : []
+                "areaEffects": []
             },
-            "3/5" : {
-                "character" : {
-                    "decorations" : {
-                        "name" : "builtins:characters.target_dummy_large.name",
-                        "description" : "builtins:characters.target_dummy_large.desc",
-                        "sprite" : "builtins:characters.target_dummy"
+            "3/5": {
+                "character": {
+                    "decorations": {
+                        "name": "builtins:characters.target_dummy_large.name",
+                        "description": "builtins:characters.target_dummy_large.desc",
+                        "sprite": "builtins:characters.target_dummy"
                     },
-                    "square" : {
-                        "line" : 3,
-                        "column" : 5
+                    "square": {
+                        "line": 3,
+                        "column": 5
                     },
-                    "health" : {
-                        "current" : 244,
-                        "max" : 250
+                    "health": {
+                        "current": 244,
+                        "max": 250
                     },
-                    "action_points" : {
-                        "current" : 0,
-                        "max" : 10
+                    "action_points": {
+                        "current": 0,
+                        "max": 10
                     },
-                    "armor" : {
-                        "current" : 0,
-                        "base" : 100
+                    "armor": {
+                        "current": 0,
+                        "base": 100
                     },
-                    "statusEffects" : []
+                    "statusEffects": []
                 },
-                "areaEffects" : []
+                "areaEffects": []
             },
-            "4/2" : {
-                "character" : {
-                    "decorations" : {
-                        "name" : "The Hero",
-                        "description" : "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
-                        "sprite" : "ally"
+            "4/2": {
+                "character": {
+                    "decorations": {
+                        "name": "The Hero",
+                        "description": "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
+                        "sprite": "ally"
                     },
-                    "square" : {
-                        "line" : 4,
-                        "column" : 2
+                    "square": {
+                        "line": 4,
+                        "column": 2
                     },
-                    "health" : {
-                        "current" : 150,
-                        "max" : 150
+                    "health": {
+                        "current": 150,
+                        "max": 150
                     },
-                    "action_points" : {
-                        "current" : 1,
-                        "max" : 4
+                    "action_points": {
+                        "current": 1,
+                        "max": 4
                     },
-                    "armor" : {
-                        "current" : 25,
-                        "base" : 25
+                    "armor": {
+                        "current": 25,
+                        "base": 25
                     },
-                    "statusEffects" : []
+                    "statusEffects": []
                 },
-                "areaEffects" : []
+                "areaEffects": []
             }
         }
     },
-    "round" : {
-        "current" : "24",
-        "order" : [
+    "round": {
+        "current": "24",
+        "order": [
             {
-                "controlledBy" : {
-                    "type" : "player",
-                    "id" : "660953204bd5e6d58ed510d2"
+                "controlledBy": {
+                    "type": "player",
+                    "id": "660953204bd5e6d58ed510d2"
                 },
-                "descriptor" : "coordinator:hero",
-                "decorations" : {
-                    "name" : "The Hero",
-                    "description" : "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
-                    "sprite" : "coordinator:ally"
+                "descriptor": "coordinator:hero",
+                "decorations": {
+                    "name": "The Hero",
+                    "description": "An ordinary farmer who gained the strongest power capable of defeating The Demon King.",
+                    "sprite": "coordinator:ally"
                 },
-                "square" : {
-                    "line" : 4,
-                    "column" : 2
+                "square": {
+                    "line": 4,
+                    "column": 2
                 },
-                "controlledByYou" : true
+                "controlledByYou": true
             },
             {
-                "controlledBy" : {
-                    "type" : "player",
-                    "id" : "660953204bd5e6d58ed510d2"
+                "controlledBy": {
+                    "type": "player",
+                    "id": "660953204bd5e6d58ed510d2"
                 },
-                "descriptor" : "builtins:target_dummy",
-                "decorations" : {
-                    "name" : "builtins:characters.target_dummy.name",
-                    "description" : "builtins:characters.target_dummy.desc",
-                    "sprite" : "builtins:characters.target_dummy"
+                "descriptor": "builtins:target_dummy",
+                "decorations": {
+                    "name": "builtins:characters.target_dummy.name",
+                    "description": "builtins:characters.target_dummy.desc",
+                    "sprite": "builtins:characters.target_dummy"
                 },
-                "square" : {
-                    "line" : 3,
-                    "column" : 3
+                "square": {
+                    "line": 3,
+                    "column": 3
                 },
-                "controlledByYou" : true
+                "controlledByYou": true
             },
             null
         ]

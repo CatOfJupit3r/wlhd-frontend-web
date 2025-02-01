@@ -1,10 +1,10 @@
-import GameMessage from '@components/GameScreen/GameMessages/GameMessage'
-import { Separator } from '@components/ui/separator'
-import { GameStateContainer } from '@models/GameModels'
-import { selectAllMessages } from '@redux/slices/gameScreenSlice'
-import { Fragment, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
+import { Separator } from '@components/ui/separator';
+import { GameStateContainer } from '@models/GameModels';
+import { selectAllMessages } from '@redux/slices/gameScreenSlice';
+import { Fragment, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 /*
 
@@ -24,13 +24,13 @@ For now, support for offloading messages, so for now we keep all messages loaded
 */
 
 const GameMessagesFeed = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
-    const messages = useSelector(selectAllMessages)
+    const messages = useSelector(selectAllMessages);
 
     const reverseMessageContainer = useCallback((messages: GameStateContainer): GameStateContainer => {
-        return messages.slice().reverse()
-    }, [])
+        return messages.slice().reverse();
+    }, []);
 
     return (
         <div className={'flex h-full w-full flex-col gap-2 overflow-auto px-4'}>
@@ -41,13 +41,13 @@ const GameMessagesFeed = () => {
                             <GameMessage content={msg} />
                             <Separator />
                         </Fragment>
-                    )
+                    );
                 })
             ) : (
                 <p>{t('local:game.messages.loading')}</p>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default GameMessagesFeed
+export default GameMessagesFeed;

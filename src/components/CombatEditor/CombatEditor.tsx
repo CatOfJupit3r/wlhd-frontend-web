@@ -1,41 +1,41 @@
-import Battlefield from '@components/Battlefield/Battlefield'
-import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import { AddNewCharacter } from '@components/CombatEditor/AddNewCharacter'
+import Battlefield from '@components/Battlefield/Battlefield';
+import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
+import { AddNewCharacter } from '@components/CombatEditor/AddNewCharacter';
 import {
     getLastUsedCombatEditorPreset,
     removeCombatEditorLocalStorage,
     saveCombatEditorPreset,
     verifyCombatEditorLocalStorage,
-} from '@components/CombatEditor/CombatEditorLocalStorage'
-import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare'
-import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor'
-import { Button } from '@components/ui/button'
-import { Input } from '@components/ui/input'
-import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext'
-import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext'
-import { toastError } from '@hooks/useToast'
-import { Battlefield as BattlefieldModel } from '@models/GameModels'
-import useThisLobby from '@queries/useThisLobby'
-import paths from '@router/paths'
-import APIService from '@services/APIService'
-import EditorHelpers from '@utils/editorHelpers'
-import { AxiosError } from 'axios'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { BiAddToQueue } from 'react-icons/bi'
-import { FaPlay, FaSave } from 'react-icons/fa'
-import { MdOutlineVideogameAssetOff } from 'react-icons/md'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useNavigate } from 'react-router'
+} from '@components/CombatEditor/CombatEditorLocalStorage';
+import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare';
+import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor';
+import { Button } from '@components/ui/button';
+import { Input } from '@components/ui/input';
+import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext';
+import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
+import { toastError } from '@hooks/useToast';
+import { Battlefield as BattlefieldModel } from '@models/GameModels';
+import useThisLobby from '@queries/useThisLobby';
+import paths from '@router/paths';
+import APIService from '@services/APIService';
+import EditorHelpers from '@utils/editorHelpers';
+import { AxiosError } from 'axios';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BiAddToQueue } from 'react-icons/bi';
+import { FaPlay, FaSave } from 'react-icons/fa';
+import { MdOutlineVideogameAssetOff } from 'react-icons/md';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useNavigate } from 'react-router';
 
 interface PresetDetails {
-    nickName: string
-    lobbyID: string
-    presetID: string
+    nickName: string;
+    lobbyID: string;
+    presetID: string;
 }
 
 const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (square: string | null) => void }) => {
-    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditorContext()
+    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditorContext();
     const {
         changeBattlefield,
         setInteractableSquares,
@@ -43,21 +43,21 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
         incrementClickedSquares,
         resetClickedSquares,
         changeBonusTileTooltipGenerator,
-    } = useBattlefieldContext()
+    } = useBattlefieldContext();
 
     const updateBattlefield = useCallback(() => {
         const newBattlefield: {
-            [square: string]: BattlefieldModel['pawns'][string]
-        } = {}
+            [square: string]: BattlefieldModel['pawns'][string];
+        } = {};
         for (const square in battlefield) {
-            const [lineStr, columnStr] = square.split('/')
+            const [lineStr, columnStr] = square.split('/');
             if (!lineStr || !columnStr || !battlefield[square]) {
-                continue
+                continue;
             }
-            const line = parseInt(lineStr)
-            const column = parseInt(columnStr)
+            const line = parseInt(lineStr);
+            const column = parseInt(columnStr);
             if (isNaN(line) || isNaN(column)) {
-                continue
+                continue;
             }
             newBattlefield[square] = {
                 character: {
@@ -80,48 +80,48 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                     })),
                 },
                 areaEffects: [],
-            }
+            };
         }
         changeBattlefield(
             {
                 pawns: newBattlefield,
             },
-            { keepActive: true, keepClicked: true, keepInteractable: true }
-        )
+            { keepActive: true, keepClicked: true, keepInteractable: true },
+        );
         setInteractableSquares(
             ...(() => {
-                const interactableSquares: Array<string> = []
+                const interactableSquares: Array<string> = [];
                 for (let i = 0; i < 6; i++) {
                     for (let j = 0; j < 6; j++) {
-                        interactableSquares.push(`${i + 1}/${j + 1}`)
+                        interactableSquares.push(`${i + 1}/${j + 1}`);
                     }
                 }
-                return interactableSquares
-            })()
-        )
+                return interactableSquares;
+            })(),
+        );
         changeOnClickTile((square) => {
             if (square) {
-                resetClickedSquares()
-                incrementClickedSquares(square)
+                resetClickedSquares();
+                incrementClickedSquares(square);
             }
-            setClickedSquare(square ?? null)
-        })
+            setClickedSquare(square ?? null);
+        });
         changeBonusTileTooltipGenerator((square) => {
-            if (!square) return null
-            const characterIsPreset = !!(battlefield[square] && battlefield[square].descriptor)
-            if (!characterIsPreset) return null
+            if (!square) return null;
+            const characterIsPreset = !!(battlefield[square] && battlefield[square].descriptor);
+            if (!characterIsPreset) return null;
             const buttons: Array<{
-                text: string | ReactNode
-                onClick: () => void
-                variant: 'default' | 'destructive' | 'secondary' | null
-                disabled: boolean
+                text: string | ReactNode;
+                onClick: () => void;
+                variant: 'default' | 'destructive' | 'secondary' | null;
+                disabled: boolean;
             }> = [
                 {
                     text: <BiAddToQueue />,
                     onClick: () => {
-                        if (!characterIsPreset) return
-                        const characterId = battlefield[square].id_
-                        addCharacterToTurnOrder(characterId)
+                        if (!characterIsPreset) return;
+                        const characterId = battlefield[square].id_;
+                        addCharacterToTurnOrder(characterId);
                     },
                     variant: 'default',
                     disabled: !characterIsPreset,
@@ -129,12 +129,12 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                 {
                     text: <RiDeleteBin6Line />,
                     onClick: () => {
-                        removeCharacter(square)
+                        removeCharacter(square);
                     },
                     variant: 'destructive',
                     disabled: !characterIsPreset,
                 },
-            ]
+            ];
             return buttons.map((button, index) => (
                 <Button
                     key={index}
@@ -145,28 +145,28 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                 >
                     {button.text}
                 </Button>
-            ))
-        })
-    }, [battlefield])
+            ));
+        });
+    }, [battlefield]);
 
     useEffect(() => {
         setTimeout(() => {
-            updateBattlefield()
-        })
-    }, [battlefield])
+            updateBattlefield();
+        });
+    }, [battlefield]);
 
-    return <Battlefield />
-}
+    return <Battlefield />;
+};
 
 const RoundHeader = () => {
-    const { t } = useTranslation()
-    const { round, changeRound } = useCombatEditorContext()
-    const [newRound, setNewRound] = useState(round)
-    const [editable, setEditable] = useState(false)
+    const { t } = useTranslation();
+    const { round, changeRound } = useCombatEditorContext();
+    const [newRound, setNewRound] = useState(round);
+    const [editable, setEditable] = useState(false);
 
     useEffect(() => {
-        setNewRound(round)
-    }, [round])
+        setNewRound(round);
+    }, [round]);
 
     return (
         <div className={'flex flex-row gap-2'}>
@@ -180,40 +180,40 @@ const RoundHeader = () => {
                         extraClassName={'text-2xl '}
                         type={'number'}
                         onBlur={() => {
-                            changeRound(newRound)
-                            setEditable(false)
+                            changeRound(newRound);
+                            setEditable(false);
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                changeRound(newRound)
-                                setEditable(false)
+                                changeRound(newRound);
+                                setEditable(false);
                             } else if (e.key === 'Escape') {
-                                setNewRound(round)
-                                setEditable(false)
+                                setNewRound(round);
+                                setEditable(false);
                             }
                         }}
                         autoFocus
                         onFocus={(event) => {
-                            const value = event.target.value
-                            event.target.value = ''
-                            event.target.value = value
+                            const value = event.target.value;
+                            event.target.value = '';
+                            event.target.value = value;
                         }}
                         onInput={(e) => {
-                            e.preventDefault()
+                            e.preventDefault();
                             if (e.currentTarget.value === '') {
-                                setNewRound(0)
-                                return
+                                setNewRound(0);
+                                return;
                             }
-                            const value = parseInt(e.currentTarget.value)
+                            const value = parseInt(e.currentTarget.value);
                             if (isNaN(value)) {
-                                return
+                                return;
                             } else if (value <= 0) {
-                                setNewRound(0)
+                                setNewRound(0);
                             } else if (value > 999) {
-                                setNewRound(999)
-                                return
+                                setNewRound(999);
+                                return;
                             } else {
-                                setNewRound(parseInt(e.currentTarget.value))
+                                setNewRound(parseInt(e.currentTarget.value));
                             }
                         }}
                     />
@@ -221,7 +221,7 @@ const RoundHeader = () => {
                     <p
                         className={'text-center text-2xl font-bold text-white'}
                         onDoubleClick={() => {
-                            setEditable(true)
+                            setEditable(true);
                         }}
                     >
                         {round}
@@ -229,26 +229,26 @@ const RoundHeader = () => {
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 const CombatEditor = () => {
-    const { t } = useTranslation()
-    const navigate = useNavigate()
+    const { t } = useTranslation();
+    const navigate = useNavigate();
 
-    const { lobby } = useThisLobby()
+    const { lobby } = useThisLobby();
 
     const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages } =
-        useCombatEditorContext()
+        useCombatEditorContext();
 
-    const [clickedSquare, setClickedSquare] = useState<string | null>(null)
-    const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null)
+    const [clickedSquare, setClickedSquare] = useState<string | null>(null);
+    const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null);
 
     const resetCombatEditor = useCallback(() => {
         if (Object.keys(battlefield).length !== 0) {
-            resetPreset()
+            resetPreset();
         }
-    }, [clickedSquare, battlefield])
+    }, [clickedSquare, battlefield]);
 
     // useEffect(() => {
     //     resetCombatEditor()
@@ -256,20 +256,20 @@ const CombatEditor = () => {
 
     useEffect(() => {
         if (!lobby?.lobbyId || presetDetails !== null) {
-            return
+            return;
         }
-        verifyCombatEditorLocalStorage()
-        const lastUsedPreset = getLastUsedCombatEditorPreset(lobby?.lobbyId)
+        verifyCombatEditorLocalStorage();
+        const lastUsedPreset = getLastUsedCombatEditorPreset(lobby?.lobbyId);
         if (lastUsedPreset) {
-            const { data } = lastUsedPreset
-            changePreset(data)
+            const { data } = lastUsedPreset;
+            changePreset(data);
             setPresetDetails({
                 nickName: lastUsedPreset.nickName,
                 lobbyID: lastUsedPreset.lobbyID,
                 presetID: lastUsedPreset.presetID,
-            })
+            });
         }
-    }, [lobby])
+    }, [lobby]);
 
     const handlePlayButton = useCallback(async () => {
         try {
@@ -282,21 +282,21 @@ const CombatEditor = () => {
                     activeCharacterIndex,
                     round,
                     messages,
-                })
-            )
-            navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id))
+                }),
+            );
+            navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id));
         } catch (e) {
             if (e instanceof AxiosError) {
                 toastError({
                     title: t('Something went wrong during save handling'),
                     description: e.response?.data.message,
-                })
-                console.log(e.response?.data)
+                });
+                console.log(e.response?.data);
             } else {
-                console.error(e)
+                console.error(e);
             }
         }
-    }, [battlefield, lobby, resetCombatEditor, t])
+    }, [battlefield, lobby, resetCombatEditor, t]);
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
@@ -327,8 +327,8 @@ const CombatEditor = () => {
                                         round,
                                         messages,
                                     },
-                                    lobby?.lobbyId
-                                )
+                                    lobby?.lobbyId,
+                                );
                             }}
                         >
                             <FaSave />
@@ -343,7 +343,7 @@ const CombatEditor = () => {
                             className={'size-12 p-3 text-2xl'}
                             variant={'outline'}
                             onClick={() => {
-                                handlePlayButton().then()
+                                handlePlayButton().then();
                             }}
                         >
                             <FaPlay />
@@ -352,10 +352,10 @@ const CombatEditor = () => {
                             variant={'outline'}
                             className={'size-12 p-3 text-2xl'}
                             onClick={() => {
-                                resetCombatEditor()
+                                resetCombatEditor();
                                 if (presetDetails) {
-                                    removeCombatEditorLocalStorage(presetDetails.presetID)
-                                    setPresetDetails(null)
+                                    removeCombatEditorLocalStorage(presetDetails.presetID);
+                                    setPresetDetails(null);
                                 }
                             }}
                         >
@@ -369,7 +369,7 @@ const CombatEditor = () => {
                             onClick={() =>
                                 navigate(
                                     lobby?.lobbyId ? paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId) : paths.home,
-                                    { relative: 'path' }
+                                    { relative: 'path' },
                                 )
                             }
                         >
@@ -396,15 +396,15 @@ const CombatEditor = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const CharacterEditorWithContext = () => {
     return (
         <CombatEditorContextProvider>
             <CombatEditor />
         </CombatEditorContextProvider>
-    )
-}
+    );
+};
 
-export default CharacterEditorWithContext
+export default CharacterEditorWithContext;

@@ -33,7 +33,7 @@ const UnderMaintenanceNoDepsPage = () => {
                         cursor: 'pointer',
                     }}
                     onClick={() => {
-                        window.location.reload()
+                        window.location.reload();
                     }}
                 >
                     <span style={{ marginRight: '16px', display: 'inline-block', transform: 'rotate(90deg)' }}>
@@ -55,7 +55,7 @@ const UnderMaintenanceNoDepsPage = () => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UnderMaintenanceNoDepsPage
+export default UnderMaintenanceNoDepsPage;

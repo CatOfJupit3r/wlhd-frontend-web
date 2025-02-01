@@ -1,10 +1,10 @@
-import SeparatedDiv from '@components/ui/separated-div'
-import { StaticSkeleton } from '@components/ui/skeleton'
-import { cn } from '@utils'
-import { FC, HTMLAttributes } from 'react'
+import SeparatedDiv from '@components/ui/separated-div';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import { cn } from '@utils';
+import { FC, HTMLAttributes } from 'react';
 
 interface iInfoDisplayPlaceholder extends HTMLAttributes<HTMLDivElement> {
-    type: 'item' | 'weapon' | 'spell' | 'status_effect'
+    type: 'item' | 'weapon' | 'spell' | 'status_effect';
 }
 
 const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, ...props }) => {
@@ -12,7 +12,7 @@ const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, 
         <SeparatedDiv
             className={cn(
                 'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3',
-                className
+                className,
             )}
             {...props}
         >
@@ -80,21 +80,21 @@ const InfoDisplayPlaceholder: FC<iInfoDisplayPlaceholder> = ({ type, className, 
                 <StaticSkeleton className={'h-6 w-full max-w-[25%]'} />
             </div>
         </SeparatedDiv>
-    )
-}
+    );
+};
 
 export const WeaponInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplayPlaceholder type={'weapon'} {...props} />
-)
+);
 
 export const ItemInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplayPlaceholder type={'item'} {...props} />
-)
+);
 
 export const SpellInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplayPlaceholder type={'spell'} {...props} />
-)
+);
 
 export const StatusEffectInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplayPlaceholder type={'status_effect'} {...props} />
-)
+);

@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 
 const HomePage = () => {
     const { t } = useTranslation('local', {
         keyPrefix: 'index',
-    })
+    });
 
     return (
         <>
@@ -12,7 +12,7 @@ const HomePage = () => {
                 <h2 className={'font-normal'}>{t('subtitle')}</h2>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default HomePage
+export default HomePage;

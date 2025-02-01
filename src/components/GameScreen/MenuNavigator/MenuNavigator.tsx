@@ -1,9 +1,9 @@
-import { ButtonWithTooltip } from '@components/ui/button'
-import { useTranslation } from 'react-i18next'
-import { FaUsers } from 'react-icons/fa'
-import { FaUncharted } from 'react-icons/fa6'
-import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md'
-import { TbManualGearbox } from 'react-icons/tb'
+import { ButtonWithTooltip } from '@components/ui/button';
+import { useTranslation } from 'react-i18next';
+import { FaUsers } from 'react-icons/fa';
+import { FaUncharted } from 'react-icons/fa6';
+import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md';
+import { TbManualGearbox } from 'react-icons/tb';
 
 const UPPER_BUTTONS = {
     YOUR_CHARACTERS: {
@@ -18,7 +18,7 @@ const UPPER_BUTTONS = {
         key: 'history',
         Component: MdHistoryToggleOff,
     },
-}
+};
 
 const LOWER_BUTTONS = {
     GM_SETTINGS: {
@@ -29,23 +29,23 @@ const LOWER_BUTTONS = {
         key: 'leave-game',
         Component: MdOutlineVideogameAssetOff,
     },
-}
+};
 
 const ButtonContainerContent = ({
     buttons,
     setChosen,
     tooltipPosition,
 }: {
-    buttons: typeof LOWER_BUTTONS | typeof UPPER_BUTTONS
-    setChosen: (value: string) => void
-    tooltipPosition?: 'top' | 'bottom'
+    buttons: typeof LOWER_BUTTONS | typeof UPPER_BUTTONS;
+    setChosen: (value: string) => void;
+    tooltipPosition?: 'top' | 'bottom';
 }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
         <>
             {Object.values(buttons).map((pageNavigator, index) => {
-                const { Component, key } = pageNavigator
+                const { Component, key } = pageNavigator;
                 return (
                     <ButtonWithTooltip
                         key={index}
@@ -53,7 +53,7 @@ const ButtonContainerContent = ({
                             'relative m-0 size-16 p-0 transition-colors duration-100 hover:text-[#d9d9d9] active:text-[#b7b7b7]'
                         }
                         onClick={() => {
-                            setChosen(key)
+                            setChosen(key);
                         }}
                         tooltip={key && t(`local:game.action_menus.${key}`)}
                         tooltipProps={{
@@ -65,11 +65,11 @@ const ButtonContainerContent = ({
                     >
                         <Component className={'size-16'} />
                     </ButtonWithTooltip>
-                )
+                );
             })}
         </>
-    )
-}
+    );
+};
 
 const MenuNavigator = ({ setChosen }: { setChosen: (value: string) => void }) => {
     return (
@@ -81,7 +81,7 @@ const MenuNavigator = ({ setChosen }: { setChosen: (value: string) => void }) =>
                 <ButtonContainerContent buttons={LOWER_BUTTONS} setChosen={setChosen} tooltipPosition={'top'} />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default MenuNavigator
+export default MenuNavigator;

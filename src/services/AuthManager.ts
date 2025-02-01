@@ -1,79 +1,79 @@
-import EventEmitter from 'events'
-import { jwtDecode } from 'jwt-decode'
+import EventEmitter from 'events';
+import { jwtDecode } from 'jwt-decode';
 
 export const LOGIN_STATUS = {
     LOGGED_IN: 'logged-in',
     LOGGED_OUT: 'logged-out',
-}
-export type eLoginStatus = (typeof LOGIN_STATUS)[keyof typeof LOGIN_STATUS]
+};
+export type eLoginStatus = (typeof LOGIN_STATUS)[keyof typeof LOGIN_STATUS];
 
 class AuthManager {
-    accessTokenKey = 'WALENHOLDE_ACCESS_TOKEN'
-    refreshTokenKey = 'WALENHOLDE_REFRESH_TOKEN'
-    emitter = new EventEmitter()
+    accessTokenKey = 'WALENHOLDE_ACCESS_TOKEN';
+    refreshTokenKey = 'WALENHOLDE_REFRESH_TOKEN';
+    emitter = new EventEmitter();
 
     eventTypes = {
         LOGIN_STATUS_CHANGED: 'LOGIN_STATUS_CHANGED',
-    }
+    };
 
     isLoggedIn() {
-        const token = this.getAccessToken()
-        return !!token
+        const token = this.getAccessToken();
+        return !!token;
     }
 
     isAccessTokenExpired = () => {
-        const token = this.getAccessToken()
-        if (!token) return true
+        const token = this.getAccessToken();
+        if (!token) return true;
 
-        const decoded = jwtDecode(token)
-        const expirationDate = decoded.exp
-        if (!expirationDate) return true
-        return new Date().getTime() >= expirationDate * 1000
-    }
+        const decoded = jwtDecode(token);
+        const expirationDate = decoded.exp;
+        if (!expirationDate) return true;
+        return new Date().getTime() >= expirationDate * 1000;
+    };
 
     getAccessToken() {
-        return localStorage.getItem(this.accessTokenKey)
+        return localStorage.getItem(this.accessTokenKey);
     }
 
     setAccessToken(accessToken: string) {
-        localStorage.setItem(this.accessTokenKey, accessToken)
+        localStorage.setItem(this.accessTokenKey, accessToken);
     }
 
     getRefreshToken() {
-        return localStorage.getItem(this.refreshTokenKey)
+        return localStorage.getItem(this.refreshTokenKey);
     }
 
     setRefreshToken(refreshToken: string) {
-        localStorage.setItem(this.refreshTokenKey, refreshToken)
+        localStorage.setItem(this.refreshTokenKey, refreshToken);
     }
 
     login({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) {
-        this.setAccessToken(accessToken)
-        this.setRefreshToken(refreshToken)
+        this.setAccessToken(accessToken);
+        this.setRefreshToken(refreshToken);
 
-        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_IN)
+        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_IN);
     }
 
     logout() {
-        localStorage.removeItem(this.accessTokenKey)
-        localStorage.removeItem(this.refreshTokenKey)
+        localStorage.removeItem(this.accessTokenKey);
+        localStorage.removeItem(this.refreshTokenKey);
 
-        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_OUT)
+        this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_OUT);
     }
 
     onLoginStatusChange(cb: (status: eLoginStatus) => void): () => void {
-        this.emitter.on(this.eventTypes.LOGIN_STATUS_CHANGED, cb)
+        this.emitter.on(this.eventTypes.LOGIN_STATUS_CHANGED, cb);
 
         return () => {
-            this.emitter.off(this.eventTypes.LOGIN_STATUS_CHANGED, cb)
-        }
+            this.emitter.off(this.eventTypes.LOGIN_STATUS_CHANGED, cb);
+        };
     }
 
     authHeader() {
         return {
             Authorization: `Bearer ${this.getAccessToken()}`,
-        }
+        };
     }
 }
 
-export default new AuthManager()
+export default new AuthManager();

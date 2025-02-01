@@ -1,7 +1,7 @@
-import CombatEditor from '@components/CombatEditor/CombatEditor'
+import CombatEditor from '@components/CombatEditor/CombatEditor';
 
 const CreateCombatPage = () => {
-    return <CombatEditor />
-}
+    return <CombatEditor />;
+};
 
-export default CreateCombatPage
+export default CreateCombatPage;

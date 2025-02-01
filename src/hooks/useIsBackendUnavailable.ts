@@ -1,26 +1,26 @@
-import APIHealth from '@services/APIHealth'
-import { useEffect, useState } from 'react'
+import APIHealth from '@services/APIHealth';
+import { useEffect, useState } from 'react';
 
 const useIsBackendUnavailable = () => {
-    const [isBackendUnavailable, setIsBackendUnavailable] = useState<boolean | null>(APIHealth.isBackendUnavailable())
+    const [isBackendUnavailable, setIsBackendUnavailable] = useState<boolean | null>(APIHealth.isBackendUnavailable());
 
     useEffect(() => {
         const handleBackendStatusChange = (status: boolean) => {
-            setIsBackendUnavailable(status)
-        }
+            setIsBackendUnavailable(status);
+        };
 
-        setIsBackendUnavailable(APIHealth.isBackendUnavailable())
+        setIsBackendUnavailable(APIHealth.isBackendUnavailable());
 
-        const unsubscribeFromBackendStatusChange = APIHealth.onBackendStatusChange(handleBackendStatusChange)
+        const unsubscribeFromBackendStatusChange = APIHealth.onBackendStatusChange(handleBackendStatusChange);
 
         return () => {
-            unsubscribeFromBackendStatusChange()
-        }
-    }, [])
+            unsubscribeFromBackendStatusChange();
+        };
+    }, []);
 
     return {
         isBackendUnavailable,
-    }
-}
+    };
+};
 
-export default useIsBackendUnavailable
+export default useIsBackendUnavailable;

@@ -1,1 +1,1 @@
-export { default as default } from './ActiveCombatsList'
+export { default as default } from './ActiveCombatsList';

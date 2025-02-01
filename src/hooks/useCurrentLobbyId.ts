@@ -1,7 +1,7 @@
-import { useParams } from 'react-router'
+import { useParams } from 'react-router';
 
 export const useCurrentLobbyId = () => {
-    const { lobbyId } = useParams()
+    const { lobbyId } = useParams();
 
-    return lobbyId
-}
+    return lobbyId;
+};

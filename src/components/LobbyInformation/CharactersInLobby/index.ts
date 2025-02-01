@@ -1,1 +1,1 @@
-export { default as default } from './CharactersInLobby'
+export { default as default } from './CharactersInLobby';

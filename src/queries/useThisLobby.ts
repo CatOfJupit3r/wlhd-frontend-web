@@ -1,7 +1,7 @@
-import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId'
-import { iLobbyInformation } from '@models/Redux'
-import APIService from '@services/APIService'
-import { useQuery } from '@tanstack/react-query'
+import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
+import { iLobbyInformation } from '@models/Redux';
+import APIService from '@services/APIService';
+import { useQuery } from '@tanstack/react-query';
 
 const defaultLobbyState: iLobbyInformation = {
     name: '',
@@ -12,10 +12,10 @@ const defaultLobbyState: iLobbyInformation = {
     characters: [],
     gm: '',
     layout: 'default',
-}
+};
 
 const useThisLobby = () => {
-    const lobbyId = useCurrentLobbyId()
+    const lobbyId = useCurrentLobbyId();
 
     const {
         data: lobby,
@@ -31,14 +31,14 @@ const useThisLobby = () => {
 
         queryFn: async () => {
             if (!lobbyId) {
-                throw new Error('No lobby ID provided')
+                throw new Error('No lobby ID provided');
             }
 
             try {
-                return APIService.getLobbyInfo(lobbyId)
+                return APIService.getLobbyInfo(lobbyId);
             } catch (error) {
-                console.error('Failed to fetch lobby information', error)
-                throw error
+                console.error('Failed to fetch lobby information', error);
+                throw error;
             }
         },
 
@@ -47,7 +47,7 @@ const useThisLobby = () => {
         retry: 1,
 
         placeholderData: defaultLobbyState,
-    })
+    });
 
     return {
         lobby: lobby ?? defaultLobbyState,
@@ -57,7 +57,7 @@ const useThisLobby = () => {
         lobbyId,
         refetch,
         isInLobbyPage: !!lobbyId,
-    }
-}
+    };
+};
 
-export default useThisLobby
+export default useThisLobby;

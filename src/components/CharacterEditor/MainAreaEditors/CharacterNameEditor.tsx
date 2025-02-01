@@ -1,18 +1,18 @@
-import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit'
-import { Button } from '@components/ui/button'
-import { Input } from '@components/ui/input'
-import { Label } from '@components/ui/label'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import React from 'react'
-import { RxReset } from 'react-icons/rx'
+import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
+import { Button } from '@components/ui/button';
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import React from 'react';
+import { RxReset } from 'react-icons/rx';
 
-const MAX_NAME_LENGTH = 64
+const MAX_NAME_LENGTH = 64;
 
 const CharacterNameEditor = () => {
-    const { character, updateCharacter, initial } = useCharacterEditorContext()
+    const { character, updateCharacter, initial } = useCharacterEditorContext();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
+        const value = e.target.value;
         if (value.length <= MAX_NAME_LENGTH) {
             updateCharacter({
                 ...character,
@@ -20,9 +20,9 @@ const CharacterNameEditor = () => {
                     ...character.decorations,
                     name: value,
                 },
-            })
+            });
         }
-    }
+    };
 
     return (
         <div>
@@ -47,7 +47,7 @@ const CharacterNameEditor = () => {
                                 ...character.decorations,
                                 name: initial.decorations.name,
                             },
-                        })
+                        });
                     }}
                     className={'h-5 text-gray-400 hover:text-gray-600'}
                 >
@@ -55,7 +55,7 @@ const CharacterNameEditor = () => {
                 </Button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CharacterNameEditor
+export default CharacterNameEditor;

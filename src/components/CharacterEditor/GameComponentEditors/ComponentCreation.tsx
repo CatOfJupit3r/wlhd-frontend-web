@@ -3,10 +3,10 @@ import {
     SpellEditor,
     StatusEffectEditor,
     WeaponEditor,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor'
-import { Button } from '@components/ui/button'
-import { Combobox } from '@components/ui/combobox'
-import { Label } from '@components/ui/label'
+} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor';
+import { Button } from '@components/ui/button';
+import { Combobox } from '@components/ui/combobox';
+import { Label } from '@components/ui/label';
 import {
     Select,
     SelectContent,
@@ -15,61 +15,61 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from '@components/ui/select'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { useDataContext } from '@context/GameDataProvider'
+} from '@components/ui/select';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useDataContext } from '@context/GameDataProvider';
 import {
     CharacterDataEditable,
     ItemEditable,
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels'
-import { isDescriptor } from '@utils'
-import { SUPPORTED_DLCs } from 'config'
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { AiOutlinePlus } from 'react-icons/ai'
+} from '@models/CombatEditorModels';
+import { isDescriptor } from '@utils';
+import { SUPPORTED_DLCs } from 'config';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
-    })
-    const { character, updateCharacter } = useCharacterEditorContext()
+    });
+    const { character, updateCharacter } = useCharacterEditorContext();
 
-    const dataContext = useDataContext()
+    const dataContext = useDataContext();
 
-    const [dlc, setDlc] = useState('')
-    const [descriptor, setDescriptor] = useState('')
-    const [component, setComponent] = useState<COMPONENT_TO_INTERFACE[CONTAINER_TYPE] | null>(null)
+    const [dlc, setDlc] = useState('');
+    const [descriptor, setDescriptor] = useState('');
+    const [component, setComponent] = useState<COMPONENT_TO_INTERFACE[CONTAINER_TYPE] | null>(null);
 
     useEffect(() => {
-        setDlc('')
-        setDescriptor('')
-        setComponent(null)
-    }, [props.type])
+        setDlc('');
+        setDescriptor('');
+        setComponent(null);
+    }, [props.type]);
 
     const getComponentFromLoadedData = useCallback(
         (dlc: string, descriptor: string) => {
             switch (props.type) {
                 case 'item':
-                    return dataContext?.items?.[dlc]?.[descriptor] ?? null
+                    return dataContext?.items?.[dlc]?.[descriptor] ?? null;
                 case 'weapon':
-                    return dataContext?.weapons?.[dlc]?.[descriptor] ?? null
+                    return dataContext?.weapons?.[dlc]?.[descriptor] ?? null;
                 case 'spell':
-                    return dataContext?.spells?.[dlc]?.[descriptor] ?? null
+                    return dataContext?.spells?.[dlc]?.[descriptor] ?? null;
                 case 'statusEffect':
-                    return dataContext?.statusEffects?.[dlc]?.[descriptor] ?? null
+                    return dataContext?.statusEffects?.[dlc]?.[descriptor] ?? null;
                 default:
-                    return null
+                    return null;
             }
         },
-        [dataContext, props]
-    )
+        [dataContext, props],
+    );
 
     const addNewComponent = useCallback(
         (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE]) => {
-            const newCharacter = { ...character }
+            const newCharacter = { ...character };
             switch (props.type) {
                 case 'item':
                     newCharacter.inventory = [
@@ -78,14 +78,14 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                             ...component,
                             descriptor: `${dlc}:${descriptor}`,
                         } as CharacterDataEditable['inventory'][number],
-                    ]
-                    break
+                    ];
+                    break;
                 case 'weapon':
                     newCharacter.weaponry = [
                         ...newCharacter.weaponry,
                         component as CharacterDataEditable['weaponry'][number],
-                    ]
-                    break
+                    ];
+                    break;
                 case 'spell':
                     newCharacter.spellBook = {
                         ...newCharacter.spellBook,
@@ -93,60 +93,60 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                             ...newCharacter.spellBook.knownSpells,
                             component as CharacterDataEditable['spellBook']['knownSpells'][number],
                         ],
-                    }
-                    break
+                    };
+                    break;
                 case 'statusEffect':
                     newCharacter.statusEffects = [
                         ...newCharacter.statusEffects,
                         component as CharacterDataEditable['statusEffects'][number],
-                    ]
-                    break
+                    ];
+                    break;
             }
-            updateCharacter(newCharacter)
+            updateCharacter(newCharacter);
         },
-        [character, props, component, descriptor, dlc, updateCharacter]
-    )
+        [character, props, component, descriptor, dlc, updateCharacter],
+    );
 
     useEffect(() => {
         if (!dlc) {
-            return
+            return;
         }
         switch (props.type) {
             case 'item':
                 if (dataContext?.items === null || dataContext?.items[dlc] === undefined) {
-                    dataContext.fetchAndSetItems(dlc).catch(console.error)
+                    dataContext.fetchAndSetItems(dlc).catch(console.error);
                 }
-                break
+                break;
             case 'weapon':
                 if (dataContext?.weapons === null || dataContext?.weapons[dlc] === undefined) {
-                    dataContext.fetchAndSetWeapons(dlc).catch(console.error)
+                    dataContext.fetchAndSetWeapons(dlc).catch(console.error);
                 }
-                break
+                break;
             case 'spell':
                 if (dataContext?.spells === null || dataContext?.spells[dlc] === undefined) {
-                    dataContext.fetchAndSetSpells(dlc).catch(console.error)
+                    dataContext.fetchAndSetSpells(dlc).catch(console.error);
                 }
-                break
+                break;
             case 'statusEffect':
                 if (dataContext?.statusEffects === null || dataContext?.statusEffects[dlc] === undefined) {
-                    dataContext.fetchAndSetStatusEffects(dlc).catch(console.error)
+                    dataContext.fetchAndSetStatusEffects(dlc).catch(console.error);
                 }
-                break
+                break;
         }
-    }, [dlc, dataContext])
+    }, [dlc, dataContext]);
 
     useEffect(() => {
         if (!dlc || !descriptor) {
-            setComponent(null)
-            return
+            setComponent(null);
+            return;
         }
-        const component = getComponentFromLoadedData(dlc, descriptor)
+        const component = getComponentFromLoadedData(dlc, descriptor);
         if (component) {
-            setComponent(component)
+            setComponent(component);
         } else {
-            setComponent(null)
+            setComponent(null);
         }
-    }, [dlc, descriptor])
+    }, [dlc, descriptor]);
 
     return (
         <div id={`add-new-component`}>
@@ -156,9 +156,9 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                         <Label>{t('general.dlc')}</Label>
                         <Select
                             onValueChange={(value) => {
-                                setDescriptor('')
-                                setComponent(null)
-                                setDlc(value)
+                                setDescriptor('');
+                                setComponent(null);
+                                setDlc(value);
                             }}
                         >
                             <SelectTrigger>
@@ -181,19 +181,19 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                         <Combobox
                             items={(() => {
                                 if (!dlc) {
-                                    return []
+                                    return [];
                                 }
                                 switch (props.type) {
                                     case 'item':
-                                        return Object.keys(dataContext?.items?.[dlc] ?? {})
+                                        return Object.keys(dataContext?.items?.[dlc] ?? {});
                                     case 'weapon':
-                                        return Object.keys(dataContext?.weapons?.[dlc] ?? {})
+                                        return Object.keys(dataContext?.weapons?.[dlc] ?? {});
                                     case 'spell':
-                                        return Object.keys(dataContext?.spells?.[dlc] ?? {})
+                                        return Object.keys(dataContext?.spells?.[dlc] ?? {});
                                     case 'statusEffect':
-                                        return Object.keys(dataContext?.statusEffects?.[dlc] ?? {})
+                                        return Object.keys(dataContext?.statusEffects?.[dlc] ?? {});
                                     default:
-                                        return []
+                                        return [];
                                 }
                             })().map((descriptor) => ({
                                 value: descriptor,
@@ -201,7 +201,7 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                             }))}
                             value={descriptor}
                             onChange={(e) => {
-                                setDescriptor(e)
+                                setDescriptor(e);
                             }}
                         />
                     </div>
@@ -211,26 +211,26 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                 (() => {
                     switch (props.type) {
                         case 'item':
-                            return <ItemEditor component={component as ItemEditable} setComponent={setComponent} />
+                            return <ItemEditor component={component as ItemEditable} setComponent={setComponent} />;
                         case 'weapon':
-                            return <WeaponEditor component={component as WeaponEditable} setComponent={setComponent} />
+                            return <WeaponEditor component={component as WeaponEditable} setComponent={setComponent} />;
                         case 'spell':
-                            return <SpellEditor component={component as SpellEditable} setComponent={setComponent} />
+                            return <SpellEditor component={component as SpellEditable} setComponent={setComponent} />;
                         case 'statusEffect':
                             return (
                                 <StatusEffectEditor
                                     component={component as StatusEffectEditable}
                                     setComponent={setComponent}
                                 />
-                            )
+                            );
                         default:
-                            return null
+                            return null;
                     }
                 })()}
             <Button
                 onClick={() => {
                     if (component) {
-                        addNewComponent(component)
+                        addNewComponent(component);
                     }
                 }}
                 className={'mt-2'}
@@ -240,14 +240,14 @@ export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
                 {t('general.add')}
             </Button>
         </div>
-    )
-}
+    );
+};
 
 export interface COMPONENT_TO_INTERFACE {
-    item: ItemEditable
-    weapon: WeaponEditable
-    spell: SpellEditable
-    statusEffect: StatusEffectEditable
+    item: ItemEditable;
+    weapon: WeaponEditable;
+    spell: SpellEditable;
+    statusEffect: StatusEffectEditable;
 }
 
-export type CONTAINER_TYPE = 'item' | 'weapon' | 'spell' | 'statusEffect'
+export type CONTAINER_TYPE = 'item' | 'weapon' | 'spell' | 'statusEffect';

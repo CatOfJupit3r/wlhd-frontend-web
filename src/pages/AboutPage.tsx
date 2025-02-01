@@ -15,7 +15,7 @@ const AboutPage = () => {
                 are now very different, I still want to thank you for your work!
             </p>
         </>
-    )
-}
+    );
+};
 
-export { AboutPage as default }
+export { AboutPage as default };

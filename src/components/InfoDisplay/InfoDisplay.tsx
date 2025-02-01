@@ -1,38 +1,38 @@
-import { ActiveIcon, LocationIcon } from '@components/icons'
-import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay'
-import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories'
-import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
-import SeparatedDiv from '@components/ui/separated-div'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels'
-import { HTMLAttributes, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { BiInfinite } from 'react-icons/bi'
-import { FaBoxes, FaHourglassHalf } from 'react-icons/fa'
-import { LuTally5 } from 'react-icons/lu'
-import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi'
+import { ActiveIcon, LocationIcon } from '@components/icons';
+import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay';
+import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
+import SeparatedDiv from '@components/ui/separated-div';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
+import { HTMLAttributes, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BiInfinite } from 'react-icons/bi';
+import { FaBoxes, FaHourglassHalf } from 'react-icons/fa';
+import { LuTally5 } from 'react-icons/lu';
+import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi';
 
 interface WeaponSegment {
-    type: 'weapon'
-    info: WeaponInfo
+    type: 'weapon';
+    info: WeaponInfo;
 }
 
 interface ItemSegment {
-    type: 'item'
-    info: ItemInfo
+    type: 'item';
+    info: ItemInfo;
 }
 
 interface SpellSegment {
-    type: 'spell'
-    info: SpellInfo
+    type: 'spell';
+    info: SpellInfo;
 }
 
 interface StatusEffectSegment {
-    type: 'status_effect'
-    info: StatusEffectInfo
+    type: 'status_effect';
+    info: StatusEffectInfo;
 }
 
-export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment
+export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment;
 
 const RADIUS_TO_COMMON_NAMES: { [key: string]: string } = {
     '3,4': 'any-melee',
@@ -41,14 +41,14 @@ const RADIUS_TO_COMMON_NAMES: { [key: string]: string } = {
     '1,2,3': 'any-enemy',
     '4,5,6': 'any-ally',
     '1,2,3,4,5,6': 'any',
-}
+};
 
 const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'game.info-display',
-    })
-    const { t: tNoPrefix } = useTranslation()
-    const { decorations } = info
+    });
+    const { t: tNoPrefix } = useTranslation();
+    const { decorations } = info;
 
     const QuantityInfo = useCallback(({ info }: ItemSegment | WeaponSegment) => {
         return (
@@ -65,12 +65,12 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     </TooltipContent>
                 </Tooltip>
             </div>
-        )
-    }, [])
+        );
+    }, []);
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment | SpellSegment) => {
-        return info.isActive ? <ActiveIcon className={'size-6'} /> : null
-    }, [])
+        return info.isActive ? <ActiveIcon className={'size-6'} /> : null;
+    }, []);
 
     const UsageDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
@@ -104,8 +104,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     </Tooltip>
                 </div>
             </>
-        )
-    }, [])
+        );
+    }, []);
 
     const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
@@ -120,8 +120,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     <TooltipContent>{t('tooltips.cost')}</TooltipContent>
                 </Tooltip>
             </div>
-        )
-    }, [])
+        );
+    }, []);
 
     const CooldownDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
         return (
@@ -146,8 +146,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     </TooltipContent>
                 </Tooltip>
             </div>
-        )
-    }, [])
+        );
+    }, []);
 
     const EffectDurationDetails = useCallback(({ info }: StatusEffectSegment) => {
         return (
@@ -168,8 +168,8 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     </TooltipContent>
                 </Tooltip>
             </div>
-        )
-    }, [])
+        );
+    }, []);
 
     return (
         <SeparatedDiv
@@ -227,27 +227,27 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 </>
             ) : null}
         </SeparatedDiv>
-    )
-}
+    );
+};
 
 export const WeaponInfoDisplay = ({
     info,
     ...props
 }: {
-    info: WeaponSegment['info']
-} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'weapon'} info={info} {...props} />
+    info: WeaponSegment['info'];
+} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'weapon'} info={info} {...props} />;
 export const ItemInfoDisplay = ({ info, ...props }: { info: ItemSegment['info'] } & HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplay type={'item'} info={info} {...props} />
-)
+);
 export const SpellInfoDisplay = ({
     info,
     ...props
 }: {
-    info: SpellSegment['info']
-} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'spell'} info={info} {...props} />
+    info: SpellSegment['info'];
+} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'spell'} info={info} {...props} />;
 export const StatusEffectInfoDisplay = ({
     info,
     ...props
 }: {
-    info: StatusEffectSegment['info']
-} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'status_effect'} info={info} {...props} />
+    info: StatusEffectSegment['info'];
+} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'status_effect'} info={info} {...props} />;

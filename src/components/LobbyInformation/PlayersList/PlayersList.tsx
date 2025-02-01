@@ -1,32 +1,32 @@
-import { Button, MutationButton } from '@components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { ScrollArea } from '@components/ui/scroll-area'
-import { Separator } from '@components/ui/separator'
-import { iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/Redux'
-import useRefreshLobbyPlayers from '@mutations/useRefreshLobbyPlayers'
-import { cn } from '@utils'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaUserPlus } from 'react-icons/fa6'
-import { LuUsers } from 'react-icons/lu'
-import { TbRefreshDot } from 'react-icons/tb'
-import { LOBBY_INFO_MODALS, LOBBY_INFO_MODALS_TYPE } from '../types'
-import PlayerDisplay from './PlayerDisplay'
+import { Button, MutationButton } from '@components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { ScrollArea } from '@components/ui/scroll-area';
+import { Separator } from '@components/ui/separator';
+import { iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/Redux';
+import useRefreshLobbyPlayers from '@mutations/useRefreshLobbyPlayers';
+import { cn } from '@utils';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaUserPlus } from 'react-icons/fa6';
+import { LuUsers } from 'react-icons/lu';
+import { TbRefreshDot } from 'react-icons/tb';
+import { LOBBY_INFO_MODALS, LOBBY_INFO_MODALS_TYPE } from '../types';
+import PlayerDisplay from './PlayerDisplay';
 
 interface iPlayersList {
-    className?: string
-    players: Array<iLobbyPlayerInfo>
-    waitingPlayers: Array<iWaitingApprovalPlayer>
-    layout: iLobbyInformation['layout']
-    setModalType: (value: LOBBY_INFO_MODALS_TYPE) => void
-    lobbyId: string
+    className?: string;
+    players: Array<iLobbyPlayerInfo>;
+    waitingPlayers: Array<iWaitingApprovalPlayer>;
+    layout: iLobbyInformation['layout'];
+    setModalType: (value: LOBBY_INFO_MODALS_TYPE) => void;
+    lobbyId: string;
 }
 
 const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalType, lobbyId, waitingPlayers }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.players',
-    })
-    const { refreshLobbyPlayers, isPending } = useRefreshLobbyPlayers()
+    });
+    const { refreshLobbyPlayers, isPending } = useRefreshLobbyPlayers();
 
     return (
         <Card>
@@ -38,8 +38,8 @@ const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalTyp
                 <div className={'flex gap-2'}>
                     <MutationButton
                         mutate={() => {
-                            if (!lobbyId) return
-                            refreshLobbyPlayers(lobbyId)
+                            if (!lobbyId) return;
+                            refreshLobbyPlayers(lobbyId);
                         }}
                         isPending={isPending}
                         className={'h-8 text-sm'}
@@ -72,7 +72,7 @@ const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalTyp
                                     lobbyId={lobbyId}
                                     isApproved={true}
                                 />
-                            )
+                            );
                         })}
                     </div>
                     {waitingPlayers.length === 0 ? null : <Separator className={'my-3'} />}
@@ -90,13 +90,13 @@ const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalTyp
                                     lobbyId={lobbyId}
                                     isApproved={false}
                                 />
-                            )
+                            );
                         })}
                     </div>
                 </ScrollArea>
             </CardContent>
         </Card>
-    )
-}
+    );
+};
 
-export default PlayersList
+export default PlayersList;

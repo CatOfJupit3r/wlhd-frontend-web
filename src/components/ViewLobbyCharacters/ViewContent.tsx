@@ -1,5 +1,5 @@
-import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay'
-import CharacterEditor from '@components/CharacterEditor/CharacterEditor'
+import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
+import CharacterEditor from '@components/CharacterEditor/CharacterEditor';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,57 +9,57 @@ import {
     AlertDialogFooter,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from '@components/ui/alert-dialog'
-import { Button } from '@components/ui/button'
-import { Separator } from '@components/ui/separator'
+} from '@components/ui/alert-dialog';
+import { Button } from '@components/ui/button';
+import { Separator } from '@components/ui/separator';
 import {
     CharacterEditorContextType,
     CharacterEditorProvider,
     useBuildCharacterEditorProps,
-} from '@context/CharacterEditorProvider'
-import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider'
-import { useViewCharactersContext } from '@context/ViewCharactersContext'
-import { toastError } from '@hooks/useToast'
-import { CharacterDataEditable } from '@models/CombatEditorModels'
-import { CharacterInfoFull } from '@models/GameModels'
-import useThisLobby from '@queries/useThisLobby'
-import APIService from '@services/APIService'
-import GameConverters from '@services/GameConverters'
-import { cn } from '@utils'
-import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaXmark } from 'react-icons/fa6'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+} from '@context/CharacterEditorProvider';
+import { useCoordinatorCharactersContext } from '@context/CoordinatorCharactersProvider';
+import { useViewCharactersContext } from '@context/ViewCharactersContext';
+import { toastError } from '@hooks/useToast';
+import { CharacterDataEditable } from '@models/CombatEditorModels';
+import { CharacterInfoFull } from '@models/GameModels';
+import useThisLobby from '@queries/useThisLobby';
+import APIService from '@services/APIService';
+import GameConverters from '@services/GameConverters';
+import { cn } from '@utils';
+import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaXmark } from 'react-icons/fa6';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
     exclude: {},
     attributes: {
         ignored: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     },
-}
+};
 
-const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4'
+const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4';
 
 const CharacterEditorMenu = () => {
-    const { viewedCharacter: character, descriptor, changeViewedCharacter } = useViewCharactersContext()
-    const { lobby, refetch } = useThisLobby()
+    const { viewedCharacter: character, descriptor, changeViewedCharacter } = useViewCharactersContext();
+    const { lobby, refetch } = useThisLobby();
     const {
         character: editedCharacter,
         changeEditedCharacter,
         resetCharacter,
-    } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable)
-    const { fetchCharacter } = useCoordinatorCharactersContext()
+    } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable);
+    const { fetchCharacter } = useCoordinatorCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
-    })
+    });
 
     useEffect(() => {
         if (!character) {
-            return
+            return;
         }
-        changeEditedCharacter({ ...character })
-    }, [character])
+        changeEditedCharacter({ ...character });
+    }, [character]);
 
     return (
         <div className={cn(componentClass, 'flex flex-col gap-2')}>
@@ -68,7 +68,7 @@ const CharacterEditorMenu = () => {
                     variant={'destructive'}
                     className={'w-full'}
                     onClick={() => {
-                        resetCharacter()
+                        resetCharacter();
                     }}
                 >
                     {t('reset')}
@@ -77,37 +77,37 @@ const CharacterEditorMenu = () => {
                     className={'w-full'}
                     onClick={() => {
                         if (!descriptor) {
-                            return
+                            return;
                         }
                         const wasCharacterChanged: boolean =
-                            JSON.stringify(character) !== JSON.stringify(editedCharacter)
+                            JSON.stringify(character) !== JSON.stringify(editedCharacter);
                         if (wasCharacterChanged) {
                             // TODO: create omit function to only send changed fields
 
                             APIService.updateCharacter(
                                 lobby.lobbyId,
                                 descriptor as string,
-                                prepareCharacterToClassConversion(editedCharacter)
+                                prepareCharacterToClassConversion(editedCharacter),
                             )
                                 .then(() => {
-                                    console.log('Character was updated')
+                                    console.log('Character was updated');
                                     refetch().then(() => {
                                         fetchCharacter(lobby.lobbyId, descriptor, true)
                                             .then((data) => {
-                                                changeViewedCharacter(data, descriptor)
+                                                changeViewedCharacter(data, descriptor);
                                             })
                                             .catch((e) => {
-                                                console.error(e)
-                                                changeViewedCharacter(null, null)
-                                            })
-                                    })
+                                                console.error(e);
+                                                changeViewedCharacter(null, null);
+                                            });
+                                    });
                                 })
                                 .catch((error) => {
                                     toastError({
                                         title: error?.title || t('error'),
                                         description: error?.details ?? error?.message ?? t('error-message'),
-                                    })
-                                })
+                                    });
+                                });
                         }
                     }}
                 >
@@ -123,15 +123,15 @@ const CharacterEditorMenu = () => {
                 <CharacterEditor className={'w-full border-0'} />
             </CharacterEditorProvider>
         </div>
-    )
-}
+    );
+};
 
 const GmOptionMenu = () => {
-    const { lobby, refetch } = useThisLobby()
-    const { descriptor } = useViewCharactersContext()
+    const { lobby, refetch } = useThisLobby();
+    const { descriptor } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.gm-options',
-    })
+    });
 
     return (
         <div className={cn(componentClass, 'justify-end')}>
@@ -143,7 +143,7 @@ const GmOptionMenu = () => {
                         variant={'destructive'}
                         onClick={() => {
                             if (!descriptor || !lobby) {
-                                return
+                                return;
                             }
                         }}
                         disabled={!descriptor || !lobby}
@@ -168,15 +168,15 @@ const GmOptionMenu = () => {
                                 disabled={!descriptor || !lobby}
                                 onClick={() => {
                                     if (!descriptor || !lobby) {
-                                        return
+                                        return;
                                     }
                                     APIService.deleteCharacter(lobby.lobbyId, descriptor)
                                         .then(() => {
-                                            refetch().then()
+                                            refetch().then();
                                         })
                                         .catch((error) => {
-                                            console.error('Error removing character', error)
-                                        })
+                                            console.error('Error removing character', error);
+                                        });
                                 }}
                             >
                                 <RiDeleteBin6Line className={'mr-1 text-[1rem] text-white'} />
@@ -187,49 +187,49 @@ const GmOptionMenu = () => {
                 </AlertDialogContent>
             </AlertDialog>
         </div>
-    )
-}
+    );
+};
 
 const LobbyCharacterDisplay = () => {
-    const { viewedCharacter } = useViewCharactersContext()
-    const [converted, setConverted] = useState<CharacterInfoFull | null>(null)
+    const { viewedCharacter } = useViewCharactersContext();
+    const [converted, setConverted] = useState<CharacterInfoFull | null>(null);
 
     useEffect(() => {
         if (!viewedCharacter) {
-            setConverted(null)
+            setConverted(null);
         } else {
-            setConverted(GameConverters.convertCharacterEditableToInfoFull(viewedCharacter))
+            setConverted(GameConverters.convertCharacterEditableToInfoFull(viewedCharacter));
         }
-    }, [viewedCharacter])
+    }, [viewedCharacter]);
 
     if (!viewedCharacter) {
-        return <CharacterDisplayPlaceholder className={componentClass} />
+        return <CharacterDisplayPlaceholder className={componentClass} />;
     }
 
     return converted ? (
         <CharacterDisplayInLobby character={converted} className={componentClass} />
     ) : (
         <CharacterDisplayPlaceholder className={componentClass} />
-    )
-}
+    );
+};
 
 const ViewContent = ({ type }: { type: string }) => {
-    const { viewedCharacter } = useViewCharactersContext()
+    const { viewedCharacter } = useViewCharactersContext();
 
     if (!viewedCharacter) {
-        return <CharacterDisplayPlaceholder className={componentClass} />
+        return <CharacterDisplayPlaceholder className={componentClass} />;
     }
 
     switch (type) {
         case 'display':
-            return <LobbyCharacterDisplay />
+            return <LobbyCharacterDisplay />;
         case 'edit':
-            return <CharacterEditorMenu />
+            return <CharacterEditorMenu />;
         case 'gm-options':
-            return <GmOptionMenu />
+            return <GmOptionMenu />;
         default:
-            return <CharacterDisplayPlaceholder className={componentClass} />
+            return <CharacterDisplayPlaceholder className={componentClass} />;
     }
-}
+};
 
-export default ViewContent
+export default ViewContent;

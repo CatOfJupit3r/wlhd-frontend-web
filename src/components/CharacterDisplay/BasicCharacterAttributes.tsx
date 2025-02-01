@@ -1,19 +1,19 @@
-import { Progress } from '@components/ui/progress'
-import { CharacterInfoFull } from '@models/GameModels'
-import { getPercentage } from '@utils/getPercentage'
-import { useMemo } from 'react'
-import { GiHeartPlus } from 'react-icons/gi'
-import { IoShieldSharp } from 'react-icons/io5'
-import { PiSneakerMoveFill } from 'react-icons/pi'
+import { Progress } from '@components/ui/progress';
+import { CharacterInfoFull } from '@models/GameModels';
+import { getPercentage } from '@utils/getPercentage';
+import { useMemo } from 'react';
+import { GiHeartPlus } from 'react-icons/gi';
+import { IoShieldSharp } from 'react-icons/io5';
+import { PiSneakerMoveFill } from 'react-icons/pi';
 
 const BasicCharacterAttributes = ({
     attributes,
     flags,
 }: {
-    attributes: CharacterInfoFull['attributes']
+    attributes: CharacterInfoFull['attributes'];
     flags?: {
-        ignoreCurrentValues?: boolean
-    }
+        ignoreCurrentValues?: boolean;
+    };
 }) => {
     const MAIN_ATTRIBUTES = useMemo(
         () => ({
@@ -39,8 +39,8 @@ const BasicCharacterAttributes = ({
                     : `${attributes['builtins:current_action_points'] ?? '-'}/${attributes['builtins:max_action_points'] ?? '-'}`,
             },
         }),
-        [attributes, flags]
-    )
+        [attributes, flags],
+    );
 
     return (
         <div className={'flex w-full gap-2'}>
@@ -116,7 +116,7 @@ const BasicCharacterAttributes = ({
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default BasicCharacterAttributes
+export default BasicCharacterAttributes;

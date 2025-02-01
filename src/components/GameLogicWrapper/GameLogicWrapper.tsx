@@ -1,61 +1,61 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
-import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection'
-import GameScreen from '@components/GameScreen/GameScreen'
-import Overlay from '@components/Overlay'
-import { ThreeInOneSpinner } from '@components/Spinner'
-import { Button } from '@components/ui/button'
-import { Separator } from '@components/ui/separator'
-import { iActionContext } from '@context/ActionContext'
-import useThisLobby from '@queries/useThisLobby'
-import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice'
-import { AppDispatch } from '@redux/store'
-import paths from '@router/paths'
-import SocketService from '@services/SocketService'
+import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection';
+import GameScreen from '@components/GameScreen/GameScreen';
+import Overlay from '@components/Overlay';
+import { ThreeInOneSpinner } from '@components/Spinner';
+import { Button } from '@components/ui/button';
+import { Separator } from '@components/ui/separator';
+import { iActionContext } from '@context/ActionContext';
+import useThisLobby from '@queries/useThisLobby';
+import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice';
+import { AppDispatch } from '@redux/store';
+import paths from '@router/paths';
+import SocketService from '@services/SocketService';
 
 const GameLogicWrapper = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null)
-    const { t } = useTranslation()
-    const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>();
+    const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null);
+    const { t } = useTranslation();
+    const navigate = useNavigate();
 
-    const { gameId, lobbyId } = useParams()
+    const { gameId, lobbyId } = useParams();
 
-    const gameFlow = useSelector(selectGameFlow)
-    const { lobby } = useThisLobby()
+    const gameFlow = useSelector(selectGameFlow);
+    const { lobby } = useThisLobby();
 
     useEffect(() => {
         if (!lobbyId || !gameId) {
             // if (somehow) lobbyId or gameId is not set, we leave the page before anything bad happens
-            dispatch(resetGameScreenSlice())
-            navigate('..')
-            return
+            dispatch(resetGameScreenSlice());
+            navigate('..');
+            return;
         }
-        dispatch(setActions(null))
+        dispatch(setActions(null));
         SocketService.connect({
             lobbyId,
             combatId: gameId,
             isGm: lobby.layout === 'gm',
-        })
-    }, [gameId, t, navigate])
+        });
+    }, [gameId, t, navigate]);
 
     useEffect(() => {
         if (actionOutput) {
-            dispatch(setActions(null))
-            SocketService.emit('take_action', actionOutput)
+            dispatch(setActions(null));
+            SocketService.emit('take_action', actionOutput);
         }
-    }, [actionOutput])
+    }, [actionOutput]);
 
     const navigateToLobby = useCallback(() => {
         if (!lobbyId) {
-            return
+            return;
         }
-        SocketService.disconnect()
-        navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId))
-    }, [lobbyId, navigate])
+        SocketService.disconnect();
+        navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId));
+    }, [lobbyId, navigate]);
 
     switch (gameFlow?.type) {
         case 'pending':
@@ -78,7 +78,7 @@ const GameLogicWrapper = () => {
                             {lobby.layout === 'gm' ? (
                                 <Button
                                     onClick={() => {
-                                        SocketService.emit('start_combat')
+                                        SocketService.emit('start_combat');
                                     }}
                                 >
                                     {t('local:game.pending.start')}
@@ -89,15 +89,15 @@ const GameLogicWrapper = () => {
                         <ConnectedPlayersSection />
                     </div>
                 </Overlay>
-            )
+            );
         case 'active':
             return (
                 <GameScreen
                     setActionOutput={(output) => {
-                        setActionOutput(output)
+                        setActionOutput(output);
                     }}
                 />
-            )
+            );
         case 'ended':
             return (
                 <Overlay>
@@ -111,7 +111,7 @@ const GameLogicWrapper = () => {
                         <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </div>
                 </Overlay>
-            )
+            );
         case 'aborted':
             return (
                 <Overlay>
@@ -121,7 +121,7 @@ const GameLogicWrapper = () => {
                         <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </div>
                 </Overlay>
-            )
+            );
         default:
             return (
                 <Overlay>
@@ -130,8 +130,8 @@ const GameLogicWrapper = () => {
                         <ThreeInOneSpinner className={'5rem'} />
                     </div>
                 </Overlay>
-            )
+            );
     }
-}
+};
 
-export default GameLogicWrapper
+export default GameLogicWrapper;

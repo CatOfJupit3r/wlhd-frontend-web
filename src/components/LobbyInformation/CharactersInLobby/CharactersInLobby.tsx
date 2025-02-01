@@ -1,22 +1,22 @@
-import ShortCharacterInfo from '@components/LobbyInformation/CharactersInLobby/ShortCharacterInfo'
-import { ButtonLink } from '@components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { ScrollArea } from '@components/ui/scroll-area'
-import { iCharacterInLobby } from '@models/Redux'
-import paths from '@router/paths'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { MdOutlineGroups3 } from 'react-icons/md'
+import ShortCharacterInfo from '@components/LobbyInformation/CharactersInLobby/ShortCharacterInfo';
+import { ButtonLink } from '@components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { ScrollArea } from '@components/ui/scroll-area';
+import { iCharacterInLobby } from '@models/Redux';
+import paths from '@router/paths';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MdOutlineGroups3 } from 'react-icons/md';
 
 interface iCharactersInLobby {
-    characters: Array<iCharacterInLobby>
-    lobbyId: string
+    characters: Array<iCharacterInLobby>;
+    lobbyId: string;
 }
 
 const CharactersInLobby: FC<iCharactersInLobby> = ({ characters, lobbyId }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.all-characters',
-    })
+    });
 
     return (
         <Card>
@@ -49,7 +49,7 @@ const CharactersInLobby: FC<iCharactersInLobby> = ({ characters, lobbyId }) => {
                 </ScrollArea>
             </CardContent>
         </Card>
-    )
-}
+    );
+};
 
-export default CharactersInLobby
+export default CharactersInLobby;

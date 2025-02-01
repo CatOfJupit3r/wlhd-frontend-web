@@ -1,4 +1,4 @@
-import { iLobbyInformation } from '@models/Redux'
+import { iLobbyInformation } from '@models/Redux';
 
 export const mockLobbyInfo: iLobbyInformation = {
     lobbyId: '123456',
@@ -84,4 +84,4 @@ export const mockLobbyInfo: iLobbyInformation = {
         },
     ],
     layout: 'gm',
-}
+};

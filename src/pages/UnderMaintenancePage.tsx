@@ -1,10 +1,10 @@
-import { Button } from '@components/ui/button'
-import StyledLink from '@components/ui/styled-link'
-import { useTranslation } from 'react-i18next'
-import { FaArrowRotateRight } from 'react-icons/fa6'
+import { Button } from '@components/ui/button';
+import StyledLink from '@components/ui/styled-link';
+import { useTranslation } from 'react-i18next';
+import { FaArrowRotateRight } from 'react-icons/fa6';
 
 const UnderMaintenancePage = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     return (
         <div className={'m-0 mt-[10vh] flex h-screen w-full flex-col items-center'}>
             <div className={'flex max-w-[30rem] flex-col gap-4'}>
@@ -13,7 +13,7 @@ const UnderMaintenancePage = () => {
                     type={'button'}
                     className={'h-12 w-full justify-normal p-6 text-left align-baseline'}
                     onClick={() => {
-                        window.location.reload()
+                        window.location.reload();
                     }}
                 >
                     <FaArrowRotateRight className={'mr-4'} />
@@ -32,7 +32,7 @@ const UnderMaintenancePage = () => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UnderMaintenancePage
+export default UnderMaintenancePage;

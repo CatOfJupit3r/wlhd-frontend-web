@@ -1,95 +1,95 @@
-import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay'
-import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay'
+import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay';
+import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay';
 import {
     ItemInfoDisplay,
     SpellInfoDisplay,
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
-} from '@components/InfoDisplay/InfoDisplay'
-import TagsDisplay from '@components/InfoDisplay/TagsDisplay'
-import { EmptyMenuContent } from '@components/ui/menu'
-import { Separator } from '@components/ui/separator'
-import { CharacterInfoFull } from '@models/GameModels'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+} from '@components/InfoDisplay/InfoDisplay';
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
+import { EmptyMenuContent } from '@components/ui/menu';
+import { Separator } from '@components/ui/separator';
+import { CharacterInfoFull } from '@models/GameModels';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const
+const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const;
 
 type FeatureProps = {
-    type: (typeof SupportedFeatures)[number] | string
-    info: CharacterInfoFull
+    type: (typeof SupportedFeatures)[number] | string;
+    info: CharacterInfoFull;
     flags: {
-        ignoreAttributes?: Array<string>
-    }
-}
+        ignoreAttributes?: Array<string>;
+    };
+};
 
 const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'game.character-display',
-    })
+    });
     if (!type || !(SupportedFeatures.indexOf(type as never) > -1)) {
-        return <EmptyMenuContent />
+        return <EmptyMenuContent />;
     }
 
     switch (type) {
         case 'inventory': {
-            const { inventory } = info
+            const { inventory } = info;
             if (inventory && inventory.length > 0) {
                 return (
                     <>
                         {inventory.map((item, index) => {
-                            return <ItemInfoDisplay key={index} info={item} />
+                            return <ItemInfoDisplay key={index} info={item} />;
                         })}
                     </>
-                )
+                );
             }
-            break
+            break;
         }
         case 'statusEffects': {
-            const { statusEffects } = info
+            const { statusEffects } = info;
             if (statusEffects && statusEffects.length > 0) {
                 return (
                     <>
                         {statusEffects.map((effect, index) => {
-                            return <StatusEffectInfoDisplay key={index} info={effect} />
+                            return <StatusEffectInfoDisplay key={index} info={effect} />;
                         })}
                     </>
-                )
+                );
             }
-            break
+            break;
         }
         case 'spells': {
-            const spellBook = info.spellBook
+            const spellBook = info.spellBook;
             if (spellBook && spellBook.knownSpells.length > 0) {
                 return (
                     <>
                         {spellBook.knownSpells.map((spell, index) => {
-                            return <SpellInfoDisplay key={index} info={spell} />
+                            return <SpellInfoDisplay key={index} info={spell} />;
                         })}
                     </>
-                )
+                );
             }
-            break
+            break;
         }
         case 'weaponry': {
-            const { weaponry } = info
+            const { weaponry } = info;
             if (weaponry && weaponry.length > 0) {
                 return (
                     <>
                         {weaponry.map((weapon, index) => {
-                            return <WeaponInfoDisplay key={index} info={weapon} />
+                            return <WeaponInfoDisplay key={index} info={weapon} />;
                         })}
                     </>
-                )
+                );
             }
-            break
+            break;
         }
         case 'attributes': {
-            const { attributes } = info
+            const { attributes } = info;
             if (attributes) {
-                return <AttributeDisplay attributes={attributes} ignore={flags?.ignoreAttributes || []} />
+                return <AttributeDisplay attributes={attributes} ignore={flags?.ignoreAttributes || []} />;
             }
-            break
+            break;
         }
         case 'misc': {
             return (
@@ -112,23 +112,23 @@ const FeatureContainerContent: FC<FeatureProps> = ({ type, info, flags }) => {
                         )}
                     </div>
                 </div>
-            )
+            );
         }
         default: {
-            console.log('Default value was triggered with this:', type)
-            break
+            console.log('Default value was triggered with this:', type);
+            break;
         }
     }
 
-    return <EmptyMenuContent />
-}
+    return <EmptyMenuContent />;
+};
 
 const FeatureContainer = ({ type, info, flags }: FeatureProps) => {
     return (
         <div id={`${type}-container`} className={'flex flex-col gap-4'}>
             <FeatureContainerContent type={type} info={info} flags={flags} />
         </div>
-    )
-}
+    );
+};
 
-export default FeatureContainer
+export default FeatureContainer;

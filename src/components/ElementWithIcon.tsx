@@ -1,5 +1,5 @@
-import { cn } from '@utils'
-import { JSX, KeyboardEvent, MouseEvent } from 'react'
+import { cn } from '@utils';
+import { JSX, KeyboardEvent, MouseEvent } from 'react';
 
 const ElementWithIcon = ({
     icon,
@@ -11,21 +11,21 @@ const ElementWithIcon = ({
     role,
     tabIndex,
 }: {
-    icon: JSX.Element
-    element: JSX.Element
-    iconPosition?: 'together' | 'opposite'
-    className?: string
-    onClick?: ((e: MouseEvent<HTMLDivElement>) => void) | (() => void)
-    onKeyDown?: ((e: KeyboardEvent<HTMLDivElement>) => void) | (() => void)
-    role?: string
-    tabIndex?: number
+    icon: JSX.Element;
+    element: JSX.Element;
+    iconPosition?: 'together' | 'opposite';
+    className?: string;
+    onClick?: ((e: MouseEvent<HTMLDivElement>) => void) | (() => void);
+    onKeyDown?: ((e: KeyboardEvent<HTMLDivElement>) => void) | (() => void);
+    role?: string;
+    tabIndex?: number;
 }) => {
     return (
         <div
             className={cn(
                 'margin-0 flex flex-row items-center gap-2',
                 iconPosition === 'opposite' ? 'justify-between' : 'justify-normal',
-                className ? ` ${className}` : ''
+                className ? ` ${className}` : '',
             )}
             onClick={onClick}
             onKeyDown={onKeyDown}
@@ -44,7 +44,7 @@ const ElementWithIcon = ({
                 </>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default ElementWithIcon
+export default ElementWithIcon;

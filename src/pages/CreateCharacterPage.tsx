@@ -1,5 +1,5 @@
 const CreateCharacterPage = () => {
-    return <div>Under construction...</div>
-}
+    return <div>Under construction...</div>;
+};
 
-export default CreateCharacterPage
+export default CreateCharacterPage;

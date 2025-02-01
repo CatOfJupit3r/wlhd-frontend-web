@@ -1,13 +1,13 @@
-import { ButtonLink } from '@components/ui/button'
-import CommaSeparatedList from '@components/ui/coma-separated-list'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import { iCombatInfo } from '@models/Redux'
-import paths from '@router/paths'
-import { cn } from '@utils'
-import { FC, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaCircle, FaUsers } from 'react-icons/fa'
-import { LuGamepad } from 'react-icons/lu'
+import { ButtonLink } from '@components/ui/button';
+import CommaSeparatedList from '@components/ui/coma-separated-list';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { iCombatInfo } from '@models/Redux';
+import paths from '@router/paths';
+import { cn } from '@utils';
+import { FC, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaCircle, FaUsers } from 'react-icons/fa';
+import { LuGamepad } from 'react-icons/lu';
 
 const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode; className?: string }> = ({
     combatId,
@@ -22,12 +22,12 @@ const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode
         >
             {children}
         </ButtonLink>
-    )
-}
+    );
+};
 
 interface iCombatDisplay {
-    combat: iCombatInfo
-    lobbyId: string
+    combat: iCombatInfo;
+    lobbyId: string;
 }
 
 const CombatDisplay: FC<iCombatDisplay> = ({
@@ -36,7 +36,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
 }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.combats',
-    })
+    });
 
     return (
         <div className={'flex flex-col'}>
@@ -61,7 +61,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
                                 )}
                                 className={cn(
                                     'flex flex-row',
-                                    activePlayers?.length === 0 ? 'text-gray-500' : 'text-black'
+                                    activePlayers?.length === 0 ? 'text-gray-500' : 'text-black',
                                 )}
                             />
                         </TooltipContent>
@@ -74,7 +74,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
             </div>
             <p className={'flex flex-row text-gray-500'}>{t('round-count', { round: roundCount })}</p>
         </div>
-    )
-}
+    );
+};
 
-export default CombatDisplay
+export default CombatDisplay;

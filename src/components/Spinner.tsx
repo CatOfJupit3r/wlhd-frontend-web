@@ -1,11 +1,11 @@
-import { cn } from '@utils'
-import { FC, HtmlHTMLAttributes } from 'react'
+import { cn } from '@utils';
+import { FC, HtmlHTMLAttributes } from 'react';
 
 interface iSpinnerProps {
-    type: 'spin' | 'pulse'
-    color?: string
-    size?: number
-    className?: string
+    type: 'spin' | 'pulse';
+    color?: string;
+    size?: number;
+    className?: string;
 }
 
 const Spinner: FC<iSpinnerProps> = ({ type, color, size, className }) => {
@@ -14,7 +14,7 @@ const Spinner: FC<iSpinnerProps> = ({ type, color, size, className }) => {
             className={cn(
                 'inline-block',
                 type === 'spin' ? '} animate-spinner-border border-solid border-r-transparent' : 'animate-spinner-grow',
-                className
+                className,
             )}
             style={{
                 width: `${size || 2}rem`,
@@ -35,42 +35,42 @@ const Spinner: FC<iSpinnerProps> = ({ type, color, size, className }) => {
                       }),
             }}
         />
-    )
-}
+    );
+};
 
 const TrueSpinner: FC<Omit<iSpinnerProps, 'type'>> = (props) => {
-    return <Spinner type="spin" {...props} />
-}
+    return <Spinner type="spin" {...props} />;
+};
 
 const PulsingSpinner: FC<Omit<iSpinnerProps, 'type'>> = (props) => {
-    return <Spinner type="pulse" {...props} />
-}
+    return <Spinner type="pulse" {...props} />;
+};
 
 interface iSVGSpinnerProps extends Omit<HtmlHTMLAttributes<HTMLImageElement>, 'src'> {
-    source: string
+    source: string;
 }
 
-type iSVGSpinnerChildProps = Omit<iSVGSpinnerProps, 'source'>
+type iSVGSpinnerChildProps = Omit<iSVGSpinnerProps, 'source'>;
 
 const SVGSpinner: FC<iSVGSpinnerProps> = ({ source, className, ...props }) => {
-    return <img src={source} alt="spinner" className={cn('size-8', className)} {...props} />
-}
+    return <img src={source} alt="spinner" className={cn('size-8', className)} {...props} />;
+};
 
 const BlocksShuffleSpinner: FC<iSVGSpinnerChildProps> = (props) => {
-    return <SVGSpinner source="/components/spinners/blocks-shuffle.svg" {...props} />
-}
+    return <SVGSpinner source="/components/spinners/blocks-shuffle.svg" {...props} />;
+};
 
 const BlocksWaveSpinner: FC<iSVGSpinnerChildProps> = (props) => {
-    return <SVGSpinner source="/components/spinners/blocks-wave.svg" {...props} />
-}
+    return <SVGSpinner source="/components/spinners/blocks-wave.svg" {...props} />;
+};
 
 const RingResizeSpinner: FC<iSVGSpinnerChildProps> = (props) => {
-    return <SVGSpinner source="/components/spinners/ring-size.svg" {...props} />
-}
+    return <SVGSpinner source="/components/spinners/ring-size.svg" {...props} />;
+};
 
 const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
-    return <SVGSpinner source="/components/spinners/three-in-one-spinner.svg" {...props} />
-}
+    return <SVGSpinner source="/components/spinners/three-in-one-spinner.svg" {...props} />;
+};
 
 export {
     Spinner,
@@ -81,4 +81,4 @@ export {
     SVGSpinner,
     TrueSpinner,
     PulsingSpinner,
-}
+};

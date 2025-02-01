@@ -1,24 +1,24 @@
-import { selectGameLobbyState } from '@redux/slices/gameScreenSlice'
-import { FC } from 'react'
-import { useSelector } from 'react-redux'
+import { selectGameLobbyState } from '@redux/slices/gameScreenSlice';
+import { FC } from 'react';
+import { useSelector } from 'react-redux';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import UserAvatar from '@components/UserAvatars'
-import { iGameLobbyState } from '@models/GameModels'
-import useThisLobby from '@queries/useThisLobby'
-import { cn } from '@utils'
-import { useTranslation } from 'react-i18next'
-import { FaCrown } from 'react-icons/fa'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import UserAvatar from '@components/UserAvatars';
+import { iGameLobbyState } from '@models/GameModels';
+import useThisLobby from '@queries/useThisLobby';
+import { cn } from '@utils';
+import { useTranslation } from 'react-i18next';
+import { FaCrown } from 'react-icons/fa';
 
 interface iPlayerCard {
-    info: iGameLobbyState['players'][number]
+    info: iGameLobbyState['players'][number];
 }
 
 const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) => {
-    const { lobby } = useThisLobby()
-    const userInLobby = lobby.players.find((player) => player.userId === userId)
+    const { lobby } = useThisLobby();
+    const userInLobby = lobby.players.find((player) => player.userId === userId);
     if (!userInLobby) {
-        return null
+        return null;
     }
     return (
         <div className={'flex flex-row items-center gap-1 p-2'}>
@@ -39,12 +39,12 @@ const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) =>
                 </TooltipContent>
             </Tooltip>
         </div>
-    )
-}
+    );
+};
 
 const ConnectedPlayersSection: FC = () => {
-    const { t } = useTranslation('local', { keyPrefix: 'game.pending' })
-    const gameLobbyState = useSelector(selectGameLobbyState)
+    const { t } = useTranslation('local', { keyPrefix: 'game.pending' });
+    const gameLobbyState = useSelector(selectGameLobbyState);
 
     return (
         <div className={'flex w-full flex-col justify-center'}>
@@ -55,7 +55,7 @@ const ConnectedPlayersSection: FC = () => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ConnectedPlayersSection
+export default ConnectedPlayersSection;

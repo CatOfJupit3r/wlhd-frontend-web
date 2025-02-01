@@ -1,4 +1,4 @@
-import { TrueSpinner } from '@components/Spinner'
+import { TrueSpinner } from '@components/Spinner';
 
 const ThinkingHn = (props: { text: string }) => {
     return (
@@ -6,7 +6,7 @@ const ThinkingHn = (props: { text: string }) => {
             <h1>{props.text}</h1>
             <TrueSpinner size={3} />
         </div>
-    )
-}
+    );
+};
 
-export default ThinkingHn
+export default ThinkingHn;

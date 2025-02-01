@@ -1,13 +1,13 @@
-import GameAsset from '@components/GameAsset'
-import { ButtonLink } from '@components/ui/button'
-import { iCharacterInLobby } from '@models/Redux'
-import paths from '@router/paths'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
+import GameAsset from '@components/GameAsset';
+import { ButtonLink } from '@components/ui/button';
+import { iCharacterInLobby } from '@models/Redux';
+import paths from '@router/paths';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface iShortCharacterInfo {
-    character: iCharacterInLobby
-    lobbyId: string
+    character: iCharacterInLobby;
+    lobbyId: string;
 }
 
 const ShortCharacterInfo: FC<iShortCharacterInfo> = ({
@@ -19,7 +19,7 @@ const ShortCharacterInfo: FC<iShortCharacterInfo> = ({
 }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.all-characters',
-    })
+    });
 
     return (
         <div className={'flex flex-col gap-3'}>
@@ -37,7 +37,7 @@ const ShortCharacterInfo: FC<iShortCharacterInfo> = ({
             </div>
             <p className={'text-sm text-gray-400'}>{description}</p>
         </div>
-    )
-}
+    );
+};
 
-export default ShortCharacterInfo
+export default ShortCharacterInfo;

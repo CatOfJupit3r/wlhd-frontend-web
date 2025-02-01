@@ -1,18 +1,18 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { AwaitingButton } from '@components/ui/button'
-import { Combobox } from '@components/ui/combobox'
-import { Separator } from '@components/ui/separator'
-import { StaticSkeleton } from '@components/ui/skeleton'
-import UserAvatar from '@components/UserAvatars'
-import { useViewCharactersContext } from '@context/ViewCharactersContext'
-import { iLobbyPlayerInfo } from '@models/Redux'
-import useThisLobby from '@queries/useThisLobby'
-import APIService from '@services/APIService'
-import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FaXmark } from 'react-icons/fa6'
-import { IoMdPersonAdd } from 'react-icons/io'
-import { IoAdd } from 'react-icons/io5'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { AwaitingButton } from '@components/ui/button';
+import { Combobox } from '@components/ui/combobox';
+import { Separator } from '@components/ui/separator';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import UserAvatar from '@components/UserAvatars';
+import { useViewCharactersContext } from '@context/ViewCharactersContext';
+import { iLobbyPlayerInfo } from '@models/Redux';
+import useThisLobby from '@queries/useThisLobby';
+import APIService from '@services/APIService';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaXmark } from 'react-icons/fa6';
+import { IoMdPersonAdd } from 'react-icons/io';
+import { IoAdd } from 'react-icons/io5';
 
 const Placeholder = () => {
     return (
@@ -20,24 +20,24 @@ const Placeholder = () => {
             <StaticSkeleton className={'h-6 w-[12ch]'} />
             <StaticSkeleton className={'mt-1 h-10 w-full'} />
         </div>
-    )
-}
+    );
+};
 
 const filterPlayersByControlledDescriptor = (descriptor: string | null) => {
     if (!descriptor) {
-        return () => false
+        return () => false;
     }
     return (player: iLobbyPlayerInfo) => {
-        return player.characters && player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor)
-    }
-}
+        return player.characters && player.characters.some(([playerDescriptor]) => playerDescriptor === descriptor);
+    };
+};
 
 const PlainListOfPlayers = () => {
-    const { lobby, refetch } = useThisLobby()
-    const { descriptor } = useViewCharactersContext()
+    const { lobby, refetch } = useThisLobby();
+    const { descriptor } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.control-details',
-    })
+    });
 
     return (
         <div className={'mt-2 flex flex-col gap-1'}>
@@ -54,16 +54,16 @@ const PlainListOfPlayers = () => {
                                           return APIService.removePlayerFromCharacter(
                                               lobby.lobbyId,
                                               descriptor as string,
-                                              player.userId
-                                          )
+                                              player.userId,
+                                          );
                                       }
                                     : undefined
                             }
                             thenCase={() => {
-                                refetch().then()
+                                refetch().then();
                             }}
                             catchCase={(error) => {
-                                console.error('Error removing player', error)
+                                console.error('Error removing player', error);
                             }}
                             variant={'destructiveGhost'}
                             className={`absolute right-0 p-3 text-red-700 opacity-60 hover:text-destructive hover:opacity-100 active:border-red-600 active:text-red-600`}
@@ -72,16 +72,16 @@ const PlainListOfPlayers = () => {
                             <p>{t('remove')}</p>
                         </AwaitingButton>
                     </div>
-                )
+                );
             })}
         </div>
-    )
-}
+    );
+};
 
 const AddNewPlayer = () => {
-    const [playerToAdd, setPlayerToAdd] = useState<string>('')
-    const { lobby, refetch } = useThisLobby()
-    const { descriptor } = useViewCharactersContext()
+    const [playerToAdd, setPlayerToAdd] = useState<string>('');
+    const { lobby, refetch } = useThisLobby();
+    const { descriptor } = useViewCharactersContext();
 
     return (
         <div className={'flex h-10 flex-row gap-2'}>
@@ -95,7 +95,7 @@ const AddNewPlayer = () => {
                 }))}
                 value={playerToAdd}
                 onChange={(value) => {
-                    setPlayerToAdd(value)
+                    setPlayerToAdd(value);
                 }}
                 size={{
                     height: 'h-full',
@@ -108,16 +108,16 @@ const AddNewPlayer = () => {
                               return APIService.assignPlayerToCharacter(
                                   lobby.lobbyId,
                                   descriptor as string,
-                                  playerToAdd
-                              )
+                                  playerToAdd,
+                              );
                           }
                         : undefined
                 }
                 thenCase={() => {
-                    refetch().then()
+                    refetch().then();
                 }}
                 catchCase={(error) => {
-                    console.error('Error adding player', error)
+                    console.error('Error adding player', error);
                 }}
                 variant={'secondary'}
                 className={'h-full'}
@@ -125,23 +125,23 @@ const AddNewPlayer = () => {
                 <IoAdd />
             </AwaitingButton>
         </div>
-    )
-}
+    );
+};
 
 export const CharacterControlInfo = () => {
-    const { lobby } = useThisLobby()
-    const { descriptor } = useViewCharactersContext()
+    const { lobby } = useThisLobby();
+    const { descriptor } = useViewCharactersContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.control-details',
-    })
+    });
 
     const playersInControl = useMemo(
         () => lobby.players.filter(filterPlayersByControlledDescriptor(descriptor || '')),
-        [lobby, descriptor]
-    )
+        [lobby, descriptor],
+    );
 
     if (!descriptor) {
-        return <Placeholder />
+        return <Placeholder />;
     }
 
     return (
@@ -181,5 +181,5 @@ export const CharacterControlInfo = () => {
                 </AccordionItem>
             </Accordion>
         </div>
-    )
-}
+    );
+};

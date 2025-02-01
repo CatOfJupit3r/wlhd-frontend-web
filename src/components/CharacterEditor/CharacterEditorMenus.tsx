@@ -1,17 +1,17 @@
-import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor'
-import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor'
-import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor'
-import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons'
-import { EmptyMenuContent } from '@components/ui/menu'
-import { Separator } from '@components/ui/separator'
-import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group'
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider'
-import { useState } from 'react'
-import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md'
+import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor';
+import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor';
+import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor';
+import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
+import { EmptyMenuContent } from '@components/ui/menu';
+import { Separator } from '@components/ui/separator';
+import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
+import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useState } from 'react';
+import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 
 export const CharacterEditorMenus = () => {
-    const { flags } = useCharacterEditorContext()
-    const [menu, setMenu] = useState<null | 'attribute' | 'item' | 'weapon' | 'spell' | 'statusEffect' | string>(null)
+    const { flags } = useCharacterEditorContext();
+    const [menu, setMenu] = useState<null | 'attribute' | 'item' | 'weapon' | 'spell' | 'statusEffect' | string>(null);
 
     return (
         <div className={'flex flex-col gap-4'}>
@@ -19,9 +19,9 @@ export const CharacterEditorMenus = () => {
                 type={'single'}
                 onValueChange={(value) => {
                     if (value === menu) {
-                        setMenu(null)
+                        setMenu(null);
                     } else if (value !== menu) {
-                        setMenu(value)
+                        setMenu(value);
                     }
                 }}
             >
@@ -70,11 +70,11 @@ export const CharacterEditorMenus = () => {
                     ))
                     .sort((a, b) => {
                         if (a.props.disabled) {
-                            return 1
+                            return 1;
                         } else if (b.props.disabled) {
-                            return -1
+                            return -1;
                         }
-                        return 0
+                        return 0;
                     })}
             </ToggleGroup>
             <Separator />
@@ -82,19 +82,19 @@ export const CharacterEditorMenus = () => {
                 {(() => {
                     switch (menu) {
                         case 'attribute':
-                            return <AttributesEditor />
+                            return <AttributesEditor />;
                         case 'misc':
-                            return <CharacterMiscEditor />
+                            return <CharacterMiscEditor />;
                         case 'item':
                         case 'weapon':
                         case 'spell':
                         case 'statusEffect':
-                            return <ComponentContainerEditor type={menu} />
+                            return <ComponentContainerEditor type={menu} />;
                         default:
-                            return <EmptyMenuContent />
+                            return <EmptyMenuContent />;
                     }
                 })()}
             </div>
         </div>
-    )
-}
+    );
+};

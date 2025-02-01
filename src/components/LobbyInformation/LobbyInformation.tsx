@@ -1,21 +1,21 @@
-import ModalManager from '@components/LobbyInformation/Modals/ModalManager'
-import { AlertDialog } from '@components/ui/alert-dialog'
-import { iLobbyInformation } from '@models/Redux'
-import { FC, useState } from 'react'
-import ActiveCombatsList from './ActiveCombatsList'
-import CharactersInLobby from './CharactersInLobby'
-import LobbyInformationHeader from './LobbyInformationHeader'
-import PlayersList from './PlayersList'
-import { LOBBY_INFO_MODALS_TYPE } from './types'
+import ModalManager from '@components/LobbyInformation/Modals/ModalManager';
+import { AlertDialog } from '@components/ui/alert-dialog';
+import { iLobbyInformation } from '@models/Redux';
+import { FC, useState } from 'react';
+import ActiveCombatsList from './ActiveCombatsList';
+import CharactersInLobby from './CharactersInLobby';
+import LobbyInformationHeader from './LobbyInformationHeader';
+import PlayersList from './PlayersList';
+import { LOBBY_INFO_MODALS_TYPE } from './types';
 
 interface iLobbyInformationProps {
-    info: iLobbyInformation
+    info: iLobbyInformation;
 }
 
 const LobbyInformation: FC<iLobbyInformationProps> = ({
     info: { name, players, combats, layout, lobbyId, characters, waitingApproval },
 }) => {
-    const [modalType, setModalType] = useState<LOBBY_INFO_MODALS_TYPE | null>(null)
+    const [modalType, setModalType] = useState<LOBBY_INFO_MODALS_TYPE | null>(null);
 
     return (
         <AlertDialog open={modalType !== null} onOpenChange={(isOpen) => setModalType(isOpen ? modalType : null)}>
@@ -36,7 +36,7 @@ const LobbyInformation: FC<iLobbyInformationProps> = ({
             </div>
             <ModalManager current={modalType} setCurrent={setModalType} />
         </AlertDialog>
-    )
-}
+    );
+};
 
-export default LobbyInformation
+export default LobbyInformation;

@@ -1,7 +1,7 @@
-import QueryClient from '@queries/QueryClient'
-import RootRouter from '@router/RootRouter'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import QueryClient from '@queries/QueryClient';
+import RootRouter from '@router/RootRouter';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const App = () => {
     return (
@@ -11,7 +11,7 @@ const App = () => {
                 <RootRouter />
             </div>
         </QueryClientProvider>
-    )
-}
+    );
+};
 
-export default App
+export default App;

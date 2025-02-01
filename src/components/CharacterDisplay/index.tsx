@@ -1,8 +1,8 @@
 import CharacterDisplay, {
     CharacterDisplayProps,
     CharacterDisplaySettings,
-} from '@components/CharacterDisplay/CharacterDisplay'
-import CharacterDisplayPlaceholder from '@components/CharacterDisplay/CharacterDisplayPlaceholder'
+} from '@components/CharacterDisplay/CharacterDisplay';
+import CharacterDisplayPlaceholder from '@components/CharacterDisplay/CharacterDisplayPlaceholder';
 
 const InGameSettings: CharacterDisplaySettings = {
     includeDescription: true,
@@ -18,7 +18,7 @@ const InGameSettings: CharacterDisplaySettings = {
         'builtins:base_armor',
     ],
     displayBasicAttributes: true,
-}
+};
 const InLobbySettings: CharacterDisplaySettings = {
     includeDescription: true,
     showEquippedWeapon: false,
@@ -27,7 +27,7 @@ const InLobbySettings: CharacterDisplaySettings = {
     ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     displayBasicAttributes: true,
     ignoreCurrentValuesInBasicAttributes: true,
-}
+};
 
 const GameWikiSettings: CharacterDisplaySettings = {
     includeDescription: true,
@@ -37,17 +37,17 @@ const GameWikiSettings: CharacterDisplaySettings = {
     ignoreAttributes: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
     displayBasicAttributes: true,
     ignoreCurrentValuesInBasicAttributes: true,
-}
+};
 
-type displayWithoutSettings = Omit<CharacterDisplayProps, 'settings'>
+type displayWithoutSettings = Omit<CharacterDisplayProps, 'settings'>;
 
 const CharacterDisplayInGame = (props: displayWithoutSettings) => (
     <CharacterDisplay {...props} settings={InGameSettings} />
-)
+);
 
 const CharacterDisplayInLobby = (props: displayWithoutSettings) => (
     <CharacterDisplay {...props} settings={InLobbySettings} />
-)
+);
 
 export {
     CharacterDisplayInGame,
@@ -55,4 +55,4 @@ export {
     CharacterDisplay,
     CharacterDisplayPlaceholder,
     GameWikiSettings,
-}
+};

@@ -4,19 +4,20 @@
 
 body {
     margin: 0;
-    font-family: 'Poppins',
-    'Open Sans',
-    'Montserrat',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Roboto',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+    font-family:
+        'Poppins',
+        'Open Sans',
+        'Montserrat',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     --color-background: #fafafa;

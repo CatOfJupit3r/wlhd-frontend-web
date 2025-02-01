@@ -1,33 +1,33 @@
-import { CharacterDisplayPlaceholder, GameWikiSettings } from '@components/CharacterDisplay'
-import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
-import CharacterEditableInfoAdapter from '@components/CharacterDisplay/CharacterEditableInfoAdapter'
-import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent'
+import { CharacterDisplayPlaceholder, GameWikiSettings } from '@components/CharacterDisplay';
+import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo';
+import CharacterEditableInfoAdapter from '@components/CharacterDisplay/CharacterEditableInfoAdapter';
+import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
 import {
     ItemEditableInfoAdapter,
     SpellEditableInfoAdapter,
     StatusEffectEditableInfoAdapter,
     WeaponEditableInfoAdapter,
-} from '@components/InfoDisplay/EditableInfoAdapter'
+} from '@components/InfoDisplay/EditableInfoAdapter';
 import {
     ItemInfoDisplayPlaceholder,
     SpellInfoDisplayPlaceholder,
     StatusEffectInfoDisplayPlaceholder,
     WeaponInfoDisplayPlaceholder,
-} from '@components/InfoDisplay/InfoDisplayPlaceholder'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion'
-import { useDataContext } from '@context/GameDataProvider'
-import { useGameWikiContext } from '@context/GameWikiContext'
-import { FC, useEffect } from 'react'
+} from '@components/InfoDisplay/InfoDisplayPlaceholder';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { useDataContext } from '@context/GameDataProvider';
+import { useGameWikiContext } from '@context/GameWikiContext';
+import { FC, useEffect } from 'react';
 
 interface iCategoryContent {
-    category: string
+    category: string;
 }
 
-const PLACEHOLDER_CLASSNAME = 'flex flex-col gap-4 rounded border-2 p-4'
-const CONTENT_DIV_CLASSNAME = 'grid grid-cols-2 gap-6 overflow-x-auto'
+const PLACEHOLDER_CLASSNAME = 'flex flex-col gap-4 rounded border-2 p-4';
+const CONTENT_DIV_CLASSNAME = 'grid grid-cols-2 gap-6 overflow-x-auto';
 
 const CategoryContent: FC<iCategoryContent> = ({ category }) => {
-    const { dlc } = useGameWikiContext()
+    const { dlc } = useGameWikiContext();
     const {
         items,
         spells,
@@ -39,27 +39,27 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         fetchAndSetSpells,
         fetchAndSetStatusEffects,
         fetchAndSetWeapons,
-    } = useDataContext()
+    } = useDataContext();
 
     useEffect(() => {
         switch (category) {
             case 'characters':
-                fetchAndSetCharacters(dlc).then(() => {})
-                break
+                fetchAndSetCharacters(dlc).then(() => {});
+                break;
             case 'spells':
-                fetchAndSetSpells(dlc).then(() => {})
-                break
+                fetchAndSetSpells(dlc).then(() => {});
+                break;
             case 'items':
-                fetchAndSetItems(dlc).then(() => {})
-                break
+                fetchAndSetItems(dlc).then(() => {});
+                break;
             case 'weapons':
-                fetchAndSetWeapons(dlc).then(() => {})
-                break
+                fetchAndSetWeapons(dlc).then(() => {});
+                break;
             case 'statusEffects':
-                fetchAndSetStatusEffects(dlc).then(() => {})
-                break
+                fetchAndSetStatusEffects(dlc).then(() => {});
+                break;
         }
-    }, [category, dlc])
+    }, [category, dlc]);
 
     switch (category) {
         case 'characters':
@@ -97,12 +97,12 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                                             />
                                         </AccordionContent>
                                     </AccordionItem>
-                                )
+                                );
                             })}
                         </Accordion>
                     )}
                 </div>
-            )
+            );
         case 'spells':
             return (
                 <div>
@@ -116,12 +116,12 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             {Object.entries(spells[dlc]).map(([descriptor, spell], index) => {
-                                return <SpellEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />
+                                return <SpellEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
                             })}
                         </div>
                     )}
                 </div>
-            )
+            );
         case 'items':
             return (
                 <div>
@@ -135,12 +135,12 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             {Object.entries(items[dlc]).map(([descriptor, spell], index) => {
-                                return <ItemEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />
+                                return <ItemEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
                             })}
                         </div>
                     )}
                 </div>
-            )
+            );
         case 'weapons':
             return (
                 <div>
@@ -154,12 +154,12 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             {Object.entries(weapons[dlc]).map(([descriptor, spell], index) => {
-                                return <WeaponEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />
+                                return <WeaponEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
                             })}
                         </div>
                     )}
                 </div>
-            )
+            );
         case 'statusEffects':
             return (
                 <div>
@@ -175,15 +175,15 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                             {Object.entries(statusEffects[dlc]).map(([descriptor, spell], index) => {
                                 return (
                                     <StatusEffectEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />
-                                )
+                                );
                             })}
                         </div>
                     )}
                 </div>
-            )
+            );
         default:
-            return <PseudoCategoryContent />
+            return <PseudoCategoryContent />;
     }
-}
+};
 
-export default CategoryContent
+export default CategoryContent;

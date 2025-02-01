@@ -1,26 +1,26 @@
-import { ButtonLink } from '@components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card'
-import { ScrollArea } from '@components/ui/scroll-area'
-import { iCombatInfo, iLobbyInformation } from '@models/Redux'
-import paths from '@router/paths'
-import { cn } from '@utils'
-import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
-import { LiaPlusCircleSolid } from 'react-icons/lia'
-import { LuSwords } from 'react-icons/lu'
-import CombatDisplay from './CombatDisplay'
+import { ButtonLink } from '@components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import { ScrollArea } from '@components/ui/scroll-area';
+import { iCombatInfo, iLobbyInformation } from '@models/Redux';
+import paths from '@router/paths';
+import { cn } from '@utils';
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LiaPlusCircleSolid } from 'react-icons/lia';
+import { LuSwords } from 'react-icons/lu';
+import CombatDisplay from './CombatDisplay';
 
 interface iActiveCombatsList {
-    className?: string
-    lobbyId: string
-    combats: Array<iCombatInfo>
-    layout: iLobbyInformation['layout']
+    className?: string;
+    lobbyId: string;
+    combats: Array<iCombatInfo>;
+    layout: iLobbyInformation['layout'];
 }
 
 const ActiveCombatsList: FC<iActiveCombatsList> = ({ className, combats, layout, lobbyId }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'lobby-info.combats',
-    })
+    });
     return (
         <Card>
             <CardHeader className={'flex flex-row items-center justify-between'}>
@@ -46,7 +46,7 @@ const ActiveCombatsList: FC<iActiveCombatsList> = ({ className, combats, layout,
                     <div className={'flex w-full flex-col gap-2 border-0 p-0'}>
                         {combats.length > 0 ? (
                             combats.map((combat) => {
-                                return <CombatDisplay combat={combat} key={combat._id} lobbyId={lobbyId} />
+                                return <CombatDisplay combat={combat} key={combat._id} lobbyId={lobbyId} />;
                             })
                         ) : (
                             <p className={'text-base italic'}>{t('no-combats')} </p>
@@ -55,7 +55,7 @@ const ActiveCombatsList: FC<iActiveCombatsList> = ({ className, combats, layout,
                 </ScrollArea>
             </CardContent>
         </Card>
-    )
-}
+    );
+};
 
-export default ActiveCombatsList
+export default ActiveCombatsList;

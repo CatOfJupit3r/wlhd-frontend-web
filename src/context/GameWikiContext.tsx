@@ -1,18 +1,18 @@
-import React, { createContext, ReactNode, useCallback, useContext } from 'react'
+import React, { createContext, ReactNode, useCallback, useContext } from 'react';
 
 interface iGameWikiContext {
-    dlc: string
-    changeDlc: (dlc: string) => void
+    dlc: string;
+    changeDlc: (dlc: string) => void;
 }
 
-const GameWikiContext = createContext<iGameWikiContext | undefined>(undefined)
+const GameWikiContext = createContext<iGameWikiContext | undefined>(undefined);
 
 export const GameWikiContextProvider = ({ children }: { children: ReactNode }) => {
-    const [dlc, setDlc] = React.useState<string>('builtins')
+    const [dlc, setDlc] = React.useState<string>('builtins');
 
     const changeDlc = useCallback((dlc: string) => {
-        setDlc(dlc)
-    }, [])
+        setDlc(dlc);
+    }, []);
 
     return (
         <GameWikiContext.Provider
@@ -23,13 +23,13 @@ export const GameWikiContextProvider = ({ children }: { children: ReactNode }) =
         >
             {children}
         </GameWikiContext.Provider>
-    )
-}
+    );
+};
 
 export const useGameWikiContext = () => {
-    const context = useContext(GameWikiContext)
+    const context = useContext(GameWikiContext);
     if (context === undefined) {
-        throw new Error('useGameWikiContext must be used within a GameWikiContextProvider.')
+        throw new Error('useGameWikiContext must be used within a GameWikiContextProvider.');
     }
-    return context as iGameWikiContext
-}
+    return context as iGameWikiContext;
+};

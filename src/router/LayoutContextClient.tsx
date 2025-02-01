@@ -1,25 +1,25 @@
-import { TooltipProvider } from '@components/ui/tooltip'
-import { CoordinatorCharactersProvider } from '@context/CoordinatorCharactersProvider'
-import { GameDataProvider } from '@context/GameDataProvider'
-import { useLayoutContext } from '@context/LayoutContext'
-import { apprf, cn } from '@utils'
-import { lazy, ReactNode, Suspense } from 'react'
-import { Outlet } from 'react-router'
+import { TooltipProvider } from '@components/ui/tooltip';
+import { CoordinatorCharactersProvider } from '@context/CoordinatorCharactersProvider';
+import { GameDataProvider } from '@context/GameDataProvider';
+import { useLayoutContext } from '@context/LayoutContext';
+import { apprf, cn } from '@utils';
+import { lazy, ReactNode, Suspense } from 'react';
+import { Outlet } from 'react-router';
 
-const Header = lazy(() => import('@components/Header'))
-const Footer = lazy(() => import('@components/Footer'))
-const Notify = lazy(() => import('@components/Notify'))
+const Header = lazy(() => import('@components/Header'));
+const Footer = lazy(() => import('@components/Footer'));
+const Notify = lazy(() => import('@components/Notify'));
 
 const HeaderPlaceholder = () => (
     <div
         className={cn(
             'relative top-0 flex w-full justify-between bg-black p-4 text-xl text-white',
-            apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle')
+            apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle'),
         )}
     >
         Loading header...
     </div>
-)
+);
 
 const FooterPlaceholder = () => (
     <footer className={'relative bottom-0 box-border block min-h-fit w-full justify-center bg-[#252525FF] p-8'}>
@@ -30,16 +30,16 @@ const FooterPlaceholder = () => (
             id={'footer-links'}
             className={cn(
                 'mt-[1%] flex justify-center gap-[1%] text-base',
-                apprf('max-[512px]', 'flex flex-col items-center justify-center gap-2')
+                apprf('max-[512px]', 'flex flex-col items-center justify-center gap-2'),
             )}
         >
             <div>Loading footer...</div>
         </div>
     </footer>
-)
+);
 
 const LayoutContextClient = () => {
-    const { footer, header } = useLayoutContext()
+    const { footer, header } = useLayoutContext();
 
     return (
         <GlobalContext>
@@ -60,8 +60,8 @@ const LayoutContextClient = () => {
                 <Notify />
             </Suspense>
         </GlobalContext>
-    )
-}
+    );
+};
 
 const GlobalContext = ({ children }: { children: ReactNode }) => {
     return (
@@ -70,7 +70,7 @@ const GlobalContext = ({ children }: { children: ReactNode }) => {
                 <GameDataProvider>{children}</GameDataProvider>
             </CoordinatorCharactersProvider>
         </TooltipProvider>
-    )
-}
+    );
+};
 
-export default LayoutContextClient
+export default LayoutContextClient;

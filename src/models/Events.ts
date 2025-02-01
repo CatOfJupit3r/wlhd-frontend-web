@@ -1,20 +1,20 @@
 export interface TakeActionPayload {
-    character_id: 'string'
+    character_id: 'string';
 }
 
 export interface ActionResultsPayload {
-    code: number
-    message: string
+    code: number;
+    message: string;
 }
 
 export interface NewMessagePayload {
-    message: string
+    message: string;
 }
 
 export interface BattleEndedPayload {
-    battle_result: string
+    battle_result: string;
 }
 
 export interface RoundUpdatePayload {
-    round_number: string
+    round_number: string;
 }

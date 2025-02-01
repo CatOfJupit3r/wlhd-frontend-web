@@ -1,24 +1,24 @@
-import CharacterTooltip from '@components/Battlefield/Tiles/CharacterTooltip/CharacterTooltip'
-import { CharacterGameAsset } from '@components/GameAsset'
-import { ImgHTMLAttributes, useMemo } from 'react'
-import Decoration from './Decoration/Decoration'
+import CharacterTooltip from '@components/Battlefield/Tiles/CharacterTooltip/CharacterTooltip';
+import { CharacterGameAsset } from '@components/GameAsset';
+import { ImgHTMLAttributes, useMemo } from 'react';
+import Decoration from './Decoration/Decoration';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
-import { useBattlefieldContext } from '@context/BattlefieldContext'
-import { cn } from '@utils'
-import { useTranslation } from 'react-i18next'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { cn } from '@utils';
+import { useTranslation } from 'react-i18next';
 
 const TileWithCharacter = ({
     square,
     className,
     ...props
 }: { square: string } & ImgHTMLAttributes<HTMLImageElement>) => {
-    const { battlefield, onClickTile, createBonusTileTooltip } = useBattlefieldContext()
-    const { t } = useTranslation()
-    const bonusTooltip = useMemo(() => createBonusTileTooltip(square), [createBonusTileTooltip, square])
-    const line = useMemo(() => parseInt(square.split('/')[0] ?? '1'), [square])
+    const { battlefield, onClickTile, createBonusTileTooltip } = useBattlefieldContext();
+    const { t } = useTranslation();
+    const bonusTooltip = useMemo(() => createBonusTileTooltip(square), [createBonusTileTooltip, square]);
+    const line = useMemo(() => parseInt(square.split('/')[0] ?? '1'), [square]);
 
-    const squareInfo = useMemo(() => battlefield[square], [battlefield, square])
+    const squareInfo = useMemo(() => battlefield[square], [battlefield, square]);
 
     return (
         <Tooltip>
@@ -30,11 +30,11 @@ const TileWithCharacter = ({
                     className={cn(
                         'relative',
                         squareInfo?.info !== null ? 'bg-cover' : '',
-                        'h-[var(--tile-size)] w-[var(--tile-size)]'
+                        'h-[var(--tile-size)] w-[var(--tile-size)]',
                     )}
                     onDoubleClick={() => {
                         if (squareInfo?.flags.interactable) {
-                            onClickTile(square)
+                            onClickTile(square);
                         }
                     }}
                     id={`square_${square}`}
@@ -60,7 +60,7 @@ const TileWithCharacter = ({
                     'flex-col gap-2 text-ellipsis whitespace-nowrap',
                     'opacity-95',
                     squareInfo?.info.character ? 'w-96' : 'w-60',
-                    !squareInfo?.info.character && !bonusTooltip ? 'hidden' : null
+                    !squareInfo?.info.character && !bonusTooltip ? 'hidden' : null,
                 )}
                 side={squareInfo?.info.character ? 'right' : 'top'}
             >
@@ -68,7 +68,7 @@ const TileWithCharacter = ({
                 {bonusTooltip ? <div className={'w-54 flex flex-row gap-1'}>{bonusTooltip}</div> : null}
             </TooltipContent>
         </Tooltip>
-    )
-}
+    );
+};
 
-export default TileWithCharacter
+export default TileWithCharacter;
