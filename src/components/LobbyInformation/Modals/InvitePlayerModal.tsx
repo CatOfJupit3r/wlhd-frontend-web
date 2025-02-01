@@ -13,6 +13,7 @@ import { ScrollArea } from '@components/ui/scroll-area'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId'
+import { toast } from '@hooks/useToast'
 import useCreateInviteCode from '@mutations/useCreateInviteCode'
 import useDeleteInviteCode from '@mutations/useDeleteInviteCode'
 import useLobbyInviteCodes from '@queries/useLobbyInviteCodes'
@@ -20,6 +21,7 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { FaPlus, FaTrashAlt } from 'react-icons/fa'
+import { FiCopy } from 'react-icons/fi'
 import { z } from 'zod'
 
 interface iInvitePlayerModal {
@@ -89,16 +91,43 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
                                                 {uses}/{maxUses}
                                             </p>
                                         </div>
-                                        <ButtonWithTooltip
-                                            tooltip={t('delete-code')}
-                                            tooltipClassname={'text-xs'}
-                                            className={'size-8 p-1.5'}
-                                            variant={'destructiveGhost'}
-                                            disabled={isPendingDeletion}
-                                            onClick={() => handleCodeDeletion(code)}
-                                        >
-                                            <FaTrashAlt className={'inline-block text-red-500'} />
-                                        </ButtonWithTooltip>
+                                        <div className={'flex flex-row items-center gap-2'}>
+                                            <ButtonWithTooltip
+                                                tooltip={t('copy-code-btn-tooltip')}
+                                                tooltipClassname={'text-xs'}
+                                                className={'size-8 p-1.5'}
+                                                onClick={() => {
+                                                    navigator.clipboard
+                                                        .writeText(code)
+                                                        .then(() => {
+                                                            toast({
+                                                                title: t('code-copied'),
+                                                                position: 'top-center',
+                                                            })
+                                                        })
+                                                        .catch((e) => {
+                                                            console.debug(e)
+                                                            toast({
+                                                                title: t('code-could-not-be-copied'),
+                                                                position: 'top-center',
+                                                            })
+                                                        })
+                                                }}
+                                                variant={'ghost'}
+                                            >
+                                                <FiCopy className={'inline-block'} />
+                                            </ButtonWithTooltip>
+                                            <ButtonWithTooltip
+                                                tooltip={t('delete-code')}
+                                                tooltipClassname={'text-xs'}
+                                                className={'size-8 p-1.5'}
+                                                variant={'destructiveGhost'}
+                                                disabled={isPendingDeletion}
+                                                onClick={() => handleCodeDeletion(code)}
+                                            >
+                                                <FaTrashAlt className={'inline-block text-red-500'} />
+                                            </ButtonWithTooltip>
+                                        </div>
                                     </div>
                                 ))
                             ) : (
