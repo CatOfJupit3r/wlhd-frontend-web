@@ -1,8 +1,9 @@
 import APIService from '@services/APIService';
 import { useQuery } from '@tanstack/react-query';
 
-const useCoordinatorCharacter = (lobbyId: string, descriptor: string) => {
-    const { data, refetch, isPending, isError } = useQuery({
+const useCoordinatorCharacter = (lobbyId: string, descriptor: string, enabled: boolean = true) => {
+    const { data, refetch, isPending, isError, isSuccess } = useQuery({
+        enabled: enabled && !!lobbyId && !!descriptor,
         queryKey: ['game', 'coordinator', 'character', descriptor],
         queryFn: async () => {
             console.log('Fetching character', descriptor);
@@ -16,6 +17,7 @@ const useCoordinatorCharacter = (lobbyId: string, descriptor: string) => {
         refetch,
         isPending,
         isError,
+        isSuccess,
     };
 };
 

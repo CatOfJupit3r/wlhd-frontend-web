@@ -1,3 +1,5 @@
+import { GameComponentDecoration } from '@models/GameModels';
+
 export interface ShortLobbyInformation {
     name: string;
     isGm: boolean;
@@ -15,4 +17,13 @@ export interface UserInformation {
     handle: string;
     createdAt: string;
     joined: Array<string>;
+}
+
+export interface LimitedGameComponentData {
+    descriptor: string;
+    decorations: GameComponentDecoration;
+}
+
+export interface LimitedDLCData {
+    [descriptor: string]: LimitedGameComponentData;
 }

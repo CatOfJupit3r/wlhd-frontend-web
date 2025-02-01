@@ -1,6 +1,5 @@
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
-import GameAsset from '@components/GameAsset';
-import { HTMLIconFactoryProps, IconComponentType } from '@components/icons/icon_factory';
+import { gameAssetToComboboxIcon } from '@components/GameAsset';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -24,30 +23,31 @@ import {
     SelectValue,
 } from '@components/ui/select';
 import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext';
-import { useDataContext } from '@context/GameDataProvider';
 import { ControlledBy } from '@models/EditorConversion';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
+import { useGameCharacterInformation } from '@queries/useGameData';
+import { useLoadedCharacters } from '@queries/useLoadedGameData';
 import useThisLobby from '@queries/useThisLobby';
 import { SUPPORTED_DLCs } from 'config';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const [dlc, setDlc] = useState<string>('');
     const [descriptor, setDescriptor] = useState<string>('');
-    const { characters, fetchAndSetCharacters } = useDataContext();
+    const { character } = useGameCharacterInformation(dlc, descriptor, dlc !== 'coordinator');
     const { lobby } = useThisLobby();
-    const { character: characterFromCoordinator, isPending } = useCoordinatorCharacter(lobby.lobbyId, descriptor);
+    const { characters: charactersFromCoordinator, isSuccess: isSuccessLoaded } = useLoadedCharacters(
+        dlc,
+        dlc !== 'coordinator',
+    );
+    const { character: characterFromCoordinator, isSuccess: isSuccessCoordinator } = useCoordinatorCharacter(
+        lobby.lobbyId,
+        descriptor,
+        dlc === 'coordinator',
+    );
     const { t } = useTranslation();
     const { addCharacter } = useCombatEditorContext();
-
-    useEffect(() => {
-        if (dlc && (characters === null || characters?.[dlc] === undefined)) {
-            if (dlc !== 'coordinator') {
-                fetchAndSetCharacters(dlc).catch(console.error);
-            }
-        }
-    }, [dlc, characters]);
 
     return (
         <AlertDialogContent className={'max-w-3xl'}>
@@ -62,6 +62,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                         <Select
                             onValueChange={(value) => {
                                 setDlc(value);
+                                setDescriptor('');
                             }}
                         >
                             <SelectTrigger>
@@ -85,19 +86,17 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                         <Combobox
                             items={[
                                 ...(dlc !== 'coordinator'
-                                    ? Object.entries(characters?.[dlc] ?? {}).map(([descriptor, character]) => ({
-                                          value: descriptor,
-                                          label: t(character.decorations.name),
-                                          icon: ((props: HTMLIconFactoryProps) => (
-                                              <GameAsset src={character.decorations.sprite} {...props} />
-                                          )) as IconComponentType,
-                                      }))
+                                    ? Object.entries(charactersFromCoordinator ?? {}).map(
+                                          ([descriptor, character]) => ({
+                                              value: descriptor,
+                                              label: t(character.decorations.name),
+                                              icon: gameAssetToComboboxIcon(character),
+                                          }),
+                                      )
                                     : Object.values(lobby.characters ?? {}).map((character) => ({
                                           value: character.descriptor,
                                           label: character.decorations.name,
-                                          icon: ((props: HTMLIconFactoryProps) => (
-                                              <GameAsset src={character.decorations.sprite} {...props} />
-                                          )) as IconComponentType,
+                                          icon: gameAssetToComboboxIcon(character),
                                       }))),
                             ]}
                             includeSearch={true}
@@ -114,28 +113,20 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                 <AlertDialogAction
                     disabled={
                         !dlc ||
-                        isPending ||
                         !descriptor ||
-                        (dlc !== 'coordinator' &&
-                            !characters?.[dlc]?.[descriptor] &&
-                            dlc === 'coordinator' &&
-                            !lobby.characters?.find((character) => character.descriptor === descriptor))
+                        (dlc === 'coordinator'
+                            ? !isSuccessCoordinator &&
+                              !lobby.characters?.find((character) => character.descriptor === descriptor)
+                            : !isSuccessLoaded && !character)
                     }
                     onClick={() => {
                         if (!clickedSquare) {
                             return;
                         }
                         if (dlc !== 'coordinator') {
-                            const character = characters?.[dlc]?.[descriptor];
                             if (character) {
+                                console.log('Adding character from preset', character);
                                 addCharacter(clickedSquare, character, `${dlc}:${descriptor}`);
-                            } else {
-                                fetchAndSetCharacters(dlc).then((fetched) => {
-                                    const character = fetched[descriptor];
-                                    if (character) {
-                                        addCharacter(clickedSquare, character, `${dlc}:${descriptor}`);
-                                    }
-                                });
                             }
                         } else {
                             const player = lobby.players.find((player) =>
@@ -146,6 +137,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                                 : CONTROLLED_BY_GAME_LOGIC;
 
                             if (characterFromCoordinator) {
+                                console.log('Adding character from coordinator', characterFromCoordinator);
                                 addCharacter(
                                     clickedSquare,
                                     characterFromCoordinator,

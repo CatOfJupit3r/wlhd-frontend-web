@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
-import { iUserAvatarProcessed, ShortLobbyInformation, UserInformation } from '@models/APIData';
+import { iUserAvatarProcessed, LimitedDLCData, ShortLobbyInformation, UserInformation } from '@models/APIData';
 import {
     CharacterDataEditable,
     ItemEditable,
@@ -32,11 +32,20 @@ const ENDPOINTS = {
     CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
     LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}`,
     LOBBY_PLAYERS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/players`,
-    GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_URL}/game/weapons?dlc=${dlc}`,
-    GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_URL}/game/items?dlc=${dlc}`,
-    GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_URL}/game/spells?dlc=${dlc}`,
-    GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/status_effects?dlc=${dlc}`,
-    GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_URL}/game/characters?dlc=${dlc}`,
+
+    GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/weapons`,
+    GAME_WEAPON_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/weapons/${descriptor}`,
+    GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/items`,
+    GAME_ITEM_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/items/${descriptor}`,
+    GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/spells`,
+    GAME_SPELL_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/spells/${descriptor}`,
+    GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/status_effects`,
+    GAME_STATUS_EFFECT_INFO: (dlc: string, descriptor: string) =>
+        `${VITE_BACKEND_URL}/game/${dlc}/status_effects/${descriptor}`,
+    GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/characters`,
+    GAME_CHARACTER_INFO: (dlc: string, descriptor: string) =>
+        `${VITE_BACKEND_URL}/game/${dlc}/characters/${descriptor}`,
+
     LOBBY_CHARACTER_INFO: (lobby_id: string, descriptor: string) =>
         `${VITE_BACKEND_URL}/lobbies/${lobby_id}/characters/${descriptor}/`,
     CREATE_LOBBY_COMBAT: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/combats`,
@@ -235,114 +244,6 @@ class APIService {
         });
     };
 
-    public getLoadedWeapons = async (
-        dlc: string,
-    ): Promise<{
-        weapons: { [descriptor: string]: WeaponEditable };
-    }> => {
-        if (!dlc) {
-            return {
-                weapons: {},
-            };
-        }
-        return (await this.fetch({
-            url: ENDPOINTS.GAME_WEAPONS(dlc),
-            method: 'get',
-        })) as {
-            weapons: {
-                [descriptor: string]: WeaponEditable;
-            };
-        };
-    };
-
-    public getLoadedItems = async (
-        dlc: string,
-    ): Promise<{
-        items: {
-            [descriptor: string]: ItemEditable;
-        };
-    }> => {
-        if (!dlc) {
-            return {
-                items: {},
-            };
-        }
-        return (await this.fetch({
-            url: ENDPOINTS.GAME_ITEMS(dlc),
-            method: 'get',
-        })) as {
-            items: {
-                [descriptor: string]: ItemEditable;
-            };
-        };
-    };
-
-    public getLoadedSpells = async (
-        dlc: string,
-    ): Promise<{
-        spells: {
-            [descriptor: string]: SpellEditable;
-        };
-    }> => {
-        if (!dlc) {
-            return {
-                spells: {},
-            };
-        }
-        return (await this.fetch({
-            url: ENDPOINTS.GAME_SPELLS(dlc),
-            method: 'get',
-        })) as {
-            spells: {
-                [descriptor: string]: SpellEditable;
-            };
-        };
-    };
-
-    public getLoadedStatusEffects = async (
-        dlc: string,
-    ): Promise<{
-        status_effects: {
-            [descriptor: string]: StatusEffectEditable;
-        };
-    }> => {
-        if (!dlc) {
-            return {
-                status_effects: {},
-            };
-        }
-        return (await this.fetch({
-            url: ENDPOINTS.GAME_STATUS_EFFECTS(dlc),
-            method: 'get',
-        })) as {
-            status_effects: {
-                [descriptor: string]: StatusEffectEditable;
-            };
-        };
-    };
-
-    public getLoadedCharacters = async (
-        dlc: string,
-    ): Promise<{
-        characters: {
-            [descriptor: string]: CharacterDataEditable;
-        };
-    }> => {
-        if (!dlc) {
-            return {
-                characters: {},
-            };
-        }
-        return (await this.fetch({
-            url: ENDPOINTS.GAME_CHARACTERS(dlc),
-            method: 'get',
-        })) as {
-            characters: {
-                [descriptor: string]: CharacterDataEditable;
-            };
-        };
-    };
-
     public getCharacterInfo = async (lobby_id: string, descriptor: string) => {
         return this.fetch<CharacterDataEditable>({
             url: ENDPOINTS.LOBBY_CHARACTER_INFO(lobby_id, descriptor),
@@ -523,6 +424,101 @@ class APIService {
             method: 'get',
         });
     }
+
+    public getLoadedWeapons = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { weapons } = await this.fetch<{ weapons: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_WEAPONS(dlc),
+            method: 'get',
+        });
+        return weapons;
+    };
+
+    public getLoadedItems = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { items } = await this.fetch<{ items: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_ITEMS(dlc),
+            method: 'get',
+        });
+        return items;
+    };
+
+    public getLoadedSpells = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { spells } = await this.fetch<{ spells: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_SPELLS(dlc),
+            method: 'get',
+        });
+        return spells;
+    };
+
+    public getLoadedStatusEffects = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { statusEffects } = await this.fetch<{ statusEffects: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_STATUS_EFFECTS(dlc),
+            method: 'get',
+        });
+        return statusEffects;
+    };
+
+    public getLoadedCharacters = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { characters } = await this.fetch<{ characters: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_CHARACTERS(dlc),
+            method: 'get',
+        });
+        return characters;
+    };
+
+    public getWeaponInformation = async (dlc: string, descriptor: string) => {
+        const { weapon } = await this.fetch<{ weapon: WeaponEditable }>({
+            url: ENDPOINTS.GAME_WEAPON_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return weapon;
+    };
+
+    public getItemInformation = async (dlc: string, descriptor: string) => {
+        const { item } = await this.fetch<{ item: ItemEditable }>({
+            url: ENDPOINTS.GAME_ITEM_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return item;
+    };
+
+    public getSpellInformation = async (dlc: string, descriptor: string) => {
+        const { spell } = await this.fetch<{ spell: SpellEditable }>({
+            url: ENDPOINTS.GAME_SPELL_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return spell;
+    };
+
+    public getStatusEffectInformation = async (dlc: string, descriptor: string) => {
+        const { statusEffect } = await this.fetch<{ statusEffect: StatusEffectEditable }>({
+            url: ENDPOINTS.GAME_STATUS_EFFECT_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return statusEffect;
+    };
+
+    public getCharacterInformation = async (dlc: string, descriptor: string) => {
+        const { character } = await this.fetch<{ character: CharacterDataEditable }>({
+            url: ENDPOINTS.GAME_CHARACTER_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return character;
+    };
 }
 
 export default new APIService();

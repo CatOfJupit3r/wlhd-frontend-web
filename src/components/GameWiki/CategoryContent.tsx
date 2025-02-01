@@ -1,23 +1,29 @@
-import { CharacterDisplayPlaceholder, GameWikiSettings } from '@components/CharacterDisplay';
+import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo';
-import CharacterEditableInfoAdapter from '@components/CharacterDisplay/CharacterEditableInfoAdapter';
+import CharacterInfoWithDescriptor from '@components/CharacterDisplay/CharacterInfoWithDescriptor';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
-import {
-    ItemEditableInfoAdapter,
-    SpellEditableInfoAdapter,
-    StatusEffectEditableInfoAdapter,
-    WeaponEditableInfoAdapter,
-} from '@components/InfoDisplay/EditableInfoAdapter';
 import {
     ItemInfoDisplayPlaceholder,
     SpellInfoDisplayPlaceholder,
     StatusEffectInfoDisplayPlaceholder,
     WeaponInfoDisplayPlaceholder,
 } from '@components/InfoDisplay/InfoDisplayPlaceholder';
+import {
+    ItemInfoDisplayWithDescriptor,
+    SpellInfoDisplayWithDescriptor,
+    StatusEffectInfoDisplayWithDescriptor,
+    WeaponInfoDisplayWithDescriptor,
+} from '@components/InfoDisplay/InfoDisplayWithDescriptor';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
-import { useDataContext } from '@context/GameDataProvider';
 import { useGameWikiContext } from '@context/GameWikiContext';
-import { FC, useEffect } from 'react';
+import {
+    useLoadedCharacters,
+    useLoadedItems,
+    useLoadedSpells,
+    useLoadedStatusEffects,
+    useLoadedWeapons,
+} from '@queries/useLoadedGameData';
+import { FC } from 'react';
 
 interface iCategoryContent {
     category: string;
@@ -28,44 +34,17 @@ const CONTENT_DIV_CLASSNAME = 'grid grid-cols-2 gap-6 overflow-x-auto';
 
 const CategoryContent: FC<iCategoryContent> = ({ category }) => {
     const { dlc } = useGameWikiContext();
-    const {
-        items,
-        spells,
-        weapons,
-        characters: characters,
-        statusEffects,
-        fetchAndSetItems,
-        fetchAndSetCharacters,
-        fetchAndSetSpells,
-        fetchAndSetStatusEffects,
-        fetchAndSetWeapons,
-    } = useDataContext();
-
-    useEffect(() => {
-        switch (category) {
-            case 'characters':
-                fetchAndSetCharacters(dlc).then(() => {});
-                break;
-            case 'spells':
-                fetchAndSetSpells(dlc).then(() => {});
-                break;
-            case 'items':
-                fetchAndSetItems(dlc).then(() => {});
-                break;
-            case 'weapons':
-                fetchAndSetWeapons(dlc).then(() => {});
-                break;
-            case 'statusEffects':
-                fetchAndSetStatusEffects(dlc).then(() => {});
-                break;
-        }
-    }, [category, dlc]);
+    const { spells, isPending: isSpellPending } = useLoadedSpells(dlc);
+    const { items, isPending: isItemPending } = useLoadedItems(dlc);
+    const { weapons, isPending: isWeaponPending } = useLoadedWeapons(dlc);
+    const { statusEffects, isPending: isStatusEffectPending } = useLoadedStatusEffects(dlc);
+    const { characters, isPending: isCharacterPending } = useLoadedCharacters(dlc);
 
     switch (category) {
         case 'characters':
             return (
                 <div>
-                    {characters === null ? (
+                    {isCharacterPending || !characters ? (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             <CharacterDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
                             <CharacterDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
@@ -74,7 +53,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                         </div>
                     ) : (
                         <Accordion type={'multiple'} className={CONTENT_DIV_CLASSNAME}>
-                            {Object.entries(characters[dlc]).map(([descriptor, character], index) => {
+                            {Object.entries(characters).map(([descriptor, character], index) => {
                                 return (
                                     <AccordionItem value={descriptor} key={index} className={''}>
                                         <AccordionTrigger className={'hover:no-underline'}>
@@ -88,13 +67,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                                             />
                                         </AccordionTrigger>
                                         <AccordionContent>
-                                            <CharacterEditableInfoAdapter
-                                                character={character}
-                                                className={
-                                                    'flex w-full flex-col gap-4 rounded border-2 p-4 max-[960px]:w-full'
-                                                }
-                                                settings={GameWikiSettings}
-                                            />
+                                            <CharacterInfoWithDescriptor dlc={dlc} descriptor={descriptor} />
                                         </AccordionContent>
                                     </AccordionItem>
                                 );
@@ -106,7 +79,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         case 'spells':
             return (
                 <div>
-                    {spells === null ? (
+                    {isSpellPending || !spells ? (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             <SpellInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
                             <SpellInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
@@ -115,8 +88,8 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                         </div>
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
-                            {Object.entries(spells[dlc]).map(([descriptor, spell], index) => {
-                                return <SpellEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
+                            {Object.keys(spells).map((descriptor, index) => {
+                                return <SpellInfoDisplayWithDescriptor dlc={dlc} descriptor={descriptor} key={index} />;
                             })}
                         </div>
                     )}
@@ -125,7 +98,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         case 'items':
             return (
                 <div>
-                    {items === null ? (
+                    {isItemPending || !items ? (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             <ItemInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
                             <ItemInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
@@ -134,8 +107,8 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                         </div>
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
-                            {Object.entries(items[dlc]).map(([descriptor, spell], index) => {
-                                return <ItemEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
+                            {Object.keys(items).map((descriptor, index) => {
+                                return <ItemInfoDisplayWithDescriptor dlc={dlc} descriptor={descriptor} key={index} />;
                             })}
                         </div>
                     )}
@@ -144,7 +117,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         case 'weapons':
             return (
                 <div>
-                    {weapons === null ? (
+                    {isWeaponPending || !weapons ? (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             <WeaponInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
                             <WeaponInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
@@ -153,8 +126,10 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                         </div>
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
-                            {Object.entries(weapons[dlc]).map(([descriptor, spell], index) => {
-                                return <WeaponEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />;
+                            {Object.keys(weapons).map((descriptor, index) => {
+                                return (
+                                    <WeaponInfoDisplayWithDescriptor dlc={dlc} descriptor={descriptor} key={index} />
+                                );
                             })}
                         </div>
                     )}
@@ -163,7 +138,7 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
         case 'statusEffects':
             return (
                 <div>
-                    {statusEffects === null ? (
+                    {isStatusEffectPending || !statusEffects ? (
                         <div className={CONTENT_DIV_CLASSNAME}>
                             <StatusEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
                             <StatusEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
@@ -172,9 +147,13 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                         </div>
                     ) : (
                         <div className={CONTENT_DIV_CLASSNAME}>
-                            {Object.entries(statusEffects[dlc]).map(([descriptor, spell], index) => {
+                            {Object.keys(statusEffects).map((descriptor, index) => {
                                 return (
-                                    <StatusEffectEditableInfoAdapter info={spell} key={index} descriptor={descriptor} />
+                                    <StatusEffectInfoDisplayWithDescriptor
+                                        dlc={dlc}
+                                        descriptor={descriptor}
+                                        key={index}
+                                    />
                                 );
                             })}
                         </div>

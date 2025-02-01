@@ -8,7 +8,6 @@ const CharacterEditor = ({ className }: { className?: string }) => {
 
     Editor requires following components:
     - CharacterEditorProvider.tsx
-    - GameDataProvider.tsx
 
     If you don't wrap this component with those providers, it will throw an error.
 

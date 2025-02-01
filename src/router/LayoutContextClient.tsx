@@ -1,5 +1,4 @@
 import { TooltipProvider } from '@components/ui/tooltip';
-import { GameDataProvider } from '@context/GameDataProvider';
 import { useLayoutContext } from '@context/LayoutContext';
 import { apprf, cn } from '@utils';
 import { lazy, ReactNode, Suspense } from 'react';
@@ -63,11 +62,7 @@ const LayoutContextClient = () => {
 };
 
 const GlobalContext = ({ children }: { children: ReactNode }) => {
-    return (
-        <TooltipProvider>
-            <GameDataProvider>{children}</GameDataProvider>
-        </TooltipProvider>
-    );
+    return <TooltipProvider>{children}</TooltipProvider>;
 };
 
 export default LayoutContextClient;

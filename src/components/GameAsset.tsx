@@ -1,3 +1,5 @@
+import { HTMLIconFactoryProps } from '@components/icons/icon_factory';
+import { GameComponentDecoration } from '@models/GameModels';
 import { getCharacterSide } from '@utils';
 import { generateAssetPath, generateAssetPathFullDescriptor } from '@utils/generateAssetPath';
 import React from 'react';
@@ -55,6 +57,10 @@ export const CharacterGameAsset = ({ line, ...props }: GameAssetProps & { line: 
             }
         />
     );
+};
+
+export const gameAssetToComboboxIcon = (component: { decorations: GameComponentDecoration }) => {
+    return (props: HTMLIconFactoryProps) => <GameAsset src={component.decorations.sprite} alt={props.alt} {...props} />;
 };
 
 export default GameAsset;
