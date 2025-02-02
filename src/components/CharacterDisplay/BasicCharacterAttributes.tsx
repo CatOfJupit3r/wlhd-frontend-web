@@ -1,10 +1,8 @@
+import { ActionPointsIcon, ArmorIcon, HealthIcon } from '@components/icons';
 import { Progress } from '@components/ui/progress';
 import { CharacterInfoFull } from '@models/GameModels';
 import { getPercentage } from '@utils/getPercentage';
 import { useMemo } from 'react';
-import { GiHeartPlus } from 'react-icons/gi';
-import { IoShieldSharp } from 'react-icons/io5';
-import { PiSneakerMoveFill } from 'react-icons/pi';
 
 const BasicCharacterAttributes = ({
     attributes,
@@ -46,7 +44,7 @@ const BasicCharacterAttributes = ({
         <div className={'flex w-full gap-2'}>
             <div className={'w-10/12 items-center'}>
                 <div className={'flex w-full flex-row items-center gap-1'}>
-                    <IoShieldSharp className={'size-5 text-gray-700'} />
+                    <ArmorIcon className={'size-5 text-gray-700'} />
                     <Progress
                         value={
                             flags?.ignoreCurrentValues
@@ -84,7 +82,7 @@ const BasicCharacterAttributes = ({
                         }
                     >
                         {MAIN_ATTRIBUTES.HEALTH.text}
-                        <GiHeartPlus className={'size-5'} />
+                        <HealthIcon className={'size-5'} />
                     </p>
                 </div>
             </div>
@@ -111,7 +109,7 @@ const BasicCharacterAttributes = ({
                 >
                     {MAIN_ATTRIBUTES.AP.text}
                 </p>
-                <PiSneakerMoveFill
+                <ActionPointsIcon
                     className={`absolute inset-0 flex size-full items-center justify-center gap-2 overflow-x-clip text-base font-semibold text-white opacity-20`}
                 />
             </div>

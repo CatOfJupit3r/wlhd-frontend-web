@@ -1,13 +1,12 @@
 import CategoryContent from '@components/GameWiki/CategoryContent';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
+import { InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
 import { Button } from '@components/ui/button';
 import paths from '@router/paths';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAddressCard } from 'react-icons/fa';
-import { GiKnapsack, GiSpellBook, GiSwordsEmblem } from 'react-icons/gi';
 import { IoMdReturnLeft } from 'react-icons/io';
-import { IoLayersSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
 
 interface iDLCContents {}
@@ -43,22 +42,22 @@ const DLCContents: FC<iDLCContents> = () => {
                         },
                         {
                             name: 'spells',
-                            icon: GiSpellBook,
+                            icon: SpellBookIcon,
                             value: 'spells',
                         },
                         {
                             name: 'items',
-                            icon: GiKnapsack,
+                            icon: InventoryIcon,
                             value: 'items',
                         },
                         {
                             name: 'weapons',
-                            icon: GiSwordsEmblem,
+                            icon: WeaponryIcon,
                             value: 'weapons',
                         },
                         {
                             name: 'status-effects',
-                            icon: IoLayersSharp,
+                            icon: StatusEffectsIcon,
                             value: 'statusEffects',
                         },
                     ].map(({ name, value, icon }, index) => {

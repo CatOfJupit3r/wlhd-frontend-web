@@ -1,13 +1,19 @@
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor';
 import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor';
 import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor';
-import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
+import {
+    AttributesIcon,
+    InventoryIcon,
+    MiscIcon,
+    SpellBookIcon,
+    StatusEffectsIcon,
+    WeaponryIcon,
+} from '@components/icons';
 import { EmptyMenuContent } from '@components/ui/menu';
 import { Separator } from '@components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
 import { useState } from 'react';
-import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 
 export const CharacterEditorMenus = () => {
     const { flags } = useCharacterEditorContext();
@@ -40,7 +46,7 @@ export const CharacterEditorMenus = () => {
                     },
                     {
                         value: 'misc',
-                        icon: MdOutlineAutoAwesomeMosaic,
+                        icon: MiscIcon,
                         disabled: flags.exclude?.misc,
                         hide: flags.exclude?.misc,
                     },

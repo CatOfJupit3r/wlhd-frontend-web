@@ -1,4 +1,12 @@
-import { ActiveIcon, LocationIcon } from '@components/icons';
+import {
+    ActionPointsIcon,
+    ActivenessIcon,
+    CooldownIcon,
+    DurationIcon,
+    LocationIcon,
+    QuantityIcon,
+    UsesIcon,
+} from '@components/icons';
 import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay';
 import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
@@ -8,9 +16,6 @@ import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameM
 import { HTMLAttributes, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiInfinite } from 'react-icons/bi';
-import { FaBoxes, FaHourglassHalf } from 'react-icons/fa';
-import { LuTally5 } from 'react-icons/lu';
-import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi';
 
 interface WeaponSegment {
     type: 'weapon';
@@ -56,7 +61,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex flex-row items-center gap-1'}>
-                            <FaBoxes />
+                            <QuantityIcon />
                             <p>{info.quantity ?? '-'}</p>
                         </div>
                     </TooltipTrigger>
@@ -69,7 +74,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     }, []);
 
     const IsActiveDetails = useCallback(({ info }: WeaponSegment | SpellSegment) => {
-        return info.isActive ? <ActiveIcon className={'size-6'} /> : null;
+        return info.isActive ? <ActivenessIcon className={'size-6'} /> : null;
     }, []);
 
     const UsageDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
@@ -94,7 +99,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                     <Tooltip>
                         <TooltipTrigger className={'cursor-default'}>
                             <div className={'flex flex-row items-center gap-1'}>
-                                <LuTally5 />
+                                <UsesIcon />
                                 {`${info.uses.current ?? '-'}/${info.uses.max ?? '-'}`}
                             </div>
                         </TooltipTrigger>
@@ -113,7 +118,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex flex-row items-center gap-1 text-base'}>
-                            <PiSneakerMoveFill />
+                            <ActionPointsIcon />
                             <p>{info.cost ?? '-'}</p>
                         </div>
                     </TooltipTrigger>
@@ -129,7 +134,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex flex-row items-center gap-1'}>
-                            <PiClockCountdownBold className={'size-5'} />
+                            <CooldownIcon className={'size-5'} />
                             <p
                                 style={{
                                     margin: '0',
@@ -155,7 +160,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex items-center gap-1'}>
-                            <FaHourglassHalf className={'size-5'} />
+                            <DurationIcon className={'size-5'} />
                             {info.duration === null ? (
                                 <BiInfinite className={'size-5'} />
                             ) : (

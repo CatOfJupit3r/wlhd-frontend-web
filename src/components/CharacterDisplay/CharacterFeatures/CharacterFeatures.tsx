@@ -1,9 +1,15 @@
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer';
-import { AttributesIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
+import {
+    AttributesIcon,
+    InventoryIcon,
+    MiscIcon,
+    SpellBookIcon,
+    StatusEffectsIcon,
+    WeaponryIcon,
+} from '@components/icons';
 import Menu, { MenuSelection } from '@components/ui/menu';
 import { CharacterInfoFull } from '@models/GameModels';
 import React, { useMemo } from 'react';
-import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 
 const CharacterMenus: Array<{
     value: string;
@@ -38,7 +44,7 @@ const CharacterMenus: Array<{
     {
         value: 'misc',
         label: 'Misc',
-        icon: MdOutlineAutoAwesomeMosaic,
+        icon: MiscIcon,
     },
 ];
 

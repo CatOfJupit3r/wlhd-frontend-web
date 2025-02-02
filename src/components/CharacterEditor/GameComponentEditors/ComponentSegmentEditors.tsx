@@ -1,3 +1,11 @@
+import {
+    ActionPointsIcon,
+    ActivenessIcon,
+    CooldownIcon,
+    DurationIcon,
+    QuantityIcon,
+    UsesIcon,
+} from '@components/icons';
 import { IndividualTagDisplay } from '@components/InfoDisplay/TagsDisplay';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Button, ButtonWithTooltip } from '@components/ui/button';
@@ -19,10 +27,7 @@ import { OneOf } from '@models/OneOf';
 import { capitalizeFirstLetter, cn } from '@utils';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaBoxes, FaHourglassHalf } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
-import { LuTally5, LuTriangle } from 'react-icons/lu';
-import { PiClockCountdownBold, PiSneakerMoveFill } from 'react-icons/pi';
 
 const useComponentEditorTranslation = () => {
     return useTranslation('local', {
@@ -92,7 +97,7 @@ export const ActivenessEditor: React.FC<ComponentPartEditorProps & { disabled: b
             tooltipClassname={'text-sm font-normal'}
             disabled={!usable}
         >
-            <LuTriangle />
+            <ActivenessIcon />
         </ButtonWithTooltip>
     );
 };
@@ -101,7 +106,7 @@ export const QuantityEditor: React.FC<ComponentPartEditorProps> = ({ component, 
 
     return (
         <div>
-            <EditorLabel text={t('quantity')} icon={<FaBoxes />} />
+            <EditorLabel text={t('quantity')} icon={<QuantityIcon />} />
             <Input
                 type={'number'}
                 value={component.quantity}
@@ -115,7 +120,7 @@ export const UsesEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
     const { t } = useComponentEditorTranslation();
     return (
         <div>
-            <EditorLabel text={t('component-uses')} icon={<LuTally5 />} />
+            <EditorLabel text={t('component-uses')} icon={<UsesIcon />} />
             <div className={'flex flex-row items-center gap-2'}>
                 <div className={'flex flex-row items-center gap-2 text-sm font-normal italic'}>
                     <Input
@@ -142,7 +147,7 @@ export const DurationEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     const { t } = useComponentEditorTranslation();
     return (
         <div>
-            <EditorLabel text={t('duration')} icon={<FaHourglassHalf />} />
+            <EditorLabel text={t('duration')} icon={<DurationIcon />} />
             <Input
                 type={'number'}
                 value={component.duration ?? 0}
@@ -157,7 +162,7 @@ export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     const { t } = useComponentEditorTranslation();
     return (
         <div>
-            <EditorLabel text={t('cooldown')} icon={<PiClockCountdownBold />} />
+            <EditorLabel text={t('cooldown')} icon={<CooldownIcon />} />
             <div className={'flex flex-row items-center gap-1 text-sm font-normal italic'}>
                 <Input
                     type={'number'}
@@ -181,7 +186,7 @@ export const CostEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
 
     return (
         <div>
-            <EditorLabel text={t('cost-to-use')} icon={<PiSneakerMoveFill />} />
+            <EditorLabel text={t('cost-to-use')} icon={<ActionPointsIcon />} />
             <Input
                 type={'number'}
                 value={component.usageCost ?? 0}
