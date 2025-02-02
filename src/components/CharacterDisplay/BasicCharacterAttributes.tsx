@@ -1,6 +1,7 @@
 import { ActionPointsIcon, ArmorIcon, HealthIcon } from '@components/icons';
 import { Progress } from '@components/ui/progress';
 import { CharacterInfoFull } from '@models/GameModels';
+import { cn } from '@utils';
 import { getPercentage } from '@utils/getPercentage';
 import { useMemo } from 'react';
 
@@ -44,7 +45,14 @@ const BasicCharacterAttributes = ({
         <div className={'flex w-full gap-2'}>
             <div className={'w-10/12 items-center'}>
                 <div className={'flex w-full flex-row items-center gap-1'}>
-                    <ArmorIcon className={'size-5 text-gray-700'} />
+                    <ArmorIcon
+                        className={cn(
+                            'size-5',
+                            flags?.ignoreCurrentValues || MAIN_ATTRIBUTES.ARMOR.current > 0
+                                ? 'text-amber-500'
+                                : 'text-gray-700',
+                        )}
+                    />
                     <Progress
                         value={
                             flags?.ignoreCurrentValues
