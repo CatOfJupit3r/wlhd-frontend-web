@@ -1,6 +1,6 @@
 import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper';
 import Overlay from '@components/Overlay';
-import ThinkingHn from '@components/ThinkingHn';
+import { TrueSpinner } from '@components/Spinner';
 import APIService from '@services/APIService';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +41,10 @@ const GameRoomPage = () => {
         <>
             {loadingTranslations ? (
                 <Overlay>
-                    <ThinkingHn text={t('builtins:loading')} />
+                    <div className={'flex flex-row items-center justify-center gap-4'}>
+                        <h1>{t('builtins:loading')}</h1>
+                        <TrueSpinner size={3} />
+                    </div>
                 </Overlay>
             ) : (
                 <GameLogicWrapper />
