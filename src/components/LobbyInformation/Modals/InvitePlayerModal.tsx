@@ -1,3 +1,4 @@
+import { toastError, toastInfo } from '@components/toastifications';
 import {
     AlertDialogCancel,
     AlertDialogDescription,
@@ -13,7 +14,6 @@ import { ScrollArea } from '@components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
-import { toast } from '@hooks/useToast';
 import useCreateInviteCode from '@mutations/useCreateInviteCode';
 import useDeleteInviteCode from '@mutations/useDeleteInviteCode';
 import useLobbyInviteCodes from '@queries/useLobbyInviteCodes';
@@ -100,17 +100,11 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
                                                     navigator.clipboard
                                                         .writeText(code)
                                                         .then(() => {
-                                                            toast({
-                                                                title: t('code-copied'),
-                                                                position: 'top-center',
-                                                            });
+                                                            toastInfo(t('code-copied'));
                                                         })
                                                         .catch((e) => {
                                                             console.debug(e);
-                                                            toast({
-                                                                title: t('code-could-not-be-copied'),
-                                                                position: 'top-center',
-                                                            });
+                                                            toastError(t('code-could-not-be-copied'));
                                                         });
                                                 }}
                                                 variant={'ghost'}

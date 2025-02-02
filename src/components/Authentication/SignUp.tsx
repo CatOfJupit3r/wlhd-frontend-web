@@ -1,8 +1,8 @@
+import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import StyledLink from '@components/ui/styled-link';
-import { useToast } from '@hooks/useToast';
 import useMe from '@queries/useMe';
 import paths from '@router/paths';
 import APIService from '@services/APIService';
@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router';
 const SignUp = ({ className }: { className?: string }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { toastError } = useToast();
 
     const [handle, setHandle] = useState('');
     const [password, setPassword] = useState('');
@@ -44,10 +43,10 @@ const SignUp = ({ className }: { className?: string }) => {
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (!handle || !password) {
-            toastError({ title: t('local:error'), description: t('local:missingParameters') });
+            toastError(t('local:error'), t('local:missingParameters'));
             return;
         } else if (password !== confirmPassword) {
-            toastError({ title: t('local:error'), description: t('local:passwordsDoNotMatch') });
+            toastError(t('local:error'), t('local:passwordsDoNotMatch'));
             return;
         }
 
@@ -55,9 +54,9 @@ const SignUp = ({ className }: { className?: string }) => {
             await APIService.createAccount(handle, password);
         } catch (err) {
             if (err && err instanceof AxiosError) {
-                toastError({ title: t('local:error'), description: err.response?.data.message });
+                toastError(t('local:error'), err.response?.data.message);
             } else if (err && err instanceof Error) {
-                toastError({ title: t('local:error'), description: err.message });
+                toastError(t('local:error'), err.message);
             }
             console.log('Error: ', err);
         }

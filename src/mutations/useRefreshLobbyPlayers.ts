@@ -1,4 +1,4 @@
-import { toastError } from '@hooks/useToast';
+import { toastError } from '@components/toastifications';
 import { iLobbyInformation } from '@models/Redux';
 import APIService from '@services/APIService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -19,10 +19,7 @@ const useRefreshLobbyPlayers = () => {
             }
         },
         onError: (error) => {
-            toastError({
-                title: 'Error',
-                description: error.message ?? 'Could not refresh lobby players',
-            });
+            toastError('Error', error.message ?? 'Could not refresh lobby players');
         },
     });
 

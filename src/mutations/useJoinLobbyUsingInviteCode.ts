@@ -1,4 +1,4 @@
-import { toast } from '@hooks/useToast';
+import { toastError, toastInfo } from '@components/toastifications';
 import APIService from '@services/APIService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -16,18 +16,10 @@ const useJoinLobbyUsingInviteCode = () => {
                     return { ...data };
                 });
             }
-            toast({
-                title: 'Success',
-                description: 'Invite code successfully used! Now, wait for the GM to approve your request.',
-                position: 'top-center',
-            });
+            toastInfo('Success', 'Invite code successfully used! Now, wait for the GM to approve your request.'); // add translations
         },
         onError: (error) => {
-            toast({
-                title: 'Error',
-                description: error.message ?? 'Could not join lobby',
-                position: 'top-center',
-            });
+            toastError('Error', error.message ?? 'Could not join lobby'); // add translations
         },
     });
 

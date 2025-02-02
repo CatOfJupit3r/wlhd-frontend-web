@@ -1,10 +1,9 @@
-import { Toaster } from '@components/ui/toaster';
+import { ToastContainer } from 'react-toastify';
 
 const Notify = () => {
     return (
         <>
-            <Toaster variant={'top-center'} />
-            <Toaster variant={'bottom-left'} />
+            <ToastContainer />
         </>
     );
 };

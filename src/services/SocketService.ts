@@ -1,4 +1,4 @@
-import { toast } from '@hooks/useToast';
+import { toastError, toastInfo } from '@components/toastifications';
 import { ActionResultsPayload } from '@models/Events';
 import {
     Battlefield,
@@ -165,12 +165,7 @@ class SocketService {
             [SOCKET_EVENTS.ERROR]: (error: unknown) => {
                 console.error('Socket error', error);
                 if (error !== null && typeof error === 'object' && 'message' in error) {
-                    toast({
-                        variant: 'destructive',
-                        title: 'Error',
-                        description: (error['message'] as string) ?? '???',
-                        position: 'top-center',
-                    });
+                    toastError('Error', (error['message'] as string) ?? '???');
                     return;
                 }
                 if (this.retries > 0) {
@@ -189,12 +184,14 @@ class SocketService {
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message);
-                toast({
-                    variant: code === 200 ? 'default' : 'destructive',
-                    title: code === 200 ? 'Success' : 'Error',
-                    description: code === 200 ? 'local:game.actionSuccess' : (message ?? 'local:game.actionError'),
-                    position: code === 200 ? 'bottom-left' : 'top-center',
-                });
+                const toast = code === 200 ? toastInfo : toastError;
+                toast(
+                    code === 200 ? 'local:game.actionSuccess' : (message ?? 'local:game.actionError'),
+                    code === 200 ? 'Success' : 'Error',
+                    {
+                        position: code === 200 ? 'bottom-left' : 'top-center',
+                    },
+                );
             },
             [SOCKET_EVENTS.HALT_ACTION]: () => {
                 // this action stops any further action from being taken.

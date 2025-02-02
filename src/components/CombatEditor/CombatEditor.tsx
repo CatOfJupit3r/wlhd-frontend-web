@@ -9,11 +9,11 @@ import {
 } from '@components/CombatEditor/CombatEditorLocalStorage';
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare';
 import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor';
+import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext';
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
-import { toastError } from '@hooks/useToast';
 import { Battlefield as BattlefieldModel } from '@models/GameModels';
 import useThisLobby from '@queries/useThisLobby';
 import paths from '@router/paths';
@@ -287,10 +287,7 @@ const CombatEditor = () => {
             navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id));
         } catch (e) {
             if (e instanceof AxiosError) {
-                toastError({
-                    title: t('Something went wrong during save handling'),
-                    description: e.response?.data.message,
-                });
+                toastError(t('Something went wrong during save handling'), e.response?.data.message);
                 console.log(e.response?.data);
             } else {
                 console.error(e);

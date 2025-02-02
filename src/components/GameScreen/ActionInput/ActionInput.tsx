@@ -7,8 +7,8 @@ import { BsArrowBarLeft } from 'react-icons/bs';
 
 import { useActionContext } from '@context/ActionContext';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { useToast } from '@hooks/useToast';
 
+import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { iAction } from '@models/GameModels';
 import { selectActions, selectIsYourTurn } from '@redux/slices/gameScreenSlice';
@@ -67,7 +67,6 @@ const ActionInput = () => {
         resetClickedSquares,
     } = useBattlefieldContext();
     const { t } = useTranslation();
-    const { toastError } = useToast();
     const actions = useSelector(selectActions);
     const isPlayerTurn = useSelector(selectIsYourTurn);
     const [currentAlias, setCurrentAlias] = useState('action');
@@ -162,10 +161,7 @@ const ActionInput = () => {
             return <h1 className={'mt-2 text-center text-2xl font-bold'}>Seems something is missing...</h1>;
         } else if (!action || action.length === 0 || options.length === 0) {
             setTimeout(handleErrorCase);
-            toastError({
-                title: t('local:game.actions.error'),
-                description: t('local:error.no_actions'),
-            });
+            toastError(t('local:game.actions.error'), t('local:error.no_actions'));
             return <h1 className={'mt-2 text-center text-2xl font-bold'}>Loading...</h1>;
         } else if (aliasValue.startsWith('Square')) {
             return <h1 className={'mt-2 text-center text-2xl font-bold'}>{t('local:game.actions.choose-square')}</h1>;

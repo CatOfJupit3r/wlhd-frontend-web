@@ -1,9 +1,8 @@
 import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
+import { toastGameMessage } from '@components/toastifications/create-jsx-toasts';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { toast } from '@hooks/useToast';
 import { selectActions, selectActiveCharacter, selectAllMessages } from '@redux/slices/gameScreenSlice';
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 const GameUtilityComponent = () => {
@@ -11,9 +10,6 @@ const GameUtilityComponent = () => {
     const activeCharacter = useSelector(selectActiveCharacter);
     const { setActiveSquares, resetActiveSquares, resetInteractableSquares, resetClickedSquares } =
         useBattlefieldContext();
-    const { t } = useTranslation('local', {
-        keyPrefix: 'game.utility',
-    });
     const messages = useSelector(selectAllMessages);
 
     useEffect(() => {
@@ -21,11 +17,9 @@ const GameUtilityComponent = () => {
         // so we don't need some fancy memoization here. simple last element check is enough
         if (messages.length > 0) {
             const lastMessage = messages[messages.length - 1];
-            toast({
-                title: t('new-message'),
-                description: <GameMessage content={lastMessage} />,
-                position: 'bottom-left',
-                clickToDismiss: true,
+            toastGameMessage(<GameMessage content={lastMessage} />, {
+                position: 'bottom-right',
+                closeOnClick: true,
             });
         }
     }, [messages]);

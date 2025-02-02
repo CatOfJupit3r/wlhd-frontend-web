@@ -1,23 +1,24 @@
+import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import StyledLink from '@components/ui/styled-link';
-import { useToast } from '@hooks/useToast';
 import useMe from '@queries/useMe';
 import paths from '@router/paths';
 import APIService from '@services/APIService';
 import { apprf, checkHandle, checkPassword, cn } from '@utils';
 import { AxiosError } from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 const SignIn = ({ className = '' }: { className?: string }) => {
-    const { toastError } = useToast();
     const navigate = useNavigate();
 
     const [handle, setHandle] = useState('admin');
     const [password, setPassword] = useState('motherfucker');
     const { isLoggedIn, isLoading } = useMe();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (!isLoggedIn || isLoading) return;
@@ -37,10 +38,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
     const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         if (!handle || !password) {
-            toastError({
-                title: 'local:error',
-                description: 'local:error.missingParams',
-            });
+            toastError(t('local:error'), t('local:error.missingParams'));
             return;
         }
 
@@ -49,15 +47,9 @@ const SignIn = ({ className = '' }: { className?: string }) => {
         } catch (err: unknown) {
             if (!err) return;
             if (err instanceof AxiosError) {
-                toastError({
-                    title: 'local:error',
-                    description: err?.response?.data.message || 'local:error.connectionError',
-                });
+                toastError(t('local:error'), err?.response?.data.message || 'local:error.connectionError');
             } else if (err instanceof Error) {
-                toastError({
-                    title: 'local:error',
-                    description: err.message || 'local:error.connectionError',
-                });
+                toastError(t('local:error'), err.message || 'local:error.connectionError');
             }
         }
     };
