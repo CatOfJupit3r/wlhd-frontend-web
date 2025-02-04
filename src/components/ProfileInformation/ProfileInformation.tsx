@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Input } from '@components/ui/input';
 import { Separator } from '@components/ui/separator';
 import { CurrentUserAvatar } from '@components/UserAvatars';
-import useJoinLobbyUsingInviteCode from '@mutations/useJoinLobbyUsingInviteCode';
+import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
 import useMe from '@queries/useMe';
 import { Calendar, Gamepad, Trophy } from 'lucide-react';
 import { useState } from 'react';

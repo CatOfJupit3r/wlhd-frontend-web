@@ -20,8 +20,8 @@ import {
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { CharacterInfoFull } from '@models/GameModels';
-import useDeleteCharacter from '@mutations/useDeleteCharacter';
-import useUpdateCharacter from '@mutations/useUpdateCharacter';
+import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
+import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import GameConverters from '@services/GameConverters';
 import { cn } from '@utils';
