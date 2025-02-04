@@ -1,118 +1,134 @@
-import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@components/ui/form';
 import { Input } from '@components/ui/input';
-import { Label } from '@components/ui/label';
 import StyledLink from '@components/ui/styled-link';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useRegister from '@mutations/auth/useRegister';
 import useMe from '@queries/useMe';
 import paths from '@router/paths';
-import APIService from '@services/APIService';
-import { apprf, checkConfirmPassword, checkHandle, checkPassword, cn } from '@utils';
-import { AxiosError } from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import { apprf, cn } from '@utils';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { z } from 'zod';
+
+const registerSchema = z
+    .object({
+        handle: z
+            .string()
+            .min(4)
+            .max(20)
+            .regex(/^[a-zA-Z0-9_]+$/),
+        password: z
+            .string()
+            .min(5)
+            .max(20)
+            .regex(/^[a-zA-Z0-9_]+$/),
+        confirmPassword: z
+            .string()
+            .min(5)
+            .max(20)
+            .regex(/^[a-zA-Z0-9_]+$/),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: 'Passwords do not match!',
+        path: ['confirmPassword'],
+    });
 
 const SignUp = ({ className }: { className?: string }) => {
+    'use no memo;';
     const navigate = useNavigate();
-    const { t } = useTranslation();
-
-    const [handle, setHandle] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const { t } = useTranslation('local', {
+        keyPrefix: 'auth',
+    });
     const { isLoggedIn, isLoading } = useMe();
+    const form = useForm<z.infer<typeof registerSchema>>({
+        resolver: zodResolver(registerSchema),
+        defaultValues: {
+            handle: '',
+            password: '',
+            confirmPassword: '',
+        },
+    });
+    const { mutate, isPending } = useRegister();
 
     useEffect(() => {
         if (!isLoggedIn || isLoading) return;
         navigate(paths.profile);
     }, [isLoggedIn, isLoading]);
 
-    const checkInputValidity = useCallback(() => {
-        for (const check of [
-            checkHandle(handle),
-            checkPassword(password),
-            checkConfirmPassword(password, confirmPassword),
-        ]) {
-            const { valid } = check;
-            if (!valid) {
-                return false;
-            }
-        }
-        return true;
-    }, [password, handle, confirmPassword]);
-
-    const onSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        if (!handle || !password) {
-            toastError(t('local:error'), t('local:missingParameters'));
-            return;
-        } else if (password !== confirmPassword) {
-            toastError(t('local:error'), t('local:passwordsDoNotMatch'));
-            return;
-        }
-
-        try {
-            await APIService.createAccount(handle, password);
-        } catch (err) {
-            if (err && err instanceof AxiosError) {
-                toastError(t('local:error'), err.response?.data.message);
-            } else if (err && err instanceof Error) {
-                toastError(t('local:error'), err.message);
-            }
-            console.log('Error: ', err);
-        }
+    const onSubmit = (values: z.infer<typeof registerSchema>) => {
+        mutate(values);
     };
 
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
-            <h2 className={'text-3.5xl border-b-2'}>Create an account</h2>
-            <form className={'flex w-full flex-col gap-2'}>
-                <div>
-                    <Label htmlFor="handle">Handle</Label>
-                    <Input
-                        type="text"
-                        value={handle}
-                        placeholder="Enter handle"
-                        onChange={(e) => {
-                            setHandle(e.target.value);
-                        }}
-                        className={'w-full'}
+            <h2 className={'text-3.5xl border-b-2'}>{t('sign-up.title')}</h2>
+            <Form {...form}>
+                <form className={'flex w-full flex-col gap-2'}>
+                    <FormField
+                        control={form.control}
+                        name="handle"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel htmlFor="handle">{t('handle.index')}</FormLabel>
+                                <FormDescription>{t('handle.description')}</FormDescription>
+                                <FormControl>
+                                    <Input className={'w-full'} placeholder={t('handle.placeholder')} {...field} />
+                                </FormControl>
+                            </FormItem>
+                        )}
                     />
-                </div>
-                <div>
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                        type="password"
-                        value={password}
-                        placeholder="Enter password"
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel htmlFor="password">{t('password.index')}</FormLabel>
+                                <FormDescription>{t('password.description')}</FormDescription>
+                                <FormControl>
+                                    <Input
+                                        className={'w-full'}
+                                        placeholder={t('password.placeholder')}
+                                        type="password"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
                     />
-                </div>
-                <div>
-                    <Label htmlFor="confirm-password">Confirm password</Label>
-                    <Input
-                        type="password"
-                        value={confirmPassword}
-                        placeholder="Confirm password"
-                        onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                        }}
+                    <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel htmlFor="confirm-password">{t('confirm-password.index')}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        className={'w-full'}
+                                        placeholder={t('confirm-password.placeholder')}
+                                        type="password"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
                     />
-                </div>
-            </form>
+                </form>
+            </Form>
             <Button
                 className={cn(
                     'w-full rounded-md bg-blue-800 p-2 text-white transition-all duration-100',
                     apprf('disabled:', 'cursor-not-allowed bg-blue-400 text-gray-400'),
                 )}
-                onClick={(e) => onSubmit(e).then()}
-                disabled={!checkInputValidity()}
+                onClick={(_) => form.handleSubmit(onSubmit)()}
+                disabled={isPending || !form.formState.isValid}
             >
-                Sign up!
+                {t('sign-up.submit')}
             </Button>
             <p id={'to-signin'}>
-                Already have an account?{' '}
+                {t('sign-up.footer')}{' '}
                 <StyledLink
                     to={paths.signIn}
                     className={cn(
@@ -121,7 +137,7 @@ const SignUp = ({ className }: { className?: string }) => {
                         apprf('hover:', 'text-blue-600'),
                     )}
                 >
-                    Sign In!
+                    {t('sign-up.footer-link')}
                 </StyledLink>
             </p>
         </div>

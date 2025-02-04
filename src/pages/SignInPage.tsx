@@ -8,7 +8,7 @@ const SignInPage = () => {
                 flexDirection: 'row',
             }}
         >
-            <SignIn className={'mt-[30vh]'} />
+            <SignIn className={'mt-[25vh]'} />
             <div
                 style={{
                     backgroundColor: 'black',
