@@ -1,10 +1,9 @@
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes';
 import { StaticSkeleton } from '@components/ui/skeleton';
 import { CharacterInfoTooltip } from '@models/GameModels';
-import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const PlaceholderTooltip = () => {
+const PlaceholderTooltip = () => {
     return (
         <>
             <div className={'flex flex-row gap-2'}>
@@ -35,45 +34,41 @@ export const PlaceholderTooltip = () => {
     );
 };
 
-const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) => {
+const CharacterRealTooltip = ({ character }: { character: CharacterInfoTooltip }) => {
     const { t } = useTranslation();
+    const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character;
+    return (
+        <>
+            <p className={'text-base font-semibold'}>
+                {t(decorations.name)} ({square.line}/{square.column})
+            </p>
+            <BasicCharacterAttributes
+                attributes={{
+                    'builtins:current_health': health.current,
+                    'builtins:max_health': health.max,
+                    'builtins:current_action_points': action_points.current,
+                    'builtins:max_action_points': action_points.max,
+                    'builtins:current_armor': armor.current,
+                    'builtins:base_armor': armor.base,
+                }}
+            />
+            <p className={'w-full text-wrap break-all italic'}>
+                {status_effects && status_effects.length > 0
+                    ? status_effects
+                          .map((value) =>
+                              value.duration !== null
+                                  ? `${t(value.decorations.name)} (${value.duration})`
+                                  : t(value.decorations.name),
+                          )
+                          .join(', ')
+                    : t('local:game.components.tooltip.no_status_effects')}
+            </p>
+        </>
+    );
+};
 
-    const RealContent = useCallback(() => {
-        if (!character) {
-            return <PlaceholderTooltip />;
-        }
-        const { decorations, square, health, action_points, armor, statusEffects: status_effects } = character;
-        return (
-            <>
-                <p className={'text-base font-semibold'}>
-                    {t(decorations.name)} ({square.line}/{square.column})
-                </p>
-                <BasicCharacterAttributes
-                    attributes={{
-                        'builtins:current_health': health.current,
-                        'builtins:max_health': health.max,
-                        'builtins:current_action_points': action_points.current,
-                        'builtins:max_action_points': action_points.max,
-                        'builtins:current_armor': armor.current,
-                        'builtins:base_armor': armor.base,
-                    }}
-                />
-                <p className={'w-full text-wrap break-all italic'}>
-                    {status_effects && status_effects.length > 0
-                        ? status_effects
-                              .map((value) =>
-                                  value.duration !== null
-                                      ? `${t(value.decorations.name)} (${value.duration})`
-                                      : t(value.decorations.name),
-                              )
-                              .join(', ')
-                        : t('local:game.components.tooltip.no_status_effects')}
-                </p>
-            </>
-        );
-    }, [character]);
-
-    return <div>{!character ? <PlaceholderTooltip /> : <RealContent />}</div>;
+const CharacterTooltip = ({ character }: { character: CharacterInfoTooltip }) => {
+    return <div>{!character ? <PlaceholderTooltip /> : <CharacterRealTooltip character={character} />}</div>;
 };
 
 export default CharacterTooltip;
