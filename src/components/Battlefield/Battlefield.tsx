@@ -57,12 +57,12 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
     const CharactersOnRow = useCallback(({ line }: { line: string }) => {
         return (
             <>
-                <TileWithCharacter square={`${line}/1`} />
-                <TileWithCharacter square={`${line}/2`} />
-                <TileWithCharacter square={`${line}/3`} />
-                <TileWithCharacter square={`${line}/4`} />
-                <TileWithCharacter square={`${line}/5`} />
-                <TileWithCharacter square={`${line}/6`} />
+                <TileWithCharacter square={`${line}/1`} key={`${line}/1`} />
+                <TileWithCharacter square={`${line}/2`} key={`${line}/2`} />
+                <TileWithCharacter square={`${line}/3`} key={`${line}/3`} />
+                <TileWithCharacter square={`${line}/4`} key={`${line}/4`} />
+                <TileWithCharacter square={`${line}/5`} key={`${line}/5`} />
+                <TileWithCharacter square={`${line}/6`} key={`${line}/6`} />
             </>
         );
     }, []);
