@@ -6,7 +6,6 @@ import { Outlet } from 'react-router';
 
 const Header = lazy(() => import('@components/Header'));
 const Footer = lazy(() => import('@components/Footer'));
-const Notify = lazy(() => import('@components/Notify'));
 
 const HeaderPlaceholder = () => (
     <div
@@ -54,9 +53,6 @@ const LayoutContextClient = () => {
                     <Footer />
                 </Suspense>
             )}
-            <Suspense fallback={null}>
-                <Notify />
-            </Suspense>
         </GlobalContext>
     );
 };

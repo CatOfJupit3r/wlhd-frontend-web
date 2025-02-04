@@ -2,6 +2,7 @@ import QueryClient from '@queries/QueryClient';
 import RootRouter from '@router/RootRouter';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
     return (
@@ -10,6 +11,7 @@ const App = () => {
             <div className={'App'}>
                 <RootRouter />
             </div>
+            <ToastContainer />
         </QueryClientProvider>
     );
 };
