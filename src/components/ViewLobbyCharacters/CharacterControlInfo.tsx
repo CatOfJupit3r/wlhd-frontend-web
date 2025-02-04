@@ -1,12 +1,13 @@
-import { AwaitingButton } from '@components/ui/button';
+import { MutationButton } from '@components/ui/button';
 import { Combobox } from '@components/ui/combobox';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { StaticSkeleton } from '@components/ui/skeleton';
 import UserAvatar from '@components/UserAvatars';
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { iLobbyPlayerInfo } from '@models/Redux';
+import useAssignPlayerToCharacter from '@mutations/view-character/useAssignPlayerToCharacter';
+import useRemovePlayerFromCharacter from '@mutations/view-character/useRemovePlayerFromCharacter';
 import useThisLobby from '@queries/useThisLobby';
-import APIService from '@services/APIService';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
@@ -41,6 +42,7 @@ const ChangeControlledBy = () => {
     const [playerToAdd, setPlayerToAdd] = useState<string>('');
     const { lobby, refetch } = useThisLobby();
     const { descriptor } = useViewCharactersContext();
+    const { mutate, isPending } = useAssignPlayerToCharacter();
 
     return (
         <div className={'flex h-10 flex-row gap-2'}>
@@ -64,35 +66,30 @@ const ChangeControlledBy = () => {
                     height: 'h-full',
                 }}
             />
-            <AwaitingButton
-                onClick={
-                    descriptor && playerToAdd
-                        ? () => {
-                              return APIService.assignPlayerToCharacter(
-                                  lobby.lobbyId,
-                                  descriptor as string,
-                                  playerToAdd,
-                              );
-                          }
-                        : undefined
-                }
-                thenCase={() => {
-                    refetch().then();
-                }}
-                catchCase={(error) => {
-                    console.error('Error adding player', error);
+            <MutationButton
+                isPending={isPending}
+                mutate={() => {
+                    if (!descriptor || !playerToAdd) {
+                        return;
+                    }
+                    mutate({
+                        lobbyId: lobby.lobbyId,
+                        descriptor,
+                        playerId: playerToAdd,
+                    });
                 }}
                 variant={'secondary'}
                 className={'h-full'}
             >
                 <IoAdd />
-            </AwaitingButton>
+            </MutationButton>
         </div>
     );
 };
 
 const PlainListOfPlayers = ({ playersInControl }: { playersInControl: iLobbyPlayerInfo[] }) => {
-    const { lobby, refetch } = useThisLobby();
+    const { lobby } = useThisLobby();
+    const { mutate, isPending } = useRemovePlayerFromCharacter();
     const { descriptor } = useViewCharactersContext();
 
     return (
@@ -102,30 +99,25 @@ const PlainListOfPlayers = ({ playersInControl }: { playersInControl: iLobbyPlay
                     <div key={player.handle} className={'relative flex flex-row items-center gap-2'}>
                         <UserAvatar handle={player.handle} className={'size-8 border-2'} />
                         <p className={'max-w-[75%]'}>@{player.handle}</p>
-                        <AwaitingButton
-                            id={'remove-player'}
-                            onClick={
-                                descriptor && player.userId
-                                    ? () => {
-                                          return APIService.removePlayerFromCharacter(
-                                              lobby.lobbyId,
-                                              descriptor as string,
-                                              player.userId,
-                                          );
-                                      }
-                                    : undefined
-                            }
-                            thenCase={() => {
-                                refetch().then();
-                            }}
-                            catchCase={(error) => {
-                                console.error('Error removing player', error);
+                        <MutationButton
+                            isPending={isPending}
+                            mutate={() => {
+                                if (!descriptor || !player.userId) {
+                                    return;
+                                }
+                                mutate({
+                                    lobbyId: lobby.lobbyId,
+                                    descriptor,
+                                    playerId: player.userId,
+                                });
                             }}
                             variant={'destructiveGhost'}
-                            className={`absolute right-0 p-3 text-red-700 opacity-60 hover:opacity-100 active:border-red-600 active:text-red-600`}
+                            className={
+                                'absolute right-0 p-3 text-red-700 opacity-60 hover:opacity-100 active:border-red-600 active:text-red-600'
+                            }
                         >
-                            <FaXmark className={'mr-1 size-4'} />
-                        </AwaitingButton>
+                            <FaXmark className={'size-4'} />
+                        </MutationButton>
                     </div>
                 );
             })}

@@ -231,15 +231,15 @@ class APIService {
         return result;
     };
 
-    public getCustomLobbyTranslations = async (lobby_id: string): Promise<TranslationJSON> => {
+    public getCustomLobbyTranslations = async (lobby_id: string) => {
         try {
-            return await this.fetch({
+            return await this.fetch<TranslationJSON>({
                 url: ENDPOINTS.CUSTOM_LOBBY_TRANSLATIONS(lobby_id),
                 method: 'get',
             });
         } catch (e) {
             console.log(e);
-            return {};
+            return {} as TranslationJSON;
         }
     };
 
@@ -286,12 +286,11 @@ class APIService {
         });
     };
 
-    public assignPlayerToCharacter = async (
-        lobbyId: string,
-        descriptor: string,
-        playerId: string,
-    ): Promise<unknown> => {
-        return await this.fetch({
+    public assignPlayerToCharacter = async (lobbyId: string, descriptor: string, playerId: string) => {
+        return await this.fetch<{
+            players: Array<iLobbyPlayerInfo>;
+            characters: Array<iCharacterInLobby>;
+        }>({
             url: ENDPOINTS.ASSIGN_PLAYER_TO_CHARACTER(lobbyId, descriptor),
             method: 'patch',
             data: {
@@ -300,12 +299,11 @@ class APIService {
         });
     };
 
-    public removePlayerFromCharacter = async (
-        lobbyId: string,
-        descriptor: string,
-        playerId: string,
-    ): Promise<unknown> => {
-        return await this.fetch({
+    public removePlayerFromCharacter = async (lobbyId: string, descriptor: string, playerId: string) => {
+        return await this.fetch<{
+            players: Array<iLobbyPlayerInfo>;
+            characters: Array<iCharacterInLobby>;
+        }>({
             url: ENDPOINTS.REMOVE_PLAYER_FROM_CHARACTER(lobbyId, descriptor),
             method: 'delete',
             data: {

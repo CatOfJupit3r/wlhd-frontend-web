@@ -1,14 +1,9 @@
 import { CosmeticsState } from '@models/Redux';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import APIService from '@services/APIService';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: CosmeticsState = {
     pageTitle: 'unknown', // this title is displayed
 };
-
-export const fetchUserInformation = createAsyncThunk('cosmetics/fetchUserInformation', async () => {
-    return await APIService.getUserInformation();
-});
 
 const CosmeticsSlice = createSlice({
     name: 'cosmetics',
