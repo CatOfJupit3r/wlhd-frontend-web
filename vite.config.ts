@@ -2,8 +2,9 @@
 import react from '@vitejs/plugin-react';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { defineConfig } from 'vite';
+import { Plugin } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 function emptySourcemapFix() {
     let currentInterval = null;
@@ -40,7 +41,7 @@ function ClosePlugin() {
         name: 'ClosePlugin', // required, will show up in warnings and errors
 
         // use this to catch errors when building
-        buildEnd(error: any) {
+        buildEnd(error: never) {
             if (error) {
                 console.error('Error bundling');
                 console.error(error);
@@ -51,7 +52,7 @@ function ClosePlugin() {
         },
 
         // use this to catch the end of a build without errors
-        closeBundle(id: any) {
+        closeBundle() {
             console.log('Bundle closed');
             process.exit(0);
         },
@@ -62,9 +63,7 @@ const ReactCompilerConfig = {
     target: '19',
 };
 
-// https://vitejs.dev/config/
-export default defineConfig({
-    base: '/',
+const viteConfig = defineConfig({
     plugins: [
         react({
             babel: {
@@ -72,8 +71,15 @@ export default defineConfig({
             },
         }),
         tsconfigPaths(),
-        emptySourcemapFix() as unknown as Plugin,
-        ClosePlugin() as unknown as Plugin,
+        emptySourcemapFix() as Plugin,
+        ClosePlugin() as Plugin,
     ],
+    test: {
+        alias: {
+            '@utils': path.resolve(__dirname, './src/utils'),
+        },
+    },
     build: {},
 });
+
+export default viteConfig;
