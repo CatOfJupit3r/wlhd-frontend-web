@@ -1,0 +1,68 @@
+name: "TypeScript CodeQL Config"
+
+disable-default-queries: false
+
+queries:
+  # Run all default queries for JavaScript/TypeScript
+  - uses: security-and-quality
+
+  # Add specific security-extended queries
+  - uses: security-extended
+
+paths:
+  # Define paths to analyze
+  - src
+paths-ignore:
+  # Exclude test files and directories
+  - '**/test/**'
+  - '**/tests/**'
+  - '**/__tests__/**'
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+  # Exclude build output directories
+  - '**/dist/**'
+  - '**/build/**'
+  - '**/coverage/**'
+  # Exclude third-party code
+  - '**/node_modules/**'
+  # Exclude documentation
+  - '**/docs/**'
+  - '**/*.md'
+
+# Optional: Configure the number of threads to use for analysis
+query-filters:
+  - exclude:
+      problem.severity:
+        - note
+        - recommendation
+
+# Advanced JavaScript/TypeScript-specific settings
+javascript:
+  # Maximum size of a file to analyze (in bytes)
+  maxFileSize: 10485760  # 10MB
+  # Maximum number of lines in a file to analyze
+  maxLines: 100000
+  # Experimental features
+  experimental:
+    # Enable analysis of TypeScript decorators
+    decorators: true
+
+# Define custom severity levels for different query types
+severity-rules:
+  - id: js/sql-injection
+    severity: error
+  - id: js/path-injection
+    severity: error
+  - id: js/xss
+    severity: error
+  - id: js/clear-text-logging
+    severity: warning
+  - id: js/clear-text-storage
+    severity: warning
+
+# Database settings
+database:
+  # Optimize for TypeScript projects
+  optimize:
+    - template-code: true
+    - unused-code: true
