@@ -1,5 +1,5 @@
 import BetterScrollableContainer from '@components/BetterScrollableContainer';
-import { CharacterCard } from '@components/GameScreen/TurnOrderDisplay';
+import { CharacterCard } from '@components/GameScreen/turn-order-display';
 import { Button } from '@components/ui/button';
 import { useCombatEditorContext } from '@context/CombatEditorContext';
 import React, { useCallback, useMemo } from 'react';

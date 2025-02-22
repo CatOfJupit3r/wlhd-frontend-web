@@ -1,6 +1,6 @@
 import Battlefield from '@components/Battlefield/Battlefield';
+import AOEEffectsDisplay from '@components/GameScreen/aoe-effects-display';
 import GameUtilityComponent from '@components/GameScreen/GameUtilityComponent';
-import TurnOrderDisplay from '@components/GameScreen/TurnOrderDisplay';
 import { ActionContextProvider, iActionContext } from '@context/ActionContext';
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext';
 import { selectActions, selectActionTimestamp, selectBattlefield } from '@redux/slices/gameScreenSlice';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import styles from './GameScreen.module.css';
 import MenuContainer from './MenuContainer/MenuContainer';
 import MenuNavigator from './MenuNavigator/MenuNavigator';
-import RoundHeader from './RoundHeader';
+import RoundHeader from './round-header';
 
 const BattlefieldSection = () => {
     const battlefield = useSelector(selectBattlefield);
@@ -33,7 +33,7 @@ const GameScreen = ({ setActionOutput }: { setActionOutput?: iActionContext['set
                 <div className={styles.gameInfoContainer}>
                     <RoundHeader />
                     <div className={'flex flex-row'}>
-                        <TurnOrderDisplay />
+                        <AOEEffectsDisplay />
                         <BattlefieldSection />
                     </div>
                 </div>

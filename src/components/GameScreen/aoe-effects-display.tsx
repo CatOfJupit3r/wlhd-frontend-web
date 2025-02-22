@@ -81,7 +81,7 @@ type InnerInterOrderItem = {
     key: string;
 };
 
-const TurnOrderDisplay = () => {
+const AOEEffectsDisplay = () => {
     const turnOrder = useSelector(selectTurnOrder);
     const [innerTurnOrder, setInnerTurnOrder] = useState<InnerInterOrderItem[]>([]);
 
@@ -141,4 +141,4 @@ const TurnOrderDisplay = () => {
 };
 
 export { CharacterCard };
-export default TurnOrderDisplay;
+export default AOEEffectsDisplay;
