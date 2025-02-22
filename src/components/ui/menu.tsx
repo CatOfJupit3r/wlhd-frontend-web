@@ -45,9 +45,9 @@ const Menu = ({ selection }: { selection: MenuSelection }) => {
                 }}
             >
                 {menusToSelect
-                    .map(({ value, icon, disabled }) => (
+                    .map(({ value, icon: Icon, disabled }) => (
                         <ToggleGroupItem key={value} value={value} disabled={disabled ?? false}>
-                            {icon({ className: 'size-8' })}
+                            <Icon className={'size-8'} />
                         </ToggleGroupItem>
                     ))
                     .sort((a, b) => {

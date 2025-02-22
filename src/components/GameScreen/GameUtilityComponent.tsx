@@ -18,7 +18,7 @@ const GameUtilityComponent = () => {
         if (messages.length > 0) {
             const lastMessage = messages[messages.length - 1];
             toastGameMessage(<GameMessage content={lastMessage} />, {
-                position: 'bottom-right',
+                position: 'bottom-left',
                 closeOnClick: true,
             });
         }
