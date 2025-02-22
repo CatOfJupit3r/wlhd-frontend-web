@@ -14,14 +14,14 @@ import {
 } from '@components/Battlefield/Tiles/CosmeticTiles';
 import TileWithCharacter from '@components/Battlefield/Tiles/TileWithCharacter';
 import { cn } from '@utils';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import styles from './Battlefield.module.css';
 
 // const BATTLEFIELD_BLUR_HASH: string =
 //     '{7H2i;WB00j[9Ft7M{ofofazoLayoLayfQay00WB-;j[%gt7xuofoffQWBj[WBj[WBj[00WB~qfQ?cof%MfQt7j[ayj[ayfQayj[MxayofayoffQofayayj[t7ayt7WBofWBWBay%MfQxuj[t7j['
 
 const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | null }) => {
-    const SeparatorRow = useCallback(() => {
+    const SeparatorRow = useMemo(() => {
         if (separatorTimestamp) {
             return <SeparatorRowWithTimestamp timestamp={separatorTimestamp} />;
         }
@@ -39,7 +39,7 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
         );
     }, [separatorTimestamp]);
 
-    const NavigationHelpRow = useCallback(() => {
+    const NavigationHelpRow = useMemo(() => {
         return (
             <div id={'nav-help-row'} className={'flex'}>
                 <ConnectorTile />
@@ -69,7 +69,7 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
 
     return (
         <div className={cn(styles.battlefield, 'flex flex-col')} id={'battlefield-div'}>
-            <NavigationHelpRow />
+            {NavigationHelpRow}
             <div id={'safe-enemy'} className={'flex'}>
                 <SafeLineTile />
                 <CharactersOnRow line={'1'} />
@@ -85,7 +85,7 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <CharactersOnRow line={'3'} />
                 <MeleeLineTile />
             </div>
-            <SeparatorRow />
+            {SeparatorRow}
             <div id={'melee-ally'} className={'flex'}>
                 <MeleeLineTile />
                 <CharactersOnRow line={'4'} />
@@ -101,7 +101,7 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <CharactersOnRow line={'6'} />
                 <SafeLineTile />
             </div>
-            <NavigationHelpRow />
+            {NavigationHelpRow}
         </div>
     );
 };
