@@ -133,7 +133,8 @@
                 "user-range": "Радіус, щоб використовувати",
                 "is-active": "Активний",
                 "duration": "Тривалість",
-                "cost": "Вартість"
+                "cost": "Вартість",
+                "area-affected": "Клітинки під впливом"
             },
             "radius-alias": {
                 "any": "Будь-яка",
@@ -348,7 +349,8 @@
             "weapons": "Зброя",
             "spells": "Закляття",
             "items": "Предмети",
-            "status-effects": "Статусні ефекти"
+            "status-effects": "Статусні ефекти",
+            "area-effects": "Ефекти поля бою"
         }
     },
     "lobby-info": {

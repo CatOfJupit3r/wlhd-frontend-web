@@ -1,10 +1,17 @@
 import {
+    AreaEffectInfoDisplay,
     ItemInfoDisplay,
     SpellInfoDisplay,
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay';
-import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
+import {
+    AreaEffectEditable,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@models/CombatEditorModels';
 import GameConverters from '@services/GameConverters';
 import { FC } from 'react';
 
@@ -32,12 +39,18 @@ interface iStatusEffectEditableAdapter {
     info: StatusEffectEditable;
 }
 
+interface iAreaEffectEditableAdapter {
+    descriptor?: string;
+    type: 'area_effect';
+    info: AreaEffectEditable;
+}
+
 type EditableInfoAdapterProps =
     | iItemEditableAdapter
     | iWeaponEditableAdapter
     | iSpellEditableAdapter
-    | iStatusEffectEditableAdapter;
-
+    | iStatusEffectEditableAdapter
+    | iAreaEffectEditableAdapter;
 export const EditableInfoAdapter: FC<EditableInfoAdapterProps> = ({ type, info, descriptor }) => {
     switch (type) {
         case 'item':
@@ -50,6 +63,12 @@ export const EditableInfoAdapter: FC<EditableInfoAdapterProps> = ({ type, info, 
             return (
                 <StatusEffectInfoDisplay
                     info={GameConverters.convertStatusEffectEditableToInfo(descriptor ?? 'what', info)}
+                />
+            );
+        case 'area_effect':
+            return (
+                <AreaEffectInfoDisplay
+                    info={GameConverters.convertAreaEffectEditableToInfo(descriptor ?? 'what', info)}
                 />
             );
         default:
@@ -71,4 +90,8 @@ export const SpellEditableInfoAdapter: FC<Omit<iSpellEditableAdapter, 'type'>> =
 
 export const StatusEffectEditableInfoAdapter: FC<Omit<iStatusEffectEditableAdapter, 'type'>> = (props) => (
     <EditableInfoAdapter type={'status_effect'} {...props} />
+);
+
+export const AreaEffectEditableInfoAdapter: FC<Omit<iAreaEffectEditableAdapter, 'type'>> = (props) => (
+    <EditableInfoAdapter type={'area_effect'} {...props} />
 );

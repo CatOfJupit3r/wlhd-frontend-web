@@ -79,12 +79,12 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
                         ...effect,
                     })),
                 },
-                areaEffects: [],
             };
         }
         changeBattlefield(
             {
                 pawns: newBattlefield,
+                effects: [],
             },
             { keepActive: true, keepClicked: true, keepInteractable: true },
         );

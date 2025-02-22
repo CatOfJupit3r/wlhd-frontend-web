@@ -48,6 +48,10 @@ export interface StatusEffectEditable extends CommonEditableField {
     activationType: string;
 }
 
+export interface AreaEffectEditable extends StatusEffectEditable {
+    squares: string[];
+}
+
 export interface SpellEditable extends UsableComponentEditableFields {
     isActive: boolean;
 }

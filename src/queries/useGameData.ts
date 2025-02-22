@@ -87,10 +87,28 @@ const useGameCharacterInformation = (dlc: string, descriptor: string, enabled: b
     };
 };
 
+const useGameAreaEffectInformation = (dlc: string, descriptor: string) => {
+    const { data, refetch, isPending, isError } = useQuery({
+        queryKey: ['game', 'area_effect', dlc, descriptor],
+        queryFn: async () => {
+            console.log('Fetching area effect data');
+            return APIService.getAreaEffectInformation(dlc, descriptor);
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes,
+    });
+    return {
+        areaEffect: data,
+        refetch,
+        isPending,
+        isError,
+    };
+};
+
 export {
     useGameItemInformation,
     useGameWeaponInformation,
     useGameSpellInformation,
     useGameStatusEffectInformation,
+    useGameAreaEffectInformation,
     useGameCharacterInformation,
 };

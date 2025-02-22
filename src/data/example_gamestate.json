@@ -1997,8 +1997,7 @@
                         "base": 50
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             },
             "3/5": {
                 "character": {
@@ -2024,8 +2023,7 @@
                         "base": 100
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             },
             "4/2": {
                 "character": {
@@ -2051,10 +2049,10 @@
                         "base": 25
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             }
-        }
+        },
+        "effects": []
     },
     "round": {
         "current": "24",

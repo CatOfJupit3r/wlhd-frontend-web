@@ -6,6 +6,7 @@ import { IoHeart, IoLayersSharp, IoShieldSharp } from 'react-icons/io5';
 import { LuTally5, LuTriangle } from 'react-icons/lu';
 import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 import { PiClockCountdownBold, PiPlaceholderFill, PiSneakerMoveFill } from 'react-icons/pi';
+import { TbChartAreaLineFilled } from 'react-icons/tb';
 
 const Icons = [
     {
@@ -41,4 +42,5 @@ export {
     IoShieldSharp as ArmorIcon,
     IoHeart as HealthIcon,
     PiPlaceholderFill as PlaceholderIcon,
+    TbChartAreaLineFilled as AOEIcon,
 };

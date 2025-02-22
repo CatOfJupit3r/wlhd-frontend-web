@@ -98,3 +98,7 @@ export const SpellInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement
 export const StatusEffectInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
     <InfoDisplayPlaceholder type={'status_effect'} {...props} />
 );
+
+export const AreaEffectInfoDisplayPlaceholder = (props: HTMLAttributes<HTMLDivElement>) => (
+    <InfoDisplayPlaceholder type={'status_effect'} {...props} />
+);

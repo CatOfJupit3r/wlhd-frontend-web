@@ -1,6 +1,7 @@
 import {
     ActionPointsIcon,
     ActivenessIcon,
+    AOEIcon,
     CooldownIcon,
     DurationIcon,
     LocationIcon,
@@ -12,8 +13,8 @@ import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemo
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
 import SeparatedDiv from '@components/ui/separated-div';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
-import { HTMLAttributes, useCallback } from 'react';
+import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
+import { HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiInfinite } from 'react-icons/bi';
 
@@ -37,7 +38,12 @@ interface StatusEffectSegment {
     info: StatusEffectInfo;
 }
 
-export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment;
+interface AreaEffectSegment {
+    type: 'area_effect';
+    info: AreaEffectInfo;
+}
+
+export type InfoSegmentProps = WeaponSegment | ItemSegment | SpellSegment | StatusEffectSegment | AreaEffectSegment;
 
 const RADIUS_TO_COMMON_NAMES: { [key: string]: string } = {
     '3,4': 'any-melee',
@@ -55,14 +61,17 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
     const { t: tNoPrefix } = useTranslation();
     const { decorations } = info;
 
-    const QuantityInfo = useCallback(({ info }: ItemSegment | WeaponSegment) => {
+    const QuantityInfo = useMemo(() => {
+        if (type !== 'item' && type !== 'weapon') return null;
+
+        const { quantity } = info as ItemSegment['info'] | WeaponSegment['info'];
         return (
             <div>
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex flex-row items-center gap-1'}>
                             <QuantityIcon />
-                            <p>{info.quantity ?? '-'}</p>
+                            <p>{quantity ?? '-'}</p>
                         </div>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -71,13 +80,19 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 </Tooltip>
             </div>
         );
-    }, []);
+    }, [type, info]);
 
-    const IsActiveDetails = useCallback(({ info }: WeaponSegment | SpellSegment) => {
-        return info.isActive ? <ActivenessIcon className={'size-6'} /> : null;
-    }, []);
+    const IsActiveDetails = useMemo(() => {
+        if (type !== 'weapon' && type !== 'spell') return null;
 
-    const UsageDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
+        const { isActive } = info as WeaponSegment['info'] | SpellSegment['info'];
+        return isActive ? <ActivenessIcon className={'size-6'} /> : null;
+    }, [type, info]);
+
+    const UsageDetails = useMemo(() => {
+        if (type === 'status_effect' || type === 'area_effect') return null;
+
+        const { userNeedsRange, uses } = info;
         return (
             <>
                 <div className={''}>
@@ -86,9 +101,9 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                             <div className={'flex flex-row items-center gap-1'}>
                                 <LocationIcon className={'size-4'} />
                                 <p>
-                                    {info.userNeedsRange.toString() in RADIUS_TO_COMMON_NAMES
-                                        ? t(`radius-alias.${RADIUS_TO_COMMON_NAMES[info.userNeedsRange.toString()]}`)
-                                        : info.userNeedsRange.toString()}
+                                    {userNeedsRange.toString() in RADIUS_TO_COMMON_NAMES
+                                        ? t(`radius-alias.${RADIUS_TO_COMMON_NAMES[userNeedsRange.toString()]}`)
+                                        : userNeedsRange.toString()}
                                 </p>
                             </div>
                         </TooltipTrigger>
@@ -100,7 +115,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                         <TooltipTrigger className={'cursor-default'}>
                             <div className={'flex flex-row items-center gap-1'}>
                                 <UsesIcon />
-                                {`${info.uses.current ?? '-'}/${info.uses.max ?? '-'}`}
+                                {`${uses.current ?? '-'}/${uses.max ?? '-'}`}
                             </div>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -110,25 +125,31 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 </div>
             </>
         );
-    }, []);
+    }, [type, info]);
 
-    const CostDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
+    const CostDetails = useMemo(() => {
+        if (type === 'status_effect' || type === 'area_effect') return null;
+
+        const { cost } = info;
         return (
             <div>
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex flex-row items-center gap-1 text-base'}>
                             <ActionPointsIcon />
-                            <p>{info.cost ?? '-'}</p>
+                            <p>{cost ?? '-'}</p>
                         </div>
                     </TooltipTrigger>
                     <TooltipContent>{t('tooltips.cost')}</TooltipContent>
                 </Tooltip>
             </div>
         );
-    }, []);
+    }, [type, info]);
 
-    const CooldownDetails = useCallback(({ info }: ItemSegment | WeaponSegment | SpellSegment) => {
+    const CooldownDetails = useMemo(() => {
+        if (type === 'status_effect' || type === 'area_effect') return null;
+
+        const { cooldown } = info;
         return (
             <div>
                 <Tooltip>
@@ -142,7 +163,7 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                                     color: 'black',
                                 }}
                             >
-                                {info.cooldown ? `${info.cooldown.current ?? '-'}/${info.cooldown.max ?? '-'}` : '-'}
+                                {cooldown ? `${cooldown.current ?? '-'}/${cooldown.max ?? '-'}` : '-'}
                             </p>
                         </div>
                     </TooltipTrigger>
@@ -152,20 +173,19 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 </Tooltip>
             </div>
         );
-    }, []);
+    }, [type, info]);
 
-    const EffectDurationDetails = useCallback(({ info }: StatusEffectSegment) => {
+    const EffectDurationDetails = useMemo(() => {
+        if (type !== 'status_effect' && type !== 'area_effect') return null;
+
+        const { duration } = info;
         return (
             <div>
                 <Tooltip>
                     <TooltipTrigger className={'cursor-default'}>
                         <div className={'flex items-center gap-1'}>
                             <DurationIcon className={'size-5'} />
-                            {info.duration === null ? (
-                                <BiInfinite className={'size-5'} />
-                            ) : (
-                                <p>{info.duration ?? '-'}</p>
-                            )}
+                            {duration === null ? <BiInfinite className={'size-5'} /> : <p>{duration ?? '-'}</p>}
                         </div>
                     </TooltipTrigger>
                     <TooltipContent className={'text-base font-normal'}>
@@ -174,7 +194,35 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
                 </Tooltip>
             </div>
         );
-    }, []);
+    }, [type, info]);
+
+    const AreaAffectedDetails = useMemo(() => {
+        if (type !== 'area_effect') return null;
+
+        const { squares } = info;
+        return (
+            <div>
+                <div className={'flex flex-row items-center gap-1'}>
+                    <Tooltip>
+                        <TooltipTrigger className={'cursor-default'}>
+                            <AOEIcon className={'size-5'} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{t('tooltips.area-affected')}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger className={'cursor-default'}>
+                            <p>{squares.length ?? '-'}</p>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{squares.join(', ')}</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </div>
+        );
+    }, [type, info]);
 
     return (
         <SeparatedDiv
@@ -185,35 +233,19 @@ const InfoDisplay = ({ type, info }: InfoSegmentProps) => {
             <div id={'main-info'} className={'flex w-full flex-row justify-between overflow-hidden text-xl font-bold'}>
                 <div className={'flex flex-row items-center gap-2'}>
                     {tNoPrefix(decorations?.name) ?? '???'}
-                    {type === 'weapon' && IsActiveDetails({ info } as WeaponSegment)}
-                    {type === 'spell' && info.isActive && IsActiveDetails({ info } as SpellSegment)}
+                    {IsActiveDetails}
                 </div>
             </div>
             <div id={'minor-info'} className={'relative flex flex-row justify-between text-base'}>
                 <div>
-                    {(type === 'item' || type === 'weapon') &&
-                        QuantityInfo({
-                            type,
-                            info,
-                        } as ItemSegment | WeaponSegment)}
-                    {type !== 'status_effect' &&
-                        UsageDetails({
-                            type,
-                            info,
-                        } as ItemSegment | WeaponSegment | SpellSegment)}
+                    {AreaAffectedDetails}
+                    {QuantityInfo}
+                    {UsageDetails}
                 </div>
                 <div id={'type-details'} className={'flex-col items-end gap-3'}>
-                    {type === 'status_effect' && EffectDurationDetails({ info } as StatusEffectSegment)}
-                    {type !== 'status_effect' &&
-                        CooldownDetails({
-                            type,
-                            info,
-                        } as ItemSegment | WeaponSegment | SpellSegment)}
-                    {type !== 'status_effect' &&
-                        CostDetails({
-                            type,
-                            info,
-                        } as ItemSegment | WeaponSegment | SpellSegment)}
+                    {EffectDurationDetails}
+                    {CooldownDetails}
+                    {CostDetails}
                 </div>
             </div>
             <DescriptionWithMemories
@@ -256,3 +288,10 @@ export const StatusEffectInfoDisplay = ({
 }: {
     info: StatusEffectSegment['info'];
 } & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'status_effect'} info={info} {...props} />;
+
+export const AreaEffectInfoDisplay = ({
+    info,
+    ...props
+}: {
+    info: AreaEffectSegment['info'];
+} & HTMLAttributes<HTMLDivElement>) => <InfoDisplay type={'area_effect'} info={info} {...props} />;

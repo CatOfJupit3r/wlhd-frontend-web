@@ -3,12 +3,14 @@ import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo'
 import CharacterInfoWithDescriptor from '@components/CharacterDisplay/CharacterInfoWithDescriptor';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
 import {
+    AreaEffectInfoDisplayPlaceholder,
     ItemInfoDisplayPlaceholder,
     SpellInfoDisplayPlaceholder,
     StatusEffectInfoDisplayPlaceholder,
     WeaponInfoDisplayPlaceholder,
 } from '@components/InfoDisplay/InfoDisplayPlaceholder';
 import {
+    AreaEffectInfoDisplayWithDescriptor,
     ItemInfoDisplayWithDescriptor,
     SpellInfoDisplayWithDescriptor,
     StatusEffectInfoDisplayWithDescriptor,
@@ -17,6 +19,7 @@ import {
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { useGameWikiContext } from '@context/GameWikiContext';
 import {
+    useLoadedAreaEffects,
     useLoadedCharacters,
     useLoadedItems,
     useLoadedSpells,
@@ -26,7 +29,7 @@ import {
 import { FC } from 'react';
 
 interface iCategoryContent {
-    category: string;
+    category: 'characters' | 'spells' | 'items' | 'weapons' | 'statusEffects' | 'areaEffects' | null;
 }
 
 const PLACEHOLDER_CLASSNAME = 'flex flex-col gap-4 rounded border-2 p-4';
@@ -34,11 +37,15 @@ const CONTENT_DIV_CLASSNAME = 'grid grid-cols-2 gap-6 overflow-x-auto';
 
 const CategoryContent: FC<iCategoryContent> = ({ category }) => {
     const { dlc } = useGameWikiContext();
-    const { spells, isPending: isSpellPending } = useLoadedSpells(dlc);
-    const { items, isPending: isItemPending } = useLoadedItems(dlc);
-    const { weapons, isPending: isWeaponPending } = useLoadedWeapons(dlc);
-    const { statusEffects, isPending: isStatusEffectPending } = useLoadedStatusEffects(dlc);
-    const { characters, isPending: isCharacterPending } = useLoadedCharacters(dlc);
+    const { spells, isPending: isSpellPending } = useLoadedSpells(dlc, category === 'spells');
+    const { items, isPending: isItemPending } = useLoadedItems(dlc, category === 'items');
+    const { weapons, isPending: isWeaponPending } = useLoadedWeapons(dlc, category === 'weapons');
+    const { statusEffects, isPending: isStatusEffectPending } = useLoadedStatusEffects(
+        dlc,
+        category === 'statusEffects',
+    );
+    const { areaEffects, isPending: isAreaEffectPending } = useLoadedAreaEffects(dlc, category === 'areaEffects');
+    const { characters, isPending: isCharacterPending } = useLoadedCharacters(dlc, category === 'characters');
 
     switch (category) {
         case 'characters':
@@ -150,6 +157,31 @@ const CategoryContent: FC<iCategoryContent> = ({ category }) => {
                             {Object.keys(statusEffects).map((descriptor, index) => {
                                 return (
                                     <StatusEffectInfoDisplayWithDescriptor
+                                        dlc={dlc}
+                                        descriptor={descriptor}
+                                        key={index}
+                                    />
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+            );
+        case 'areaEffects':
+            return (
+                <div>
+                    {isAreaEffectPending || !areaEffects ? (
+                        <div className={CONTENT_DIV_CLASSNAME}>
+                            <AreaEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
+                            <AreaEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
+                            <AreaEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
+                            <AreaEffectInfoDisplayPlaceholder className={PLACEHOLDER_CLASSNAME} />
+                        </div>
+                    ) : (
+                        <div className={CONTENT_DIV_CLASSNAME}>
+                            {Object.keys(areaEffects).map((descriptor, index) => {
+                                return (
+                                    <AreaEffectInfoDisplayWithDescriptor
                                         dlc={dlc}
                                         descriptor={descriptor}
                                         key={index}

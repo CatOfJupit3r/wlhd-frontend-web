@@ -17,12 +17,12 @@ const initialState: GameScreenState = {
                 for (let j = 0; j < 6; j++) {
                     pawns[`${i + 1}/${j + 1}`] = {
                         character: null,
-                        areaEffects: [],
                     };
                 }
             }
             return pawns;
         })(),
+        effects: [],
     },
     actions: null,
     round: {

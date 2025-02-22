@@ -11,9 +11,9 @@ export interface Battlefield {
     pawns: {
         [key: string]: {
             character: CharacterInfoTooltip | null;
-            areaEffects: Array<unknown>;
         };
     };
+    effects: Array<AreaEffectInfo>;
 }
 
 export type TranslatableString =
@@ -137,6 +137,12 @@ export interface SpellInfo extends CommonGameComponentInfoFields {
 export interface StatusEffectInfo extends CommonGameComponentInfoFields {
     descriptor: string;
     duration: number | null;
+}
+
+export interface AreaEffectInfo extends CommonGameComponentInfoFields {
+    descriptor: string;
+    duration: number | null;
+    squares: Array<string>;
 }
 
 export interface iActionDecoration extends GameComponentDecoration {

@@ -1,16 +1,19 @@
 import {
+    AreaEffectEditableInfoAdapter,
     ItemEditableInfoAdapter,
     SpellEditableInfoAdapter,
     StatusEffectEditableInfoAdapter,
     WeaponEditableInfoAdapter,
 } from '@components/InfoDisplay/EditableInfoAdapter';
 import {
+    AreaEffectInfoDisplayPlaceholder,
     ItemInfoDisplayPlaceholder,
     SpellInfoDisplayPlaceholder,
     StatusEffectInfoDisplayPlaceholder,
     WeaponInfoDisplayPlaceholder,
 } from '@components/InfoDisplay/InfoDisplayPlaceholder';
 import {
+    useGameAreaEffectInformation,
     useGameItemInformation,
     useGameSpellInformation,
     useGameStatusEffectInformation,
@@ -59,9 +62,19 @@ const StatusEffectInfoDisplayWithDescriptor: FC<iInfoDisplayWithDescriptor> = ({
     return <StatusEffectEditableInfoAdapter info={statusEffect} />;
 };
 
+const AreaEffectInfoDisplayWithDescriptor: FC<iInfoDisplayWithDescriptor> = ({ dlc, descriptor }) => {
+    const { areaEffect, isPending } = useGameAreaEffectInformation(dlc, descriptor);
+
+    if (isPending || !areaEffect) {
+        return <AreaEffectInfoDisplayPlaceholder />;
+    }
+    return <AreaEffectEditableInfoAdapter info={areaEffect} />;
+};
+
 export {
     ItemInfoDisplayWithDescriptor,
     WeaponInfoDisplayWithDescriptor,
     SpellInfoDisplayWithDescriptor,
     StatusEffectInfoDisplayWithDescriptor,
+    AreaEffectInfoDisplayWithDescriptor,
 };
