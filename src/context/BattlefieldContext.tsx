@@ -77,6 +77,48 @@ const DEFAULT_BATTLEFIELD: () => iBattlefieldContext['battlefield'] = () => {
     return res;
 };
 
+const calculateWhichAOEHighlightsToShow = (squares: Array<string>) =>
+    squares.reduce(
+        (acc, curr) => {
+            const [line, column] = curr.split('/').map((value) => parseInt(value, 10));
+            let modes = [
+                AOE_HIGHLIGHT_MODE.LEFT,
+                AOE_HIGHLIGHT_MODE.RIGHT,
+                AOE_HIGHLIGHT_MODE.TOP,
+                AOE_HIGHLIGHT_MODE.BOTTOM,
+            ];
+            let neighborLeft = acc[`${line}/${column - 1}`];
+            if (neighborLeft) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.LEFT);
+                neighborLeft = neighborLeft.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.RIGHT);
+            }
+            let neighborRight = acc[`${line}/${column + 1}`];
+            if (neighborRight) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.RIGHT);
+                neighborRight = neighborRight.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.LEFT);
+            }
+            let neighborTop = acc[`${line - 1}/${column}`];
+            if (neighborTop) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.TOP);
+                neighborTop = neighborTop.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.BOTTOM);
+            }
+            let neighborBottom = acc[`${line + 1}/${column}`];
+            if (neighborBottom) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.BOTTOM);
+                neighborBottom = neighborBottom.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.TOP);
+            }
+            return {
+                ...acc,
+                ...(neighborLeft ? { [`${line}/${column - 1}`]: neighborLeft } : {}),
+                ...(neighborRight ? { [`${line}/${column + 1}`]: neighborRight } : {}),
+                ...(neighborTop ? { [`${line - 1}/${column}`]: neighborTop } : {}),
+                ...(neighborBottom ? { [`${line + 1}/${column}`]: neighborBottom } : {}),
+                [curr]: [...modes],
+            };
+        },
+        {} as { [key in (typeof squares)[number]]: Array<AOEHighlightModeType> },
+    );
+
 export const BattlefieldContextProvider = ({ children }: { children: ReactNode }) => {
     const [battlefield, setBattlefield] = useState<iBattlefieldContext['battlefield']>(DEFAULT_BATTLEFIELD());
     const [onClickTile, setOnClickTile] = useState<iBattlefieldContext['onClickTile']>((_?: string) => () => {});
@@ -239,19 +281,20 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
     const addAOEHighlight = useCallback((squares: Array<string>) => {
         setBattlefield((prev) => {
             const newBattlefield = { ...prev };
+            const newAOEHighlights = {
+                ...calculateWhichAOEHighlightsToShow(
+                    squares.filter((square) => getCharacterSideWithSquare(square) === 'ally'),
+                ),
+                ...calculateWhichAOEHighlightsToShow(
+                    squares.filter((square) => getCharacterSideWithSquare(square) === 'enemy'),
+                ),
+            };
             for (const square of Object.keys(newBattlefield)) {
                 newBattlefield[square] = {
                     ...newBattlefield[square],
                     flags: {
                         ...newBattlefield[square].flags,
-                        aoe_highlight: squares.find((s) => s === square)
-                            ? [
-                                  AOE_HIGHLIGHT_MODE.LEFT,
-                                  AOE_HIGHLIGHT_MODE.RIGHT,
-                                  AOE_HIGHLIGHT_MODE.TOP,
-                                  AOE_HIGHLIGHT_MODE.BOTTOM,
-                              ]
-                            : [],
+                        aoe_highlight: newAOEHighlights[square] || [],
                     },
                 };
             }
