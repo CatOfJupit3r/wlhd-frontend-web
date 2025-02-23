@@ -2,7 +2,7 @@ import { Battlefield } from '@models/GameModels';
 import { getCharacterSideWithSquare } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
-const AOE_HIGHLIGHT_MODE = {
+export const AOE_HIGHLIGHT_MODE = {
     RIGHT: 'RIGHT',
     LEFT: 'LEFT',
     TOP: 'TOP',
@@ -43,7 +43,7 @@ export interface iBattlefieldContext {
     setInteractableSquares: (...squares: string[]) => void;
     setActiveSquares: (...squares: string[]) => void;
 
-    addAOEHighlight: (squares: string[]) => void;
+    addAOEHighlight: (squares: Array<string>) => void;
 
     onClickTile: (square?: string) => void;
     changeOnClickTile: (onClickTile: (square?: string) => void) => void;
@@ -236,7 +236,7 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
         });
     }, []);
 
-    const addAOEHighlight = useCallback((squares: string[]) => {
+    const addAOEHighlight = useCallback((squares: Array<string>) => {
         setBattlefield((prev) => {
             const newBattlefield = { ...prev };
             for (const square of Object.keys(newBattlefield)) {
@@ -244,7 +244,14 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
                     ...newBattlefield[square],
                     flags: {
                         ...newBattlefield[square].flags,
-                        aoe_highlight: squares.find((square) => square === square) ? [AOE_HIGHLIGHT_MODE.LEFT] : [],
+                        aoe_highlight: squares.find((s) => s === square)
+                            ? [
+                                  AOE_HIGHLIGHT_MODE.LEFT,
+                                  AOE_HIGHLIGHT_MODE.RIGHT,
+                                  AOE_HIGHLIGHT_MODE.TOP,
+                                  AOE_HIGHLIGHT_MODE.BOTTOM,
+                              ]
+                            : [],
                     },
                 };
             }
