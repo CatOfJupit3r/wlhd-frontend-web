@@ -147,6 +147,9 @@
             "memories": {
                 "dice": "{{amount}}к{{sides}}"
             }
+        },
+        "aoe-effects-display": {
+            "tooltip" : "Активні ефекти поля бою"
         }
     },
     "not_found": {

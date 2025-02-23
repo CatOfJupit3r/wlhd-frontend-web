@@ -159,6 +159,7 @@ export const selectActions = (state: RootState) => state.gameScreen.actions;
 export const selectIsYourTurn = (state: RootState) => state.gameScreen.yourTurn;
 export const selectActionTimestamp = (state: RootState) => state.gameScreen.actionTimestamp;
 export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameLobbyState;
+export const selectAOEEffects = (state: RootState) => state.gameScreen.battlefield.effects;
 
 export const selectActiveCharacter = createSelector(
     [(state: RootState) => state.gameScreen.round.order],
