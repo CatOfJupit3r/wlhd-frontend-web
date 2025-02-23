@@ -84,8 +84,8 @@ const Decoration = ({ square }: { square: string }) => {
                     aoe_highlight.length > 0 ? '' : 'pointer-events-none opacity-0',
                 )}
                 style={{
-                    width: 'var(--tile-size);',
-                    height: 'var(--tile-size);',
+                    width: 'var(--tile-size)',
+                    height: 'var(--tile-size)',
                 }}
             />
         </>
