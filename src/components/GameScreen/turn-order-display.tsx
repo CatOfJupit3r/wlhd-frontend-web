@@ -33,7 +33,7 @@ const CharacterCard = forwardRef(
                 title={t(character.decorations.name)}
                 ref={ref}
                 initial={{ y: -100, opacity: 0 }}
-                animate={{ y: isActive ? 0 : -15, opacity: 1 }} // active characters are a bit to the right
+                animate={{ y: isActive ? 0 : -15, opacity: 1 }} // active characters are a bit to the top
                 exit={{ y: -100, opacity: 0 }}
                 layout
                 transition={{

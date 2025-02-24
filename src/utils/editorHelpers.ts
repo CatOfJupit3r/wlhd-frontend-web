@@ -24,8 +24,8 @@ class EditorHelpers {
         // [1, 2, 3, 4, 5]. 2 is activeCharacterIndex
         // [3, 4, 5, null, 1, 2]
 
-        const firstHalf = turnOrderCopy.slice(activeCharacterIndex + 1);
-        const secondHalf = turnOrderCopy.slice(0, activeCharacterIndex + 1);
+        const firstHalf = turnOrderCopy.slice(activeCharacterIndex + 1).map((turn) => turn.id);
+        const secondHalf = turnOrderCopy.slice(0, activeCharacterIndex + 1).map((turn) => turn.id);
 
         // null is the round end. it is possible for multiple nulls, but editor is not designed for that
         console.log('First half:', firstHalf);

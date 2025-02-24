@@ -7,6 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const apprf = (prefix: string, className: ClassValue, includeTwoDots: boolean = true): ClassValue => {
     // adds a prefix to each TailwindCSS class in `className` params. Adds `:` in process.
+    // DO NOT USE, TAILWIND WON'T RECOGNIZE THE PREFIX
     if (!className) {
         return className;
     }

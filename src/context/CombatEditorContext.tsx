@@ -1,6 +1,7 @@
 import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
+import { RandomUtils } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id });
@@ -22,7 +23,7 @@ export interface CombatEditorContextType {
         [square: string]: CharacterDataEditableInCombat;
     };
     messages: GameStateContainer;
-    turnOrder: Array<string>;
+    turnOrder: Array<iTurnInOrder>;
     activeCharacterIndex: number;
 
     addCharacter: (
@@ -36,7 +37,7 @@ export interface CombatEditorContextType {
     updateControl: (square: string, control: ControlledBy) => void;
 
     changeRound: (newRound: number) => void;
-    changeTurnOrder: (newTurnOrder: Array<string>) => void;
+    changeTurnOrder: (newTurnOrder: Array<iTurnInOrder>) => void;
     addCharacterToTurnOrder: (characterId: string) => void;
     makeCharacterActive: (index: number) => void;
 
@@ -49,6 +50,14 @@ export interface CombatEditorContextType {
     changePreset: (newData: CombatEditorSaveType) => void;
     resetPreset: () => void;
 }
+
+interface iTurnInOrder {
+    character: string;
+    id: string; // id of TURN instance
+    // possible to extends in future should turns become more complex
+}
+
+const createTurnInOrder = (character: string): iTurnInOrder => ({ character, id: RandomUtils.uuid() });
 
 const CombatEditorContext = createContext<CombatEditorContextType | undefined>(undefined);
 
@@ -158,14 +167,13 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         setRound(newRound);
     }, []);
 
-    const changeTurnOrder = useCallback((newTurnOrder: Array<string>) => {
+    const changeTurnOrder = useCallback((newTurnOrder: Array<iTurnInOrder>) => {
+        // newTurnOrder contains IDs of turns, not characters
         setTurnOrder(newTurnOrder);
     }, []);
 
     const addCharacterToTurnOrder = useCallback((characterId: string) => {
-        setTurnOrder((prev) => {
-            return [...prev, characterId];
-        });
+        setTurnOrder((prev) => [...prev, createTurnInOrder(characterId)]);
     }, []);
 
     const makeCharacterActive = useCallback(

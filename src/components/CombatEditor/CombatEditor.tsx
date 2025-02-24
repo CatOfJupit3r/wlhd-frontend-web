@@ -8,10 +8,9 @@ import {
     verifyCombatEditorLocalStorage,
 } from '@components/CombatEditor/CombatEditorLocalStorage';
 import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare';
-import TurnOrderEditor from '@components/CombatEditor/TurnOrderEditor';
+import RoundInfoEditor from '@components/CombatEditor/round-info-editor';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
-import { Input } from '@components/ui/input';
 import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext';
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
 import { Battlefield as BattlefieldModel } from '@models/GameModels';
@@ -158,80 +157,6 @@ const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (sq
     return <Battlefield />;
 };
 
-const RoundHeader = () => {
-    const { t } = useTranslation();
-    const { round, changeRound } = useCombatEditorContext();
-    const [newRound, setNewRound] = useState(round);
-    const [editable, setEditable] = useState(false);
-
-    useEffect(() => {
-        setNewRound(round);
-    }, [round]);
-
-    return (
-        <div className={'flex flex-row gap-2'}>
-            <div className={'flex flex-row gap-2'}>
-                <p className={'text-2xl text-white'}>{t('local:editor.round-count')}</p>
-                {editable ? (
-                    <Input
-                        className={`h-full w-[4ch] max-w-[4ch] border-0 border-none border-transparent bg-transparent p-0 font-bold text-secondary underline ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent`}
-                        value={parseInt(newRound.toString()).toString()}
-                        placeholder={round.toString()}
-                        extraClassName={'text-2xl '}
-                        type={'number'}
-                        onBlur={() => {
-                            changeRound(newRound);
-                            setEditable(false);
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                changeRound(newRound);
-                                setEditable(false);
-                            } else if (e.key === 'Escape') {
-                                setNewRound(round);
-                                setEditable(false);
-                            }
-                        }}
-                        autoFocus
-                        onFocus={(event) => {
-                            const value = event.target.value;
-                            event.target.value = '';
-                            event.target.value = value;
-                        }}
-                        onInput={(e) => {
-                            e.preventDefault();
-                            if (e.currentTarget.value === '') {
-                                setNewRound(0);
-                                return;
-                            }
-                            const value = parseInt(e.currentTarget.value);
-                            if (isNaN(value)) {
-                                return;
-                            } else if (value <= 0) {
-                                setNewRound(0);
-                            } else if (value > 999) {
-                                setNewRound(999);
-                                return;
-                            } else {
-                                setNewRound(parseInt(e.currentTarget.value));
-                            }
-                        }}
-                    />
-                ) : (
-                    <p
-                        className={'text-center text-2xl font-bold text-white'}
-                        onDoubleClick={() => {
-                            setEditable(true);
-                        }}
-                    >
-                        {round}
-                    </p>
-                )}
-            </div>
-        </div>
-    );
-};
-
 const CombatEditor = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -297,18 +222,13 @@ const CombatEditor = () => {
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
-            <div className={'relative flex h-full w-3/5 flex-col items-center justify-center gap-3 bg-gray-800'}>
-                <div>
-                    <RoundHeader />
-                </div>
-                <div className={'flex flex-row gap-2'}>
-                    <TurnOrderEditor />
-                    <BattlefieldContextProvider>
-                        <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
-                    </BattlefieldContextProvider>
-                </div>
+            <div className={'max-w-2/3 relative flex h-full w-full flex-col items-center gap-3 bg-gray-800 pt-8'}>
+                <RoundInfoEditor style={{ width: 'calc(var(--tile-size) * 8)' }} />
+                <BattlefieldContextProvider>
+                    <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
+                </BattlefieldContextProvider>
             </div>
-            <div className={'relative flex h-screen w-2/5 flex-col bg-white'}>
+            <div className={'max-w-1/3 relative flex h-screen w-full flex-col bg-white'}>
                 <div className={'text-t-4xl flex h-20 w-full flex-row items-center bg-black px-4'}>
                     <div className={'flex w-full max-w-[90%] flex-row items-center justify-center gap-2'}>
                         <Button
