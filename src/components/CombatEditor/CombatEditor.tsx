@@ -1,31 +1,32 @@
-import Battlefield from '@components/Battlefield/Battlefield';
+import { AxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaPlay, FaSave } from 'react-icons/fa';
+import { MdOutlineVideogameAssetOff } from 'react-icons/md';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useNavigate } from 'react-router';
+
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
-import { AddNewCharacter } from '@components/CombatEditor/AddNewCharacter';
+import { toastError } from '@components/toastifications';
+import { Button } from '@components/ui/button';
+import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
+import useThisLobby from '@queries/useThisLobby';
+import paths from '@router/paths';
+import APIService from '@services/APIService';
+import EditorHelpers from '@utils/editorHelpers';
+
+import { AddNewCharacter } from './AddNewCharacter';
 import {
     getLastUsedCombatEditorPreset,
     removeCombatEditorLocalStorage,
     saveCombatEditorPreset,
     verifyCombatEditorLocalStorage,
-} from '@components/CombatEditor/CombatEditorLocalStorage';
-import { EditCharacterOnSquare } from '@components/CombatEditor/EditCharacterOnSquare';
-import RoundInfoEditor from '@components/CombatEditor/round-info-editor';
-import { toastError } from '@components/toastifications';
-import { Button } from '@components/ui/button';
-import { BattlefieldContextProvider, useBattlefieldContext } from '@context/BattlefieldContext';
-import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
-import { Battlefield as BattlefieldModel } from '@models/GameModels';
-import useThisLobby from '@queries/useThisLobby';
-import paths from '@router/paths';
-import APIService from '@services/APIService';
-import EditorHelpers from '@utils/editorHelpers';
-import { AxiosError } from 'axios';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { BiAddToQueue } from 'react-icons/bi';
-import { FaPlay, FaSave } from 'react-icons/fa';
-import { MdOutlineVideogameAssetOff } from 'react-icons/md';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { useNavigate } from 'react-router';
+} from './CombatEditorLocalStorage';
+import { EditCharacterOnSquare } from './EditCharacterOnSquare';
+import RoundInfoEditor from './round-header';
+
+import BattlefieldSectionEditor from './battlefield-section-editor';
+import styles from './dotted-background.module.css';
 
 interface PresetDetails {
     nickName: string;
@@ -33,137 +34,13 @@ interface PresetDetails {
     presetID: string;
 }
 
-const BattlefieldRepresentation = ({ setClickedSquare }: { setClickedSquare: (square: string | null) => void }) => {
-    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditorContext();
-    const {
-        changeBattlefield,
-        setInteractableSquares,
-        changeOnClickTile,
-        incrementClickedSquares,
-        resetClickedSquares,
-        changeBonusTileTooltipGenerator,
-    } = useBattlefieldContext();
-
-    const updateBattlefield = useCallback(() => {
-        const newBattlefield: {
-            [square: string]: BattlefieldModel['pawns'][string];
-        } = {};
-        for (const square in battlefield) {
-            const [lineStr, columnStr] = square.split('/');
-            if (!lineStr || !columnStr || !battlefield[square]) {
-                continue;
-            }
-            const line = parseInt(lineStr);
-            const column = parseInt(columnStr);
-            if (isNaN(line) || isNaN(column)) {
-                continue;
-            }
-            newBattlefield[square] = {
-                character: {
-                    decorations: battlefield[square].decorations,
-                    square: { line, column },
-                    health: {
-                        current: battlefield[square].attributes['builtins:current_health'],
-                        max: battlefield[square].attributes['builtins:max_health'],
-                    },
-                    action_points: {
-                        current: battlefield[square].attributes['builtins:current_action_points'],
-                        max: battlefield[square].attributes['builtins:max_action_points'],
-                    },
-                    armor: {
-                        current: battlefield[square].attributes['builtins:current_armor'],
-                        base: battlefield[square].attributes['builtins:base_armor'],
-                    },
-                    statusEffects: battlefield[square].statusEffects.map((effect) => ({
-                        ...effect,
-                    })),
-                },
-            };
-        }
-        changeBattlefield(
-            {
-                pawns: newBattlefield,
-                effects: [],
-            },
-            { keepActive: true, keepClicked: true, keepInteractable: true },
-        );
-        setInteractableSquares(
-            ...(() => {
-                const interactableSquares: Array<string> = [];
-                for (let i = 0; i < 6; i++) {
-                    for (let j = 0; j < 6; j++) {
-                        interactableSquares.push(`${i + 1}/${j + 1}`);
-                    }
-                }
-                return interactableSquares;
-            })(),
-        );
-        changeOnClickTile((square) => {
-            if (square) {
-                resetClickedSquares();
-                incrementClickedSquares(square);
-            }
-            setClickedSquare(square ?? null);
-        });
-        changeBonusTileTooltipGenerator((square) => {
-            if (!square) return null;
-            const characterIsPreset = !!(battlefield[square] && battlefield[square].descriptor);
-            if (!characterIsPreset) return null;
-            const buttons: Array<{
-                text: string | ReactNode;
-                onClick: () => void;
-                variant: 'default' | 'destructive' | 'secondary' | null;
-                disabled: boolean;
-            }> = [
-                {
-                    text: <BiAddToQueue />,
-                    onClick: () => {
-                        if (!characterIsPreset) return;
-                        const characterId = battlefield[square].id_;
-                        addCharacterToTurnOrder(characterId);
-                    },
-                    variant: 'default',
-                    disabled: !characterIsPreset,
-                },
-                {
-                    text: <RiDeleteBin6Line />,
-                    onClick: () => {
-                        removeCharacter(square);
-                    },
-                    variant: 'destructive',
-                    disabled: !characterIsPreset,
-                },
-            ];
-            return buttons.map((button, index) => (
-                <Button
-                    key={index}
-                    onClick={button.onClick}
-                    variant={button.variant}
-                    className={'w-full'}
-                    disabled={button.disabled}
-                >
-                    {button.text}
-                </Button>
-            ));
-        });
-    }, [battlefield]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            updateBattlefield();
-        });
-    }, [battlefield]);
-
-    return <Battlefield />;
-};
-
 const CombatEditor = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
     const { lobby } = useThisLobby();
 
-    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages } =
+    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages, areaEffects } =
         useCombatEditorContext();
 
     const [clickedSquare, setClickedSquare] = useState<string | null>(null);
@@ -202,6 +79,7 @@ const CombatEditor = () => {
                 lobby.lobbyId,
                 'Combat from Editor',
                 EditorHelpers.convertGameEditorSaveToExportable({
+                    areaEffects,
                     battlefield,
                     turnOrder,
                     activeCharacterIndex,
@@ -222,11 +100,11 @@ const CombatEditor = () => {
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
-            <div className={'max-w-2/3 relative flex h-full w-full flex-col items-center gap-3 bg-gray-800 pt-8'}>
+            <div
+                className={`max-w-2/3 relative flex h-full w-full flex-col items-center gap-3 pt-8 ${styles.dottedBackground}`}
+            >
                 <RoundInfoEditor style={{ width: 'calc(var(--tile-size) * 8)' }} />
-                <BattlefieldContextProvider>
-                    <BattlefieldRepresentation setClickedSquare={setClickedSquare} />
-                </BattlefieldContextProvider>
+                <BattlefieldSectionEditor setClickedSquare={setClickedSquare} />
             </div>
             <div className={'max-w-1/3 relative flex h-screen w-full flex-col bg-white'}>
                 <div className={'text-t-4xl flex h-20 w-full flex-row items-center bg-black px-4'}>
@@ -238,6 +116,7 @@ const CombatEditor = () => {
                                 saveCombatEditorPreset(
                                     'Preset from Memory',
                                     {
+                                        areaEffects,
                                         battlefield,
                                         turnOrder,
                                         activeCharacterIndex,

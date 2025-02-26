@@ -43,7 +43,7 @@ const multiSelectVariants = cva(
 /**
  * Props for MultiSelect component
  */
-interface MultiSelectProps
+export interface MultiSelectProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
         VariantProps<typeof multiSelectVariants> {
     /**
@@ -219,7 +219,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                             )}
                                             style={{ animationDuration: `${animation}s` }}
                                         >
-                                            {`+ ${selectedValues.length - maxCount} more`}
+                                            {`+ ${selectedValues.length - maxCount}`}
                                             <XCircle
                                                 className="ml-2 h-4 w-4 cursor-pointer"
                                                 onClick={(event) => {

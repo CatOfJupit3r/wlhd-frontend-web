@@ -213,7 +213,9 @@
             "component-uses": "Використань (CUR/MAX)",
             "is-active": "Активний",
             "is-active-tooltip": "Чи цей компонент активний?",
-            "cost-to-use": "Вартість використання"
+            "cost-to-use": "Вартість використання",
+            "affected-squares": "Клітинки під впливом",
+            "affected-squares-multi-select-placeholder": "Оберіть клітинки"
         },
         "general": {
             "dlc": "DLC",
@@ -258,6 +260,13 @@
             "remove": "Видалити статусний ефект",
             "decrease-duration": "Зменшити тривалість",
             "increase-duration": "Збільшити тривалість"
+        },
+        "area-effects": {
+            "add": "Додати ефект поля бою",
+            "remove": "Видалити ефект поля бою",
+            "close": "Закрити",
+            "close-and-save": "Закрити та зберегти",
+            "edit": "Редагувати ефект поля бою"
         },
         "memories": {
             "title": "Спогади",

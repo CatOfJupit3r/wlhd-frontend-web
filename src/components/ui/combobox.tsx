@@ -97,7 +97,10 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                 </Button>
             </PopoverTrigger>
             <PopoverContent
-                className={cn('p-1', size?.width || 'w-full')}
+                className={cn(
+                    'p-1',
+                    size?.width || 'max-h-[--radix-popover-content-available-height] w-[--radix-popover-trigger-width]',
+                )}
                 ref={contentRef}
                 style={{
                     width: buttonWidth,

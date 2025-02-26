@@ -1,4 +1,4 @@
-import CharacterEditor from '@components/CharacterEditor/CharacterEditor';
+import CharacterEditor from '@components/CharacterEditor';
 import { Button } from '@components/ui/button';
 import {
     DropdownMenu,

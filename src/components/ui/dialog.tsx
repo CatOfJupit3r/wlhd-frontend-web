@@ -2,6 +2,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 
 import { cn } from '@utils';
+import * as React from 'react';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
 
 const Dialog = DialogPrimitive.Root;
@@ -81,6 +82,12 @@ const DialogDescription = forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const DialogInteractableArea: React.FC<
+    React.HTMLAttributes<HTMLDivElement> & {
+        ref?: React.Ref<HTMLDivElement>;
+    }
+> = ({ className, ref, ...props }) => <div ref={ref} className={cn('flex flex-col space-y-2', className)} {...props} />;
+
 export {
     Dialog,
     DialogPortal,
@@ -92,4 +99,5 @@ export {
     DialogFooter,
     DialogTitle,
     DialogDescription,
+    DialogInteractableArea,
 };

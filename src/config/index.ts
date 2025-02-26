@@ -12,4 +12,5 @@ export const SUPPORTED_DLCs = [
     },
 ];
 export const FALLBACK_LANGUAGE = 'uk-UA';
-export const SUPPORTED_DLCS_DESCRIPTORS = SUPPORTED_DLCs.map(({ descriptor }) => descriptor);
+export type SupportedDLCs = (typeof SUPPORTED_DLCs)[number]['descriptor'];
+export const SUPPORTED_DLCS_DESCRIPTORS: Array<SupportedDLCs> = SUPPORTED_DLCs.map(({ descriptor }) => descriptor);

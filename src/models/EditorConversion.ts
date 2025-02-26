@@ -1,4 +1,4 @@
-import { CharacterDataInSave } from '@models/CombatEditorModels';
+import { AreaEffectsOnBattlefieldInSave, CharacterDataInSave } from '@models/CombatEditorModels';
 import { AttributeInfo, GameStateContainer } from '@models/GameModels';
 
 export interface CharacterClassConversion {
@@ -100,6 +100,7 @@ export interface CreateCombatBody {
                 control: ControlledBy;
             };
         };
+        areaEffects: AreaEffectsOnBattlefieldInSave;
     };
 }
 

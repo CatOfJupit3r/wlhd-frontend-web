@@ -8,12 +8,16 @@ import { AreaEffectInfo } from '@models/GameModels';
 import { selectAOEEffects } from '@redux/slices/gameScreenSlice';
 import { cn } from '@utils';
 import { AnimatePresence } from 'framer-motion';
-import { FC, useCallback } from 'react';
+import { FC, ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
-const AOECard: FC<{ effect: AreaEffectInfo }> = ({ effect }) => {
+export const AOECard: FC<{ effect: AreaEffectInfo; bonusTooltip?: ReactNode; className?: string }> = ({
+    effect,
+    bonusTooltip,
+    className,
+}) => {
     const { addAOEHighlight } = useBattlefieldContext();
 
     const onHover = useCallback(() => {
@@ -26,9 +30,9 @@ const AOECard: FC<{ effect: AreaEffectInfo }> = ({ effect }) => {
 
     return (
         <div
-            className={'mr-4 flex flex-row items-center justify-between'}
             onMouseEnter={onHover}
             onMouseLeave={onLeave}
+            className={cn('mr-4 flex flex-row items-center justify-between', className)}
         >
             <PlaceholderIcon className={'w-full text-5xl'} />
             <div className={'flex h-full flex-col items-start justify-start gap-1 py-1'}>
@@ -38,6 +42,7 @@ const AOECard: FC<{ effect: AreaEffectInfo }> = ({ effect }) => {
                     </TooltipTrigger>
                     <TooltipContent className={'rounded-2xl border-none p-0'}>
                         <AreaEffectInfoDisplay info={effect} />
+                        {bonusTooltip}
                     </TooltipContent>
                 </Tooltip>
             </div>

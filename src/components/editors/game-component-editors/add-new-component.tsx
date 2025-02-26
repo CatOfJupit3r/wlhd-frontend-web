@@ -1,42 +1,32 @@
-import {
-    ItemEditor,
-    SpellEditor,
-    StatusEffectEditor,
-    WeaponEditor,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor';
-import { gameAssetToComboboxIcon } from '@components/GameAsset';
+import { DLCSelect, GameComponentDescriptorCombobox } from '@components/common/descriptor-components';
 import { Button } from '@components/ui/button';
-import { Combobox } from '@components/ui/combobox';
 import { Label } from '@components/ui/label';
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@components/ui/select';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
-import {
-    CharacterDataEditable,
+    AreaEffectEditable,
     ItemEditable,
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
 import {
+    useGameAreaEffectInformation,
     useGameItemInformation,
     useGameSpellInformation,
     useGameStatusEffectInformation,
     useGameWeaponInformation,
 } from '@queries/useGameData';
-import { useLoadedItems, useLoadedSpells, useLoadedStatusEffects, useLoadedWeapons } from '@queries/useLoadedGameData';
+import {
+    useLoadedAreaEffects,
+    useLoadedItems,
+    useLoadedSpells,
+    useLoadedStatusEffects,
+    useLoadedWeapons,
+} from '@queries/useLoadedGameData';
 import { isDescriptor } from '@utils';
-import { SUPPORTED_DLCs } from 'config';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { AreaEffectEditor, ItemEditor, SpellEditor, StatusEffectEditor, WeaponEditor } from './predeclared-editors';
 
 interface iComponentCombobox {
     dlc: string;
@@ -56,88 +46,39 @@ export interface COMPONENT_TO_INTERFACE {
     weapon: WeaponEditable;
     spell: SpellEditable;
     statusEffect: StatusEffectEditable;
+    areaEffect: AreaEffectEditable;
 }
 
-export type CONTAINER_TYPE = 'item' | 'weapon' | 'spell' | 'statusEffect';
+export type CONTAINER_TYPE = 'item' | 'weapon' | 'spell' | 'statusEffect' | 'areaEffect';
 
 const ItemCombobox: FC<iComponentCombobox> = ({ dlc, descriptor, onChange }) => {
     const { items } = useLoadedItems(dlc);
-    const { t } = useTranslation();
 
-    return (
-        <Combobox
-            items={Object.entries(items ?? {}).map(([descriptor, item]) => ({
-                value: descriptor,
-                label: t(item.decorations.name),
-                icon: gameAssetToComboboxIcon(item),
-            }))}
-            includeSearch={true}
-            value={descriptor}
-            onChange={(e) => {
-                onChange(e);
-            }}
-        />
-    );
+    return <GameComponentDescriptorCombobox items={items ?? {}} value={descriptor} onChangeValue={onChange} />;
 };
 
 const WeaponCombobox: FC<iComponentCombobox> = ({ dlc, descriptor, onChange }) => {
     const { weapons } = useLoadedWeapons(dlc);
-    const { t } = useTranslation();
 
-    return (
-        <Combobox
-            items={Object.entries(weapons ?? {}).map(([descriptor, weapon]) => ({
-                value: descriptor,
-                label: t(weapon.decorations.name),
-                icon: gameAssetToComboboxIcon(weapon),
-            }))}
-            includeSearch={true}
-            value={descriptor}
-            onChange={(e) => {
-                onChange(e);
-            }}
-        />
-    );
+    return <GameComponentDescriptorCombobox items={weapons ?? {}} value={descriptor} onChangeValue={onChange} />;
 };
 
 const SpellCombobox: FC<iComponentCombobox> = ({ dlc, descriptor, onChange }) => {
     const { spells } = useLoadedSpells(dlc);
-    const { t } = useTranslation();
 
-    return (
-        <Combobox
-            items={Object.entries(spells ?? {}).map(([descriptor, spell]) => ({
-                value: descriptor,
-                label: t(spell.decorations.name),
-                icon: gameAssetToComboboxIcon(spell),
-            }))}
-            includeSearch={true}
-            value={descriptor}
-            onChange={(e) => {
-                onChange(e);
-            }}
-        />
-    );
+    return <GameComponentDescriptorCombobox items={spells ?? {}} value={descriptor} onChangeValue={onChange} />;
 };
 
 const StatusEffectCombobox: FC<iComponentCombobox> = ({ dlc, descriptor, onChange }) => {
     const { statusEffects } = useLoadedStatusEffects(dlc);
-    const { t } = useTranslation();
 
-    return (
-        <Combobox
-            items={Object.entries(statusEffects ?? {}).map(([descriptor, statusEffect]) => ({
-                value: descriptor,
-                label: t(statusEffect.decorations.name),
-                icon: gameAssetToComboboxIcon(statusEffect),
-            }))}
-            includeSearch={true}
-            value={descriptor}
-            onChange={(e) => {
-                onChange(e);
-            }}
-        />
-    );
+    return <GameComponentDescriptorCombobox items={statusEffects ?? {}} value={descriptor} onChangeValue={onChange} />;
+};
+
+const AreaEffectCombobox: FC<iComponentCombobox> = ({ dlc, descriptor, onChange }) => {
+    const { areaEffects } = useLoadedAreaEffects(dlc);
+
+    return <GameComponentDescriptorCombobox items={areaEffects ?? {}} value={descriptor} onChangeValue={onChange} />;
 };
 
 const ItemPreview: FC<iComponentPreview<'item'>> = ({ setComponent, component, dlc, descriptor }) => {
@@ -188,132 +129,107 @@ const StatusEffectPreview: FC<iComponentPreview<'statusEffect'>> = ({ setCompone
     return <StatusEffectEditor component={component} setComponent={setComponent} />;
 };
 
-export const AddNewComponent = (props: { type: CONTAINER_TYPE }) => {
+const AreaEffectPreview: FC<iComponentPreview<'areaEffect'>> = ({ setComponent, component, dlc, descriptor }) => {
+    const { areaEffect, isPending } = useGameAreaEffectInformation(dlc, descriptor);
+
+    useEffect(() => {
+        if (!dlc || !descriptor || isPending || !areaEffect) return;
+        setComponent(areaEffect);
+    }, [dlc, descriptor, isPending, areaEffect]);
+
+    if (isPending || !areaEffect || !component) return null;
+    return <AreaEffectEditor component={component} setComponent={setComponent} />;
+};
+
+interface iAddNewComponentProps<T extends CONTAINER_TYPE = CONTAINER_TYPE> {
+    type: T;
+    onAdd: (component: COMPONENT_TO_INTERFACE[T], descriptor: string) => void;
+}
+
+export const AddNewComponent: FC<iAddNewComponentProps> = ({ type, onAdd }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
-    const { character, updateCharacter } = useCharacterEditorContext();
     const [dlc, setDlc] = useState('');
     const [descriptor, setDescriptor] = useState('');
     const [component, setComponent] = useState<COMPONENT_TO_INTERFACE[CONTAINER_TYPE] | null>(null);
 
-    const addNewComponent = useCallback(
-        (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE]) => {
-            const newCharacter = { ...character };
-            switch (props.type) {
-                case 'item':
-                    newCharacter.inventory = [
-                        ...newCharacter.inventory,
-                        {
-                            ...component,
-                            descriptor: `${dlc}:${descriptor}`,
-                        } as CharacterDataEditable['inventory'][number],
-                    ];
-                    break;
-                case 'weapon':
-                    newCharacter.weaponry = [
-                        ...newCharacter.weaponry,
-                        component as CharacterDataEditable['weaponry'][number],
-                    ];
-                    break;
-                case 'spell':
-                    newCharacter.spellBook = {
-                        ...newCharacter.spellBook,
-                        knownSpells: [
-                            ...newCharacter.spellBook.knownSpells,
-                            component as CharacterDataEditable['spellBook']['knownSpells'][number],
-                        ],
-                    };
-                    break;
-                case 'statusEffect':
-                    newCharacter.statusEffects = [
-                        ...newCharacter.statusEffects,
-                        component as CharacterDataEditable['statusEffects'][number],
-                    ];
-                    break;
-            }
-            updateCharacter(newCharacter);
-        },
-        [character, props, component, descriptor, dlc, updateCharacter],
-    );
-
     return (
-        <div id={`add-new-component`}>
-            <div>
-                <div className={'flex flex-col gap-2'}>
-                    <div>
+        <div id={`add-new-component`} className={'w-full'}>
+            <div className={'w-full gap-3'}>
+                <div className={'flex w-full flex-row gap-2'}>
+                    <div className={'w-full'}>
                         <Label>{t('general.dlc')}</Label>
-                        <Select
-                            onValueChange={(value) => {
+                        <DLCSelect
+                            value={dlc}
+                            selectTriggerClassName={'w-full'}
+                            onChangeValue={(value) => {
                                 setDescriptor('');
                                 setComponent(null);
                                 setDlc(value);
                             }}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder={t('general.select-dlc')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>{t('general.dlc')}</SelectLabel>
-                                    {SUPPORTED_DLCs.map(({ title, descriptor }) => (
-                                        <SelectItem key={descriptor} value={descriptor}>
-                                            {title}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                            placeholder={t('general.select-dlc')}
+                            selectLabel={t('general.dlc')}
+                        />
                     </div>
-                    <div>
+                    <div className={'w-full'}>
                         <Label>{t('general.descriptor')}</Label>
-                        {props.type === 'item' ? (
+                        {type === 'item' ? (
                             <ItemCombobox dlc={dlc} descriptor={descriptor} onChange={setDescriptor} />
-                        ) : props.type === 'weapon' ? (
+                        ) : type === 'weapon' ? (
                             <WeaponCombobox dlc={dlc} descriptor={descriptor} onChange={setDescriptor} />
-                        ) : props.type === 'spell' ? (
+                        ) : type === 'spell' ? (
                             <SpellCombobox dlc={dlc} descriptor={descriptor} onChange={setDescriptor} />
-                        ) : props.type === 'statusEffect' ? (
+                        ) : type === 'statusEffect' ? (
                             <StatusEffectCombobox dlc={dlc} descriptor={descriptor} onChange={setDescriptor} />
+                        ) : type === 'areaEffect' ? (
+                            <AreaEffectCombobox dlc={dlc} descriptor={descriptor} onChange={setDescriptor} />
                         ) : null}
                     </div>
                 </div>
             </div>
             {dlc && descriptor ? (
-                props.type === 'item' ? (
+                type === 'item' ? (
                     <ItemPreview
                         dlc={dlc}
                         descriptor={descriptor}
                         component={component as ItemEditable}
                         setComponent={setComponent}
                     />
-                ) : props.type === 'weapon' ? (
+                ) : type === 'weapon' ? (
                     <WeaponPreview
                         dlc={dlc}
                         descriptor={descriptor}
                         component={component as WeaponEditable}
                         setComponent={setComponent}
                     />
-                ) : props.type === 'spell' ? (
+                ) : type === 'spell' ? (
                     <SpellPreview
                         dlc={dlc}
                         descriptor={descriptor}
                         component={component as SpellEditable}
                         setComponent={setComponent}
                     />
-                ) : props.type === 'statusEffect' ? (
+                ) : type === 'statusEffect' ? (
                     <StatusEffectPreview
                         dlc={dlc}
                         descriptor={descriptor}
                         component={component as StatusEffectEditable}
                         setComponent={setComponent}
                     />
+                ) : type === 'areaEffect' ? (
+                    <AreaEffectPreview
+                        dlc={dlc}
+                        descriptor={descriptor}
+                        component={component as AreaEffectEditable}
+                        setComponent={setComponent}
+                    />
                 ) : null
             ) : null}
             <Button
                 onClick={() => {
-                    if (component) {
-                        addNewComponent(component);
+                    if (component && dlc && descriptor) {
+                        onAdd(component, `${dlc}:${descriptor}`);
                     }
                 }}
                 className={'mt-2'}

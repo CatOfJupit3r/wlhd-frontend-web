@@ -1,4 +1,8 @@
-import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels';
+import {
+    AreaEffectsOnBattlefieldEditable,
+    CharacterDataEditable,
+    CharacterDataEditableInCombat,
+} from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
 import { RandomUtils } from '@utils';
@@ -14,6 +18,7 @@ export type CombatEditorSaveType = {
     messages: GameStateContainer;
     round: CombatEditorContextType['round'];
     activeCharacterIndex: CombatEditorContextType['activeCharacterIndex'];
+    areaEffects: CombatEditorContextType['areaEffects'];
 };
 
 export interface CombatEditorContextType {
@@ -25,6 +30,7 @@ export interface CombatEditorContextType {
     messages: GameStateContainer;
     turnOrder: Array<iTurnInOrder>;
     activeCharacterIndex: number;
+    areaEffects: AreaEffectsOnBattlefieldEditable;
 
     addCharacter: (
         square: string,
@@ -47,6 +53,10 @@ export interface CombatEditorContextType {
 
     setMode: (mode: CombatEditorContextType['mode']) => void;
 
+    addAreaEffect: (areaEffect: AreaEffectsOnBattlefieldEditable[number]) => void;
+    deleteAreaEffect: (index: number) => void;
+    changeAreaEffect: (index: number, areaEffect: AreaEffectsOnBattlefieldEditable[number]) => void;
+
     changePreset: (newData: CombatEditorSaveType) => void;
     resetPreset: () => void;
 }
@@ -68,6 +78,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [activeCharacterIndex, setActiveCharacterIndex] = useState(0);
     const [messages, setMessages] = useState<GameStateContainer>([]);
     const [mode, setMode] = useState<CombatEditorContextType['mode']>('save');
+    const [areaEffects, setAreaEffects] = useState<CombatEditorContextType['areaEffects']>([]);
 
     const addCharacter = useCallback(
         (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => {
@@ -157,6 +168,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 : 0,
         );
         setMessages(newData.messages ?? []);
+        setAreaEffects(newData.areaEffects ?? []);
     }, []);
 
     const resetPreset = useCallback(() => {
@@ -206,6 +218,26 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         });
     }, []);
 
+    const addAreaEffect = useCallback((areaEffect: AreaEffectsOnBattlefieldEditable[number]) => {
+        setAreaEffects((prev) => [...prev, areaEffect]);
+    }, []);
+
+    const deleteAreaEffect = useCallback((index: number) => {
+        setAreaEffects((prev) => {
+            const newAreaEffects = [...prev];
+            newAreaEffects.splice(index, 1);
+            return newAreaEffects;
+        });
+    }, []);
+
+    const changeAreaEffect = useCallback((index: number, areaEffect: AreaEffectsOnBattlefieldEditable[number]) => {
+        setAreaEffects((prev) => {
+            const newAreaEffects = [...prev];
+            newAreaEffects[index] = areaEffect;
+            return newAreaEffects;
+        });
+    }, []);
+
     return (
         <CombatEditorContext.Provider
             value={{
@@ -226,9 +258,15 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 turnOrder,
                 updateCharacter,
                 updateControl,
+
                 addGameMessage,
                 deleteGameMessage,
                 changeGameMessage,
+
+                areaEffects,
+                addAreaEffect,
+                deleteAreaEffect,
+                changeAreaEffect,
             }}
         >
             {children}

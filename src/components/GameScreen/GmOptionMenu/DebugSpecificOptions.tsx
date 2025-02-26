@@ -1,11 +1,15 @@
+import { SquareMultiSelect } from '@components/common/square-multi-select'; /*
+
+This component is built for /game-test route and allows for better control over game state for testing purposes.
+
+ */
 import { Button } from '@components/ui/button';
-import { MultiSelect } from '@components/ui/multi-select';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
 import { RandomUtils } from '@utils';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /*
@@ -139,10 +143,6 @@ const ShiftTurnOrder = () => {
 const AddAOEHighlightToSquares = () => {
     const [squares, setSquares] = useState<string[]>([]);
     const { addAOEHighlight } = useBattlefieldContext();
-    const options = useMemo(
-        () => [1, 2, 3, 4, 5, 6].map((line) => [1, 2, 3, 4, 5, 6].map((column) => `${line}/${column}`)).flat(),
-        [],
-    );
 
     useEffect(() => {
         addAOEHighlight(squares);
@@ -153,14 +153,7 @@ const AddAOEHighlightToSquares = () => {
             <div className={'flex flex-col gap-2'}>
                 <p className={'text-lg font-medium'}>Squares to highlight</p>
                 <div className={'flex flex-col gap-2'}>
-                    <MultiSelect
-                        options={options.map((option) => ({ label: option, value: option }))}
-                        onValueChange={(value) => {
-                            setSquares(value);
-                        }}
-                        value={squares}
-                        placeholder={'Select squares'}
-                    />
+                    <SquareMultiSelect onChange={setSquares} values={squares} />
                 </div>
             </div>
         </div>

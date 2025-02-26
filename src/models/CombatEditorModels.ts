@@ -63,6 +63,7 @@ export type SpellBookEditable = {
     maxActiveSpells: number | null;
 };
 export type StatusEffectsEditable = Array<StatusEffectEditable & { descriptor: string }>;
+export type AreaEffectsOnBattlefieldEditable = Array<AreaEffectEditable & { descriptor: string }>;
 
 export type CharacterDataEditable = {
     descriptor: string;
@@ -152,6 +153,7 @@ interface CommonSaveField {
 type ItemInSave = Partial<ItemEditable> & CommonSaveField & { effectHook?: string };
 type WeaponInSave = Partial<WeaponEditable> & CommonSaveField & { isActive: boolean; effectHook?: string };
 type StatusEffectInSave = Partial<StatusEffectEditable> & CommonSaveField;
+type AreaEffectInSave = Partial<AreaEffectEditable> & CommonSaveField;
 type SpellInSave = Partial<SpellEditable> & CommonSaveField & { isActive: boolean; effectHook?: string };
 
 export type InventoryInSave = Array<ItemInSave>;
@@ -161,6 +163,7 @@ export type SpellBookInSave = {
     maxActiveSpells: number | null;
 };
 export type StatusEffectsInSave = Array<StatusEffectInSave>;
+export type AreaEffectsOnBattlefieldInSave = Array<AreaEffectInSave>;
 
 export interface CharacterDataInSave {
     inventory: InventoryInSave;
