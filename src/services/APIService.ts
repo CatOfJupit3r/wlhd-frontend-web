@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 
 import { iUserAvatarProcessed, LimitedDLCData, ShortLobbyInformation, UserInformation } from '@models/APIData';
 import {
+    AreaEffectEditable,
     CharacterDataEditable,
     ItemEditable,
     SpellEditable,
@@ -48,6 +49,9 @@ const ENDPOINTS = {
     GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/status_effects`,
     GAME_STATUS_EFFECT_INFO: (dlc: string, descriptor: string) =>
         `${VITE_BACKEND_URL}/game/${dlc}/status_effects/${descriptor}`,
+    GAME_AREA_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/area_effects`,
+    GAME_AREA_EFFECT_INFO: (dlc: string, descriptor: string) =>
+        `${VITE_BACKEND_URL}/game/${dlc}/area_effects/${descriptor}`,
     GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/characters`,
     GAME_CHARACTER_INFO: (dlc: string, descriptor: string) =>
         `${VITE_BACKEND_URL}/game/${dlc}/characters/${descriptor}`,
@@ -472,6 +476,17 @@ class APIService {
         return statusEffects;
     };
 
+    public getLoadedAreaEffects = async (dlc: string) => {
+        if (!dlc) {
+            return {};
+        }
+        const { areaEffects } = await this.fetch<{ areaEffects: LimitedDLCData }>({
+            url: ENDPOINTS.GAME_AREA_EFFECTS(dlc),
+            method: 'get',
+        });
+        return areaEffects;
+    };
+
     public getLoadedCharacters = async (dlc: string) => {
         if (!dlc) {
             return {};
@@ -513,6 +528,14 @@ class APIService {
             method: 'get',
         });
         return statusEffect;
+    };
+
+    public getAreaEffectInformation = async (dlc: string, descriptor: string) => {
+        const { areaEffect } = await this.fetch<{ areaEffect: AreaEffectEditable }>({
+            url: ENDPOINTS.GAME_AREA_EFFECT_INFO(dlc, descriptor),
+            method: 'get',
+        });
+        return areaEffect;
     };
 
     public getCharacterInformation = async (dlc: string, descriptor: string) => {

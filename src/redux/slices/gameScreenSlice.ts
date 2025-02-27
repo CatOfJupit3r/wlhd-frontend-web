@@ -17,12 +17,12 @@ const initialState: GameScreenState = {
                 for (let j = 0; j < 6; j++) {
                     pawns[`${i + 1}/${j + 1}`] = {
                         character: null,
-                        areaEffects: [],
                     };
                 }
             }
             return pawns;
         })(),
+        effects: [],
     },
     actions: null,
     round: {
@@ -159,6 +159,7 @@ export const selectActions = (state: RootState) => state.gameScreen.actions;
 export const selectIsYourTurn = (state: RootState) => state.gameScreen.yourTurn;
 export const selectActionTimestamp = (state: RootState) => state.gameScreen.actionTimestamp;
 export const selectGameLobbyState = (state: RootState) => state.gameScreen.gameLobbyState;
+export const selectAOEEffects = (state: RootState) => state.gameScreen.battlefield.effects;
 
 export const selectActiveCharacter = createSelector(
     [(state: RootState) => state.gameScreen.round.order],

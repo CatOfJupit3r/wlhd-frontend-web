@@ -1,8 +1,15 @@
+import { SquareMultiSelect } from '@components/common/square-multi-select'; /*
+
+This component is built for /game-test route and allows for better control over game state for testing purposes.
+
+ */
 import { Button } from '@components/ui/button';
+import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
 import { RandomUtils } from '@utils';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 /*
@@ -133,11 +140,32 @@ const ShiftTurnOrder = () => {
     return <Button onClick={handleShiftButtonClick}>Shift Turn Order</Button>;
 };
 
+const AddAOEHighlightToSquares = () => {
+    const [squares, setSquares] = useState<string[]>([]);
+    const { addAOEHighlight } = useBattlefieldContext();
+
+    useEffect(() => {
+        addAOEHighlight(squares);
+    }, [squares]);
+
+    return (
+        <div className={'flex w-full flex-col gap-2'}>
+            <div className={'flex flex-col gap-2'}>
+                <p className={'text-lg font-medium'}>Squares to highlight</p>
+                <div className={'flex flex-col gap-2'}>
+                    <SquareMultiSelect onChange={setSquares} values={squares} />
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const DebugSpecificOptions = () => {
     return (
         <div className={'flex w-full flex-col gap-2'}>
             <RandomizeTurnOrder />
             <ShiftTurnOrder />
+            <AddAOEHighlightToSquares />
         </div>
     );
 };

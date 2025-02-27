@@ -1,6 +1,11 @@
-import { CharacterDataEditable, CharacterDataEditableInCombat } from '@models/CombatEditorModels';
+import {
+    AreaEffectsOnBattlefieldEditable,
+    CharacterDataEditable,
+    CharacterDataEditableInCombat,
+} from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
+import { RandomUtils } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id });
@@ -13,6 +18,7 @@ export type CombatEditorSaveType = {
     messages: GameStateContainer;
     round: CombatEditorContextType['round'];
     activeCharacterIndex: CombatEditorContextType['activeCharacterIndex'];
+    areaEffects: CombatEditorContextType['areaEffects'];
 };
 
 export interface CombatEditorContextType {
@@ -22,8 +28,9 @@ export interface CombatEditorContextType {
         [square: string]: CharacterDataEditableInCombat;
     };
     messages: GameStateContainer;
-    turnOrder: Array<string>;
+    turnOrder: Array<iTurnInOrder>;
     activeCharacterIndex: number;
+    areaEffects: AreaEffectsOnBattlefieldEditable;
 
     addCharacter: (
         square: string,
@@ -36,7 +43,7 @@ export interface CombatEditorContextType {
     updateControl: (square: string, control: ControlledBy) => void;
 
     changeRound: (newRound: number) => void;
-    changeTurnOrder: (newTurnOrder: Array<string>) => void;
+    changeTurnOrder: (newTurnOrder: Array<iTurnInOrder>) => void;
     addCharacterToTurnOrder: (characterId: string) => void;
     makeCharacterActive: (index: number) => void;
 
@@ -46,9 +53,21 @@ export interface CombatEditorContextType {
 
     setMode: (mode: CombatEditorContextType['mode']) => void;
 
+    addAreaEffect: (areaEffect: AreaEffectsOnBattlefieldEditable[number]) => void;
+    deleteAreaEffect: (index: number) => void;
+    changeAreaEffect: (index: number, areaEffect: AreaEffectsOnBattlefieldEditable[number]) => void;
+
     changePreset: (newData: CombatEditorSaveType) => void;
     resetPreset: () => void;
 }
+
+interface iTurnInOrder {
+    character: string;
+    id: string; // id of TURN instance
+    // possible to extends in future should turns become more complex
+}
+
+const createTurnInOrder = (character: string): iTurnInOrder => ({ character, id: RandomUtils.uuid() });
 
 const CombatEditorContext = createContext<CombatEditorContextType | undefined>(undefined);
 
@@ -59,6 +78,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
     const [activeCharacterIndex, setActiveCharacterIndex] = useState(0);
     const [messages, setMessages] = useState<GameStateContainer>([]);
     const [mode, setMode] = useState<CombatEditorContextType['mode']>('save');
+    const [areaEffects, setAreaEffects] = useState<CombatEditorContextType['areaEffects']>([]);
 
     const addCharacter = useCallback(
         (square: string, character: CharacterDataEditable, descriptor: string, control?: ControlledBy) => {
@@ -148,6 +168,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 : 0,
         );
         setMessages(newData.messages ?? []);
+        setAreaEffects(newData.areaEffects ?? []);
     }, []);
 
     const resetPreset = useCallback(() => {
@@ -158,14 +179,13 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         setRound(newRound);
     }, []);
 
-    const changeTurnOrder = useCallback((newTurnOrder: Array<string>) => {
+    const changeTurnOrder = useCallback((newTurnOrder: Array<iTurnInOrder>) => {
+        // newTurnOrder contains IDs of turns, not characters
         setTurnOrder(newTurnOrder);
     }, []);
 
     const addCharacterToTurnOrder = useCallback((characterId: string) => {
-        setTurnOrder((prev) => {
-            return [...prev, characterId];
-        });
+        setTurnOrder((prev) => [...prev, createTurnInOrder(characterId)]);
     }, []);
 
     const makeCharacterActive = useCallback(
@@ -198,6 +218,26 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         });
     }, []);
 
+    const addAreaEffect = useCallback((areaEffect: AreaEffectsOnBattlefieldEditable[number]) => {
+        setAreaEffects((prev) => [...prev, areaEffect]);
+    }, []);
+
+    const deleteAreaEffect = useCallback((index: number) => {
+        setAreaEffects((prev) => {
+            const newAreaEffects = [...prev];
+            newAreaEffects.splice(index, 1);
+            return newAreaEffects;
+        });
+    }, []);
+
+    const changeAreaEffect = useCallback((index: number, areaEffect: AreaEffectsOnBattlefieldEditable[number]) => {
+        setAreaEffects((prev) => {
+            const newAreaEffects = [...prev];
+            newAreaEffects[index] = areaEffect;
+            return newAreaEffects;
+        });
+    }, []);
+
     return (
         <CombatEditorContext.Provider
             value={{
@@ -218,9 +258,15 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                 turnOrder,
                 updateCharacter,
                 updateControl,
+
                 addGameMessage,
                 deleteGameMessage,
                 changeGameMessage,
+
+                areaEffects,
+                addAreaEffect,
+                deleteAreaEffect,
+                changeAreaEffect,
             }}
         >
             {children}

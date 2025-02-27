@@ -19,5 +19,5 @@ export const ToastTitle: FC<{ children?: ReactNode; className?: string }> = ({ c
 };
 
 export const ToastDescription: FC<{ children?: ReactNode; className?: string }> = ({ children, className }) => {
-    return <p className={cn('w-full text-sm', className)}>{children}</p>;
+    return <div className={cn('w-full text-sm', className)}>{children}</div>;
 };

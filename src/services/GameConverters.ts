@@ -1,4 +1,5 @@
 import {
+    AreaEffectEditable,
     CharacterDataEditable,
     CharacterDataInPreset,
     CharacterDataInSave,
@@ -7,7 +8,14 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
-import { CharacterInfoFull, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
+import {
+    AreaEffectInfo,
+    CharacterInfoFull,
+    ItemInfo,
+    SpellInfo,
+    StatusEffectInfo,
+    WeaponInfo,
+} from '@models/GameModels';
 
 class GameConverters {
     public convertSpellEditableToInfo = (descriptor: string, spell: SpellEditable): SpellInfo => {
@@ -103,6 +111,17 @@ class GameConverters {
             weaponry: character.weaponry.map((weapon) => this.convertWeaponEditableToInfo(weapon.descriptor, weapon)),
             tags: [],
             memory: {},
+        };
+    };
+
+    public convertAreaEffectEditableToInfo = (descriptor: string, effect: AreaEffectEditable): AreaEffectInfo => {
+        return {
+            descriptor,
+            duration: effect.duration,
+            squares: effect.squares,
+            memory: effect.memory,
+            tags: effect.tags,
+            decorations: effect.decorations,
         };
     };
 

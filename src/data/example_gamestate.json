@@ -1997,8 +1997,7 @@
                         "base": 50
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             },
             "3/5": {
                 "character": {
@@ -2024,8 +2023,7 @@
                         "base": 100
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             },
             "4/2": {
                 "character": {
@@ -2051,10 +2049,232 @@
                         "base": 25
                     },
                     "statusEffects": []
-                },
-                "areaEffects": []
+                }
             }
-        }
+        },
+        "effects": [
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            },
+            {
+                "descriptor": "builtins:burning_floor",
+                "duration": 4,
+                "squares": [
+                    "1/1",
+                    "1/2",
+                    "1/3",
+                    "1/4"
+                ],
+                "memory": {},
+                "tags": [],
+                "decorations": {
+                    "name": "builtins:area_effects.burning_floor.name",
+                    "description": "builtins:area_effects.burning_floor.desc",
+                    "sprite": "builtins:area_effects.burning_floor"
+                }
+            }
+        ]
     },
     "round": {
         "current": "24",

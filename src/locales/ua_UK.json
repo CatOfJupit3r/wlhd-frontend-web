@@ -133,7 +133,8 @@
                 "user-range": "Радіус, щоб використовувати",
                 "is-active": "Активний",
                 "duration": "Тривалість",
-                "cost": "Вартість"
+                "cost": "Вартість",
+                "area-affected": "Клітинки під впливом"
             },
             "radius-alias": {
                 "any": "Будь-яка",
@@ -146,6 +147,9 @@
             "memories": {
                 "dice": "{{amount}}к{{sides}}"
             }
+        },
+        "aoe-effects-display": {
+            "tooltip" : "Активні ефекти поля бою"
         }
     },
     "not_found": {
@@ -209,7 +213,9 @@
             "component-uses": "Використань (CUR/MAX)",
             "is-active": "Активний",
             "is-active-tooltip": "Чи цей компонент активний?",
-            "cost-to-use": "Вартість використання"
+            "cost-to-use": "Вартість використання",
+            "affected-squares": "Клітинки під впливом",
+            "affected-squares-multi-select-placeholder": "Оберіть клітинки"
         },
         "general": {
             "dlc": "DLC",
@@ -254,6 +260,13 @@
             "remove": "Видалити статусний ефект",
             "decrease-duration": "Зменшити тривалість",
             "increase-duration": "Збільшити тривалість"
+        },
+        "area-effects": {
+            "add": "Додати ефект поля бою",
+            "remove": "Видалити ефект поля бою",
+            "close": "Закрити",
+            "close-and-save": "Закрити та зберегти",
+            "edit": "Редагувати ефект поля бою"
         },
         "memories": {
             "title": "Спогади",
@@ -348,7 +361,8 @@
             "weapons": "Зброя",
             "spells": "Закляття",
             "items": "Предмети",
-            "status-effects": "Статусні ефекти"
+            "status-effects": "Статусні ефекти",
+            "area-effects": "Ефекти поля бою"
         }
     },
     "lobby-info": {

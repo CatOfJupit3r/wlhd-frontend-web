@@ -76,6 +76,25 @@ const useLoadedStatusEffects = (dlc: string, enabled: boolean = true) => {
     };
 };
 
+const useLoadedAreaEffects = (dlc: string, enabled: boolean = true) => {
+    const { data, refetch, isPending, isError } = useQuery({
+        enabled: enabled && !!dlc,
+        queryKey: ['game', 'area_effect', dlc],
+        queryFn: async () => {
+            if (!dlc) throw new Error('DLC missing');
+            console.log('Fetching area effect data');
+            return APIService.getLoadedAreaEffects(dlc);
+        },
+        staleTime: 1000 * 60 * 5, // 5 minutes,
+    });
+    return {
+        areaEffects: data,
+        refetch,
+        isPending,
+        isError,
+    };
+};
+
 const useLoadedCharacters = (dlc: string, enabled: boolean = true) => {
     const { data, refetch, isPending, isError, isSuccess } = useQuery({
         enabled: enabled && !!dlc,
@@ -96,4 +115,11 @@ const useLoadedCharacters = (dlc: string, enabled: boolean = true) => {
     };
 };
 
-export { useLoadedItems, useLoadedWeapons, useLoadedSpells, useLoadedStatusEffects, useLoadedCharacters };
+export {
+    useLoadedItems,
+    useLoadedWeapons,
+    useLoadedSpells,
+    useLoadedStatusEffects,
+    useLoadedCharacters,
+    useLoadedAreaEffects,
+};

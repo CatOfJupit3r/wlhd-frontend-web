@@ -134,8 +134,8 @@ const ButtonWithTooltip = ({
 } & ButtonProps) => {
     return (
         <Tooltip {...tooltipProps}>
-            <TooltipTrigger>
-                <Button {...props} asChild />
+            <TooltipTrigger asChild>
+                <Button {...props} />
             </TooltipTrigger>
             <TooltipContent {...tooltipContentProps}>
                 <p className={cn(tooltipClassname)}>{tooltip}</p>

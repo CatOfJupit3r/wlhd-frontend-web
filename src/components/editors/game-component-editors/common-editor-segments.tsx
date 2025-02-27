@@ -1,6 +1,8 @@
+import { SquareMultiSelect } from '@components/common/square-multi-select';
 import {
     ActionPointsIcon,
     ActivenessIcon,
+    AOEIcon,
     CooldownIcon,
     DurationIcon,
     QuantityIcon,
@@ -16,6 +18,7 @@ import { Separator } from '@components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import useDualTranslation from '@hooks/useDualTranslation';
 import {
+    AreaEffectEditable,
     CharacterDataInSave,
     ItemEditable,
     SpellEditable,
@@ -54,7 +57,9 @@ export const getHandlerChange = (max: number, min: number, set: (value: number) 
         }
     };
 };
-export type AllowedEditables = OneOf<[ItemEditable, WeaponEditable, SpellEditable, StatusEffectEditable]>;
+export type AllowedEditables = OneOf<
+    [ItemEditable, WeaponEditable, SpellEditable, StatusEffectEditable, AreaEffectEditable]
+>;
 type ComponentPartEditorProps = {
     component: AllowedEditables;
     changeComponentField: (key: keyof AllowedEditables, value: AllowedEditables[keyof AllowedEditables]) => void;
@@ -193,6 +198,26 @@ export const CostEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
                 onChange={getHandlerChange(99, 0, (value) => changeComponentField('usageCost', value))}
                 className={'w-20'}
             />
+        </div>
+    );
+};
+
+export const AffectedSquaresEditor: React.FC<ComponentPartEditorProps> = ({ component, changeComponentField }) => {
+    const { t } = useComponentEditorTranslation();
+
+    return (
+        <div className={'flex w-full max-w-[50%] flex-col gap-2'}>
+            <EditorLabel text={t('affected-squares')} icon={<AOEIcon />} />
+            <div className={'flex flex-col gap-2'}>
+                <SquareMultiSelect
+                    maxCount={2}
+                    onChange={(value) => {
+                        changeComponentField('squares', value);
+                    }}
+                    values={component.squares ?? []}
+                    placeholder={t('affected-squares-multi-select-placeholder')}
+                />
+            </div>
         </div>
     );
 };

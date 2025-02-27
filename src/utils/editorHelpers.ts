@@ -1,5 +1,6 @@
 import { CombatEditorSaveType, CONTROLLED_BY_GAME_LOGIC } from '@context/CombatEditorContext';
 import { ControlledBy, CreateCombatBody } from '@models/EditorConversion';
+import { isValidSquareString } from '@utils/isValidSquareString';
 
 class EditorHelpers {
     private processControl(control: unknown): ControlledBy {
@@ -24,8 +25,8 @@ class EditorHelpers {
         // [1, 2, 3, 4, 5]. 2 is activeCharacterIndex
         // [3, 4, 5, null, 1, 2]
 
-        const firstHalf = turnOrderCopy.slice(activeCharacterIndex + 1);
-        const secondHalf = turnOrderCopy.slice(0, activeCharacterIndex + 1);
+        const firstHalf = turnOrderCopy.slice(activeCharacterIndex + 1).map((turn) => turn.character);
+        const secondHalf = turnOrderCopy.slice(0, activeCharacterIndex + 1).map((turn) => turn.character);
 
         // null is the round end. it is possible for multiple nulls, but editor is not designed for that
         console.log('First half:', firstHalf);
@@ -67,12 +68,25 @@ class EditorHelpers {
         return converted;
     }
 
+    public convertAreaEffectsToExportable(editorSave: CombatEditorSaveType): CreateCombatBody['preset']['areaEffects'] {
+        return editorSave.areaEffects
+            .filter((effect) => effect.descriptor !== '')
+            .map((effect) => {
+                return {
+                    ...effect,
+                    squares: effect.squares.filter((square) => isValidSquareString(square)),
+                };
+            })
+            .filter((effect) => effect.squares.length > 0);
+    }
+
     public convertGameEditorSaveToExportable(editorSave: CombatEditorSaveType): CreateCombatBody['preset'] {
         return {
             round: editorSave.round,
             turnOrder: this.convertTurnOrderToExportable(editorSave),
             messages: editorSave.messages,
             battlefield: this.convertBattlefieldToExportable(editorSave),
+            areaEffects: this.convertAreaEffectsToExportable(editorSave),
         };
     }
 }

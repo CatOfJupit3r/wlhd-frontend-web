@@ -1,11 +1,12 @@
-import BetterScrollableContainer from '@components/BetterScrollableContainer';
 import { CharacterGameAsset } from '@components/GameAsset';
+import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
 import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder } from '@redux/slices/gameScreenSlice';
 import { cn, getCharacterSide } from '@utils';
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
-import { forwardRef, Ref, useEffect, useState } from 'react';
+import { FC, forwardRef, Ref, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PiStarFourFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
 
 interface iCharacterCard extends MotionProps {
@@ -21,7 +22,7 @@ const CharacterCard = forwardRef(
         return (
             <motion.div
                 className={cn(
-                    'flex h-10 w-full flex-row items-center gap-1 overflow-y-hidden hover:opacity-100 hover:grayscale-0',
+                    'flex h-full w-10 flex-col items-center gap-1 hover:opacity-100 hover:grayscale-0',
                     isActive ? 'opacity-100' : 'opacity-70 grayscale',
                     className,
                 )}
@@ -31,9 +32,9 @@ const CharacterCard = forwardRef(
                 }}
                 title={t(character.decorations.name)}
                 ref={ref}
-                initial={{ x: -100, opacity: 0 }}
-                animate={{ x: isActive ? 0 : -5, opacity: 1 }} // active characters are a bit to the right
-                exit={{ x: -100, opacity: 0 }}
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: isActive ? 0 : -15, opacity: 1 }} // active characters are a bit to the top
+                exit={{ y: -100, opacity: 0 }}
                 layout
                 transition={{
                     layout: {
@@ -44,15 +45,17 @@ const CharacterCard = forwardRef(
                 }}
                 {...props}
             >
-                <CharacterGameAsset
-                    src={character.decorations.sprite}
-                    alt={character.descriptor}
-                    className={cn('h-20 w-28 overflow-y-hidden object-cover')}
-                    line={character.square?.line ?? 4}
-                />
+                <div className={'relative h-16 max-h-[2.75rem] w-10 overflow-y-hidden'}>
+                    <CharacterGameAsset
+                        src={character.decorations.sprite}
+                        alt={character.descriptor}
+                        className={cn('w-22 absolute bottom-[-6px] h-16 object-cover')}
+                        line={character.square?.line ?? 4}
+                    />
+                </div>
                 <div
                     className={cn(
-                        'relative flex h-full w-3 items-center justify-center overflow-hidden rounded opacity-90',
+                        'relative flex h-3 w-full flex-col items-center justify-center overflow-hidden rounded opacity-90',
                         getCharacterSide(character.square?.line ?? 4) === 'ally'
                             ? isActive
                                 ? character.controlledByYou
@@ -69,7 +72,13 @@ const CharacterCard = forwardRef(
                                 ? 'bg-red-400'
                                 : 'bg-rose-400',
                     )}
-                ></div>
+                >
+                    <PiStarFourFill
+                        className={
+                            'y-0 x-5 absolute flex size-4 gap-2 overflow-x-clip text-base font-semibold text-white opacity-20'
+                        }
+                    />
+                </div>
             </motion.div>
         );
     },
@@ -81,7 +90,7 @@ type InnerInterOrderItem = {
     key: string;
 };
 
-const TurnOrderDisplay = () => {
+const TurnOrderDisplay: FC<{ className?: string }> = ({ className }) => {
     const turnOrder = useSelector(selectTurnOrder);
     const [innerTurnOrder, setInnerTurnOrder] = useState<InnerInterOrderItem[]>([]);
 
@@ -130,13 +139,16 @@ const TurnOrderDisplay = () => {
     }, [turnOrder]);
 
     return (
-        <BetterScrollableContainer className={'w-20'}>
+        <ScrollArea className={cn('flex w-full flex-row gap-4', className)}>
+            <ScrollBar orientation={'horizontal'} />
             <AnimatePresence>
-                {innerTurnOrder.filter(Boolean).map(({ key, character, isActive }) => (
-                    <CharacterCard key={key} character={character} isActive={isActive} />
-                ))}
+                <div className={'flex flex-row gap-2'}>
+                    {innerTurnOrder.filter(Boolean).map(({ key, character, isActive }) => (
+                        <CharacterCard key={key} character={character} isActive={isActive} />
+                    ))}
+                </div>
             </AnimatePresence>
-        </BetterScrollableContainer>
+        </ScrollArea>
     );
 };
 

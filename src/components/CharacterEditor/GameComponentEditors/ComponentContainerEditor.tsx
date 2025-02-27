@@ -1,14 +1,9 @@
+import { ItemEditor, SpellEditor, StatusEffectEditor, WeaponEditor } from '@components/editors/game-component-editors';
 import {
     AddNewComponent,
     COMPONENT_TO_INTERFACE,
     CONTAINER_TYPE,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentCreation';
-import {
-    ItemEditor,
-    SpellEditor,
-    StatusEffectEditor,
-    WeaponEditor,
-} from '@components/CharacterEditor/GameComponentEditors/ComponentEditor';
+} from '@components/editors/game-component-editors/add-new-component';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
@@ -251,9 +246,52 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
 };
 
 const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
+    // maybe extract this to general editor folder too
+    // but for now, it's only needed in character editor, so it's fine
+    const { character, updateCharacter } = useCharacterEditorContext();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
+
+    const addNewComponent = useCallback(
+        (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE], descriptor: string) => {
+            const newCharacter = { ...character };
+            switch (type) {
+                case 'item':
+                    newCharacter.inventory = [
+                        ...newCharacter.inventory,
+                        {
+                            ...component,
+                            descriptor,
+                        } as CharacterDataEditable['inventory'][number],
+                    ];
+                    break;
+                case 'weapon':
+                    newCharacter.weaponry = [
+                        ...newCharacter.weaponry,
+                        component as CharacterDataEditable['weaponry'][number],
+                    ];
+                    break;
+                case 'spell':
+                    newCharacter.spellBook = {
+                        ...newCharacter.spellBook,
+                        knownSpells: [
+                            ...newCharacter.spellBook.knownSpells,
+                            component as CharacterDataEditable['spellBook']['knownSpells'][number],
+                        ],
+                    };
+                    break;
+                case 'statusEffect':
+                    newCharacter.statusEffects = [
+                        ...newCharacter.statusEffects,
+                        component as CharacterDataEditable['statusEffects'][number],
+                    ];
+                    break;
+            }
+            updateCharacter(newCharacter);
+        },
+        [character, updateCharacter],
+    );
 
     return (
         <div id={'component-container'} className={'flex flex-col gap-4'}>
@@ -261,7 +299,7 @@ const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
                 <AccordionItem value={'add-new-component'}>
                     <AccordionTrigger className={'text-xl'}>{t(`${type}.add`)}</AccordionTrigger>
                     <AccordionContent>
-                        <AddNewComponent type={type} />
+                        <AddNewComponent type={type} onAdd={addNewComponent} />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

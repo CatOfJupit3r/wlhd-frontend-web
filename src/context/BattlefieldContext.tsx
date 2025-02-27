@@ -2,6 +2,15 @@ import { Battlefield } from '@models/GameModels';
 import { getCharacterSideWithSquare } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 
+export const AOE_HIGHLIGHT_MODE = {
+    RIGHT: 'RIGHT',
+    LEFT: 'LEFT',
+    TOP: 'TOP',
+    BOTTOM: 'BOTTOM',
+} as const;
+
+type AOEHighlightModeType = keyof typeof AOE_HIGHLIGHT_MODE;
+
 export interface iBattlefieldContext {
     battlefield: {
         [square: string]: {
@@ -13,6 +22,7 @@ export interface iBattlefieldContext {
                     flag: boolean;
                     type: 'ally' | 'enemy' | 'neutral';
                 };
+                aoe_highlight: Array<AOEHighlightModeType>;
             };
         };
     };
@@ -33,6 +43,8 @@ export interface iBattlefieldContext {
     setInteractableSquares: (...squares: string[]) => void;
     setActiveSquares: (...squares: string[]) => void;
 
+    addAOEHighlight: (squares: Array<string>) => void;
+
     onClickTile: (square?: string) => void;
     changeOnClickTile: (onClickTile: (square?: string) => void) => void;
 
@@ -49,7 +61,6 @@ const DEFAULT_BATTLEFIELD: () => iBattlefieldContext['battlefield'] = () => {
             res[`${i}/${j}`] = {
                 info: {
                     character: null,
-                    areaEffects: [],
                 },
                 flags: {
                     active: false,
@@ -58,12 +69,55 @@ const DEFAULT_BATTLEFIELD: () => iBattlefieldContext['battlefield'] = () => {
                         flag: false,
                         type: 'neutral',
                     },
+                    aoe_highlight: [],
                 },
             };
         }
     }
     return res;
 };
+
+const calculateWhichAOEHighlightsToShow = (squares: Array<string>) =>
+    squares.reduce(
+        (acc, curr) => {
+            const [line, column] = curr.split('/').map((value) => parseInt(value, 10));
+            let modes = [
+                AOE_HIGHLIGHT_MODE.LEFT,
+                AOE_HIGHLIGHT_MODE.RIGHT,
+                AOE_HIGHLIGHT_MODE.TOP,
+                AOE_HIGHLIGHT_MODE.BOTTOM,
+            ];
+            let neighborLeft = acc[`${line}/${column - 1}`];
+            if (neighborLeft) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.LEFT);
+                neighborLeft = neighborLeft.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.RIGHT);
+            }
+            let neighborRight = acc[`${line}/${column + 1}`];
+            if (neighborRight) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.RIGHT);
+                neighborRight = neighborRight.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.LEFT);
+            }
+            let neighborTop = acc[`${line - 1}/${column}`];
+            if (neighborTop) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.TOP);
+                neighborTop = neighborTop.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.BOTTOM);
+            }
+            let neighborBottom = acc[`${line + 1}/${column}`];
+            if (neighborBottom) {
+                modes = modes.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.BOTTOM);
+                neighborBottom = neighborBottom.filter((mode) => mode !== AOE_HIGHLIGHT_MODE.TOP);
+            }
+            return {
+                ...acc,
+                ...(neighborLeft ? { [`${line}/${column - 1}`]: neighborLeft } : {}),
+                ...(neighborRight ? { [`${line}/${column + 1}`]: neighborRight } : {}),
+                ...(neighborTop ? { [`${line - 1}/${column}`]: neighborTop } : {}),
+                ...(neighborBottom ? { [`${line + 1}/${column}`]: neighborBottom } : {}),
+                [curr]: [...modes],
+            };
+        },
+        {} as { [key in (typeof squares)[number]]: Array<AOEHighlightModeType> },
+    );
 
 export const BattlefieldContextProvider = ({ children }: { children: ReactNode }) => {
     const [battlefield, setBattlefield] = useState<iBattlefieldContext['battlefield']>(DEFAULT_BATTLEFIELD());
@@ -83,6 +137,7 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
                 keepActive?: boolean;
                 keepClicked?: boolean;
                 keepInteractable?: boolean;
+                keepAOEHighlight?: boolean;
             } = {},
         ) => {
             setBattlefield((prev) => {
@@ -99,6 +154,7 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
                                       flag: false,
                                       type: 'neutral',
                                   },
+                            aoe_highlight: options.keepAOEHighlight ? prev[square]?.flags.aoe_highlight : [],
                         },
                     };
                 }
@@ -222,6 +278,30 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
         });
     }, []);
 
+    const addAOEHighlight = useCallback((squares: Array<string>) => {
+        setBattlefield((prev) => {
+            const newBattlefield = { ...prev };
+            const newAOEHighlights = {
+                ...calculateWhichAOEHighlightsToShow(
+                    squares.filter((square) => getCharacterSideWithSquare(square) === 'ally'),
+                ),
+                ...calculateWhichAOEHighlightsToShow(
+                    squares.filter((square) => getCharacterSideWithSquare(square) === 'enemy'),
+                ),
+            };
+            for (const square of Object.keys(newBattlefield)) {
+                newBattlefield[square] = {
+                    ...newBattlefield[square],
+                    flags: {
+                        ...newBattlefield[square].flags,
+                        aoe_highlight: newAOEHighlights[square] || [],
+                    },
+                };
+            }
+            return newBattlefield;
+        });
+    }, []);
+
     const generateLeftTileTooltip = useCallback(
         (square: string) => {
             return bonusTileTooltipGenerator(square);
@@ -246,6 +326,8 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
                 incrementClickedSquares,
                 setInteractableSquares,
                 setActiveSquares,
+
+                addAOEHighlight,
 
                 onClickTile,
                 changeOnClickTile,
