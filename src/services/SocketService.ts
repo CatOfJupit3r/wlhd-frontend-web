@@ -1,4 +1,4 @@
-import { toastError, toastInfo } from '@components/toastifications';
+import { toastError } from '@components/toastifications';
 import { ActionResultsPayload } from '@models/Events';
 import {
     Battlefield,
@@ -184,14 +184,9 @@ class SocketService {
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message);
-                const toast = code === 200 ? toastInfo : toastError;
-                toast(
-                    code === 200 ? 'local:game.actionSuccess' : (message ?? 'local:game.actionError'),
-                    code === 200 ? 'Success' : 'Error',
-                    {
-                        position: code === 200 ? 'bottom-left' : 'top-center',
-                    },
-                );
+                if (code !== 200) {
+                    toastError(message ?? 'local:game.action-error', 'bottom-left');
+                }
             },
             [SOCKET_EVENTS.HALT_ACTION]: () => {
                 // this action stops any further action from being taken.
