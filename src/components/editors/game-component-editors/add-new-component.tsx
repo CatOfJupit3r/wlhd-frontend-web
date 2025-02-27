@@ -22,7 +22,7 @@ import {
     useLoadedStatusEffects,
     useLoadedWeapons,
 } from '@queries/useLoadedGameData';
-import { isDescriptor } from '@utils';
+import { cn, isDescriptor } from '@utils';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -144,9 +144,10 @@ const AreaEffectPreview: FC<iComponentPreview<'areaEffect'>> = ({ setComponent, 
 interface iAddNewComponentProps<T extends CONTAINER_TYPE = CONTAINER_TYPE> {
     type: T;
     onAdd: (component: COMPONENT_TO_INTERFACE[T], descriptor: string) => void;
+    className?: string;
 }
 
-export const AddNewComponent: FC<iAddNewComponentProps> = ({ type, onAdd }) => {
+export const AddNewComponent: FC<iAddNewComponentProps> = ({ type, onAdd, className }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
@@ -155,7 +156,7 @@ export const AddNewComponent: FC<iAddNewComponentProps> = ({ type, onAdd }) => {
     const [component, setComponent] = useState<COMPONENT_TO_INTERFACE[CONTAINER_TYPE] | null>(null);
 
     return (
-        <div id={`add-new-component`} className={'w-full'}>
+        <div id={`add-new-component`} className={cn('w-full', className)}>
             <div className={'w-full gap-3'}>
                 <div className={'flex w-full flex-row gap-2'}>
                     <div className={'w-full'}>

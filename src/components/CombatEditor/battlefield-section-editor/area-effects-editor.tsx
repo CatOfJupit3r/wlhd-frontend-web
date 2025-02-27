@@ -109,6 +109,7 @@ const AreaEffectsOnBattlefieldEditor: FC<iAreaEffectsEditor> = () => {
                                 });
                                 setModal(null);
                             }}
+                            className={'max-h-3xl'}
                         />
                     ) : (
                         <AreaEffectEditor
@@ -120,6 +121,7 @@ const AreaEffectsOnBattlefieldEditor: FC<iAreaEffectsEditor> = () => {
                                     descriptor: oldAreaEffect.descriptor,
                                 });
                             }}
+                            className={'max-h-[650px]'}
                         />
                     )}
                 </DialogInteractableArea>

@@ -3,6 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Label } from '@components/ui/label';
 import { HorizontalSeparator } from '@components/ui/separator';
 import useDualTranslation from '@hooks/useDualTranslation';
+import { cn } from '@utils';
 import React, { useCallback, useMemo } from 'react';
 import { FaTags } from 'react-icons/fa';
 import {
@@ -23,10 +24,11 @@ type ComponentEditorProps<T extends AllowedEditables> = {
     component: T;
     setComponent: (component: T) => void;
     canBeActivated?: (component?: T) => boolean;
+    className?: string;
 };
 
 const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React.FC<ComponentEditorProps<T>> => {
-    const Created: React.FC<ComponentEditorProps<T>> = ({ component, setComponent, canBeActivated }) => {
+    const Created: React.FC<ComponentEditorProps<T>> = ({ component, setComponent, canBeActivated, className }) => {
         const { t } = useDualTranslation('local', { keyPrefix: 'editor' });
 
         const changeComponentField = useCallback(
@@ -85,9 +87,10 @@ const ComponentEditorFactory = <T extends AllowedEditables>(type: string): React
 
         return (
             <div
-                className={
-                    'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3'
-                }
+                className={cn(
+                    'border-container-medium relative flex w-full max-w-full flex-col gap-2 overflow-y-auto overflow-x-hidden p-3',
+                    className,
+                )}
             >
                 <Accordion type={'single'} collapsible={true} defaultValue={'main-info'}>
                     <AccordionItem value={'main-info'}>
