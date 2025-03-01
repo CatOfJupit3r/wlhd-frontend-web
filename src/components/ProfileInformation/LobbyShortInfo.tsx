@@ -3,6 +3,7 @@ import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Skeleton } from '@components/ui/skeleton';
 import StyledLink from '@components/ui/styled-link';
 import useLobbyShortInfo from '@queries/useLobbyShortInfo';
+import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
 import { cn } from '@utils';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -79,7 +80,10 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
 
     return (
         <StyledLink
-            to={`/lobby-rooms/${lobbyId}`}
+            to={LobbyRoomRoute.to}
+            params={{
+                lobbyId,
+            }}
             className={cn('block w-full no-underline')}
             disabled={lobbyInfo?.needsApproval}
         >

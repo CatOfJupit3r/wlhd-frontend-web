@@ -29,6 +29,12 @@ const router = createRouter({
     defaultPreload: 'intent',
 });
 
+declare module '@tanstack/react-router' {
+    interface Register {
+        router: typeof router;
+    }
+}
+
 const MeResolver = () => {
     const me = useMe();
 

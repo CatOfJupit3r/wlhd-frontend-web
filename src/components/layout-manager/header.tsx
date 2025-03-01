@@ -91,7 +91,7 @@ const Header = () => {
                 <Button
                     onClick={() =>
                         navigate({
-                            to: '/sign-in',
+                            to: '/login',
                         })
                     }
                     variant={'ghost'}
@@ -117,32 +117,30 @@ const Header = () => {
 
     const LoggedInLinks = useCallback(() => {
         return (
-            <>
-                <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger asChild>
-                        <div>
-                            <CurrentUserAvatar className={'unselectable cursor-pointer text-black'} />
+            <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                    <div>
+                        <CurrentUserAvatar className={'unselectable cursor-pointer text-black'} />
+                    </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>@{user?.handle}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {sections.map((section, index) => (
+                        <div key={index}>
+                            <DropdownMenuGroup>
+                                {section.map(({ name, action, icon: Icon, className, disabled }, index) => (
+                                    <DropdownMenuItem key={`item_${index}`} onClick={action} disabled={disabled}>
+                                        <Icon className="mr-2 size-5" />
+                                        <span className={className}>{t(name)}</span>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
                         </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                        <DropdownMenuLabel>@{user?.handle}</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {sections.map((section, index) => (
-                            <div key={index}>
-                                <DropdownMenuGroup>
-                                    {section.map(({ name, action, icon: Icon, className, disabled }, index) => (
-                                        <DropdownMenuItem key={`item_${index}`} onClick={action} disabled={disabled}>
-                                            <Icon className="mr-2 size-5" />
-                                            <span className={className}>{t(name)}</span>
-                                        </DropdownMenuItem>
-                                    ))}
-                                </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                            </div>
-                        ))}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
         );
     }, [lobbyId, user?.handle]);
 

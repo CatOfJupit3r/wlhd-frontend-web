@@ -18,8 +18,8 @@ const Footer = () => {
             >
                 <StyledLink to={'/'}>{t('home')}</StyledLink>
                 <StyledLink to={'/about'}>{t('about')}</StyledLink>
-                <StyledLink to={'/contact'}>{t('contact')}</StyledLink>
-                <StyledLink to={'/privacy'}>{t('privacy')}</StyledLink>
+                <StyledLink to={'/'}>{t('contact')}</StyledLink>
+                <StyledLink to={'/'}>{t('privacy')}</StyledLink>
             </div>
         </footer>
     );

@@ -13,7 +13,7 @@ const StyledLink: React.FC<StyledLinkProps> = ({ className, children, disabled, 
     return (
         <Link
             className={cn(baseStyles, disabled ? 'pointer-events-none' : '', className)}
-            to={disabled ? '' : to}
+            to={to}
             disabled={disabled}
             {...props}
         >

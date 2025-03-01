@@ -2,6 +2,7 @@ import CategoryContent from '@components/GameWiki/CategoryContent';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
 import { AOEIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
 import { Button } from '@components/ui/button';
+import { Route as WikiDlcSelectRoute } from '@router/_auth_only/game-wiki';
 import { useNavigate } from '@tanstack/react-router';
 import { SupportedDLCs } from 'config';
 import React, { FC } from 'react';
@@ -29,7 +30,7 @@ const DLCContents: FC<iDLCContents> = ({ dlc }) => {
                     <Button
                         onClick={() => {
                             navigate({
-                                to: '/game-wiki/',
+                                to: WikiDlcSelectRoute.to,
                             });
                         }}
                         variant={'default'}

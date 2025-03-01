@@ -9,7 +9,7 @@ import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 
 interface RootRouteContext {
     me: Promise<UseMe>;
-    queryClient: typeof QueryClient;
+    queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RootRouteContext>()({

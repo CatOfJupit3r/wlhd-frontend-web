@@ -43,7 +43,13 @@ const WikiDLCChoice: FC<iWikiDLCChoice> = () => {
                 </div>
                 <div className={'flex flex-row justify-center gap-4'}>
                     {SUPPORTED_DLCS_DESCRIPTORS.map((dlc) => (
-                        <StyledLink to={`/game-wiki/${dlc}`} className={'w-full no-underline'}>
+                        <StyledLink
+                            to={`/game-wiki/$dlc`}
+                            className={'w-full no-underline'}
+                            params={{
+                                dlc,
+                            }}
+                        >
                             <DLCCard
                                 title={t(`dlcs.${dlc}.name`)}
                                 description={t(`dlcs.${dlc}.description`)}

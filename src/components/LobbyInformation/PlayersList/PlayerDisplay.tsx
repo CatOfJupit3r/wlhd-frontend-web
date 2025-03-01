@@ -7,6 +7,7 @@ import { iLobbyInformation, iLobbyPlayerInfo } from '@models/Redux';
 import { useApproveUserMutation } from '@mutations/lobby-overview/useApproveUser';
 import useRemoveLobbyMember from '@mutations/lobby-overview/useRemoveLobbyMember';
 import useMe from '@queries/useMe';
+import { Route as ViewCharacterRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/view-character';
 import { FC } from 'react';
 import { FaCheck, FaCheckDouble } from 'react-icons/fa';
 import { ImCross } from 'react-icons/im';
@@ -17,7 +18,12 @@ const LinkToPlayerCharacter: FC<{
     name: string;
 }> = ({ descriptor, name }) => {
     return (
-        <StyledLink to={`./view-character?character=${descriptor}`}>
+        <StyledLink
+            to={ViewCharacterRoute.to}
+            search={{
+                character: descriptor,
+            }}
+        >
             {name} ({descriptor})
         </StyledLink>
     );
