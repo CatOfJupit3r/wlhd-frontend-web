@@ -1,8 +1,8 @@
 // src/components/multi-select.tsx
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckIcon, ChevronDown, WandSparkles, XCircle, XIcon } from 'lucide-react';
 import * as React from 'react';
+import { LuCheck, LuChevronDown, LuCircleX, LuWandSparkles, LuX } from 'react-icons/lu';
 
 import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
@@ -200,10 +200,10 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                             >
                                                 {IconComponent && <IconComponent className="mr-2 h-4 w-4" />}
                                                 {option?.label}
-                                                <XCircle
+                                                <LuCircleX
                                                     className="ml-2 h-4 w-4 cursor-pointer"
-                                                    onClick={(event) => {
-                                                        event.stopPropagation();
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
                                                         toggleOption(value);
                                                     }}
                                                 />
@@ -220,10 +220,10 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                             style={{ animationDuration: `${animation}s` }}
                                         >
                                             {`+ ${selectedValues.length - maxCount}`}
-                                            <XCircle
+                                            <LuCircleX
                                                 className="ml-2 h-4 w-4 cursor-pointer"
-                                                onClick={(event) => {
-                                                    event.stopPropagation();
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
                                                     clearExtraOptions();
                                                 }}
                                             />
@@ -231,7 +231,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                     )}
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <XIcon
+                                    <LuX
                                         className="mx-2 h-4 cursor-pointer text-muted-foreground"
                                         onClick={(event) => {
                                             event.stopPropagation();
@@ -239,13 +239,13 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                         }}
                                     />
                                     <Separator orientation="vertical" className="flex h-full min-h-6" />
-                                    <ChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
+                                    <LuChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
                                 </div>
                             </div>
                         ) : (
                             <div className="mx-auto flex w-full items-center justify-between">
                                 <span className="mx-3 text-sm text-muted-foreground">{placeholder}</span>
-                                <ChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
+                                <LuChevronDown className="mx-2 h-4 cursor-pointer text-muted-foreground" />
                             </div>
                         )}
                     </Button>
@@ -269,7 +269,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                                 : 'opacity-50 [&_svg]:invisible',
                                         )}
                                     >
-                                        <CheckIcon className="h-4 w-4" />
+                                        <LuCheck className="h-4 w-4" />
                                     </div>
                                     <span>(Select All)</span>
                                 </CommandItem>
@@ -289,7 +289,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                                                         : 'opacity-50 [&_svg]:invisible',
                                                 )}
                                             >
-                                                <CheckIcon className="h-4 w-4" />
+                                                <LuCheck className="h-4 w-4" />
                                             </div>
                                             {option.icon && (
                                                 <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -325,7 +325,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                     </Command>
                 </PopoverContent>
                 {animation > 0 && selectedValues.length > 0 && (
-                    <WandSparkles
+                    <LuWandSparkles
                         className={cn(
                             'my-2 h-3 w-3 cursor-pointer bg-background text-foreground',
                             isAnimating ? '' : 'text-muted-foreground',

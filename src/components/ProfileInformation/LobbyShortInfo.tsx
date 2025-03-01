@@ -3,11 +3,11 @@ import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Skeleton } from '@components/ui/skeleton';
 import StyledLink from '@components/ui/styled-link';
 import useLobbyShortInfo from '@queries/useLobbyShortInfo';
-import paths from '@router/paths';
+import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
 import { cn } from '@utils';
-import { Crown } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LuCrown } from 'react-icons/lu';
 
 const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
     const { t } = useTranslation('local', {
@@ -52,7 +52,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
         () => (
             <div className="space-y-1">
                 <div className="flex items-center space-x-2">
-                    {lobbyInfo.isGm && <Crown className="size-5 text-yellow-500" />}
+                    {lobbyInfo.isGm && <LuCrown className="size-5 text-yellow-500" />}
                     <LinkToLobby />
                 </div>
                 <CommaSeparatedList
@@ -80,7 +80,10 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
 
     return (
         <StyledLink
-            to={paths.lobbyRoom.replace(':lobbyId', lobbyId)}
+            to={LobbyRoomRoute.to}
+            params={{
+                lobbyId,
+            }}
             className={cn('block w-full no-underline')}
             disabled={lobbyInfo?.needsApproval}
         >

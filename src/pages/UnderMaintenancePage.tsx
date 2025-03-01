@@ -22,7 +22,7 @@ const UnderMaintenancePage = () => {
                 <p className="max-w-[30rem] opacity-60">
                     {t('local:under_maintenance.explanation')}{' '}
                     <StyledLink
-                        to={'https://github.com/CatOfJupit3r'}
+                        href={'https://github.com/CatOfJupit3r'}
                         className={'font-extrabold text-blue-800'}
                         target={'_blank'}
                     >

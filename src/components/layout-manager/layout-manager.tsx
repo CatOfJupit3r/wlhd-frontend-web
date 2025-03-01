@@ -1,11 +1,9 @@
-import { TooltipProvider } from '@components/ui/tooltip';
-import { useLayoutContext } from '@context/LayoutContext';
+import { LayoutContextProvider, useLayoutContext } from '@context/LayoutContext';
 import { apprf, cn } from '@utils';
-import { lazy, ReactNode, Suspense } from 'react';
-import { Outlet } from 'react-router';
+import { FC, lazy, ReactNode, Suspense } from 'react';
 
-const Header = lazy(() => import('@components/Header'));
-const Footer = lazy(() => import('@components/Footer'));
+const Header = lazy(() => import('@components/layout-manager/header'));
+const Footer = lazy(() => import('@components/layout-manager/footer'));
 
 const HeaderPlaceholder = () => (
     <div
@@ -35,30 +33,34 @@ const FooterPlaceholder = () => (
     </footer>
 );
 
-const LayoutContextClient = () => {
+interface iLayoutManagerProps {
+    children: ReactNode;
+}
+
+const LayoutManager: FC<iLayoutManagerProps> = ({ children }) => {
     const { footer, header } = useLayoutContext();
 
     return (
-        <GlobalContext>
+        <>
             {header && (
                 <Suspense fallback={<HeaderPlaceholder />}>
                     <Header />
                 </Suspense>
             )}
-            <main>
-                <Outlet />
-            </main>
+            <main>{children}</main>
             {footer && (
                 <Suspense fallback={<FooterPlaceholder />}>
                     <Footer />
                 </Suspense>
             )}
-        </GlobalContext>
+        </>
     );
 };
 
-const GlobalContext = ({ children }: { children: ReactNode }) => {
-    return <TooltipProvider>{children}</TooltipProvider>;
+export default ({ ...props }: iLayoutManagerProps) => {
+    return (
+        <LayoutContextProvider>
+            <LayoutManager {...props} />
+        </LayoutContextProvider>
+    );
 };
-
-export default LayoutContextClient;

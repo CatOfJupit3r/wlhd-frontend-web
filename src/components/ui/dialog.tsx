@@ -1,5 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
+import { LuX } from 'react-icons/lu';
 
 import { cn } from '@utils';
 import * as React from 'react';
@@ -44,7 +44,7 @@ const DialogContent = forwardRef<
         >
             {children}
             <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                <X className="size-4" />
+                <LuX className="size-4" />
                 <span className="sr-only">Close</span>
             </DialogPrimitive.Close>
         </DialogPrimitive.Content>
@@ -90,14 +90,14 @@ const DialogInteractableArea: React.FC<
 
 export {
     Dialog,
-    DialogPortal,
-    DialogOverlay,
     DialogClose,
-    DialogTrigger,
     DialogContent,
-    DialogHeader,
-    DialogFooter,
-    DialogTitle,
     DialogDescription,
+    DialogFooter,
+    DialogHeader,
     DialogInteractableArea,
+    DialogOverlay,
+    DialogPortal,
+    DialogTitle,
+    DialogTrigger,
 };

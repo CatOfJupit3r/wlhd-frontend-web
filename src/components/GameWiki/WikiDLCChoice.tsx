@@ -1,7 +1,6 @@
 import DLCData, { iDLCData } from '@components/GameWiki/data';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
 import StyledLink from '@components/ui/styled-link';
-import paths from '@router/paths';
 import { SUPPORTED_DLCS_DESCRIPTORS } from 'config';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +43,13 @@ const WikiDLCChoice: FC<iWikiDLCChoice> = () => {
                 </div>
                 <div className={'flex flex-row justify-center gap-4'}>
                     {SUPPORTED_DLCS_DESCRIPTORS.map((dlc) => (
-                        <StyledLink to={paths.wikiWithDLC.replace(':dlc', dlc)} className={'w-full no-underline'}>
+                        <StyledLink
+                            to={`/game-wiki/$dlc`}
+                            className={'w-full no-underline'}
+                            params={{
+                                dlc,
+                            }}
+                        >
                             <DLCCard
                                 title={t(`dlcs.${dlc}.name`)}
                                 description={t(`dlcs.${dlc}.description`)}

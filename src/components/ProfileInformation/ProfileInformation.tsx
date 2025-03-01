@@ -16,9 +16,9 @@ import { Separator } from '@components/ui/separator';
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
 import useMe from '@queries/useMe';
-import { Calendar, Gamepad, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LuCalendar, LuGamepad, LuTrophy } from 'react-icons/lu';
 
 const ProfileInformation = () => {
     const { user } = useMe();
@@ -44,11 +44,11 @@ const ProfileInformation = () => {
                 <CardContent className="mt-6 grid gap-6">
                     <div className="flex items-center space-x-4 text-sm">
                         <Badge variant="secondary" className="px-3 py-1">
-                            <Calendar className="mr-2 size-4" />
+                            <LuCalendar className="mr-2 size-4" />
                             {t('joined-on')} {new Date(user.createdAt).toLocaleDateString()}
                         </Badge>
                         <Badge variant="secondary" className="px-3 py-1">
-                            <Trophy className="mr-2 size-4" />
+                            <LuTrophy className="mr-2 size-4" />
                             {t('legacy-member')}
                         </Badge>
                     </div>
@@ -62,7 +62,7 @@ const ProfileInformation = () => {
                         </div>
                     </div>
                     <Button className="w-full" onClick={() => setShowInviteOverlay(true)}>
-                        <Gamepad className="mr-2 size-4" />
+                        <LuGamepad className="mr-2 size-4" />
                         {t('join-new')}
                     </Button>
                 </CardContent>

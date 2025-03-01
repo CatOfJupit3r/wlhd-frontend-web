@@ -1,17 +1,18 @@
+import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaPlay, FaSave } from 'react-icons/fa';
 import { MdOutlineVideogameAssetOff } from 'react-icons/md';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { useNavigate } from 'react-router';
 
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
 import useThisLobby from '@queries/useThisLobby';
-import paths from '@router/paths';
+import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId';
+import { Route as GameRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
 import APIService from '@services/APIService';
 import EditorHelpers from '@utils/editorHelpers';
 
@@ -87,7 +88,13 @@ const CombatEditor = () => {
                     messages,
                 }),
             );
-            navigate(paths.gameRoom.replace(':lobbyId', lobby.lobbyId).replace(':gameId', combat_id));
+            await navigate({
+                to: GameRoomRoute.to,
+                params: {
+                    lobbyId: lobby.lobbyId,
+                    gameId: combat_id,
+                },
+            });
         } catch (e) {
             if (e instanceof AxiosError) {
                 toastError(t('Something went wrong during save handling'), e.response?.data.message);
@@ -163,10 +170,12 @@ const CombatEditor = () => {
                             variant={'outline'}
                             className={'size-12 p-3 text-2xl'}
                             onClick={() =>
-                                navigate(
-                                    lobby?.lobbyId ? paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId) : paths.home,
-                                    { relative: 'path' },
-                                )
+                                navigate({
+                                    to: LobbyRoomRoute.to,
+                                    params: {
+                                        lobbyId: lobby.lobbyId,
+                                    },
+                                })
                             }
                         >
                             <MdOutlineVideogameAssetOff />

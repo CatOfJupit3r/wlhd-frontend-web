@@ -1,5 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import pluginRouter from '@tanstack/eslint-plugin-router';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import reactCompiler from 'eslint-plugin-react-compiler';
@@ -18,6 +19,7 @@ const compat = new FlatCompat({
 
 export default [
     ...compat.extends('eslint:recommended', 'plugin:@typescript-eslint/recommended'),
+    ...pluginRouter.configs['flat/recommended'],
     {
         plugins: {
             '@typescript-eslint': typescriptEslint,

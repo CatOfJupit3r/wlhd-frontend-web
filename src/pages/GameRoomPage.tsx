@@ -1,13 +1,18 @@
 import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper';
 import Overlay from '@components/Overlay';
 import { TrueSpinner } from '@components/Spinner';
+import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
 import APIService from '@services/APIService';
+import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router';
 
-const GameRoomPage = () => {
-    const { lobbyId } = useParams();
+interface GameRoomPageProps {
+    lobbyId: string;
+    gameId: string;
+}
+
+const GameRoomPage = ({ lobbyId, gameId }: GameRoomPageProps) => {
     const [loadingTranslations, setLoadingTranslations] = useState(true);
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
@@ -33,7 +38,12 @@ const GameRoomPage = () => {
             loadTranslations().then(() => setLoadingTranslations(false));
         } catch (error) {
             console.log(error);
-            navigate('..');
+            navigate({
+                to: LobbyRoomRoute.to,
+                params: {
+                    lobbyId,
+                },
+            });
         }
     }, [i18n]);
 
@@ -47,7 +57,7 @@ const GameRoomPage = () => {
                     </div>
                 </Overlay>
             ) : (
-                <GameLogicWrapper />
+                <GameLogicWrapper lobbyId={lobbyId} gameId={gameId} />
             )}
         </>
     );

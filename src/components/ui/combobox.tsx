@@ -4,10 +4,10 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover';
 import { cn } from '@utils';
 import { ClassValue } from 'clsx';
-import { Check, ChevronsUpDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
+import { LuCheck, LuChevronsUpDown } from 'react-icons/lu';
 import { PiDotsThreeOutline } from 'react-icons/pi';
 
 const PlaceholderIcon = PiDotsThreeOutline;
@@ -93,7 +93,7 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                             <ComboBoxItem icon={PlaceholderIcon} label={selectText || t('select')} />
                         )}
                     </div>
-                    <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+                    <LuChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -122,7 +122,7 @@ export const Combobox = ({ items, value, onChange, selectText, size, includeSear
                                             setOpen(false);
                                         }}
                                     >
-                                        <Check
+                                        <LuCheck
                                             className={cn(
                                                 'mx-2 size-4',
                                                 value === item.value ? 'opacity-100' : 'opacity-0',

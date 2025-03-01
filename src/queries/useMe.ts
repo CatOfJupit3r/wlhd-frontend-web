@@ -77,4 +77,5 @@ export const useMe = () => {
     };
 };
 
+export type UseMe = ReturnType<typeof useMe>;
 export default useMe;

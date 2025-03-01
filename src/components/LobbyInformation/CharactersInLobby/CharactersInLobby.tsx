@@ -3,7 +3,6 @@ import { ButtonLink } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { iCharacterInLobby } from '@models/Redux';
-import paths from '@router/paths';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MdOutlineGroups3 } from 'react-icons/md';
@@ -25,7 +24,7 @@ const CharactersInLobby: FC<iCharactersInLobby> = ({ characters, lobbyId }) => {
                     <MdOutlineGroups3 className="mr-2 inline-block" />
                     {t('title')}
                 </CardTitle>
-                <ButtonLink href={paths.viewCharacter.replace(':lobbyId', lobbyId)} variant={'outline'}>
+                <ButtonLink href={`/lobby-rooms/${lobbyId}/view-character`} variant={'outline'}>
                     {t('goto-view-characters')}
                 </ButtonLink>
             </CardHeader>

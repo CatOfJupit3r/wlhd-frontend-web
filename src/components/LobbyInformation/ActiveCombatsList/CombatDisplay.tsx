@@ -2,7 +2,6 @@ import { ButtonLink } from '@components/ui/button';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import { iCombatInfo } from '@models/Redux';
-import paths from '@router/paths';
 import { cn } from '@utils';
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,10 +15,7 @@ const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode
     className,
 }) => {
     return (
-        <ButtonLink
-            className={className}
-            href={paths.gameRoom.replace(':lobbyId', lobbyId || '').replace(':gameId', combatId)}
-        >
+        <ButtonLink className={className} href={`/lobby-rooms/${lobbyId}/game-rooms/${combatId}`}>
             {children}
         </ButtonLink>
     );
