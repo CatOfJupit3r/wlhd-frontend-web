@@ -2,16 +2,18 @@ import CategoryContent from '@components/GameWiki/CategoryContent';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
 import { AOEIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
 import { Button } from '@components/ui/button';
-import paths from '@router/paths';
+import { useNavigate } from '@tanstack/react-router';
+import { SupportedDLCs } from 'config';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAddressCard } from 'react-icons/fa';
 import { IoMdReturnLeft } from 'react-icons/io';
-import { useNavigate } from 'react-router';
 
-interface iDLCContents {}
+interface iDLCContents {
+    dlc: SupportedDLCs;
+}
 
-const DLCContents: FC<iDLCContents> = () => {
+const DLCContents: FC<iDLCContents> = ({ dlc }) => {
     const [selected, setSelected] = React.useState<
         'characters' | 'spells' | 'items' | 'weapons' | 'statusEffects' | 'areaEffects' | null
     >(null);
@@ -26,7 +28,9 @@ const DLCContents: FC<iDLCContents> = () => {
                 <div>
                     <Button
                         onClick={() => {
-                            navigate(paths.wiki);
+                            navigate({
+                                to: '/game-wiki/',
+                            });
                         }}
                         variant={'default'}
                         className={'flex w-full flex-row gap-2'}
@@ -91,7 +95,7 @@ const DLCContents: FC<iDLCContents> = () => {
                 </div>
             </div>
             <div className={'size-full'}>
-                {selected ? <CategoryContent category={selected} /> : <PseudoCategoryContent />}
+                {selected ? <CategoryContent category={selected} dlc={dlc} /> : <PseudoCategoryContent />}
             </div>
         </div>
     );

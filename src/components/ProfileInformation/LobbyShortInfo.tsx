@@ -3,7 +3,6 @@ import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Skeleton } from '@components/ui/skeleton';
 import StyledLink from '@components/ui/styled-link';
 import useLobbyShortInfo from '@queries/useLobbyShortInfo';
-import paths from '@router/paths';
 import { cn } from '@utils';
 import { Crown } from 'lucide-react';
 import { useCallback, useState } from 'react';
@@ -80,7 +79,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
 
     return (
         <StyledLink
-            to={paths.lobbyRoom.replace(':lobbyId', lobbyId)}
+            to={`/lobby-rooms/${lobbyId}`}
             className={cn('block w-full no-underline')}
             disabled={lobbyInfo?.needsApproval}
         >

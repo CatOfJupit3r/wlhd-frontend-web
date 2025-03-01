@@ -10,27 +10,32 @@ interface iUserAvatarProps extends HTMLAttributes<HTMLDivElement> {
     handle: UserInformation['handle'] | null;
 }
 
-const avatarCache = new LRUCache<string, string>({ max: 25 }); // Cache up to 100 avatars
+const avatarCache = new LRUCache<string, string>({ max: 25 }); // Cache up to 25 avatars
 
 const UserAvatar = ({ className, handle, ...props }: iUserAvatarProps) => {
+    const [currentHandle, setCurrentHandle] = useState<string | null>(handle); // Initialize as null for better handling of loading states
     const [avatar, setAvatar] = useState<string | null>(null); // Initialize as null for better handling of loading states
 
     useEffect(() => {
+        if (!handle || (currentHandle === handle && avatar)) return;
+        setCurrentHandle(handle);
+
+        const cached = avatarCache.get(handle);
+        if (cached) {
+            setAvatar(cached);
+            return;
+        }
+
         const fetchAvatar = async () => {
-            if (!handle) return;
-            // Check if the avatar is already in the cache
-            const cachedAvatar = avatarCache.get(handle);
-            if (cachedAvatar) {
-                setAvatar(cachedAvatar);
-            } else {
-                // Fetch the avatar and cache it
-                const fetchedAvatar = await APIService.getUserAvatar(handle);
-                avatarCache.set(handle, fetchedAvatar);
-                setAvatar(fetchedAvatar);
-            }
+            // Fetch the avatar and cache it
+            const fetchedAvatar = await APIService.getUserAvatar(handle);
+            avatarCache.set(handle, fetchedAvatar);
+            return fetchedAvatar;
         };
 
-        fetchAvatar().then();
+        fetchAvatar().then((avatar) => {
+            setAvatar(avatar);
+        });
     }, [handle]);
 
     return (

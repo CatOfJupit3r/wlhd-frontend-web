@@ -1,28 +1,26 @@
-import { iRouteConfig } from '@models/IRouteConfig';
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+
+interface iRouteConfig {
+    includeHeader: boolean;
+    includeFooter: boolean;
+}
 
 interface LayoutContextType {
     header: boolean;
     footer: boolean;
-    auth: boolean;
-    lobbyInfo: boolean;
 
-    changeConfig: (config: iRouteConfig | null) => void;
+    changeConfig: (config: Partial<iRouteConfig> | null) => void;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
 
 export const LayoutContextProvider = ({ children }: { children: ReactNode }) => {
-    const [header, setHeader] = useState<boolean>(false);
-    const [footer, setFooter] = useState<boolean>(false);
-    const [auth, setAuth] = useState<boolean>(false);
-    const [lobbyInfo, setLobbyInfo] = useState<boolean>(false);
+    const [header, setHeader] = useState<boolean>(true);
+    const [footer, setFooter] = useState<boolean>(true);
 
-    const changeConfig = useCallback((config: iRouteConfig | null) => {
-        setHeader((config ? config.includeHeader : null) ?? false);
-        setFooter((config ? config.includeFooter : null) ?? false);
-        setAuth((config ? config.requiresAuth : null) ?? false);
-        setLobbyInfo((config ? config.requiresLobbyInfo : null) ?? false);
+    const changeConfig = useCallback((config: Partial<iRouteConfig> | null) => {
+        setHeader((prev) => (config ? config?.includeHeader : null) ?? prev);
+        setFooter((prev) => (config ? config?.includeFooter : null) ?? prev);
     }, []);
 
     return (
@@ -30,8 +28,6 @@ export const LayoutContextProvider = ({ children }: { children: ReactNode }) => 
             value={{
                 header,
                 footer,
-                auth,
-                lobbyInfo,
                 changeConfig,
             }}
         >
@@ -46,4 +42,72 @@ export const useLayoutContext = () => {
         throw new Error('useLayoutContext must be used within a LayoutContextProvider.');
     }
     return context as LayoutContextType;
+};
+
+/**
+ * Hook that will disable footer on route.
+ */
+export const useNoFooter = () => {
+    const { changeConfig, footer } = useLayoutContext();
+
+    useEffect(() => {
+        // Store initial state in a ref to avoid dependency issues
+        const wasFooterShown = footer;
+
+        // Only update if footer is currently shown
+        if (wasFooterShown) {
+            changeConfig({
+                includeFooter: false,
+            });
+        }
+
+        // Clean-up function
+        return () => {
+            // Only restore if footer was initially shown
+            if (wasFooterShown) {
+                changeConfig({
+                    includeFooter: true,
+                });
+            }
+        };
+    }, []); // Empty dependency array - run only on mount/unmount
+};
+
+/**
+ * Hook that will disable header on route.
+ */
+export const useNoHeader = () => {
+    const { changeConfig, header } = useLayoutContext();
+
+    useEffect(() => {
+        // Store initial state in a ref to avoid dependency issues
+        const wasHeaderShown = header;
+
+        // Only update if header is currently shown
+        if (wasHeaderShown) {
+            changeConfig({
+                includeHeader: false,
+            });
+        }
+
+        // Clean-up function
+        return () => {
+            // Only restore if header was initially shown
+            if (wasHeaderShown) {
+                changeConfig({
+                    includeHeader: true,
+                });
+            }
+        };
+    }, []); // Empty dependency array - run only on mount/unmount
+};
+
+/**
+ * Hook that will disable both header and footer on route.
+ *
+ * Composes useNoFooter and useNoHeader, so you can use it as a single hook.
+ */
+export const useNoFooterOrHeader = () => {
+    useNoFooter();
+    useNoHeader();
 };

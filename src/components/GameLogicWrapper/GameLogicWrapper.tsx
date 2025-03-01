@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
 
 import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection';
 import GameScreen from '@components/GameScreen/GameScreen';
@@ -13,16 +13,18 @@ import { iActionContext } from '@context/ActionContext';
 import useThisLobby from '@queries/useThisLobby';
 import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
-import paths from '@router/paths';
 import SocketService from '@services/SocketService';
 
-const GameLogicWrapper = () => {
+interface GameLogicWrapperProps {
+    lobbyId: string;
+    gameId: string;
+}
+
+const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null);
     const { t } = useTranslation();
     const navigate = useNavigate();
-
-    const { gameId, lobbyId } = useParams();
 
     const gameFlow = useSelector(selectGameFlow);
     const { lobby } = useThisLobby();
@@ -31,7 +33,9 @@ const GameLogicWrapper = () => {
         if (!lobbyId || !gameId) {
             // if (somehow) lobbyId or gameId is not set, we leave the page before anything bad happens
             dispatch(resetGameScreenSlice());
-            navigate('..');
+            navigate({
+                to: '..',
+            });
             return;
         }
         dispatch(setActions(null));
@@ -54,7 +58,12 @@ const GameLogicWrapper = () => {
             return;
         }
         SocketService.disconnect();
-        navigate(paths.lobbyRoom.replace(':lobbyId', lobbyId));
+        navigate({
+            to: '/lobby-rooms/$lobbyId',
+            params: {
+                lobbyId,
+            },
+        });
     }, [lobbyId, navigate]);
 
     switch (gameFlow?.type) {

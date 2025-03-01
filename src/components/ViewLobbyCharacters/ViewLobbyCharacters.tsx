@@ -7,14 +7,13 @@ import ViewContent from '@components/ViewLobbyCharacters/ViewContent';
 import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import useThisLobby from '@queries/useThisLobby';
-import paths from '@router/paths';
+import { useNavigate } from '@tanstack/react-router';
 import { cn } from '@utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEdit } from 'react-icons/fa';
 import { GrContactInfo } from 'react-icons/gr';
 import { RiAdminFill } from 'react-icons/ri';
-import { useNavigate } from 'react-router';
 
 const NoCharactersPresent = () => {
     const { lobby } = useThisLobby();
@@ -31,14 +30,24 @@ const NoCharactersPresent = () => {
                 <div className={'mt-4 flex w-full flex-col gap-1'}>
                     <Button
                         onClick={() => {
-                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId));
+                            navigate({
+                                to: '/lobby-rooms/$lobbyId/create-character',
+                                params: {
+                                    lobbyId: lobby.lobbyId,
+                                },
+                            });
                         }}
                     >
                         {t('create-character')}
                     </Button>
                     <Button
                         onClick={() => {
-                            navigate(paths.lobbyRoom.replace(':lobbyId', lobby.lobbyId));
+                            navigate({
+                                to: '/lobby-rooms/$lobbyId',
+                                params: {
+                                    lobbyId: lobby.lobbyId,
+                                },
+                            });
                         }}
                         variant={'outline'}
                     >
@@ -124,7 +133,12 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                                     <Button
                                         variant={'outlineToDefault'}
                                         onClick={() => {
-                                            navigate(paths.createCharacter.replace(':lobbyId', lobby.lobbyId));
+                                            navigate({
+                                                to: '/lobby-rooms/$lobbyId/create-character',
+                                                params: {
+                                                    lobbyId: lobby.lobbyId,
+                                                },
+                                            });
                                         }}
                                     >
                                         {t('goto-character-creator')}

@@ -5,12 +5,11 @@ import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useRegister from '@mutations/auth/useRegister';
 import useMe from '@queries/useMe';
-import paths from '@router/paths';
+import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
 const registerSchema = z
@@ -38,7 +37,6 @@ const registerSchema = z
 
 const SignUp = ({ className }: { className?: string }) => {
     'use no memo;';
-    const navigate = useNavigate();
     const { t } = useTranslation('local', {
         keyPrefix: 'auth',
     });
@@ -52,10 +50,13 @@ const SignUp = ({ className }: { className?: string }) => {
         },
     });
     const { mutate, isPending } = useRegister();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isLoggedIn || isLoading) return;
-        navigate(paths.profile);
+        navigate({
+            to: '/profile',
+        });
     }, [isLoggedIn, isLoading]);
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
@@ -130,7 +131,7 @@ const SignUp = ({ className }: { className?: string }) => {
             <p id={'to-signin'}>
                 {t('sign-up.footer')}{' '}
                 <StyledLink
-                    to={paths.signIn}
+                    to={'/login'}
                     className={cn(
                         'text-blue-800 underline',
                         apprf('disabled:', 'cursor-not-allowed text-gray-400'),

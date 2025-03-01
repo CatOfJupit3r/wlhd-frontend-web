@@ -12,17 +12,16 @@ import StyledLink from '@components/ui/styled-link';
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import useMe from '@queries/useMe';
 import useThisLobby from '@queries/useThisLobby';
-import paths from '@router/paths';
 import AuthManager from '@services/AuthManager';
+import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { IS_DEVELOPMENT } from 'config';
-import { startTransition, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
 import { BiLogOut, BiSolidCog } from 'react-icons/bi';
 import { FaBook } from 'react-icons/fa';
-import { LuSquareMenu, LuUser } from 'react-icons/lu';
-import { useNavigate } from 'react-router';
+import { LuUser } from 'react-icons/lu';
 
 interface iSection {
     name: string;
@@ -42,35 +41,26 @@ const Header = () => {
         keyPrefix: 'header',
     });
 
-    const redirect = useCallback((to: string, relative: 'path' | 'route' = 'path') => {
-        return () => {
-            startTransition(() => {
-                navigate(to, {
-                    relative,
-                });
-            });
-        };
-    }, []);
-
     const sections: SectionsType = useMemo(() => {
         return [
             [
                 {
                     name: 'profile',
-                    action: redirect(paths.profile, 'path'),
+                    action: () =>
+                        navigate({
+                            to: '/profile',
+                        }),
                     icon: LuUser,
-                },
-                {
-                    name: 'recent-lobby',
-                    action: lobbyId ? redirect(paths.lobbyRoom.replace(':lobbyId', lobbyId), 'path') : () => {},
-                    icon: LuSquareMenu,
-                    disabled: !lobbyId,
                 },
             ],
             [
                 {
                     name: 'game-wiki',
-                    action: redirect(paths.wiki, 'path'),
+                    action: () =>
+                        navigate({
+                            to: '/game-wiki',
+                            resetScroll: true,
+                        }),
                     icon: FaBook,
                 },
             ],
@@ -78,7 +68,10 @@ const Header = () => {
                 IS_DEVELOPMENT
                     ? {
                           name: 'game-test',
-                          action: redirect(paths.gameTest, 'path'),
+                          action: () =>
+                              navigate({
+                                  to: '/game-test',
+                              }),
                           icon: BiSolidCog,
                       }
                     : null,
@@ -90,16 +83,28 @@ const Header = () => {
                 },
             ].filter((item) => item),
         ] as SectionsType;
-    }, [redirect]);
+    }, [navigate]);
 
     const AuthLinks = useCallback(() => {
         return (
             <>
-                <Button onClick={redirect(paths.signIn, 'path')} variant={'ghost'} size={'sm'}>
+                <Button
+                    onClick={() =>
+                        navigate({
+                            to: '/sign-in',
+                        })
+                    }
+                    variant={'ghost'}
+                    size={'sm'}
+                >
                     {t('sign-in')}
                 </Button>
                 <Button
-                    onClick={redirect(paths.signUp, 'path')}
+                    onClick={() =>
+                        navigate({
+                            to: '/sign-up',
+                        })
+                    }
                     variant={'default'}
                     size={'sm'}
                     className={'bg-accent text-accent-foreground hover:bg-accent/90'}
@@ -108,7 +113,7 @@ const Header = () => {
                 </Button>
             </>
         );
-    }, []);
+    }, [navigate]);
 
     const LoggedInLinks = useCallback(() => {
         return (
@@ -162,7 +167,7 @@ const Header = () => {
                 apprf('max-[512px]', 'flex-col justify-center gap-3 bg-black p-4 text-center align-middle'),
             )}
         >
-            <StyledLink to="." relative={'route'} id={'header-logo'} className={'font-bold text-white no-underline'}>
+            <StyledLink to="/" className={'font-bold text-white no-underline'}>
                 Walenholde
             </StyledLink>
             {/* you served well, o' feline. For this, you will be engraved here until the end of times. */}

@@ -2,7 +2,6 @@ import { ButtonLink } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { iCombatInfo, iLobbyInformation } from '@models/Redux';
-import paths from '@router/paths';
 import { cn } from '@utils';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +32,7 @@ const ActiveCombatsList: FC<iActiveCombatsList> = ({ className, combats, layout,
                         <ButtonLink
                             variant={'outline'}
                             className={'h-8 text-sm text-primary'}
-                            href={paths.createCombatRoom.replace(':lobbyId', lobbyId)}
+                            href={`/lobby-rooms/${lobbyId}/create-combat`}
                         >
                             <LiaPlusCircleSolid className={'mr-2 inline-block'} />
                             {t('new-combat')}

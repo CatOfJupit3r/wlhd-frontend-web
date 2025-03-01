@@ -8,9 +8,9 @@ import {
     AlertDialogTitle,
 } from '@components/ui/alert-dialog';
 import SocketService from '@services/SocketService';
+import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 
 const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation('local', {
@@ -21,7 +21,9 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
     const leaveGame = useCallback(() => {
         SocketService.disconnect();
         setChosen(null);
-        navigate('..');
+        navigate({
+            to: '..',
+        });
     }, []);
 
     const stayInGame = useCallback(() => {

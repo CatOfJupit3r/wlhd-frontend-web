@@ -1,14 +1,12 @@
 import ViewCharacterLobby from '@components/ViewLobbyCharacters/ViewLobbyCharacters';
-import { useSearchParams } from 'react-router';
+import { FC } from 'react';
 
-const ViewCharacterPage = () => {
-    const [searchParams] = useSearchParams();
+interface ViewCharacterPageProps {
+    initial: string | null;
+}
 
-    return (
-        <div>
-            <ViewCharacterLobby initial={searchParams.get('character') || null} />
-        </div>
-    );
+const ViewCharacterPage: FC<ViewCharacterPageProps> = ({ initial }) => {
+    return <ViewCharacterLobby initial={initial} />;
 };
 
 export default ViewCharacterPage;

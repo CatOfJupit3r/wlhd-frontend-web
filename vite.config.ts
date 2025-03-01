@@ -5,6 +5,8 @@ import * as path from 'node:path';
 import { Plugin } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
+// @ts-expect-error wtf???? like it finds the type, but STILL complains about it
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin';
 
 function emptySourcemapFix() {
     let currentInterval = null;
@@ -71,6 +73,12 @@ const viteConfig = defineConfig({
             },
         }),
         tsconfigPaths(),
+        TanStackRouterVite({
+            target: 'react',
+            trailingSlash: true,
+            quoteStyle: 'single',
+            semicolons: true,
+        }),
         emptySourcemapFix() as Plugin,
         ClosePlugin() as Plugin,
     ],

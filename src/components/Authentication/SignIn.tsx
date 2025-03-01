@@ -5,12 +5,11 @@ import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useLogin from '@mutations/auth/useLogin';
 import useMe from '@queries/useMe';
-import paths from '@router/paths';
+import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -44,7 +43,9 @@ const SignIn = ({ className = '' }: { className?: string }) => {
 
     useEffect(() => {
         if (!isLoggedIn || isLoading) return;
-        navigate(paths.profile);
+        navigate({
+            to: '/profile',
+        });
     }, [isLoggedIn, isLoading]);
 
     const onSubmit = (values: z.infer<typeof loginSchema>) => {
@@ -102,7 +103,7 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                 <p>
                     {t('sign-in.footer')}{' '}
                     <StyledLink
-                        to={paths.signUp}
+                        to={`/sign-up`}
                         className={cn(
                             'text-blue-800 underline',
                             apprf('disabled:', 'cursor-not-allowed text-gray-400'),

@@ -1,7 +1,9 @@
-import { useParams } from 'react-router';
+import { useParams } from '@tanstack/react-router';
 
 export const useCurrentLobbyId = () => {
-    const { lobbyId } = useParams();
+    const { lobbyId } = useParams({
+        strict: false,
+    });
 
     return lobbyId;
 };

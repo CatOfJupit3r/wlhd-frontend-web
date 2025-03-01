@@ -17,7 +17,6 @@ import {
     WeaponInfoDisplayWithDescriptor,
 } from '@components/InfoDisplay/InfoDisplayWithDescriptor';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
-import { useGameWikiContext } from '@context/GameWikiContext';
 import {
     useLoadedAreaEffects,
     useLoadedCharacters,
@@ -26,17 +25,18 @@ import {
     useLoadedStatusEffects,
     useLoadedWeapons,
 } from '@queries/useLoadedGameData';
+import { SupportedDLCs } from 'config';
 import { FC } from 'react';
 
 interface iCategoryContent {
     category: 'characters' | 'spells' | 'items' | 'weapons' | 'statusEffects' | 'areaEffects' | null;
+    dlc: SupportedDLCs;
 }
 
 const PLACEHOLDER_CLASSNAME = 'flex flex-col gap-4 rounded border-2 p-4';
 const CONTENT_DIV_CLASSNAME = 'grid grid-cols-2 gap-6 overflow-x-auto';
 
-const CategoryContent: FC<iCategoryContent> = ({ category }) => {
-    const { dlc } = useGameWikiContext();
+const CategoryContent: FC<iCategoryContent> = ({ category, dlc }) => {
     const { spells, isPending: isSpellPending } = useLoadedSpells(dlc, category === 'spells');
     const { items, isPending: isItemPending } = useLoadedItems(dlc, category === 'items');
     const { weapons, isPending: isWeaponPending } = useLoadedWeapons(dlc, category === 'weapons');
