@@ -1,6 +1,6 @@
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
-import { Search } from 'lucide-react';
+import { LuSearch } from 'react-icons/lu';
 
 import { Dialog, DialogContent } from '@components/ui/dialog';
 import { cn } from '@utils';
@@ -39,7 +39,7 @@ const CommandInput = forwardRef<
     ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
     <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
-        <Search className="mr-2 size-4 shrink-0 opacity-50" />
+        <LuSearch className="mr-2 size-4 shrink-0 opacity-50" />
         <CommandPrimitive.Input
             ref={ref}
             className={cn(
@@ -126,11 +126,11 @@ CommandShortcut.displayName = 'CommandShortcut';
 export {
     Command,
     CommandDialog,
-    CommandInput,
-    CommandList,
     CommandEmpty,
     CommandGroup,
+    CommandInput,
     CommandItem,
-    CommandShortcut,
+    CommandList,
     CommandSeparator,
+    CommandShortcut,
 };

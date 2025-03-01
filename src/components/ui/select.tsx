@@ -1,7 +1,7 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { cn } from '@utils';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
+import { LuCheck, LuChevronDown, LuChevronUp } from 'react-icons/lu';
 
 const Select = SelectPrimitive.Root;
 
@@ -23,7 +23,7 @@ const SelectTrigger = forwardRef<
     >
         {children}
         <SelectPrimitive.Icon asChild>
-            <ChevronDown className="size-4 opacity-50" />
+            <LuChevronDown className="size-4 opacity-50" />
         </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
 ));
@@ -38,7 +38,7 @@ const SelectScrollUpButton = forwardRef<
         className={cn('flex cursor-default items-center justify-center py-1', className)}
         {...props}
     >
-        <ChevronUp className="size-4" />
+        <LuChevronUp className="size-4" />
     </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -52,7 +52,7 @@ const SelectScrollDownButton = forwardRef<
         className={cn('flex cursor-default items-center justify-center py-1', className)}
         {...props}
     >
-        <ChevronDown className="size-4" />
+        <LuChevronDown className="size-4" />
     </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
@@ -111,7 +111,7 @@ const SelectItem = forwardRef<
     >
         <span className="absolute left-2 flex size-3.5 items-center justify-center">
             <SelectPrimitive.ItemIndicator>
-                <Check className="size-4" />
+                <LuCheck className="size-4" />
             </SelectPrimitive.ItemIndicator>
         </span>
 
@@ -130,13 +130,13 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
     Select,
-    SelectGroup,
-    SelectValue,
-    SelectTrigger,
     SelectContent,
-    SelectLabel,
+    SelectGroup,
     SelectItem,
-    SelectSeparator,
-    SelectScrollUpButton,
+    SelectLabel,
     SelectScrollDownButton,
+    SelectScrollUpButton,
+    SelectSeparator,
+    SelectTrigger,
+    SelectValue,
 };

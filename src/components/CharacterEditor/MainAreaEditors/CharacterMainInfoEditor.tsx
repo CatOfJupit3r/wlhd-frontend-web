@@ -4,9 +4,9 @@ import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/Cha
 import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor';
 import { Button } from '@components/ui/button';
 import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
-import { PencilIcon } from 'lucide-react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LuPencil } from 'react-icons/lu';
 
 const CharacterMainInfoEditor = () => {
     const { flags, character } = useCharacterEditorContext();
@@ -26,7 +26,7 @@ const CharacterMainInfoEditor = () => {
                 title={editing ? t('stop-editing') : t('edit-character')}
                 className={'absolute right-0 top-0 size-8 opacity-50 transition-all hover:opacity-100'}
             >
-                <PencilIcon />
+                <LuPencil />
             </Button>
         ),
         [editing],

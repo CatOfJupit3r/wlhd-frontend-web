@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Check, ChevronRight, Circle } from 'lucide-react';
+import { LuCheck, LuChevronRight, LuCircle } from 'react-icons/lu';
 
 import { cn } from '@utils';
 
@@ -33,7 +33,7 @@ const DropdownMenuSubTrigger = forwardRef<
         {...props}
     >
         {children}
-        <ChevronRight className="ml-auto size-4" />
+        <LuChevronRight className="ml-auto size-4" />
     </DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
@@ -89,7 +89,7 @@ const DropdownMenuItem = forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
-const DropdownMenuCheckboxItem = forwardRef<
+const DropdownMenuLuCheckboxItem = forwardRef<
     ComponentRef<typeof DropdownMenuPrimitive.CheckboxItem>,
     ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
 >(({ className, children, checked, ...props }, ref) => (
@@ -104,13 +104,13 @@ const DropdownMenuCheckboxItem = forwardRef<
     >
         <span className="absolute left-2 flex size-3.5 items-center justify-center">
             <DropdownMenuPrimitive.ItemIndicator>
-                <Check className="size-4" />
+                <LuCheck className="size-4" />
             </DropdownMenuPrimitive.ItemIndicator>
         </span>
         {children}
     </DropdownMenuPrimitive.CheckboxItem>
 ));
-DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
+DropdownMenuLuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
 
 const DropdownMenuRadioItem = forwardRef<
     ComponentRef<typeof DropdownMenuPrimitive.RadioItem>,
@@ -126,7 +126,7 @@ const DropdownMenuRadioItem = forwardRef<
     >
         <span className="absolute left-2 flex size-3.5 items-center justify-center">
             <DropdownMenuPrimitive.ItemIndicator>
-                <Circle className="size-2 fill-current" />
+                <LuCircle className="size-2 fill-current" />
             </DropdownMenuPrimitive.ItemIndicator>
         </span>
         {children}
@@ -163,18 +163,18 @@ DropdownMenuShortcut.displayName = 'DropdownMenuShortcut';
 
 export {
     DropdownMenu,
-    DropdownMenuTrigger,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuCheckboxItem,
-    DropdownMenuRadioItem,
     DropdownMenuLabel,
+    DropdownMenuLuCheckboxItem,
+    DropdownMenuPortal,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuGroup,
-    DropdownMenuPortal,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
-    DropdownMenuRadioGroup,
+    DropdownMenuTrigger,
 };
