@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_auth_only/lobby-rooms/$lobbyId/view-char
 });
 
 function RouteComponent() {
-    const { character } = Route.useParams();
+    const { character } = Route.useSearch();
 
     return <ViewCharacterPage initial={character} />;
 }
