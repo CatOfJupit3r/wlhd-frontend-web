@@ -67,17 +67,18 @@ const ReactCompilerConfig = {
 
 const viteConfig = defineConfig({
     plugins: [
-        react({
-            babel: {
-                plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
-            },
-        }),
         tsconfigPaths(),
         TanStackRouterVite({
             target: 'react',
             trailingSlash: true,
             quoteStyle: 'single',
             semicolons: true,
+            autoCodeSplitting: true,
+        }),
+        react({
+            babel: {
+                plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
+            },
         }),
         emptySourcemapFix() as Plugin,
         ClosePlugin() as Plugin,
