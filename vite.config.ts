@@ -2,7 +2,6 @@
 import react from '@vitejs/plugin-react';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Plugin } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 // @ts-expect-error wtf???? like it finds the type, but STILL complains about it
@@ -80,8 +79,8 @@ const viteConfig = defineConfig({
                 plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
             },
         }),
-        emptySourcemapFix() as Plugin,
-        ClosePlugin() as Plugin,
+        emptySourcemapFix(),
+        ClosePlugin(),
     ],
     test: {
         alias: {
