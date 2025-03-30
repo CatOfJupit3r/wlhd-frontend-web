@@ -7,7 +7,7 @@ import { UseMe } from '@queries/useMe';
 import { QueryClient } from '@tanstack/react-query';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 
-interface RootRouteContext {
+export interface RootRouteContext {
     me: Promise<UseMe>;
     queryClient: QueryClient;
 }

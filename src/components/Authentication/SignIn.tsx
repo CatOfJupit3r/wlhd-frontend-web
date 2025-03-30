@@ -38,19 +38,20 @@ const SignIn = ({ className = '' }: { className?: string }) => {
             password: 'motherfucker',
         },
     });
-    const { mutate, isPending } = useLogin();
-    const { isLoggedIn, isLoading } = useMe();
-
-    useEffect(() => {
-        if (!isLoggedIn || isLoading) return;
-        navigate({
-            to: '/profile',
-        });
-    }, [isLoggedIn, isLoading]);
+    const { isLoading, isLoggedIn } = useMe();
+    const { mutate, isPending, isSuccess } = useLogin({ shouldRedirect: true });
 
     const onSubmit = (values: z.infer<typeof loginSchema>) => {
         mutate(values);
     };
+
+    useEffect(() => {
+        if (isSuccess || (!isLoading && isLoggedIn)) {
+            navigate({
+                to: '/profile',
+            }).then();
+        }
+    }, [isSuccess]);
 
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>

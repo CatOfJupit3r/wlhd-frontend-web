@@ -78,7 +78,7 @@ const PlayerDisplay: FC<iPlayerDisplay> = ({
                         <MutationButton
                             className={'h-8 text-sm'}
                             mutate={() => {
-                                if (user?.handle === handle || !lobbyId) return;
+                                if (user?.username === handle || !lobbyId) return;
                                 return approveUser({ lobbyId, handle });
                             }}
                             isPending={isApprovalPending}
@@ -88,12 +88,12 @@ const PlayerDisplay: FC<iPlayerDisplay> = ({
                     ) : null}
                     <MutationButton
                         mutate={() => {
-                            if (user?.handle === handle || !lobbyId) return;
+                            if (user?.username === handle || !lobbyId) return;
                             return removeLobbyMember({ lobbyId, handle });
                         }}
                         className={'h-8 text-sm'}
                         variant={'destructiveGhost'}
-                        disabled={user?.handle === handle}
+                        disabled={user?.username === handle}
                         isPending={isDeletionPending}
                     >
                         {isApproved ? (

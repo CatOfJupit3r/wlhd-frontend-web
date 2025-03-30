@@ -5,7 +5,7 @@ import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useRegister from '@mutations/auth/useRegister';
 import useMe from '@queries/useMe';
-import { useNavigate } from '@tanstack/react-router';
+import { redirect } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -40,7 +40,6 @@ const SignUp = ({ className }: { className?: string }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'auth',
     });
-    const { isLoggedIn, isLoading } = useMe();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -49,15 +48,17 @@ const SignUp = ({ className }: { className?: string }) => {
             confirmPassword: '',
         },
     });
-    const { mutate, isPending } = useRegister();
-    const navigate = useNavigate();
+    const { isLoading, isLoggedIn } = useMe();
+    const { mutate, isPending, isSuccess } = useRegister();
 
     useEffect(() => {
-        if (!isLoggedIn || isLoading) return;
-        navigate({
-            to: '/profile',
-        });
-    }, [isLoggedIn, isLoading]);
+        if (isSuccess || (!isLoading && isLoggedIn)) {
+            redirect({
+                to: '/profile',
+                throw: true,
+            });
+        }
+    }, [isSuccess, isLoading, isLoggedIn]);
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         mutate(values);

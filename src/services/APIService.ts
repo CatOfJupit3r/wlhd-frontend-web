@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
+import authClient from '@lib/auth';
 import { iUserAvatarProcessed, LimitedDLCData, ShortLobbyInformation, UserInformation } from '@models/APIData';
 import {
     AreaEffectEditable,
@@ -103,18 +104,12 @@ class APIService {
         _retry?: boolean;
     }): Promise<T> => {
         console.log('Checking token expiration');
-        if (AuthManager.isAccessTokenExpired()) {
-            console.log('Token is expired');
-            await this.tryRefreshingTokenOrLogoutAndThrow();
-        }
         try {
             console.log('Fetching the API...', url);
             const result = await axios(url, {
                 method,
-                headers: {
-                    ...(AuthManager.authHeader() || {}),
-                },
                 data,
+                withCredentials: true,
             });
             console.log('Fetch succeeded', url);
             return result.data;
@@ -122,24 +117,8 @@ class APIService {
             if (!(error instanceof AxiosError)) throw error;
             if (error.response && error.response.status === 401) {
                 console.log('Received Unauthorized error from server');
-                if (_retry) {
-                    console.log('The request has already been retried, so we logout');
-                    await this.logout();
-                    throw new Error(errors.TOKEN_EXPIRED);
-                } else {
-                    console.log('Trying to refresh the access token');
-                    await this.tryRefreshingTokenOrLogoutAndThrow();
-                    console.log('Retrying original request with new access token', url);
-                    const retryData = await this.fetch<T>({
-                        url,
-                        method,
-                        data,
-                        _retry: true,
-                    });
-
-                    console.log('Retry succeeded!', url);
-                    return retryData;
-                }
+                await authClient.signOut();
+                throw new Error(errors.TOKEN_EXPIRED);
             } else if (isServerUnavailableError(error)) {
                 APIHealth.handleBackendRefusedConnection();
                 this.injectResponseMessageToError(error);
@@ -149,32 +128,6 @@ class APIService {
                 throw error;
             }
         }
-    };
-
-    private tryRefreshingTokenOrLogoutAndThrow = async () => {
-        try {
-            console.log('Refreshing token');
-            await this.refreshToken();
-            console.log('Token successfully refreshed');
-        } catch (error) {
-            console.log('Error refreshing token', error);
-            console.log('Logging out user.');
-            // error refreshing token
-            await this.logout();
-            throw new Error(errors.TOKEN_EXPIRED);
-        }
-    };
-
-    public refreshToken = async () => {
-        const refreshToken = AuthManager.getRefreshToken();
-        const {
-            data: { accessToken },
-        } = await axios({
-            url: ENDPOINTS.REFRESH_TOKEN,
-            method: 'post',
-            data: { token: refreshToken },
-        });
-        AuthManager.setAccessToken(accessToken);
     };
 
     public logout = async () => {
@@ -188,32 +141,6 @@ class APIService {
             });
         }
         return null;
-    };
-
-    public login = async (handle: string, password: string) => {
-        let response;
-        try {
-            response = await axios.post(ENDPOINTS.LOGIN, { handle, password });
-        } catch (error) {
-            if (isServerUnavailableError(error)) {
-                APIHealth.handleBackendRefusedConnection();
-            }
-            throw error;
-        }
-        const { accessToken, refreshToken } = response.data;
-        AuthManager.login({ accessToken, refreshToken });
-    };
-
-    public createAccount = async (handle: string, password: string) => {
-        try {
-            await axios.post(ENDPOINTS.REGISTER, { handle, password });
-        } catch (error) {
-            if (isServerUnavailableError(error)) {
-                APIHealth.handleBackendRefusedConnection();
-            }
-            throw error;
-        }
-        await this.login(handle, password);
     };
 
     public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
@@ -273,13 +200,6 @@ class APIService {
                 nickname,
                 preset,
             },
-        });
-    };
-
-    public getUserInformation = async () => {
-        return this.fetch<UserInformation>({
-            url: ENDPOINTS.USER_INFO,
-            method: 'get',
         });
     };
 

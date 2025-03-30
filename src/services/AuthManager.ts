@@ -32,7 +32,7 @@ class AuthManager {
     };
 
     getAccessToken() {
-        return localStorage.getItem(this.accessTokenKey);
+        return '123';
     }
 
     setAccessToken(accessToken: string) {
@@ -59,20 +59,6 @@ class AuthManager {
         localStorage.removeItem(this.refreshTokenKey);
 
         this.emitter.emit(this.eventTypes.LOGIN_STATUS_CHANGED, LOGIN_STATUS.LOGGED_OUT);
-    }
-
-    onLoginStatusChange(cb: (status: eLoginStatus) => void): () => void {
-        this.emitter.on(this.eventTypes.LOGIN_STATUS_CHANGED, cb);
-
-        return () => {
-            this.emitter.off(this.eventTypes.LOGIN_STATUS_CHANGED, cb);
-        };
-    }
-
-    authHeader() {
-        return {
-            Authorization: `Bearer ${this.getAccessToken()}`,
-        };
     }
 }
 

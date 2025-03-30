@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router';
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root';
@@ -15,18 +17,28 @@ import { Route as AuthonlyImport } from './routes/_auth_only';
 import { Route as IndexImport } from './routes/index';
 import { Route as AuthonlyProfileImport } from './routes/_auth_only/profile';
 import { Route as AuthonlyGameTestImport } from './routes/_auth_only/game-test';
-import { Route as generalSignUpImport } from './routes/(general)/sign-up';
-import { Route as generalLoginImport } from './routes/(general)/login';
 import { Route as generalAboutImport } from './routes/(general)/about';
+import { Route as generalToprofileImport } from './routes/(general)/_to_profile';
 import { Route as AuthonlyGameWikiIndexImport } from './routes/_auth_only/game-wiki/index';
 import { Route as AuthonlyGameWikiDlcImport } from './routes/_auth_only/game-wiki/$dlc';
+import { Route as generalToprofileSignUpImport } from './routes/(general)/_to_profile.sign-up';
+import { Route as generalToprofileLoginImport } from './routes/(general)/_to_profile.login';
 import { Route as AuthonlyLobbyRoomsLobbyIdIndexImport } from './routes/_auth_only/lobby-rooms/$lobbyId/index';
 import { Route as AuthonlyLobbyRoomsLobbyIdViewCharacterImport } from './routes/_auth_only/lobby-rooms/$lobbyId/view-character';
 import { Route as AuthonlyLobbyRoomsLobbyIdCreateCombatImport } from './routes/_auth_only/lobby-rooms/$lobbyId/create-combat';
 import { Route as AuthonlyLobbyRoomsLobbyIdCreateCharacterImport } from './routes/_auth_only/lobby-rooms/$lobbyId/create-character';
 import { Route as AuthonlyLobbyRoomsLobbyIdGameRoomsGameIdImport } from './routes/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
 
+// Create Virtual Routes
+
+const generalImport = createFileRoute('/(general)')();
+
 // Create/Update Routes
+
+const generalRoute = generalImport.update({
+  id: '/(general)',
+  getParentRoute: () => rootRoute,
+} as any);
 
 const AuthonlyRoute = AuthonlyImport.update({
   id: '/_auth_only',
@@ -51,22 +63,15 @@ const AuthonlyGameTestRoute = AuthonlyGameTestImport.update({
   getParentRoute: () => AuthonlyRoute,
 } as any);
 
-const generalSignUpRoute = generalSignUpImport.update({
-  id: '/(general)/sign-up',
-  path: '/sign-up',
-  getParentRoute: () => rootRoute,
-} as any);
-
-const generalLoginRoute = generalLoginImport.update({
-  id: '/(general)/login',
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any);
-
 const generalAboutRoute = generalAboutImport.update({
-  id: '/(general)/about',
+  id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => generalRoute,
+} as any);
+
+const generalToprofileRoute = generalToprofileImport.update({
+  id: '/_to_profile',
+  getParentRoute: () => generalRoute,
 } as any);
 
 const AuthonlyGameWikiIndexRoute = AuthonlyGameWikiIndexImport.update({
@@ -79,6 +84,18 @@ const AuthonlyGameWikiDlcRoute = AuthonlyGameWikiDlcImport.update({
   id: '/game-wiki/$dlc',
   path: '/game-wiki/$dlc',
   getParentRoute: () => AuthonlyRoute,
+} as any);
+
+const generalToprofileSignUpRoute = generalToprofileSignUpImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => generalToprofileRoute,
+} as any);
+
+const generalToprofileLoginRoute = generalToprofileLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => generalToprofileRoute,
 } as any);
 
 const AuthonlyLobbyRoomsLobbyIdIndexRoute =
@@ -134,26 +151,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthonlyImport;
       parentRoute: typeof rootRoute;
     };
+    '/(general)': {
+      id: '/(general)';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof generalImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/(general)/_to_profile': {
+      id: '/(general)/_to_profile';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof generalToprofileImport;
+      parentRoute: typeof generalRoute;
+    };
     '/(general)/about': {
       id: '/(general)/about';
       path: '/about';
       fullPath: '/about';
       preLoaderRoute: typeof generalAboutImport;
-      parentRoute: typeof rootRoute;
-    };
-    '/(general)/login': {
-      id: '/(general)/login';
-      path: '/login';
-      fullPath: '/login';
-      preLoaderRoute: typeof generalLoginImport;
-      parentRoute: typeof rootRoute;
-    };
-    '/(general)/sign-up': {
-      id: '/(general)/sign-up';
-      path: '/sign-up';
-      fullPath: '/sign-up';
-      preLoaderRoute: typeof generalSignUpImport;
-      parentRoute: typeof rootRoute;
+      parentRoute: typeof generalImport;
     };
     '/_auth_only/game-test': {
       id: '/_auth_only/game-test';
@@ -168,6 +185,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/profile';
       preLoaderRoute: typeof AuthonlyProfileImport;
       parentRoute: typeof AuthonlyImport;
+    };
+    '/(general)/_to_profile/login': {
+      id: '/(general)/_to_profile/login';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof generalToprofileLoginImport;
+      parentRoute: typeof generalToprofileImport;
+    };
+    '/(general)/_to_profile/sign-up': {
+      id: '/(general)/_to_profile/sign-up';
+      path: '/sign-up';
+      fullPath: '/sign-up';
+      preLoaderRoute: typeof generalToprofileSignUpImport;
+      parentRoute: typeof generalToprofileImport;
     };
     '/_auth_only/game-wiki/$dlc': {
       id: '/_auth_only/game-wiki/$dlc';
@@ -255,14 +286,40 @@ const AuthonlyRouteWithChildren = AuthonlyRoute._addFileChildren(
   AuthonlyRouteChildren,
 );
 
+interface generalToprofileRouteChildren {
+  generalToprofileLoginRoute: typeof generalToprofileLoginRoute;
+  generalToprofileSignUpRoute: typeof generalToprofileSignUpRoute;
+}
+
+const generalToprofileRouteChildren: generalToprofileRouteChildren = {
+  generalToprofileLoginRoute: generalToprofileLoginRoute,
+  generalToprofileSignUpRoute: generalToprofileSignUpRoute,
+};
+
+const generalToprofileRouteWithChildren =
+  generalToprofileRoute._addFileChildren(generalToprofileRouteChildren);
+
+interface generalRouteChildren {
+  generalToprofileRoute: typeof generalToprofileRouteWithChildren;
+  generalAboutRoute: typeof generalAboutRoute;
+}
+
+const generalRouteChildren: generalRouteChildren = {
+  generalToprofileRoute: generalToprofileRouteWithChildren,
+  generalAboutRoute: generalAboutRoute,
+};
+
+const generalRouteWithChildren =
+  generalRoute._addFileChildren(generalRouteChildren);
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
+  '/': typeof generalToprofileRouteWithChildren;
   '': typeof AuthonlyRouteWithChildren;
   '/about': typeof generalAboutRoute;
-  '/login': typeof generalLoginRoute;
-  '/sign-up': typeof generalSignUpRoute;
   '/game-test': typeof AuthonlyGameTestRoute;
   '/profile': typeof AuthonlyProfileRoute;
+  '/login': typeof generalToprofileLoginRoute;
+  '/sign-up': typeof generalToprofileSignUpRoute;
   '/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
   '/game-wiki': typeof AuthonlyGameWikiIndexRoute;
   '/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
@@ -273,13 +330,13 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
+  '/': typeof generalToprofileRouteWithChildren;
   '': typeof AuthonlyRouteWithChildren;
   '/about': typeof generalAboutRoute;
-  '/login': typeof generalLoginRoute;
-  '/sign-up': typeof generalSignUpRoute;
   '/game-test': typeof AuthonlyGameTestRoute;
   '/profile': typeof AuthonlyProfileRoute;
+  '/login': typeof generalToprofileLoginRoute;
+  '/sign-up': typeof generalToprofileSignUpRoute;
   '/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
   '/game-wiki': typeof AuthonlyGameWikiIndexRoute;
   '/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
@@ -293,11 +350,13 @@ export interface FileRoutesById {
   __root__: typeof rootRoute;
   '/': typeof IndexRoute;
   '/_auth_only': typeof AuthonlyRouteWithChildren;
+  '/(general)': typeof generalRouteWithChildren;
+  '/(general)/_to_profile': typeof generalToprofileRouteWithChildren;
   '/(general)/about': typeof generalAboutRoute;
-  '/(general)/login': typeof generalLoginRoute;
-  '/(general)/sign-up': typeof generalSignUpRoute;
   '/_auth_only/game-test': typeof AuthonlyGameTestRoute;
   '/_auth_only/profile': typeof AuthonlyProfileRoute;
+  '/(general)/_to_profile/login': typeof generalToprofileLoginRoute;
+  '/(general)/_to_profile/sign-up': typeof generalToprofileSignUpRoute;
   '/_auth_only/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
   '/_auth_only/game-wiki/': typeof AuthonlyGameWikiIndexRoute;
   '/_auth_only/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
@@ -313,10 +372,10 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
-    | '/login'
-    | '/sign-up'
     | '/game-test'
     | '/profile'
+    | '/login'
+    | '/sign-up'
     | '/game-wiki/$dlc'
     | '/game-wiki'
     | '/lobby-rooms/$lobbyId/create-character'
@@ -329,10 +388,10 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
-    | '/login'
-    | '/sign-up'
     | '/game-test'
     | '/profile'
+    | '/login'
+    | '/sign-up'
     | '/game-wiki/$dlc'
     | '/game-wiki'
     | '/lobby-rooms/$lobbyId/create-character'
@@ -344,11 +403,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth_only'
+    | '/(general)'
+    | '/(general)/_to_profile'
     | '/(general)/about'
-    | '/(general)/login'
-    | '/(general)/sign-up'
     | '/_auth_only/game-test'
     | '/_auth_only/profile'
+    | '/(general)/_to_profile/login'
+    | '/(general)/_to_profile/sign-up'
     | '/_auth_only/game-wiki/$dlc'
     | '/_auth_only/game-wiki/'
     | '/_auth_only/lobby-rooms/$lobbyId/create-character'
@@ -362,17 +423,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   AuthonlyRoute: typeof AuthonlyRouteWithChildren;
-  generalAboutRoute: typeof generalAboutRoute;
-  generalLoginRoute: typeof generalLoginRoute;
-  generalSignUpRoute: typeof generalSignUpRoute;
+  generalRoute: typeof generalRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthonlyRoute: AuthonlyRouteWithChildren,
-  generalAboutRoute: generalAboutRoute,
-  generalLoginRoute: generalLoginRoute,
-  generalSignUpRoute: generalSignUpRoute,
+  generalRoute: generalRouteWithChildren,
 };
 
 export const routeTree = rootRoute
@@ -387,9 +444,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth_only",
-        "/(general)/about",
-        "/(general)/login",
-        "/(general)/sign-up"
+        "/(general)"
       ]
     },
     "/": {
@@ -409,14 +464,24 @@ export const routeTree = rootRoute
         "/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId"
       ]
     },
+    "/(general)": {
+      "filePath": "(general)",
+      "children": [
+        "/(general)/_to_profile",
+        "/(general)/about"
+      ]
+    },
+    "/(general)/_to_profile": {
+      "filePath": "(general)/_to_profile.tsx",
+      "parent": "/(general)",
+      "children": [
+        "/(general)/_to_profile/login",
+        "/(general)/_to_profile/sign-up"
+      ]
+    },
     "/(general)/about": {
-      "filePath": "(general)/about.tsx"
-    },
-    "/(general)/login": {
-      "filePath": "(general)/login.tsx"
-    },
-    "/(general)/sign-up": {
-      "filePath": "(general)/sign-up.tsx"
+      "filePath": "(general)/about.tsx",
+      "parent": "/(general)"
     },
     "/_auth_only/game-test": {
       "filePath": "_auth_only/game-test.tsx",
@@ -425,6 +490,14 @@ export const routeTree = rootRoute
     "/_auth_only/profile": {
       "filePath": "_auth_only/profile.tsx",
       "parent": "/_auth_only"
+    },
+    "/(general)/_to_profile/login": {
+      "filePath": "(general)/_to_profile.login.tsx",
+      "parent": "/(general)/_to_profile"
+    },
+    "/(general)/_to_profile/sign-up": {
+      "filePath": "(general)/_to_profile.sign-up.tsx",
+      "parent": "/(general)/_to_profile"
     },
     "/_auth_only/game-wiki/$dlc": {
       "filePath": "_auth_only/game-wiki/$dlc.tsx",

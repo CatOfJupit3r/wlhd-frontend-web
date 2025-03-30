@@ -56,7 +56,7 @@ export const CurrentUserAvatar = ({ className, ...props }: HTMLAttributes<HTMLDi
         return <UserAvatar className={className} handle={null} {...props} />;
     }
 
-    return <UserAvatar className={className} handle={user.handle} {...props} />;
+    return <UserAvatar className={className} handle={user.username} {...props} />;
 };
 
 export default UserAvatar;
