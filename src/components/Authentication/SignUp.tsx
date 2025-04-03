@@ -14,7 +14,7 @@ import { z } from 'zod';
 
 const registerSchema = z
     .object({
-        handle: z
+        username: z
             .string()
             .min(4)
             .max(20)
@@ -40,24 +40,25 @@ const SignUp = ({ className }: { className?: string }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'auth',
     });
-    const { isLoggedIn, isLoading } = useMe();
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
-            handle: '',
+            username: '',
             password: '',
             confirmPassword: '',
         },
     });
-    const { mutate, isPending } = useRegister();
     const navigate = useNavigate();
+    const { isLoading, isLoggedIn } = useMe();
+    const { mutate, isPending, isSuccess } = useRegister();
 
     useEffect(() => {
-        if (!isLoggedIn || isLoading) return;
-        navigate({
-            to: '/profile',
-        });
-    }, [isLoggedIn, isLoading]);
+        if (isSuccess || (!isLoading && isLoggedIn)) {
+            navigate({
+                to: '/profile',
+            });
+        }
+    }, [isSuccess, isLoading, isLoggedIn]);
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         mutate(values);
@@ -70,13 +71,13 @@ const SignUp = ({ className }: { className?: string }) => {
                 <form className={'flex w-full flex-col gap-2'}>
                     <FormField
                         control={form.control}
-                        name="handle"
+                        name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor="handle">{t('handle.index')}</FormLabel>
-                                <FormDescription>{t('handle.description')}</FormDescription>
+                                <FormLabel htmlFor="username">{t('username.index')}</FormLabel>
+                                <FormDescription>{t('username.description')}</FormDescription>
                                 <FormControl>
-                                    <Input className={'w-full'} placeholder={t('handle.placeholder')} {...field} />
+                                    <Input className={'w-full'} placeholder={t('username.placeholder')} {...field} />
                                 </FormControl>
                             </FormItem>
                         )}

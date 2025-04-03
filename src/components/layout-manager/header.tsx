@@ -12,7 +12,7 @@ import StyledLink from '@components/ui/styled-link';
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import useMe from '@queries/useMe';
 import useThisLobby from '@queries/useThisLobby';
-import AuthManager from '@services/AuthManager';
+import AuthService from '@services/AuthService';
 import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { IS_DEVELOPMENT } from 'config';
@@ -34,7 +34,7 @@ interface iSection {
 type SectionsType = Array<Array<iSection>>;
 
 const Header = () => {
-    const { user, isLoggedIn } = useMe();
+    const { user, isLoggedIn, refetch } = useMe();
     const { lobbyId } = useThisLobby();
     const navigate = useNavigate();
     const { t } = useTranslation('local', {
@@ -77,13 +77,22 @@ const Header = () => {
                     : null,
                 {
                     name: 'logout',
-                    action: () => AuthManager.logout(),
+                    action: () => {
+                        console.log('' + 'Logging out');
+                        AuthService.getInstance()
+                            .signOut({
+                                fetchOptions: { throw: true },
+                            })
+                            .finally(() => {
+                                refetch().then();
+                            });
+                    },
                     icon: BiLogOut,
                     className: 'text-red-500 hover:text-red-700',
                 },
             ].filter((item) => item),
         ] as SectionsType;
-    }, [navigate]);
+    }, [navigate, refetch]);
 
     const AuthLinks = useCallback(() => {
         return (
@@ -124,7 +133,7 @@ const Header = () => {
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                    <DropdownMenuLabel>@{user?.handle}</DropdownMenuLabel>
+                    <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {sections.map((section, index) => (
                         <div key={index}>
@@ -142,7 +151,7 @@ const Header = () => {
                 </DropdownMenuContent>
             </DropdownMenu>
         );
-    }, [lobbyId, user?.handle]);
+    }, [lobbyId, user?.username]);
 
     const Navigation = useCallback(() => {
         return (

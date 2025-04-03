@@ -2,18 +2,23 @@ import { Card, CardContent } from '@components/ui/card';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Skeleton } from '@components/ui/skeleton';
 import StyledLink from '@components/ui/styled-link';
-import useLobbyShortInfo from '@queries/useLobbyShortInfo';
+import { ShortLobbyInformation } from '@models/APIData';
+import useLobbyShortInfo from '@queries/profile/useLobbyShortInfo';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
 import { cn } from '@utils';
-import { useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LuCrown } from 'react-icons/lu';
 
-const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
+interface iLobbyShortInfoProps {
+    info: ShortLobbyInformation;
+}
+
+const LobbyShortInfo: FC<iLobbyShortInfoProps> = ({ info }) => {
     const { t } = useTranslation('local', {
         keyPrefix: 'profile',
     });
-    const { lobbyInfo, isLoading, isError } = useLobbyShortInfo(lobbyId);
+    const { lobbyInfo, isLoading, isError } = useLobbyShortInfo(info._id, info);
     const [placeholderParams] = useState({
         title: Math.floor(Math.random() * 16) + 5,
         description: Array.from({ length: Math.floor(Math.random() * 3) + 1 }).map(
@@ -82,7 +87,7 @@ const LobbyShortInfo = ({ lobbyId }: { lobbyId: string }) => {
         <StyledLink
             to={LobbyRoomRoute.to}
             params={{
-                lobbyId,
+                lobbyId: info._id,
             }}
             className={cn('block w-full no-underline')}
             disabled={lobbyInfo?.needsApproval}

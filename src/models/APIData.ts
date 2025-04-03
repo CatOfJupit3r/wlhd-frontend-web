@@ -8,15 +8,8 @@ export interface ShortLobbyInformation {
     needsApproval: boolean;
 }
 
-export interface iUserAvatarProcessed {
-    type: 'static' | 'generated';
-    content: string; // url or base64
-}
-
 export interface UserInformation {
-    handle: string;
     createdAt: string;
-    joined: Array<string>;
 }
 
 export interface LimitedGameComponentData {

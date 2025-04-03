@@ -1,9 +1,9 @@
 import {
+    iCharacterActions as ActionInputInterface,
     Battlefield,
     CharacterInfoFull,
     GameHandshake,
     GameStateContainer,
-    iCharacterActions as ActionInputInterface,
     iGameLobbyState,
     IndividualTurnOrder,
 } from './GameModels';
@@ -17,21 +17,21 @@ export interface iCombatInfo {
     isActive: boolean;
     roundCount: number;
     activePlayers: Array<{
-        handle: string;
+        username: string;
         nickname: string;
     }>;
     _id: string;
 }
 
 export interface iLobbyPlayerInfo {
-    handle: string;
+    username: string;
     nickname: string;
     userId: string;
     characters: Array<[string, string]>;
 }
 
 export interface iWaitingApprovalPlayer {
-    handle: string;
+    username: string;
     userId: string;
 }
 

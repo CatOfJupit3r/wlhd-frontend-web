@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
-import { iUserAvatarProcessed, LimitedDLCData, ShortLobbyInformation, UserInformation } from '@models/APIData';
+import { LimitedDLCData, ShortLobbyInformation } from '@models/APIData';
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -20,7 +20,7 @@ import {
 } from '@models/Redux';
 import { TranslationJSON } from '@models/Translation';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
-import AuthManager from '@services/AuthManager';
+import AuthService from '@services/AuthService';
 import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
 
 const errors = {
@@ -34,6 +34,7 @@ const ENDPOINTS = {
     REFRESH_TOKEN: `${VITE_BACKEND_URL}/token`,
     HEALTH_CHECK: `${VITE_BACKEND_URL}/health`,
     USER_INFO: `${VITE_BACKEND_URL}/user/profile`,
+    USER_JOINED_LOBBIES: `${VITE_BACKEND_URL}/user/joined`,
     USE_INVITE_CODE: `${VITE_BACKEND_URL}/user/join`,
 
     CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
@@ -70,11 +71,11 @@ const ENDPOINTS = {
         `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
     CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
         `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
-    GET_USER_AVATAR: (handle: string) => `${VITE_BACKEND_URL}/user/${handle}/avatar`,
+    GET_USER_AVATAR: (username: string) => `${VITE_BACKEND_URL}/user/${username}/avatar`,
 
-    APPROVE_LOBBY_PLAYER: (lobbyId: string, handle: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${handle}/approve`,
-    REMOVE_LOBBY_PLAYER: (lobbyId: string, handle: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${handle}`,
+    APPROVE_LOBBY_PLAYER: (lobbyId: string, username: string) =>
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, username: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}`,
     DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
     GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
     CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
@@ -103,18 +104,12 @@ class APIService {
         _retry?: boolean;
     }): Promise<T> => {
         console.log('Checking token expiration');
-        if (AuthManager.isAccessTokenExpired()) {
-            console.log('Token is expired');
-            await this.tryRefreshingTokenOrLogoutAndThrow();
-        }
         try {
             console.log('Fetching the API...', url);
             const result = await axios(url, {
                 method,
-                headers: {
-                    ...(AuthManager.authHeader() || {}),
-                },
                 data,
+                withCredentials: true,
             });
             console.log('Fetch succeeded', url);
             return result.data;
@@ -122,24 +117,8 @@ class APIService {
             if (!(error instanceof AxiosError)) throw error;
             if (error.response && error.response.status === 401) {
                 console.log('Received Unauthorized error from server');
-                if (_retry) {
-                    console.log('The request has already been retried, so we logout');
-                    await this.logout();
-                    throw new Error(errors.TOKEN_EXPIRED);
-                } else {
-                    console.log('Trying to refresh the access token');
-                    await this.tryRefreshingTokenOrLogoutAndThrow();
-                    console.log('Retrying original request with new access token', url);
-                    const retryData = await this.fetch<T>({
-                        url,
-                        method,
-                        data,
-                        _retry: true,
-                    });
-
-                    console.log('Retry succeeded!', url);
-                    return retryData;
-                }
+                await AuthService.getInstance().signOut();
+                throw new Error(errors.TOKEN_EXPIRED);
             } else if (isServerUnavailableError(error)) {
                 APIHealth.handleBackendRefusedConnection();
                 this.injectResponseMessageToError(error);
@@ -149,71 +128,6 @@ class APIService {
                 throw error;
             }
         }
-    };
-
-    private tryRefreshingTokenOrLogoutAndThrow = async () => {
-        try {
-            console.log('Refreshing token');
-            await this.refreshToken();
-            console.log('Token successfully refreshed');
-        } catch (error) {
-            console.log('Error refreshing token', error);
-            console.log('Logging out user.');
-            // error refreshing token
-            await this.logout();
-            throw new Error(errors.TOKEN_EXPIRED);
-        }
-    };
-
-    public refreshToken = async () => {
-        const refreshToken = AuthManager.getRefreshToken();
-        const {
-            data: { accessToken },
-        } = await axios({
-            url: ENDPOINTS.REFRESH_TOKEN,
-            method: 'post',
-            data: { token: refreshToken },
-        });
-        AuthManager.setAccessToken(accessToken);
-    };
-
-    public logout = async () => {
-        AuthManager.logout();
-        const refreshToken = AuthManager.getRefreshToken();
-        if (refreshToken) {
-            return axios({
-                url: ENDPOINTS.LOGOUT,
-                method: 'post',
-                data: { token: refreshToken },
-            });
-        }
-        return null;
-    };
-
-    public login = async (handle: string, password: string) => {
-        let response;
-        try {
-            response = await axios.post(ENDPOINTS.LOGIN, { handle, password });
-        } catch (error) {
-            if (isServerUnavailableError(error)) {
-                APIHealth.handleBackendRefusedConnection();
-            }
-            throw error;
-        }
-        const { accessToken, refreshToken } = response.data;
-        AuthManager.login({ accessToken, refreshToken });
-    };
-
-    public createAccount = async (handle: string, password: string) => {
-        try {
-            await axios.post(ENDPOINTS.REGISTER, { handle, password });
-        } catch (error) {
-            if (isServerUnavailableError(error)) {
-                APIHealth.handleBackendRefusedConnection();
-            }
-            throw error;
-        }
-        await this.login(handle, password);
     };
 
     public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
@@ -276,13 +190,6 @@ class APIService {
         });
     };
 
-    public getUserInformation = async () => {
-        return this.fetch<UserInformation>({
-            url: ENDPOINTS.USER_INFO,
-            method: 'get',
-        });
-    };
-
     public getShortLobbyInfo = async (lobby_id: string) => {
         return this.fetch<ShortLobbyInformation>({
             url: ENDPOINTS.SHORT_LOBBY_INFO(lobby_id),
@@ -334,34 +241,17 @@ class APIService {
         });
     };
 
-    public getUserAvatar = async (handle: string) => {
-        const res = (await this.fetch({
-            url: ENDPOINTS.GET_USER_AVATAR(handle),
-            method: 'get',
-        })) as iUserAvatarProcessed | string | unknown;
-        if (typeof res === 'string') return res;
-        if (
-            typeof res === 'object' &&
-            res !== null &&
-            'type' in res &&
-            'content' in res &&
-            typeof res.content === 'string'
-        ) {
-            if (res.type === 'static') return res.content;
-            else if (res.type === 'generated') {
-                return `data:image/png;base64,${res.content}`;
-            }
-        }
-        return '';
+    public getUserAvatarEndpoint = (username: string) => {
+        return ENDPOINTS.GET_USER_AVATAR(username);
     };
 
-    public async approveLobbyPlayer(lobbyId: string, handle: string) {
+    public async approveLobbyPlayer(lobbyId: string, username: string) {
         return this.fetch<{
             players: Array<iLobbyPlayerInfo>;
             waitingApproval: Array<iWaitingApprovalPlayer>;
             message: string;
         }>({
-            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, handle),
+            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, username),
             method: 'patch',
         });
     }
@@ -409,20 +299,20 @@ class APIService {
         }));
     }
 
-    public async removeLobbyMember(lobbyId: string, handle: string) {
+    public async removeLobbyMember(lobbyId: string, username: string) {
         return this.fetch<{ players: Array<iLobbyPlayerInfo>; waitingApproval: Array<iWaitingApprovalPlayer> }>({
-            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, handle),
+            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, username),
             method: 'delete',
         });
     }
 
     public async joinLobbyUsingInviteCode({ inviteCode }: { inviteCode: string }) {
-        const { profile } = await this.fetch<{ profile: UserInformation }>({
+        const { joined } = await this.fetch<{ joined: Array<ShortLobbyInformation> }>({
             url: ENDPOINTS.USE_INVITE_CODE,
             method: 'post',
             data: { inviteCode },
         });
-        return profile;
+        return joined;
     }
 
     public async getLobbyPlayers(lobbyId: string) {
@@ -544,6 +434,14 @@ class APIService {
             method: 'get',
         });
         return character;
+    };
+
+    public getJoinedLobbies = async () => {
+        const { joined } = await this.fetch<{ joined: Array<ShortLobbyInformation> }>({
+            url: ENDPOINTS.USER_JOINED_LOBBIES,
+            method: 'get',
+        });
+        return joined;
     };
 }
 

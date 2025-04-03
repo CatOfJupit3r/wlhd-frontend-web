@@ -15,6 +15,7 @@ import { Input } from '@components/ui/input';
 import { Separator } from '@components/ui/separator';
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
+import useJoinedLobbies from '@queries/profile/useJoinedLobbies';
 import useMe from '@queries/useMe';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +23,7 @@ import { LuCalendar, LuGamepad, LuTrophy } from 'react-icons/lu';
 
 const ProfileInformation = () => {
     const { user } = useMe();
+    const { joined } = useJoinedLobbies();
     const { t } = useTranslation('local', {
         keyPrefix: 'profile',
     });
@@ -37,7 +39,7 @@ const ProfileInformation = () => {
                     <div className="relative flex items-center space-x-4">
                         <CurrentUserAvatar className={'size-32'} />
                         <div className="rounded-lg bg-white px-2 py-1 shadow-lg">
-                            <CardTitle className="text-3.5xl font-bold">@{user.handle}</CardTitle>
+                            <CardTitle className="text-3.5xl font-bold">@{user.username}</CardTitle>
                         </div>
                     </div>
                 </CardHeader>
@@ -56,8 +58,8 @@ const ProfileInformation = () => {
                     <div className="grid gap-4">
                         <div className="text-2xl font-semibold">{t('joined-lobbies')}</div>
                         <div className="grid gap-4">
-                            {user.joined.map((lobbyId) => (
-                                <LobbyShortInfo key={lobbyId} lobbyId={lobbyId} />
+                            {joined.map((lobby) => (
+                                <LobbyShortInfo key={lobby._id} info={lobby} />
                             ))}
                         </div>
                     </div>

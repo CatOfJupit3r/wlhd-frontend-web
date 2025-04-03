@@ -10,7 +10,6 @@ const useLoadedItems = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching item data');
             return APIService.getLoadedItems(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         items: data,
@@ -29,7 +28,6 @@ const useLoadedWeapons = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching weapon data');
             return APIService.getLoadedWeapons(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         weapons: data,
@@ -47,7 +45,6 @@ const useLoadedSpells = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching spell data');
             return APIService.getLoadedSpells(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         spells: data,
@@ -66,7 +63,6 @@ const useLoadedStatusEffects = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching status effect data');
             return APIService.getLoadedStatusEffects(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         statusEffects: data,
@@ -85,7 +81,6 @@ const useLoadedAreaEffects = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching area effect data');
             return APIService.getLoadedAreaEffects(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         areaEffects: data,
@@ -104,7 +99,6 @@ const useLoadedCharacters = (dlc: string, enabled: boolean = true) => {
             console.log('Fetching character data');
             return APIService.getLoadedCharacters(dlc);
         },
-        staleTime: 1000 * 60 * 5, // 5 minutes,
     });
     return {
         characters: data,
@@ -116,10 +110,10 @@ const useLoadedCharacters = (dlc: string, enabled: boolean = true) => {
 };
 
 export {
+    useLoadedAreaEffects,
+    useLoadedCharacters,
     useLoadedItems,
-    useLoadedWeapons,
     useLoadedSpells,
     useLoadedStatusEffects,
-    useLoadedCharacters,
-    useLoadedAreaEffects,
+    useLoadedWeapons,
 };

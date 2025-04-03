@@ -6,4 +6,3 @@ export * from './getCharacterSide';
 export * from './getPercentage';
 export { default as RandomUtils } from './rand';
 export * from './tailwindHelpers';
-export * from './verifyInputs';

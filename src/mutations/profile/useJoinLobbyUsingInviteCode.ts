@@ -1,4 +1,5 @@
 import { toastError, toastInfo } from '@components/toastifications';
+import { JOINED_LOBBIES_QUERY_KEYS } from '@queries/profile/useJoinedLobbies';
 import APIService from '@services/APIService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -11,8 +12,7 @@ const useJoinLobbyUsingInviteCode = () => {
         },
         onSuccess: (data) => {
             if (data) {
-                console.log(data);
-                queryClient.setQueryData(['user', 'me'], () => {
+                queryClient.setQueryData(JOINED_LOBBIES_QUERY_KEYS(), () => {
                     return { ...data };
                 });
             }

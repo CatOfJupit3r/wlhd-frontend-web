@@ -67,7 +67,7 @@ const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalTyp
                             return (
                                 <PlayerDisplay
                                     player={player}
-                                    key={player.handle}
+                                    key={player.username}
                                     layout={layout}
                                     lobbyId={lobbyId}
                                     isApproved={true}
@@ -82,10 +82,10 @@ const PlayersList: FC<iPlayersList> = ({ className, players, layout, setModalTyp
                                 <PlayerDisplay
                                     player={{
                                         ...player,
-                                        nickname: player.handle,
+                                        nickname: player.username,
                                         characters: [],
                                     }}
-                                    key={player.handle}
+                                    key={player.username}
                                     layout={layout}
                                     lobbyId={lobbyId}
                                     isApproved={false}

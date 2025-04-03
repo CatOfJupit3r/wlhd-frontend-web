@@ -17,8 +17,6 @@ const useLobbyInviteCodes = () => {
             if (!lobbyId) throw new Error('No lobby ID provided');
             return APIService.getInviteCodes({ lobbyId });
         },
-
-        staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: true,
         retry: 1,
 

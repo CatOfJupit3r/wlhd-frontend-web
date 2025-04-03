@@ -1,79 +1,58 @@
-import APIService from '@services/APIService';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { UserInformation } from '@models/APIData';
-import AuthManager, { LOGIN_STATUS } from '@services/AuthManager';
+import AuthService, { InternalAuthSession } from '@services/AuthService';
+import { useMemo } from 'react';
 
-const PLACEHOLDER_USER: UserInformation = {
-    handle: '',
-    createdAt: '',
-    joined: [],
+const PLACEHOLDER_USER: InternalAuthSession = {
+    user: {
+        email: '',
+        name: '',
+        username: '',
+        displayUsername: '',
+        id: '',
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        emailVerified: true,
+    },
+    session: {
+        id: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: '',
+        expiresAt: new Date(),
+        token: '',
+    },
 };
 
-// Custom hook for fetching user information
+export const USE_ME_QUERY_KEYS = () => ['user', 'me'];
+export const meQueryFn = async () => {
+    return AuthService.getInstance().getSession({ fetchOptions: { throw: true } });
+};
+
+/**
+ * Central hook for getting user information
+ * It is recommended to use this hook as it caches the user information and refetches every once in a while
+ */
 export const useMe = () => {
-    const queryClient = useQueryClient();
-    const [loggedIn, setLoggedIn] = useState(AuthManager.isLoggedIn());
-
-    useEffect(() => {
-        const unsubscribeFromLoginStatusChange = AuthManager.onLoginStatusChange((token) => {
-            if (token === LOGIN_STATUS.LOGGED_OUT) {
-                setLoggedIn(false);
-                queryClient.removeQueries({
-                    queryKey: ['user', 'me'],
-                    refetchActive: true,
-                });
-            } else if (token === LOGIN_STATUS.LOGGED_IN) {
-                setLoggedIn(true);
-                queryClient.invalidateQueries({
-                    queryKey: ['user', 'me'],
-                    refetchType: 'active',
-                    refetchActive: true,
-                });
-            }
-        });
-        return () => {
-            unsubscribeFromLoginStatusChange();
-        };
-    }, [queryClient]);
-
-    const {
-        data: user,
-        isLoading,
-        isFetching,
-        isError,
-        error,
-        refetch,
-        isSuccess,
-    } = useQuery<UserInformation>({
-        enabled: () => AuthManager.isLoggedIn(),
-        queryKey: ['user', 'me'],
-
-        // Query function to fetch user data
-        queryFn: async () => {
-            return APIService.getUserInformation();
-        },
+    const queryKey = useMemo(() => USE_ME_QUERY_KEYS(), []);
+    const { data, isPending, isError, error, refetch, isSuccess } = useQuery<InternalAuthSession>({
+        queryKey,
+        queryFn: meQueryFn,
         // Caching and retry configurations
-        staleTime: 5 * 60 * 1000, // Data considered fresh for 5 minutes
+        staleTime: 60 * 1000, // Data considered fresh for 1 minutes
         refetchOnWindowFocus: true, // Refetch when window regains focus
         retry: 1, // Retry once on failure
-
-        placeholderData: { ...PLACEHOLDER_USER },
     });
 
-    const isLoggedIn = useMemo(() => {
-        if (isFetching) return loggedIn;
-        return Boolean(loggedIn && isSuccess);
-    }, [loggedIn, isSuccess, isFetching]);
-
     return {
-        user: user ?? PLACEHOLDER_USER,
-        isLoading,
+        user: data?.user ?? PLACEHOLDER_USER?.user,
+        session: data?.session ?? PLACEHOLDER_USER?.session,
+        isLoading: isPending,
         isError,
+        isSuccess,
         error,
         refetch,
-        isLoggedIn,
+        isLoggedIn: Boolean(data?.user?.id && isSuccess),
     };
 };
 

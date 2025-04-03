@@ -52,7 +52,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
                                 emptyMessage={t('no-players')}
                                 renderItem={(item) => (
                                     <p>
-                                        {item.nickname} (@{item.handle})
+                                        {item.nickname} (@{item.username})
                                     </p>
                                 )}
                                 className={cn(

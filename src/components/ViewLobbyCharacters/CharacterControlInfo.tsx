@@ -47,17 +47,19 @@ const ChangeControlledBy = () => {
     return (
         <div className={'flex h-10 flex-row gap-2'}>
             <Combobox
-                items={lobby.players.filter(filterPlayersByControlledDescriptor(descriptor, true)).map((player) => ({
-                    value: player.userId,
-                    label: player.handle,
-                    icon: () => (
-                        <UserAvatar
-                            handle={player.handle}
-                            className={'size-8 border-2'}
-                            style={{ borderRadius: '50%' }}
-                        />
-                    ),
-                }))}
+                items={lobby.players
+                    .filter(filterPlayersByControlledDescriptor(descriptor, true))
+                    .map(({ userId, username }) => ({
+                        value: userId,
+                        label: username,
+                        icon: () => (
+                            <UserAvatar
+                                username={username}
+                                className={'size-8 border-2'}
+                                style={{ borderRadius: '50%' }}
+                            />
+                        ),
+                    }))}
                 value={playerToAdd}
                 onChange={(value) => {
                     setPlayerToAdd(value);
@@ -96,9 +98,9 @@ const PlainListOfPlayers = ({ playersInControl }: { playersInControl: iLobbyPlay
         <ScrollArea className={'mt-2 flex h-[100px] flex-col gap-1'}>
             {playersInControl.map((player) => {
                 return (
-                    <div key={player.handle} className={'relative flex flex-row items-center gap-2'}>
-                        <UserAvatar handle={player.handle} className={'size-8 border-2'} />
-                        <p className={'max-w-[75%]'}>@{player.handle}</p>
+                    <div key={player.username} className={'relative flex flex-row items-center gap-2'}>
+                        <UserAvatar username={player.username} className={'size-8 border-2'} />
+                        <p className={'max-w-[75%]'}>@{player.username}</p>
                         <MutationButton
                             isPending={isPending}
                             mutate={() => {

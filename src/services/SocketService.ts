@@ -29,8 +29,6 @@ import {
 import { store as ReduxStore } from '@redux/store';
 import { VITE_BACKEND_URL } from 'config';
 import { io, Socket } from 'socket.io-client';
-import APIService from './APIService';
-import AuthManager from './AuthManager';
 
 const SOCKET_EVENTS = {
     BATTLE_STARTED: 'battle_started',
@@ -81,6 +79,7 @@ class SocketService {
         this.socket = io(VITE_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
+            withCredentials: true,
         });
     }
 
@@ -97,7 +96,9 @@ class SocketService {
     }
 
     public disconnect() {
-        this.socket.disconnect();
+        if (this.socket.connected) {
+            this.socket.disconnect();
+        }
     }
 
     public connect({ lobbyId, combatId, isGm = false }: { lobbyId: string; combatId: string; isGm?: boolean }) {
@@ -120,7 +121,7 @@ class SocketService {
         }
         this.socket.io.opts.query = {
             ...this.socket.io.opts.query,
-            userToken: AuthManager.getAccessToken(),
+            // user token is fetched from cookies
             lobbyId,
             combatId,
         };
@@ -154,13 +155,11 @@ class SocketService {
                 if (this.triedToRefreshToken) {
                     this.triedToRefreshToken = false;
                     console.log('Logging out user');
-                    ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'));
                 } else {
                     this.triedToRefreshToken = true;
-                    APIService.refreshToken().then(() => {
-                        this.reconnect();
-                    });
                 }
+                this.disconnect();
+                ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'));
             },
             [SOCKET_EVENTS.ERROR]: (error: unknown) => {
                 console.error('Socket error', error);
