@@ -6,7 +6,7 @@ import {
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
 import { RandomUtils } from '@utils';
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id });
 export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id });
@@ -238,40 +238,66 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
         });
     }, []);
 
-    return (
-        <CombatEditorContext.Provider
-            value={{
-                messages,
-                activeCharacterIndex,
-                addCharacter,
-                addCharacterToTurnOrder,
-                battlefield,
-                changePreset,
-                changeRound,
-                changeTurnOrder,
-                mode,
-                makeCharacterActive,
-                removeCharacter,
-                resetPreset,
-                round,
-                setMode,
-                turnOrder,
-                updateCharacter,
-                updateControl,
+    const context = useMemo(
+        () => ({
+            messages,
+            activeCharacterIndex,
+            addCharacter,
+            addCharacterToTurnOrder,
+            battlefield,
+            changePreset,
+            changeRound,
+            changeTurnOrder,
+            mode,
+            makeCharacterActive,
+            removeCharacter,
+            resetPreset,
+            round,
+            setMode,
+            turnOrder,
+            updateCharacter,
+            updateControl,
 
-                addGameMessage,
-                deleteGameMessage,
-                changeGameMessage,
+            addGameMessage,
+            deleteGameMessage,
+            changeGameMessage,
 
-                areaEffects,
-                addAreaEffect,
-                deleteAreaEffect,
-                changeAreaEffect,
-            }}
-        >
-            {children}
-        </CombatEditorContext.Provider>
+            areaEffects,
+            addAreaEffect,
+            deleteAreaEffect,
+            changeAreaEffect,
+        }),
+        [
+            messages,
+            activeCharacterIndex,
+            addCharacter,
+            addCharacterToTurnOrder,
+            battlefield,
+            changePreset,
+            changeRound,
+            changeTurnOrder,
+            mode,
+            makeCharacterActive,
+            removeCharacter,
+            resetPreset,
+            round,
+            setMode,
+            turnOrder,
+            updateCharacter,
+            updateControl,
+
+            addGameMessage,
+            deleteGameMessage,
+            changeGameMessage,
+
+            areaEffects,
+            addAreaEffect,
+            deleteAreaEffect,
+            changeAreaEffect,
+        ],
     );
+
+    return <CombatEditorContext.Provider value={context}>{children}</CombatEditorContext.Provider>;
 };
 
 const useCombatEditorContext = () => {
