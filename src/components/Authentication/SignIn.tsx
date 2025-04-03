@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 const loginSchema = z.object({
-    handle: z
+    username: z
         .string()
         .min(4)
         .max(20)
@@ -34,12 +34,12 @@ const SignIn = ({ className = '' }: { className?: string }) => {
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            handle: 'admin',
+            username: 'admin',
             password: 'motherfucker',
         },
     });
     const { isLoading, isLoggedIn } = useMe();
-    const { mutate, isPending, isSuccess } = useLogin({ shouldRedirect: true });
+    const { mutate, isPending, isSuccess } = useLogin();
 
     const onSubmit = (values: z.infer<typeof loginSchema>) => {
         mutate(values);
@@ -60,12 +60,12 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                 <form className={'flex w-full flex-col gap-2'}>
                     <FormField
                         control={form.control}
-                        name="handle"
+                        name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor="handle">{t('handle.index')}</FormLabel>
+                                <FormLabel htmlFor="username">{t('username.index')}</FormLabel>
                                 <FormControl>
-                                    <Input className={'w-full'} placeholder={t('handle.placeholder')} {...field} />
+                                    <Input className={'w-full'} placeholder={t('username.placeholder')} {...field} />
                                 </FormControl>
                             </FormItem>
                         )}

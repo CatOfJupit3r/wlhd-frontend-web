@@ -10,9 +10,9 @@ import {
 } from '@components/ui/dropdown-menu';
 import StyledLink from '@components/ui/styled-link';
 import { CurrentUserAvatar } from '@components/UserAvatars';
-import authClient from '@lib/auth';
 import useMe from '@queries/useMe';
 import useThisLobby from '@queries/useThisLobby';
+import AuthService from '@services/AuthService';
 import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { IS_DEVELOPMENT } from 'config';
@@ -79,7 +79,7 @@ const Header = () => {
                     name: 'logout',
                     action: () => {
                         console.log('' + 'Logging out');
-                        authClient
+                        AuthService.getInstance()
                             .signOut({
                                 fetchOptions: { throw: true },
                             })

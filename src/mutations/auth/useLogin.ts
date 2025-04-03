@@ -1,20 +1,20 @@
 import { toastError } from '@components/toastifications';
-import authClient from '@lib/auth';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import AuthService from '@services/AuthService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 
-const useLogin = ({ shouldRedirect }: { shouldRedirect?: boolean }) => {
+const useLogin = () => {
     const { t } = useTranslation('local', {
         keyPrefix: 'auth',
     });
     const queryClient = useQueryClient();
 
     const { mutate, isPending, isSuccess } = useMutation({
-        mutationFn: ({ handle, password }: { handle: string; password: string }) => {
-            return authClient.signIn.username({
-                username: handle,
+        mutationFn: ({ username, password }: { username: string; password: string }) => {
+            return AuthService.getInstance().signIn.username({
+                username,
                 password,
                 rememberMe: true,
                 fetchOptions: { throw: true },
@@ -31,7 +31,7 @@ const useLogin = ({ shouldRedirect }: { shouldRedirect?: boolean }) => {
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({
-                queryKey: [...USE_ME_QUERY_KEYS],
+                queryKey: USE_ME_QUERY_KEYS(),
             });
         },
     });

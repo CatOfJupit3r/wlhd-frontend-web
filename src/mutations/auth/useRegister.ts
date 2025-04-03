@@ -1,7 +1,7 @@
 import { toastError } from '@components/toastifications';
-import authClient from '@lib/auth';
 import queryClient from '@queries/QueryClient';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import AuthService from '@services/AuthService';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -10,11 +10,11 @@ const useRegister = () => {
     const { t } = useTranslation('local');
 
     const { mutate, isPending, isSuccess } = useMutation({
-        mutationFn: ({ handle, password }: { handle: string; password: string }) => {
-            return authClient.signUp.email({
-                email: `${handle}@example.com`,
-                name: handle,
-                username: handle,
+        mutationFn: ({ username, password }: { username: string; password: string }) => {
+            return AuthService.getInstance().signUp.email({
+                email: `${username}@example.com`,
+                name: username,
+                username,
                 password,
                 fetchOptions: { throw: true },
             });
@@ -28,7 +28,7 @@ const useRegister = () => {
         },
         onSuccess: async (_) => {
             await queryClient.invalidateQueries({
-                queryKey: [...USE_ME_QUERY_KEYS],
+                queryKey: USE_ME_QUERY_KEYS(),
             });
         },
     });

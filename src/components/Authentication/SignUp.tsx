@@ -5,7 +5,7 @@ import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useRegister from '@mutations/auth/useRegister';
 import useMe from '@queries/useMe';
-import { redirect } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,7 +14,7 @@ import { z } from 'zod';
 
 const registerSchema = z
     .object({
-        handle: z
+        username: z
             .string()
             .min(4)
             .max(20)
@@ -43,19 +43,19 @@ const SignUp = ({ className }: { className?: string }) => {
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
-            handle: '',
+            username: '',
             password: '',
             confirmPassword: '',
         },
     });
+    const navigate = useNavigate();
     const { isLoading, isLoggedIn } = useMe();
     const { mutate, isPending, isSuccess } = useRegister();
 
     useEffect(() => {
         if (isSuccess || (!isLoading && isLoggedIn)) {
-            redirect({
+            navigate({
                 to: '/profile',
-                throw: true,
             });
         }
     }, [isSuccess, isLoading, isLoggedIn]);
@@ -71,13 +71,13 @@ const SignUp = ({ className }: { className?: string }) => {
                 <form className={'flex w-full flex-col gap-2'}>
                     <FormField
                         control={form.control}
-                        name="handle"
+                        name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel htmlFor="handle">{t('handle.index')}</FormLabel>
-                                <FormDescription>{t('handle.description')}</FormDescription>
+                                <FormLabel htmlFor="username">{t('username.index')}</FormLabel>
+                                <FormDescription>{t('username.description')}</FormDescription>
                                 <FormControl>
-                                    <Input className={'w-full'} placeholder={t('handle.placeholder')} {...field} />
+                                    <Input className={'w-full'} placeholder={t('username.placeholder')} {...field} />
                                 </FormControl>
                             </FormItem>
                         )}

@@ -1,5 +1,5 @@
 import { selectGameLobbyState } from '@redux/slices/gameScreenSlice';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
@@ -16,7 +16,7 @@ interface iPlayerCard {
 
 const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) => {
     const { lobby } = useThisLobby();
-    const userInLobby = lobby.players.find((player) => player.userId === userId);
+    const userInLobby = useMemo(() => lobby.players.find((player) => player.userId === userId), [lobby, userId]);
     if (!userInLobby) {
         return null;
     }
@@ -26,7 +26,10 @@ const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) =>
                 <TooltipTrigger asChild>
                     <div className={'flex h-full w-full flex-row items-center gap-1'}>
                         <div className={'relative'}>
-                            <UserAvatar handle={userInLobby.handle} className={'rounded-lg border-none shadow-none'} />
+                            <UserAvatar
+                                username={userInLobby.username}
+                                className={'rounded-lg border-none shadow-none'}
+                            />
                             {isGm && <FaCrown className={'absolute right-0 top-0 text-amber-300'} />}
                         </div>
                         <div className={cn('h-full w-3 rounded-xl', isConnected ? 'bg-green-500' : 'bg-red-500')} />
@@ -34,7 +37,7 @@ const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) =>
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>
-                        {userInLobby.nickname} (@{userInLobby.handle})
+                        {userInLobby.nickname} (@{userInLobby.username})
                     </p>
                 </TooltipContent>
             </Tooltip>

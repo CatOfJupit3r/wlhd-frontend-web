@@ -29,7 +29,6 @@ import {
 import { store as ReduxStore } from '@redux/store';
 import { VITE_BACKEND_URL } from 'config';
 import { io, Socket } from 'socket.io-client';
-import AuthManager from './AuthManager';
 
 const SOCKET_EVENTS = {
     BATTLE_STARTED: 'battle_started',
@@ -80,6 +79,7 @@ class SocketService {
         this.socket = io(VITE_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
+            withCredentials: true,
         });
     }
 
@@ -121,7 +121,7 @@ class SocketService {
         }
         this.socket.io.opts.query = {
             ...this.socket.io.opts.query,
-            userToken: AuthManager.getAccessToken(),
+            // user token is fetched from cookies
             lobbyId,
             combatId,
         };

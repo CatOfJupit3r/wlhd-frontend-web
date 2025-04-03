@@ -16,7 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
 import useCreateInviteCode from '@mutations/lobby-overview/useCreateInviteCode';
 import useDeleteInviteCode from '@mutations/lobby-overview/useDeleteInviteCode';
-import useLobbyInviteCodes from '@queries/useLobbyInviteCodes';
+import useLobbyInviteCodes from '@queries/profile/useLobbyInviteCodes';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
