@@ -107,8 +107,8 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                             },
                         },
                         descriptor,
-                        id_: crypto.randomUUID(),
-                        controlInfo: control || CONTROLLED_BY_GAME_LOGIC,
+                        id_: RandomUtils.uuid(),
+                        controlInfo: control ?? CONTROLLED_BY_GAME_LOGIC,
                         square: { line, column },
                     },
                 };

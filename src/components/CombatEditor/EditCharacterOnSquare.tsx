@@ -18,22 +18,19 @@ import {
     SelectValue,
 } from '@components/ui/select';
 import UserAvatar from '@components/UserAvatars';
-import {
-    CharacterEditorContextType,
-    CharacterEditorProvider,
-    useBuildCharacterEditorProps,
-} from '@context/CharacterEditorProvider';
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { useCombatEditorContext } from '@context/CombatEditorContext';
+import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import useThisLobby from '@queries/useThisLobby';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrContactInfo } from 'react-icons/gr';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 
-const CombatCharacterEditorSettings: CharacterEditorContextType['flags'] = {
+const CombatCharacterEditorSettings: CharacterEditorFlags = {
     attributes: {
         ignored: [],
         nonEditable: [],
@@ -167,26 +164,48 @@ const EditCharacterControls = ({
     );
 };
 
+const EditCharacterOnSquareListener = ({ onChange }: { onChange: (clickedSquare: CharacterDataEditable) => void }) => {
+    const { character } = useCharacterEditor();
+
+    useEffect(() => {
+        onChange(character);
+    }, [character]);
+
+    return null;
+};
+
 export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const { lobby } = useThisLobby();
     const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext();
     const { battlefield } = useCombatEditorContext();
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character');
-    const { character, changeEditedCharacter } = useBuildCharacterEditorProps(battlefield[clickedSquare as string]);
     const [newControls, setNewControls] = useState<ControlledBy>(battlefield[clickedSquare as string].controlInfo);
+    const character = useMemo(() => battlefield[clickedSquare!], [clickedSquare, battlefield]);
 
     useEffect(() => {
         if (clickedSquare) {
             const newCharacter = battlefield[clickedSquare];
-            if (character && newCharacter && JSON.stringify(character) !== JSON.stringify(newCharacter)) {
-                changeEditedCharacter(newCharacter);
-                setNewControls(newCharacter.controlInfo);
-            }
+            setNewControls(newCharacter.controlInfo);
         }
     }, [clickedSquare, battlefield]);
 
-    const handleSaveButton = useCallback(() => {
-        if (!clickedSquare || !character) return;
+    const handleSaveButton = useCallback(
+        (newCharacter: CharacterDataEditable) => {
+            if (
+                !clickedSquare ||
+                !character ||
+                !newCharacter ||
+                JSON.stringify(character) === JSON.stringify(newCharacter)
+            ) {
+                return;
+            }
+            updateCharacter(clickedSquare, newCharacter);
+        },
+        [character, newControls, clickedSquare, isEditing, lobby],
+    );
+
+    useEffect(() => {
+        if (!clickedSquare) return;
         if (isEditing === 'controls') {
             if (newControls.type === 'player') {
                 if (
@@ -208,14 +227,8 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
                 type: newControls.type,
                 id: newControls.type === 'game_logic' ? undefined : newControls.id,
             });
-        } else {
-            updateCharacter(clickedSquare, character);
         }
-    }, [character, newControls, clickedSquare, isEditing, lobby]);
-
-    useEffect(() => {
-        handleSaveButton();
-    }, [character, newControls]);
+    }, [newControls]);
 
     return (
         <div className={'mt-4'}>
@@ -274,13 +287,12 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <CharacterEditorProvider
-                character={character}
-                setEditedCharacter={changeEditedCharacter}
-                flags={CombatCharacterEditorSettings}
-            >
+            <CharacterEditorProvider character={character} flags={CombatCharacterEditorSettings}>
                 {isEditing === 'character' ? (
-                    <CharacterEditor className={'flex w-full flex-col gap-4 rounded border-2 p-4'} />
+                    <>
+                        <CharacterEditor className={'flex w-full flex-col gap-4 rounded border-2 p-4'} />
+                        <EditCharacterOnSquareListener onChange={handleSaveButton} />
+                    </>
                 ) : (
                     <EditCharacterControls
                         newControls={newControls}

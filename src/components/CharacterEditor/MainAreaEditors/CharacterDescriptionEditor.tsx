@@ -1,28 +1,22 @@
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
-import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useCharacterEditor } from '@context/character-editor';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { RxReset } from 'react-icons/rx';
 
 const MAX_DESCRIPTION_LENGTH = 256;
 
 const CharacterDescriptionEditor = () => {
-    const { character, updateCharacter, initial } = useCharacterEditorContext();
+    const { character, updateCharacterDecorations } = useCharacterEditor();
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const setCharacterDescription = useCallback(
         (description: string) => {
-            updateCharacter({
-                ...character,
-                decorations: {
-                    ...character.decorations,
-                    description,
-                },
+            updateCharacterDecorations({
+                description,
             });
         },
-        [character, updateCharacter],
+        [updateCharacterDecorations],
     );
     useEffect(() => {
         if (textareaRef.current) {
@@ -52,22 +46,6 @@ const CharacterDescriptionEditor = () => {
             />
             <div className={'mt-1 flex justify-between'}>
                 <CharacterLimit characterLimit={MAX_DESCRIPTION_LENGTH} text={character.decorations.description} />
-                <Button
-                    variant={'ghost'}
-                    size={'icon'}
-                    onClick={() => {
-                        updateCharacter({
-                            ...character,
-                            decorations: {
-                                ...character.decorations,
-                                description: initial.decorations.description,
-                            },
-                        });
-                    }}
-                    className={'h-5 text-gray-400 hover:text-gray-600'}
-                >
-                    <RxReset />
-                </Button>
             </div>
         </div>
     );

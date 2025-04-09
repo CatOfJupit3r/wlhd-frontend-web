@@ -1,6 +1,6 @@
 import { Input } from '@components/ui/input';
 import { Progress } from '@components/ui/progress';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useCharacterEditor } from '@context/character-editor';
 import { capitalizeFirstLetter, getPercentage } from '@utils';
 import {
     extractCurrentMaxBaseAttributes,
@@ -59,7 +59,7 @@ const FancyAttributesWithBar = ({
     color: string;
     setAttribute: setAttributeFuncType;
 }) => {
-    const { character } = useCharacterEditorContext();
+    const { character } = useCharacterEditor();
     const { t } = useTranslation();
     const percentage = getPercentage(character.attributes[current], character.attributes[max]);
 
@@ -165,7 +165,7 @@ const DualAttributeEditor = ({
 };
 
 const AttributesEditor = () => {
-    const { character, updateCharacter, flags } = useCharacterEditorContext();
+    const { character, flags, changeCharacterAttribute } = useCharacterEditor();
     const { attributes: attributesFlags } = flags;
     const { t } = useTranslation();
     const [handledByOther, setHandledByOther] = useState<Array<string>>([]);
@@ -193,15 +193,12 @@ const AttributesEditor = () => {
 
     const setAttribute = useCallback(
         (attribute: string, value: number) => {
-            updateCharacter({
-                ...character,
-                attributes: {
-                    ...character.attributes,
-                    [attribute]: value,
-                },
+            changeCharacterAttribute({
+                attribute,
+                value,
             });
         },
-        [character, updateCharacter],
+        [changeCharacterAttribute],
     );
 
     return (

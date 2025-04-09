@@ -1,12 +1,12 @@
 import { common } from '@components/editors/game-component-editors';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useCharacterEditor } from '@context/character-editor';
 import { GameComponentMemory } from '@models/GameModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const CharacterMiscEditor = () => {
-    const { character, updateCharacter } = useCharacterEditorContext();
+    const { character, changeCharacterMemories, changeCharacterTags } = useCharacterEditor();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
@@ -17,19 +17,13 @@ const CharacterMiscEditor = () => {
             value: T extends 'tags' ? string[] : T extends 'memory' ? GameComponentMemory : never,
         ) => {
             if (key === 'tags') {
-                updateCharacter({
-                    ...character,
-                    tags: value as string[],
-                });
+                changeCharacterTags(value as string[]);
             }
             if (key === 'memory') {
-                updateCharacter({
-                    ...character,
-                    memory: value as GameComponentMemory,
-                });
+                changeCharacterMemories(value as GameComponentMemory);
             }
         },
-        [character, updateCharacter],
+        [character, changeCharacterTags, changeCharacterMemories],
     );
 
     return (
