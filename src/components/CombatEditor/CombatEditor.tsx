@@ -1,15 +1,14 @@
 import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaPlay, FaSave } from 'react-icons/fa';
+import { FaPlay } from 'react-icons/fa';
 import { MdOutlineVideogameAssetOff } from 'react-icons/md';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
-import { CombatEditorContextProvider, useCombatEditorContext } from '@context/CombatEditorContext';
 import useThisLobby from '@queries/useThisLobby';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId';
 import { Route as GameRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
@@ -17,15 +16,10 @@ import APIService from '@services/APIService';
 import { EditorHelpers } from '@utils';
 
 import { AddNewCharacter } from './AddNewCharacter';
-import {
-    getLastUsedCombatEditorPreset,
-    removeCombatEditorLocalStorage,
-    saveCombatEditorPreset,
-    verifyCombatEditorLocalStorage,
-} from './CombatEditorLocalStorage';
 import { EditCharacterOnSquare } from './EditCharacterOnSquare';
 import RoundInfoEditor from './round-header';
 
+import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
 import BattlefieldSectionEditor from './battlefield-section-editor';
 import styles from './dotted-background.module.css';
 
@@ -41,44 +35,21 @@ const CombatEditor = () => {
 
     const { lobby } = useThisLobby();
 
-    const { battlefield, changePreset, resetPreset, turnOrder, activeCharacterIndex, round, messages, areaEffects } =
-        useCombatEditorContext();
+    const { battlefield, resetPreset, turnOrder, activeCharacterIndex, round, messages, areaEffects, meta } =
+        useCombatEditor();
 
     const [clickedSquare, setClickedSquare] = useState<string | null>(null);
-    const [presetDetails, setPresetDetails] = useState<PresetDetails | null>(null);
+    const [presetDetails] = useState<PresetDetails | null>(null);
 
     const resetCombatEditor = useCallback(() => {
-        if (Object.keys(battlefield).length !== 0) {
-            resetPreset();
-        }
-    }, [clickedSquare, battlefield]);
-
-    // useEffect(() => {
-    //     resetCombatEditor()
-    // }, [])
-
-    useEffect(() => {
-        if (!lobby?.lobbyId || presetDetails !== null) {
-            return;
-        }
-        verifyCombatEditorLocalStorage();
-        const lastUsedPreset = getLastUsedCombatEditorPreset(lobby?.lobbyId);
-        if (lastUsedPreset) {
-            const { data } = lastUsedPreset;
-            changePreset(data);
-            setPresetDetails({
-                nickName: lastUsedPreset.nickName,
-                lobbyID: lastUsedPreset.lobbyID,
-                presetID: lastUsedPreset.presetID,
-            });
-        }
-    }, [lobby]);
+        resetPreset();
+    }, [resetPreset]);
 
     const handlePlayButton = useCallback(async () => {
         try {
             const { combat_id } = await APIService.createLobbyCombat(
                 lobby.lobbyId,
-                'Combat from Editor',
+                meta.nickname,
                 EditorHelpers.convertGameEditorSaveToExportable({
                     areaEffects,
                     battlefield,
@@ -103,7 +74,22 @@ const CombatEditor = () => {
                 console.error(e);
             }
         }
-    }, [battlefield, lobby, resetCombatEditor, t]);
+    }, [
+        t,
+        navigate,
+
+        lobby,
+
+        resetCombatEditor,
+
+        battlefield,
+        meta.nickname,
+        areaEffects,
+        turnOrder,
+        activeCharacterIndex,
+        round,
+        messages,
+    ]);
 
     return (
         <div className={'flex h-screen max-h-screen w-screen flex-row'}>
@@ -116,26 +102,6 @@ const CombatEditor = () => {
             <div className={'max-w-1/3 relative flex h-screen w-full flex-col bg-white'}>
                 <div className={'text-t-4xl flex h-20 w-full flex-row items-center bg-black px-4'}>
                     <div className={'flex w-full max-w-[90%] flex-row items-center justify-center gap-2'}>
-                        <Button
-                            className={'size-12 p-3 text-2xl'}
-                            variant={'outline'}
-                            onClick={() => {
-                                saveCombatEditorPreset(
-                                    'Preset from Memory',
-                                    {
-                                        areaEffects,
-                                        battlefield,
-                                        turnOrder,
-                                        activeCharacterIndex,
-                                        round,
-                                        messages,
-                                    },
-                                    lobby?.lobbyId,
-                                );
-                            }}
-                        >
-                            <FaSave />
-                        </Button>
                         <p
                             className={'h-full w-full truncate text-center text-2xl text-white'}
                             title={presetDetails?.nickName || 'Untitled Combat'}
@@ -151,17 +117,7 @@ const CombatEditor = () => {
                         >
                             <FaPlay />
                         </Button>
-                        <Button
-                            variant={'outline'}
-                            className={'size-12 p-3 text-2xl'}
-                            onClick={() => {
-                                resetCombatEditor();
-                                if (presetDetails) {
-                                    removeCombatEditorLocalStorage(presetDetails.presetID);
-                                    setPresetDetails(null);
-                                }
-                            }}
-                        >
+                        <Button variant={'outline'} className={'size-12 p-3 text-2xl'} onClick={resetCombatEditor}>
                             <RiDeleteBin6Line />
                         </Button>
                     </div>
@@ -205,10 +161,16 @@ const CombatEditor = () => {
 };
 
 const CharacterEditorWithContext = () => {
+    const { lobbyId } = useThisLobby();
+
+    if (!lobbyId) {
+        return null;
+    }
+
     return (
-        <CombatEditorContextProvider>
+        <CombatEditorProvider lobbyId={lobbyId}>
             <CombatEditor />
-        </CombatEditorContextProvider>
+        </CombatEditorProvider>
     );
 };
 

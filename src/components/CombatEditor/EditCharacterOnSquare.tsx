@@ -19,11 +19,11 @@ import {
 } from '@components/ui/select';
 import UserAvatar from '@components/UserAvatars';
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
-import { useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
 import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import useThisLobby from '@queries/useThisLobby';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrContactInfo } from 'react-icons/gr';
@@ -58,7 +58,7 @@ const EditCharacterControls = ({
     clickedSquare: string | null;
 }) => {
     const { lobby } = useThisLobby();
-    const { battlefield } = useCombatEditorContext();
+    const character = useCharacterOnSquareInEditor(clickedSquare!);
 
     return (
         <div>
@@ -69,11 +69,11 @@ const EditCharacterControls = ({
                         <Select
                             onValueChange={(value) => {
                                 let changeTo;
-                                const character = battlefield[clickedSquare as string].controlInfo;
-                                if (character.type === value && character.id) {
+                                const controls = character.controlInfo;
+                                if (controls.type === value && controls.id) {
                                     changeTo = {
                                         type: value,
-                                        id: character.id,
+                                        id: controls.id,
                                     };
                                 } else {
                                     changeTo = {
@@ -174,20 +174,20 @@ const EditCharacterOnSquareListener = ({ onChange }: { onChange: (clickedSquare:
     return null;
 };
 
-export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string | null }) => {
+export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string }) => {
     const { lobby } = useThisLobby();
-    const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditorContext();
-    const { battlefield } = useCombatEditorContext();
+    const { updateCharacter, removeCharacter, updateControl, addCharacterToTurnOrder } = useCombatEditor();
     const [isEditing, setIsEditing] = useState<'character' | 'controls'>('character');
-    const [newControls, setNewControls] = useState<ControlledBy>(battlefield[clickedSquare as string].controlInfo);
-    const character = useMemo(() => battlefield[clickedSquare!], [clickedSquare, battlefield]);
+
+    const character = useCharacterOnSquareInEditor(clickedSquare);
+    const [newControls, setNewControls] = useState<ControlledBy>(character.controlInfo);
 
     useEffect(() => {
-        if (clickedSquare) {
-            const newCharacter = battlefield[clickedSquare];
-            setNewControls(newCharacter.controlInfo);
+        // only is triggered when switching between squares
+        if (character && character?.controlInfo !== newControls) {
+            setNewControls(character.controlInfo);
         }
-    }, [clickedSquare, battlefield]);
+    }, [character]);
 
     const handleSaveButton = useCallback(
         (newCharacter: CharacterDataEditable) => {
@@ -201,7 +201,7 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
             }
             updateCharacter(clickedSquare, newCharacter);
         },
-        [character, newControls, clickedSquare, isEditing, lobby],
+        [character, newControls, clickedSquare, isEditing, lobby, updateCharacter],
     );
 
     useEffect(() => {
@@ -273,8 +273,6 @@ export const EditCharacterOnSquare = ({ clickedSquare }: { clickedSquare: string
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onSelect={() => {
-                                if (!clickedSquare) return;
-                                const character = battlefield[clickedSquare];
                                 if (!character) return;
                                 addCharacterToTurnOrder(character.id_);
                             }}

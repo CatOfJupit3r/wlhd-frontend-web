@@ -1,4 +1,4 @@
-import { CombatEditorSaveType } from '@context/CombatEditorContext';
+import { CombatEditorSaveType } from '@context/combat-editor';
 import {
     CharacterClassConversion,
     ControlledBy,
