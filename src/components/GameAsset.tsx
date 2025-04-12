@@ -1,7 +1,7 @@
 import { HTMLIconFactoryProps } from '@components/icons/icon_factory';
 import { GameComponentDecoration } from '@models/GameModels';
 import { getCharacterSide } from '@utils';
-import { generateAssetPath, generateAssetPathFullDescriptor } from '@utils/generateAssetPath';
+import { assetsHelpers, generateAssetPathFullDescriptor } from '@utils/assets-helpers';
 import React from 'react';
 
 const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png';
@@ -26,9 +26,7 @@ const GameAsset = ({ src, fallback, alt, ...props }: GameAssetProps) => {
             {...props}
             alt={alt || 'asset'}
             src={
-                typeof src === 'string'
-                    ? generateAssetPathFullDescriptor(src)
-                    : generateAssetPath(src.dlc, src.descriptor)
+                typeof src === 'string' ? generateAssetPathFullDescriptor(src) : assetsHelpers(src.dlc, src.descriptor)
             }
             onError={(e) => {
                 if (e.currentTarget.src === INVALID_ASSET_PATH) return;

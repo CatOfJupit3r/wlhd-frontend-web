@@ -1,5 +1,5 @@
+import { isDescriptor, splitDescriptor } from '@utils/game-helpers';
 import { describe, expect, it } from 'vitest';
-import { isDescriptor, splitDescriptor } from './descriptorTools';
 
 describe('descriptorTools', () => {
     it('should split descriptor', () => {

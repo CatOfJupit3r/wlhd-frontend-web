@@ -27,7 +27,8 @@ import {
 } from '@models/CombatEditorModels';
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels';
 import { OneOf } from '@models/OneOf';
-import { capitalizeFirstLetter, cn } from '@utils';
+import { cn } from '@utils';
+import { capitalize } from 'lodash';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaX } from 'react-icons/fa6';
@@ -473,7 +474,7 @@ const IndividualMemoryEditor: React.FC<{
                 <Tooltip>
                     <TooltipTrigger>
                         <div className={'cursor-default text-base font-bold'}>
-                            {capitalizeFirstLetter(t(memory.display_name, { includePrefix: false })) || memory_key}
+                            {capitalize(t(memory.display_name, { includePrefix: false })) || memory_key}
                         </div>
                     </TooltipTrigger>
                     <TooltipContent>

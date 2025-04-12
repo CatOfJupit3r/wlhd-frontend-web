@@ -1,5 +1,5 @@
 import { CommonGameComponentInfoFields, GameComponentDecoration, MemoryType, PossibleMemory } from '@models/GameModels';
-import { memoryValueToTranslation } from '@utils/memoryValueToTranslation';
+import { memoryValueToTranslation } from '@utils/game-display-tools';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -19,8 +19,7 @@ import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import GameConverters from '@services/GameConverters';
-import { cn } from '@utils';
-import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction';
+import { cn, EditorHelpers } from '@utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
@@ -58,7 +57,7 @@ const SaveCharacterButton = () => {
                     updateCharacter({
                         lobbyId: lobby.lobbyId,
                         descriptor: descriptor as string,
-                        character: prepareCharacterToClassConversion(editedCharacter),
+                        character: EditorHelpers.prepareCharacterToClassConversion(editedCharacter),
                     });
                 }
             }}

@@ -14,7 +14,7 @@ import useThisLobby from '@queries/useThisLobby';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId';
 import { Route as GameRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
 import APIService from '@services/APIService';
-import EditorHelpers from '@utils/editorHelpers';
+import { EditorHelpers } from '@utils';
 
 import { AddNewCharacter } from './AddNewCharacter';
 import {

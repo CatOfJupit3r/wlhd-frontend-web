@@ -5,7 +5,7 @@ import {
 } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
-import { CONTROLLED_BY_GAME_LOGIC, RandomUtils } from '@utils';
+import { CONTROLLED_BY_GAME_LOGIC, RandomizeUtils } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 export type CombatEditorSaveType = {
@@ -63,7 +63,7 @@ interface iTurnInOrder {
     // possible to extends in future should turns become more complex
 }
 
-const createTurnInOrder = (character: string): iTurnInOrder => ({ character, id: RandomUtils.uuid() });
+const createTurnInOrder = (character: string): iTurnInOrder => ({ character, id: RandomizeUtils.uuid() });
 
 const CombatEditorContext = createContext<CombatEditorContextType | undefined>(undefined);
 
@@ -103,7 +103,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                             },
                         },
                         descriptor,
-                        id_: RandomUtils.uuid(),
+                        id_: RandomizeUtils.uuid(),
                         controlInfo: control ?? CONTROLLED_BY_GAME_LOGIC(),
                         square: { line, column },
                     },

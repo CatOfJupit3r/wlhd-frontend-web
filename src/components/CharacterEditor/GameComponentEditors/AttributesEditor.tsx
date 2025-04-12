@@ -1,13 +1,14 @@
 import { Input } from '@components/ui/input';
 import { Progress } from '@components/ui/progress';
 import { useCharacterEditor } from '@context/character-editor';
-import { capitalizeFirstLetter, getPercentage } from '@utils';
+import { getPercentage } from '@utils';
 import {
     extractCurrentMaxBaseAttributes,
     extractDualAttributes,
     FancyAttributeArray,
     PrefixCollection,
-} from '@utils/gameDisplayTools';
+} from '@utils/game-display-tools';
+import { capitalize } from 'lodash';
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -68,7 +69,7 @@ const FancyAttributesWithBar = ({
             <div id={'label-and-input'} className={'flex w-full flex-row justify-between'}>
                 <div className={'flex max-w-[50%] flex-row items-center gap-1'}>
                     <p className={'w-full max-w-[70%] break-words'}>
-                        {capitalizeFirstLetter(t(PrefixCollection.attributes(current)))}
+                        {capitalize(t(PrefixCollection.attributes(current)))}
                     </p>
                     <Input
                         type={'number'}
@@ -98,7 +99,7 @@ const FancyAttributesWithBar = ({
                         }}
                     />
                     <p className={'w-full max-w-[70%] break-words'}>
-                        {capitalizeFirstLetter(t(PrefixCollection.attributes(max)))}
+                        {capitalize(t(PrefixCollection.attributes(max)))}
                     </p>
                 </div>
             </div>
@@ -143,12 +144,12 @@ const DualAttributeEditor = ({
                         })}
                     />
                     <p className={'w-full max-w-[70%] break-words'}>
-                        {capitalizeFirstLetter(t(PrefixCollection.attributes(`${attributeKey}_attack`)))}
+                        {capitalize(t(PrefixCollection.attributes(`${attributeKey}_attack`)))}
                     </p>
                 </div>
                 <div className={'flex max-w-[50%] flex-row items-center gap-1'}>
                     <p className={'w-full max-w-[70%] break-words'}>
-                        {capitalizeFirstLetter(t(PrefixCollection.attributes(`${attributeKey}_defense`)))}
+                        {capitalize(t(PrefixCollection.attributes(`${attributeKey}_defense`)))}
                     </p>
                     <Input
                         type={'number'}
@@ -223,7 +224,7 @@ const AttributesEditor = () => {
                 return (
                     <div key={attribute} className={'flex items-center justify-between'} id={'changeable'}>
                         <p className={'w-full max-w-[70%] break-words'}>
-                            {capitalizeFirstLetter(t(PrefixCollection.attributes(attribute)))}
+                            {capitalize(t(PrefixCollection.attributes(attribute)))}
                         </p>
                         <Input
                             type={'number'}
