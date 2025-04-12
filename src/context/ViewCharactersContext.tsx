@@ -1,5 +1,5 @@
 import { CharacterDataEditable } from '@models/CombatEditorModels';
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 interface ViewCharactersContextType {
     viewedCharacter: CharacterDataEditable | null;
@@ -24,18 +24,17 @@ const ViewCharactersContextProvider = ({ children }: { children: ReactNode }) =>
         changeViewedCharacter(null, null);
     }, []);
 
-    return (
-        <ViewCharactersContext.Provider
-            value={{
-                viewedCharacter,
-                descriptor,
-                changeViewedCharacter,
-                clearViewedCharacter,
-            }}
-        >
-            {children}
-        </ViewCharactersContext.Provider>
+    const context = useMemo(
+        () => ({
+            viewedCharacter,
+            descriptor,
+            changeViewedCharacter,
+            clearViewedCharacter,
+        }),
+        [viewedCharacter, descriptor, changeViewedCharacter, clearViewedCharacter],
     );
+
+    return <ViewCharactersContext.Provider value={context}>{children}</ViewCharactersContext.Provider>;
 };
 
 const useViewCharactersContext = () => {
@@ -46,4 +45,4 @@ const useViewCharactersContext = () => {
     return context;
 };
 
-export { ViewCharactersContextProvider, useViewCharactersContext };
+export { useViewCharactersContext, ViewCharactersContextProvider };

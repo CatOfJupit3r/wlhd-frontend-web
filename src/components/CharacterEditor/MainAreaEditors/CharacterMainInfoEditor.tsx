@@ -3,19 +3,19 @@ import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEdit
 import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor';
 import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor';
 import { Button } from '@components/ui/button';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
-import React, { useCallback } from 'react';
+import { useCharacterEditor } from '@context/character-editor';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LuPencil } from 'react-icons/lu';
 
 const CharacterMainInfoEditor = () => {
-    const { flags, character } = useCharacterEditorContext();
+    const { flags, character } = useCharacterEditor();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
     const [editing, setEditing] = React.useState(false);
 
-    const EditCharacterButton = useCallback(
+    const EditCharacterButton = useMemo(
         () => (
             <Button
                 variant={'ghost'}
@@ -44,7 +44,7 @@ const CharacterMainInfoEditor = () => {
         />
     ) : editing ? (
         <div className={'relative flex flex-row gap-4'}>
-            <EditCharacterButton />
+            {EditCharacterButton}
             <CharacterSpriteEditor />
             <div className={'flex flex-col gap-2'}>
                 <CharacterNameEditor />
@@ -53,7 +53,7 @@ const CharacterMainInfoEditor = () => {
         </div>
     ) : (
         <div className={'relative'}>
-            <EditCharacterButton />
+            {EditCharacterButton}
             <CharacterBasicInfo
                 includeSquare={false}
                 character={{

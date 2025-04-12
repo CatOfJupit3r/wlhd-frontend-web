@@ -1,6 +1,10 @@
 import { SquareMultiSelect } from '@components/common/square-multi-select'; /*
 
+
+
 This component is built for /game-test route and allows for better control over game state for testing purposes.
+
+
 
  */
 import { Button } from '@components/ui/button';
@@ -8,7 +12,7 @@ import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
-import { RandomUtils } from '@utils';
+import { RandomizeUtils } from '@utils';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -111,11 +115,11 @@ const RandomizeTurnOrder = () => {
     const handleRandomizeButtonClick = () => {
         const newOrder = [...MOCK_TURN_ORDER_CHARACTERS];
         const shuffled = newOrder.sort(() => 0.5 - Math.random());
-        const howManyToPop = RandomUtils.randNumber(0, 2);
+        const howManyToPop = RandomizeUtils.randNumber(0, 2);
         for (let i = 0; i < howManyToPop; i++) {
             shuffled.pop();
         }
-        shuffled.splice(RandomUtils.randNumber(0, shuffled.length - 1), 0, null as any);
+        shuffled.splice(RandomizeUtils.randNumber(0, shuffled.length - 1), 0, null as any);
         dispatch(setTurnOrder(shuffled));
     };
 

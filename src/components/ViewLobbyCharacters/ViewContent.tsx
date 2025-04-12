@@ -12,26 +12,20 @@ import {
 } from '@components/ui/alert-dialog';
 import { Button, MutationButton } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import {
-    CharacterEditorContextType,
-    CharacterEditorProvider,
-    useBuildCharacterEditorProps,
-} from '@context/CharacterEditorProvider';
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
-import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { CharacterInfoFull } from '@models/GameModels';
 import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import GameConverters from '@services/GameConverters';
-import { cn } from '@utils';
-import { prepareCharacterToClassConversion } from '@utils/editorPrepareFunction';
+import { cn, EditorHelpers } from '@utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
-const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
+const ViewCharacterEditorSettings: CharacterEditorFlags = {
     exclude: {},
     attributes: {
         ignored: ['builtins:current_health', 'builtins:current_action_points', 'builtins:current_armor'],
@@ -40,66 +34,48 @@ const ViewCharacterEditorSettings: CharacterEditorContextType['flags'] = {
 
 const componentClass = 'flex w-full max-w-[52rem] max-[960px]:max-w-full flex-col gap-4 rounded border-2 p-4 h-full';
 
-const CharacterEditorMenu = () => {
+const SaveCharacterButton = () => {
     const { viewedCharacter: character, descriptor } = useViewCharactersContext();
+    const { character: editedCharacter } = useCharacterEditor();
     const { lobby } = useThisLobby();
-    const {
-        character: editedCharacter,
-        changeEditedCharacter,
-        resetCharacter,
-    } = useBuildCharacterEditorProps({ ...character } as CharacterDataEditable);
-    const { updateCharacter, isPending } = useUpdateCharacter();
     const { t } = useTranslation('local', {
         keyPrefix: 'character-viewer.edit-character',
     });
+    const { updateCharacter, isPending } = useUpdateCharacter();
 
-    useEffect(() => {
-        if (!character) {
-            return;
-        }
-        changeEditedCharacter({ ...character });
-    }, [character]);
+    return (
+        <MutationButton
+            className={'w-full'}
+            isPending={isPending}
+            mutate={() => {
+                if (!descriptor) {
+                    return;
+                }
+                const wasCharacterChanged: boolean = JSON.stringify(character) !== JSON.stringify(editedCharacter);
+                if (wasCharacterChanged) {
+                    // TODO: create omit function to only send changed fields
+                    updateCharacter({
+                        lobbyId: lobby.lobbyId,
+                        descriptor: descriptor as string,
+                        character: EditorHelpers.prepareCharacterToClassConversion(editedCharacter),
+                    });
+                }
+            }}
+        >
+            {t('save')}
+        </MutationButton>
+    );
+};
+const CharacterEditorMenu = () => {
+    const { viewedCharacter: character } = useViewCharactersContext();
 
     return (
         <div className={cn(componentClass, 'flex flex-col gap-2')}>
-            <div id={'editor-controls'} className={'flex w-full flex-row gap-1'}>
-                <Button
-                    variant={'destructive'}
-                    className={'w-full'}
-                    onClick={() => {
-                        resetCharacter();
-                    }}
-                >
-                    {t('reset')}
-                </Button>
-                <MutationButton
-                    className={'w-full'}
-                    isPending={isPending}
-                    mutate={() => {
-                        if (!descriptor) {
-                            return;
-                        }
-                        const wasCharacterChanged: boolean =
-                            JSON.stringify(character) !== JSON.stringify(editedCharacter);
-                        if (wasCharacterChanged) {
-                            // TODO: create omit function to only send changed fields
-                            updateCharacter({
-                                lobbyId: lobby.lobbyId,
-                                descriptor: descriptor as string,
-                                character: prepareCharacterToClassConversion(editedCharacter),
-                            });
-                        }
-                    }}
-                >
-                    {t('save')}
-                </MutationButton>
-            </div>
-            <Separator />
-            <CharacterEditorProvider
-                character={editedCharacter}
-                setEditedCharacter={changeEditedCharacter}
-                flags={ViewCharacterEditorSettings}
-            >
+            <CharacterEditorProvider character={character!} flags={ViewCharacterEditorSettings}>
+                <div id={'editor-controls'} className={'flex w-full flex-row gap-1'}>
+                    <SaveCharacterButton />
+                </div>
+                <Separator />
                 <CharacterEditor className={'w-full border-0'} />
             </CharacterEditorProvider>
         </div>

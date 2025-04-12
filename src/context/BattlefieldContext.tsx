@@ -1,6 +1,6 @@
 import { Battlefield } from '@models/GameModels';
 import { getCharacterSideWithSquare } from '@utils';
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 export const AOE_HIGHLIGHT_MODE = {
     RIGHT: 'RIGHT',
@@ -313,32 +313,45 @@ export const BattlefieldContextProvider = ({ children }: { children: ReactNode }
         setBonusTileTooltipGenerator(() => func);
     }, []);
 
-    return (
-        <BattlefieldContext.Provider
-            value={{
-                battlefield,
-                changeBattlefield,
+    const context = useMemo(
+        () => ({
+            battlefield,
+            changeBattlefield,
 
-                resetActiveSquares,
-                resetInteractableSquares,
-                resetClickedSquares,
+            resetActiveSquares,
+            resetInteractableSquares,
+            resetClickedSquares,
 
-                incrementClickedSquares,
-                setInteractableSquares,
-                setActiveSquares,
+            incrementClickedSquares,
+            setInteractableSquares,
+            setActiveSquares,
 
-                addAOEHighlight,
+            addAOEHighlight,
 
-                onClickTile,
-                changeOnClickTile,
+            onClickTile,
+            changeOnClickTile,
 
-                createBonusTileTooltip: generateLeftTileTooltip,
-                changeBonusTileTooltipGenerator: changeBonusTileTooltipGenerator,
-            }}
-        >
-            {children}
-        </BattlefieldContext.Provider>
+            createBonusTileTooltip: generateLeftTileTooltip,
+            changeBonusTileTooltipGenerator: changeBonusTileTooltipGenerator,
+        }),
+        [
+            battlefield,
+            changeBattlefield,
+            resetActiveSquares,
+            resetInteractableSquares,
+            resetClickedSquares,
+            incrementClickedSquares,
+            setInteractableSquares,
+            setActiveSquares,
+            addAOEHighlight,
+            onClickTile,
+            changeOnClickTile,
+            generateLeftTileTooltip,
+            changeBonusTileTooltipGenerator,
+        ],
     );
+
+    return <BattlefieldContext.Provider value={context}>{children}</BattlefieldContext.Provider>;
 };
 
 export const useBattlefieldContext = () => {

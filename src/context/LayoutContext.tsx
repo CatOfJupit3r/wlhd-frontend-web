@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface iRouteConfig {
     includeHeader: boolean;
@@ -23,17 +23,16 @@ export const LayoutContextProvider = ({ children }: { children: ReactNode }) => 
         setFooter((prev) => (config ? config?.includeFooter : null) ?? prev);
     }, []);
 
-    return (
-        <LayoutContext.Provider
-            value={{
-                header,
-                footer,
-                changeConfig,
-            }}
-        >
-            {children}
-        </LayoutContext.Provider>
+    const context = useMemo(
+        () => ({
+            header,
+            footer,
+            changeConfig,
+        }),
+        [header, footer, changeConfig],
     );
+
+    return <LayoutContext.Provider value={context}>{children}</LayoutContext.Provider>;
 };
 
 export const useLayoutContext = () => {
