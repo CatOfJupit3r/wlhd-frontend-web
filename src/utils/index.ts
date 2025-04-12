@@ -5,6 +5,6 @@ export {
     CONTROLLED_BY_PLAYER,
     default as EditorHelpers,
 } from './editor-helpers';
-export { getPercentage } from './get-percentage';
+export { getPercentage } from './number-utils';
 export { default as RandomizeUtils } from './randomize-utils';
 export { apprf, cn } from './tailwind-helpers';

@@ -2,7 +2,7 @@ import { ActionPointsIcon, ArmorIcon, HealthIcon } from '@components/icons';
 import { Progress } from '@components/ui/progress';
 import { CharacterInfoFull } from '@models/GameModels';
 import { cn } from '@utils';
-import { getPercentage } from '@utils/get-percentage';
+import { getPercentage } from '@utils/number-utils';
 import { useMemo } from 'react';
 
 const BasicCharacterAttributes = ({
