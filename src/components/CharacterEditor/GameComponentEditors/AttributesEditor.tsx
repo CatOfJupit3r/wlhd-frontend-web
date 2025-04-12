@@ -1,6 +1,6 @@
 import { NumberInput } from '@components/ui/input';
 import { Progress } from '@components/ui/progress';
-import { useCharacterEditor } from '@context/character-editor';
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import { getPercentage } from '@utils';
 import {
     extractCurrentMaxBaseAttributes,
@@ -129,7 +129,8 @@ const DualAttributeEditor = ({
 };
 
 const AttributesEditor = () => {
-    const { character, flags, changeCharacterAttribute } = useCharacterEditor();
+    const { character, flags } = useCharacterEditor();
+    const { changeCharacterAttribute } = useCharacterEditorUpdateActions();
     const { attributes: attributesFlags } = flags;
     const { t } = useTranslation();
     const [handledByOther, setHandledByOther] = useState<Array<string>>([]);

@@ -1,12 +1,14 @@
 import { common } from '@components/editors/game-component-editors';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { useCharacterEditor } from '@context/character-editor';
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import { GameComponentMemory } from '@models/GameModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const CharacterMiscEditor = () => {
-    const { character, changeCharacterMemories, changeCharacterTags } = useCharacterEditor();
+    const { memories, character } = useCharacterEditor();
+    const { changeCharacterTags, changeCharacterMemories } = useCharacterEditorUpdateActions();
+
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
@@ -23,7 +25,7 @@ const CharacterMiscEditor = () => {
                 changeCharacterMemories(value as GameComponentMemory);
             }
         },
-        [character, changeCharacterTags, changeCharacterMemories],
+        [changeCharacterTags, changeCharacterMemories],
     );
 
     return (
@@ -31,7 +33,7 @@ const CharacterMiscEditor = () => {
             <div className={'flex w-full flex-col justify-center gap-1 p-4'}>
                 <p className={'text-center text-xl'}>{t('memories.title')}</p>
                 <common.CreateNewMemoryWithAccordion component={character} changeComponentField={editMemoryCallback} />
-                {character.memory && Object.keys(character.memory).length === 0 ? (
+                {memories && Object.keys(memories).length === 0 ? (
                     <EmptyMenuContent />
                 ) : (
                     <common.MemoriesEditor component={character} changeComponentField={editMemoryCallback} />

@@ -8,7 +8,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { useCharacterEditor } from '@context/character-editor';
+import {
+    useCharacterEditorAddActions,
+    useCharacterEditorInventory,
+    useCharacterEditorRemoveActions,
+    useCharacterEditorSpellBook,
+    useCharacterEditorStatusEffects,
+    useCharacterEditorWeaponry,
+} from '@context/character-editor';
 import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +26,7 @@ const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER
         keyPrefix: 'editor',
     });
     const { removeFromInventory, removeFromWeaponry, removeFromSpellBook, removeFromStatusEffect } =
-        useCharacterEditor();
+        useCharacterEditorRemoveActions();
 
     const removeComponent = useCallback(
         (index: number) => {
@@ -55,14 +62,11 @@ const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER
 };
 
 const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
-    const {
-        character,
-        updateItemInInventory,
-        updateSpellInSpellBook,
-        updateWeaponInWeaponry,
-        updateStatusEffectInStatusEffects,
-        updateSpellBookMaxActiveSpells,
-    } = useCharacterEditor();
+    const { inventory, updateItemInInventory } = useCharacterEditorInventory();
+    const { spellBook, updateSpellInSpellBook, updateSpellBookMaxActiveSpells } = useCharacterEditorSpellBook();
+    const { weaponry, updateWeaponInWeaponry } = useCharacterEditorWeaponry();
+    const { statusEffects, updateStatusEffectInStatusEffects } = useCharacterEditorStatusEffects();
+
     const { type } = props;
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
@@ -98,12 +102,12 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
 
     switch (type) {
         case 'item':
-            if (character.inventory.length === 0) {
+            if (inventory.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.inventory.map((item, index) => {
+                        {inventory.map((item, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'item'} />
@@ -118,12 +122,12 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                 );
             }
         case 'weapon':
-            if (character.weaponry.length === 0) {
+            if (weaponry.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.weaponry.map((weapon, index) => {
+                        {weaponry.map((weapon, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'weapon'} />
@@ -131,9 +135,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         component={weapon as WeaponEditable}
                                         setComponent={updateComponent(index)}
                                         canBeActivated={() => {
-                                            return (
-                                                character.weaponry.filter((weapon) => weapon.isActive).length + 1 < 2
-                                            );
+                                            return weaponry.filter((weapon) => weapon.isActive).length + 1 < 2;
                                         }}
                                     />
                                 </div>
@@ -154,7 +156,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                         <Input
                             type={'string'}
                             placeholder={t('general.infinity')}
-                            value={character.spellBook.maxActiveSpells || ''}
+                            value={spellBook.maxActiveSpells || ''}
                             onChange={(e) => {
                                 if (e.target.value === '') {
                                     updateSpellBookMaxActiveSpells(null);
@@ -170,10 +172,10 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                             }}
                         />
                     </div>
-                    {character.spellBook.knownSpells.length === 0 ? (
+                    {spellBook.knownSpells.length === 0 ? (
                         <EmptyMenuContent />
                     ) : (
-                        character.spellBook.knownSpells.map((spell, index) => {
+                        spellBook.knownSpells.map((spell, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'spell'} />
@@ -181,11 +183,9 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         component={spell as SpellEditable}
                                         setComponent={updateComponent(index)}
                                         canBeActivated={() => {
-                                            return character.spellBook.maxActiveSpells
-                                                ? character.spellBook.knownSpells.filter((spell) => spell.isActive)
-                                                      .length +
-                                                      1 <
-                                                      character.spellBook.maxActiveSpells
+                                            return spellBook.maxActiveSpells
+                                                ? spellBook.knownSpells.filter((spell) => spell.isActive).length + 1 <
+                                                      spellBook.maxActiveSpells
                                                 : true;
                                         }}
                                     />
@@ -196,12 +196,12 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                 </div>
             );
         case 'statusEffect':
-            if (character.statusEffects.length === 0) {
+            if (statusEffects.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.statusEffects.map((effect, index) => {
+                        {statusEffects.map((effect, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'statusEffect'} />
@@ -224,7 +224,7 @@ const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
     // maybe extract this to general editor folder too
     // but for now, it's only needed in character editor, so it's fine
     const { addItemToInventory, addSpellToSpellBook, addWeaponToWeaponry, addStatusEffectToContainers } =
-        useCharacterEditor();
+        useCharacterEditorAddActions();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });

@@ -1,12 +1,13 @@
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
 import { Label } from '@components/ui/label';
-import { useCharacterEditor } from '@context/character-editor';
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import React, { useCallback, useEffect, useRef } from 'react';
 
 const MAX_DESCRIPTION_LENGTH = 256;
 
 const CharacterDescriptionEditor = () => {
-    const { character, updateCharacterDecorations } = useCharacterEditor();
+    const { character } = useCharacterEditor();
+    const { updateCharacterDecorations } = useCharacterEditorUpdateActions();
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 

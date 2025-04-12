@@ -1,6 +1,7 @@
 import { CharacterDataEditable, SpellEditable } from '@models/CombatEditorModels';
 import { atom, Provider, useAtom } from 'jotai';
 import { atomWithImmer } from 'jotai-immer';
+import { selectAtom } from 'jotai/utils';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 export interface CharacterEditorFlags {
@@ -46,6 +47,41 @@ type ComponentByContainer<T extends CharacterComponentContainers> = T extends 'i
  */
 function createCharacterAtoms(character: CharacterDataEditable) {
     const characterAtom = atomWithImmer(character);
+    const attributesAtom = selectAtom(
+        characterAtom,
+        (state) => state.attributes,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const inventoryAtom = selectAtom(
+        characterAtom,
+        (state) => state.inventory,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const weaponryAtom = selectAtom(
+        characterAtom,
+        (state) => state.weaponry,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const spellBookAtom = selectAtom(
+        characterAtom,
+        (state) => state.spellBook,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const statusEffectsAtom = selectAtom(
+        characterAtom,
+        (state) => state.statusEffects,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const memoriesAtom = selectAtom(
+        characterAtom,
+        (state) => state.memory,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
+    const tagsAtom = selectAtom(
+        characterAtom,
+        (state) => state.tags,
+        (a, b) => JSON.stringify(a) === JSON.stringify(b),
+    );
 
     const updateCharacterAtom = atom(null, (_, set, modifier: Partial<CharacterDataEditable>) => {
         set(characterAtom, (prevCharacter) => ({
@@ -186,6 +222,14 @@ function createCharacterAtoms(character: CharacterDataEditable) {
 
     return {
         characterAtom,
+        attributesAtom,
+        inventoryAtom,
+        weaponryAtom,
+        spellBookAtom,
+        statusEffectsAtom,
+        memoriesAtom,
+        tagsAtom,
+
         updateCharacterAtom,
         updateCharacterDecorationsAtom,
         changeCharacterAttributeAtom,
@@ -253,87 +297,208 @@ export function useCharacterEditorContext() {
     return atoms;
 }
 
+// Little note about following hooks:
+// Q: Why are there so many commented out returns from these hooks?
+// A: Because of current code structure, these functions are not necessarily used from these hooks.
+//    useCharacterEditorInventory, despite returning `removeItemFromInventory` and `addItemToInventory`,
+//    is not used, as they are imported with other similar functions.
+//    still, I kept them commented out in case I decide to use them in the future from these hooks.
+
 /**
  * Hook that has all character atoms with pre-applied `useAtom` hook
  */
 export function useCharacterEditor() {
     const {
         characterAtom,
-        updateCharacterAtom,
-        updateCharacterDecorationsAtom,
-        changeCharacterAttributeAtom,
-        changeCharacterMemoriesAtom,
-        changeCharacterTagsAtom,
-
-        removeFromInventoryAtom,
-        removeFromWeaponryAtom,
-        removeFromSpellBookAtom,
-        removeFromStatusEffectAtom,
-
-        updateItemInInventoryAtom,
-        updateWeaponInWeaponryAtom,
-        updateSpellInSpellBookAtom,
-        updateStatusEffectInStatusEffectsAtom,
-
-        addItemToInventoryAtom,
-        addWeaponToWeaponryAtom,
-        addSpellToSpellBookAtom,
-        addStatusEffectToStatusEffectsAtom,
-
-        updateSpellBookMaxActiveSpellsAtom,
-
-        ...rest
+        attributesAtom,
+        inventoryAtom,
+        weaponryAtom,
+        spellBookAtom,
+        statusEffectsAtom,
+        flags,
+        memoriesAtom,
+        tagsAtom,
     } = useCharacterEditorContext();
 
     const [character] = useAtom(characterAtom);
-    const [, updateCharacter] = useAtom(updateCharacterAtom);
-    const [, updateCharacterDecorations] = useAtom(updateCharacterDecorationsAtom);
-    const [, changeCharacterAttribute] = useAtom(changeCharacterAttributeAtom);
-    const [, changeCharacterMemories] = useAtom(changeCharacterMemoriesAtom);
-    const [, changeCharacterTags] = useAtom(changeCharacterTagsAtom);
+    const [attributes] = useAtom(attributesAtom);
+    const [inventory] = useAtom(inventoryAtom);
+    const [weaponry] = useAtom(weaponryAtom);
+    const [spellBook] = useAtom(spellBookAtom);
+    const [statusEffects] = useAtom(statusEffectsAtom);
+    const [memories] = useAtom(memoriesAtom);
+    const [tags] = useAtom(tagsAtom);
+
+    return {
+        character,
+        attributes,
+        inventory,
+        weaponry,
+        spellBook,
+        statusEffects,
+        flags,
+        memories,
+        tags,
+    };
+}
+
+export function useCharacterEditorRemoveActions() {
+    const { removeFromInventoryAtom, removeFromWeaponryAtom, removeFromSpellBookAtom, removeFromStatusEffectAtom } =
+        useCharacterEditorContext();
 
     const [, removeFromInventory] = useAtom(removeFromInventoryAtom);
     const [, removeFromWeaponry] = useAtom(removeFromWeaponryAtom);
     const [, removeFromSpellBook] = useAtom(removeFromSpellBookAtom);
     const [, removeFromStatusEffect] = useAtom(removeFromStatusEffectAtom);
 
-    const [, updateItemInInventory] = useAtom(updateItemInInventoryAtom);
-    const [, updateWeaponInWeaponry] = useAtom(updateWeaponInWeaponryAtom);
-    const [, updateSpellInSpellBook] = useAtom(updateSpellInSpellBookAtom);
-    const [, updateStatusEffectInStatusEffects] = useAtom(updateStatusEffectInStatusEffectsAtom);
+    return {
+        removeFromInventory,
+        removeFromWeaponry,
+        removeFromSpellBook,
+        removeFromStatusEffect,
+    };
+}
+
+export function useCharacterEditorUpdateActions() {
+    const {
+        // updateItemInInventoryAtom,
+        // updateWeaponInWeaponryAtom,
+        // updateSpellInSpellBookAtom,
+        // updateStatusEffectInStatusEffectsAtom,
+        // updateSpellBookMaxActiveSpellsAtom,
+        changeCharacterAttributeAtom,
+        changeCharacterMemoriesAtom,
+        changeCharacterTagsAtom,
+        updateCharacterDecorationsAtom,
+    } = useCharacterEditorContext();
+
+    // const [, updateItemInInventory] = useAtom(updateItemInInventoryAtom);
+    // const [, updateWeaponInWeaponry] = useAtom(updateWeaponInWeaponryAtom);
+    // const [, updateSpellInSpellBook] = useAtom(updateSpellInSpellBookAtom);
+    // const [, updateStatusEffectInStatusEffects] = useAtom(updateStatusEffectInStatusEffectsAtom);
+    // const [, updateSpellBookMaxActiveSpells] = useAtom(updateSpellBookMaxActiveSpellsAtom);
+    const [, changeCharacterAttribute] = useAtom(changeCharacterAttributeAtom);
+    const [, changeCharacterMemories] = useAtom(changeCharacterMemoriesAtom);
+    const [, changeCharacterTags] = useAtom(changeCharacterTagsAtom);
+    const [, updateCharacterDecorations] = useAtom(updateCharacterDecorationsAtom);
+
+    return {
+        // updateItemInInventory,
+        // updateWeaponInWeaponry,
+        // updateSpellInSpellBook,
+        // updateStatusEffectInStatusEffects,
+        // updateSpellBookMaxActiveSpells,
+        changeCharacterAttribute,
+        changeCharacterMemories,
+        changeCharacterTags,
+        updateCharacterDecorations,
+    };
+}
+
+export function useCharacterEditorAddActions() {
+    const {
+        addItemToInventoryAtom,
+        addWeaponToWeaponryAtom,
+        addSpellToSpellBookAtom,
+        addStatusEffectToStatusEffectsAtom,
+    } = useCharacterEditorContext();
 
     const [, addItemToInventory] = useAtom(addItemToInventoryAtom);
     const [, addWeaponToWeaponry] = useAtom(addWeaponToWeaponryAtom);
     const [, addSpellToSpellBook] = useAtom(addSpellToSpellBookAtom);
     const [, addStatusEffectToContainers] = useAtom(addStatusEffectToStatusEffectsAtom);
 
-    const [, updateSpellBookMaxActiveSpells] = useAtom(updateSpellBookMaxActiveSpellsAtom);
-
     return {
-        character,
-        updateCharacter,
-        updateCharacterDecorations,
-        changeCharacterAttribute,
-        changeCharacterMemories,
-        changeCharacterTags,
-
-        removeFromInventory,
-        removeFromWeaponry,
-        removeFromSpellBook,
-        removeFromStatusEffect,
-
-        updateItemInInventory,
-        updateWeaponInWeaponry,
-        updateSpellInSpellBook,
-        updateStatusEffectInStatusEffects,
-
         addItemToInventory,
         addWeaponToWeaponry,
         addSpellToSpellBook,
         addStatusEffectToContainers,
+    };
+}
 
+export function useCharacterEditorInventory() {
+    const {
+        inventoryAtom,
+        updateItemInInventoryAtom,
+        // removeFromInventoryAtom,
+        // addItemToInventoryAtom
+    } = useCharacterEditorContext();
+
+    const [inventory] = useAtom(inventoryAtom);
+    const [, updateItemInInventory] = useAtom(updateItemInInventoryAtom);
+    // const [, removeFromInventory] = useAtom(removeFromInventoryAtom);
+    // const [, addItemToInventory] = useAtom(addItemToInventoryAtom);
+
+    return {
+        inventory,
+        updateItemInInventory,
+        // removeFromInventory,
+        // addItemToInventory,
+    };
+}
+
+export function useCharacterEditorWeaponry() {
+    const {
+        weaponryAtom,
+        updateWeaponInWeaponryAtom,
+        // removeFromWeaponryAtom,
+        // addWeaponToWeaponryAtom
+    } = useCharacterEditorContext();
+
+    const [weaponry] = useAtom(weaponryAtom);
+    const [, updateWeaponInWeaponry] = useAtom(updateWeaponInWeaponryAtom);
+    // const [, removeFromWeaponry] = useAtom(removeFromWeaponryAtom);
+    // const [, addWeaponToWeaponry] = useAtom(addWeaponToWeaponryAtom);
+
+    return {
+        weaponry,
+        updateWeaponInWeaponry,
+        // removeFromWeaponry,
+        // addWeaponToWeaponry,
+    };
+}
+
+export function useCharacterEditorSpellBook() {
+    const {
+        spellBookAtom,
+        updateSpellInSpellBookAtom,
+        updateSpellBookMaxActiveSpellsAtom,
+        // removeFromSpellBookAtom,
+        // addSpellToSpellBookAtom,
+    } = useCharacterEditorContext();
+
+    const [spellBook] = useAtom(spellBookAtom);
+    const [, updateSpellInSpellBook] = useAtom(updateSpellInSpellBookAtom);
+    const [, updateSpellBookMaxActiveSpells] = useAtom(updateSpellBookMaxActiveSpellsAtom);
+    // const [, removeFromSpellBook] = useAtom(removeFromSpellBookAtom);
+    // const [, addSpellToSpellBook] = useAtom(addSpellToSpellBookAtom);
+
+    return {
+        spellBook,
+        updateSpellInSpellBook,
         updateSpellBookMaxActiveSpells,
+        // removeFromSpellBook,
+        // addSpellToSpellBook,
+    };
+}
 
-        ...rest,
+export function useCharacterEditorStatusEffects() {
+    const {
+        statusEffectsAtom,
+        updateStatusEffectInStatusEffectsAtom,
+        // removeFromStatusEffectAtom,
+        // addStatusEffectToStatusEffectsAtom,
+    } = useCharacterEditorContext();
+
+    const [statusEffects] = useAtom(statusEffectsAtom);
+    const [, updateStatusEffectInStatusEffects] = useAtom(updateStatusEffectInStatusEffectsAtom);
+    // const [, removeFromStatusEffect] = useAtom(removeFromStatusEffectAtom);
+    // const [, addStatusEffectToContainers] = useAtom(addStatusEffectToStatusEffectsAtom);
+
+    return {
+        statusEffects,
+        updateStatusEffectInStatusEffects,
+        // removeFromStatusEffect,
+        // addStatusEffectToContainers,
     };
 }

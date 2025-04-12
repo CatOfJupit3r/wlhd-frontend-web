@@ -1,13 +1,14 @@
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import { useCharacterEditor } from '@context/character-editor';
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import React, { useCallback } from 'react';
 
 const MAX_NAME_LENGTH = 64;
 
 const CharacterNameEditor = () => {
-    const { character, updateCharacterDecorations } = useCharacterEditor();
+    const { character } = useCharacterEditor();
+    const { updateCharacterDecorations } = useCharacterEditorUpdateActions();
 
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
