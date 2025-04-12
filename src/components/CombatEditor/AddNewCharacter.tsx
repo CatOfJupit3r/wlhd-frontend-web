@@ -22,12 +22,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCombatEditorContext } from '@context/CombatEditorContext';
 import { ControlledBy } from '@models/EditorConversion';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import { useGameCharacterInformation } from '@queries/useGameData';
 import { useLoadedCharacters } from '@queries/useLoadedGameData';
 import useThisLobby from '@queries/useThisLobby';
+import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER } from '@utils';
 import { SUPPORTED_DLCs } from 'config';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -134,7 +135,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                             );
                             const controlled: ControlledBy = player
                                 ? CONTROLLED_BY_PLAYER(player.userId)
-                                : CONTROLLED_BY_GAME_LOGIC;
+                                : CONTROLLED_BY_GAME_LOGIC();
 
                             if (characterFromCoordinator) {
                                 console.log('Adding character from coordinator', characterFromCoordinator);

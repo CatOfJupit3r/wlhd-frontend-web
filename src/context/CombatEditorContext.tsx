@@ -5,12 +5,8 @@ import {
 } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import { GameStateContainer } from '@models/GameModels';
-import { RandomUtils } from '@utils';
+import { CONTROLLED_BY_GAME_LOGIC, RandomUtils } from '@utils';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
-
-export const CONTROLLED_BY_PLAYER = (id: string): { type: 'player'; id: string } => ({ type: 'player', id });
-export const CONTROLLED_BY_AI = (id: string): { type: 'ai'; id: string } => ({ type: 'ai', id });
-export const CONTROLLED_BY_GAME_LOGIC = { type: 'game_logic' };
 
 export type CombatEditorSaveType = {
     battlefield: CombatEditorContextType['battlefield'];
@@ -108,7 +104,7 @@ const CombatEditorContextProvider = ({ children }: { children: ReactNode }) => {
                         },
                         descriptor,
                         id_: RandomUtils.uuid(),
-                        controlInfo: control ?? CONTROLLED_BY_GAME_LOGIC,
+                        controlInfo: control ?? CONTROLLED_BY_GAME_LOGIC(),
                         square: { line, column },
                     },
                 };

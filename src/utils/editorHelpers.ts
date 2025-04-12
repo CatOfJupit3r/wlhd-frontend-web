@@ -1,22 +1,32 @@
-import { CombatEditorSaveType, CONTROLLED_BY_GAME_LOGIC } from '@context/CombatEditorContext';
-import { ControlledBy, CreateCombatBody } from '@models/EditorConversion';
+import { CombatEditorSaveType } from '@context/CombatEditorContext';
+import {
+    ControlledBy,
+    ControlledByAI,
+    ControlledByGameLogic,
+    ControlledByPlayer,
+    CreateCombatBody,
+} from '@models/EditorConversion';
 import { isValidSquareString } from '@utils/isValidSquareString';
+
+export const CONTROLLED_BY_PLAYER = (id: string): ControlledByPlayer => ({ type: 'player', id });
+export const CONTROLLED_BY_AI = (id: string): ControlledByAI => ({ type: 'ai', id });
+export const CONTROLLED_BY_GAME_LOGIC = (): ControlledByGameLogic => ({ type: 'game_logic' });
 
 class EditorHelpers {
     private processControl(control: unknown): ControlledBy {
         if (typeof control !== 'object' || control === null) {
-            return CONTROLLED_BY_GAME_LOGIC;
+            return CONTROLLED_BY_GAME_LOGIC();
         }
         if ('type' in control && 'id' in control) {
             if (control.type === 'player' || control.type === 'ai') {
                 if (typeof control.id !== 'string' && control.id !== null) {
-                    return CONTROLLED_BY_GAME_LOGIC;
+                    return CONTROLLED_BY_GAME_LOGIC();
                 }
                 return control as ControlledBy;
             }
-            return CONTROLLED_BY_GAME_LOGIC;
+            return CONTROLLED_BY_GAME_LOGIC();
         }
-        return CONTROLLED_BY_GAME_LOGIC;
+        return CONTROLLED_BY_GAME_LOGIC();
     }
 
     private convertTurnOrderToExportable(editorSave: CombatEditorSaveType): CreateCombatBody['preset']['turnOrder'] {
