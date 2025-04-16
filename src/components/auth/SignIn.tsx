@@ -1,3 +1,4 @@
+import { DiscordSocialButton } from '@components/auth/socials-logins';
 import { Button } from '@components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@components/ui/form';
 import { Input } from '@components/ui/input';
@@ -100,8 +101,14 @@ const SignIn = ({ className = '' }: { className?: string }) => {
                     </Button>
                 </form>
             </Form>
+            <p>or</p>
+            <div className={'flex w-full flex-col gap-2'}>
+                <DiscordSocialButton thenCase={() => navigate({ to: '/profile' })} className={'w-full'}>
+                    Login with Discord
+                </DiscordSocialButton>
+            </div>
             <div>
-                <p>
+                <p className={'text-sm'}>
                     {t('sign-in.footer')}{' '}
                     <StyledLink
                         to={`/sign-up`}

@@ -115,9 +115,7 @@ const TurnOrderDisplay: FC<{ className?: string }> = ({ className }) => {
         const found = new Map<string, number>();
 
         const newInnerTurnOrder = [...secondHalf, ...firstHalf].map(({ character, ...rest }) => {
-            // tsc --noEmit
             const howManyFound = found.get(character?.descriptor ?? '') ?? 0;
-            // tsc --noEmit
             found.set(character?.descriptor ?? '', howManyFound + 1);
             return {
                 ...rest,

@@ -71,11 +71,11 @@ const ENDPOINTS = {
         `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
     CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
         `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
-    GET_USER_AVATAR: (username: string) => `${VITE_BACKEND_URL}/user/${username}/avatar`,
+    GET_USER_AVATAR: (userId: string) => `${VITE_BACKEND_URL}/user/${userId}/avatar`,
 
-    APPROVE_LOBBY_PLAYER: (lobbyId: string, username: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}/approve`,
-    REMOVE_LOBBY_PLAYER: (lobbyId: string, username: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}`,
+    APPROVE_LOBBY_PLAYER: (lobbyId: string, userId: string) =>
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}`,
     DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
     GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
     CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
@@ -241,17 +241,17 @@ class APIService {
         });
     };
 
-    public getUserAvatarEndpoint = (username: string) => {
-        return ENDPOINTS.GET_USER_AVATAR(username);
+    public getUserAvatarEndpoint = (userId: string) => {
+        return ENDPOINTS.GET_USER_AVATAR(userId);
     };
 
-    public async approveLobbyPlayer(lobbyId: string, username: string) {
+    public async approveLobbyPlayer(lobbyId: string, userId: string) {
         return this.fetch<{
             players: Array<iLobbyPlayerInfo>;
             waitingApproval: Array<iWaitingApprovalPlayer>;
             message: string;
         }>({
-            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, username),
+            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, userId),
             method: 'patch',
         });
     }
@@ -299,9 +299,9 @@ class APIService {
         }));
     }
 
-    public async removeLobbyMember(lobbyId: string, username: string) {
+    public async removeLobbyMember(lobbyId: string, userId: string) {
         return this.fetch<{ players: Array<iLobbyPlayerInfo>; waitingApproval: Array<iWaitingApprovalPlayer> }>({
-            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, username),
+            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, userId),
             method: 'delete',
         });
     }

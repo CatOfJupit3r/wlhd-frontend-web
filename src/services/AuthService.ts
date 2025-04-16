@@ -16,11 +16,7 @@ class AuthService {
 
     public static setup(client?: AuthInstanceType) {
         if (!client) {
-            AuthService.instance = createAuthClient({
-                baseURL: VITE_BACKEND_URL,
-                basePath: '/auth',
-                plugins: [usernameClient()],
-            });
+            AuthService.instance = DEFAULT_INSTANCE();
         } else {
             AuthService.instance = client;
         }
@@ -32,10 +28,12 @@ class AuthService {
         }
         return AuthService.instance as NonNullable<typeof AuthService.instance>;
     }
+
+    public static getSession() {
+        return AuthService.getInstance().getSession({ fetchOptions: { throw: true } });
+    }
 }
 
-export type InternalAuthSession = Awaited<ReturnType<ReturnType<typeof AuthService.getInstance>['getSession']>>;
-export type AuthSessionUser = InternalAuthSession['user'];
-export type AuthSession = InternalAuthSession['session'];
+export type InternalAuthSession = AuthInstanceType['$Infer']['Session'];
 
 export default AuthService;

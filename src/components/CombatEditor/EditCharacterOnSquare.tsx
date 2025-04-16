@@ -121,12 +121,10 @@ const EditCharacterControls = ({
                                                 <SelectItem key={player.userId} value={player.userId}>
                                                     <div className={'flex flex-row items-center'}>
                                                         <UserAvatar
-                                                            username={player.username}
+                                                            userId={player.userId}
                                                             className={'mr-2 size-8 shadow-none'}
                                                         />
-                                                        <p>
-                                                            {player.nickname} (@{player.username})
-                                                        </p>
+                                                        <p>{player.nickname}</p>
                                                     </div>
                                                 </SelectItem>
                                             ))}

@@ -39,7 +39,7 @@ const ProfileInformation = () => {
                     <div className="relative flex items-center space-x-4">
                         <CurrentUserAvatar className={'size-32'} />
                         <div className="rounded-lg bg-white px-2 py-1 shadow-lg">
-                            <CardTitle className="text-3.5xl font-bold">@{user.username}</CardTitle>
+                            <CardTitle className="text-3.5xl font-bold">{user.name}</CardTitle>
                         </div>
                     </div>
                 </CardHeader>
