@@ -32,7 +32,8 @@ const ActiveCombatsList: FC<iActiveCombatsList> = ({ className, combats, layout,
                         <ButtonLink
                             variant={'outline'}
                             className={'h-8 text-sm text-primary'}
-                            href={`/lobby-rooms/${lobbyId}/create-combat`}
+                            to={`/lobby-rooms/$lobbyId/create-combat`}
+                            params={{ lobbyId }}
                         >
                             <LiaPlusCircleSolid className={'mr-2 inline-block'} />
                             {t('new-combat')}

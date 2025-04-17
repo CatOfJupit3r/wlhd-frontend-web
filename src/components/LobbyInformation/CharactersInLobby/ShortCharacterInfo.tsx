@@ -27,7 +27,14 @@ const ShortCharacterInfo: FC<iShortCharacterInfo> = ({
                     <GameAsset className={'size-12'} src={sprite} alt={descriptor} />
                     <p className={'text-md'}>{name}</p>
                 </div>
-                <ButtonLink href={`/lobby-rooms/${lobbyId}/view-character?character=${descriptor}`} variant={'outline'}>
+                <ButtonLink
+                    to={`/lobby-rooms/$lobbyId/view-character`}
+                    variant={'outline'}
+                    params={{ lobbyId }}
+                    search={{
+                        character: descriptor,
+                    }}
+                >
                     {t('view-specific')}
                 </ButtonLink>
             </div>

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { PulsingSpinner } from '@components/Spinner';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { Link } from '@tanstack/react-router';
+import { Link, LinkProps } from '@tanstack/react-router';
 import { cn } from '@utils';
 import { ClassValue } from 'clsx';
 import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react';
@@ -177,13 +177,16 @@ const AwaitingButtonWithTooltip = ({
     );
 };
 
-const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }) => {
+type ButtonLinkProps = Omit<ButtonProps, 'onClick'> & Pick<LinkProps, 'to' | 'search' | 'params'>;
+
+const ButtonLink: React.FC<ButtonLinkProps> = ({ to, search, params, ...props }) => {
     return (
         <Button
             asChild
             className={cn(buttonVariants({ variant: props.variant, size: props.size, className: props.className }))}
+            {...props}
         >
-            <Link to={href} className={'transition-auto hover:text-auto'}>
+            <Link to={to} className={'transition-auto hover:text-auto'} search={search} params={params}>
                 {props.children}
             </Link>
         </Button>
