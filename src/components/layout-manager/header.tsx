@@ -133,7 +133,7 @@ const Header = () => {
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                    <DropdownMenuLabel>@{user?.username}</DropdownMenuLabel>
+                    <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {sections.map((section, index) => (
                         <div key={index}>
@@ -151,7 +151,7 @@ const Header = () => {
                 </DropdownMenuContent>
             </DropdownMenu>
         );
-    }, [lobbyId, user?.username]);
+    }, [lobbyId, user?.name]);
 
     const Navigation = useCallback(() => {
         return (

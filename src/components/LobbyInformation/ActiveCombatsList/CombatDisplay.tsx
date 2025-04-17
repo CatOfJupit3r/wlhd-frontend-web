@@ -50,11 +50,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
                             <CommaSeparatedList
                                 items={activePlayers}
                                 emptyMessage={t('no-players')}
-                                renderItem={(item) => (
-                                    <p>
-                                        {item.nickname} (@{item.username})
-                                    </p>
-                                )}
+                                renderItem={(item) => <p>{item.nickname}</p>}
                                 className={cn(
                                     'flex flex-row',
                                     activePlayers?.length === 0 ? 'text-gray-500' : 'text-black',

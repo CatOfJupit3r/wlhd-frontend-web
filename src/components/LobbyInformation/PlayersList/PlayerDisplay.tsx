@@ -37,7 +37,7 @@ interface iPlayerDisplay {
 }
 
 const PlayerDisplay: FC<iPlayerDisplay> = ({
-    player: { username, nickname, characters },
+    player: { userId, nickname, characters },
     layout,
     lobbyId,
     isApproved,
@@ -49,10 +49,10 @@ const PlayerDisplay: FC<iPlayerDisplay> = ({
 
     return (
         <div className="mb-4 flex w-full space-x-2">
-            <UserAvatar username={username} className={'size-10 border-2 shadow-none'} />
+            <UserAvatar userId={userId} className={'size-10 border-2 shadow-none'} />
             <div className={'w-full max-w-[90%]'}>
                 <span className="flex flex-row gap-1 font-medium">
-                    {nickname} (@{username})
+                    {nickname}
                     <span className={'m-1 flex text-sm text-muted-foreground'}>
                         {isApproved ? (
                             <FaCheckDouble className={'inline-block'} />
@@ -78,8 +78,8 @@ const PlayerDisplay: FC<iPlayerDisplay> = ({
                         <MutationButton
                             className={'h-8 text-sm'}
                             mutate={() => {
-                                if (user?.username === username || !lobbyId) return;
-                                return approveUser({ lobbyId, username });
+                                if (user?.id === userId || !lobbyId) return;
+                                return approveUser({ lobbyId, userId });
                             }}
                             isPending={isApprovalPending}
                         >
@@ -88,12 +88,12 @@ const PlayerDisplay: FC<iPlayerDisplay> = ({
                     ) : null}
                     <MutationButton
                         mutate={() => {
-                            if (user?.username === username || !lobbyId) return;
-                            return removeLobbyMember({ lobbyId, username: username });
+                            if (user?.id === userId || !lobbyId) return;
+                            return removeLobbyMember({ lobbyId, userId });
                         }}
                         className={'h-8 text-sm'}
                         variant={'destructiveGhost'}
-                        disabled={user?.username === username}
+                        disabled={user?.id === userId}
                         isPending={isDeletionPending}
                     >
                         {isApproved ? (

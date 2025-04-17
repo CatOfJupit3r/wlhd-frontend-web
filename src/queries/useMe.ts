@@ -26,7 +26,7 @@ const PLACEHOLDER_USER: InternalAuthSession = {
 
 export const USE_ME_QUERY_KEYS = () => ['user', 'me'];
 export const meQueryFn = async () => {
-    return AuthService.getInstance().getSession({ fetchOptions: { throw: true } });
+    return AuthService.getSession();
 };
 
 /**

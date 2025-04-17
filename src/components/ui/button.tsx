@@ -74,19 +74,14 @@ const TimeoutButton = ({ timeoutTime, onClick, disabled, ...props }: { timeoutTi
     );
 };
 
-const AwaitingButton = ({
-    onClick,
-    thenCase,
-    catchCase,
-    finallyCase,
-    disabled,
-    ...props
-}: {
+export interface iAwaitingButtonProps extends Omit<ButtonProps, 'onClick'> {
     onClick?: () => Promise<unknown>;
     thenCase?: () => void;
     catchCase?: (error: unknown) => void;
     finallyCase?: () => void;
-} & Omit<ButtonProps, 'onClick'>) => {
+}
+
+const AwaitingButton = ({ onClick, thenCase, catchCase, finallyCase, disabled, ...props }: iAwaitingButtonProps) => {
     const [isAwaiting, setIsAwaiting] = useState(false);
 
     const handleClick = useCallback(async () => {

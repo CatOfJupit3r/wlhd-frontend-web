@@ -6,10 +6,10 @@ export const useApproveUserMutation = () => {
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async ({ lobbyId, username }: { lobbyId: string; username: string }) => {
-            return APIService.approveLobbyPlayer(lobbyId, username);
+        mutationFn: async ({ lobbyId, userId }: { lobbyId: string; userId: string }) => {
+            return APIService.approveLobbyPlayer(lobbyId, userId);
         },
-        onMutate: ({ lobbyId, username }) => {
+        onMutate: ({ lobbyId, userId }) => {
             queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
                 if (!oldData) return;
                 return {
@@ -17,13 +17,12 @@ export const useApproveUserMutation = () => {
                     players: [
                         ...oldData.players,
                         {
-                            nickname: username,
-                            username,
+                            nickname: oldData.waitingApproval.find((p) => p.userId === userId)?.name || '',
                             characters: [],
-                            userId: '',
+                            userId,
                         },
                     ],
-                    waitingApproval: oldData.waitingApproval.filter((p) => p.username !== username),
+                    waitingApproval: oldData.waitingApproval.filter((p) => p.userId !== userId),
                 };
             });
         },

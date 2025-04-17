@@ -17,21 +17,20 @@ export interface iCombatInfo {
     isActive: boolean;
     roundCount: number;
     activePlayers: Array<{
-        username: string;
+        userId: string;
         nickname: string;
     }>;
     _id: string;
 }
 
 export interface iLobbyPlayerInfo {
-    username: string;
     nickname: string;
     userId: string;
     characters: Array<[string, string]>;
 }
 
 export interface iWaitingApprovalPlayer {
-    username: string;
+    name: string;
     userId: string;
 }
 

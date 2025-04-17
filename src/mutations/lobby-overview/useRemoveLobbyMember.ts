@@ -6,16 +6,16 @@ const useRemoveLobbyMember = () => {
     const queryClient = useQueryClient();
 
     const { mutate: removeLobbyMember, isPending } = useMutation({
-        mutationFn: async ({ lobbyId, username }: { lobbyId: string; username: string }) => {
-            return APIService.removeLobbyMember(lobbyId, username);
+        mutationFn: async ({ lobbyId, userId }: { lobbyId: string; userId: string }) => {
+            return APIService.removeLobbyMember(lobbyId, userId);
         },
-        onMutate: ({ lobbyId, username }) => {
+        onMutate: ({ lobbyId, userId }) => {
             queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
                 if (!oldData) {
                     return oldData;
                 }
-                const players = oldData.players.filter((player) => player.username !== username);
-                const waitingApproval = oldData.waitingApproval.filter((player) => player.username !== username);
+                const players = oldData.players.filter((player) => player.userId !== userId);
+                const waitingApproval = oldData.waitingApproval.filter((player) => player.name !== userId);
                 return {
                     ...oldData,
                     players,
