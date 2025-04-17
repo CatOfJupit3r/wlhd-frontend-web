@@ -1,8 +1,10 @@
 import { AwaitingButton, iAwaitingButtonProps } from '@components/ui/button';
 import AuthService from '@services/AuthService';
 import { cn } from '@utils';
+import { clientAbsoluteLink } from '@utils/client-absolute-link';
 import { CSSProperties, FC } from 'react';
 import { FaDiscord } from 'react-icons/fa';
+import { Route as ProfileRoute } from '../../routes/_auth_only/profile';
 
 type BetterAuthSocialProviders = Parameters<
     ReturnType<typeof AuthService.getInstance>['signIn']['social']
@@ -21,7 +23,12 @@ const SocialLoginButton: FC<SocialLoginButtonProps> = ({ provider, ...props }) =
     return (
         <AwaitingButton
             {...props}
-            onClick={() => AuthService.getInstance().signIn.social({ provider, callbackURL: '/profile' })}
+            onClick={() =>
+                AuthService.getInstance().signIn.social({
+                    provider,
+                    callbackURL: clientAbsoluteLink(ProfileRoute.to),
+                })
+            }
         />
     );
 };
