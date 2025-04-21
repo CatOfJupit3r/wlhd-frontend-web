@@ -40,20 +40,20 @@ const BannerFooter: FC<{ name: string }> = ({ name }) => {
             <div className="relative flex h-full w-full items-end max-sm:flex-col max-sm:items-center">
                 {/* Avatar */}
                 <div className="absolute z-10">
-                    <CurrentUserAvatar className="ml-6 h-[128px] w-[128px] rounded-full" />
+                    <CurrentUserAvatar className="ml-6 h-[128px] w-[128px] rounded-full border-slate-900 shadow-none" />
                 </div>
 
                 {/* Username and title on compact dark background */}
-                <div className="mt-16 inline-flex flex-col rounded-tr-3xl bg-slate-900 py-2 pl-44 pr-8 max-sm:mt-[138px] max-sm:flex-col max-sm:rounded-xl max-sm:px-6 max-sm:pl-6">
-                    <h1 className="text-2xl font-bold text-white">{name}</h1>
+                <div className="mt-16 inline-flex flex-col rounded-tr-3xl bg-background py-2 pl-44 pr-8 max-sm:mt-[138px] max-sm:flex-col max-sm:rounded-xl max-sm:px-6 max-sm:pl-6">
+                    <h1 className="text-2xl font-bold">{name}</h1>
                     <p className="text-sm text-slate-400">Cosmic Explorer</p>
                 </div>
 
                 {/* Settings button outside the dark background */}
-                <div className="ml-auto mt-16 rounded-tl-3xl bg-slate-900 px-4 py-4 pr-44">
+                <div className="ml-auto mt-16 rounded-tl-3xl bg-background px-4 py-4 pr-44">
                     <ButtonLink
                         to="/profile"
-                        variant="outline"
+                        variant="default"
                         size="sm"
                         className="border-slate-700 backdrop-blur-sm hover:bg-slate-500 hover:text-white"
                     >
