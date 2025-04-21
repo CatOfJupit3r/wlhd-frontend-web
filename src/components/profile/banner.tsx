@@ -34,7 +34,7 @@ const BannerBackground: FC<iBannerBackground> = ({ children }) => {
     );
 };
 
-const BannerFooter: FC = () => {
+const BannerFooter: FC<{ name: string }> = ({ name }) => {
     return (
         <div className="w-full items-end justify-between">
             <div className="relative flex h-full w-full items-end max-sm:flex-col max-sm:items-center">
@@ -45,7 +45,7 @@ const BannerFooter: FC = () => {
 
                 {/* Username and title on compact dark background */}
                 <div className="mt-16 inline-flex flex-col rounded-tr-3xl bg-slate-900 py-2 pl-44 pr-8 max-sm:mt-[138px] max-sm:flex-col max-sm:rounded-xl max-sm:px-6 max-sm:pl-6">
-                    <h1 className="text-2xl font-bold text-white">CatOfJupit3r</h1>
+                    <h1 className="text-2xl font-bold text-white">{name}</h1>
                     <p className="text-sm text-slate-400">Cosmic Explorer</p>
                 </div>
 
@@ -66,13 +66,15 @@ const BannerFooter: FC = () => {
     );
 };
 
-interface iBanner {}
+interface iBanner {
+    name: string;
+}
 
-const Banner: FC<iBanner> = () => {
+const Banner: FC<iBanner> = ({ name }) => {
     return (
         <div className="relative h-48 w-full max-sm:h-56">
             <BannerBackground>
-                <BannerFooter />
+                <BannerFooter name={name} />
             </BannerBackground>
         </div>
     );
