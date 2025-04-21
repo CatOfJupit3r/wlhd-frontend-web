@@ -1,3 +1,4 @@
+import JoinNewLobby from '@components/profile/profile-body/joined-lobbies/join-new-lobby';
 import { Button } from '@components/ui/button';
 import { usePagination } from '@hooks/use-pagination';
 import useJoinedLobbies from '@queries/profile/useJoinedLobbies';
@@ -12,10 +13,35 @@ const JoinedLobbiesContainer: FC<iJoinedLobbiesContainer> = () => {
     const { currentPage, totalPages, prevPage, nextPage } = usePagination(joined);
 
     return (
-        <div>
+        <div className="space-y-2">
             <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">My Lobbies</h2>
-                <Button size="sm">Join New Lobby</Button>
+                {/* Pagination Controls */}
+                <div className="flex items-center justify-center gap-2 pt-4 text-white">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={prevPage}
+                        disabled={currentPage === 1 || totalPages === 1}
+                    >
+                        <LuChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-sm">
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={nextPage}
+                        disabled={currentPage === totalPages || totalPages === 1}
+                    >
+                        <LuChevronRight className="h-4 w-4" />
+                    </Button>
+                </div>
+                <JoinNewLobby>
+                    <Button size="sm" variant={'outline'}>
+                        Join New Lobby
+                    </Button>
+                </JoinNewLobby>
             </div>
             {/* Lobby Cards with Pagination */}
             <div className="grid gap-4 sm:grid-cols-2">
@@ -29,20 +55,6 @@ const JoinedLobbiesContainer: FC<iJoinedLobbiesContainer> = () => {
                     />
                 ))}
             </div>
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 pt-4">
-                    <Button variant="outline" size="sm" onClick={prevPage} disabled={currentPage === 1}>
-                        <LuChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <span className="text-sm">
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <Button variant="outline" size="sm" onClick={nextPage} disabled={currentPage === totalPages}>
-                        <LuChevronRight className="h-4 w-4" />
-                    </Button>
-                </div>
-            )}
         </div>
     );
 };
