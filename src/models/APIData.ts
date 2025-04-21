@@ -20,3 +20,16 @@ export interface LimitedGameComponentData {
 export interface LimitedDLCData {
     [descriptor: string]: LimitedGameComponentData;
 }
+
+export interface iMyCharacter {
+    _id: string;
+    descriptor: string;
+    lobbyId: string;
+    decorations: GameComponentDecoration;
+}
+
+export interface iUserStatistics {
+    characters: number;
+    lobbies: number;
+    gmLobbies: number;
+}

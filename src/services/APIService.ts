@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
-import { LimitedDLCData, ShortLobbyInformation } from '@models/APIData';
+import { iMyCharacter, iUserStatistics, LimitedDLCData, ShortLobbyInformation } from '@models/APIData';
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -79,6 +79,9 @@ const ENDPOINTS = {
     DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
     GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
     CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
+
+    USER_STATISTICS: `${VITE_BACKEND_URL}/user/statistics?short=true`,
+    USER_CHARACTERS: `${VITE_BACKEND_URL}/user/characters`,
 };
 
 class APIService {
@@ -442,6 +445,23 @@ class APIService {
             method: 'get',
         });
         return joined;
+    };
+
+    public getMyStatistics = async () => {
+        return await this.fetch<iUserStatistics>({
+            url: ENDPOINTS.USER_STATISTICS,
+            method: 'get',
+        });
+    };
+
+    public getMyCharacters = async () => {
+        const { characters } = await this.fetch<{
+            characters: Array<iMyCharacter>;
+        }>({
+            url: ENDPOINTS.USER_CHARACTERS,
+            method: 'get',
+        });
+        return characters;
     };
 }
 
