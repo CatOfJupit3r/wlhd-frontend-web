@@ -72,11 +72,6 @@ const JoinedLobbyCard: FC<iJoinedLobbyCard> = ({ name, isGm, _id, needsApproval,
                             </Badge>
                         ) : null}
                         {characters.length > 1 ? <div>+{characters.length - 2}</div> : null}
-                        {characters.map(([descriptor, name]) => (
-                            <Badge key={descriptor} variant="outline" className="px-2 py-1">
-                                {name} ({descriptor})
-                            </Badge>
-                        ))}
                     </div>
                     <EnterLobbyButton lobbyId={_id} variant="ghost" size="sm" disabled={needsApproval}>
                         {needsApproval ? 'Pending...' : 'View'}
