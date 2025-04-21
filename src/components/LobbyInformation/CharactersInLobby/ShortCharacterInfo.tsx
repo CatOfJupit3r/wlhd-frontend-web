@@ -1,5 +1,5 @@
 import GameAsset from '@components/GameAsset';
-import { ButtonLink } from '@components/ui/button';
+import { ViewCharacterButton } from '@components/ui/common-links';
 import { iCharacterInLobby } from '@models/Redux';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,16 +27,9 @@ const ShortCharacterInfo: FC<iShortCharacterInfo> = ({
                     <GameAsset className={'size-12'} src={sprite} alt={descriptor} />
                     <p className={'text-md'}>{name}</p>
                 </div>
-                <ButtonLink
-                    to={`/lobby-rooms/$lobbyId/view-character`}
-                    variant={'outline'}
-                    params={{ lobbyId }}
-                    search={{
-                        character: descriptor,
-                    }}
-                >
+                <ViewCharacterButton variant={'outline'} character={descriptor} lobbyId={lobbyId}>
                     {t('view-specific')}
-                </ButtonLink>
+                </ViewCharacterButton>
             </div>
             <p className={'text-sm text-gray-400'}>{description}</p>
         </div>
