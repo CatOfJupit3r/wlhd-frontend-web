@@ -25,8 +25,8 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
+import { OneOf } from '@models/common-types';
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels';
-import { OneOf } from '@models/OneOf';
 import { cn } from '@utils';
 import { capitalize } from 'lodash';
 import React, { useCallback } from 'react';

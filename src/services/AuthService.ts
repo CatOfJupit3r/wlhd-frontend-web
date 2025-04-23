@@ -7,9 +7,13 @@ const DEFAULT_INSTANCE = () => {
         baseURL: VITE_BACKEND_URL,
         basePath: '/auth',
         plugins: [usernameClient()],
+        fetchOptions: {
+            throw: true,
+        },
     });
 };
-type AuthInstanceType = ReturnType<typeof DEFAULT_INSTANCE>;
+
+export type AuthInstanceType = ReturnType<typeof DEFAULT_INSTANCE>;
 
 class AuthService {
     private static instance: AuthInstanceType | null = null;

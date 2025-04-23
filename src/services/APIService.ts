@@ -18,10 +18,10 @@ import {
     iLobbyPlayerInfo,
     iWaitingApprovalPlayer,
 } from '@models/Redux';
-import { TranslationJSON } from '@models/Translation';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthService from '@services/AuthService';
 import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
+import { Resource } from 'i18next';
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -133,11 +133,11 @@ class APIService {
         }
     };
 
-    public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
-        const result = {};
+    public getTranslations = async (languages: Array<string>, dlcs: Array<string>) => {
+        const result: Resource = {};
         for (const dlc of dlcs) {
             try {
-                const translations = await this.fetch({
+                const translations = await this.fetch<Resource>({
                     url: ENDPOINTS.CDN_GET_TRANSLATIONS(
                         languages.map((lan) => lan.replace('-', '_')),
                         dlc,
@@ -154,13 +154,13 @@ class APIService {
 
     public getCustomLobbyTranslations = async (lobby_id: string) => {
         try {
-            return await this.fetch<TranslationJSON>({
+            return await this.fetch<Resource>({
                 url: ENDPOINTS.CUSTOM_LOBBY_TRANSLATIONS(lobby_id),
                 method: 'get',
             });
         } catch (e) {
             console.log(e);
-            return {} as TranslationJSON;
+            return {} as Resource;
         }
     };
 

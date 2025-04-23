@@ -43,9 +43,9 @@ const SignUp = ({ className }: { className?: string }) => {
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
-            username: '',
-            password: '',
-            confirmPassword: '',
+            username: 'someuser',
+            password: '1234567890',
+            confirmPassword: '1234567890',
         },
     });
     const navigate = useNavigate();

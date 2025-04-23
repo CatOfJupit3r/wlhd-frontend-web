@@ -30,15 +30,15 @@ const UserSettings: FC<iUserSettings> = () => {
                     <LuShield className="mr-2 h-4 w-4" />
                     Security
                 </TabsTrigger>
-                <TabsTrigger className={'w-full py-2'} value={'notifications'}>
+                <TabsTrigger className={'w-full py-2'} value={'notifications'} disabled>
                     <LuBell className="mr-2 h-4 w-4" />
                     Notifications
                 </TabsTrigger>
-                <TabsTrigger className={'w-full py-2'} value={'appearance'}>
+                <TabsTrigger className={'w-full py-2'} value={'appearance'} disabled>
                     <LuPalette className="mr-2 h-4 w-4" />
                     Appearance
                 </TabsTrigger>
-                <TabsTrigger className={'w-full py-2'} value={'privacy'}>
+                <TabsTrigger className={'w-full py-2'} value={'privacy'} disabled>
                     <RiSecurePaymentLine className={'mr-2 h-4 w-4'} />
                     Privacy
                 </TabsTrigger>
