@@ -17,12 +17,15 @@ const buttonVariants = cva(
                 default: 'bg-primary text-primary-foreground hover:bg-primary/90',
                 destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
                 outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground text-primary',
-                outlineToDefault: 'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
+                'outline-default':
+                    'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
                 ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
                 destructiveGhost:
                     'border border-transparent hover:border-destructive hover:text-destructive-foreground hover:bg-destructive/90',
                 link: 'text-primary underline-offset-4 hover:underline',
+                'outline-destructive':
+                    'border border-input bg-background hover:bg-destructive/90 hover:text-destructive-foreground',
             },
             size: {
                 default: 'h-10 px-4 py-2',
@@ -208,7 +211,7 @@ function MutationButton({ mutate, children, isPending, disabled, ...props }: Mut
 
     return (
         <Button {...props} onClick={handleClick} disabled={disabled || isPending}>
-            {isPending ? <PulsingSpinner /> : children}
+            {isPending ? <PulsingSpinner size={1} /> : children}
         </Button>
     );
 }

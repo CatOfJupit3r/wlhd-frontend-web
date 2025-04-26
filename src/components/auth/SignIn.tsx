@@ -12,19 +12,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-
-const loginSchema = z.object({
-    username: z
-        .string()
-        .min(4)
-        .max(20)
-        .regex(/^[a-zA-Z0-9_]+$/),
-    password: z
-        .string()
-        .min(5)
-        .max(20)
-        .regex(/^[a-zA-Z0-9_]+$/),
-});
+import { loginSchema } from './schemas';
 
 const SignIn = ({ className = '' }: { className?: string }) => {
     'use no memo;';

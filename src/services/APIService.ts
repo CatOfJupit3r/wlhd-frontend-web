@@ -82,6 +82,7 @@ const ENDPOINTS = {
 
     USER_STATISTICS: `${VITE_BACKEND_URL}/user/statistics?short=true`,
     USER_CHARACTERS: `${VITE_BACKEND_URL}/user/characters`,
+    ADD_CREDENTIAL_AUTH: `${VITE_BACKEND_URL}/user/me/auth/add-credential-auth`,
 };
 
 class APIService {
@@ -462,6 +463,14 @@ class APIService {
             method: 'get',
         });
         return characters;
+    };
+
+    public addCredentialAuth = async (data: { username: string; password: string }) => {
+        return await this.fetch({
+            url: ENDPOINTS.ADD_CREDENTIAL_AUTH,
+            method: 'post',
+            data,
+        });
     };
 }
 
