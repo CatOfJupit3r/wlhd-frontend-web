@@ -6,7 +6,16 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip'
 import { Link, LinkProps } from '@tanstack/react-router';
 import { cn } from '@utils';
 import { ClassValue } from 'clsx';
-import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react';
+import {
+    ButtonHTMLAttributes,
+    ComponentProps,
+    FC,
+    forwardRef,
+    MouseEvent,
+    ReactNode,
+    useCallback,
+    useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 const buttonVariants = cva(
@@ -20,7 +29,7 @@ const buttonVariants = cva(
                 'outline-default':
                     'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-                ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
+                ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground active:bg-primary/20',
                 destructiveGhost:
                     'border border-transparent hover:border-destructive hover:text-destructive-foreground hover:bg-destructive/90',
                 link: 'text-primary underline-offset-4 hover:underline',
@@ -215,6 +224,28 @@ function MutationButton({ mutate, children, isPending, disabled, ...props }: Mut
         </Button>
     );
 }
+
+interface iCopyButtonProps extends ButtonProps {
+    value: string;
+    children?: ReactNode;
+    copiedChildren?: ReactNode;
+}
+
+export const CopyButton: FC<iCopyButtonProps> = ({ value, children, copiedChildren, ...props }) => {
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleClick = useCallback(() => {
+        navigator.clipboard.writeText(value);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 1500);
+    }, [value]);
+
+    return (
+        <Button {...props} onClick={handleClick} aria-label={'Copy to clipboard'}>
+            {isCopied ? (copiedChildren ?? children) : children}
+        </Button>
+    );
+};
 
 export {
     AwaitingButton,
