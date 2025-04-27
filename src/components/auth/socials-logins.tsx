@@ -1,16 +1,14 @@
-import { AwaitingButton, iAwaitingButtonProps } from '@components/ui/button';
-import AuthService from '@services/AuthService';
+import { iAwaitingButtonProps, MutationButton } from '@components/ui/button';
+import { AccountSocialProviders } from '@models/common-types';
+import useSocialSignIn from '@mutations/profile/use-social-sign-in';
+import { Route as ProfileRoute } from '@router/_auth_only';
 import { cn } from '@utils';
 import { clientAbsoluteLink } from '@utils/client-absolute-link';
 import { CSSProperties, FC } from 'react';
 import { FaDiscord } from 'react-icons/fa';
-import { Route as ProfileRoute } from '../../routes/_auth_only/profile';
 
-type BetterAuthSocialProviders = Parameters<
-    ReturnType<typeof AuthService.getInstance>['signIn']['social']
->[0]['provider'];
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SUPPORTED_PROVIDERS: Array<BetterAuthSocialProviders> = ['discord'];
+const SUPPORTED_PROVIDERS: Array<AccountSocialProviders> = ['discord'];
 type SupportedSocialProviders = (typeof SUPPORTED_PROVIDERS)[number];
 
 interface SocialLoginButtonProps extends iAwaitingButtonProps {
@@ -20,15 +18,17 @@ interface SocialLoginButtonProps extends iAwaitingButtonProps {
 type ConcreteSocialLoginButtonProps = Omit<SocialLoginButtonProps, 'provider'>;
 
 const SocialLoginButton: FC<SocialLoginButtonProps> = ({ provider, ...props }) => {
+    const { mutate, isPending } = useSocialSignIn();
     return (
-        <AwaitingButton
+        <MutationButton
             {...props}
-            onClick={() =>
-                AuthService.getInstance().signIn.social({
+            mutate={() => {
+                return mutate({
                     provider,
                     callbackURL: clientAbsoluteLink(ProfileRoute.to),
-                })
-            }
+                });
+            }}
+            isPending={isPending}
         />
     );
 };

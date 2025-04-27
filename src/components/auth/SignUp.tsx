@@ -1,6 +1,6 @@
+import { registerSchema } from '@components/auth/schemas';
+import { SignUpForm } from '@components/auth/sign-up-form';
 import { Button } from '@components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@components/ui/form';
-import { Input } from '@components/ui/input';
 import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useRegister from '@mutations/auth/useRegister';
@@ -12,29 +12,6 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-const registerSchema = z
-    .object({
-        username: z
-            .string()
-            .min(4)
-            .max(20)
-            .regex(/^[a-zA-Z0-9_]+$/),
-        password: z
-            .string()
-            .min(5)
-            .max(20)
-            .regex(/^[a-zA-Z0-9_]+$/),
-        confirmPassword: z
-            .string()
-            .min(5)
-            .max(20)
-            .regex(/^[a-zA-Z0-9_]+$/),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: 'Passwords do not match!',
-        path: ['confirmPassword'],
-    });
-
 const SignUp = ({ className }: { className?: string }) => {
     'use no memo;';
     const { t } = useTranslation('local', {
@@ -43,9 +20,9 @@ const SignUp = ({ className }: { className?: string }) => {
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
-            username: '',
-            password: '',
-            confirmPassword: '',
+            username: 'someuser',
+            password: '1234567890',
+            confirmPassword: '1234567890',
         },
     });
     const navigate = useNavigate();
@@ -67,58 +44,7 @@ const SignUp = ({ className }: { className?: string }) => {
     return (
         <div className={cn('box-border flex w-[30rem] flex-col items-center gap-4 px-16', className)}>
             <h2 className={'text-3.5xl border-b-2'}>{t('sign-up.title')}</h2>
-            <Form {...form}>
-                <form className={'flex w-full flex-col gap-2'}>
-                    <FormField
-                        control={form.control}
-                        name="username"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel htmlFor="username">{t('username.index')}</FormLabel>
-                                <FormDescription>{t('username.description')}</FormDescription>
-                                <FormControl>
-                                    <Input className={'w-full'} placeholder={t('username.placeholder')} {...field} />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel htmlFor="password">{t('password.index')}</FormLabel>
-                                <FormDescription>{t('password.description')}</FormDescription>
-                                <FormControl>
-                                    <Input
-                                        className={'w-full'}
-                                        placeholder={t('password.placeholder')}
-                                        type="password"
-                                        {...field}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel htmlFor="confirm-password">{t('confirm-password.index')}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        className={'w-full'}
-                                        placeholder={t('confirm-password.placeholder')}
-                                        type="password"
-                                        {...field}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                </form>
-            </Form>
+            <SignUpForm form={form} />
             <Button
                 className={cn(
                     'w-full rounded-md bg-blue-800 p-2 text-white transition-all duration-100',

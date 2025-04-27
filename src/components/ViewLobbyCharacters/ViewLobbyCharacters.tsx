@@ -131,7 +131,7 @@ const ViewLobbyCharacters = ({ initial }: { initial: null | string }) => {
                             {lobby.layout === 'gm' && (
                                 <>
                                     <Button
-                                        variant={'outlineToDefault'}
+                                        variant={'outline-default'}
                                         onClick={() => {
                                             navigate({
                                                 to: '/lobby-rooms/$lobbyId/create-character',

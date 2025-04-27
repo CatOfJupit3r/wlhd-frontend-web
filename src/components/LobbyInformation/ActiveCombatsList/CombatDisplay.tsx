@@ -15,7 +15,11 @@ const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode
     className,
 }) => {
     return (
-        <ButtonLink className={className} href={`/lobby-rooms/${lobbyId}/game-rooms/${combatId}`}>
+        <ButtonLink
+            className={className}
+            to={`/lobby-rooms/$lobbyId/game-rooms/$gameId`}
+            params={{ lobbyId, gameId: combatId }}
+        >
             {children}
         </ButtonLink>
     );

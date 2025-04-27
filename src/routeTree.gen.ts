@@ -15,11 +15,12 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Route as rootRoute } from './routes/__root';
 import { Route as AuthonlyImport } from './routes/_auth_only';
 import { Route as IndexImport } from './routes/index';
-import { Route as AuthonlyProfileImport } from './routes/_auth_only/profile';
 import { Route as AuthonlyGameTestImport } from './routes/_auth_only/game-test';
 import { Route as generalAboutImport } from './routes/(general)/about';
 import { Route as generalToprofileImport } from './routes/(general)/_to_profile';
+import { Route as AuthonlyProfileIndexImport } from './routes/_auth_only/profile/index';
 import { Route as AuthonlyGameWikiIndexImport } from './routes/_auth_only/game-wiki/index';
+import { Route as AuthonlyProfileSettingsImport } from './routes/_auth_only/profile/settings';
 import { Route as AuthonlyGameWikiDlcImport } from './routes/_auth_only/game-wiki/$dlc';
 import { Route as generalToprofileSignUpImport } from './routes/(general)/_to_profile.sign-up';
 import { Route as generalToprofileLoginImport } from './routes/(general)/_to_profile.login';
@@ -51,12 +52,6 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any);
 
-const AuthonlyProfileRoute = AuthonlyProfileImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthonlyRoute,
-} as any);
-
 const AuthonlyGameTestRoute = AuthonlyGameTestImport.update({
   id: '/game-test',
   path: '/game-test',
@@ -74,9 +69,21 @@ const generalToprofileRoute = generalToprofileImport.update({
   getParentRoute: () => generalRoute,
 } as any);
 
+const AuthonlyProfileIndexRoute = AuthonlyProfileIndexImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AuthonlyRoute,
+} as any);
+
 const AuthonlyGameWikiIndexRoute = AuthonlyGameWikiIndexImport.update({
   id: '/game-wiki/',
   path: '/game-wiki/',
+  getParentRoute: () => AuthonlyRoute,
+} as any);
+
+const AuthonlyProfileSettingsRoute = AuthonlyProfileSettingsImport.update({
+  id: '/profile/settings',
+  path: '/profile/settings',
   getParentRoute: () => AuthonlyRoute,
 } as any);
 
@@ -179,13 +186,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthonlyGameTestImport;
       parentRoute: typeof AuthonlyImport;
     };
-    '/_auth_only/profile': {
-      id: '/_auth_only/profile';
-      path: '/profile';
-      fullPath: '/profile';
-      preLoaderRoute: typeof AuthonlyProfileImport;
-      parentRoute: typeof AuthonlyImport;
-    };
     '/(general)/_to_profile/login': {
       id: '/(general)/_to_profile/login';
       path: '/login';
@@ -207,11 +207,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthonlyGameWikiDlcImport;
       parentRoute: typeof AuthonlyImport;
     };
+    '/_auth_only/profile/settings': {
+      id: '/_auth_only/profile/settings';
+      path: '/profile/settings';
+      fullPath: '/profile/settings';
+      preLoaderRoute: typeof AuthonlyProfileSettingsImport;
+      parentRoute: typeof AuthonlyImport;
+    };
     '/_auth_only/game-wiki/': {
       id: '/_auth_only/game-wiki/';
       path: '/game-wiki';
       fullPath: '/game-wiki';
       preLoaderRoute: typeof AuthonlyGameWikiIndexImport;
+      parentRoute: typeof AuthonlyImport;
+    };
+    '/_auth_only/profile/': {
+      id: '/_auth_only/profile/';
+      path: '/profile';
+      fullPath: '/profile';
+      preLoaderRoute: typeof AuthonlyProfileIndexImport;
       parentRoute: typeof AuthonlyImport;
     };
     '/_auth_only/lobby-rooms/$lobbyId/create-character': {
@@ -256,9 +270,10 @@ declare module '@tanstack/react-router' {
 
 interface AuthonlyRouteChildren {
   AuthonlyGameTestRoute: typeof AuthonlyGameTestRoute;
-  AuthonlyProfileRoute: typeof AuthonlyProfileRoute;
   AuthonlyGameWikiDlcRoute: typeof AuthonlyGameWikiDlcRoute;
+  AuthonlyProfileSettingsRoute: typeof AuthonlyProfileSettingsRoute;
   AuthonlyGameWikiIndexRoute: typeof AuthonlyGameWikiIndexRoute;
+  AuthonlyProfileIndexRoute: typeof AuthonlyProfileIndexRoute;
   AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute: typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
   AuthonlyLobbyRoomsLobbyIdCreateCombatRoute: typeof AuthonlyLobbyRoomsLobbyIdCreateCombatRoute;
   AuthonlyLobbyRoomsLobbyIdViewCharacterRoute: typeof AuthonlyLobbyRoomsLobbyIdViewCharacterRoute;
@@ -268,9 +283,10 @@ interface AuthonlyRouteChildren {
 
 const AuthonlyRouteChildren: AuthonlyRouteChildren = {
   AuthonlyGameTestRoute: AuthonlyGameTestRoute,
-  AuthonlyProfileRoute: AuthonlyProfileRoute,
   AuthonlyGameWikiDlcRoute: AuthonlyGameWikiDlcRoute,
+  AuthonlyProfileSettingsRoute: AuthonlyProfileSettingsRoute,
   AuthonlyGameWikiIndexRoute: AuthonlyGameWikiIndexRoute,
+  AuthonlyProfileIndexRoute: AuthonlyProfileIndexRoute,
   AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute:
     AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute,
   AuthonlyLobbyRoomsLobbyIdCreateCombatRoute:
@@ -317,11 +333,12 @@ export interface FileRoutesByFullPath {
   '': typeof AuthonlyRouteWithChildren;
   '/about': typeof generalAboutRoute;
   '/game-test': typeof AuthonlyGameTestRoute;
-  '/profile': typeof AuthonlyProfileRoute;
   '/login': typeof generalToprofileLoginRoute;
   '/sign-up': typeof generalToprofileSignUpRoute;
   '/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
+  '/profile/settings': typeof AuthonlyProfileSettingsRoute;
   '/game-wiki': typeof AuthonlyGameWikiIndexRoute;
+  '/profile': typeof AuthonlyProfileIndexRoute;
   '/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
   '/lobby-rooms/$lobbyId/create-combat': typeof AuthonlyLobbyRoomsLobbyIdCreateCombatRoute;
   '/lobby-rooms/$lobbyId/view-character': typeof AuthonlyLobbyRoomsLobbyIdViewCharacterRoute;
@@ -334,11 +351,12 @@ export interface FileRoutesByTo {
   '': typeof AuthonlyRouteWithChildren;
   '/about': typeof generalAboutRoute;
   '/game-test': typeof AuthonlyGameTestRoute;
-  '/profile': typeof AuthonlyProfileRoute;
   '/login': typeof generalToprofileLoginRoute;
   '/sign-up': typeof generalToprofileSignUpRoute;
   '/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
+  '/profile/settings': typeof AuthonlyProfileSettingsRoute;
   '/game-wiki': typeof AuthonlyGameWikiIndexRoute;
+  '/profile': typeof AuthonlyProfileIndexRoute;
   '/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
   '/lobby-rooms/$lobbyId/create-combat': typeof AuthonlyLobbyRoomsLobbyIdCreateCombatRoute;
   '/lobby-rooms/$lobbyId/view-character': typeof AuthonlyLobbyRoomsLobbyIdViewCharacterRoute;
@@ -354,11 +372,12 @@ export interface FileRoutesById {
   '/(general)/_to_profile': typeof generalToprofileRouteWithChildren;
   '/(general)/about': typeof generalAboutRoute;
   '/_auth_only/game-test': typeof AuthonlyGameTestRoute;
-  '/_auth_only/profile': typeof AuthonlyProfileRoute;
   '/(general)/_to_profile/login': typeof generalToprofileLoginRoute;
   '/(general)/_to_profile/sign-up': typeof generalToprofileSignUpRoute;
   '/_auth_only/game-wiki/$dlc': typeof AuthonlyGameWikiDlcRoute;
+  '/_auth_only/profile/settings': typeof AuthonlyProfileSettingsRoute;
   '/_auth_only/game-wiki/': typeof AuthonlyGameWikiIndexRoute;
+  '/_auth_only/profile/': typeof AuthonlyProfileIndexRoute;
   '/_auth_only/lobby-rooms/$lobbyId/create-character': typeof AuthonlyLobbyRoomsLobbyIdCreateCharacterRoute;
   '/_auth_only/lobby-rooms/$lobbyId/create-combat': typeof AuthonlyLobbyRoomsLobbyIdCreateCombatRoute;
   '/_auth_only/lobby-rooms/$lobbyId/view-character': typeof AuthonlyLobbyRoomsLobbyIdViewCharacterRoute;
@@ -373,11 +392,12 @@ export interface FileRouteTypes {
     | ''
     | '/about'
     | '/game-test'
-    | '/profile'
     | '/login'
     | '/sign-up'
     | '/game-wiki/$dlc'
+    | '/profile/settings'
     | '/game-wiki'
+    | '/profile'
     | '/lobby-rooms/$lobbyId/create-character'
     | '/lobby-rooms/$lobbyId/create-combat'
     | '/lobby-rooms/$lobbyId/view-character'
@@ -389,11 +409,12 @@ export interface FileRouteTypes {
     | ''
     | '/about'
     | '/game-test'
-    | '/profile'
     | '/login'
     | '/sign-up'
     | '/game-wiki/$dlc'
+    | '/profile/settings'
     | '/game-wiki'
+    | '/profile'
     | '/lobby-rooms/$lobbyId/create-character'
     | '/lobby-rooms/$lobbyId/create-combat'
     | '/lobby-rooms/$lobbyId/view-character'
@@ -407,11 +428,12 @@ export interface FileRouteTypes {
     | '/(general)/_to_profile'
     | '/(general)/about'
     | '/_auth_only/game-test'
-    | '/_auth_only/profile'
     | '/(general)/_to_profile/login'
     | '/(general)/_to_profile/sign-up'
     | '/_auth_only/game-wiki/$dlc'
+    | '/_auth_only/profile/settings'
     | '/_auth_only/game-wiki/'
+    | '/_auth_only/profile/'
     | '/_auth_only/lobby-rooms/$lobbyId/create-character'
     | '/_auth_only/lobby-rooms/$lobbyId/create-combat'
     | '/_auth_only/lobby-rooms/$lobbyId/view-character'
@@ -454,9 +476,10 @@ export const routeTree = rootRoute
       "filePath": "_auth_only.tsx",
       "children": [
         "/_auth_only/game-test",
-        "/_auth_only/profile",
         "/_auth_only/game-wiki/$dlc",
+        "/_auth_only/profile/settings",
         "/_auth_only/game-wiki/",
+        "/_auth_only/profile/",
         "/_auth_only/lobby-rooms/$lobbyId/create-character",
         "/_auth_only/lobby-rooms/$lobbyId/create-combat",
         "/_auth_only/lobby-rooms/$lobbyId/view-character",
@@ -487,10 +510,6 @@ export const routeTree = rootRoute
       "filePath": "_auth_only/game-test.tsx",
       "parent": "/_auth_only"
     },
-    "/_auth_only/profile": {
-      "filePath": "_auth_only/profile.tsx",
-      "parent": "/_auth_only"
-    },
     "/(general)/_to_profile/login": {
       "filePath": "(general)/_to_profile.login.tsx",
       "parent": "/(general)/_to_profile"
@@ -503,8 +522,16 @@ export const routeTree = rootRoute
       "filePath": "_auth_only/game-wiki/$dlc.tsx",
       "parent": "/_auth_only"
     },
+    "/_auth_only/profile/settings": {
+      "filePath": "_auth_only/profile/settings.tsx",
+      "parent": "/_auth_only"
+    },
     "/_auth_only/game-wiki/": {
       "filePath": "_auth_only/game-wiki/index.tsx",
+      "parent": "/_auth_only"
+    },
+    "/_auth_only/profile/": {
+      "filePath": "_auth_only/profile/index.tsx",
       "parent": "/_auth_only"
     },
     "/_auth_only/lobby-rooms/$lobbyId/create-character": {
