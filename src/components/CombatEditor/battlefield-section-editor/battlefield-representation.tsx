@@ -1,7 +1,7 @@
 import Battlefield from '@components/Battlefield/Battlefield';
 import { Button } from '@components/ui/button';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCombatEditor } from '@context/combat-editor';
 import { Battlefield as BattlefieldModel } from '@models/GameModels';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -12,7 +12,7 @@ export const BattlefieldRepresentation = ({
 }: {
     setClickedSquare: (square: string | null) => void;
 }) => {
-    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditorContext();
+    const { battlefield, removeCharacter, addCharacterToTurnOrder } = useCombatEditor();
     const {
         changeBattlefield,
         setInteractableSquares,
@@ -52,9 +52,7 @@ export const BattlefieldRepresentation = ({
                         current: battlefield[square].attributes['builtins:current_armor'],
                         base: battlefield[square].attributes['builtins:base_armor'],
                     },
-                    statusEffects: battlefield[square].statusEffects.map((effect) => ({
-                        ...effect,
-                    })),
+                    statusEffects: battlefield[square].statusEffects,
                 },
             };
         }
@@ -124,7 +122,7 @@ export const BattlefieldRepresentation = ({
                 </Button>
             ));
         });
-    }, [battlefield]);
+    }, [battlefield, removeCharacter, addCharacterToTurnOrder]);
 
     useEffect(() => {
         setTimeout(() => {

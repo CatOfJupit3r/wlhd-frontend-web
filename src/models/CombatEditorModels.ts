@@ -8,6 +8,7 @@ import { GameComponentDecoration, GameComponentMemory } from '@models/GameModels
  */
 
 interface CommonEditableField {
+    descriptor: string;
     decorations: GameComponentDecoration;
     memory: GameComponentMemory | null;
     tags: GameTags;

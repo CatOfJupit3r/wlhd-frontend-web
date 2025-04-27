@@ -213,3 +213,44 @@ code {
 .no-visible-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+.spinning-border:hover {
+    --border-size: 0.25rem;
+    --background-color: white;
+    --chasing-color: white;
+    --border-angle: 0deg;
+
+    box-shadow: 0px 2px 4px hsl(0 0% 0% / 25%);
+    animation: border-angle-rotate 2s infinite linear;
+    border: var(--border-size) solid transparent;
+
+    background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
+    conic-gradient(
+            from var(--border-angle),
+            var(--chasing-color) 50%,
+            var(--background-color)
+    )
+    border-box;
+}
+
+@keyframes border-angle-rotate {
+    from { --border-angle: 0deg; }
+    to { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.custom-gradient {
+    --primary-color: white;
+    --secondary-color: black;
+    
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}

@@ -1,7 +1,8 @@
 import { Separator } from '@components/ui/separator';
 import { CharacterAttributes } from '@models/GameModels';
-import { capitalizeFirstLetter, splitDescriptor } from '@utils';
-import { extractDualAttributes } from '@utils/gameDisplayTools';
+import { splitDescriptor } from '@utils';
+import { extractDualAttributes } from '@utils/game-display-tools';
+import { capitalize } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +16,7 @@ const Attribute = ({ name, value }: { name: string; value: string }) => {
 
     return (
         <div className={'mb-0.5 flex flex-row justify-between text-base'}>
-            <p className={'font-normal'}>{capitalizeFirstLetter(t(addPrefix('attributes', name)))}</p>
+            <p className={'font-normal'}>{capitalize(t(addPrefix('attributes', name)))}</p>
             <p className={'font-bold'}>{value}</p>
         </div>
     );

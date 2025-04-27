@@ -1,18 +1,18 @@
 import { cn } from '@utils';
-import { HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 
-function Skeleton({
-    className,
-    pulsating = true,
-    ...props
-}: {
+interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
     pulsating?: boolean;
-} & HTMLAttributes<HTMLDivElement>) {
-    return <div className={cn(`rounded-md bg-muted ${pulsating ? 'animate-pulse' : ''}`, className)} {...props} />;
 }
 
-const StaticSkeleton = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+export const Skeleton: FC<SkeletonProps> = ({ className, pulsating = true, ...props }) => {
+    return <div className={cn(`rounded-md bg-muted ${pulsating ? 'animate-pulse' : ''}`, className)} {...props} />;
+};
+
+export const StaticSkeleton: FC<Omit<SkeletonProps, 'pulsating'>> = ({ className, ...props }) => {
     return <Skeleton pulsating={false} className={className} {...props} />;
 };
 
-export { Skeleton, StaticSkeleton };
+export const PulsatingSkeleton: FC<Omit<SkeletonProps, 'pulsating'>> = ({ className, ...props }) => {
+    return <Skeleton pulsating={true} className={className} {...props} />;
+};

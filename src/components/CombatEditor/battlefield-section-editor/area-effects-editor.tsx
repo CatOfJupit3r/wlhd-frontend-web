@@ -12,7 +12,7 @@ import {
 } from '@components/ui/dialog';
 import { HorizontalSeparator } from '@components/ui/separator';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCombatEditor } from '@context/combat-editor';
 import { AreaEffectEditable } from '@models/CombatEditorModels';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ const AreaEffectsOnBattlefieldEditor: FC<iAreaEffectsEditor> = () => {
     const [modal, setModal] = useState<null | 'edit' | 'add'>(null);
     const [modalAOEIndex, setModalAOEIndex] = useState<number | null>(null);
     const { addAOEHighlight } = useBattlefieldContext();
-    const { areaEffects, addAreaEffect, deleteAreaEffect, changeAreaEffect } = useCombatEditorContext();
+    const { areaEffects, addAreaEffect, deleteAreaEffect, changeAreaEffect } = useCombatEditor();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor.area-effects',
     });

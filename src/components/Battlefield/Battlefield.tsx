@@ -69,7 +69,6 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
 
     return (
         <div className={cn(styles.battlefield, 'flex flex-col')} id={'battlefield-div'}>
-            {NavigationHelpRow}
             <div id={'safe-enemy'} className={'flex'}>
                 <SafeLineTile />
                 <CharactersOnRow line={'1'} />
@@ -101,7 +100,6 @@ const Battlefield = ({ separatorTimestamp }: { separatorTimestamp?: number | nul
                 <CharactersOnRow line={'6'} />
                 <SafeLineTile />
             </div>
-            {NavigationHelpRow}
         </div>
     );
 };

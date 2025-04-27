@@ -1,7 +1,6 @@
-import { TranslationJSON } from '@models/Translation';
 import axios from 'axios';
 import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from 'config';
-import i18next, { ResourceLanguage } from 'i18next';
+import i18next, { Resource } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import en_US from '../locales/en_US.json';
@@ -64,7 +63,7 @@ class TranslationService {
 
     private spawnDLCTranslations = async (dlc: string) => {
         try {
-            const { data: translations }: { data: TranslationJSON } = await axios.get(
+            const { data: translations }: { data: Resource } = await axios.get(
                 `${VITE_CDN_URL}/game/${dlc}/translations?languages=${this.getLanguages()
                     .map((language) => language.replace('-', '_'))
                     .join(',')}`,
@@ -82,7 +81,7 @@ class TranslationService {
         }
     };
 
-    private getDefaultLanguageResourcePack = (lang: string): ResourceLanguage => {
+    private getDefaultLanguageResourcePack = (lang: string): Resource => {
         switch (lang) {
             case 'uk-UA':
                 return { local: ua_UK };

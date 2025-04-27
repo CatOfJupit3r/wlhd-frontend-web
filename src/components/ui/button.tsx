@@ -3,10 +3,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { PulsingSpinner } from '@components/Spinner';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { Link } from '@tanstack/react-router';
+import { Link, LinkProps } from '@tanstack/react-router';
 import { cn } from '@utils';
 import { ClassValue } from 'clsx';
-import { ButtonHTMLAttributes, ComponentProps, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react';
+import {
+    ButtonHTMLAttributes,
+    ComponentProps,
+    FC,
+    forwardRef,
+    MouseEvent,
+    ReactNode,
+    useCallback,
+    useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 const buttonVariants = cva(
@@ -17,12 +26,15 @@ const buttonVariants = cva(
                 default: 'bg-primary text-primary-foreground hover:bg-primary/90',
                 destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
                 outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground text-primary',
-                outlineToDefault: 'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
+                'outline-default':
+                    'border border-input bg-background hover:bg-primary/90 hover:text-primary-foreground',
                 secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-                ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground',
+                ghost: 'border border-transparent hover:bg-accent hover:text-accent-foreground active:bg-primary/20',
                 destructiveGhost:
                     'border border-transparent hover:border-destructive hover:text-destructive-foreground hover:bg-destructive/90',
                 link: 'text-primary underline-offset-4 hover:underline',
+                'outline-destructive':
+                    'border border-input bg-background hover:bg-destructive/90 hover:text-destructive-foreground',
             },
             size: {
                 default: 'h-10 px-4 py-2',
@@ -74,19 +86,14 @@ const TimeoutButton = ({ timeoutTime, onClick, disabled, ...props }: { timeoutTi
     );
 };
 
-const AwaitingButton = ({
-    onClick,
-    thenCase,
-    catchCase,
-    finallyCase,
-    disabled,
-    ...props
-}: {
+export interface iAwaitingButtonProps extends Omit<ButtonProps, 'onClick'> {
     onClick?: () => Promise<unknown>;
     thenCase?: () => void;
     catchCase?: (error: unknown) => void;
     finallyCase?: () => void;
-} & Omit<ButtonProps, 'onClick'>) => {
+}
+
+const AwaitingButton = ({ onClick, thenCase, catchCase, finallyCase, disabled, ...props }: iAwaitingButtonProps) => {
     const [isAwaiting, setIsAwaiting] = useState(false);
 
     const handleClick = useCallback(async () => {
@@ -182,13 +189,16 @@ const AwaitingButtonWithTooltip = ({
     );
 };
 
-const ButtonLink: React.FC<ButtonProps & { href: string }> = ({ href, ...props }) => {
+type ButtonLinkProps = Omit<ButtonProps, 'onClick'> & Pick<LinkProps, 'to' | 'search' | 'params'>;
+
+const ButtonLink: React.FC<ButtonLinkProps> = ({ to, search, params, ...props }) => {
     return (
         <Button
             asChild
             className={cn(buttonVariants({ variant: props.variant, size: props.size, className: props.className }))}
+            {...props}
         >
-            <Link to={href} className={'transition-auto hover:text-auto'}>
+            <Link to={to} className={'transition-auto hover:text-auto'} search={search} params={params}>
                 {props.children}
             </Link>
         </Button>
@@ -202,7 +212,8 @@ type MutationButtonProps = {
 } & Omit<ButtonProps, 'onClick'>;
 
 function MutationButton({ mutate, children, isPending, disabled, ...props }: MutationButtonProps) {
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         if (!isPending && !disabled) {
             mutate();
         }
@@ -210,10 +221,32 @@ function MutationButton({ mutate, children, isPending, disabled, ...props }: Mut
 
     return (
         <Button {...props} onClick={handleClick} disabled={disabled || isPending}>
-            {isPending ? <PulsingSpinner /> : children}
+            {isPending ? <PulsingSpinner size={1} /> : children}
         </Button>
     );
 }
+
+interface iCopyButtonProps extends ButtonProps {
+    value: string;
+    children?: ReactNode;
+    copiedChildren?: ReactNode;
+}
+
+export const CopyButton: FC<iCopyButtonProps> = ({ value, children, copiedChildren, ...props }) => {
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleClick = useCallback(() => {
+        navigator.clipboard.writeText(value);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 1500);
+    }, [value]);
+
+    return (
+        <Button {...props} onClick={handleClick} aria-label={'Copy to clipboard'}>
+            {isCopied ? (copiedChildren ?? children) : children}
+        </Button>
+    );
+};
 
 export {
     AwaitingButton,

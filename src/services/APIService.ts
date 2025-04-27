@@ -1,7 +1,14 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
-import { LimitedDLCData, ShortLobbyInformation } from '@models/APIData';
+import {
+    iMyCharacter,
+    iUserExtraData,
+    iUserPatchData,
+    iUserStatistics,
+    LimitedDLCData,
+    ShortLobbyInformation,
+} from '@models/APIData';
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -18,10 +25,10 @@ import {
     iLobbyPlayerInfo,
     iWaitingApprovalPlayer,
 } from '@models/Redux';
-import { TranslationJSON } from '@models/Translation';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthService from '@services/AuthService';
 import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
+import { Resource } from 'i18next';
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -71,14 +78,20 @@ const ENDPOINTS = {
         `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
     CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
         `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
-    GET_USER_AVATAR: (username: string) => `${VITE_BACKEND_URL}/user/${username}/avatar`,
+    GET_USER_AVATAR: (userId: string) => `${VITE_BACKEND_URL}/user/${userId}/avatar`,
 
-    APPROVE_LOBBY_PLAYER: (lobbyId: string, username: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}/approve`,
-    REMOVE_LOBBY_PLAYER: (lobbyId: string, username: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${username}`,
+    APPROVE_LOBBY_PLAYER: (lobbyId: string, userId: string) =>
+        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}`,
     DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
     GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
     CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
+
+    USER_STATISTICS: `${VITE_BACKEND_URL}/user/statistics?short=true`,
+    USER_CHARACTERS: `${VITE_BACKEND_URL}/user/characters`,
+    ADD_CREDENTIAL_AUTH: `${VITE_BACKEND_URL}/user/me/auth/add-credential-auth`,
+    PATCH_USER_INFO: `${VITE_BACKEND_URL}/user/me`,
+    USER_EXTRA_DATA: `${VITE_BACKEND_URL}/user/me/extra`,
 };
 
 class APIService {
@@ -130,11 +143,11 @@ class APIService {
         }
     };
 
-    public getTranslations = async (languages: Array<string>, dlcs: Array<string>): Promise<TranslationJSON> => {
-        const result = {};
+    public getTranslations = async (languages: Array<string>, dlcs: Array<string>) => {
+        const result: Resource = {};
         for (const dlc of dlcs) {
             try {
-                const translations = await this.fetch({
+                const translations = await this.fetch<Resource>({
                     url: ENDPOINTS.CDN_GET_TRANSLATIONS(
                         languages.map((lan) => lan.replace('-', '_')),
                         dlc,
@@ -151,13 +164,13 @@ class APIService {
 
     public getCustomLobbyTranslations = async (lobby_id: string) => {
         try {
-            return await this.fetch<TranslationJSON>({
+            return await this.fetch<Resource>({
                 url: ENDPOINTS.CUSTOM_LOBBY_TRANSLATIONS(lobby_id),
                 method: 'get',
             });
         } catch (e) {
             console.log(e);
-            return {} as TranslationJSON;
+            return {} as Resource;
         }
     };
 
@@ -241,17 +254,17 @@ class APIService {
         });
     };
 
-    public getUserAvatarEndpoint = (username: string) => {
-        return ENDPOINTS.GET_USER_AVATAR(username);
+    public getUserAvatarEndpoint = (userId: string) => {
+        return ENDPOINTS.GET_USER_AVATAR(userId);
     };
 
-    public async approveLobbyPlayer(lobbyId: string, username: string) {
+    public async approveLobbyPlayer(lobbyId: string, userId: string) {
         return this.fetch<{
             players: Array<iLobbyPlayerInfo>;
             waitingApproval: Array<iWaitingApprovalPlayer>;
             message: string;
         }>({
-            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, username),
+            url: ENDPOINTS.APPROVE_LOBBY_PLAYER(lobbyId, userId),
             method: 'patch',
         });
     }
@@ -299,9 +312,9 @@ class APIService {
         }));
     }
 
-    public async removeLobbyMember(lobbyId: string, username: string) {
+    public async removeLobbyMember(lobbyId: string, userId: string) {
         return this.fetch<{ players: Array<iLobbyPlayerInfo>; waitingApproval: Array<iWaitingApprovalPlayer> }>({
-            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, username),
+            url: ENDPOINTS.REMOVE_LOBBY_PLAYER(lobbyId, userId),
             method: 'delete',
         });
     }
@@ -442,6 +455,46 @@ class APIService {
             method: 'get',
         });
         return joined;
+    };
+
+    public getMyStatistics = async () => {
+        return await this.fetch<iUserStatistics>({
+            url: ENDPOINTS.USER_STATISTICS,
+            method: 'get',
+        });
+    };
+
+    public getMyCharacters = async () => {
+        const { characters } = await this.fetch<{
+            characters: Array<iMyCharacter>;
+        }>({
+            url: ENDPOINTS.USER_CHARACTERS,
+            method: 'get',
+        });
+        return characters;
+    };
+
+    public addCredentialAuth = async (data: { username: string; password: string }) => {
+        return await this.fetch({
+            url: ENDPOINTS.ADD_CREDENTIAL_AUTH,
+            method: 'post',
+            data,
+        });
+    };
+
+    public patchUserData = async (data: Partial<iUserPatchData>) => {
+        return await this.fetch<iUserPatchData>({
+            url: ENDPOINTS.PATCH_USER_INFO,
+            method: 'patch',
+            data,
+        });
+    };
+
+    public getMyExtraData = async () => {
+        return await this.fetch<iUserExtraData>({
+            url: ENDPOINTS.USER_EXTRA_DATA,
+            method: 'get',
+        });
     };
 }
 

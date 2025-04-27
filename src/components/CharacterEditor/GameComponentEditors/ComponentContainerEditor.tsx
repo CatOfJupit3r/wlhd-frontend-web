@@ -8,14 +8,15 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
 import {
-    CharacterDataEditable,
-    ItemEditable,
-    SpellEditable,
-    StatusEffectEditable,
-    WeaponEditable,
-} from '@models/CombatEditorModels';
+    useCharacterEditorAddActions,
+    useCharacterEditorInventory,
+    useCharacterEditorRemoveActions,
+    useCharacterEditorSpellBook,
+    useCharacterEditorStatusEffects,
+    useCharacterEditorWeaponry,
+} from '@context/character-editor';
+import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -24,41 +25,27 @@ const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
-    const { character, updateCharacter } = useCharacterEditorContext();
+    const { removeFromInventory, removeFromWeaponry, removeFromSpellBook, removeFromStatusEffect } =
+        useCharacterEditorRemoveActions();
 
     const removeComponent = useCallback(
         (index: number) => {
             switch (type) {
                 case 'item':
-                    updateCharacter({
-                        ...character,
-                        inventory: character.inventory.filter((_, i) => i !== index),
-                    });
+                    removeFromInventory(index);
                     break;
                 case 'weapon':
-                    updateCharacter({
-                        ...character,
-                        weaponry: character.weaponry.filter((_, i) => i !== index),
-                    });
+                    removeFromWeaponry(index);
                     break;
                 case 'spell':
-                    updateCharacter({
-                        ...character,
-                        spellBook: {
-                            ...character.spellBook,
-                            knownSpells: character.spellBook.knownSpells.filter((_, i) => i !== index),
-                        },
-                    });
+                    removeFromSpellBook(index);
                     break;
                 case 'statusEffect':
-                    updateCharacter({
-                        ...character,
-                        statusEffects: character.statusEffects.filter((_, i) => i !== index),
-                    });
+                    removeFromStatusEffect(index);
                     break;
             }
         },
-        [character, updateCharacter, type],
+        [removeFromInventory, removeFromWeaponry, removeFromSpellBook, removeFromStatusEffect, type],
     );
 
     return (
@@ -75,7 +62,11 @@ const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER
 };
 
 const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
-    const { character, updateCharacter } = useCharacterEditorContext();
+    const { inventory, updateItemInInventory } = useCharacterEditorInventory();
+    const { spellBook, updateSpellInSpellBook, updateSpellBookMaxActiveSpells } = useCharacterEditorSpellBook();
+    const { weaponry, updateWeaponInWeaponry } = useCharacterEditorWeaponry();
+    const { statusEffects, updateStatusEffectInStatusEffects } = useCharacterEditorStatusEffects();
+
     const { type } = props;
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
@@ -84,36 +75,39 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
     const updateComponent = useCallback(
         (index: number) => {
             return (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE]) => {
-                const newCharacter = { ...character };
                 switch (type) {
                     case 'item':
-                        newCharacter.inventory[index] = component as CharacterDataEditable['inventory'][number];
+                        updateItemInInventory({ index, component });
                         break;
                     case 'weapon':
-                        newCharacter.weaponry[index] = component as CharacterDataEditable['weaponry'][number];
+                        updateWeaponInWeaponry({ index, component });
                         break;
                     case 'spell':
-                        newCharacter.spellBook.knownSpells[index] =
-                            component as CharacterDataEditable['spellBook']['knownSpells'][number];
+                        updateSpellInSpellBook({ index, component });
                         break;
                     case 'statusEffect':
-                        newCharacter.statusEffects[index] = component as CharacterDataEditable['statusEffects'][number];
+                        updateStatusEffectInStatusEffects({ index, component });
                         break;
                 }
-                updateCharacter(newCharacter);
             };
         },
-        [props.type, character, updateCharacter],
+        [
+            props.type,
+            updateItemInInventory,
+            updateSpellInSpellBook,
+            updateWeaponInWeaponry,
+            updateStatusEffectInStatusEffects,
+        ],
     );
 
     switch (type) {
         case 'item':
-            if (character.inventory.length === 0) {
+            if (inventory.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.inventory.map((item, index) => {
+                        {inventory.map((item, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'item'} />
@@ -128,12 +122,12 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                 );
             }
         case 'weapon':
-            if (character.weaponry.length === 0) {
+            if (weaponry.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.weaponry.map((weapon, index) => {
+                        {weaponry.map((weapon, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'weapon'} />
@@ -141,9 +135,7 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         component={weapon as WeaponEditable}
                                         setComponent={updateComponent(index)}
                                         canBeActivated={() => {
-                                            return (
-                                                character.weaponry.filter((weapon) => weapon.isActive).length + 1 < 2
-                                            );
+                                            return weaponry.filter((weapon) => weapon.isActive).length + 1 < 2;
                                         }}
                                     />
                                 </div>
@@ -164,16 +156,10 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                         <Input
                             type={'string'}
                             placeholder={t('general.infinity')}
-                            value={character.spellBook.maxActiveSpells || ''}
+                            value={spellBook.maxActiveSpells || ''}
                             onChange={(e) => {
                                 if (e.target.value === '') {
-                                    updateCharacter({
-                                        ...character,
-                                        spellBook: {
-                                            ...character.spellBook,
-                                            maxActiveSpells: null,
-                                        },
-                                    });
+                                    updateSpellBookMaxActiveSpells(null);
                                     return;
                                 }
                                 const value = parseInt(e.target.value);
@@ -181,24 +167,15 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                 if (isNaN(value) || value < 0 || value > 256) {
                                     return;
                                 } else {
-                                    updateCharacter({
-                                        ...character,
-                                        spellBook: {
-                                            knownSpells: character.spellBook.knownSpells.map((spell) => ({
-                                                ...spell,
-                                                isActive: false,
-                                            })),
-                                            maxActiveSpells: value,
-                                        },
-                                    });
+                                    updateSpellBookMaxActiveSpells(value);
                                 }
                             }}
                         />
                     </div>
-                    {character.spellBook.knownSpells.length === 0 ? (
+                    {spellBook.knownSpells.length === 0 ? (
                         <EmptyMenuContent />
                     ) : (
-                        character.spellBook.knownSpells.map((spell, index) => {
+                        spellBook.knownSpells.map((spell, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'spell'} />
@@ -206,11 +183,9 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                                         component={spell as SpellEditable}
                                         setComponent={updateComponent(index)}
                                         canBeActivated={() => {
-                                            return character.spellBook.maxActiveSpells
-                                                ? character.spellBook.knownSpells.filter((spell) => spell.isActive)
-                                                      .length +
-                                                      1 <
-                                                      character.spellBook.maxActiveSpells
+                                            return spellBook.maxActiveSpells
+                                                ? spellBook.knownSpells.filter((spell) => spell.isActive).length + 1 <
+                                                      spellBook.maxActiveSpells
                                                 : true;
                                         }}
                                     />
@@ -221,12 +196,12 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
                 </div>
             );
         case 'statusEffect':
-            if (character.statusEffects.length === 0) {
+            if (statusEffects.length === 0) {
                 return <EmptyMenuContent />;
             } else {
                 return (
                     <>
-                        {character.statusEffects.map((effect, index) => {
+                        {statusEffects.map((effect, index) => {
                             return (
                                 <div key={index} className={'flex flex-col gap-2'}>
                                     <RemoveComponentButton index={index} type={'statusEffect'} />
@@ -248,49 +223,42 @@ const ContainerContent = (props: { type: CONTAINER_TYPE }) => {
 const ComponentContainerEditor = ({ type }: { type: CONTAINER_TYPE }) => {
     // maybe extract this to general editor folder too
     // but for now, it's only needed in character editor, so it's fine
-    const { character, updateCharacter } = useCharacterEditorContext();
+    const { addItemToInventory, addSpellToSpellBook, addWeaponToWeaponry, addStatusEffectToContainers } =
+        useCharacterEditorAddActions();
     const { t } = useTranslation('local', {
         keyPrefix: 'editor',
     });
 
     const addNewComponent = useCallback(
         (component: COMPONENT_TO_INTERFACE[CONTAINER_TYPE], descriptor: string) => {
-            const newCharacter = { ...character };
             switch (type) {
                 case 'item':
-                    newCharacter.inventory = [
-                        ...newCharacter.inventory,
-                        {
-                            ...component,
-                            descriptor,
-                        } as CharacterDataEditable['inventory'][number],
-                    ];
+                    addItemToInventory({
+                        ...component,
+                        descriptor,
+                    });
                     break;
                 case 'weapon':
-                    newCharacter.weaponry = [
-                        ...newCharacter.weaponry,
-                        component as CharacterDataEditable['weaponry'][number],
-                    ];
+                    addWeaponToWeaponry({
+                        ...component,
+                        descriptor,
+                    });
                     break;
                 case 'spell':
-                    newCharacter.spellBook = {
-                        ...newCharacter.spellBook,
-                        knownSpells: [
-                            ...newCharacter.spellBook.knownSpells,
-                            component as CharacterDataEditable['spellBook']['knownSpells'][number],
-                        ],
-                    };
+                    addSpellToSpellBook({
+                        ...component,
+                        descriptor,
+                    });
                     break;
                 case 'statusEffect':
-                    newCharacter.statusEffects = [
-                        ...newCharacter.statusEffects,
-                        component as CharacterDataEditable['statusEffects'][number],
-                    ];
+                    addStatusEffectToContainers({
+                        ...component,
+                        descriptor,
+                    });
                     break;
             }
-            updateCharacter(newCharacter);
         },
-        [character, updateCharacter],
+        [addItemToInventory, addSpellToSpellBook, addWeaponToWeaponry, addStatusEffectToContainers],
     );
 
     return (

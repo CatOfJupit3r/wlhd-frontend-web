@@ -26,19 +26,14 @@ const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) =>
                 <TooltipTrigger asChild>
                     <div className={'flex h-full w-full flex-row items-center gap-1'}>
                         <div className={'relative'}>
-                            <UserAvatar
-                                username={userInLobby.username}
-                                className={'rounded-lg border-none shadow-none'}
-                            />
+                            <UserAvatar userId={userInLobby.userId} className={'rounded-lg border-none shadow-none'} />
                             {isGm && <FaCrown className={'absolute right-0 top-0 text-amber-300'} />}
                         </div>
                         <div className={cn('h-full w-3 rounded-xl', isConnected ? 'bg-green-500' : 'bg-red-500')} />
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>
-                        {userInLobby.nickname} (@{userInLobby.username})
-                    </p>
+                    <p>{userInLobby.nickname}</p>
                 </TooltipContent>
             </Tooltip>
         </div>

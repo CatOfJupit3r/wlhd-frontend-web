@@ -11,7 +11,7 @@ import {
 import { IndividualTagDisplay } from '@components/InfoDisplay/TagsDisplay';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Button, ButtonWithTooltip } from '@components/ui/button';
-import { Input } from '@components/ui/input';
+import { Input, NumberInput } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Separator } from '@components/ui/separator';
@@ -25,9 +25,10 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
+import { OneOf } from '@models/common-types';
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels';
-import { OneOf } from '@models/OneOf';
-import { capitalizeFirstLetter, cn } from '@utils';
+import { cn } from '@utils';
+import { capitalize } from 'lodash';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaX } from 'react-icons/fa6';
@@ -38,25 +39,6 @@ const useComponentEditorTranslation = () => {
     });
 };
 
-export const getHandlerChange = (max: number, min: number, set: (value: number) => void, fallbackValue: number = 1) => {
-    return (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        if (value === '') {
-            set(fallbackValue);
-        } else {
-            const parsedValue = parseInt(value);
-            if (isNaN(parsedValue)) {
-                set(fallbackValue);
-            } else if (parsedValue < min) {
-                set(min);
-            } else if (parsedValue > max) {
-                set(max);
-            } else {
-                set(parsedValue);
-            }
-        }
-    };
-};
 export type AllowedEditables = OneOf<
     [ItemEditable, WeaponEditable, SpellEditable, StatusEffectEditable, AreaEffectEditable]
 >;
@@ -112,10 +94,12 @@ export const QuantityEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     return (
         <div>
             <EditorLabel text={t('quantity')} icon={<QuantityIcon />} />
-            <Input
-                type={'number'}
+            <NumberInput
                 value={component.quantity}
-                onChange={getHandlerChange(99, 1, (value) => changeComponentField('quantity', value))}
+                min={1}
+                onChange={(value) => {
+                    changeComponentField('quantity', value);
+                }}
                 className={'w-20'}
             />
         </div>
@@ -128,19 +112,22 @@ export const UsesEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
             <EditorLabel text={t('component-uses')} icon={<UsesIcon />} />
             <div className={'flex flex-row items-center gap-2'}>
                 <div className={'flex flex-row items-center gap-2 text-sm font-normal italic'}>
-                    <Input
-                        type={'number'}
+                    <NumberInput
                         value={component.currentConsecutiveUses}
-                        onChange={getHandlerChange(99, 1, (value) =>
-                            changeComponentField('currentConsecutiveUses', value),
-                        )}
+                        max={99}
+                        min={1}
+                        onChange={(value) => {
+                            changeComponentField('currentConsecutiveUses', value);
+                        }}
                         className={'w-20'}
                     />
                     /
-                    <Input
-                        type={'number'}
+                    <NumberInput
                         value={component.maxConsecutiveUses ?? 0}
-                        onChange={getHandlerChange(99, 0, (value) => changeComponentField('maxConsecutiveUses', value))}
+                        min={0}
+                        onChange={(value) => {
+                            changeComponentField('maxConsecutiveUses', value);
+                        }}
                         className={'w-20'}
                     />
                 </div>
@@ -153,10 +140,11 @@ export const DurationEditor: React.FC<ComponentPartEditorProps> = ({ component, 
     return (
         <div>
             <EditorLabel text={t('duration')} icon={<DurationIcon />} />
-            <Input
-                type={'number'}
+            <NumberInput
                 value={component.duration ?? 0}
-                onChange={getHandlerChange(99, 0, (value) => changeComponentField('duration', value))}
+                onChange={(value) => {
+                    changeComponentField('duration', value);
+                }}
                 className={'w-20'}
             />
         </div>
@@ -169,17 +157,19 @@ export const CooldownEditor: React.FC<ComponentPartEditorProps> = ({ component, 
         <div>
             <EditorLabel text={t('cooldown')} icon={<CooldownIcon />} />
             <div className={'flex flex-row items-center gap-1 text-sm font-normal italic'}>
-                <Input
-                    type={'number'}
+                <NumberInput
                     value={component.turnsUntilUsage}
-                    onChange={getHandlerChange(99, 0, (value) => changeComponentField('turnsUntilUsage', value))}
+                    onChange={(value) => {
+                        changeComponentField('turnsUntilUsage', value);
+                    }}
                     className={'w-20'}
                 />
                 /
-                <Input
-                    type={'number'}
+                <NumberInput
                     value={component.cooldownValue ?? 0}
-                    onChange={getHandlerChange(99, 0, (value) => changeComponentField('cooldownValue', value))}
+                    onChange={(value) => {
+                        changeComponentField('cooldownValue', value);
+                    }}
                     className={'w-20'}
                 />
             </div>
@@ -192,10 +182,11 @@ export const CostEditor: React.FC<ComponentPartEditorProps> = ({ component, chan
     return (
         <div>
             <EditorLabel text={t('cost-to-use')} icon={<ActionPointsIcon />} />
-            <Input
-                type={'number'}
+            <NumberInput
                 value={component.usageCost ?? 0}
-                onChange={getHandlerChange(99, 0, (value) => changeComponentField('usageCost', value))}
+                onChange={(value) => {
+                    changeComponentField('usageCost', value);
+                }}
                 className={'w-20'}
             />
         </div>
@@ -231,39 +222,29 @@ const MemoryValueEditor: React.FC<{
         case 'dice':
             return (
                 <div className={'flex flex-row items-center gap-2'}>
-                    <Input
-                        type={'number'}
+                    <NumberInput
                         value={(value as DiceMemory['value']).amount}
-                        onChange={(e) => {
-                            if (e.target.value === '' || isNaN(parseInt(e.target.value))) {
-                                change({
-                                    amount: 0,
-                                    sides: (value as DiceMemory['value']).sides,
-                                });
-                                return;
-                            }
+                        max={99}
+                        min={1}
+                        fallbackValue={1}
+                        onChange={(parsed) => {
                             change({
-                                amount: parseInt(e.target.value),
+                                amount: parsed,
                                 sides: (value as DiceMemory['value']).sides,
                             });
                         }}
                         className={'w-20'}
                     />
                     d
-                    <Input
-                        type={'number'}
+                    <NumberInput
                         value={(value as DiceMemory['value']).sides}
-                        onChange={(e) => {
-                            if (e.target.value === '' || isNaN(parseInt(e.target.value))) {
-                                change({
-                                    amount: (value as DiceMemory['value']).amount,
-                                    sides: 0,
-                                });
-                                return;
-                            }
+                        max={99}
+                        min={1}
+                        fallbackValue={1}
+                        onChange={(parsed) => {
                             change({
                                 amount: (value as DiceMemory['value']).amount,
-                                sides: parseInt(e.target.value),
+                                sides: parsed,
                             });
                         }}
                         className={'w-20'}
@@ -285,12 +266,12 @@ const MemoryValueEditor: React.FC<{
             );
         case 'number':
             return (
-                <Input
-                    type={'number'}
+                <NumberInput
                     value={value as number}
-                    onChange={(e) => {
-                        change(parseInt(e.target.value));
-                    }}
+                    max={99}
+                    min={1}
+                    fallbackValue={1}
+                    onChange={(value) => change(value)}
                     className={'w-full'}
                 />
             );
@@ -473,7 +454,7 @@ const IndividualMemoryEditor: React.FC<{
                 <Tooltip>
                     <TooltipTrigger>
                         <div className={'cursor-default text-base font-bold'}>
-                            {capitalizeFirstLetter(t(memory.display_name, { includePrefix: false })) || memory_key}
+                            {capitalize(t(memory.display_name, { includePrefix: false })) || memory_key}
                         </div>
                     </TooltipTrigger>
                     <TooltipContent>

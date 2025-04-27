@@ -1,6 +1,6 @@
 import { GameComponentMemory, PossibleMemory } from '@models/GameModels';
-import { capitalizeFirstLetter } from '@utils';
-import { memoryValueToTranslation } from '@utils/memoryValueToTranslation';
+import { memoryValueToTranslation } from '@utils/game-display-tools';
+import { capitalize } from 'lodash';
 import React, { FC, HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,8 +16,7 @@ const ComponentMemory: React.FC<
 
     return (
         <li className={'flex flex-row gap-1'} {...props}>
-            <p>{capitalizeFirstLetter(t(display_name))}</p> :{' '}
-            <p className={internal ? 'text-gray-400' : ''}>{t(key, args)}</p>
+            <p>{capitalize(t(display_name))}</p> : <p className={internal ? 'text-gray-400' : ''}>{t(key, args)}</p>
         </li>
     );
 };

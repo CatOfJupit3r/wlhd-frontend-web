@@ -34,17 +34,17 @@ type ControlledByPrototype = {
     id?: string;
 };
 
-interface ControlledByPlayer extends ControlledByPrototype {
+export interface ControlledByPlayer extends ControlledByPrototype {
     type: 'player';
     id: string;
 }
 
-interface ControlledByAI extends ControlledByPrototype {
+export interface ControlledByAI extends ControlledByPrototype {
     type: 'ai';
     id: string;
 }
 
-interface ControlledByGameLogic extends ControlledByPrototype {
+export interface ControlledByGameLogic extends ControlledByPrototype {
     type: 'game_logic';
 }
 

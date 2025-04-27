@@ -15,7 +15,11 @@ const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode
     className,
 }) => {
     return (
-        <ButtonLink className={className} href={`/lobby-rooms/${lobbyId}/game-rooms/${combatId}`}>
+        <ButtonLink
+            className={className}
+            to={`/lobby-rooms/$lobbyId/game-rooms/$gameId`}
+            params={{ lobbyId, gameId: combatId }}
+        >
             {children}
         </ButtonLink>
     );
@@ -50,11 +54,7 @@ const CombatDisplay: FC<iCombatDisplay> = ({
                             <CommaSeparatedList
                                 items={activePlayers}
                                 emptyMessage={t('no-players')}
-                                renderItem={(item) => (
-                                    <p>
-                                        {item.nickname} (@{item.username})
-                                    </p>
-                                )}
+                                renderItem={(item) => <p>{item.nickname}</p>}
                                 className={cn(
                                     'flex flex-row',
                                     activePlayers?.length === 0 ? 'text-gray-500' : 'text-black',

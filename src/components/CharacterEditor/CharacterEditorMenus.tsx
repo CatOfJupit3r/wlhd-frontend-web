@@ -12,11 +12,11 @@ import {
 import { EmptyMenuContent } from '@components/ui/menu';
 import { Separator } from '@components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
-import { useCharacterEditorContext } from '@context/CharacterEditorProvider';
+import { useCharacterEditor } from '@context/character-editor';
 import { useState } from 'react';
 
 export const CharacterEditorMenus = () => {
-    const { flags } = useCharacterEditorContext();
+    const { flags } = useCharacterEditor();
     const [menu, setMenu] = useState<null | 'attribute' | 'item' | 'weapon' | 'spell' | 'statusEffect' | string>(null);
 
     return (

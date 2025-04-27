@@ -24,7 +24,7 @@ const CharactersInLobby: FC<iCharactersInLobby> = ({ characters, lobbyId }) => {
                     <MdOutlineGroups3 className="mr-2 inline-block" />
                     {t('title')}
                 </CardTitle>
-                <ButtonLink href={`/lobby-rooms/${lobbyId}/view-character`} variant={'outline'}>
+                <ButtonLink to={`/lobby-rooms/$lobbyId/view-character`} params={{ lobbyId }} variant={'outline'}>
                     {t('goto-view-characters')}
                 </ButtonLink>
             </CardHeader>

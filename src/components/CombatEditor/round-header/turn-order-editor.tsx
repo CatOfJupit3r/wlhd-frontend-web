@@ -2,12 +2,12 @@ import { Sortable } from '@components/dnd-extensions/sortable';
 import { CharacterCard } from '@components/GameScreen/turn-order-display';
 import { Button, ButtonWithTooltip } from '@components/ui/button';
 import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
-import { useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCharacterByIdInEditor, useCombatEditor } from '@context/combat-editor';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import { horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { cn } from '@utils';
 import { AnimatePresence } from 'framer-motion';
-import React, { RefObject, useCallback, useMemo } from 'react';
+import React, { RefObject, useCallback } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const CharacterCardInEditor: React.FC<{
@@ -16,13 +16,8 @@ const CharacterCardInEditor: React.FC<{
     turnId: string;
     disableAnimation?: boolean;
 }> = ({ characterId, disableAnimation, turnId, index, ...props }) => {
-    const { battlefield, makeCharacterActive, activeCharacterIndex, changeTurnOrder, turnOrder } =
-        useCombatEditorContext();
-
-    const character = useMemo(
-        () => Object.values(battlefield).find((character) => character.id_ === characterId),
-        [battlefield, characterId],
-    );
+    const { makeCharacterActive, activeCharacterIndex, changeTurnOrder, turnOrder } = useCombatEditor();
+    const character = useCharacterByIdInEditor(characterId);
 
     const handleDelete = useCallback(() => {
         const newTurnOrder = [...turnOrder];
@@ -31,7 +26,7 @@ const CharacterCardInEditor: React.FC<{
         if (activeCharacterIndex === index && activeCharacterIndex >= newTurnOrder.length) {
             makeCharacterActive(index - 1);
         }
-    }, [index, turnOrder, activeCharacterIndex]);
+    }, [index, turnOrder, activeCharacterIndex, changeTurnOrder]);
 
     if (!character) return null;
 
@@ -71,7 +66,7 @@ const CharacterCardInEditor: React.FC<{
 };
 
 const TurnOrderEditor = () => {
-    const { turnOrder, changeTurnOrder, activeCharacterIndex, makeCharacterActive } = useCombatEditorContext();
+    const { turnOrder, changeTurnOrder, activeCharacterIndex, makeCharacterActive } = useCombatEditor();
 
     return (
         <div className={'flex flex-row gap-2'}>

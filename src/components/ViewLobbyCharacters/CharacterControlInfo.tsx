@@ -40,7 +40,7 @@ export const filterPlayersByControlledDescriptor = (descriptor: string | null, r
 
 const ChangeControlledBy = () => {
     const [playerToAdd, setPlayerToAdd] = useState<string>('');
-    const { lobby, refetch } = useThisLobby();
+    const { lobby } = useThisLobby();
     const { descriptor } = useViewCharactersContext();
     const { mutate, isPending } = useAssignPlayerToCharacter();
 
@@ -49,15 +49,11 @@ const ChangeControlledBy = () => {
             <Combobox
                 items={lobby.players
                     .filter(filterPlayersByControlledDescriptor(descriptor, true))
-                    .map(({ userId, username }) => ({
+                    .map(({ userId, nickname }) => ({
                         value: userId,
-                        label: username,
+                        label: nickname,
                         icon: () => (
-                            <UserAvatar
-                                username={username}
-                                className={'size-8 border-2'}
-                                style={{ borderRadius: '50%' }}
-                            />
+                            <UserAvatar userId={userId} className={'size-8 border-2'} style={{ borderRadius: '50%' }} />
                         ),
                     }))}
                 value={playerToAdd}
@@ -98,9 +94,9 @@ const PlainListOfPlayers = ({ playersInControl }: { playersInControl: iLobbyPlay
         <ScrollArea className={'mt-2 flex h-[100px] flex-col gap-1'}>
             {playersInControl.map((player) => {
                 return (
-                    <div key={player.username} className={'relative flex flex-row items-center gap-2'}>
-                        <UserAvatar username={player.username} className={'size-8 border-2'} />
-                        <p className={'max-w-[75%]'}>@{player.username}</p>
+                    <div key={player.nickname} className={'relative flex flex-row items-center gap-2'}>
+                        <UserAvatar userId={player.userId} className={'size-8 border-2'} />
+                        <p className={'max-w-[75%]'}>@{player.nickname}</p>
                         <MutationButton
                             isPending={isPending}
                             mutate={() => {

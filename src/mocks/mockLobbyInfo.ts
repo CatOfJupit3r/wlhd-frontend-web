@@ -10,9 +10,9 @@ export const mockLobbyInfo: iLobbyInformation = {
             isActive: true,
             roundCount: 3,
             activePlayers: [
-                { username: 'player1', nickname: 'Thorin' },
-                { username: 'player2', nickname: 'Legolas' },
-                { username: 'player3', nickname: 'Gimli' },
+                { userId: 'player1', nickname: 'Thorin' },
+                { userId: 'player2', nickname: 'Legolas' },
+                { userId: 'player3', nickname: 'Gimli' },
             ],
         },
         {
@@ -21,8 +21,8 @@ export const mockLobbyInfo: iLobbyInformation = {
             isActive: false,
             roundCount: 1,
             activePlayers: [
-                { username: 'player4', nickname: 'Gandalf' },
-                { username: 'player5', nickname: 'Frodo' },
+                { userId: 'player4', nickname: 'Gandalf' },
+                { userId: 'player5', nickname: 'Frodo' },
             ],
         },
     ],
@@ -55,19 +55,16 @@ export const mockLobbyInfo: iLobbyInformation = {
     gm: 'Dungeon Master',
     players: [
         {
-            username: 'player1',
             nickname: 'Thorin',
             userId: 'user1',
             characters: [['coordinator:hero', 'builtins:characters.hero.name']],
         },
         {
-            username: 'player2',
             nickname: 'Legolas',
             userId: 'user2',
             characters: [],
         },
         {
-            username: 'player5',
             nickname: 'Frodo',
             userId: 'user5',
             characters: [],
@@ -75,11 +72,11 @@ export const mockLobbyInfo: iLobbyInformation = {
     ],
     waitingApproval: [
         {
-            username: 'player4',
+            name: 'player4',
             userId: 'user4',
         },
         {
-            username: 'player3',
+            name: 'player3',
             userId: 'user3',
         },
     ],

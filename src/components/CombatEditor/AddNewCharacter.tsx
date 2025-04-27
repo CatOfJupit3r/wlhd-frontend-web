@@ -22,12 +22,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER, useCombatEditorContext } from '@context/CombatEditorContext';
+import { useCombatEditor } from '@context/combat-editor';
 import { ControlledBy } from '@models/EditorConversion';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import { useGameCharacterInformation } from '@queries/useGameData';
 import { useLoadedCharacters } from '@queries/useLoadedGameData';
 import useThisLobby from '@queries/useThisLobby';
+import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER } from '@utils';
 import { SUPPORTED_DLCs } from 'config';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +48,7 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
         dlc === 'coordinator',
     );
     const { t } = useTranslation();
-    const { addCharacter } = useCombatEditorContext();
+    const { addCharacter } = useCombatEditor();
 
     return (
         <AlertDialogContent className={'max-w-3xl'}>
@@ -126,7 +127,11 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                         if (dlc !== 'coordinator') {
                             if (character) {
                                 console.log('Adding character from preset', character);
-                                addCharacter(clickedSquare, character, `${dlc}:${descriptor}`);
+                                addCharacter({
+                                    square: clickedSquare,
+                                    character: character,
+                                    descriptor: `${dlc}:${descriptor}`,
+                                });
                             }
                         } else {
                             const player = lobby.players.find((player) =>
@@ -134,16 +139,16 @@ const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string
                             );
                             const controlled: ControlledBy = player
                                 ? CONTROLLED_BY_PLAYER(player.userId)
-                                : CONTROLLED_BY_GAME_LOGIC;
+                                : CONTROLLED_BY_GAME_LOGIC();
 
                             if (characterFromCoordinator) {
                                 console.log('Adding character from coordinator', characterFromCoordinator);
-                                addCharacter(
-                                    clickedSquare,
-                                    characterFromCoordinator,
-                                    `${dlc}:${descriptor}`,
-                                    controlled,
-                                );
+                                addCharacter({
+                                    square: clickedSquare,
+                                    character: characterFromCoordinator,
+                                    descriptor: `${dlc}:${descriptor}`,
+                                    control: controlled,
+                                });
                             }
                         }
                     }}
