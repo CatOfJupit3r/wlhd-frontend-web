@@ -1,3 +1,8 @@
+import { useCombatEditor } from '@context/combat-editor';
+import { SUPPORTED_DLCs } from 'config';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import { gameAssetToComboboxIcon } from '@components/GameAsset';
 import {
@@ -22,16 +27,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { useCombatEditor } from '@context/combat-editor';
 import { ControlledBy } from '@models/EditorConversion';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import { useGameCharacterInformation } from '@queries/useGameData';
 import { useLoadedCharacters } from '@queries/useLoadedGameData';
 import useThisLobby from '@queries/useThisLobby';
 import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER } from '@utils';
-import { SUPPORTED_DLCs } from 'config';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {
     const [dlc, setDlc] = useState<string>('');

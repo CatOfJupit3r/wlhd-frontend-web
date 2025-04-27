@@ -1,3 +1,13 @@
+import { useNavigate } from '@tanstack/react-router';
+import { IS_DEVELOPMENT } from 'config';
+import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconType } from 'react-icons';
+import { BiLogOut, BiSolidCog } from 'react-icons/bi';
+import { FaBook } from 'react-icons/fa';
+import { LuUser } from 'react-icons/lu';
+
+import { CurrentUserAvatar } from '@components/UserAvatars';
 import { Button } from '@components/ui/button';
 import {
     DropdownMenu,
@@ -9,19 +19,10 @@ import {
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu';
 import StyledLink from '@components/ui/styled-link';
-import { CurrentUserAvatar } from '@components/UserAvatars';
 import useMe from '@queries/useMe';
 import useThisLobby from '@queries/useThisLobby';
 import AuthService from '@services/AuthService';
-import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
-import { IS_DEVELOPMENT } from 'config';
-import { useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { IconType } from 'react-icons';
-import { BiLogOut, BiSolidCog } from 'react-icons/bi';
-import { FaBook } from 'react-icons/fa';
-import { LuUser } from 'react-icons/lu';
 
 interface iSection {
     name: string;

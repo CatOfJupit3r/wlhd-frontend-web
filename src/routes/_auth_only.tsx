@@ -1,6 +1,7 @@
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
+
 import PseudoPage from '@pages/PseudoPage';
 import { useMe } from '@queries/useMe';
-import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth_only')({
     beforeLoad: async ({ context }) => {

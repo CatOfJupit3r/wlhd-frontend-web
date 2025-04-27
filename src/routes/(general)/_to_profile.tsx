@@ -1,7 +1,8 @@
 import { useNoFooterOrHeader } from '@context/LayoutContext';
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
+
 import PseudoPage from '@pages/PseudoPage';
 import { useMe } from '@queries/useMe';
-import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/(general)/_to_profile')({
     beforeLoad: async ({ context }) => {

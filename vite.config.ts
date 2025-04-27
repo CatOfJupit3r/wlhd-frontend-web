@@ -1,11 +1,11 @@
 // import react from '@vitejs/plugin-react-swc'
+// @ts-expect-error wtf???? like it finds the type, but STILL complains about it
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
-// @ts-expect-error wtf???? like it finds the type, but STILL complains about it
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 
 function emptySourcemapFix() {
     let currentInterval = null;

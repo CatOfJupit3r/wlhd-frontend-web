@@ -1,9 +1,10 @@
-import { Badge, BadgeVariants } from '@components/ui/badge';
-import { GameTags } from '@models/CombatEditorModels';
-import { PrefixCollection } from '@utils/game-display-tools';
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTags } from 'react-icons/fa';
+
+import { Badge, BadgeVariants } from '@components/ui/badge';
+import { GameTags } from '@models/CombatEditorModels';
+import { PrefixCollection } from '@utils/game-display-tools';
 
 interface iTag {
     tag: string;

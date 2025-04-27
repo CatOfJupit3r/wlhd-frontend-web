@@ -1,5 +1,6 @@
-import { cn } from '@utils';
 import { FC, HtmlHTMLAttributes } from 'react';
+
+import { cn } from '@utils';
 
 interface iSpinnerProps {
     type: 'spin' | 'pulse';
@@ -73,12 +74,12 @@ const ThreeInOneSpinner: FC<iSVGSpinnerChildProps> = (props) => {
 };
 
 export {
-    Spinner,
     BlocksShuffleSpinner,
     BlocksWaveSpinner,
-    RingResizeSpinner,
-    ThreeInOneSpinner,
-    SVGSpinner,
-    TrueSpinner,
     PulsingSpinner,
+    RingResizeSpinner,
+    Spinner,
+    SVGSpinner,
+    ThreeInOneSpinner,
+    TrueSpinner,
 };

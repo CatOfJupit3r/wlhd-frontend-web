@@ -1,3 +1,6 @@
+import { iActionContext } from '@context/ActionContext';
+import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice';
+import { AppDispatch } from '@redux/store';
 import { useNavigate } from '@tanstack/react-router';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +12,7 @@ import Overlay from '@components/Overlay';
 import { ThreeInOneSpinner } from '@components/Spinner';
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import { iActionContext } from '@context/ActionContext';
 import useThisLobby from '@queries/useThisLobby';
-import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice';
-import { AppDispatch } from '@redux/store';
 import SocketService from '@services/SocketService';
 
 interface GameLogicWrapperProps {

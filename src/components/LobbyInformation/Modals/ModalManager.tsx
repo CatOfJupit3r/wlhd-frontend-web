@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import InvitePlayerModal from '@components/LobbyInformation/Modals/InvitePlayerModal';
 import { AlertDialogContent } from '@components/ui/alert-dialog';
-import { FC } from 'react';
+
 import { LOBBY_INFO_MODALS, LOBBY_INFO_MODALS_TYPE } from '../types';
 
 interface iModalManager {

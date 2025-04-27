@@ -1,5 +1,4 @@
 // src/components/multi-select.tsx
-
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 import { LuCheck, LuChevronDown, LuCircleX, LuWandSparkles, LuX } from 'react-icons/lu';

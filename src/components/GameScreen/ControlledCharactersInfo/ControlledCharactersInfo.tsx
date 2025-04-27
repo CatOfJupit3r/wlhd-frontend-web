@@ -1,6 +1,7 @@
-import { CharacterDisplayInGame } from '@components/CharacterDisplay';
 import { selectActiveCharacter, selectControlledCharacters } from '@redux/slices/gameScreenSlice';
 import { useSelector } from 'react-redux';
+
+import { CharacterDisplayInGame } from '@components/CharacterDisplay';
 
 const ControlledCharactersInfo = () => {
     const controlledCharacters = useSelector(selectControlledCharacters);

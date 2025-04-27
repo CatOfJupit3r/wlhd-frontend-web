@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FC, useCallback, useMemo } from 'react';
+import { z } from 'zod';
 
 import { cn } from '@utils';
-import { z } from 'zod';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 

@@ -1,5 +1,4 @@
 import { GameTags } from '@models/CombatEditorModels';
-
 import { OneOf } from '@models/common-types';
 
 export interface GameComponentDecoration {

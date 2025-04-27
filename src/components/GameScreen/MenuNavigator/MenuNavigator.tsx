@@ -1,9 +1,10 @@
-import { ButtonWithTooltip } from '@components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { FaUsers } from 'react-icons/fa';
 import { FaUncharted } from 'react-icons/fa6';
 import { MdHistoryToggleOff, MdOutlineVideogameAssetOff } from 'react-icons/md';
 import { TbManualGearbox } from 'react-icons/tb';
+
+import { ButtonWithTooltip } from '@components/ui/button';
 
 const UPPER_BUTTONS = {
     YOUR_CHARACTERS: {

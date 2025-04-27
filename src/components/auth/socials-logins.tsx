@@ -1,11 +1,12 @@
+import { CSSProperties, FC } from 'react';
+import { FaDiscord } from 'react-icons/fa';
+
 import { iAwaitingButtonProps, MutationButton } from '@components/ui/button';
 import { AccountSocialProviders } from '@models/common-types';
 import useSocialSignIn from '@mutations/profile/use-social-sign-in';
 import { Route as ProfileRoute } from '@router/_auth_only';
 import { cn } from '@utils';
 import { clientAbsoluteLink } from '@utils/client-absolute-link';
-import { CSSProperties, FC } from 'react';
-import { FaDiscord } from 'react-icons/fa';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SUPPORTED_PROVIDERS: Array<AccountSocialProviders> = ['discord'];

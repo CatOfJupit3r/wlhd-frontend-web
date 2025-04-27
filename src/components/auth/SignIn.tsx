@@ -1,17 +1,19 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
+
 import { DiscordSocialButton } from '@components/auth/socials-logins';
 import { Button } from '@components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import StyledLink from '@components/ui/styled-link';
-import { zodResolver } from '@hookform/resolvers/zod';
 import useLogin from '@mutations/auth/useLogin';
 import useMe from '@queries/useMe';
-import { useNavigate } from '@tanstack/react-router';
 import { apprf, cn } from '@utils';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
+
 import { loginSchema } from './schemas';
 
 const SignIn = ({ className = '' }: { className?: string }) => {

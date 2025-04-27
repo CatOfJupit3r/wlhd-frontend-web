@@ -1,9 +1,10 @@
+import { LRUCache } from 'lru-cache';
+import { HTMLAttributes, useMemo } from 'react';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import useMe from '@queries/useMe';
 import APIService from '@services/APIService';
 import { cn } from '@utils';
-import { LRUCache } from 'lru-cache';
-import { HTMLAttributes, useMemo } from 'react';
 
 interface iUserAvatarProps extends HTMLAttributes<HTMLDivElement> {
     userId: string | null;

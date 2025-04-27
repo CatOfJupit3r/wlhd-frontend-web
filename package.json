@@ -87,7 +87,7 @@
         "lint": "eslint . --fix",
         "ts": "tsc --noEmit",
         "prepare": "husky",
-        "pretty": "prettier --plugin=prettier-plugin-organize-imports --plugin=prettier-plugin-tailwindcss --plugin=prettier-plugin-classnames --write ."
+        "pretty": "prettier --plugin=@trivago/prettier-plugin-sort-imports --plugin=prettier-plugin-tailwindcss --plugin=prettier-plugin-classnames  --write ."
     },
     "eslintConfig": {
         "extends": [
@@ -115,6 +115,7 @@
         "@tanstack/eslint-plugin-router": "^1.105.0",
         "@tanstack/router-devtools": "^1.111.11",
         "@tanstack/router-plugin": "^1.112.0",
+        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "@types/jest": "^27.5.2",
         "@types/lodash": "^4.17.13",
         "@types/node": "^22.5.5",
@@ -135,7 +136,6 @@
         "lint-staged": "^15.2.2",
         "postcss": "^8.4.47",
         "prettier": "^3.5.2",
-        "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "tailwindcss": "^3.4.12",
         "tailwindcss-animate": "^1.0.7",

@@ -1,3 +1,15 @@
+import {
+    useCharacterEditorAddActions,
+    useCharacterEditorInventory,
+    useCharacterEditorRemoveActions,
+    useCharacterEditorSpellBook,
+    useCharacterEditorStatusEffects,
+    useCharacterEditorWeaponry,
+} from '@context/character-editor';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaTrashAlt } from 'react-icons/fa';
+
 import { ItemEditor, SpellEditor, StatusEffectEditor, WeaponEditor } from '@components/editors/game-component-editors';
 import {
     AddNewComponent,
@@ -8,18 +20,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { EmptyMenuContent } from '@components/ui/menu';
-import {
-    useCharacterEditorAddActions,
-    useCharacterEditorInventory,
-    useCharacterEditorRemoveActions,
-    useCharacterEditorSpellBook,
-    useCharacterEditorStatusEffects,
-    useCharacterEditorWeaponry,
-} from '@context/character-editor';
 import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
-import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FaTrashAlt } from 'react-icons/fa';
 
 const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER_TYPE }) => {
     const { t } = useTranslation('local', {

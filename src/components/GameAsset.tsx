@@ -1,8 +1,9 @@
+import React from 'react';
+
 import { HTMLIconFactoryProps } from '@components/icons/icon_factory';
 import { GameComponentDecoration } from '@models/GameModels';
 import { getCharacterSide } from '@utils';
 import { assetsHelpers, generateAssetPathFullDescriptor } from '@utils/assets-helpers';
-import React from 'react';
 
 const INVALID_ASSET_PATH: string = '/assets/local/invalid_asset.png';
 

@@ -1,3 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { FaPlus, FaTrashAlt } from 'react-icons/fa';
+import { FiCopy } from 'react-icons/fi';
+import { z } from 'zod';
+
 import { toastError, toastInfo } from '@components/toastifications';
 import {
     AlertDialogCancel,
@@ -12,17 +20,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@components/ui/input';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
 import useCreateInviteCode from '@mutations/lobby-overview/useCreateInviteCode';
 import useDeleteInviteCode from '@mutations/lobby-overview/useDeleteInviteCode';
 import useLobbyInviteCodes from '@queries/profile/useLobbyInviteCodes';
-import { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { FaPlus, FaTrashAlt } from 'react-icons/fa';
-import { FiCopy } from 'react-icons/fi';
-import { z } from 'zod';
 
 interface iInvitePlayerModal {
     closeModal: () => void;

@@ -1,14 +1,15 @@
-import { Sortable } from '@components/dnd-extensions/sortable';
-import { CharacterCard } from '@components/GameScreen/turn-order-display';
-import { Button, ButtonWithTooltip } from '@components/ui/button';
-import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
 import { useCharacterByIdInEditor, useCombatEditor } from '@context/combat-editor';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import { horizontalListSortingStrategy } from '@dnd-kit/sortable';
-import { cn } from '@utils';
 import { AnimatePresence } from 'framer-motion';
 import React, { RefObject, useCallback } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+
+import { CharacterCard } from '@components/GameScreen/turn-order-display';
+import { Sortable } from '@components/dnd-extensions/sortable';
+import { Button, ButtonWithTooltip } from '@components/ui/button';
+import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
+import { cn } from '@utils';
 
 const CharacterCardInEditor: React.FC<{
     characterId: string;

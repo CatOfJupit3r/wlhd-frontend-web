@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import StyledLink from '@components/ui/styled-link';
 import { cn } from '@utils';
-import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
     const { t } = useTranslation('local', {

@@ -1,8 +1,9 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import GameAsset from '@components/GameAsset';
 import { ViewCharacterButton } from '@components/ui/common-links';
 import { iCharacterInLobby } from '@models/Redux';
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface iShortCharacterInfo {
     character: iCharacterInLobby;

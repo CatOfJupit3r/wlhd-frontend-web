@@ -1,3 +1,4 @@
+import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
 import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
@@ -17,11 +18,9 @@ import { EditorHelpers } from '@utils';
 
 import { AddNewCharacter } from './AddNewCharacter';
 import { EditCharacterOnSquare } from './EditCharacterOnSquare';
-import RoundInfoEditor from './round-header';
-
-import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
 import BattlefieldSectionEditor from './battlefield-section-editor';
 import styles from './dotted-background.module.css';
+import RoundInfoEditor from './round-header';
 
 interface PresetDetails {
     nickName: string;

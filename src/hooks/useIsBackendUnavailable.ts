@@ -1,5 +1,6 @@
-import APIHealth from '@services/APIHealth';
 import { useEffect, useState } from 'react';
+
+import APIHealth from '@services/APIHealth';
 
 const useIsBackendUnavailable = () => {
     const [isBackendUnavailable, setIsBackendUnavailable] = useState<boolean | null>(APIHealth.isBackendUnavailable());

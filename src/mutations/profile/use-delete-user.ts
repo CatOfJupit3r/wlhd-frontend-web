@@ -1,9 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
+
 import { toastError } from '@components/toastifications';
 import { RouterRoute } from '@models/common-types';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
 import AuthService from '@services/AuthService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 
 const useDeleteUser = ({ to }: { to: RouterRoute }) => {
     const queryClient = useQueryClient();

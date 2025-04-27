@@ -1,7 +1,8 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { toastError, toastInfo } from '@components/toastifications';
 import { JOINED_LOBBIES_QUERY_KEYS } from '@queries/profile/useJoinedLobbies';
 import APIService from '@services/APIService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const useJoinLobbyUsingInviteCode = () => {
     const queryClient = useQueryClient();

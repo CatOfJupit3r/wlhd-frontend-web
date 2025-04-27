@@ -1,7 +1,8 @@
+import { FC, HTMLAttributes } from 'react';
+
 import SeparatedDiv from '@components/ui/separated-div';
 import { StaticSkeleton } from '@components/ui/skeleton';
 import { cn } from '@utils';
-import { FC, HTMLAttributes } from 'react';
 
 interface iInfoDisplayPlaceholder extends HTMLAttributes<HTMLDivElement> {
     type: 'item' | 'weapon' | 'spell' | 'status_effect';

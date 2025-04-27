@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-
 import { useTranslation } from 'react-i18next';
 
 import { ToastBody, ToastDescription, ToastTitle } from './common-toast-parts';
@@ -48,4 +47,4 @@ const ErrorToast: CustomReferenceToastFC<ErrorToastData> = ({ data }) => {
     );
 };
 
-export { InfoToast, ErrorToast, GameMessageToast };
+export { ErrorToast, GameMessageToast, InfoToast };

@@ -1,5 +1,6 @@
-import UserSettings from '@components/user-settings';
 import { FC } from 'react';
+
+import UserSettings from '@components/user-settings';
 
 interface iUserSettingsPage {}
 

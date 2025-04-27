@@ -1,9 +1,10 @@
-import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
-import { toastGameMessage } from '@components/toastifications/create-jsx-toasts';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { selectActions, selectActiveCharacter, selectAllMessages } from '@redux/slices/gameScreenSlice';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
+import { toastGameMessage } from '@components/toastifications/create-jsx-toasts';
 
 const GameUtilityComponent = () => {
     const actions = useSelector(selectActions);

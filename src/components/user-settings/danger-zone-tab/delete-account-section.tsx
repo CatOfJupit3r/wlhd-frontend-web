@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,7 +15,6 @@ import { Button, MutationButton } from '@components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
 import useDeleteUser from '@mutations/profile/use-delete-user';
 import { Route as IndexRoute } from '@router/index';
-import { FC } from 'react';
 
 interface iDeleteAccountSection {}
 

@@ -1,20 +1,16 @@
-import { SquareMultiSelect } from '@components/common/square-multi-select'; /*
-
-
-
-This component is built for /game-test route and allows for better control over game state for testing purposes.
-
-
-
- */
-import { Button } from '@components/ui/button';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder, setTurnOrder } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
-import { RandomizeUtils } from '@utils';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { SquareMultiSelect } from '@components/common/square-multi-select';
+/*
+This component is built for /game-test route and allows for better control over game state for testing purposes.
+*/
+import { Button } from '@components/ui/button';
+import { CharacterInTurnOrder } from '@models/GameModels';
+import { RandomizeUtils } from '@utils';
 
 /*
 

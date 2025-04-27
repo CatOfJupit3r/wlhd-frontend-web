@@ -1,17 +1,18 @@
-import { AOEIcon, PlaceholderIcon } from '@components/icons';
-import { AreaEffectInfoDisplay } from '@components/InfoDisplay/InfoDisplay';
-import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
-import { Separator } from '@components/ui/separator';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { AreaEffectInfo } from '@models/GameModels';
 import { selectAOEEffects } from '@redux/slices/gameScreenSlice';
-import { cn } from '@utils';
 import { AnimatePresence } from 'framer-motion';
 import { FC, ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+
+import { AreaEffectInfoDisplay } from '@components/InfoDisplay/InfoDisplay';
+import { AOEIcon, PlaceholderIcon } from '@components/icons';
+import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
+import { Separator } from '@components/ui/separator';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { AreaEffectInfo } from '@models/GameModels';
+import { cn } from '@utils';
 
 export const AOECard: FC<{ effect: AreaEffectInfo; bonusTooltip?: ReactNode; className?: string }> = ({
     effect,

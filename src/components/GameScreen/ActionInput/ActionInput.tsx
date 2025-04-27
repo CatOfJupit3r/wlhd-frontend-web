@@ -1,18 +1,16 @@
-import { JSX, useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useTranslation } from 'react-i18next';
-
-import { BsArrowBarLeft } from 'react-icons/bs';
-
 import { useActionContext } from '@context/ActionContext';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { selectActions, selectIsYourTurn } from '@redux/slices/gameScreenSlice';
+import { JSX, useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BsArrowBarLeft } from 'react-icons/bs';
+import { RxArrowTopRight } from 'react-icons/rx';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { iAction } from '@models/GameModels';
-import { selectActions, selectIsYourTurn } from '@redux/slices/gameScreenSlice';
-import { RxArrowTopRight } from 'react-icons/rx';
+
 import OptionCard, { OptionCardPlaceholder, OptionCardWithLogic } from './OptionCard';
 
 /*

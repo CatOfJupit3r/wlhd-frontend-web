@@ -4,27 +4,29 @@
 
 body {
     margin: 0;
-    font-family: 'Poppins',
-    'Open Sans',
-    'Montserrat',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Roboto',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+    font-family:
+        'Poppins',
+        'Open Sans',
+        'Montserrat',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Roboto',
+        'Oxygen',
+        'Ubuntu',
+        'Cantarell',
+        'Fira Sans',
+        'Droid Sans',
+        'Helvetica Neue',
+        sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     --color-background: #fafafa;
     --color-foreground: #1f2023;
     --toastify-toast-width: 420px;
-    --toastify-font-family: "Poppins", "Open Sans", "Montserrat", -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --toastify-font-family:
+        'Poppins', 'Open Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
-
 
 html,
 body {
@@ -224,22 +226,22 @@ code {
     animation: border-angle-rotate 2s infinite linear;
     border: var(--border-size) solid transparent;
 
-    background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
-    conic-gradient(
-            from var(--border-angle),
-            var(--chasing-color) 50%,
-            var(--background-color)
-    )
-    border-box;
+    background:
+        linear-gradient(var(--background-color), var(--background-color)) padding-box,
+        conic-gradient(from var(--border-angle), var(--chasing-color) 50%, var(--background-color)) border-box;
 }
 
 @keyframes border-angle-rotate {
-    from { --border-angle: 0deg; }
-    to { --border-angle: 360deg; }
+    from {
+        --border-angle: 0deg;
+    }
+    to {
+        --border-angle: 360deg;
+    }
 }
 
 @property --border-angle {
-    syntax: "<angle>";
+    syntax: '<angle>';
     initial-value: 0deg;
     inherits: false;
 }
@@ -247,7 +249,7 @@ code {
 .custom-gradient {
     --primary-color: white;
     --secondary-color: black;
-    
+
     display: flex;
     height: 100%;
     width: 100%;

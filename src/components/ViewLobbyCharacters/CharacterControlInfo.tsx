@@ -1,17 +1,18 @@
-import { MutationButton } from '@components/ui/button';
-import { Combobox } from '@components/ui/combobox';
-import { ScrollArea } from '@components/ui/scroll-area';
-import { StaticSkeleton } from '@components/ui/skeleton';
-import UserAvatar from '@components/UserAvatars';
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
-import { iLobbyPlayerInfo } from '@models/Redux';
-import useAssignPlayerToCharacter from '@mutations/view-character/useAssignPlayerToCharacter';
-import useRemovePlayerFromCharacter from '@mutations/view-character/useRemovePlayerFromCharacter';
-import useThisLobby from '@queries/useThisLobby';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
 import { IoAdd } from 'react-icons/io5';
+
+import UserAvatar from '@components/UserAvatars';
+import { MutationButton } from '@components/ui/button';
+import { Combobox } from '@components/ui/combobox';
+import { ScrollArea } from '@components/ui/scroll-area';
+import { StaticSkeleton } from '@components/ui/skeleton';
+import { iLobbyPlayerInfo } from '@models/Redux';
+import useAssignPlayerToCharacter from '@mutations/view-character/useAssignPlayerToCharacter';
+import useRemovePlayerFromCharacter from '@mutations/view-character/useRemovePlayerFromCharacter';
+import useThisLobby from '@queries/useThisLobby';
 
 const Placeholder = () => {
     return (

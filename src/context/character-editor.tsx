@@ -1,8 +1,9 @@
-import { CharacterDataEditable, SpellEditable } from '@models/CombatEditorModels';
 import { atom, Provider, useAtom } from 'jotai';
 import { atomWithImmer } from 'jotai-immer';
 import { selectAtom } from 'jotai/utils';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
+
+import { CharacterDataEditable, SpellEditable } from '@models/CombatEditorModels';
 
 export interface CharacterEditorFlags {
     attributes?: {

@@ -1,14 +1,15 @@
-import CategoryContent from '@components/GameWiki/CategoryContent';
-import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
-import { AOEIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
-import { Button } from '@components/ui/button';
-import { Route as WikiDlcSelectRoute } from '@router/_auth_only/game-wiki';
 import { useNavigate } from '@tanstack/react-router';
 import { SupportedDLCs } from 'config';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAddressCard } from 'react-icons/fa';
 import { IoMdReturnLeft } from 'react-icons/io';
+
+import CategoryContent from '@components/GameWiki/CategoryContent';
+import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
+import { AOEIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
+import { Button } from '@components/ui/button';
+import { Route as WikiDlcSelectRoute } from '@router/_auth_only/game-wiki';
 
 interface iDLCContents {
     dlc: SupportedDLCs;

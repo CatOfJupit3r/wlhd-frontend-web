@@ -1,3 +1,7 @@
+import { SUPPORTED_DLCs, SupportedDLCs } from 'config';
+import { FC, memo } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { gameAssetToComboboxIcon } from '@components/GameAsset';
 import { Combobox, ComboboxProps } from '@components/ui/combobox';
 import {
@@ -10,9 +14,6 @@ import {
     SelectValue,
 } from '@components/ui/select';
 import { LimitedDLCData } from '@models/APIData';
-import { SupportedDLCs, SUPPORTED_DLCs } from 'config';
-import { FC, memo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface iDescriptorComponents<T extends string = string> {
     value: T;

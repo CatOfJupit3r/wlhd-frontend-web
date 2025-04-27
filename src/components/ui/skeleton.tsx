@@ -1,5 +1,6 @@
-import { cn } from '@utils';
 import { FC, HTMLAttributes } from 'react';
+
+import { cn } from '@utils';
 
 interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
     pulsating?: boolean;

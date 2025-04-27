@@ -1,7 +1,8 @@
-import { Button } from '@components/ui/button';
-import StyledLink from '@components/ui/styled-link';
 import { useTranslation } from 'react-i18next';
 import { FaArrowRotateRight } from 'react-icons/fa6';
+
+import { Button } from '@components/ui/button';
+import StyledLink from '@components/ui/styled-link';
 
 const UnderMaintenancePage = () => {
     const { t } = useTranslation();

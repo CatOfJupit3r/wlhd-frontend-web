@@ -1,7 +1,8 @@
-import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
-import { Label } from '@components/ui/label';
 import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import React, { useCallback, useEffect, useRef } from 'react';
+
+import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
+import { Label } from '@components/ui/label';
 
 const MAX_DESCRIPTION_LENGTH = 256;
 

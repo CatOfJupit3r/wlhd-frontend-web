@@ -1,12 +1,13 @@
+import { useCharacterEditor } from '@context/character-editor';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LuPencil } from 'react-icons/lu';
+
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo';
 import CharacterDescriptionEditor from '@components/CharacterEditor/MainAreaEditors/CharacterDescriptionEditor';
 import CharacterNameEditor from '@components/CharacterEditor/MainAreaEditors/CharacterNameEditor';
 import CharacterSpriteEditor from '@components/CharacterEditor/MainAreaEditors/CharacterSpriteEditor';
 import { Button } from '@components/ui/button';
-import { useCharacterEditor } from '@context/character-editor';
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { LuPencil } from 'react-icons/lu';
 
 const CharacterMainInfoEditor = () => {
     const { flags, character } = useCharacterEditor();

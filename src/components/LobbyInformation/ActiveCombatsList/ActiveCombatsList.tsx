@@ -1,12 +1,14 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LiaPlusCircleSolid } from 'react-icons/lia';
+import { LuSwords } from 'react-icons/lu';
+
 import { ButtonLink } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { iCombatInfo, iLobbyInformation } from '@models/Redux';
 import { cn } from '@utils';
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { LiaPlusCircleSolid } from 'react-icons/lia';
-import { LuSwords } from 'react-icons/lu';
+
 import CombatDisplay from './CombatDisplay';
 
 interface iActiveCombatsList {

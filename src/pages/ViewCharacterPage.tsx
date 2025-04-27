@@ -1,5 +1,6 @@
-import ViewCharacterLobby from '@components/ViewLobbyCharacters/ViewLobbyCharacters';
 import { FC } from 'react';
+
+import ViewCharacterLobby from '@components/ViewLobbyCharacters/ViewLobbyCharacters';
 
 interface ViewCharacterPageProps {
     initial: string | null;

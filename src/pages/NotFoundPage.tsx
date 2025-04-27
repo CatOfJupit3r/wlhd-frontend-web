@@ -1,7 +1,8 @@
-import StyledLink from '@components/ui/styled-link';
-import { apprf, cn } from '@utils';
 import { useTranslation } from 'react-i18next';
 import { GrDocumentMissing } from 'react-icons/gr';
+
+import StyledLink from '@components/ui/styled-link';
+import { apprf, cn } from '@utils';
 
 const NotFoundPage = () => {
     const { t } = useTranslation();

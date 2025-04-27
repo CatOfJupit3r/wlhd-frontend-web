@@ -1,5 +1,3 @@
-import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
-
 import {
     Active,
     Announcements,
@@ -31,7 +29,9 @@ import {
     SortingStrategy,
     useSortable,
 } from '@dnd-kit/sortable';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+
 import { Item, ItemRenderItemFn } from './item';
 
 export interface Props {

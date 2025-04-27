@@ -1,7 +1,8 @@
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+
 import { SeparatorTile, tileClassName } from '@components/Battlefield/Tiles/CosmeticTiles';
 import { BlocksWaveSpinner } from '@components/Spinner';
 import { cn } from '@utils';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 const FIVE_MINUTES_MS = 5 * 60 * 1000;
 const UPDATE_INTERVAL_MS = 1000;

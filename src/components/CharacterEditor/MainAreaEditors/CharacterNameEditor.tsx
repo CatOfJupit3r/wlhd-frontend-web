@@ -1,8 +1,9 @@
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
+import React, { useCallback } from 'react';
+
 import CharacterLimit from '@components/CharacterEditor/MainAreaEditors/CharacterLimit';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
-import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
-import React, { useCallback } from 'react';
 
 const MAX_NAME_LENGTH = 64;
 

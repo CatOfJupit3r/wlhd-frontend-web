@@ -1,9 +1,10 @@
-import { toastError } from '@components/toastifications';
-import { USE_ME_QUERY_KEYS } from '@queries/useMe';
-import AuthService from '@services/AuthService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
+
+import { toastError } from '@components/toastifications';
+import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import AuthService from '@services/AuthService';
 
 const useLogin = () => {
     const { t } = useTranslation('local', {

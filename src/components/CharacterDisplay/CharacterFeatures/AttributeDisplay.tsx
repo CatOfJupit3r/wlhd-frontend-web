@@ -1,10 +1,11 @@
+import { capitalize } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { Separator } from '@components/ui/separator';
 import { CharacterAttributes } from '@models/GameModels';
 import { splitDescriptor } from '@utils';
 import { extractDualAttributes } from '@utils/game-display-tools';
-import { capitalize } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const addPrefix = (prefix: string, value: string): string => {
     const [dlc, key] = splitDescriptor(value);

@@ -1,5 +1,6 @@
-import { MultiSelect, MultiSelectProps } from '@components/ui/multi-select';
 import { FC } from 'react';
+
+import { MultiSelect, MultiSelectProps } from '@components/ui/multi-select';
 
 interface iSquareMultiSelect extends Omit<MultiSelectProps, 'options' | 'onValueChange' | 'onChange'> {
     values: Array<string>;

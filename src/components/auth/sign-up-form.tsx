@@ -1,10 +1,11 @@
-import { registerSchema } from '@components/auth/schemas';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@components/ui/form';
-import { Input } from '@components/ui/input';
 import { FC, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+
+import { registerSchema } from '@components/auth/schemas';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@components/ui/form';
+import { Input } from '@components/ui/input';
 
 interface iSignUpFormProps {
     form: ReturnType<typeof useForm<z.infer<typeof registerSchema>>>;

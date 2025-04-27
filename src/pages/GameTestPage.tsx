@@ -1,5 +1,3 @@
-import GameScreen from '@components/GameScreen/GameScreen';
-import useThisLobby from '@queries/useThisLobby';
 import {
     resetGameScreenSlice,
     setActions,
@@ -12,10 +10,14 @@ import {
     setYourTurn,
 } from '@redux/slices/gameScreenSlice';
 import { AppDispatch } from '@redux/store';
-import APIService from '@services/APIService';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+
+import GameScreen from '@components/GameScreen/GameScreen';
+import useThisLobby from '@queries/useThisLobby';
+import APIService from '@services/APIService';
+
 import example_gamestate from '../data/example_gamestate.json';
 
 const GameTestPage = () => {

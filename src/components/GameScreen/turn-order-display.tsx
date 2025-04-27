@@ -1,13 +1,14 @@
-import { CharacterGameAsset } from '@components/GameAsset';
-import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
-import { CharacterInTurnOrder } from '@models/GameModels';
 import { selectTurnOrder } from '@redux/slices/gameScreenSlice';
-import { cn, getCharacterSide } from '@utils';
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
 import { FC, forwardRef, Ref, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PiStarFourFill } from 'react-icons/pi';
 import { useSelector } from 'react-redux';
+
+import { CharacterGameAsset } from '@components/GameAsset';
+import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
+import { CharacterInTurnOrder } from '@models/GameModels';
+import { cn, getCharacterSide } from '@utils';
 
 interface iCharacterCard extends MotionProps {
     character: CharacterInTurnOrder;

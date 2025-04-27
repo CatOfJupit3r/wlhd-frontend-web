@@ -1,5 +1,6 @@
-import APIService from '@services/APIService';
 import { useQuery } from '@tanstack/react-query';
+
+import APIService from '@services/APIService';
 
 const useGameItemInformation = (dlc: string, descriptor: string) => {
     const { data, refetch, isPending, isError } = useQuery({
@@ -105,10 +106,10 @@ const useGameAreaEffectInformation = (dlc: string, descriptor: string) => {
 };
 
 export {
-    useGameItemInformation,
-    useGameWeaponInformation,
-    useGameSpellInformation,
-    useGameStatusEffectInformation,
     useGameAreaEffectInformation,
     useGameCharacterInformation,
+    useGameItemInformation,
+    useGameSpellInformation,
+    useGameStatusEffectInformation,
+    useGameWeaponInformation,
 };

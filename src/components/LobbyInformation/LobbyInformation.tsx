@@ -1,7 +1,9 @@
+import { FC, useState } from 'react';
+
 import ModalManager from '@components/LobbyInformation/Modals/ModalManager';
 import { AlertDialog } from '@components/ui/alert-dialog';
 import { iLobbyInformation } from '@models/Redux';
-import { FC, useState } from 'react';
+
 import ActiveCombatsList from './ActiveCombatsList';
 import CharactersInLobby from './CharactersInLobby';
 import LobbyInformationHeader from './LobbyInformationHeader';

@@ -1,3 +1,6 @@
+import { FC, ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,8 +14,6 @@ import {
 import { MutationButton } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
-import { FC, ReactNode, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface iJoinNewLobby {
     children?: ReactNode;

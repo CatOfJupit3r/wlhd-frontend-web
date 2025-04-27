@@ -1,6 +1,7 @@
 import { useNoFooterOrHeader } from '@context/LayoutContext';
-import GameRoomPage from '@pages/GameRoomPage';
 import { createFileRoute } from '@tanstack/react-router';
+
+import GameRoomPage from '@pages/GameRoomPage';
 
 export const Route = createFileRoute('/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId')({
     component: RouteComponent,

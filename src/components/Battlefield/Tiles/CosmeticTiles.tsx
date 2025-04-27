@@ -1,5 +1,6 @@
-import { cn } from '@utils';
 import { ImgHTMLAttributes } from 'react';
+
+import { cn } from '@utils';
 
 export const tileClassName =
     'transition-colors w-[var(--tile-size)] h-[var(--tile-size)] max-w-[var(--tile-size)] max-h-[var(--tile-size)]';

@@ -1,59 +1,58 @@
 name: Pull Request
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - '**/*.ts'
-      - '**/*.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'tsconfig.json'
-      - '.eslintrc*'
-      - '.prettierrc*'
+    pull_request:
+        types: [opened, synchronize, reopened]
+        paths:
+            - '**/*.ts'
+            - '**/*.js'
+            - 'package.json'
+            - 'package-lock.json'
+            - 'tsconfig.json'
+            - '.eslintrc*'
+            - '.prettierrc*'
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22.x, 23.x]
+    validate:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [22.x, 23.x]
 
-    steps:
-      - uses: actions/checkout@v4
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Type check
-        run: npm run ts
+            - name: Type check
+              run: npm run ts
 
-      - name: Lint
-        run: npm run lint
+            - name: Lint
+              run: npm run lint
 
-      - name: Build
-        run: npm run build
-      
-      # Add test coverage configuration since you have codecov action
-      - name: Test
-        run: npm test
-        env:
-          CI: true
-  
-  dependency-review:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v4
+            - name: Build
+              run: npm run build
 
-      - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4
-        with:
-          fail-on-severity: high
-          
+            # Add test coverage configuration since you have codecov action
+            - name: Test
+              run: npm test
+              env:
+                  CI: true
+
+    dependency-review:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 'Checkout Repository'
+              uses: actions/checkout@v4
+
+            - name: 'Dependency Review'
+              uses: actions/dependency-review-action@v4
+              with:
+                  fail-on-severity: high

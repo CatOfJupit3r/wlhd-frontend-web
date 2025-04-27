@@ -1,4 +1,3 @@
-import createIconComponent, { IconComponentType } from '@components/icons/icon_factory';
 import { FaBoxes } from 'react-icons/fa';
 import { FaHourglassHalf } from 'react-icons/fa6';
 import { GiKnapsack, GiSkills, GiSpellBook, GiSwordsEmblem } from 'react-icons/gi';
@@ -7,6 +6,8 @@ import { LuTally5, LuTriangle } from 'react-icons/lu';
 import { MdOutlineAutoAwesomeMosaic } from 'react-icons/md';
 import { PiClockCountdownBold, PiPlaceholderFill, PiSneakerMoveFill } from 'react-icons/pi';
 import { TbChartAreaLineFilled } from 'react-icons/tb';
+
+import createIconComponent, { IconComponentType } from '@components/icons/icon_factory';
 
 const Icons = [
     {
@@ -27,20 +28,20 @@ const iconExports = Icons.reduce(
 export const { LocationIcon } = iconExports;
 
 export {
+    PiSneakerMoveFill as ActionPointsIcon,
+    LuTriangle as ActivenessIcon,
+    TbChartAreaLineFilled as AOEIcon,
+    IoShieldSharp as ArmorIcon,
     GiSkills as AttributesIcon,
-    MdOutlineAutoAwesomeMosaic as MiscIcon,
-    GiSpellBook as SpellBookIcon,
-    GiKnapsack as InventoryIcon,
-    GiSwordsEmblem as WeaponryIcon,
-    IoLayersSharp as StatusEffectsIcon,
     PiClockCountdownBold as CooldownIcon,
     FaHourglassHalf as DurationIcon,
-    PiSneakerMoveFill as ActionPointsIcon,
-    LuTally5 as UsesIcon,
-    FaBoxes as QuantityIcon,
-    LuTriangle as ActivenessIcon,
-    IoShieldSharp as ArmorIcon,
     IoHeart as HealthIcon,
+    GiKnapsack as InventoryIcon,
+    MdOutlineAutoAwesomeMosaic as MiscIcon,
     PiPlaceholderFill as PlaceholderIcon,
-    TbChartAreaLineFilled as AOEIcon,
+    FaBoxes as QuantityIcon,
+    GiSpellBook as SpellBookIcon,
+    IoLayersSharp as StatusEffectsIcon,
+    LuTally5 as UsesIcon,
+    GiSwordsEmblem as WeaponryIcon,
 };

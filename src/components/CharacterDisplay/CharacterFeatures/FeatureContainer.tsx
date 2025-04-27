@@ -1,3 +1,6 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import AttributeDisplay from '@components/CharacterDisplay/CharacterFeatures/AttributeDisplay';
 import ComponentMemoriesDisplay from '@components/InfoDisplay/ComponentMemoriesDisplay';
 import {
@@ -10,8 +13,6 @@ import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
 import { EmptyMenuContent } from '@components/ui/menu';
 import { Separator } from '@components/ui/separator';
 import { CharacterInfoFull } from '@models/GameModels';
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const;
 

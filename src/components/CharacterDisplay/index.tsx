@@ -50,9 +50,9 @@ const CharacterDisplayInLobby = (props: displayWithoutSettings) => (
 );
 
 export {
+    CharacterDisplay,
     CharacterDisplayInGame,
     CharacterDisplayInLobby,
-    CharacterDisplay,
     CharacterDisplayPlaceholder,
     GameWikiSettings,
 };

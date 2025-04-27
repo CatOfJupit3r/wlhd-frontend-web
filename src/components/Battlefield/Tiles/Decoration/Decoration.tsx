@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import styles from './Decoration.module.css';
-
 import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { cn } from '@utils';
+
+import styles from './Decoration.module.css';
 
 const Decoration = ({ square }: { square: string }) => {
     const { battlefield } = useBattlefieldContext();

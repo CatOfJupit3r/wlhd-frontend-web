@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import {
     AreaEffectEditableInfoAdapter,
     ItemEditableInfoAdapter,
@@ -19,7 +21,6 @@ import {
     useGameStatusEffectInformation,
     useGameWeaponInformation,
 } from '@queries/useGameData';
-import { FC } from 'react';
 
 interface iInfoDisplayWithDescriptor {
     dlc: string;
@@ -72,9 +73,9 @@ const AreaEffectInfoDisplayWithDescriptor: FC<iInfoDisplayWithDescriptor> = ({ d
 };
 
 export {
+    AreaEffectInfoDisplayWithDescriptor,
     ItemInfoDisplayWithDescriptor,
-    WeaponInfoDisplayWithDescriptor,
     SpellInfoDisplayWithDescriptor,
     StatusEffectInfoDisplayWithDescriptor,
-    AreaEffectInfoDisplayWithDescriptor,
+    WeaponInfoDisplayWithDescriptor,
 };

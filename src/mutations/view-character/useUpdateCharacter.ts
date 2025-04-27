@@ -1,6 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { CharacterClassConversion } from '@models/EditorConversion';
 import APIService from '@services/APIService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const useUpdateCharacter = () => {
     const queryClient = useQueryClient();

@@ -1,6 +1,7 @@
-import GameWikiSelectedPage from '@pages/GameWikiSelectedPage';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { SUPPORTED_DLCS_DESCRIPTORS } from 'config';
+
+import GameWikiSelectedPage from '@pages/GameWikiSelectedPage';
 
 export const Route = createFileRoute('/_auth_only/game-wiki/$dlc')({
     beforeLoad: async ({ params }) => {

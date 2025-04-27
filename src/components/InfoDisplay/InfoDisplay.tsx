@@ -1,3 +1,10 @@
+import { HTMLAttributes, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { BiInfinite } from 'react-icons/bi';
+
+import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay';
+import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
+import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
 import {
     ActionPointsIcon,
     ActivenessIcon,
@@ -8,15 +15,9 @@ import {
     QuantityIcon,
     UsesIcon,
 } from '@components/icons';
-import ComponentMemories from '@components/InfoDisplay/ComponentMemoriesDisplay';
-import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
-import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
 import SeparatedDiv from '@components/ui/separated-div';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
-import { HTMLAttributes, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { BiInfinite } from 'react-icons/bi';
 
 interface WeaponSegment {
     type: 'weapon';

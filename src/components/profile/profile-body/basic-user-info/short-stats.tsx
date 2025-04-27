@@ -1,6 +1,7 @@
+import { FC } from 'react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import useMyStatistics from '@queries/profile/use-my-statistics';
-import { FC } from 'react';
 
 interface iShortStats {}
 

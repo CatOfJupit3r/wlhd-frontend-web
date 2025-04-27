@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from 'react';
+
 import SeparatorRowWithTimestamp from '@components/Battlefield/SeparatorRowWithTimestamp';
 import {
     ConnectorTile,
@@ -14,7 +16,7 @@ import {
 } from '@components/Battlefield/Tiles/CosmeticTiles';
 import TileWithCharacter from '@components/Battlefield/Tiles/TileWithCharacter';
 import { cn } from '@utils';
-import { useCallback, useMemo } from 'react';
+
 import styles from './Battlefield.module.css';
 
 // const BATTLEFIELD_BLUR_HASH: string =

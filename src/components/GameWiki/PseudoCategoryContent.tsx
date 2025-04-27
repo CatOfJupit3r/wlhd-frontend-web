@@ -1,5 +1,6 @@
-import { SpellInfoDisplayPlaceholder } from '@components/InfoDisplay/InfoDisplayPlaceholder';
 import { FC } from 'react';
+
+import { SpellInfoDisplayPlaceholder } from '@components/InfoDisplay/InfoDisplayPlaceholder';
 
 export const PseudoCategoryContent: FC = () => {
     return (

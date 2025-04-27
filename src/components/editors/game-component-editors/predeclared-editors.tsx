@@ -5,6 +5,7 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
+
 import ComponentEditorFactory from './component-editor-factory';
 
 export const ItemEditor = ComponentEditorFactory<ItemEditable>('item');

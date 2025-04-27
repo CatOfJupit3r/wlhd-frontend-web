@@ -1,11 +1,13 @@
+import React, { useCallback, useMemo } from 'react';
+import { FaTags } from 'react-icons/fa';
+
 import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemories';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Label } from '@components/ui/label';
 import { HorizontalSeparator } from '@components/ui/separator';
 import useDualTranslation from '@hooks/useDualTranslation';
 import { cn } from '@utils';
-import React, { useCallback, useMemo } from 'react';
-import { FaTags } from 'react-icons/fa';
+
 import {
     ActivenessEditor,
     AffectedSquaresEditor,

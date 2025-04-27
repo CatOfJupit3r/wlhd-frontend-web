@@ -1,3 +1,6 @@
+import { RootState } from '@redux/store';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
     Battlefield,
     CharacterInfoFull,
@@ -6,8 +9,6 @@ import {
     IndividualTurnOrder,
 } from '@models/GameModels';
 import { GameScreenState } from '@models/Redux';
-import { RootState } from '@redux/store';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: GameScreenState = {
     battlefield: {

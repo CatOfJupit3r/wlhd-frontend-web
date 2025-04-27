@@ -1,7 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
-import useMe from '@queries/useMe';
 import { FC } from 'react';
 import { LuCalendar } from 'react-icons/lu';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import useMe from '@queries/useMe';
 
 interface iProfileBio {}
 

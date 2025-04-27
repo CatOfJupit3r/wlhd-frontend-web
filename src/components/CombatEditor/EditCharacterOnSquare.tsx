@@ -1,4 +1,14 @@
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
+import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
+import { useCallback, useEffect, useState } from 'react';
+import { BiAddToQueue } from 'react-icons/bi';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { GrContactInfo } from 'react-icons/gr';
+import { IoMdPersonAdd } from 'react-icons/io';
+import { RiDeleteBin6Fill } from 'react-icons/ri';
+
 import CharacterEditor from '@components/CharacterEditor';
+import UserAvatar from '@components/UserAvatars';
 import { Button } from '@components/ui/button';
 import {
     DropdownMenu,
@@ -17,18 +27,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import UserAvatar from '@components/UserAvatars';
-import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
-import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
 import { CharacterDataEditable } from '@models/CombatEditorModels';
 import { ControlledBy } from '@models/EditorConversion';
 import useThisLobby from '@queries/useThisLobby';
-import { useCallback, useEffect, useState } from 'react';
-import { BiAddToQueue } from 'react-icons/bi';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { GrContactInfo } from 'react-icons/gr';
-import { IoMdPersonAdd } from 'react-icons/io';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
 
 const CombatCharacterEditorSettings: CharacterEditorFlags = {
     attributes: {

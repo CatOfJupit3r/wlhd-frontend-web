@@ -1,5 +1,11 @@
-import { AddNewComponent, AreaEffectEditor } from '@components/editors/game-component-editors';
+import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { useCombatEditor } from '@context/combat-editor';
+import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { RiAddBoxFill } from 'react-icons/ri';
+
 import { AOECard } from '@components/GameScreen/aoe-effects-display';
+import { AddNewComponent, AreaEffectEditor } from '@components/editors/game-component-editors';
 import { Button, ButtonWithTooltip } from '@components/ui/button';
 import {
     Dialog,
@@ -11,12 +17,7 @@ import {
     DialogTitle,
 } from '@components/ui/dialog';
 import { HorizontalSeparator } from '@components/ui/separator';
-import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { useCombatEditor } from '@context/combat-editor';
 import { AreaEffectEditable } from '@models/CombatEditorModels';
-import { FC, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { RiAddBoxFill } from 'react-icons/ri';
 
 interface iAreaEffectsEditor {}
 

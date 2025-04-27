@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { getCharacterSide, getCharacterSideWithSquare, isDescriptor, splitDescriptor } from './game-helpers';
 
 const ENEMY_LINES = [1, 2, 3];

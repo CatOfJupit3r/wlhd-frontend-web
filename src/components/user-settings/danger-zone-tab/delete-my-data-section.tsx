@@ -1,7 +1,8 @@
+import { FC } from 'react';
+
 import { toastInfo } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
-import { FC } from 'react';
 
 interface iDeleteMyDataSection {}
 

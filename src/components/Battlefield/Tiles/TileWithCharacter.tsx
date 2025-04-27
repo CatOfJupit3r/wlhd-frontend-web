@@ -1,12 +1,13 @@
+import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { ImgHTMLAttributes, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import CharacterTooltip from '@components/Battlefield/Tiles/CharacterTooltip/CharacterTooltip';
 import { CharacterGameAsset } from '@components/GameAsset';
-import { ImgHTMLAttributes, useMemo } from 'react';
-import Decoration from './Decoration/Decoration';
-
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { cn } from '@utils';
-import { useTranslation } from 'react-i18next';
+
+import Decoration from './Decoration/Decoration';
 
 const TileWithCharacter = ({
     square,

@@ -1,3 +1,6 @@
+import { SupportedDLCs } from 'config';
+import { FC } from 'react';
+
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import CharacterBasicInfo from '@components/CharacterDisplay/CharacterBasicInfo';
 import CharacterInfoWithDescriptor from '@components/CharacterDisplay/CharacterInfoWithDescriptor';
@@ -25,8 +28,6 @@ import {
     useLoadedStatusEffects,
     useLoadedWeapons,
 } from '@queries/useLoadedGameData';
-import { SupportedDLCs } from 'config';
-import { FC } from 'react';
 
 interface iCategoryContent {
     category: 'characters' | 'spells' | 'items' | 'weapons' | 'statusEffects' | 'areaEffects' | null;

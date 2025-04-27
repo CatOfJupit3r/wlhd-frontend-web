@@ -1,3 +1,9 @@
+import { capitalize } from 'lodash';
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaX } from 'react-icons/fa6';
+
+import { IndividualTagDisplay } from '@components/InfoDisplay/TagsDisplay';
 import { SquareMultiSelect } from '@components/common/square-multi-select';
 import {
     ActionPointsIcon,
@@ -8,7 +14,6 @@ import {
     QuantityIcon,
     UsesIcon,
 } from '@components/icons';
-import { IndividualTagDisplay } from '@components/InfoDisplay/TagsDisplay';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Button, ButtonWithTooltip } from '@components/ui/button';
 import { Input, NumberInput } from '@components/ui/input';
@@ -25,13 +30,9 @@ import {
     StatusEffectEditable,
     WeaponEditable,
 } from '@models/CombatEditorModels';
-import { OneOf } from '@models/common-types';
 import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels';
+import { OneOf } from '@models/common-types';
 import { cn } from '@utils';
-import { capitalize } from 'lodash';
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FaX } from 'react-icons/fa6';
 
 const useComponentEditorTranslation = () => {
     return useTranslation('local', {

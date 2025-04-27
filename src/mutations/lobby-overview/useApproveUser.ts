@@ -1,6 +1,7 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { iLobbyInformation } from '@models/Redux';
 import APIService from '@services/APIService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useApproveUserMutation = () => {
     const queryClient = useQueryClient();

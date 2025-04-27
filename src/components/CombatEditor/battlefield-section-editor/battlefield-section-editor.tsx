@@ -1,8 +1,9 @@
+import { BattlefieldContextProvider } from '@context/BattlefieldContext';
+import { FC } from 'react';
+
 import AreaEffectsEditor from '@components/CombatEditor/battlefield-section-editor/area-effects-editor';
 import { BattlefieldRepresentation } from '@components/CombatEditor/battlefield-section-editor/battlefield-representation';
 import { Separator } from '@components/ui/separator';
-import { BattlefieldContextProvider } from '@context/BattlefieldContext';
-import { FC } from 'react';
 
 interface iBattlefieldEditor {
     setClickedSquare: (square: string | null) => void;

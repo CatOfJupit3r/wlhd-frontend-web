@@ -1,6 +1,7 @@
 import { LayoutContextProvider, useLayoutContext } from '@context/LayoutContext';
-import { apprf, cn } from '@utils';
 import { FC, lazy, ReactNode, Suspense } from 'react';
+
+import { apprf, cn } from '@utils';
 
 const Header = lazy(() => import('@components/layout-manager/header'));
 const Footer = lazy(() => import('@components/layout-manager/footer'));

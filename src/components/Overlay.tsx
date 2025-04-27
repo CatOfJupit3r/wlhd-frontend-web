@@ -1,5 +1,6 @@
-import { cn } from '@utils';
 import { FC, ReactNode } from 'react';
+
+import { cn } from '@utils';
 
 interface OverlayProps {
     className?: string;

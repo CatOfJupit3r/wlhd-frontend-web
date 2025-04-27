@@ -1,5 +1,6 @@
-import { ButtonLink, ButtonProps } from '@components/ui/button';
 import { FC } from 'react';
+
+import { ButtonLink, ButtonProps } from '@components/ui/button';
 
 interface iEnterLobbyButton extends ButtonProps {
     lobbyId: string;

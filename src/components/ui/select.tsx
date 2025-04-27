@@ -1,7 +1,8 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { cn } from '@utils';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
 import { LuCheck, LuChevronDown, LuChevronUp } from 'react-icons/lu';
+
+import { cn } from '@utils';
 
 const Select = SelectPrimitive.Root;
 

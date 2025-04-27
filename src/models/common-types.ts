@@ -1,7 +1,8 @@
-import type { UserAccountsReturnType } from '@queries/user-settings/use-user-accounts';
 import type { LinkProps } from '@tanstack/react-router';
 import { SocialProvider } from 'better-auth/social-providers';
 import type { IconType } from 'react-icons';
+
+import type { UserAccountsReturnType } from '@queries/user-settings/use-user-accounts';
 
 export type RouterRoute = LinkProps['to'];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-empty-object-type

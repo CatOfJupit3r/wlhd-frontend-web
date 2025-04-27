@@ -1,6 +1,7 @@
+import { FC } from 'react';
+
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import { FC } from 'react';
 
 interface iAppearanceTab {}
 

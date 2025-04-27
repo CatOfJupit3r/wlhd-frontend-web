@@ -1,6 +1,10 @@
+import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
+import { capitalize } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { NumberInput } from '@components/ui/input';
 import { Progress } from '@components/ui/progress';
-import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
 import { getPercentage } from '@utils';
 import {
     extractCurrentMaxBaseAttributes,
@@ -8,9 +12,6 @@ import {
     FancyAttributeArray,
     PrefixCollection,
 } from '@utils/game-display-tools';
-import { capitalize } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 type setAttributeFuncType = (attribute: string, value: number) => void;
 

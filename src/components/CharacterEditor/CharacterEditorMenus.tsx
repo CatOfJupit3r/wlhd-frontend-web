@@ -1,3 +1,6 @@
+import { useCharacterEditor } from '@context/character-editor';
+import { useState } from 'react';
+
 import AttributesEditor from '@components/CharacterEditor/GameComponentEditors/AttributesEditor';
 import CharacterMiscEditor from '@components/CharacterEditor/GameComponentEditors/CharacterMiscEditor';
 import ComponentContainerEditor from '@components/CharacterEditor/GameComponentEditors/ComponentContainerEditor';
@@ -12,8 +15,6 @@ import {
 import { EmptyMenuContent } from '@components/ui/menu';
 import { Separator } from '@components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
-import { useCharacterEditor } from '@context/character-editor';
-import { useState } from 'react';
 
 export const CharacterEditorMenus = () => {
     const { flags } = useCharacterEditor();

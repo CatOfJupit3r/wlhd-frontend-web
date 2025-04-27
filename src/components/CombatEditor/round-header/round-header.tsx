@@ -1,7 +1,8 @@
-import { Input } from '@components/ui/input';
 import { useCombatEditor } from '@context/combat-editor';
 import { useEffect, useState } from 'react';
 import { MdTimer } from 'react-icons/md';
+
+import { Input } from '@components/ui/input';
 
 export const RoundHeader = () => {
     const { round, changeRound } = useCombatEditor();

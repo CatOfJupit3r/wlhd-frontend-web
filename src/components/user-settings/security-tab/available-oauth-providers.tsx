@@ -1,6 +1,8 @@
+import { FC, useMemo } from 'react';
+
 import AccountInfoPanel from '@components/user-settings/security-tab/account-info-panel';
 import { UserAccountProvider, UserAccountType } from '@models/common-types';
-import { FC, useMemo } from 'react';
+
 import { ConnectOauthAccount } from './account-panel-actions';
 
 interface iExtraOauthProviders {

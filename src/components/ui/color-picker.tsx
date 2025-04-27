@@ -1,12 +1,13 @@
 'use client';
 
+import { forwardRef, useRef, useState } from 'react';
+import { HexColorInput, HexColorModel, Hue, Saturation, useColorManipulation, useStyleSheet } from 'react-colorful';
+import { LuCopy } from 'react-icons/lu';
+
 import { Button, ButtonProps, CopyButton } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover';
 import { cn } from '@utils';
-import { forwardRef, useRef, useState } from 'react';
-import { HexColorInput, HexColorModel, Hue, Saturation, useColorManipulation, useStyleSheet } from 'react-colorful';
-import { LuCopy } from 'react-icons/lu';
 
 interface ColorPickerProps {
     value: string;

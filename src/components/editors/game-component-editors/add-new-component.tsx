@@ -1,3 +1,7 @@
+import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { AiOutlinePlus } from 'react-icons/ai';
+
 import { DLCSelect, GameComponentDescriptorCombobox } from '@components/common/descriptor-components';
 import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
@@ -23,9 +27,7 @@ import {
     useLoadedWeapons,
 } from '@queries/useLoadedGameData';
 import { cn, isDescriptor } from '@utils';
-import { FC, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { AiOutlinePlus } from 'react-icons/ai';
+
 import { AreaEffectEditor, ItemEditor, SpellEditor, StatusEffectEditor, WeaponEditor } from './predeclared-editors';
 
 interface iComponentCombobox {

@@ -1,7 +1,9 @@
 import { store } from '@redux/store';
-import '@services/TranslationService';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+
+import '@services/TranslationService';
+
 import App from './App';
 import './styles/index.css';
 

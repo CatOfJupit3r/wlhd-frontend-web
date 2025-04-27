@@ -1,5 +1,6 @@
-import { Separator } from '@components/ui/separator';
 import { Children, FC, HTMLAttributes, ReactNode } from 'react';
+
+import { Separator } from '@components/ui/separator';
 
 interface iSeparatedDiv extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;

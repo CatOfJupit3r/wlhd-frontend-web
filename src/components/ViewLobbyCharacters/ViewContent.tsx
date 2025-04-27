@@ -1,3 +1,10 @@
+import { useViewCharactersContext } from '@context/ViewCharactersContext';
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaXmark } from 'react-icons/fa6';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+
 import { CharacterDisplayInLobby, CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import CharacterEditor from '@components/CharacterEditor/CharacterEditor';
 import {
@@ -12,18 +19,12 @@ import {
 } from '@components/ui/alert-dialog';
 import { Button, MutationButton } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
-import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterInfoFull } from '@models/GameModels';
 import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
 import GameConverters from '@services/GameConverters';
 import { cn, EditorHelpers } from '@utils';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FaXmark } from 'react-icons/fa6';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const ViewCharacterEditorSettings: CharacterEditorFlags = {
     exclude: {},

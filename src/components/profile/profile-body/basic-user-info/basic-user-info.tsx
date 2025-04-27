@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import ProfileBio from './profile-bio';
 import ShortStats from './short-stats';
 

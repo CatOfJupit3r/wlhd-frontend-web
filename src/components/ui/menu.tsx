@@ -1,7 +1,8 @@
-import { Separator } from '@components/ui/separator';
-import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { Separator } from '@components/ui/separator';
+import { ToggleGroup, ToggleGroupItem } from '@components/ui/toggle-group';
 
 interface MenuItem {
     value: string;

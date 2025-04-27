@@ -3,6 +3,7 @@ import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from 'config';
 import i18next, { Resource } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+
 import en_US from '../locales/en_US.json';
 import ua_UK from '../locales/ua_UK.json';
 

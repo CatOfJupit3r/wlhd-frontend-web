@@ -1,9 +1,10 @@
-import TurnOrderDisplay from '@components/GameScreen/turn-order-display';
-import { Separator } from '@components/ui/separator';
 import { selectCurrentRoundCount } from '@redux/slices/gameScreenSlice';
 import { useTranslation } from 'react-i18next';
 import { BiSolidTimer } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
+
+import TurnOrderDisplay from '@components/GameScreen/turn-order-display';
+import { Separator } from '@components/ui/separator';
 
 const RoundHeader = () => {
     const { t } = useTranslation('local', {

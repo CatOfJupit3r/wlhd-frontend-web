@@ -1,7 +1,9 @@
-import ControlledCharactersInfo from '@components/GameScreen/ControlledCharactersInfo/ControlledCharactersInfo';
-import { Separator } from '@components/ui/separator';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import ControlledCharactersInfo from '@components/GameScreen/ControlledCharactersInfo/ControlledCharactersInfo';
+import { Separator } from '@components/ui/separator';
+
 import ActionInput from '../ActionInput/ActionInput';
 import GameMessagesFeed from '../GameMessages/GameMessagesFeed';
 import GmOptionMenu from '../GmOptionMenu/GmOptionMenu';

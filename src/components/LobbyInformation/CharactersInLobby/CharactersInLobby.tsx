@@ -1,11 +1,12 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MdOutlineGroups3 } from 'react-icons/md';
+
 import ShortCharacterInfo from '@components/LobbyInformation/CharactersInLobby/ShortCharacterInfo';
 import { ButtonLink } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { iCharacterInLobby } from '@models/Redux';
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { MdOutlineGroups3 } from 'react-icons/md';
 
 interface iCharactersInLobby {
     characters: Array<iCharacterInLobby>;

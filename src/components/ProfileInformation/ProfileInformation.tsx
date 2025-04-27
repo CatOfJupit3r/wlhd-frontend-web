@@ -1,4 +1,9 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LuCalendar, LuGamepad, LuTrophy } from 'react-icons/lu';
+
 import LobbyShortInfo from '@components/ProfileInformation/LobbyShortInfo';
+import { CurrentUserAvatar } from '@components/UserAvatars';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,13 +18,9 @@ import { Button, MutationButton } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Input } from '@components/ui/input';
 import { Separator } from '@components/ui/separator';
-import { CurrentUserAvatar } from '@components/UserAvatars';
 import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
 import useJoinedLobbies from '@queries/profile/useJoinedLobbies';
 import useMe from '@queries/useMe';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { LuCalendar, LuGamepad, LuTrophy } from 'react-icons/lu';
 
 const ProfileInformation = () => {
     const { user } = useMe();

@@ -1,4 +1,6 @@
 import axios, { AxiosError } from 'axios';
+import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
+import { Resource } from 'i18next';
 import { merge } from 'lodash';
 
 import {
@@ -27,8 +29,6 @@ import {
 } from '@models/Redux';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthService from '@services/AuthService';
-import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
-import { Resource } from 'i18next';
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',

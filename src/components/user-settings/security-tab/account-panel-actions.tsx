@@ -1,3 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { FaUnlink } from 'react-icons/fa';
+import { MdOutlineSettingsInputComponent } from 'react-icons/md';
+import { PiPlugsConnectedBold } from 'react-icons/pi';
+import { z } from 'zod';
+
 import { PASSWORD_REGEX, registerSchema } from '@components/auth/schemas';
 import { SignUpForm } from '@components/auth/sign-up-form';
 import { Button, MutationButton } from '@components/ui/button';
@@ -15,18 +23,11 @@ import {
 } from '@components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { UserAccountProvider } from '@models/common-types';
 import useAddCredentialAuth from '@mutations/profile/use-add-credential-auth';
 import useChangePassword from '@mutations/profile/use-change-password';
 import useLinkAccount from '@mutations/profile/use-link-social';
 import useUnlinkAccount from '@mutations/profile/use-unlink-account';
-import { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import { FaUnlink } from 'react-icons/fa';
-import { MdOutlineSettingsInputComponent } from 'react-icons/md';
-import { PiPlugsConnectedBold } from 'react-icons/pi';
-import { z } from 'zod';
 
 interface iUnlinkConnectedAccountButtonProps {
     removable: boolean;

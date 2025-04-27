@@ -1,5 +1,6 @@
-import GameWikiChoicePage from '@pages/GameWikiChoicePage';
 import { createFileRoute } from '@tanstack/react-router';
+
+import GameWikiChoicePage from '@pages/GameWikiChoicePage';
 
 export const Route = createFileRoute('/_auth_only/game-wiki/')({
     component: RouteComponent,

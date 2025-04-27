@@ -1,7 +1,8 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { toastError } from '@components/toastifications';
 import { iLobbyInformation } from '@models/Redux';
 import APIService from '@services/APIService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const useRefreshLobbyPlayers = () => {
     const queryClient = useQueryClient();

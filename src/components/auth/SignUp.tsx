@@ -1,16 +1,17 @@
-import { registerSchema } from '@components/auth/schemas';
-import { SignUpForm } from '@components/auth/sign-up-form';
-import { Button } from '@components/ui/button';
-import StyledLink from '@components/ui/styled-link';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useRegister from '@mutations/auth/useRegister';
-import useMe from '@queries/useMe';
 import { useNavigate } from '@tanstack/react-router';
-import { apprf, cn } from '@utils';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
+
+import { registerSchema } from '@components/auth/schemas';
+import { SignUpForm } from '@components/auth/sign-up-form';
+import { Button } from '@components/ui/button';
+import StyledLink from '@components/ui/styled-link';
+import useRegister from '@mutations/auth/useRegister';
+import useMe from '@queries/useMe';
+import { apprf, cn } from '@utils';
 
 const SignUp = ({ className }: { className?: string }) => {
     'use no memo;';

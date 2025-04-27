@@ -1,14 +1,3 @@
-import { toastError } from '@components/toastifications';
-import { ActionResultsPayload } from '@models/Events';
-import {
-    Battlefield,
-    CharacterInfoFull,
-    GameHandshake,
-    iCharacterActions,
-    iGameLobbyState,
-    IndividualTurnOrder,
-    TranslatableString,
-} from '@models/GameModels';
 import {
     addMessage,
     haltActions,
@@ -29,6 +18,18 @@ import {
 import { store as ReduxStore } from '@redux/store';
 import { VITE_BACKEND_URL } from 'config';
 import { io, Socket } from 'socket.io-client';
+
+import { toastError } from '@components/toastifications';
+import { ActionResultsPayload } from '@models/Events';
+import {
+    Battlefield,
+    CharacterInfoFull,
+    GameHandshake,
+    iCharacterActions,
+    iGameLobbyState,
+    IndividualTurnOrder,
+    TranslatableString,
+} from '@models/GameModels';
 
 const SOCKET_EVENTS = {
     BATTLE_STARTED: 'battle_started',

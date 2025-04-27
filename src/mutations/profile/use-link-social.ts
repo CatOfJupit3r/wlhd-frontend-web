@@ -1,8 +1,9 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { SocialProvider } from 'better-auth/social-providers';
+
 import { toastBetterAuthError } from '@components/toastifications';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
 import AuthService from '@services/AuthService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { SocialProvider } from 'better-auth/social-providers';
 
 const useLinkAccount = () => {
     const queryClient = useQueryClient();

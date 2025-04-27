@@ -1,3 +1,9 @@
+import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaUserPlus } from 'react-icons/fa6';
+import { LuUsers } from 'react-icons/lu';
+import { TbRefreshDot } from 'react-icons/tb';
+
 import { Button, MutationButton } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
@@ -5,11 +11,7 @@ import { Separator } from '@components/ui/separator';
 import { iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/Redux';
 import useRefreshLobbyPlayers from '@mutations/lobby-overview/useRefreshLobbyPlayers';
 import { cn } from '@utils';
-import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FaUserPlus } from 'react-icons/fa6';
-import { LuUsers } from 'react-icons/lu';
-import { TbRefreshDot } from 'react-icons/tb';
+
 import { LOBBY_INFO_MODALS, LOBBY_INFO_MODALS_TYPE } from '../types';
 import PlayerDisplay from './PlayerDisplay';
 

@@ -1,8 +1,8 @@
 import { CSSProperties, FC } from 'react';
 
+import { Separator } from '@components/ui/separator';
 import { cn } from '@utils';
 
-import { Separator } from '@components/ui/separator';
 import { RoundHeader } from './round-header';
 import TurnOrderEditor from './turn-order-editor';
 

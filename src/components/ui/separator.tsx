@@ -1,7 +1,7 @@
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
+import { ComponentPropsWithoutRef, ComponentRef, FC, forwardRef } from 'react';
 
 import { cn } from '@utils';
-import { ComponentPropsWithoutRef, ComponentRef, FC, forwardRef } from 'react';
 
 const Separator = forwardRef<
     ComponentRef<typeof SeparatorPrimitive.Root>,
@@ -35,4 +35,4 @@ const HorizontalSeparator: FC<
     // @ts-expect-error ref mismatch
 > = ({ ref, ...props }) => <Separator ref={ref} orientation="horizontal" {...props} />;
 
-export { Separator, VerticalSeparator, HorizontalSeparator };
+export { HorizontalSeparator, Separator, VerticalSeparator };

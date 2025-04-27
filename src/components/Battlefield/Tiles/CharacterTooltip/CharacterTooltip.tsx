@@ -1,7 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes';
 import { StaticSkeleton } from '@components/ui/skeleton';
 import { CharacterInfoTooltip } from '@models/GameModels';
-import { useTranslation } from 'react-i18next';
 
 const PlaceholderTooltip = () => {
     return (

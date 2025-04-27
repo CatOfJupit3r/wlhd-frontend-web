@@ -1,8 +1,9 @@
-import { Separator } from '@components/ui/separator';
-import useUserAccounts from '@queries/user-settings/use-user-accounts';
 import type { FC } from 'react';
 
+import { Separator } from '@components/ui/separator';
 import { UserAccountProvider, UserAccountType } from '@models/common-types';
+import useUserAccounts from '@queries/user-settings/use-user-accounts';
+
 import AccountInfoPanel, { AccountInfoPanelSkeleton, iAccountInfoPanel } from './account-info-panel';
 import { ConnectedAccountActions } from './account-panel-actions';
 import AvailableOauthProviders from './available-oauth-providers';

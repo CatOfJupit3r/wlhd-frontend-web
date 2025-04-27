@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { iUserExtraData } from '@models/APIData';
 import { USE_ME_QUERY_KEYS, useMe } from '@queries/useMe';
 import APIService from '@services/APIService';
-import { useQuery } from '@tanstack/react-query';
 
 const PLACEHOLDER_DATA: MeExtraQueryResultType = {
     colors: {

@@ -1,4 +1,6 @@
 import { CombatEditorSaveType } from '@context/combat-editor';
+
+import { CharacterDataInSave } from '@models/CombatEditorModels';
 import {
     CharacterClassConversion,
     ControlledBy,
@@ -8,8 +10,6 @@ import {
     CreateCombatBody,
     MinifiedCombatPreset,
 } from '@models/EditorConversion';
-
-import { CharacterDataInSave } from '@models/CombatEditorModels';
 import { CharacterInfoFull } from '@models/GameModels';
 import { isDescriptor, isValidSquareString } from '@utils/game-helpers';
 

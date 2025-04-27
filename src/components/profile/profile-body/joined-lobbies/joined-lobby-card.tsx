@@ -1,10 +1,11 @@
+import { FC } from 'react';
+import { LuClock, LuCrown } from 'react-icons/lu';
+
 import { Badge } from '@components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { EnterLobbyButton } from '@components/ui/common-links';
 import { Skeleton } from '@components/ui/skeleton';
 import useLobbyShortInfo from '@queries/profile/useLobbyShortInfo';
-import { FC } from 'react';
-import { LuClock, LuCrown } from 'react-icons/lu';
 
 interface iJoinedLobbyCard {
     name: string;

@@ -1,7 +1,8 @@
-import { IconProps, UserAccountProvider } from '@models/common-types';
 import { FC } from 'react';
 import { FaDiscord } from 'react-icons/fa';
 import { FaUnlockKeyhole } from 'react-icons/fa6';
+
+import { IconProps, UserAccountProvider } from '@models/common-types';
 
 interface iToProviderConverters {
     provider: UserAccountProvider;

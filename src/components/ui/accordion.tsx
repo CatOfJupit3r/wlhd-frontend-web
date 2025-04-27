@@ -1,8 +1,8 @@
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-
-import { cn } from '@utils';
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react';
 import { LuChevronDown } from 'react-icons/lu';
+
+import { cn } from '@utils';
 
 const Accordion = AccordionPrimitive.Root;
 

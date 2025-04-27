@@ -1,6 +1,8 @@
+import { FC } from 'react';
+
 import { Card, CardContent, CardHeader } from '@components/ui/card';
 import useMyCharacters from '@queries/profile/use-my-characters';
-import { FC } from 'react';
+
 import CharacterCard from './character-card';
 
 interface iCharacters {}

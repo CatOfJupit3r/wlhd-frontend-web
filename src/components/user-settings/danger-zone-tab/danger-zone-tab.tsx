@@ -1,6 +1,7 @@
-import { Alert, AlertDescription } from '@components/ui/alert';
 import { FC } from 'react';
 import { LuTriangleAlert } from 'react-icons/lu';
+
+import { Alert, AlertDescription } from '@components/ui/alert';
 
 import DeleteAccountSection from './delete-account-section';
 import DeleteMyDataSection from './delete-my-data-section';

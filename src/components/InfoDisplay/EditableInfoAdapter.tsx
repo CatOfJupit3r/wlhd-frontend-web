@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import {
     AreaEffectInfoDisplay,
     ItemInfoDisplay,
@@ -13,7 +15,6 @@ import {
     WeaponEditable,
 } from '@models/CombatEditorModels';
 import GameConverters from '@services/GameConverters';
-import { FC } from 'react';
 
 interface iItemEditableAdapter {
     descriptor?: string;

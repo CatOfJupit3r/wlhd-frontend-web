@@ -1,10 +1,11 @@
-import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
-import { Separator } from '@components/ui/separator';
-import { GameStateContainer } from '@models/GameModels';
 import { selectAllMessages } from '@redux/slices/gameScreenSlice';
 import { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+
+import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
+import { Separator } from '@components/ui/separator';
+import { GameStateContainer } from '@models/GameModels';
 
 /*
 

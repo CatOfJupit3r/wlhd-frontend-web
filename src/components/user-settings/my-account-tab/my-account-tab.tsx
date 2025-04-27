@@ -1,15 +1,16 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FC, useCallback } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
 import { BannerBackground } from '@components/profile/banner';
 import { MutationButton } from '@components/ui/button';
 import { ColorPicker } from '@components/ui/color-picker';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
 import useUpdateUserInfo from '@mutations/profile/use-update-user-info';
 import useMeExtra from '@queries/use-me-extra';
 import useMe from '@queries/useMe';
-import { FC, useCallback } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 interface iMyAccountTab {}
 

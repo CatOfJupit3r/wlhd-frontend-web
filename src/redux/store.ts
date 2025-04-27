@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import gameScreenReducer from './slices/gameScreenSlice';
 
 export const store = configureStore({

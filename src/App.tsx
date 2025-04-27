@@ -1,13 +1,15 @@
-import { TooltipProvider } from '@components/ui/tooltip';
-import NotFoundPage from '@pages/NotFoundPage';
-import PseudoPage from '@pages/PseudoPage';
-import QueryClient from '@queries/QueryClient';
-import { useMe, UseMe } from '@queries/useMe';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRouter, ErrorComponent, RouterProvider } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+
+import { TooltipProvider } from '@components/ui/tooltip';
+import NotFoundPage from '@pages/NotFoundPage';
+import PseudoPage from '@pages/PseudoPage';
+import QueryClient from '@queries/QueryClient';
+import { useMe, UseMe } from '@queries/useMe';
+
 import { routeTree } from './routeTree.gen';
 
 const mePromise = Promise.withResolvers<UseMe>();

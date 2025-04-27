@@ -1,17 +1,18 @@
+import { FC } from 'react';
+import { FaCheck, FaCheckDouble } from 'react-icons/fa';
+import { ImCross } from 'react-icons/im';
+import { MdOutlineGroupRemove, MdOutlineLockClock } from 'react-icons/md';
+
+import UserAvatar from '@components/UserAvatars';
 import { MutationButton } from '@components/ui/button';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import StyledLink from '@components/ui/styled-link';
-import UserAvatar from '@components/UserAvatars';
 import useDualTranslation from '@hooks/useDualTranslation';
 import { iLobbyInformation, iLobbyPlayerInfo } from '@models/Redux';
 import { useApproveUserMutation } from '@mutations/lobby-overview/useApproveUser';
 import useRemoveLobbyMember from '@mutations/lobby-overview/useRemoveLobbyMember';
 import useMe from '@queries/useMe';
 import { Route as ViewCharacterRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/view-character';
-import { FC } from 'react';
-import { FaCheck, FaCheckDouble } from 'react-icons/fa';
-import { ImCross } from 'react-icons/im';
-import { MdOutlineGroupRemove, MdOutlineLockClock } from 'react-icons/md';
 
 const LinkToPlayerCharacter: FC<{
     descriptor: string;

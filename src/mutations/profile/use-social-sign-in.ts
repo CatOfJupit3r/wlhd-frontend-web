@@ -1,8 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
+
 import { toastBetterAuthError } from '@components/toastifications';
 import { AccountSocialProviders } from '@models/common-types';
 import AuthService from '@services/AuthService';
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 
 const useSocialSignIn = () => {
     const navigate = useNavigate();

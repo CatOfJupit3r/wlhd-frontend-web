@@ -1,10 +1,10 @@
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
 import { LuSearch } from 'react-icons/lu';
 
 import { Dialog, DialogContent } from '@components/ui/dialog';
 import { cn } from '@utils';
-import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
 
 const Command = forwardRef<ComponentRef<typeof CommandPrimitive>, ComponentPropsWithoutRef<typeof CommandPrimitive>>(
     ({ className, ...props }, ref) => (

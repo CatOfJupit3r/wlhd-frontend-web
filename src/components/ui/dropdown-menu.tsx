@@ -1,6 +1,5 @@
-import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
-
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef, HTMLAttributes } from 'react';
 import { LuCheck, LuChevronRight, LuCircle } from 'react-icons/lu';
 
 import { cn } from '@utils';
