@@ -1,15 +1,25 @@
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import { ButtonLink } from '@components/ui/button';
+import { iUserExtraData } from '@models/APIData';
 import { FC, ReactNode } from 'react';
 import { LuSettings } from 'react-icons/lu';
 
 interface iBannerBackground {
-    children: ReactNode;
+    children?: ReactNode;
+    colors: {
+        primary: string;
+        secondary: string;
+    };
 }
 
-const BannerBackground: FC<iBannerBackground> = ({ children }) => {
+export const BannerBackground: FC<iBannerBackground> = ({ children, colors }) => {
     return (
-        <div className="flex h-full w-full overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600">
+        <div
+            className={`flex h-full w-full overflow-hidden`}
+            style={{
+                backgroundImage: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`,
+            }}
+        >
             <div className="absolute inset-0 opacity-30">
                 {/* Animated stars effect */}
                 <div className="stars-container">
@@ -68,12 +78,13 @@ const BannerFooter: FC<{ name: string }> = ({ name }) => {
 
 interface iBanner {
     name: string;
+    colors: iUserExtraData['colors'];
 }
 
-const Banner: FC<iBanner> = ({ name }) => {
+const Banner: FC<iBanner> = ({ name, colors }) => {
     return (
         <div className="relative h-48 w-full max-sm:h-56">
-            <BannerBackground>
+            <BannerBackground colors={colors}>
                 <BannerFooter name={name} />
             </BannerBackground>
         </div>

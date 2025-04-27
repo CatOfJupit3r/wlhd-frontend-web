@@ -212,7 +212,8 @@ type MutationButtonProps = {
 } & Omit<ButtonProps, 'onClick'>;
 
 function MutationButton({ mutate, children, isPending, disabled, ...props }: MutationButtonProps) {
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         if (!isPending && !disabled) {
             mutate();
         }

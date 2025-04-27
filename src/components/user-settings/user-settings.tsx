@@ -1,12 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
 import { FC } from 'react';
 
-import DangerZoneTab from '@components/user-settings/danger-zone-tab';
 import { Navigate } from '@tanstack/react-router';
 import { FaUserCog } from 'react-icons/fa';
 import { LuArrowLeft, LuBell, LuPalette, LuShield, LuTriangleAlert } from 'react-icons/lu';
 import { RiSecurePaymentLine } from 'react-icons/ri';
+
 import AppearanceTab from './appearance-tab';
+import DangerZoneTab from './danger-zone-tab';
 import MyAccountTab from './my-account-tab';
 import NotificationsTab from './notifications-tab';
 import PrivacyTab from './privacy-tab';

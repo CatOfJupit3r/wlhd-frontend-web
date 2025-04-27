@@ -243,3 +243,14 @@ code {
     initial-value: 0deg;
     inherits: false;
 }
+
+.custom-gradient {
+    --primary-color: white;
+    --secondary-color: black;
+    
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}

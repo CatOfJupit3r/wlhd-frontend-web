@@ -1,7 +1,14 @@
 import axios, { AxiosError } from 'axios';
 import { merge } from 'lodash';
 
-import { iMyCharacter, iUserStatistics, LimitedDLCData, ShortLobbyInformation } from '@models/APIData';
+import {
+    iMyCharacter,
+    iUserExtraData,
+    iUserPatchData,
+    iUserStatistics,
+    LimitedDLCData,
+    ShortLobbyInformation,
+} from '@models/APIData';
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -83,6 +90,8 @@ const ENDPOINTS = {
     USER_STATISTICS: `${VITE_BACKEND_URL}/user/statistics?short=true`,
     USER_CHARACTERS: `${VITE_BACKEND_URL}/user/characters`,
     ADD_CREDENTIAL_AUTH: `${VITE_BACKEND_URL}/user/me/auth/add-credential-auth`,
+    PATCH_USER_INFO: `${VITE_BACKEND_URL}/user/me`,
+    USER_EXTRA_DATA: `${VITE_BACKEND_URL}/user/me/extra`,
 };
 
 class APIService {
@@ -470,6 +479,21 @@ class APIService {
             url: ENDPOINTS.ADD_CREDENTIAL_AUTH,
             method: 'post',
             data,
+        });
+    };
+
+    public patchUserData = async (data: Partial<iUserPatchData>) => {
+        return await this.fetch<iUserPatchData>({
+            url: ENDPOINTS.PATCH_USER_INFO,
+            method: 'patch',
+            data,
+        });
+    };
+
+    public getMyExtraData = async () => {
+        return await this.fetch<iUserExtraData>({
+            url: ENDPOINTS.USER_EXTRA_DATA,
+            method: 'get',
         });
     };
 }

@@ -28,8 +28,8 @@ export const toastError = (title: string, message?: string, options?: CustomToas
     });
 };
 export const toastBetterAuthError = (title: string, e: Error, options?: CustomToastOptions<InfoToastData>) => {
-    const cause = e.cause as { code: string; message: string };
-    return toastError(title, cause.message, options);
+    const cause = e?.cause as { code: string; message: string };
+    return toastError(title, cause?.message ?? e.message, options);
 };
 
 export const toastInfo = (title: string, message?: string, options?: CustomToastOptions<InfoToastData>) => {

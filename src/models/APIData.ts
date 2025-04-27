@@ -33,3 +33,18 @@ export interface iUserStatistics {
     lobbies: number;
     gmLobbies: number;
 }
+
+export interface iUserExtraData {
+    colors: {
+        primary: string;
+        secondary: string;
+    };
+}
+
+export interface iUserPatchData {
+    colors: {
+        primary: string;
+        secondary: string;
+    };
+    name: string;
+}
