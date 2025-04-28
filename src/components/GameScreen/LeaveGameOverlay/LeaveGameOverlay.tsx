@@ -11,7 +11,6 @@ import {
     AlertDialogFooter,
     AlertDialogTitle,
 } from '@components/ui/alert-dialog';
-import SocketService from '@services/SocketService';
 
 const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => void }) => {
     const { t } = useTranslation('local', {
@@ -20,8 +19,6 @@ const LeaveGameOverlay = ({ setChosen }: { setChosen: (value: string | null) => 
     const navigate = useNavigate();
 
     const leaveGame = useCallback(() => {
-        SocketService.disconnect();
-        setChosen(null);
         navigate({
             to: '..',
         });

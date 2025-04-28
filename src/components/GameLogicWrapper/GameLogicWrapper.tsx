@@ -1,10 +1,8 @@
 import { iActionContext } from '@context/ActionContext';
-import { resetGameScreenSlice, selectGameFlow, setActions } from '@redux/slices/gameScreenSlice';
-import { AppDispatch } from '@redux/store';
 import { useNavigate } from '@tanstack/react-router';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { createStore, Provider, useAtomValue } from 'jotai';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 
 import ConnectedPlayersSection from '@components/GameLogicWrapper/ConnectedPlayersSection';
 import GameScreen from '@components/GameScreen/GameScreen';
@@ -12,6 +10,8 @@ import Overlay from '@components/Overlay';
 import { ThreeInOneSpinner } from '@components/Spinner';
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
+import { actionsAtom } from '@jotai-atoms/actions-atom';
+import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
 import useThisLobby from '@queries/useThisLobby';
 import SocketService from '@services/SocketService';
 
@@ -21,35 +21,42 @@ interface GameLogicWrapperProps {
 }
 
 const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null);
-    const { t } = useTranslation();
-    const navigate = useNavigate();
-
-    const gameFlow = useSelector(selectGameFlow);
+    const jotaiStore = useRef(createStore());
+    const connection = useRef<SocketService>(null);
     const { lobby } = useThisLobby();
 
     useEffect(() => {
-        if (!lobbyId || !gameId) {
-            // if (somehow) lobbyId or gameId is not set, we leave the page before anything bad happens
-            dispatch(resetGameScreenSlice());
-            navigate({
-                to: '..',
-            });
-            return;
-        }
-        dispatch(setActions(null));
-        SocketService.connect({
+        if (!gameId || !lobbyId) return;
+
+        const socket = new SocketService(jotaiStore.current);
+        connection.current = socket;
+        socket.connect({
             lobbyId,
             combatId: gameId,
             isGm: lobby.layout === 'gm',
         });
-    }, [gameId, t, navigate]);
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [gameId, lobbyId]);
+
+    const [actionOutput, setActionOutput] = useState<iActionContext['choices'] | null>(null);
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const flow = useAtomValue(gameFlowAtom, {
+        // eslint-disable-next-line react-compiler/react-compiler
+        store: jotaiStore!.current,
+    });
+    const gameLobbyState = useAtomValue(lobbyStateAtom, {
+        // eslint-disable-next-line react-compiler/react-compiler
+        store: jotaiStore!.current,
+    });
 
     useEffect(() => {
         if (actionOutput) {
-            dispatch(setActions(null));
-            SocketService.emit('take_action', actionOutput);
+            jotaiStore.current.set(actionsAtom, null);
+            connection.current?.emit('take_action', actionOutput);
         }
     }, [actionOutput]);
 
@@ -57,7 +64,7 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
         if (!lobbyId) {
             return;
         }
-        SocketService.disconnect();
+        connection.current?.disconnect();
         navigate({
             to: '/lobby-rooms/$lobbyId',
             params: {
@@ -66,7 +73,7 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
         });
     }, [lobbyId, navigate]);
 
-    switch (gameFlow?.type) {
+    switch (flow?.type) {
         case 'pending':
             return (
                 <Overlay>
@@ -79,7 +86,7 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
                             <h1>{t('local:game.pending.not_started')}</h1>
                             <ThreeInOneSpinner className={'size-14'} />
                         </div>
-                        <p className={'text-xl italic'}>{t(gameFlow.details || 'local:game.pending.waiting_text')}</p>
+                        <p className={'text-xl italic'}>{t(flow.details || 'local:game.pending.waiting_text')}</p>
                         <div className={'flex flex-row gap-4'}>
                             <Button variant={'secondary'} onClick={navigateToLobby}>
                                 {t('local:game.pending.exit')}
@@ -87,7 +94,7 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
                             {lobby.layout === 'gm' ? (
                                 <Button
                                     onClick={() => {
-                                        SocketService.emit('start_combat');
+                                        connection.current?.emit('start_combat');
                                     }}
                                 >
                                     {t('local:game.pending.start')}
@@ -95,28 +102,31 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
                             ) : null}
                         </div>
                         <Separator />
-                        <ConnectedPlayersSection />
+                        <ConnectedPlayersSection gameLobbyState={gameLobbyState} />
                     </div>
                 </Overlay>
             );
         case 'active':
             return (
-                <GameScreen
-                    setActionOutput={(output) => {
-                        setActionOutput(output);
-                    }}
-                />
+                // eslint-disable-next-line react-compiler/react-compiler
+                <Provider store={jotaiStore?.current}>
+                    <GameScreen
+                        setActionOutput={(output) => {
+                            setActionOutput(output);
+                        }}
+                    />
+                </Provider>
             );
         case 'ended':
             return (
                 <Overlay>
                     <div className={'flex flex-col items-center justify-center gap-4'}>
                         <h1>{t('local:game.end.title')}</h1>
-                        <h1>
+                        <h2>
                             {t('local:game.end.result', {
-                                result: t(gameFlow.details) || t('local:game.end.no_winner_received'),
+                                result: t(flow.details) || t('local:game.end.no_winner_received'),
                             })}
-                        </h1>
+                        </h2>
                         <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </div>
                 </Overlay>
@@ -124,9 +134,9 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
         case 'aborted':
             return (
                 <Overlay>
-                    <div className={'flex flex-row items-center justify-center gap-4'}>
+                    <div className={'flex flex-col items-center justify-center gap-4'}>
                         <h1>{t('local:game.end.aborted')}</h1>
-                        <h2>{t(gameFlow.details || 'local:game.end.aborted_text')}</h2>
+                        <h2>{t(flow.details || 'local:game.end.aborted_text')}</h2>
                         <Button onClick={navigateToLobby}>{t('local:game.end.exit')}</Button>
                     </div>
                 </Overlay>
@@ -134,7 +144,7 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
         default:
             return (
                 <Overlay>
-                    <div className={'flex flex-row items-center justify-center gap-4'}>
+                    <div className={'flex flex-col items-center justify-center gap-4'}>
                         <h1>{t('local:game.awaiting-flow.title')}</h1>
                         <ThreeInOneSpinner className={'5rem'} />
                     </div>

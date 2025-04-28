@@ -1,17 +1,3 @@
-import {
-    iCharacterActions as ActionInputInterface,
-    Battlefield,
-    CharacterInfoFull,
-    GameHandshake,
-    GameStateContainer,
-    iGameLobbyState,
-    IndividualTurnOrder,
-} from './GameModels';
-
-export interface CosmeticsState {
-    pageTitle: string;
-}
-
 export interface iCombatInfo {
     nickname: string;
     isActive: boolean;
@@ -62,20 +48,9 @@ export interface iCharacterInLobby {
     };
 }
 
-export interface GameScreenState {
-    battlefield: Battlefield;
-    actions: null | ActionInputInterface;
-    round: {
-        current: GameHandshake['roundCount'];
-        order: IndividualTurnOrder;
-    };
-    messages: GameStateContainer;
-    gameFlow: {
-        type: 'pending' | 'active' | 'ended' | 'aborted';
-        details: string;
-    };
-    gameLobbyState: iGameLobbyState;
-    controlledCharacters: Array<CharacterInfoFull> | null;
-    yourTurn: boolean;
-    actionTimestamp: number | null;
+type GameFlowType = 'pending' | 'active' | 'ended' | 'aborted';
+
+export interface iGameFlowState {
+    type: GameFlowType;
+    details: string;
 }

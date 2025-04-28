@@ -1,18 +1,12 @@
-import { selectCurrentRoundCount } from '@redux/slices/gameScreenSlice';
-import { useTranslation } from 'react-i18next';
+import { useAtomValue } from 'jotai';
 import { BiSolidTimer } from 'react-icons/bi';
-import { useSelector } from 'react-redux';
 
 import TurnOrderDisplay from '@components/GameScreen/turn-order-display';
 import { Separator } from '@components/ui/separator';
+import { roundAtom } from '@jotai-atoms/game-screen-atom';
 
 const RoundHeader = () => {
-    const { t } = useTranslation('local', {
-        keyPrefix: 'game',
-    });
-
-    // const isPlayerTurn = useSelector(selectIsYourTurn);
-    const round = useSelector(selectCurrentRoundCount);
+    const round = useAtomValue(roundAtom);
 
     return (
         <div

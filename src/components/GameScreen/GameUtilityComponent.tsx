@@ -1,17 +1,18 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { selectActions, selectActiveCharacter, selectAllMessages } from '@redux/slices/gameScreenSlice';
+import { useAtomValue } from 'jotai/index';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
 import { toastGameMessage } from '@components/toastifications/create-jsx-toasts';
+import { actionsAtom } from '@jotai-atoms/actions-atom';
+import { gameMessagesAtom, selectActiveCharacterAtom } from '@jotai-atoms/game-screen-atom';
 
 const GameUtilityComponent = () => {
-    const actions = useSelector(selectActions);
-    const activeCharacter = useSelector(selectActiveCharacter);
+    const actions = useAtomValue(actionsAtom);
+    const activeCharacter = useAtomValue(selectActiveCharacterAtom);
+    const messages = useAtomValue(gameMessagesAtom);
     const { setActiveSquares, resetActiveSquares, resetInteractableSquares, resetClickedSquares } =
         useBattlefieldContext();
-    const messages = useSelector(selectAllMessages);
 
     useEffect(() => {
         // in normal game, messages are being appended to the end of the array

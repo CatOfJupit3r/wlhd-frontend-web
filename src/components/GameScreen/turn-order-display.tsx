@@ -1,12 +1,12 @@
-import { selectTurnOrder } from '@redux/slices/gameScreenSlice';
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
+import { useAtomValue } from 'jotai/index';
 import { FC, forwardRef, Ref, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PiStarFourFill } from 'react-icons/pi';
-import { useSelector } from 'react-redux';
 
 import { CharacterGameAsset } from '@components/GameAsset';
 import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
+import { characterOrderAtom } from '@jotai-atoms/game-screen-atom';
 import { CharacterInTurnOrder } from '@models/GameModels';
 import { cn, getCharacterSide } from '@utils';
 
@@ -92,7 +92,7 @@ type InnerInterOrderItem = {
 };
 
 const TurnOrderDisplay: FC<{ className?: string }> = ({ className }) => {
-    const turnOrder = useSelector(selectTurnOrder);
+    const turnOrder = useAtomValue(characterOrderAtom);
     const [innerTurnOrder, setInnerTurnOrder] = useState<InnerInterOrderItem[]>([]);
 
     useEffect(() => {

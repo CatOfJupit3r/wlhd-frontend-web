@@ -1,16 +1,16 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { selectAOEEffects } from '@redux/slices/gameScreenSlice';
 import { AnimatePresence } from 'framer-motion';
+import { useAtomValue } from 'jotai';
 import { FC, ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaInfoCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 
 import { AreaEffectInfoDisplay } from '@components/InfoDisplay/InfoDisplay';
 import { AOEIcon, PlaceholderIcon } from '@components/icons';
 import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
 import { Separator } from '@components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
+import { aoeAtom } from '@jotai-atoms/battlefield-atom';
 import { AreaEffectInfo } from '@models/GameModels';
 import { cn } from '@utils';
 
@@ -55,7 +55,7 @@ const AOEEffectsDisplay = () => {
     const { t } = useTranslation('local', {
         keyPrefix: 'game.aoe-effects-display',
     });
-    const effects = useSelector(selectAOEEffects);
+    const effects = useAtomValue(aoeAtom);
 
     return (
         <div className={'flex h-full w-24 flex-col gap-2'}>
