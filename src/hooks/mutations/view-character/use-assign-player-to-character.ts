@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
 import { toastError } from '@components/toastifications';
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 const useAssignPlayerToCharacter = () => {
@@ -12,7 +13,7 @@ const useAssignPlayerToCharacter = () => {
             return APIService.assignPlayerToCharacter(lobbyId, descriptor, playerId);
         },
         onMutate: ({ lobbyId, descriptor, playerId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) {
                     return oldData;
                 }
@@ -31,7 +32,7 @@ const useAssignPlayerToCharacter = () => {
             });
         },
         onSuccess: ({ players, characters }, { lobbyId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) {
                     return oldData;
                 }
@@ -47,7 +48,7 @@ const useAssignPlayerToCharacter = () => {
                 toastError('Error assigning player to character', err.message);
             }
             queryClient.invalidateQueries({
-                queryKey: ['lobby', lobbyId],
+                queryKey: THIS_LOBBY_QUERY_KEYS(lobbyId),
             });
         },
     });

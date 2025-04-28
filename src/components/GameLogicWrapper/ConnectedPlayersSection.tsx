@@ -5,7 +5,7 @@ import { FaCrown } from 'react-icons/fa';
 
 import UserAvatar from '@components/UserAvatars';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import { cn } from '@utils';
 
 interface iPlayerCard {

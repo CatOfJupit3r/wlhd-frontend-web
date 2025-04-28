@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
+import { USE_ME_QUERY_KEYS } from '@queries/use-me';
 import APIService from '@services/api-service';
 
-export const MY_CHARACTERS_QUERY_KEYS = () => ['user', 'me', 'characters'];
+export const MY_CHARACTERS_QUERY_KEYS = () => [...USE_ME_QUERY_KEYS(), 'characters'];
 export const MY_CHARACTERS_QUERY_FN = async () => {
     return APIService.getMyCharacters();
 };

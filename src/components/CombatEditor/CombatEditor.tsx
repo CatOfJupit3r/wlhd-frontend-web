@@ -10,7 +10,7 @@ import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId';
 import { Route as GameRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
 import APIService from '@services/api-service';

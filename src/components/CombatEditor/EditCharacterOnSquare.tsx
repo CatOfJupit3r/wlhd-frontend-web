@@ -29,7 +29,7 @@ import {
 } from '@components/ui/select';
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 
 const CombatCharacterEditorSettings: CharacterEditorFlags = {
     attributes: {

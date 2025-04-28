@@ -12,7 +12,7 @@ import {
     gameMessagesAtom,
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 import example_gamestate from '../mocks/game-state.json';

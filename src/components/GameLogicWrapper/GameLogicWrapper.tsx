@@ -12,7 +12,7 @@ import { Separator } from '@components/ui/separator';
 import { iActionContext } from '@context/ActionContext';
 import { actionsAtom } from '@jotai-atoms/actions-atom';
 import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import SocketService from '@services/socket-service';
 
 interface GameLogicWrapperProps {

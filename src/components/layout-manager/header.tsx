@@ -19,8 +19,8 @@ import {
 } from '@components/ui/dropdown-menu';
 import StyledLink from '@components/ui/styled-link';
 import { IS_DEVELOPMENT } from '@configuration';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import useMe from '@queries/use-me';
-import useThisLobby from '@queries/use-this-lobby';
 import AuthService from '@services/auth-service';
 import { apprf, cn } from '@utils';
 

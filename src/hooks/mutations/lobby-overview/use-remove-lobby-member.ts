@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 const useRemoveLobbyMember = () => {
@@ -11,7 +12,7 @@ const useRemoveLobbyMember = () => {
             return APIService.removeLobbyMember(lobbyId, userId);
         },
         onMutate: ({ lobbyId, userId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) {
                     return oldData;
                 }
@@ -26,11 +27,11 @@ const useRemoveLobbyMember = () => {
         },
         onError: (_, { lobbyId }) => {
             return queryClient.invalidateQueries({
-                queryKey: ['lobby', lobbyId],
+                queryKey: THIS_LOBBY_QUERY_KEYS(lobbyId),
             });
         },
         onSuccess: ({ players, waitingApproval }, { lobbyId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) {
                     return oldData;
                 }

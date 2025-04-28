@@ -2,16 +2,19 @@ import { useQuery } from '@tanstack/react-query';
 import { iInviteCode } from '@type-defs/api-data';
 
 import { useCurrentLobbyId } from '@hooks/use-current-lobby-id';
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
-const placeholder: Array<iInviteCode> = [];
+const DEFAULT_INVITE_CODES: Array<iInviteCode> = [];
+
+export const LOBBY_INVITE_CODE_QUERY_KEYS = (lobbyId: string) => [...THIS_LOBBY_QUERY_KEYS(lobbyId), 'inviteCodes'];
 
 const useLobbyInviteCode = () => {
     const lobbyId = useCurrentLobbyId();
 
     const { data: codes } = useQuery<Array<iInviteCode>>({
-        enabled: true,
-        queryKey: ['lobby', lobbyId, 'inviteCodes'],
+        enabled: !!lobbyId,
+        queryKey: LOBBY_INVITE_CODE_QUERY_KEYS(lobbyId!),
 
         // Query function to fetch user data
         queryFn: async () => {
@@ -20,11 +23,9 @@ const useLobbyInviteCode = () => {
         },
         refetchOnWindowFocus: true,
         retry: 1,
-
-        placeholderData: placeholder,
     });
     return {
-        codes: codes ?? placeholder,
+        codes: codes ?? DEFAULT_INVITE_CODES,
     };
 };
 

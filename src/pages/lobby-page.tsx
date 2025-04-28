@@ -1,6 +1,6 @@
 import LobbyInformation from '@components/LobbyInformation/LobbyInformation';
 import PseudoLobbyInfo from '@components/LobbyInformation/PseudoLobbyInfo';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 
 const LobbyPage = () => {
     const { lobby, isLoading, isInLobbyPage, isError } = useThisLobby();

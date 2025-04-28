@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
+import { QUERY_REFETCH_INTERVALS } from '@constants/query-client';
 import { useCurrentLobbyId } from '@hooks/use-current-lobby-id';
 import APIService from '@services/api-service';
 
-const defaultLobbyState: iLobbyInformation = {
+const DEFAULT_LOBBY_STATE: ThisLobbyQueryFnReturnType = {
     name: '',
     lobbyId: '',
     combats: [],
@@ -13,6 +14,21 @@ const defaultLobbyState: iLobbyInformation = {
     characters: [],
     gm: '',
     layout: 'default',
+};
+
+export const THIS_LOBBY_QUERY_KEYS = (lobbyId: string) => ['lobby', lobbyId];
+type ThisLobbyQueryFnReturnType = Awaited<ReturnType<typeof THIS_LOBBY_QUERY_FN>>;
+export const THIS_LOBBY_QUERY_FN = async (lobbyId: string) => {
+    if (!lobbyId) {
+        throw new Error('No lobby ID provided');
+    }
+
+    try {
+        return APIService.getLobbyInfo(lobbyId);
+    } catch (error) {
+        console.error('Failed to fetch lobby information', error);
+        throw error;
+    }
 };
 
 const useThisLobby = () => {
@@ -26,32 +42,16 @@ const useThisLobby = () => {
         refetch,
     } = useQuery<iLobbyInformation>({
         enabled: !!lobbyId,
-
-        // Unique query key based on lobby ID
-        queryKey: ['lobby', lobbyId],
-
+        queryKey: THIS_LOBBY_QUERY_KEYS(lobbyId!),
         queryFn: async () => {
-            if (!lobbyId) {
-                throw new Error('No lobby ID provided');
-            }
-
-            try {
-                return APIService.getLobbyInfo(lobbyId);
-            } catch (error) {
-                console.error('Failed to fetch lobby information', error);
-                throw error;
-            }
+            return THIS_LOBBY_QUERY_FN(lobbyId!);
         },
-
-        staleTime: 60 * 1000,
+        staleTime: QUERY_REFETCH_INTERVALS.ONE_MINUTE,
         refetchOnWindowFocus: true,
-        retry: 1,
-
-        placeholderData: defaultLobbyState,
     });
 
     return {
-        lobby: lobby ?? defaultLobbyState,
+        lobby: lobby ?? DEFAULT_LOBBY_STATE,
         isLoading,
         isError,
         error,

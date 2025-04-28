@@ -28,10 +28,10 @@ import {
 } from '@components/ui/select';
 import { SUPPORTED_DLCs } from '@constants/game-support';
 import { useCombatEditor } from '@context/combat-editor';
-import useCoordinatorCharacter from '@queries/use-coordinator-character';
-import { useGameCharacterInformation } from '@queries/use-game-data';
-import { useLoadedCharacters } from '@queries/use-loaded-game-data';
-import useThisLobby from '@queries/use-this-lobby';
+import useCoordinatorCharacter from '@queries/game-data/use-coordinator-character';
+import { useGameCharacterInformation } from '@queries/game-data/use-game-data';
+import { useLoadedCharacters } from '@queries/game-data/use-loaded-game-data';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import { CONTROLLED_BY_GAME_LOGIC, CONTROLLED_BY_PLAYER } from '@utils';
 
 const AddNewCharacterDialogContent = ({ clickedSquare }: { clickedSquare: string | null }) => {

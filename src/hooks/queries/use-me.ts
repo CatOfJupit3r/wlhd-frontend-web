@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
+import { QUERY_REFETCH_INTERVALS } from '@constants/query-client';
 import AuthService, { InternalAuthSession } from '@services/auth-service';
 
 const PLACEHOLDER_USER: InternalAuthSession = {
@@ -40,7 +41,7 @@ export const useMe = () => {
         queryKey,
         queryFn: meQueryFn,
         // Caching and retry configurations
-        staleTime: 60 * 1000, // Data considered fresh for 1 minutes
+        staleTime: QUERY_REFETCH_INTERVALS.ONE_MINUTE, // Data considered fresh for 1 minutes
         refetchOnWindowFocus: true, // Refetch when window regains focus
         retry: 1, // Retry once on failure
     });

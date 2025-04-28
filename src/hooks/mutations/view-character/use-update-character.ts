@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CharacterClassConversion } from '@type-defs/editors-conversion';
 
+import { COORDINATOR_CHARACTER_QUERY_KEYS } from '@queries/game-data/use-coordinator-character';
 import APIService from '@services/api-service';
 
 const useUpdateCharacter = () => {
@@ -20,7 +21,7 @@ const useUpdateCharacter = () => {
         },
         onSettled: (_, __, { descriptor }) => {
             queryClient.invalidateQueries({
-                queryKey: ['game', 'coordinator', 'character', descriptor],
+                queryKey: COORDINATOR_CHARACTER_QUERY_KEYS(descriptor),
             });
         },
     });

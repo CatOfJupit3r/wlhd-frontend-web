@@ -20,7 +20,7 @@ import {
     useGameSpellInformation,
     useGameStatusEffectInformation,
     useGameWeaponInformation,
-} from '@queries/use-game-data';
+} from '@queries/game-data/use-game-data';
 
 interface iInfoDisplayWithDescriptor {
     dlc: string;

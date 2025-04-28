@@ -18,14 +18,14 @@ import {
     useGameSpellInformation,
     useGameStatusEffectInformation,
     useGameWeaponInformation,
-} from '@queries/use-game-data';
+} from '@queries/game-data/use-game-data';
 import {
     useLoadedAreaEffects,
     useLoadedItems,
     useLoadedSpells,
     useLoadedStatusEffects,
     useLoadedWeapons,
-} from '@queries/use-loaded-game-data';
+} from '@queries/game-data/use-loaded-game-data';
 import { cn, isDescriptor } from '@utils';
 
 import { AreaEffectEditor, ItemEditor, SpellEditor, StatusEffectEditor, WeaponEditor } from './predeclared-editors';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useGameCharacterInformation } from '@queries/use-game-data';
+import { useGameCharacterInformation } from '@queries/game-data/use-game-data';
 
 import CharacterDisplayPlaceholder from './CharacterDisplayPlaceholder';
 import CharacterEditableInfoAdapter from './CharacterEditableInfoAdapter';

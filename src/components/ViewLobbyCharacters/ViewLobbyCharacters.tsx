@@ -12,8 +12,8 @@ import { Button, TimeoutButton } from '@components/ui/button';
 import { Combobox } from '@components/ui/combobox';
 import { Separator } from '@components/ui/separator';
 import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
-import useCoordinatorCharacter from '@queries/use-coordinator-character';
-import useThisLobby from '@queries/use-this-lobby';
+import useCoordinatorCharacter from '@queries/game-data/use-coordinator-character';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import { cn } from '@utils';
 
 const NoCharactersPresent = () => {

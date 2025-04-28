@@ -12,7 +12,7 @@ import { StaticSkeleton } from '@components/ui/skeleton';
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import useAssignPlayerToCharacter from '@mutations/view-character/use-assign-player-to-character';
 import useRemovePlayerFromCharacter from '@mutations/view-character/use-remove-player-from-character';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 
 const Placeholder = () => {
     return (

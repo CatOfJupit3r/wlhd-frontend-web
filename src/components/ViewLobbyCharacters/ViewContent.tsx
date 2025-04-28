@@ -22,7 +22,7 @@ import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import useDeleteCharacter from '@mutations/view-character/use-delete-character';
 import useUpdateCharacter from '@mutations/view-character/use-update-character';
-import useThisLobby from '@queries/use-this-lobby';
+import useThisLobby from '@queries/lobbies/use-this-lobby';
 import GameConverters from '@services/game-converters';
 import { cn, EditorHelpers } from '@utils';
 

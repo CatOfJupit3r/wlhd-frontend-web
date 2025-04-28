@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 export const useApproveUserMutation = () => {
@@ -11,7 +12,7 @@ export const useApproveUserMutation = () => {
             return APIService.approveLobbyPlayer(lobbyId, userId);
         },
         onMutate: ({ lobbyId, userId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) return;
                 return {
                     ...oldData,
@@ -28,7 +29,7 @@ export const useApproveUserMutation = () => {
             });
         },
         onSuccess: ({ players, waitingApproval }, { lobbyId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) return;
                 return {
                     ...oldData,
@@ -39,7 +40,7 @@ export const useApproveUserMutation = () => {
         },
         onError: (_, { lobbyId }) => {
             queryClient.invalidateQueries({
-                queryKey: ['lobby', lobbyId],
+                queryKey: THIS_LOBBY_QUERY_KEYS(lobbyId),
             });
         },
     });

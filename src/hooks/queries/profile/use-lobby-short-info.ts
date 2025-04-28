@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ShortLobbyInformation } from '@type-defs/api-data';
 import { useMemo } from 'react';
 
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 const DEFAULT_SHORT_INFO: ShortLobbyInformation = {
@@ -12,7 +13,7 @@ const DEFAULT_SHORT_INFO: ShortLobbyInformation = {
     needsApproval: true,
 };
 
-export const LOBBY_SHORT_INFO_QUERY_KEYS = (lobbyId: string) => ['lobby', lobbyId, 'short'];
+export const LOBBY_SHORT_INFO_QUERY_KEYS = (lobbyId: string) => [...THIS_LOBBY_QUERY_KEYS(lobbyId), 'short'];
 
 const useLobbyShortInfo = (lobbyId: string, preloaded?: ShortLobbyInformation) => {
     const queryKey = useMemo(() => LOBBY_SHORT_INFO_QUERY_KEYS(lobbyId), [lobbyId]);

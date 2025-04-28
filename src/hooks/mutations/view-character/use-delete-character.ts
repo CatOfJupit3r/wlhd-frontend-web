@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
+import { COORDINATOR_CHARACTER_QUERY_KEYS } from '@queries/game-data/use-coordinator-character';
+import { THIS_LOBBY_QUERY_KEYS } from '@queries/lobbies/use-this-lobby';
 import APIService from '@services/api-service';
 
 const useDeleteCharacter = () => {
@@ -15,7 +17,7 @@ const useDeleteCharacter = () => {
             return APIService.deleteCharacter(lobbyId, descriptor);
         },
         onMutate: ({ lobbyId, descriptor }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) return oldData;
                 return {
                     ...oldData,
@@ -35,14 +37,19 @@ const useDeleteCharacter = () => {
         onError: (error) => {
             console.error('Error deleting character', error);
         },
-        onSuccess: ({ characters, players }, { lobbyId }) => {
-            queryClient.setQueryData(['lobby', lobbyId], (oldData: iLobbyInformation) => {
+        onSuccess: ({ characters, players }, { lobbyId, descriptor }) => {
+            queryClient.setQueryData(THIS_LOBBY_QUERY_KEYS(lobbyId), (oldData: iLobbyInformation) => {
                 if (!oldData) return oldData;
                 return {
                     ...oldData,
                     characters,
                     players,
                 };
+            });
+            // we only remove character on success, because IF the character is failed to be removed, this will cause unnecessary refetches
+            // but onSuccess guarantees that the character is deleted
+            queryClient.removeQueries({
+                queryKey: COORDINATOR_CHARACTER_QUERY_KEYS(descriptor),
             });
         },
     });

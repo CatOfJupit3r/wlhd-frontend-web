@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { iUserStatistics } from '@type-defs/api-data';
 import { useMemo } from 'react';
 
+import { USE_ME_QUERY_KEYS } from '@queries/use-me';
 import APIService from '@services/api-service';
 
 const DEFAULT_STATISTICS: iUserStatistics = {
@@ -10,7 +11,7 @@ const DEFAULT_STATISTICS: iUserStatistics = {
     gmLobbies: 0,
 };
 
-export const MY_STATISTICS_QUERY_KEYS = () => ['user', 'me', 'statistics'];
+export const MY_STATISTICS_QUERY_KEYS = () => [...USE_ME_QUERY_KEYS(), 'statistics'];
 export const MY_STATISTICS_QUERY_FN = async () => {
     return APIService.getMyStatistics();
 };

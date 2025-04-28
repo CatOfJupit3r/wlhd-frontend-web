@@ -23,7 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useCurrentLobbyId } from '@hooks/use-current-lobby-id';
 import useCreateInviteCode from '@mutations/lobby-overview/use-create-invite-code';
 import useDeleteInviteCode from '@mutations/lobby-overview/use-delete-invite-code';
-import useLobbyInviteCode from '@queries/profile/use-lobby-invite-code';
+import useLobbyInviteCode from '@queries/lobbies/use-lobby-invite-code';
 
 interface iInvitePlayerModal {
     closeModal: () => void;
