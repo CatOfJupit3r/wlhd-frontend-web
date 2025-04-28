@@ -3,7 +3,7 @@ import { HTMLAttributes, useMemo } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
 import useMe from '@queries/useMe';
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 import { cn } from '@utils';
 
 interface iUserAvatarProps extends HTMLAttributes<HTMLDivElement> {

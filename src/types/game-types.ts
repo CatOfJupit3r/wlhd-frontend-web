@@ -1,4 +1,4 @@
-import { GameTags } from '@type-defs/CombatEditorModels';
+import { GameTags } from '@type-defs/combat-editor-models';
 import { OneOf } from '@type-defs/common-types';
 
 export interface GameComponentDecoration {

@@ -1,4 +1,4 @@
-import { CharacterInfoTooltip } from '@type-defs/GameModels';
+import { CharacterInfoTooltip } from '@type-defs/game-types';
 import { useTranslation } from 'react-i18next';
 
 import BasicCharacterAttributes from '@components/CharacterDisplay/BasicCharacterAttributes';

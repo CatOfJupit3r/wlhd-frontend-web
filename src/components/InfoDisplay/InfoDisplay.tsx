@@ -1,4 +1,4 @@
-import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@type-defs/GameModels';
+import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@type-defs/game-types';
 import { HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiInfinite } from 'react-icons/bi';

@@ -6,7 +6,7 @@ import {
     useCharacterEditorStatusEffects,
     useCharacterEditorWeaponry,
 } from '@context/character-editor';
-import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@type-defs/CombatEditorModels';
+import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@type-defs/combat-editor-models';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTrashAlt } from 'react-icons/fa';

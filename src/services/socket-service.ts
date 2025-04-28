@@ -1,5 +1,4 @@
 import { VITE_BACKEND_URL } from '@configuration';
-import { ActionResultsPayload } from '@type-defs/Events';
 import {
     Battlefield,
     CharacterInfoFull,
@@ -8,7 +7,8 @@ import {
     iGameLobbyState,
     IndividualTurnOrder,
     TranslatableString,
-} from '@type-defs/GameModels';
+} from '@type-defs/game-types';
+import { ActionResultsPayload } from '@type-defs/socket-events';
 import { createStore } from 'jotai';
 import { io, Socket } from 'socket.io-client';
 
@@ -23,42 +23,7 @@ import {
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
 
-const SOCKET_EVENTS = {
-    BATTLE_STARTED: 'battle_started',
-    ROUND_UPDATE: 'round_update',
-    GAME_HANDSHAKE: 'game_handshake',
-    ACTION_RESULT: 'action_result',
-    BATTLE_ENDED: 'battle_ended',
-    NO_CURRENT_CHARACTER: 'no_current_character',
-    HALT_ACTION: 'halt_action',
-    TAKE_ACTION: 'take_action',
-    NEW_MESSAGE: 'new_message',
-    BATTLEFIELD_UPDATE: 'battlefield_updated',
-    CHARACTERS_UPDATED: 'characters_updated',
-    TURN_ORDER_UPDATED: 'turn_order_updated',
-    GAME_LOBBY_STATE: 'game_lobby_state',
-    ERROR: 'error',
-    ACTION_TIMESTAMP: 'action_timestamp',
-};
-
-const ELEVATED_RIGHTS_EVENTS = {
-    TAKE_UNALLOCATED_ACTION: 'take_unallocated_action',
-    // if player is not present, but GM is, then GM can take action and is notified about unallocated character.
-    TAKE_OFFLINE_PLAYER_ACTION: 'take_offline_player_action',
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SOCKET_RESPONSES = {
-    TAKE_ACTION: 'take_action',
-    SKIP: 'skip',
-};
-
-export const ELEVATED_RIGHTS_RESPONSES = {
-    ALLOCATE: 'allocate',
-    START_COMBAT: 'start_combat',
-    END_COMBAT: 'end_combat',
-    TRY_SENDING_AGAIN: 'try_sending_again', // this event used to tell server to try sending action to the player again.
-};
+import { ELEVATED_RIGHTS_EVENTS, SOCKET_EVENTS } from '../constants/socket-events';
 
 // these will be used by special actions in GM Menu
 

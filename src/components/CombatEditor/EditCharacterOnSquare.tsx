@@ -1,7 +1,7 @@
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
-import { CharacterDataEditable } from '@type-defs/CombatEditorModels';
-import { ControlledBy } from '@type-defs/EditorConversion';
+import { CharacterDataEditable } from '@type-defs/combat-editor-models';
+import { ControlledBy } from '@type-defs/editors-conversion';
 import { useCallback, useEffect, useState } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';

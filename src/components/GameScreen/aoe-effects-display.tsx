@@ -1,5 +1,5 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { AreaEffectInfo } from '@type-defs/GameModels';
+import { AreaEffectInfo } from '@type-defs/game-types';
 import { AnimatePresence } from 'framer-motion';
 import { useAtomValue } from 'jotai';
 import { FC, ReactNode, useCallback } from 'react';

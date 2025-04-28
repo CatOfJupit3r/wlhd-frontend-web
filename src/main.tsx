@@ -48,13 +48,13 @@ const MeResolver = () => {
     return null;
 };
 
-const App = () => {
+const Main = () => {
     return (
         <QueryClientProvider client={QueryClient}>
             <MeResolver />
             <ReactQueryDevtools />
             <TooltipProvider>
-                <div className={'App'}>
+                <div className={'text-center'}>
                     <RouterProvider router={router} context={{ me: mePromise.promise, queryClient: QueryClient }} />
                 </div>
             </TooltipProvider>
@@ -63,4 +63,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Main;

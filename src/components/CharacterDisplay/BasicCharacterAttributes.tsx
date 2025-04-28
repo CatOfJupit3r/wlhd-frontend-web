@@ -1,4 +1,4 @@
-import { CharacterInfoFull } from '@type-defs/GameModels';
+import { CharacterInfoFull } from '@type-defs/game-types';
 import { useMemo } from 'react';
 
 import { ActionPointsIcon, ArmorIcon, HealthIcon } from '@components/icons';

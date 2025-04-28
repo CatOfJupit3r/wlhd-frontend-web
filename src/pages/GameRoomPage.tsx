@@ -6,7 +6,7 @@ import GameLogicWrapper from '@components/GameLogicWrapper/GameLogicWrapper';
 import Overlay from '@components/Overlay';
 import { TrueSpinner } from '@components/Spinner';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 interface GameRoomPageProps {
     lobbyId: string;

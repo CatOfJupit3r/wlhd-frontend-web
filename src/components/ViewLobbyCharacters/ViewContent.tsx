@@ -1,6 +1,6 @@
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
-import { CharacterInfoFull } from '@type-defs/GameModels';
+import { CharacterInfoFull } from '@type-defs/game-types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
@@ -23,7 +23,7 @@ import { Separator } from '@components/ui/separator';
 import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';
-import GameConverters from '@services/GameConverters';
+import GameConverters from '@services/game-converters';
 import { cn, EditorHelpers } from '@utils';
 
 const ViewCharacterEditorSettings: CharacterEditorFlags = {

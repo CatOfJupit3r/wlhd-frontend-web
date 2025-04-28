@@ -1,4 +1,4 @@
-import { GameComponentMemory, PossibleMemory } from '@type-defs/GameModels';
+import { GameComponentMemory, PossibleMemory } from '@type-defs/game-types';
 import { capitalize } from 'lodash';
 import React, { FC, HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

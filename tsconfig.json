@@ -31,7 +31,8 @@
             "@queries/*": ["./hooks/queries/*"],
             "@mutations/*": ["./hooks/mutations/*"],
 			"@jotai-atoms/*": ["./jotai/*"],
-            "@type-defs/*": ["./types/*"]
+            "@type-defs/*": ["./types/*"],
+            "@constants/*": ["./constants/*"]
         }
     },
     "include": ["src"],

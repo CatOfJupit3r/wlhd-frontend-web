@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CharacterClassConversion } from '@type-defs/EditorConversion';
+import { CharacterClassConversion } from '@type-defs/editors-conversion';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 const useUpdateCharacter = () => {
     const queryClient = useQueryClient();

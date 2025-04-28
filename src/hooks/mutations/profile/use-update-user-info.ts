@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toastBetterAuthError } from '@components/toastifications';
 import { MeExtraQueryResultType, USE_ME_EXTRA_QUERY_KEYS } from '@queries/use-me-extra';
 import { MeQueryResultType, USE_ME_QUERY_KEYS } from '@queries/useMe';
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 export const USE_UPDATE_USER_INFO_MUTATION_FN = () => {
     return APIService.patchUserData;

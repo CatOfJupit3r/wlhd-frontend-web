@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 const useLoadedItems = (dlc: string, enabled: boolean = true) => {
     const { data, refetch, isPending, isError } = useQuery({

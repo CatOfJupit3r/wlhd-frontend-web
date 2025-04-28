@@ -1,4 +1,4 @@
-import { Battlefield } from '@type-defs/GameModels';
+import { Battlefield } from '@type-defs/game-types';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 import { getCharacterSideWithSquare } from '@utils';

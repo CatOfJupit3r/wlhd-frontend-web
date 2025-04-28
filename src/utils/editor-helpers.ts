@@ -1,5 +1,5 @@
 import { CombatEditorSaveType } from '@context/combat-editor';
-import { CharacterDataInSave } from '@type-defs/CombatEditorModels';
+import { CharacterDataInSave } from '@type-defs/combat-editor-models';
 import {
     CharacterClassConversion,
     ControlledBy,
@@ -8,8 +8,8 @@ import {
     ControlledByPlayer,
     CreateCombatBody,
     MinifiedCombatPreset,
-} from '@type-defs/EditorConversion';
-import { CharacterInfoFull } from '@type-defs/GameModels';
+} from '@type-defs/editors-conversion';
+import { CharacterInfoFull } from '@type-defs/game-types';
 
 import { isDescriptor, isValidSquareString } from '@utils/game-helpers';
 

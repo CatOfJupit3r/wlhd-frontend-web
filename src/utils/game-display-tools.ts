@@ -1,4 +1,4 @@
-import { DiceMemory, MemoryType, PossibleMemory } from '@type-defs/GameModels';
+import { DiceMemory, MemoryType, PossibleMemory } from '@type-defs/game-types';
 
 import { isDescriptor, splitDescriptor } from '@utils/game-helpers';
 

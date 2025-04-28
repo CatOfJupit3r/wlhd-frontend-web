@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { toastError } from '@components/toastifications';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
-import AuthService from '@services/AuthService';
+import AuthService from '@services/auth-service';
 
 const useLogin = () => {
     const { t } = useTranslation('local', {

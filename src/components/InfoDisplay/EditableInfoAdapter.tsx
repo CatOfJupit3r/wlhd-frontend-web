@@ -4,7 +4,7 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@type-defs/CombatEditorModels';
+} from '@type-defs/combat-editor-models';
 import { FC } from 'react';
 
 import {
@@ -14,7 +14,7 @@ import {
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay';
-import GameConverters from '@services/GameConverters';
+import GameConverters from '@services/game-converters';
 
 interface iItemEditableAdapter {
     descriptor?: string;

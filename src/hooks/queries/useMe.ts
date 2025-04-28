@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import AuthService, { InternalAuthSession } from '@services/AuthService';
+import AuthService, { InternalAuthSession } from '@services/auth-service';
 
 const PLACEHOLDER_USER: InternalAuthSession = {
     user: {

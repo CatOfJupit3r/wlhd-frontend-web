@@ -1,4 +1,4 @@
-import { CharacterInfoFull } from '@type-defs/GameModels';
+import { CharacterInfoFull } from '@type-defs/game-types';
 import React, { useMemo } from 'react';
 
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer';

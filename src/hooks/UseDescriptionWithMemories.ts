@@ -3,7 +3,7 @@ import {
     GameComponentDecoration,
     MemoryType,
     PossibleMemory,
-} from '@type-defs/GameModels';
+} from '@type-defs/game-types';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 

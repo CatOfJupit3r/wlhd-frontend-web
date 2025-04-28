@@ -5,9 +5,9 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@type-defs/CombatEditorModels';
-import { DiceMemory, GameComponentMemory, PossibleMemory } from '@type-defs/GameModels';
+} from '@type-defs/combat-editor-models';
 import { OneOf } from '@type-defs/common-types';
+import { DiceMemory, GameComponentMemory, PossibleMemory } from '@type-defs/game-types';
 import { capitalize } from 'lodash';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';

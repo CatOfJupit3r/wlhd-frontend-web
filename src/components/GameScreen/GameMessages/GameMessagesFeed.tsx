@@ -1,4 +1,4 @@
-import { GameStateContainer } from '@type-defs/GameModels';
+import { GameStateContainer } from '@type-defs/game-types';
 import { useAtomValue } from 'jotai';
 import { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';

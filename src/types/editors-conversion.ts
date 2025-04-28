@@ -1,5 +1,5 @@
-import { AreaEffectsOnBattlefieldInSave, CharacterDataInSave } from '@type-defs/CombatEditorModels';
-import { AttributeInfo, GameStateContainer } from '@type-defs/GameModels';
+import { AreaEffectsOnBattlefieldInSave, CharacterDataInSave } from '@type-defs/combat-editor-models';
+import { AttributeInfo, GameStateContainer } from '@type-defs/game-types';
 
 export interface CharacterClassConversion {
     decorations: {

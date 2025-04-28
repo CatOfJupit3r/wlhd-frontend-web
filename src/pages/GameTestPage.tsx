@@ -13,9 +13,9 @@ import {
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
 import useThisLobby from '@queries/useThisLobby';
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
-import example_gamestate from '../mocks/example_gamestate.json';
+import example_gamestate from '../mocks/game-state.json';
 
 const GameTestPage = () => {
     const jotaiStore = useRef(createStore());
@@ -66,7 +66,6 @@ const GameTestPage = () => {
     }, [setupExampleGameState]);
 
     return (
-        // eslint-disable-next-line react-compiler/react-compiler
         <Provider store={jotaiStore.current}>
             <div>{loadedGameState ? <GameScreen setActionOutput={dummySetActionOutput} /> : <div>Loading...</div>}</div>
         </Provider>

@@ -1,4 +1,4 @@
-import { CharacterDataEditable } from '@type-defs/CombatEditorModels';
+import { CharacterDataEditable } from '@type-defs/combat-editor-models';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
 interface ViewCharactersContextType {

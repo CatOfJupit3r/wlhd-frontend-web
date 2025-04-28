@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iInviteCode } from '@type-defs/api-data';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 const useCreateInviteCode = () => {
     const queryClient = useQueryClient();

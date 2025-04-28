@@ -1,5 +1,5 @@
 import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
-import { GameComponentMemory } from '@type-defs/GameModels';
+import { GameComponentMemory } from '@type-defs/game-types';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 

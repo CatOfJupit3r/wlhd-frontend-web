@@ -1,6 +1,6 @@
 import { useActionContext } from '@context/ActionContext';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { iAction } from '@type-defs/GameModels';
+import { iAction } from '@type-defs/game-types';
 import { useAtomValue } from 'jotai/index';
 import { JSX, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

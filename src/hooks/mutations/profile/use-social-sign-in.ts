@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { AccountSocialProviders } from '@type-defs/common-types';
 
 import { toastBetterAuthError } from '@components/toastifications';
-import AuthService from '@services/AuthService';
+import AuthService from '@services/auth-service';
 
 const useSocialSignIn = () => {
     const navigate = useNavigate();

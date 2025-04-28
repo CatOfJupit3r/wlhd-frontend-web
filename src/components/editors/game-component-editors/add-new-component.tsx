@@ -4,7 +4,7 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@type-defs/CombatEditorModels';
+} from '@type-defs/combat-editor-models';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';

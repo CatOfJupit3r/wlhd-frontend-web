@@ -1,4 +1,4 @@
-import { iGameLobbyState } from '@type-defs/GameModels';
+import { iGameLobbyState } from '@type-defs/game-types';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa';

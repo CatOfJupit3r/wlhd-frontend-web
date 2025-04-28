@@ -1,4 +1,4 @@
-import { CharacterInfoFull } from '@type-defs/GameModels';
+import { CharacterInfoFull } from '@type-defs/game-types';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -1,5 +1,5 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { CharacterInTurnOrder } from '@type-defs/GameModels';
+import { CharacterInTurnOrder } from '@type-defs/game-types';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 

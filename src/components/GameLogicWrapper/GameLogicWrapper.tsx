@@ -13,7 +13,7 @@ import { Separator } from '@components/ui/separator';
 import { actionsAtom } from '@jotai-atoms/actions-atom';
 import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
 import useThisLobby from '@queries/useThisLobby';
-import SocketService from '@services/SocketService';
+import SocketService from '@services/socket-service';
 
 interface GameLogicWrapperProps {
     lobbyId: string;
@@ -45,11 +45,9 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const flow = useAtomValue(gameFlowAtom, {
-        // eslint-disable-next-line react-compiler/react-compiler
         store: jotaiStore!.current,
     });
     const gameLobbyState = useAtomValue(lobbyStateAtom, {
-        // eslint-disable-next-line react-compiler/react-compiler
         store: jotaiStore!.current,
     });
 
@@ -108,7 +106,6 @@ const GameLogicWrapper: FC<GameLogicWrapperProps> = ({ lobbyId, gameId }) => {
             );
         case 'active':
             return (
-                // eslint-disable-next-line react-compiler/react-compiler
                 <Provider store={jotaiStore?.current}>
                     <GameScreen
                         setActionOutput={(output) => {

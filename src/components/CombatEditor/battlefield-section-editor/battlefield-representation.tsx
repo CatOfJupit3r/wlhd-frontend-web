@@ -1,6 +1,6 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { useCombatEditor } from '@context/combat-editor';
-import { Battlefield as BattlefieldModel } from '@type-defs/GameModels';
+import { Battlefield as BattlefieldModel } from '@type-defs/game-types';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { RiDeleteBin6Line } from 'react-icons/ri';

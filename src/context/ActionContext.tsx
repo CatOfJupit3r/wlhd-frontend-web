@@ -1,4 +1,4 @@
-import { iCharacterActions as iActionInput } from '@type-defs/GameModels';
+import { iCharacterActions as iActionInput } from '@type-defs/game-types';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface iActionChoices {

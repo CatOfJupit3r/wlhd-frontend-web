@@ -4,7 +4,7 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@type-defs/CombatEditorModels';
+} from '@type-defs/combat-editor-models';
 
 import ComponentEditorFactory from './component-editor-factory';
 

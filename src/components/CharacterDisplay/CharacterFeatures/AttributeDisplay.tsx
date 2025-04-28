@@ -1,4 +1,4 @@
-import { CharacterAttributes } from '@type-defs/GameModels';
+import { CharacterAttributes } from '@type-defs/game-types';
 import { capitalize } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

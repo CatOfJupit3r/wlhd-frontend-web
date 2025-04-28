@@ -1,4 +1,4 @@
-import { iCharacterActions as ActionInputInterface } from '@type-defs/GameModels';
+import { iCharacterActions as ActionInputInterface } from '@type-defs/game-types';
 import { atom } from 'jotai';
 
 export const actionsAtom = atom<null | ActionInputInterface>(null);

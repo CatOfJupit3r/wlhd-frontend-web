@@ -1,4 +1,4 @@
-import { GameMessage as GameMessageInterface } from '@type-defs/GameModels';
+import { GameMessage as GameMessageInterface } from '@type-defs/game-types';
 
 import useTString from '@hooks/useTString';
 

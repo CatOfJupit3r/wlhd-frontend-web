@@ -1,4 +1,4 @@
-import { CharacterInfoFull, GameHandshake, GameStateContainer, IndividualTurnOrder } from '@type-defs/GameModels';
+import { CharacterInfoFull, GameHandshake, GameStateContainer, IndividualTurnOrder } from '@type-defs/game-types';
 import { atom } from 'jotai';
 
 export const roundAtom = atom<GameHandshake['roundCount']>(0);

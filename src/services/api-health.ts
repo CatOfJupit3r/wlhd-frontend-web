@@ -6,7 +6,7 @@ const isServerUnavailableError = (error: unknown) => {
     return error instanceof AxiosError && error.code === 'ERR_NETWORK';
 };
 
-class APIHealth {
+class ApiHealth {
     private backendRefusedConnection: boolean | null = null;
     private emitter = new EventEmitter();
     private checkNeeded = true;
@@ -82,4 +82,4 @@ class APIHealth {
 }
 
 export { isServerUnavailableError };
-export default new APIHealth();
+export default new ApiHealth();

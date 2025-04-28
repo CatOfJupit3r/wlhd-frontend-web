@@ -2,9 +2,9 @@ import {
     AreaEffectsOnBattlefieldEditable,
     CharacterDataEditable,
     CharacterDataEditableInCombat,
-} from '@type-defs/CombatEditorModels';
-import { ControlledBy } from '@type-defs/EditorConversion';
-import { GameStateContainer } from '@type-defs/GameModels';
+} from '@type-defs/combat-editor-models';
+import { ControlledBy } from '@type-defs/editors-conversion';
+import { GameStateContainer } from '@type-defs/game-types';
 import { atom, useAtom } from 'jotai';
 import { withImmer } from 'jotai-immer';
 import { atomWithStorage, selectAtom } from 'jotai/utils';

@@ -1,6 +1,6 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { useCombatEditor } from '@context/combat-editor';
-import { AreaEffectEditable } from '@type-defs/CombatEditorModels';
+import { AreaEffectEditable } from '@type-defs/combat-editor-models';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiAddBoxFill } from 'react-icons/ri';

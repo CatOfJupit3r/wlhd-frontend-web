@@ -21,7 +21,7 @@ import {
 import StyledLink from '@components/ui/styled-link';
 import useMe from '@queries/useMe';
 import useThisLobby from '@queries/useThisLobby';
-import AuthService from '@services/AuthService';
+import AuthService from '@services/auth-service';
 import { apprf, cn } from '@utils';
 
 interface iSection {

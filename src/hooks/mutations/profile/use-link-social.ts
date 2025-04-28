@@ -3,7 +3,7 @@ import { SocialProvider } from 'better-auth/social-providers';
 
 import { toastBetterAuthError } from '@components/toastifications';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
-import AuthService from '@services/AuthService';
+import AuthService from '@services/auth-service';
 
 const useLinkAccount = () => {
     const queryClient = useQueryClient();

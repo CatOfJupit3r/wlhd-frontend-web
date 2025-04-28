@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { iLobbyInformation } from '@type-defs/api-data';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 const useRemoveLobbyMember = () => {
     const queryClient = useQueryClient();

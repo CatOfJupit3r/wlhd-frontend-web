@@ -1,14 +1,5 @@
 import { VITE_BACKEND_URL, VITE_CDN_URL } from '@configuration';
 import {
-    AreaEffectEditable,
-    CharacterDataEditable,
-    ItemEditable,
-    SpellEditable,
-    StatusEffectEditable,
-    WeaponEditable,
-} from '@type-defs/CombatEditorModels';
-import { CharacterClassConversion, CreateCombatBody } from '@type-defs/EditorConversion';
-import {
     iCharacterInLobby,
     iInviteCode,
     iLobbyInformation,
@@ -21,12 +12,21 @@ import {
     LimitedDLCData,
     ShortLobbyInformation,
 } from '@type-defs/api-data';
+import {
+    AreaEffectEditable,
+    CharacterDataEditable,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@type-defs/combat-editor-models';
+import { CharacterClassConversion, CreateCombatBody } from '@type-defs/editors-conversion';
 import axios, { AxiosError } from 'axios';
 import { Resource } from 'i18next';
 import { merge } from 'lodash';
 
-import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
-import AuthService from '@services/AuthService';
+import APIHealth, { isServerUnavailableError } from '@services/api-health';
+import AuthService from '@services/auth-service';
 
 const errors = {
     TOKEN_EXPIRED: 'Your session expired. Please login again',
@@ -92,7 +92,7 @@ const ENDPOINTS = {
     USER_EXTRA_DATA: `${VITE_BACKEND_URL}/user/me/extra`,
 };
 
-class APIService {
+class ApiService {
     private injectResponseMessageToError = (error: AxiosError) => {
         if (!error.response) return;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -496,4 +496,4 @@ class APIService {
     };
 }
 
-export default new APIService();
+export default new ApiService();

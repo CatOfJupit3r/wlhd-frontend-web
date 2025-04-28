@@ -1,6 +1,6 @@
 import { iLobbyInformation } from '@type-defs/api-data';
 
-export const mockLobbyInfo: iLobbyInformation = {
+export const lobbyInfo: iLobbyInformation = {
     lobbyId: '123456',
     name: "Dragon's Lair Adventure",
     combats: [

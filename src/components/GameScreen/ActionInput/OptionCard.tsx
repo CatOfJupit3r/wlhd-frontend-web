@@ -1,5 +1,5 @@
 import { useActionContext } from '@context/ActionContext';
-import { iAction, iActionDecoration } from '@type-defs/GameModels';
+import { iAction, iActionDecoration } from '@type-defs/game-types';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsInfoCircle } from 'react-icons/bs';

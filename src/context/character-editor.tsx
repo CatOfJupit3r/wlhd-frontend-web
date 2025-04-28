@@ -1,4 +1,4 @@
-import { CharacterDataEditable, SpellEditable } from '@type-defs/CombatEditorModels';
+import { CharacterDataEditable, SpellEditable } from '@type-defs/combat-editor-models';
 import { atom, Provider, useAtom } from 'jotai';
 import { atomWithImmer } from 'jotai-immer';
 import { selectAtom } from 'jotai/utils';

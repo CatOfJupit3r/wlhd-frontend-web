@@ -1,4 +1,4 @@
-import { GameTags } from '@type-defs/CombatEditorModels';
+import { GameTags } from '@type-defs/combat-editor-models';
 import { FC, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTags } from 'react-icons/fa';

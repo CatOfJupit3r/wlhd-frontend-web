@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ShortLobbyInformation } from '@type-defs/api-data';
 import { useMemo } from 'react';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 export const JOINED_LOBBIES_QUERY_KEYS = () => ['joined_lobbies'];
 

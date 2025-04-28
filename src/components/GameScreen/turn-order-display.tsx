@@ -1,4 +1,4 @@
-import { CharacterInTurnOrder } from '@type-defs/GameModels';
+import { CharacterInTurnOrder } from '@type-defs/game-types';
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
 import { useAtomValue } from 'jotai/index';
 import { FC, forwardRef, Ref, useEffect, useState } from 'react';

@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom/client';
 
-import '@services/TranslationService';
+import '@services/translation-service';
 
-import App from './App';
-import './styles/index.css';
+import './index.css';
+import Main from './main';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-root.render(<App />);
+root.render(<Main />);

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import AuthService from '@services/AuthService';
+import AuthService from '@services/auth-service';
 
 export type UserAccountsReturnType = Awaited<ReturnType<typeof USER_ACCOUNTS_QUERY_FN>>;
 const DEFAULT_DATA: UserAccountsReturnType = [];

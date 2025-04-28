@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import APIService from '@services/APIService';
+import APIService from '@services/api-service';
 
 const useCoordinatorCharacter = (lobbyId: string, descriptor: string, enabled: boolean = true) => {
     const { data, refetch, isPending, isError, isSuccess } = useQuery({

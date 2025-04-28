@@ -1,4 +1,4 @@
-import { GameComponentDecoration } from '@type-defs/GameModels';
+import { GameComponentDecoration } from '@type-defs/game-types';
 import React from 'react';
 
 import { HTMLIconFactoryProps } from '@components/icons/icon_factory';
