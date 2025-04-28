@@ -26,11 +26,10 @@
             "@services/*": ["./services/*"],
             "@hooks/*": ["./hooks/*"],
             "@router/*": ["./routes/*"],
-            "@lib/*": ["./lib/*"],
             "@context/*": ["./context/*"],
             "@configuration": ["./config"],
-            "@queries/*": ["./queries/*"],
-            "@mutations/*": ["./mutations/*"],
+            "@queries/*": ["./hooks/queries/*"],
+            "@mutations/*": ["./hooks/mutations/*"],
 			"@jotai-atoms/*": ["./jotai/*"],
             "@type-defs/*": ["./types/*"]
         }
