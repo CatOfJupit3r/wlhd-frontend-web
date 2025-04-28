@@ -4,8 +4,8 @@ import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import TanStackRouterDevtools from '@components/devtools/tanstack-router-devtools';
 import LayoutManager from '@components/layout-manager';
 import useIsBackendUnavailable from '@hooks/useIsBackendUnavailable';
-import PseudoPage from '@pages/PseudoPage';
-import UnderMaintenanceNoDepsPage from '@pages/UnderMaintenanceNoDepsPage';
+import PseudoPage from '@pages/pseudo-page';
+import UnderMaintenanceNoDepsPage from '@pages/under-maintenance-no-deps-page';
 import { UseMe } from '@queries/useMe';
 
 export interface RootRouteContext {

@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import { TooltipProvider } from '@components/ui/tooltip';
-import NotFoundPage from '@pages/NotFoundPage';
-import PseudoPage from '@pages/PseudoPage';
+import NotFoundPage from '@pages/not-found-page';
+import PseudoPage from '@pages/pseudo-page';
 import QueryClient from '@queries/QueryClient';
 import { useMe, UseMe } from '@queries/useMe';
 

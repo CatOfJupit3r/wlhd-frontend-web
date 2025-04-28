@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import ViewCharacterPage from '@pages/ViewCharacterPage';
+import ViewCharacterPage from '@pages/view-character-page';
 
 interface ViewCharacterSearch {
     character: string | null;

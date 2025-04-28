@@ -1,6 +1,6 @@
 import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
 
-import PseudoPage from '@pages/PseudoPage';
+import PseudoPage from '@pages/pseudo-page';
 import { useMe } from '@queries/useMe';
 
 export const Route = createFileRoute('/_auth_only')({
