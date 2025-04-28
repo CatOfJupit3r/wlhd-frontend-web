@@ -26,14 +26,14 @@
             "@utils/*": ["./utils/*"],
             "@services/*": ["./services/*"],
             "@hooks/*": ["./hooks/*"],
-            "@redux/*": ["./redux/*"],
             "@models/*": ["./models/*"],
             "@router/*": ["./routes/*"],
             "@lib/*": ["./lib/*"],
             "@context/*": ["./context/*"],
             "config": ["./config"],
             "@queries/*": ["./queries/*"],
-            "@mutations/*": ["./mutations/*"]
+            "@mutations/*": ["./mutations/*"],
+			"@jotai-atoms/*": ["./jotai/*"]
         }
     },
     "include": ["src"],

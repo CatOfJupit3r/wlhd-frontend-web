@@ -1,25 +1,17 @@
-import {
-    addMessage,
-    haltActions,
-    resetGameScreenSlice,
-    setActions,
-    setActionTimestamp,
-    setBattlefield,
-    setControlledCharacters,
-    setFlowToAborted,
-    setFlowToActive,
-    setFlowToEnded,
-    setGameLobbyState,
-    setGameScreenSliceFromHandshake,
-    setRound,
-    setTurnOrder,
-    setYourTurn,
-} from '@redux/slices/gameScreenSlice';
-import { store as ReduxStore } from '@redux/store';
 import { VITE_BACKEND_URL } from 'config';
+import { createStore } from 'jotai';
 import { io, Socket } from 'socket.io-client';
 
 import { toastError } from '@components/toastifications';
+import { actionsAtom, isYourTurnAtom } from '@jotai-atoms/actions-atom';
+import { aoeAtom, battlefieldAtom, timestampAtom } from '@jotai-atoms/battlefield-atom';
+import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
+import {
+    characterOrderAtom,
+    controlledCharactersAtom,
+    gameMessagesAtom,
+    roundAtom,
+} from '@jotai-atoms/game-screen-atom';
 import { ActionResultsPayload } from '@models/Events';
 import {
     Battlefield,
@@ -55,6 +47,7 @@ const ELEVATED_RIGHTS_EVENTS = {
     TAKE_OFFLINE_PLAYER_ACTION: 'take_offline_player_action',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SOCKET_RESPONSES = {
     TAKE_ACTION: 'take_action',
     SKIP: 'skip',
@@ -69,19 +62,23 @@ export const ELEVATED_RIGHTS_RESPONSES = {
 
 // these will be used by special actions in GM Menu
 
+type JotaiStore = ReturnType<typeof createStore>;
+
 class SocketService {
     private socket: Socket;
     private lobbyId: string | null = null;
     private combatId: string | null = null;
     private retries = 3;
     private triedToRefreshToken = false;
+    private jotaiStore: JotaiStore;
 
-    constructor() {
+    constructor(store: JotaiStore) {
         this.socket = io(VITE_BACKEND_URL, {
             autoConnect: false,
             reconnection: false, // only manually reconnect
-            withCredentials: true,
+            withCredentials: true, // better-auth cookies
         });
+        this.jotaiStore = store;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -143,12 +140,12 @@ class SocketService {
                 if (this.triedToRefreshToken) {
                     return;
                 }
-                const currentState = ReduxStore.getState();
-                if (currentState.gameScreen.gameFlow.type !== 'ended') {
-                    ReduxStore.dispatch(setFlowToAborted('local:game.disconnected'));
-                }
-                if (currentState.gameScreen.gameFlow.type === 'active') {
-                    ReduxStore.dispatch(resetGameScreenSlice());
+                const currentState = this.jotaiStore.get(gameFlowAtom);
+                if (currentState.type !== 'ended') {
+                    this.jotaiStore.set(gameFlowAtom, {
+                        type: 'aborted',
+                        details: 'local:game.disconnected',
+                    });
                 }
             },
             ['invalid_token']: () => {
@@ -160,7 +157,10 @@ class SocketService {
                     this.triedToRefreshToken = true;
                 }
                 this.disconnect();
-                ReduxStore.dispatch(setFlowToAborted('local:game.invalid_token'));
+                this.jotaiStore.set(gameFlowAtom, {
+                    type: 'aborted',
+                    details: 'local:game.invalid_token',
+                });
             },
             [SOCKET_EVENTS.ERROR]: (error: unknown) => {
                 console.error('Socket error', error);
@@ -174,13 +174,16 @@ class SocketService {
                     this.reconnect();
                 } else {
                     console.log('Could not reconnect to game server');
-                    ReduxStore.dispatch(setFlowToAborted('local:game.connection_lost'));
+                    this.jotaiStore.set(gameFlowAtom, {
+                        type: 'aborted',
+                        details: 'local:game.connection_lost',
+                    });
                     this.retries = 3;
                 }
             },
             [SOCKET_EVENTS.GAME_LOBBY_STATE]: (gameLobbyState: iGameLobbyState) => {
                 console.log('Game lobby state', gameLobbyState);
-                ReduxStore.dispatch(setGameLobbyState(gameLobbyState));
+                this.jotaiStore.set(lobbyStateAtom, gameLobbyState);
             },
             [SOCKET_EVENTS.ACTION_RESULT]: ({ code, message }: ActionResultsPayload) => {
                 console.log('Action result', code, message);
@@ -192,84 +195,96 @@ class SocketService {
                 // this action stops any further action from being taken.
                 // emitted to avoid users from taking actions when they shouldn't no longer
                 console.log('Halted action');
-                ReduxStore.dispatch(haltActions());
+                this.jotaiStore.set(actionsAtom, null);
+                this.jotaiStore.set(isYourTurnAtom, false);
             },
             [SOCKET_EVENTS.BATTLE_ENDED]: ({ battle_result }: { battle_result: string }) => {
                 console.log('Battle ended', battle_result);
-                ReduxStore.dispatch(setFlowToEnded(battle_result));
+                this.jotaiStore.set(gameFlowAtom, {
+                    type: 'ended',
+                    details: battle_result,
+                });
             },
             [SOCKET_EVENTS.TURN_ORDER_UPDATED]: ({ turnOrder }: { turnOrder: IndividualTurnOrder }) => {
                 console.log('Turn order updated', turnOrder);
-                ReduxStore.dispatch(setTurnOrder(turnOrder));
+                this.jotaiStore.set(characterOrderAtom, turnOrder);
             },
             [SOCKET_EVENTS.BATTLEFIELD_UPDATE]: ({ battlefield }: { battlefield: Battlefield }) => {
-                ReduxStore.dispatch(setBattlefield(battlefield));
+                this.jotaiStore.set(battlefieldAtom, battlefield.pawns);
+                this.jotaiStore.set(aoeAtom, battlefield.effects);
             },
             [SOCKET_EVENTS.NEW_MESSAGE]: ({ message }: { message: Array<TranslatableString> }) => {
-                ReduxStore.dispatch(addMessage(message));
+                this.jotaiStore.set(gameMessagesAtom, (prev) => [...prev, message]);
             },
             [SOCKET_EVENTS.ROUND_UPDATE]: ({ roundCount }: { roundCount: number }) => {
-                ReduxStore.dispatch(setRound(roundCount));
+                this.jotaiStore.set(roundAtom, roundCount);
                 console.log('Round update', roundCount);
             },
             [SOCKET_EVENTS.BATTLE_STARTED]: () => {
-                ReduxStore.dispatch(setFlowToActive());
+                this.jotaiStore.set(gameFlowAtom, {
+                    type: 'active',
+                    details: '',
+                });
             },
             [SOCKET_EVENTS.CHARACTERS_UPDATED]: ({
                 newControlledCharacters,
             }: {
                 newControlledCharacters: Array<CharacterInfoFull>;
             }) => {
-                ReduxStore.dispatch(setControlledCharacters(newControlledCharacters));
+                this.jotaiStore.set(controlledCharactersAtom, newControlledCharacters);
             },
             [SOCKET_EVENTS.ACTION_TIMESTAMP]: ({ timestamp }: { timestamp: number | null }) => {
-                ReduxStore.dispatch(setActionTimestamp(timestamp));
+                // ReduxStore.dispatch(setActionTimestamp(timestamp));
+                this.jotaiStore.set(timestampAtom, timestamp);
             },
             [SOCKET_EVENTS.GAME_HANDSHAKE]: (handshake: GameHandshake) => {
-                ReduxStore.dispatch(setGameScreenSliceFromHandshake(handshake));
+                // meta
+                this.jotaiStore.set(gameFlowAtom, {
+                    type: handshake.combatStatus === 'pending' ? 'pending' : 'active',
+                    details: '',
+                });
+                this.jotaiStore.set(lobbyStateAtom, handshake.gameLobbyState);
+
+                // battlefield
+                this.jotaiStore.set(battlefieldAtom, handshake.currentBattlefield.pawns);
+                this.jotaiStore.set(aoeAtom, handshake.currentBattlefield.effects);
+                this.jotaiStore.set(timestampAtom, handshake.actionTimestamp);
+
+                // round
+                this.jotaiStore.set(roundAtom, handshake.roundCount);
+                this.jotaiStore.set(characterOrderAtom, handshake.turnOrder);
+
+                // other
+                this.jotaiStore.set(gameMessagesAtom, handshake.messages);
+                this.jotaiStore.set(controlledCharactersAtom, handshake.controlledCharacters ?? []);
             },
             [SOCKET_EVENTS.TAKE_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
-                try {
-                    ReduxStore.dispatch(setActions(actions));
-                } catch (e) {
-                    console.log('Error occurred during fetching of actions: ', e);
-                    this.emit(SOCKET_RESPONSES.SKIP);
-                    return;
-                }
-                ReduxStore.dispatch(setYourTurn(true));
+                this.jotaiStore.set(actionsAtom, actions);
+                this.jotaiStore.set(isYourTurnAtom, true);
             },
             ['*']: (data: unknown) => {
                 console.log('Received unknown event', data);
             },
         };
         this.addBatchOfEventsListener(listeners);
+        this.socket.onAny((event, data) => {
+            console.debug('Received event', event, data);
+        });
     }
 
     private setupElevatedRightsListeners() {
         const listeners = {
             [ELEVATED_RIGHTS_EVENTS.TAKE_UNALLOCATED_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
-                try {
-                    ReduxStore.dispatch(setActions(actions));
-                } catch (e) {
-                    console.log('Error occurred during fetching of actions: ', e);
-                    this.emit(SOCKET_RESPONSES.SKIP);
-                    return;
-                }
-                ReduxStore.dispatch(setYourTurn(true));
+                this.jotaiStore.set(actionsAtom, actions);
+                this.jotaiStore.set(isYourTurnAtom, true);
             },
             [ELEVATED_RIGHTS_EVENTS.TAKE_OFFLINE_PLAYER_ACTION]: ({ actions }: { actions: iCharacterActions }) => {
-                try {
-                    ReduxStore.dispatch(setActions(actions));
-                } catch (e) {
-                    console.log('Error occurred during fetching of actions: ', e);
-                    this.emit(SOCKET_RESPONSES.SKIP);
-                    return;
-                }
-                ReduxStore.dispatch(setYourTurn(true));
+                this.jotaiStore.set(actionsAtom, actions);
+                this.jotaiStore.set(isYourTurnAtom, true);
             },
         };
         this.addBatchOfEventsListener(listeners);
     }
 }
 
-export default new SocketService();
+export default SocketService;

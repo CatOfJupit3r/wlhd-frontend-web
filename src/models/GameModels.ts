@@ -8,11 +8,12 @@ export interface GameComponentDecoration {
 }
 
 export interface Battlefield {
-    pawns: {
-        [key: string]: {
+    pawns: Record<
+        string,
+        {
             character: CharacterInfoTooltip | null;
-        };
-    };
+        }
+    >;
     effects: Array<AreaEffectInfo>;
 }
 

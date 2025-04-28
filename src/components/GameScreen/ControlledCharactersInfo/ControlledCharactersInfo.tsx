@@ -1,11 +1,11 @@
-import { selectActiveCharacter, selectControlledCharacters } from '@redux/slices/gameScreenSlice';
-import { useSelector } from 'react-redux';
+import { useAtomValue } from 'jotai';
 
 import { CharacterDisplayInGame } from '@components/CharacterDisplay';
+import { controlledCharactersAtom, selectActiveCharacterAtom } from '@jotai-atoms/game-screen-atom';
 
 const ControlledCharactersInfo = () => {
-    const controlledCharacters = useSelector(selectControlledCharacters);
-    const activeCharacter = useSelector(selectActiveCharacter);
+    const controlledCharacters = useAtomValue(controlledCharactersAtom);
+    const activeCharacter = useAtomValue(selectActiveCharacterAtom);
 
     return (
         <div className={'flex h-full w-full flex-col gap-3 overflow-y-scroll p-2'}>

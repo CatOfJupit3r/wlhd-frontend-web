@@ -1,10 +1,10 @@
-import { selectAllMessages } from '@redux/slices/gameScreenSlice';
+import { useAtomValue } from 'jotai';
 import { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
 import { Separator } from '@components/ui/separator';
+import { gameMessagesAtom } from '@jotai-atoms/game-screen-atom';
 import { GameStateContainer } from '@models/GameModels';
 
 /*
@@ -27,7 +27,7 @@ For now, support for offloading messages, so for now we keep all messages loaded
 const GameMessagesFeed = () => {
     const { t } = useTranslation();
 
-    const messages = useSelector(selectAllMessages);
+    const messages = useAtomValue(gameMessagesAtom);
 
     const reverseMessageContainer = useCallback((messages: GameStateContainer): GameStateContainer => {
         return messages.slice().reverse();

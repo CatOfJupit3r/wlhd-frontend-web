@@ -7,7 +7,8 @@
                     "name": "builtins:actions.use_item.name",
                     "description": "builtins:actions.use_item.desc",
                     "sprite": "builtins:actions.use_item",
-                    "cost": "-"
+                    "cost": "-",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": {
@@ -20,7 +21,8 @@
                     "name": "builtins:actions.attack.name",
                     "description": "builtins:actions.attack.desc",
                     "sprite": "builtins:actions.attack",
-                    "cost": "1"
+                    "cost": "1",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": {
@@ -33,7 +35,8 @@
                     "name": "builtins:actions.use_spell.name",
                     "description": "builtins:actions.use_spell.desc",
                     "sprite": "builtins:actions.use_spell",
-                    "cost": "-"
+                    "cost": "-",
+                    "memories": {}
                 },
                 "available": false,
                 "requires": null
@@ -44,7 +47,8 @@
                     "name": "builtins:actions.defend.name",
                     "description": "builtins:actions.defend.desc",
                     "sprite": "builtins:actions.defend",
-                    "cost": "-"
+                    "cost": "-",
+                    "memories": {}
                 },
                 "available": false,
                 "requires": null
@@ -55,7 +59,8 @@
                     "name": "builtins:actions.move.name",
                     "description": "builtins:actions.move.desc",
                     "sprite": "builtins:actions.move",
-                    "cost": "1"
+                    "cost": "1",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": {
@@ -68,7 +73,8 @@
                     "name": "builtins:actions.skip.name",
                     "description": "builtins:actions.skip.desc",
                     "sprite": "builtins:actions.skip",
-                    "cost": "-"
+                    "cost": "-",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -79,7 +85,8 @@
                     "name": "builtins:actions.change_weapon.name",
                     "description": "builtins:actions.change_weapon.desc",
                     "sprite": "builtins:actions.change_weapon",
-                    "cost": "-"
+                    "cost": "-",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": {
@@ -94,7 +101,8 @@
                     "name": "builtins:1/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -105,7 +113,8 @@
                     "name": "builtins:1/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -116,7 +125,8 @@
                     "name": "builtins:1/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -127,7 +137,8 @@
                     "name": "builtins:1/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -138,7 +149,8 @@
                     "name": "builtins:1/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -149,7 +161,8 @@
                     "name": "builtins:1/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -160,7 +173,8 @@
                     "name": "builtins:2/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -171,7 +185,8 @@
                     "name": "builtins:2/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -182,7 +197,8 @@
                     "name": "builtins:2/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -193,7 +209,8 @@
                     "name": "builtins:2/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -204,7 +221,8 @@
                     "name": "builtins:2/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -215,7 +233,8 @@
                     "name": "builtins:2/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -226,7 +245,8 @@
                     "name": "builtins:3/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -237,7 +257,8 @@
                     "name": "builtins:3/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -248,7 +269,8 @@
                     "name": "builtins:3/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -259,7 +281,8 @@
                     "name": "builtins:3/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -270,7 +293,8 @@
                     "name": "builtins:3/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -281,7 +305,8 @@
                     "name": "builtins:3/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -292,7 +317,8 @@
                     "name": "builtins:4/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -303,7 +329,8 @@
                     "name": "builtins:4/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -314,7 +341,8 @@
                     "name": "builtins:4/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -325,7 +353,8 @@
                     "name": "builtins:4/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -336,7 +365,8 @@
                     "name": "builtins:4/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -347,7 +377,8 @@
                     "name": "builtins:4/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -358,7 +389,8 @@
                     "name": "builtins:5/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -369,7 +401,8 @@
                     "name": "builtins:5/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -380,7 +413,8 @@
                     "name": "builtins:5/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -391,7 +425,8 @@
                     "name": "builtins:5/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -402,7 +437,8 @@
                     "name": "builtins:5/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -413,7 +449,8 @@
                     "name": "builtins:5/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -424,7 +461,8 @@
                     "name": "builtins:6/builtins:0",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -435,7 +473,8 @@
                     "name": "builtins:6/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -446,7 +485,8 @@
                     "name": "builtins:6/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -457,7 +497,8 @@
                     "name": "builtins:6/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -468,7 +509,8 @@
                     "name": "builtins:6/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -479,7 +521,8 @@
                     "name": "builtins:6/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -490,7 +533,8 @@
                     "name": "builtins:1/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -501,7 +545,8 @@
                     "name": "builtins:1/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -512,7 +557,8 @@
                     "name": "builtins:1/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -523,7 +569,8 @@
                     "name": "builtins:1/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -534,7 +581,8 @@
                     "name": "builtins:1/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -545,7 +593,8 @@
                     "name": "builtins:1/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -556,7 +605,8 @@
                     "name": "builtins:2/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -567,7 +617,8 @@
                     "name": "builtins:2/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -578,7 +629,8 @@
                     "name": "builtins:2/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -589,7 +641,8 @@
                     "name": "builtins:2/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -600,7 +653,8 @@
                     "name": "builtins:2/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -611,7 +665,8 @@
                     "name": "builtins:2/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -622,7 +677,8 @@
                     "name": "builtins:3/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -633,7 +689,8 @@
                     "name": "builtins:3/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -644,7 +701,8 @@
                     "name": "builtins:3/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -655,7 +713,8 @@
                     "name": "builtins:3/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -666,7 +725,8 @@
                     "name": "builtins:3/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -677,7 +737,8 @@
                     "name": "builtins:3/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -688,7 +749,8 @@
                     "name": "builtins:4/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -699,7 +761,8 @@
                     "name": "builtins:4/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -710,7 +773,8 @@
                     "name": "builtins:4/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -721,7 +785,8 @@
                     "name": "builtins:4/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -732,7 +797,8 @@
                     "name": "builtins:4/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -743,7 +809,8 @@
                     "name": "builtins:4/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -754,7 +821,8 @@
                     "name": "builtins:5/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -765,7 +833,8 @@
                     "name": "builtins:5/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -776,7 +845,8 @@
                     "name": "builtins:5/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -787,7 +857,8 @@
                     "name": "builtins:5/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -798,7 +869,8 @@
                     "name": "builtins:5/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -809,7 +881,8 @@
                     "name": "builtins:5/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -820,7 +893,8 @@
                     "name": "builtins:6/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -831,7 +905,8 @@
                     "name": "builtins:6/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -842,7 +917,8 @@
                     "name": "builtins:6/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -853,7 +929,8 @@
                     "name": "builtins:6/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -864,7 +941,8 @@
                     "name": "builtins:6/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -875,7 +953,8 @@
                     "name": "builtins:6/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -888,7 +967,8 @@
                     "name": "builtins:items.healing_potion.name",
                     "description": "builtins:items.healing_potion.desc",
                     "sprite": "builtins:items.healing_potion",
-                    "cost": "1"
+                    "cost": "1",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": {
@@ -903,7 +983,8 @@
                     "name": "builtins:3/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -914,7 +995,8 @@
                     "name": "builtins:3/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -925,7 +1007,8 @@
                     "name": "builtins:3/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -936,7 +1019,8 @@
                     "name": "builtins:3/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -947,7 +1031,8 @@
                     "name": "builtins:3/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -958,7 +1043,8 @@
                     "name": "builtins:3/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -969,7 +1055,8 @@
                     "name": "builtins:4/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -980,7 +1067,8 @@
                     "name": "builtins:4/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -991,7 +1079,8 @@
                     "name": "builtins:4/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1002,7 +1091,8 @@
                     "name": "builtins:4/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1013,7 +1103,8 @@
                     "name": "builtins:4/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1024,7 +1115,8 @@
                     "name": "builtins:4/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1037,7 +1129,8 @@
                     "name": "builtins:4/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1048,7 +1141,8 @@
                     "name": "builtins:4/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1059,7 +1153,8 @@
                     "name": "builtins:4/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1070,7 +1165,8 @@
                     "name": "builtins:4/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1081,7 +1177,8 @@
                     "name": "builtins:4/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1092,7 +1189,8 @@
                     "name": "builtins:5/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1103,7 +1201,8 @@
                     "name": "builtins:5/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1114,7 +1213,8 @@
                     "name": "builtins:5/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1125,7 +1225,8 @@
                     "name": "builtins:5/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1136,7 +1237,8 @@
                     "name": "builtins:5/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1147,7 +1249,8 @@
                     "name": "builtins:5/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1158,7 +1261,8 @@
                     "name": "builtins:6/builtins:1",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1169,7 +1273,8 @@
                     "name": "builtins:6/builtins:2",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1180,7 +1285,8 @@
                     "name": "builtins:6/builtins:3",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1191,7 +1297,8 @@
                     "name": "builtins:6/builtins:4",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1202,7 +1309,8 @@
                     "name": "builtins:6/builtins:5",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1213,7 +1321,8 @@
                     "name": "builtins:6/builtins:6",
                     "description": "",
                     "sprite": "",
-                    "cost": "0"
+                    "cost": "0",
+"memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -1226,7 +1335,8 @@
                     "name": "builtins:weapons.hero_sword.name",
                     "description": "builtins:weapons.hero_sword.desc",
                     "sprite": "builtins:weapons.hero_sword",
-                    "cost": "1"
+                    "cost": "1",
+                    "memories": {}
                 },
                 "available": true,
                 "requires": null
@@ -2212,7 +2322,7 @@
         ]
     },
     "round": {
-        "current": "24",
+        "current": 24,
         "order": [
             {
                 "controlledBy": {
@@ -2229,7 +2339,8 @@
                     "line": 4,
                     "column": 2
                 },
-                "controlledByYou": true
+                "controlledByYou": true,
+                "id_": "660953204bd5e6d58ed510d2"
             },
             {
                 "controlledBy": {
@@ -2246,7 +2357,8 @@
                     "line": 3,
                     "column": 3
                 },
-                "controlledByYou": true
+                "controlledByYou": true,
+                "id_": "760953204bd5e6d58ed510d2"
             },
             null
         ]

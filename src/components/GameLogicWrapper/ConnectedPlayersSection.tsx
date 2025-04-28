@@ -1,8 +1,6 @@
-import { selectGameLobbyState } from '@redux/slices/gameScreenSlice';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 
 import UserAvatar from '@components/UserAvatars';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
@@ -40,9 +38,8 @@ const PlayerCard: FC<iPlayerCard> = ({ info: { userId, isConnected, isGm } }) =>
     );
 };
 
-const ConnectedPlayersSection: FC = () => {
+const ConnectedPlayersSection: FC<{ gameLobbyState: iGameLobbyState }> = ({ gameLobbyState }) => {
     const { t } = useTranslation('local', { keyPrefix: 'game.pending' });
-    const gameLobbyState = useSelector(selectGameLobbyState);
 
     return (
         <div className={'flex w-full flex-col justify-center'}>

@@ -1,14 +1,14 @@
 import { useActionContext } from '@context/ActionContext';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
-import { selectActions, selectIsYourTurn } from '@redux/slices/gameScreenSlice';
+import { useAtomValue } from 'jotai/index';
 import { JSX, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsArrowBarLeft } from 'react-icons/bs';
 import { RxArrowTopRight } from 'react-icons/rx';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
+import { actionsAtom, isYourTurnAtom } from '@jotai-atoms/actions-atom';
 import { iAction } from '@models/GameModels';
 
 import OptionCard, { OptionCardPlaceholder, OptionCardWithLogic } from './OptionCard';
@@ -55,7 +55,6 @@ const EmptyActionInputContent = () => {
 type ScopeOfChoice = [string, string];
 
 const ActionInput = () => {
-    const dispatch = useDispatch();
     const { setOutput } = useActionContext();
     const {
         incrementClickedSquares,
@@ -65,8 +64,10 @@ const ActionInput = () => {
         resetClickedSquares,
     } = useBattlefieldContext();
     const { t } = useTranslation();
-    const actions = useSelector(selectActions);
-    const isPlayerTurn = useSelector(selectIsYourTurn);
+
+    const actions = useAtomValue(actionsAtom);
+    const isPlayerTurn = useAtomValue(isYourTurnAtom);
+
     const [currentAlias, setCurrentAlias] = useState('action');
     const { choices, resetChoices, setChoice } = useActionContext();
     const [scopeOfChoice, setScopeOfChoice] = useState<Array<ScopeOfChoice>>([['action', 'action']]);
@@ -210,7 +211,7 @@ const ActionInput = () => {
                 </div>
             </>
         );
-    }, [dispatch, t, choices, handleReset, scopeOfChoice]);
+    }, [t, choices, handleReset, scopeOfChoice]);
 
     useEffect(() => {
         if (!needToAddInteractableTiles.flag) {
