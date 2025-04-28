@@ -15,7 +15,7 @@ import {
 import useThisLobby from '@queries/useThisLobby';
 import APIService from '@services/APIService';
 
-import example_gamestate from '../data/example_gamestate.json';
+import example_gamestate from '../mocks/example_gamestate.json';
 
 const GameTestPage = () => {
     const jotaiStore = useRef(createStore());
