@@ -1,3 +1,4 @@
+import { VITE_BACKEND_URL } from '@configuration';
 import { ActionResultsPayload } from '@type-defs/Events';
 import {
     Battlefield,
@@ -8,7 +9,6 @@ import {
     IndividualTurnOrder,
     TranslatableString,
 } from '@type-defs/GameModels';
-import { VITE_BACKEND_URL } from 'config';
 import { createStore } from 'jotai';
 import { io, Socket } from 'socket.io-client';
 

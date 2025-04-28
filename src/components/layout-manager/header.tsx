@@ -1,5 +1,5 @@
+import { IS_DEVELOPMENT } from '@configuration';
 import { useNavigate } from '@tanstack/react-router';
-import { IS_DEVELOPMENT } from 'config';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';

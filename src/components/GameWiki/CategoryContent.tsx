@@ -1,4 +1,4 @@
-import { SupportedDLCs } from 'config';
+import { SupportedDLCs } from '@configuration';
 import { FC } from 'react';
 
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';

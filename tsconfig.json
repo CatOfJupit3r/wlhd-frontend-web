@@ -28,7 +28,7 @@
             "@router/*": ["./routes/*"],
             "@lib/*": ["./lib/*"],
             "@context/*": ["./context/*"],
-            "config": ["./config"],
+            "@configuration": ["./config"],
             "@queries/*": ["./queries/*"],
             "@mutations/*": ["./mutations/*"],
 			"@jotai-atoms/*": ["./jotai/*"],

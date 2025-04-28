@@ -1,5 +1,5 @@
+import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from '@configuration';
 import axios from 'axios';
-import { FALLBACK_LANGUAGE, SUPPORTED_DLCs, VITE_CDN_URL } from 'config';
 import i18next, { Resource } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';

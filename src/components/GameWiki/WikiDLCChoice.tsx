@@ -1,4 +1,4 @@
-import { SUPPORTED_DLCS_DESCRIPTORS } from 'config';
+import { SUPPORTED_DLCS_DESCRIPTORS } from '@configuration';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -1,3 +1,4 @@
+import { VITE_BACKEND_URL, VITE_CDN_URL } from '@configuration';
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -21,7 +22,6 @@ import {
     ShortLobbyInformation,
 } from '@type-defs/api-data';
 import axios, { AxiosError } from 'axios';
-import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
 import { Resource } from 'i18next';
 import { merge } from 'lodash';
 

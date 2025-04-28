@@ -1,5 +1,5 @@
+import { VITE_BACKEND_URL } from '@configuration';
 import axios, { AxiosError } from 'axios';
-import { VITE_BACKEND_URL } from 'config';
 import EventEmitter from 'events';
 
 const isServerUnavailableError = (error: unknown) => {

@@ -1,4 +1,4 @@
-import { VITE_CDN_URL } from 'config';
+import { VITE_CDN_URL } from '@configuration';
 
 import { splitDescriptor } from '@utils/game-helpers';
 

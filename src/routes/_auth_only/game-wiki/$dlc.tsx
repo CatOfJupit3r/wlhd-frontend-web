@@ -1,5 +1,5 @@
+import { SUPPORTED_DLCS_DESCRIPTORS } from '@configuration';
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { SUPPORTED_DLCS_DESCRIPTORS } from 'config';
 
 import GameWikiSelectedPage from '@pages/GameWikiSelectedPage';
 

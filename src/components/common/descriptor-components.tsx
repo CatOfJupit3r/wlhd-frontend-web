@@ -1,5 +1,5 @@
+import { SUPPORTED_DLCs, SupportedDLCs } from '@configuration';
 import { LimitedDLCData } from '@type-defs/api-data';
-import { SUPPORTED_DLCs, SupportedDLCs } from 'config';
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 

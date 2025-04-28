@@ -1,6 +1,6 @@
+import { SUPPORTED_DLCs } from '@configuration';
 import { useCombatEditor } from '@context/combat-editor';
 import { ControlledBy } from '@type-defs/EditorConversion';
-import { SUPPORTED_DLCs } from 'config';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

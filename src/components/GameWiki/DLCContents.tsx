@@ -1,5 +1,5 @@
+import { SupportedDLCs } from '@configuration';
 import { useNavigate } from '@tanstack/react-router';
-import { SupportedDLCs } from 'config';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaAddressCard } from 'react-icons/fa';
