@@ -4,14 +4,6 @@ import { Resource } from 'i18next';
 import { merge } from 'lodash';
 
 import {
-    iMyCharacter,
-    iUserExtraData,
-    iUserPatchData,
-    iUserStatistics,
-    LimitedDLCData,
-    ShortLobbyInformation,
-} from '@models/APIData';
-import {
     AreaEffectEditable,
     CharacterDataEditable,
     ItemEditable,
@@ -25,8 +17,14 @@ import {
     iInviteCode,
     iLobbyInformation,
     iLobbyPlayerInfo,
+    iMyCharacter,
+    iUserExtraData,
+    iUserPatchData,
+    iUserStatistics,
     iWaitingApprovalPlayer,
-} from '@models/Redux';
+    LimitedDLCData,
+    ShortLobbyInformation,
+} from '@models/api-data';
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthService from '@services/AuthService';
 

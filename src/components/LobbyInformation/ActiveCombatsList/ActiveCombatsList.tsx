@@ -6,7 +6,7 @@ import { LuSwords } from 'react-icons/lu';
 import { ButtonLink } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
-import { iCombatInfo, iLobbyInformation } from '@models/Redux';
+import { iCombatInfo, iLobbyInformation } from '@models/api-data';
 import { cn } from '@utils';
 
 import CombatDisplay from './CombatDisplay';

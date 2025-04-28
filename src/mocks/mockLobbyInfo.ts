@@ -1,4 +1,4 @@
-import { iLobbyInformation } from '@models/Redux';
+import { iLobbyInformation } from '@models/api-data';
 
 export const mockLobbyInfo: iLobbyInformation = {
     lobbyId: '123456',

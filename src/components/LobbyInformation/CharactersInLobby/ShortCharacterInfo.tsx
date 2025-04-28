@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import GameAsset from '@components/GameAsset';
 import { ViewCharacterButton } from '@components/ui/common-links';
-import { iCharacterInLobby } from '@models/Redux';
+import { iCharacterInLobby } from '@models/api-data';
 
 interface iShortCharacterInfo {
     character: iCharacterInLobby;

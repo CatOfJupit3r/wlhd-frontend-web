@@ -13,7 +13,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { LimitedDLCData } from '@models/APIData';
+import { LimitedDLCData } from '@models/api-data';
 
 interface iDescriptorComponents<T extends string = string> {
     value: T;

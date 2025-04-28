@@ -8,7 +8,7 @@ import { MutationButton } from '@components/ui/button';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import StyledLink from '@components/ui/styled-link';
 import useDualTranslation from '@hooks/useDualTranslation';
-import { iLobbyInformation, iLobbyPlayerInfo } from '@models/Redux';
+import { iLobbyInformation, iLobbyPlayerInfo } from '@models/api-data';
 import { useApproveUserMutation } from '@mutations/lobby-overview/useApproveUser';
 import useRemoveLobbyMember from '@mutations/lobby-overview/useRemoveLobbyMember';
 import useMe from '@queries/useMe';

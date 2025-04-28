@@ -6,7 +6,7 @@ import { Card, CardContent } from '@components/ui/card';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Skeleton } from '@components/ui/skeleton';
 import StyledLink from '@components/ui/styled-link';
-import { ShortLobbyInformation } from '@models/APIData';
+import { ShortLobbyInformation } from '@models/api-data';
 import useLobbyShortInfo from '@queries/profile/useLobbyShortInfo';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/';
 import { cn } from '@utils';

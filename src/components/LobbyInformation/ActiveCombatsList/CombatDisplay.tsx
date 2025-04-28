@@ -6,7 +6,7 @@ import { LuGamepad } from 'react-icons/lu';
 import { ButtonLink } from '@components/ui/button';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { iCombatInfo } from '@models/Redux';
+import { iCombatInfo } from '@models/api-data';
 import { cn } from '@utils';
 
 const JoinTheCombat: FC<{ combatId: string; lobbyId: string; children: ReactNode; className?: string }> = ({

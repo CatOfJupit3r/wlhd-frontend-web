@@ -3,7 +3,7 @@ import { LuSettings } from 'react-icons/lu';
 
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import { ButtonLink } from '@components/ui/button';
-import { iUserExtraData } from '@models/APIData';
+import { iUserExtraData } from '@models/api-data';
 
 interface iBannerBackground {
     children?: ReactNode;

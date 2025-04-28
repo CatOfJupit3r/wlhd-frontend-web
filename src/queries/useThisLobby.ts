@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
-import { iLobbyInformation } from '@models/Redux';
+import { iLobbyInformation } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const defaultLobbyState: iLobbyInformation = {
