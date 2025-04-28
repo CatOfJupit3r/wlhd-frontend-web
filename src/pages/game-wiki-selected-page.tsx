@@ -1,7 +1,7 @@
-import { SupportedDLCs } from '@configuration';
 import { FC } from 'react';
 
 import DLCContents from '@components/GameWiki/DLCContents';
+import { SupportedDLCs } from '@constants/game-support';
 
 interface GameWikiChoicePageProps {
     dlc: SupportedDLCs;

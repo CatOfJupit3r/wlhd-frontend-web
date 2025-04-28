@@ -1,4 +1,3 @@
-import { SupportedDLCs } from '@configuration';
 import { useNavigate } from '@tanstack/react-router';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +8,7 @@ import CategoryContent from '@components/GameWiki/CategoryContent';
 import { PseudoCategoryContent } from '@components/GameWiki/PseudoCategoryContent';
 import { AOEIcon, InventoryIcon, SpellBookIcon, StatusEffectsIcon, WeaponryIcon } from '@components/icons';
 import { Button } from '@components/ui/button';
+import { SupportedDLCs } from '@constants/game-support';
 import { Route as WikiDlcSelectRoute } from '@router/_auth_only/game-wiki';
 
 interface iDLCContents {

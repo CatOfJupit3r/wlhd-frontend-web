@@ -1,6 +1,6 @@
-import { SUPPORTED_DLCS_DESCRIPTORS } from '@configuration';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
+import { SUPPORTED_DLCS_DESCRIPTORS } from '@constants/game-support';
 import GameWikiSelectedPage from '@pages/game-wiki-selected-page';
 
 export const Route = createFileRoute('/_auth_only/game-wiki/$dlc')({

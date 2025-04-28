@@ -9,7 +9,7 @@
     "importOrderSeparation": true,
     "importOrder": [
         "<THIRD_PARTY_MODULES>",
-        "^@(components|configs|constants|hooks|models|mutations|pages|queries|router|services|utils|jotai-atoms)(.*)$",
+        "^@(components|configuration|locales|constants|hooks|models|mutations|pages|queries|router|services|context|utils|jotai-atoms)(.*)$",
         "^[./]"
     ]
 }

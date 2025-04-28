@@ -1,10 +1,10 @@
-import { SUPPORTED_DLCS_DESCRIPTORS } from '@configuration';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DLCData, { iDLCData } from '@components/GameWiki/data';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/card';
 import StyledLink from '@components/ui/styled-link';
+import { SUPPORTED_DLCS_DESCRIPTORS } from '@constants/game-support';
 
 interface iDLCCard {
     title: string;

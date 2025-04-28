@@ -1,4 +1,3 @@
-import { SupportedDLCs } from '@configuration';
 import { FC } from 'react';
 
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
@@ -20,6 +19,7 @@ import {
     WeaponInfoDisplayWithDescriptor,
 } from '@components/InfoDisplay/InfoDisplayWithDescriptor';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
+import { SupportedDLCs } from '@constants/game-support';
 import {
     useLoadedAreaEffects,
     useLoadedCharacters,
