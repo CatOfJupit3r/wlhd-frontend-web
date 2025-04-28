@@ -1,5 +1,6 @@
 import { useActionContext } from '@context/ActionContext';
 import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { iAction } from '@type-defs/GameModels';
 import { useAtomValue } from 'jotai/index';
 import { JSX, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +10,6 @@ import { RxArrowTopRight } from 'react-icons/rx';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
 import { actionsAtom, isYourTurnAtom } from '@jotai-atoms/actions-atom';
-import { iAction } from '@models/GameModels';
 
 import OptionCard, { OptionCardPlaceholder, OptionCardWithLogic } from './OptionCard';
 

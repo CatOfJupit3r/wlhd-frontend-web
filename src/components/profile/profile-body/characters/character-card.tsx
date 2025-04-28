@@ -1,9 +1,9 @@
+import { iMyCharacter } from '@type-defs/api-data';
 import { FC } from 'react';
 import { LuExternalLink } from 'react-icons/lu';
 
 import GameAsset from '@components/GameAsset';
 import { ViewCharacterButton } from '@components/ui/common-links';
-import { iMyCharacter } from '@models/api-data';
 
 interface iCharacterCard {
     character: iMyCharacter;

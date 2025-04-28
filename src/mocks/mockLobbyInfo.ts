@@ -1,4 +1,4 @@
-import { iLobbyInformation } from '@models/api-data';
+import { iLobbyInformation } from '@type-defs/api-data';
 
 export const mockLobbyInfo: iLobbyInformation = {
     lobbyId: '123456',

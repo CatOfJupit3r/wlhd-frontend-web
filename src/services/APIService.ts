@@ -1,8 +1,3 @@
-import axios, { AxiosError } from 'axios';
-import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
-import { Resource } from 'i18next';
-import { merge } from 'lodash';
-
 import {
     AreaEffectEditable,
     CharacterDataEditable,
@@ -10,8 +5,8 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels';
-import { CharacterClassConversion, CreateCombatBody } from '@models/EditorConversion';
+} from '@type-defs/CombatEditorModels';
+import { CharacterClassConversion, CreateCombatBody } from '@type-defs/EditorConversion';
 import {
     iCharacterInLobby,
     iInviteCode,
@@ -24,7 +19,12 @@ import {
     iWaitingApprovalPlayer,
     LimitedDLCData,
     ShortLobbyInformation,
-} from '@models/api-data';
+} from '@type-defs/api-data';
+import axios, { AxiosError } from 'axios';
+import { VITE_BACKEND_URL, VITE_CDN_URL } from 'config';
+import { Resource } from 'i18next';
+import { merge } from 'lodash';
+
 import APIHealth, { isServerUnavailableError } from '@services/APIHealth';
 import AuthService from '@services/AuthService';
 

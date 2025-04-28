@@ -1,7 +1,12 @@
+import {
+    CommonGameComponentInfoFields,
+    GameComponentDecoration,
+    MemoryType,
+    PossibleMemory,
+} from '@type-defs/GameModels';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CommonGameComponentInfoFields, GameComponentDecoration, MemoryType, PossibleMemory } from '@models/GameModels';
 import { memoryValueToTranslation } from '@utils/game-display-tools';
 
 export interface iPartialMemory {

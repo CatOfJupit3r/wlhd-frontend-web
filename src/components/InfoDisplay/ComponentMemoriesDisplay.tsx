@@ -1,8 +1,8 @@
+import { GameComponentMemory, PossibleMemory } from '@type-defs/GameModels';
 import { capitalize } from 'lodash';
 import React, { FC, HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { GameComponentMemory, PossibleMemory } from '@models/GameModels';
 import { memoryValueToTranslation } from '@utils/game-display-tools';
 
 const ComponentMemory: React.FC<

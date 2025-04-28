@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import { RouterRoute } from '@type-defs/common-types';
 
 import { toastError } from '@components/toastifications';
-import { RouterRoute } from '@models/common-types';
 import { USE_ME_QUERY_KEYS } from '@queries/useMe';
 import AuthService from '@services/AuthService';
 

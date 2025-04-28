@@ -21,19 +21,18 @@
         "paths": {
             "@components/*": ["./components/*"],
             "@pages/*": ["./pages/*"],
-            "@styles/*": ["./styles/*"],
             "@utils": ["./utils"],
             "@utils/*": ["./utils/*"],
             "@services/*": ["./services/*"],
             "@hooks/*": ["./hooks/*"],
-            "@models/*": ["./models/*"],
             "@router/*": ["./routes/*"],
             "@lib/*": ["./lib/*"],
             "@context/*": ["./context/*"],
             "config": ["./config"],
             "@queries/*": ["./queries/*"],
             "@mutations/*": ["./mutations/*"],
-			"@jotai-atoms/*": ["./jotai/*"]
+			"@jotai-atoms/*": ["./jotai/*"],
+            "@type-defs/*": ["./types/*"]
         }
     },
     "include": ["src"],

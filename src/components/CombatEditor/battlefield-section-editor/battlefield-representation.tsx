@@ -1,12 +1,12 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { useCombatEditor } from '@context/combat-editor';
+import { Battlefield as BattlefieldModel } from '@type-defs/GameModels';
 import { ReactNode, useCallback, useEffect } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 import Battlefield from '@components/Battlefield/Battlefield';
 import { Button } from '@components/ui/button';
-import { Battlefield as BattlefieldModel } from '@models/GameModels';
 
 export const BattlefieldRepresentation = ({
     setClickedSquare,

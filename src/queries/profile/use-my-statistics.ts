@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { iUserStatistics } from '@type-defs/api-data';
 import { useMemo } from 'react';
 
-import { iUserStatistics } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const DEFAULT_STATISTICS: iUserStatistics = {

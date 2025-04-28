@@ -1,10 +1,10 @@
 import { useCharacterEditor, useCharacterEditorUpdateActions } from '@context/character-editor';
+import { GameComponentMemory } from '@type-defs/GameModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { common } from '@components/editors/game-component-editors';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { GameComponentMemory } from '@models/GameModels';
 
 const CharacterMiscEditor = () => {
     const { memories, character } = useCharacterEditor();

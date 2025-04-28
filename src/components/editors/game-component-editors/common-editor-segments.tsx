@@ -1,3 +1,13 @@
+import {
+    AreaEffectEditable,
+    CharacterDataInSave,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@type-defs/CombatEditorModels';
+import { DiceMemory, GameComponentMemory, PossibleMemory } from '@type-defs/GameModels';
+import { OneOf } from '@type-defs/common-types';
 import { capitalize } from 'lodash';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,16 +32,6 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Separator } from '@components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import useDualTranslation from '@hooks/useDualTranslation';
-import {
-    AreaEffectEditable,
-    CharacterDataInSave,
-    ItemEditable,
-    SpellEditable,
-    StatusEffectEditable,
-    WeaponEditable,
-} from '@models/CombatEditorModels';
-import { DiceMemory, GameComponentMemory, PossibleMemory } from '@models/GameModels';
-import { OneOf } from '@models/common-types';
 import { cn } from '@utils';
 
 const useComponentEditorTranslation = () => {

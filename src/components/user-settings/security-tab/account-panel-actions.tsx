@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { UserAccountProvider } from '@type-defs/common-types';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUnlink } from 'react-icons/fa';
@@ -23,7 +24,6 @@ import {
 } from '@components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
-import { UserAccountProvider } from '@models/common-types';
 import useAddCredentialAuth from '@mutations/profile/use-add-credential-auth';
 import useChangePassword from '@mutations/profile/use-change-password';
 import useLinkAccount from '@mutations/profile/use-link-social';

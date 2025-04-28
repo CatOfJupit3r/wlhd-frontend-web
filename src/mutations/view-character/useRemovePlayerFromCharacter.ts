@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { iLobbyInformation } from '@type-defs/api-data';
 
 import { toastError } from '@components/toastifications';
-import { iLobbyInformation } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const useRemovePlayerFromCharacter = () => {

@@ -1,3 +1,13 @@
+import { ActionResultsPayload } from '@type-defs/Events';
+import {
+    Battlefield,
+    CharacterInfoFull,
+    GameHandshake,
+    iCharacterActions,
+    iGameLobbyState,
+    IndividualTurnOrder,
+    TranslatableString,
+} from '@type-defs/GameModels';
 import { VITE_BACKEND_URL } from 'config';
 import { createStore } from 'jotai';
 import { io, Socket } from 'socket.io-client';
@@ -12,16 +22,6 @@ import {
     gameMessagesAtom,
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
-import { ActionResultsPayload } from '@models/Events';
-import {
-    Battlefield,
-    CharacterInfoFull,
-    GameHandshake,
-    iCharacterActions,
-    iGameLobbyState,
-    IndividualTurnOrder,
-    TranslatableString,
-} from '@models/GameModels';
 
 const SOCKET_EVENTS = {
     BATTLE_STARTED: 'battle_started',

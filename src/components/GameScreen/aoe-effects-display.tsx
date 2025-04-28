@@ -1,4 +1,5 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { AreaEffectInfo } from '@type-defs/GameModels';
 import { AnimatePresence } from 'framer-motion';
 import { useAtomValue } from 'jotai';
 import { FC, ReactNode, useCallback } from 'react';
@@ -11,7 +12,6 @@ import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
 import { Separator } from '@components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
 import { aoeAtom } from '@jotai-atoms/battlefield-atom';
-import { AreaEffectInfo } from '@models/GameModels';
 import { cn } from '@utils';
 
 export const AOECard: FC<{ effect: AreaEffectInfo; bonusTooltip?: ReactNode; className?: string }> = ({

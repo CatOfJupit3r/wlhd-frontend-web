@@ -1,3 +1,4 @@
+import { CharacterInfoFull } from '@type-defs/GameModels';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +13,6 @@ import {
 import TagsDisplay from '@components/InfoDisplay/TagsDisplay';
 import { EmptyMenuContent } from '@components/ui/menu';
 import { Separator } from '@components/ui/separator';
-import { CharacterInfoFull } from '@models/GameModels';
 
 const SupportedFeatures = ['inventory', 'statusEffects', 'spells', 'weaponry', 'attributes', 'misc'] as const;
 

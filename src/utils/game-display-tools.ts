@@ -1,4 +1,5 @@
-import { DiceMemory, MemoryType, PossibleMemory } from '@models/GameModels';
+import { DiceMemory, MemoryType, PossibleMemory } from '@type-defs/GameModels';
+
 import { isDescriptor, splitDescriptor } from '@utils/game-helpers';
 
 interface IDuals {

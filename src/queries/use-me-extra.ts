@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { iUserExtraData } from '@type-defs/api-data';
 
-import { iUserExtraData } from '@models/api-data';
 import { USE_ME_QUERY_KEYS, useMe } from '@queries/useMe';
 import APIService from '@services/APIService';
 

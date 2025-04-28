@@ -1,5 +1,7 @@
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
+import { CharacterDataEditable } from '@type-defs/CombatEditorModels';
+import { ControlledBy } from '@type-defs/EditorConversion';
 import { useCallback, useEffect, useState } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -27,8 +29,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { CharacterDataEditable } from '@models/CombatEditorModels';
-import { ControlledBy } from '@models/EditorConversion';
 import useThisLobby from '@queries/useThisLobby';
 
 const CombatCharacterEditorSettings: CharacterEditorFlags = {

@@ -1,15 +1,15 @@
+import {
+    AreaEffectsOnBattlefieldEditable,
+    CharacterDataEditable,
+    CharacterDataEditableInCombat,
+} from '@type-defs/CombatEditorModels';
+import { ControlledBy } from '@type-defs/EditorConversion';
+import { GameStateContainer } from '@type-defs/GameModels';
 import { atom, useAtom } from 'jotai';
 import { withImmer } from 'jotai-immer';
 import { atomWithStorage, selectAtom } from 'jotai/utils';
 import { createContext, type FC, ReactNode, useContext, useMemo } from 'react';
 
-import {
-    AreaEffectsOnBattlefieldEditable,
-    CharacterDataEditable,
-    CharacterDataEditableInCombat,
-} from '@models/CombatEditorModels';
-import { ControlledBy } from '@models/EditorConversion';
-import { GameStateContainer } from '@models/GameModels';
 import { CONTROLLED_BY_GAME_LOGIC, RandomizeUtils } from '@utils';
 
 export type CombatEditorSaveType = {

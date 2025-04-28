@@ -1,7 +1,7 @@
+import { UserAccountProvider, UserAccountType } from '@type-defs/common-types';
 import type { FC } from 'react';
 
 import { Separator } from '@components/ui/separator';
-import { UserAccountProvider, UserAccountType } from '@models/common-types';
 import useUserAccounts from '@queries/user-settings/use-user-accounts';
 
 import AccountInfoPanel, { AccountInfoPanelSkeleton, iAccountInfoPanel } from './account-info-panel';

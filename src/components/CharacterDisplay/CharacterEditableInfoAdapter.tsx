@@ -1,8 +1,8 @@
+import { CharacterDataEditable } from '@type-defs/CombatEditorModels';
 import { FC } from 'react';
 
 import { CharacterDisplayProps } from '@components/CharacterDisplay/CharacterDisplay';
 import { CharacterDisplay } from '@components/CharacterDisplay/index';
-import { CharacterDataEditable } from '@models/CombatEditorModels';
 import GameConverters from '@services/GameConverters';
 
 type iCharacterEditableInfoAdapter = Omit<CharacterDisplayProps, 'character'> & {

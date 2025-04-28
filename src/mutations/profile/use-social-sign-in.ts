@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import { AccountSocialProviders } from '@type-defs/common-types';
 
 import { toastBetterAuthError } from '@components/toastifications';
-import { AccountSocialProviders } from '@models/common-types';
 import AuthService from '@services/AuthService';
 
 const useSocialSignIn = () => {

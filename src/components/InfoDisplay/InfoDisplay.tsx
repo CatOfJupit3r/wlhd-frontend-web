@@ -1,3 +1,4 @@
+import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@type-defs/GameModels';
 import { HTMLAttributes, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiInfinite } from 'react-icons/bi';
@@ -17,7 +18,6 @@ import {
 } from '@components/icons';
 import SeparatedDiv from '@components/ui/separated-div';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { AreaEffectInfo, ItemInfo, SpellInfo, StatusEffectInfo, WeaponInfo } from '@models/GameModels';
 
 interface WeaponSegment {
     type: 'weapon';

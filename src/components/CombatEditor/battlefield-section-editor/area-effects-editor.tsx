@@ -1,5 +1,6 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
 import { useCombatEditor } from '@context/combat-editor';
+import { AreaEffectEditable } from '@type-defs/CombatEditorModels';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiAddBoxFill } from 'react-icons/ri';
@@ -17,7 +18,6 @@ import {
     DialogTitle,
 } from '@components/ui/dialog';
 import { HorizontalSeparator } from '@components/ui/separator';
-import { AreaEffectEditable } from '@models/CombatEditorModels';
 
 interface iAreaEffectsEditor {}
 

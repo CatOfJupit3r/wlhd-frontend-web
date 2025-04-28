@@ -1,3 +1,10 @@
+import {
+    AreaEffectEditable,
+    ItemEditable,
+    SpellEditable,
+    StatusEffectEditable,
+    WeaponEditable,
+} from '@type-defs/CombatEditorModels';
 import { FC } from 'react';
 
 import {
@@ -7,13 +14,6 @@ import {
     StatusEffectInfoDisplay,
     WeaponInfoDisplay,
 } from '@components/InfoDisplay/InfoDisplay';
-import {
-    AreaEffectEditable,
-    ItemEditable,
-    SpellEditable,
-    StatusEffectEditable,
-    WeaponEditable,
-} from '@models/CombatEditorModels';
 import GameConverters from '@services/GameConverters';
 
 interface iItemEditableAdapter {

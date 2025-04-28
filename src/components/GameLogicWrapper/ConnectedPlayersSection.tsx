@@ -1,10 +1,10 @@
+import { iGameLobbyState } from '@type-defs/GameModels';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCrown } from 'react-icons/fa';
 
 import UserAvatar from '@components/UserAvatars';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import { iGameLobbyState } from '@models/GameModels';
 import useThisLobby from '@queries/useThisLobby';
 import { cn } from '@utils';
 

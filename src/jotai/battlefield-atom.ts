@@ -1,6 +1,5 @@
+import { AreaEffectInfo, Battlefield } from '@type-defs/GameModels';
 import { atom } from 'jotai';
-
-import { AreaEffectInfo, Battlefield } from '@models/GameModels';
 
 const generateDefaultBattlefield = (): Battlefield['pawns'] => {
     const pawns: Battlefield['pawns'] = {};

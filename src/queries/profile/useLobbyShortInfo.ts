@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { ShortLobbyInformation } from '@type-defs/api-data';
 import { useMemo } from 'react';
 
-import { ShortLobbyInformation } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const DEFAULT_SHORT_INFO: ShortLobbyInformation = {

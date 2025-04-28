@@ -1,3 +1,4 @@
+import { LimitedDLCData } from '@type-defs/api-data';
 import { SUPPORTED_DLCs, SupportedDLCs } from 'config';
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { LimitedDLCData } from '@models/api-data';
 
 interface iDescriptorComponents<T extends string = string> {
     value: T;

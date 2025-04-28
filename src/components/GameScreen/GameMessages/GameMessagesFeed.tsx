@@ -1,3 +1,4 @@
+import { GameStateContainer } from '@type-defs/GameModels';
 import { useAtomValue } from 'jotai';
 import { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -5,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import GameMessage from '@components/GameScreen/GameMessages/GameMessage';
 import { Separator } from '@components/ui/separator';
 import { gameMessagesAtom } from '@jotai-atoms/game-screen-atom';
-import { GameStateContainer } from '@models/GameModels';
 
 /*
 

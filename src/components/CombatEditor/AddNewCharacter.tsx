@@ -1,4 +1,5 @@
 import { useCombatEditor } from '@context/combat-editor';
+import { ControlledBy } from '@type-defs/EditorConversion';
 import { SUPPORTED_DLCs } from 'config';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +28,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import { ControlledBy } from '@models/EditorConversion';
 import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
 import { useGameCharacterInformation } from '@queries/useGameData';
 import { useLoadedCharacters } from '@queries/useLoadedGameData';

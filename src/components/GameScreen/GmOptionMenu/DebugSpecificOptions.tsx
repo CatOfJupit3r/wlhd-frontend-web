@@ -1,11 +1,11 @@
 import { useBattlefieldContext } from '@context/BattlefieldContext';
+import { CharacterInTurnOrder } from '@type-defs/GameModels';
 import { useAtom, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 
 import { SquareMultiSelect } from '@components/common/square-multi-select';
 import { Button } from '@components/ui/button';
 import { characterOrderAtom } from '@jotai-atoms/game-screen-atom';
-import { CharacterInTurnOrder } from '@models/GameModels';
 import { RandomizeUtils } from '@utils';
 
 /*

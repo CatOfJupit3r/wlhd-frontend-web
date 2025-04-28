@@ -1,9 +1,9 @@
+import { iCharacterInLobby } from '@type-defs/api-data';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import GameAsset from '@components/GameAsset';
 import { ViewCharacterButton } from '@components/ui/common-links';
-import { iCharacterInLobby } from '@models/api-data';
 
 interface iShortCharacterInfo {
     character: iCharacterInLobby;

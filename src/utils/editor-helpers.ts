@@ -1,6 +1,5 @@
 import { CombatEditorSaveType } from '@context/combat-editor';
-
-import { CharacterDataInSave } from '@models/CombatEditorModels';
+import { CharacterDataInSave } from '@type-defs/CombatEditorModels';
 import {
     CharacterClassConversion,
     ControlledBy,
@@ -9,8 +8,9 @@ import {
     ControlledByPlayer,
     CreateCombatBody,
     MinifiedCombatPreset,
-} from '@models/EditorConversion';
-import { CharacterInfoFull } from '@models/GameModels';
+} from '@type-defs/EditorConversion';
+import { CharacterInfoFull } from '@type-defs/GameModels';
+
 import { isDescriptor, isValidSquareString } from '@utils/game-helpers';
 
 export const CONTROLLED_BY_PLAYER = (id: string): ControlledByPlayer => ({ type: 'player', id });

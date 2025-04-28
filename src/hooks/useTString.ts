@@ -1,7 +1,7 @@
+import { TranslatableString } from '@type-defs/GameModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TranslatableString } from '@models/GameModels';
 import { isDescriptor } from '@utils';
 
 const useTString = () => {

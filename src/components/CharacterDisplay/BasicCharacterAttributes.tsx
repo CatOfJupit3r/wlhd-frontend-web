@@ -1,8 +1,8 @@
+import { CharacterInfoFull } from '@type-defs/GameModels';
 import { useMemo } from 'react';
 
 import { ActionPointsIcon, ArmorIcon, HealthIcon } from '@components/icons';
 import { Progress } from '@components/ui/progress';
-import { CharacterInfoFull } from '@models/GameModels';
 import { cn } from '@utils';
 import { getPercentage } from '@utils/number-utils';
 

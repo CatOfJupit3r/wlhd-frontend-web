@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { iLobbyInformation } from '@type-defs/api-data';
 
-import { iLobbyInformation } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const useDeleteCharacter = () => {

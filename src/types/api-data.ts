@@ -1,4 +1,4 @@
-import { GameComponentDecoration } from '@models/GameModels';
+import { GameComponentDecoration } from '@type-defs/GameModels';
 
 export interface ShortLobbyInformation {
     name: string;

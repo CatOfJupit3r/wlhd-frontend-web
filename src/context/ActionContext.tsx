@@ -1,6 +1,5 @@
+import { iCharacterActions as iActionInput } from '@type-defs/GameModels';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-
-import { iCharacterActions as iActionInput } from '@models/GameModels';
 
 interface iActionChoices {
     [key: keyof iActionInput]: iActionInput[keyof iActionInput][number]['id'];

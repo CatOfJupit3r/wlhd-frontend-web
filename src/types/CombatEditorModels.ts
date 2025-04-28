@@ -1,5 +1,5 @@
-import { ControlledBy } from '@models/EditorConversion';
-import { GameComponentDecoration, GameComponentMemory } from '@models/GameModels';
+import { ControlledBy } from '@type-defs/EditorConversion';
+import { GameComponentDecoration, GameComponentMemory } from '@type-defs/GameModels';
 
 /*
 

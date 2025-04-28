@@ -1,5 +1,6 @@
 import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
+import { CharacterInfoFull } from '@type-defs/GameModels';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaXmark } from 'react-icons/fa6';
@@ -19,7 +20,6 @@ import {
 } from '@components/ui/alert-dialog';
 import { Button, MutationButton } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import { CharacterInfoFull } from '@models/GameModels';
 import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
 import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
 import useThisLobby from '@queries/useThisLobby';

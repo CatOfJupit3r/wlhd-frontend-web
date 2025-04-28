@@ -1,3 +1,4 @@
+import { CharacterInTurnOrder } from '@type-defs/GameModels';
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
 import { useAtomValue } from 'jotai/index';
 import { FC, forwardRef, Ref, useEffect, useState } from 'react';
@@ -7,7 +8,6 @@ import { PiStarFourFill } from 'react-icons/pi';
 import { CharacterGameAsset } from '@components/GameAsset';
 import { ScrollArea, ScrollBar } from '@components/ui/scroll-area';
 import { characterOrderAtom } from '@jotai-atoms/game-screen-atom';
-import { CharacterInTurnOrder } from '@models/GameModels';
 import { cn, getCharacterSide } from '@utils';
 
 interface iCharacterCard extends MotionProps {

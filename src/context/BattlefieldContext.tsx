@@ -1,6 +1,6 @@
+import { Battlefield } from '@type-defs/GameModels';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
-import { Battlefield } from '@models/GameModels';
 import { getCharacterSideWithSquare } from '@utils';
 
 export const AOE_HIGHLIGHT_MODE = {

@@ -1,9 +1,9 @@
+import { iUserExtraData } from '@type-defs/api-data';
 import { FC, ReactNode } from 'react';
 import { LuSettings } from 'react-icons/lu';
 
 import { CurrentUserAvatar } from '@components/UserAvatars';
 import { ButtonLink } from '@components/ui/button';
-import { iUserExtraData } from '@models/api-data';
 
 interface iBannerBackground {
     children?: ReactNode;

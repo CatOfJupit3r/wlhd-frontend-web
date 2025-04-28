@@ -1,7 +1,7 @@
+import type { UserAccountProvider, UserAccountType } from '@type-defs/common-types';
 import { FC, ReactNode } from 'react';
 
 import { PulsatingSkeleton } from '@components/ui/skeleton';
-import type { UserAccountProvider, UserAccountType } from '@models/common-types';
 
 import { ProviderToIcon, ProviderToName } from './account-info-display-helpers';
 

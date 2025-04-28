@@ -6,6 +6,7 @@ import {
     useCharacterEditorStatusEffects,
     useCharacterEditorWeaponry,
 } from '@context/character-editor';
+import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@type-defs/CombatEditorModels';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -20,7 +21,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { EmptyMenuContent } from '@components/ui/menu';
-import { ItemEditable, SpellEditable, StatusEffectEditable, WeaponEditable } from '@models/CombatEditorModels';
 
 const RemoveComponentButton = ({ index, type }: { index: number; type: CONTAINER_TYPE }) => {
     const { t } = useTranslation('local', {

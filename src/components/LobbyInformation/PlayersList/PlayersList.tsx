@@ -1,3 +1,4 @@
+import { iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@type-defs/api-data';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUserPlus } from 'react-icons/fa6';
@@ -8,7 +9,6 @@ import { Button, MutationButton } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { Separator } from '@components/ui/separator';
-import { iLobbyInformation, iLobbyPlayerInfo, iWaitingApprovalPlayer } from '@models/api-data';
 import useRefreshLobbyPlayers from '@mutations/lobby-overview/useRefreshLobbyPlayers';
 import { cn } from '@utils';
 

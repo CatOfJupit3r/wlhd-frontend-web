@@ -1,7 +1,7 @@
+import { UserAccountProvider, UserAccountType } from '@type-defs/common-types';
 import { FC, useMemo } from 'react';
 
 import AccountInfoPanel from '@components/user-settings/security-tab/account-info-panel';
-import { UserAccountProvider, UserAccountType } from '@models/common-types';
 
 import { ConnectOauthAccount } from './account-panel-actions';
 

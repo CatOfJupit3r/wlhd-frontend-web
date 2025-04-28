@@ -1,4 +1,5 @@
 import { useActionContext } from '@context/ActionContext';
+import { iAction, iActionDecoration } from '@type-defs/GameModels';
 import { FC, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsInfoCircle } from 'react-icons/bs';
@@ -6,7 +7,6 @@ import { BsInfoCircle } from 'react-icons/bs';
 import GameAsset from '@components/GameAsset';
 import { StaticSkeleton } from '@components/ui/skeleton';
 import { useDescriptionWithMemories } from '@hooks/UseDescriptionWithMemories';
-import { iAction, iActionDecoration } from '@models/GameModels';
 import { cn } from '@utils';
 
 export const OptionCardPlaceholder: FC = () => {

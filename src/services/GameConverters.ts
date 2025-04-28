@@ -7,7 +7,7 @@ import {
     SpellEditable,
     StatusEffectEditable,
     WeaponEditable,
-} from '@models/CombatEditorModels';
+} from '@type-defs/CombatEditorModels';
 import {
     AreaEffectInfo,
     CharacterInfoFull,
@@ -15,7 +15,7 @@ import {
     SpellInfo,
     StatusEffectInfo,
     WeaponInfo,
-} from '@models/GameModels';
+} from '@type-defs/GameModels';
 
 class GameConverters {
     public convertSpellEditableToInfo = (descriptor: string, spell: SpellEditable): SpellInfo => {

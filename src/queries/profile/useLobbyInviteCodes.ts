@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { iInviteCode } from '@type-defs/api-data';
 
 import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
-import { iInviteCode } from '@models/api-data';
 import APIService from '@services/APIService';
 
 const placeholder: Array<iInviteCode> = [];

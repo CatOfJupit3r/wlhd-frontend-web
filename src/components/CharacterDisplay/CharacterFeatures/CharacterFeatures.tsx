@@ -1,3 +1,4 @@
+import { CharacterInfoFull } from '@type-defs/GameModels';
 import React, { useMemo } from 'react';
 
 import FeatureContainer from '@components/CharacterDisplay/CharacterFeatures/FeatureContainer';
@@ -10,7 +11,6 @@ import {
     WeaponryIcon,
 } from '@components/icons';
 import Menu, { MenuSelection } from '@components/ui/menu';
-import { CharacterInfoFull } from '@models/GameModels';
 
 const CharacterMenus: Array<{
     value: string;
