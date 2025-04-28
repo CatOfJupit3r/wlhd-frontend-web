@@ -4,7 +4,7 @@ import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import JoinNewLobby from '@components/profile/profile-body/joined-lobbies/join-new-lobby';
 import { Button } from '@components/ui/button';
 import { usePagination } from '@hooks/use-pagination';
-import useJoinedLobbies from '@queries/profile/useJoinedLobbies';
+import useJoinedLobbies from '@queries/profile/use-joined-lobbies';
 
 import JoinedLobbyCard from './joined-lobby-card';
 

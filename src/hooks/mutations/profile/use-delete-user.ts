@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { RouterRoute } from '@type-defs/common-types';
 
 import { toastError } from '@components/toastifications';
-import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import { USE_ME_QUERY_KEYS } from '@queries/use-me';
 import AuthService from '@services/auth-service';
 
 const useDeleteUser = ({ to }: { to: RouterRoute }) => {

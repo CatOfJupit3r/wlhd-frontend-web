@@ -9,7 +9,7 @@ import { Button, MutationButton } from '@components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { Separator } from '@components/ui/separator';
-import useRefreshLobbyPlayers from '@mutations/lobby-overview/useRefreshLobbyPlayers';
+import useRefreshLobbyPlayers from '@mutations/lobby-overview/use-refresh-lobby-players';
 import { cn } from '@utils';
 
 import { LOBBY_INFO_MODALS, LOBBY_INFO_MODALS_TYPE } from '../types';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { iUseDescriptionWithMemories, useDescriptionWithMemories } from '@hooks/UseDescriptionWithMemories';
+import { iUseDescriptionWithMemories, useDescriptionWithMemories } from '@hooks/use-description-with-memories';
 
 interface iDescriptionWithMemories extends iUseDescriptionWithMemories {
     className?: string;

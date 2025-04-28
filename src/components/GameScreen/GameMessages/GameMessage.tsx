@@ -1,6 +1,6 @@
 import { GameMessage as GameMessageInterface } from '@type-defs/game-types';
 
-import useTString from '@hooks/useTString';
+import useTString from '@hooks/use-t-string';
 
 const GameMessage = ({ content }: { content: GameMessageInterface }) => {
     const { TString } = useTString();

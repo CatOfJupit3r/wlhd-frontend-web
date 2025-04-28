@@ -9,8 +9,8 @@ import { registerSchema } from '@components/auth/schemas';
 import { SignUpForm } from '@components/auth/sign-up-form';
 import { Button } from '@components/ui/button';
 import StyledLink from '@components/ui/styled-link';
-import useRegister from '@mutations/auth/useRegister';
-import useMe from '@queries/useMe';
+import useRegister from '@mutations/auth/use-register';
+import useMe from '@queries/use-me';
 import { apprf, cn } from '@utils';
 
 const SignUp = ({ className }: { className?: string }) => {

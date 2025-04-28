@@ -1,4 +1,3 @@
-import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +11,9 @@ import ViewContent from '@components/ViewLobbyCharacters/ViewContent';
 import { Button, TimeoutButton } from '@components/ui/button';
 import { Combobox } from '@components/ui/combobox';
 import { Separator } from '@components/ui/separator';
-import useCoordinatorCharacter from '@queries/useCoordinatorCharacter';
-import useThisLobby from '@queries/useThisLobby';
+import { useViewCharactersContext, ViewCharactersContextProvider } from '@context/ViewCharactersContext';
+import useCoordinatorCharacter from '@queries/use-coordinator-character';
+import useThisLobby from '@queries/use-this-lobby';
 import { cn } from '@utils';
 
 const NoCharactersPresent = () => {

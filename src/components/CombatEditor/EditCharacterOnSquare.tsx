@@ -1,5 +1,3 @@
-import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
-import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
 import { CharacterDataEditable } from '@type-defs/combat-editor-models';
 import { ControlledBy } from '@type-defs/editors-conversion';
 import { useCallback, useEffect, useState } from 'react';
@@ -29,7 +27,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@components/ui/select';
-import useThisLobby from '@queries/useThisLobby';
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
+import { useCharacterOnSquareInEditor, useCombatEditor } from '@context/combat-editor';
+import useThisLobby from '@queries/use-this-lobby';
 
 const CombatCharacterEditorSettings: CharacterEditorFlags = {
     attributes: {

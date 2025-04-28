@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import { TooltipProvider } from '@components/ui/tooltip';
+import QueryClient from '@constants/query-client';
 import NotFoundPage from '@pages/not-found-page';
 import PseudoPage from '@pages/pseudo-page';
-import QueryClient from '@queries/QueryClient';
-import { useMe, UseMe } from '@queries/useMe';
+import { useMe, UseMe } from '@queries/use-me';
 
 import { routeTree } from './routeTree.gen';
 

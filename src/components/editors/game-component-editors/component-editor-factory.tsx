@@ -5,7 +5,7 @@ import DescriptionWithMemories from '@components/InfoDisplay/DescriptionWithMemo
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/ui/accordion';
 import { Label } from '@components/ui/label';
 import { HorizontalSeparator } from '@components/ui/separator';
-import useDualTranslation from '@hooks/useDualTranslation';
+import useDualTranslation from '@hooks/use-dual-translation';
 import { cn } from '@utils';
 
 import {

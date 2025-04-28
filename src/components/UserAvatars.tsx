@@ -2,7 +2,7 @@ import { LRUCache } from 'lru-cache';
 import { HTMLAttributes, useMemo } from 'react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/avatar';
-import useMe from '@queries/useMe';
+import useMe from '@queries/use-me';
 import APIService from '@services/api-service';
 import { cn } from '@utils';
 

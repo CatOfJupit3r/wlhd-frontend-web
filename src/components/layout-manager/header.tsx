@@ -1,4 +1,3 @@
-import { IS_DEVELOPMENT } from '@configuration';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +18,9 @@ import {
     DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu';
 import StyledLink from '@components/ui/styled-link';
-import useMe from '@queries/useMe';
-import useThisLobby from '@queries/useThisLobby';
+import { IS_DEVELOPMENT } from '@configuration';
+import useMe from '@queries/use-me';
+import useThisLobby from '@queries/use-this-lobby';
 import AuthService from '@services/auth-service';
 import { apprf, cn } from '@utils';
 

@@ -5,7 +5,7 @@ import { Badge } from '@components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { EnterLobbyButton } from '@components/ui/common-links';
 import { Skeleton } from '@components/ui/skeleton';
-import useLobbyShortInfo from '@queries/profile/useLobbyShortInfo';
+import useLobbyShortInfo from '@queries/profile/use-lobby-short-info';
 
 interface iJoinedLobbyCard {
     name: string;

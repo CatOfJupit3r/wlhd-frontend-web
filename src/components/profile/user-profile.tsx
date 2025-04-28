@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { ProfileBody } from '@components/profile/profile-body';
+import useMe from '@queries/use-me';
 import useMeExtra from '@queries/use-me-extra';
-import useMe from '@queries/useMe';
 
 import Banner from './banner';
 

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { iInviteCode } from '@type-defs/api-data';
 
-import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
+import { useCurrentLobbyId } from '@hooks/use-current-lobby-id';
 import APIService from '@services/api-service';
 
 const placeholder: Array<iInviteCode> = [];
 
-const useLobbyInviteCodes = () => {
+const useLobbyInviteCode = () => {
     const lobbyId = useCurrentLobbyId();
 
     const { data: codes } = useQuery<Array<iInviteCode>>({
@@ -28,4 +28,4 @@ const useLobbyInviteCodes = () => {
     };
 };
 
-export default useLobbyInviteCodes;
+export default useLobbyInviteCode;

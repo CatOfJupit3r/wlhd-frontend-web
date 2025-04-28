@@ -1,4 +1,3 @@
-import { useViewCharactersContext } from '@context/ViewCharactersContext';
 import { iLobbyPlayerInfo } from '@type-defs/api-data';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +9,10 @@ import { MutationButton } from '@components/ui/button';
 import { Combobox } from '@components/ui/combobox';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { StaticSkeleton } from '@components/ui/skeleton';
-import useAssignPlayerToCharacter from '@mutations/view-character/useAssignPlayerToCharacter';
-import useRemovePlayerFromCharacter from '@mutations/view-character/useRemovePlayerFromCharacter';
-import useThisLobby from '@queries/useThisLobby';
+import { useViewCharactersContext } from '@context/ViewCharactersContext';
+import useAssignPlayerToCharacter from '@mutations/view-character/use-assign-player-to-character';
+import useRemovePlayerFromCharacter from '@mutations/view-character/use-remove-player-from-character';
+import useThisLobby from '@queries/use-this-lobby';
 
 const Placeholder = () => {
     return (

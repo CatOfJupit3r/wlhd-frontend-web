@@ -1,4 +1,3 @@
-import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
 import { useNavigate } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
@@ -10,7 +9,8 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { CharacterDisplayPlaceholder } from '@components/CharacterDisplay';
 import { toastError } from '@components/toastifications';
 import { Button } from '@components/ui/button';
-import useThisLobby from '@queries/useThisLobby';
+import { CombatEditorProvider, useCombatEditor } from '@context/combat-editor';
+import useThisLobby from '@queries/use-this-lobby';
 import { Route as LobbyRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId';
 import { Route as GameRoomRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/game-rooms/$gameId';
 import APIService from '@services/api-service';

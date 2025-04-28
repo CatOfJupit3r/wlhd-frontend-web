@@ -31,7 +31,7 @@ import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Separator } from '@components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@components/ui/tooltip';
-import useDualTranslation from '@hooks/useDualTranslation';
+import useDualTranslation from '@hooks/use-dual-translation';
 import { cn } from '@utils';
 
 const useComponentEditorTranslation = () => {

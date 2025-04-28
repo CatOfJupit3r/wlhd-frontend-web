@@ -9,8 +9,8 @@ import { ColorPicker } from '@components/ui/color-picker';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import useUpdateUserInfo from '@mutations/profile/use-update-user-info';
+import useMe from '@queries/use-me';
 import useMeExtra from '@queries/use-me-extra';
-import useMe from '@queries/useMe';
 
 interface iMyAccountTab {}
 

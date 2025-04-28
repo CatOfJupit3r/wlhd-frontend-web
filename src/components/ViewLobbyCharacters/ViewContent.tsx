@@ -1,5 +1,3 @@
-import { useViewCharactersContext } from '@context/ViewCharactersContext';
-import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
 import { CharacterInfoFull } from '@type-defs/game-types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,9 +18,11 @@ import {
 } from '@components/ui/alert-dialog';
 import { Button, MutationButton } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
-import useDeleteCharacter from '@mutations/view-character/useDeleteCharacter';
-import useUpdateCharacter from '@mutations/view-character/useUpdateCharacter';
-import useThisLobby from '@queries/useThisLobby';
+import { useViewCharactersContext } from '@context/ViewCharactersContext';
+import { CharacterEditorFlags, CharacterEditorProvider, useCharacterEditor } from '@context/character-editor';
+import useDeleteCharacter from '@mutations/view-character/use-delete-character';
+import useUpdateCharacter from '@mutations/view-character/use-update-character';
+import useThisLobby from '@queries/use-this-lobby';
 import GameConverters from '@services/game-converters';
 import { cn, EditorHelpers } from '@utils';
 

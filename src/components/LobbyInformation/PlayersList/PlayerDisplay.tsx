@@ -8,10 +8,10 @@ import UserAvatar from '@components/UserAvatars';
 import { MutationButton } from '@components/ui/button';
 import CommaSeparatedList from '@components/ui/coma-separated-list';
 import StyledLink from '@components/ui/styled-link';
-import useDualTranslation from '@hooks/useDualTranslation';
-import { useApproveUserMutation } from '@mutations/lobby-overview/useApproveUser';
-import useRemoveLobbyMember from '@mutations/lobby-overview/useRemoveLobbyMember';
-import useMe from '@queries/useMe';
+import useDualTranslation from '@hooks/use-dual-translation';
+import { useApproveUserMutation } from '@mutations/lobby-overview/use-approve-user';
+import useRemoveLobbyMember from '@mutations/lobby-overview/use-remove-lobby-member';
+import useMe from '@queries/use-me';
 import { Route as ViewCharacterRoute } from '@router/_auth_only/lobby-rooms/$lobbyId/view-character';
 
 const LinkToPlayerCharacter: FC<{

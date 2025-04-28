@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { toastBetterAuthError } from '@components/toastifications';
-import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import { USE_ME_QUERY_KEYS } from '@queries/use-me';
 import AuthService from '@services/auth-service';
 
 const useUnlinkAccount = () => {

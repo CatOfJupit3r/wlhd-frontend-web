@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { iUserExtraData } from '@type-defs/api-data';
 
-import { USE_ME_QUERY_KEYS, useMe } from '@queries/useMe';
+import { USE_ME_QUERY_KEYS, useMe } from '@queries/use-me';
 import APIService from '@services/api-service';
 
 const PLACEHOLDER_DATA: MeExtraQueryResultType = {

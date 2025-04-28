@@ -20,10 +20,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@components/ui/input';
 import { ScrollArea } from '@components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
-import { useCurrentLobbyId } from '@hooks/useCurrentLobbyId';
-import useCreateInviteCode from '@mutations/lobby-overview/useCreateInviteCode';
-import useDeleteInviteCode from '@mutations/lobby-overview/useDeleteInviteCode';
-import useLobbyInviteCodes from '@queries/profile/useLobbyInviteCodes';
+import { useCurrentLobbyId } from '@hooks/use-current-lobby-id';
+import useCreateInviteCode from '@mutations/lobby-overview/use-create-invite-code';
+import useDeleteInviteCode from '@mutations/lobby-overview/use-delete-invite-code';
+import useLobbyInviteCode from '@queries/profile/use-lobby-invite-code';
 
 interface iInvitePlayerModal {
     closeModal: () => void;
@@ -46,7 +46,7 @@ const InvitePlayerModal: FC<iInvitePlayerModal> = ({ closeModal }) => {
         keyPrefix: 'lobby-info.players.invite-code-modal',
     });
     const lobbyId = useCurrentLobbyId();
-    const { codes } = useLobbyInviteCodes();
+    const { codes } = useLobbyInviteCode();
     const form = useForm<z.infer<typeof newInviteCodeSchema>>({
         resolver: zodResolver(newInviteCodeSchema),
         defaultValues: {

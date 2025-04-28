@@ -1,4 +1,3 @@
-import { iActionContext } from '@context/ActionContext';
 import { useNavigate } from '@tanstack/react-router';
 import { createStore, Provider, useAtomValue } from 'jotai';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
@@ -10,9 +9,10 @@ import Overlay from '@components/Overlay';
 import { ThreeInOneSpinner } from '@components/Spinner';
 import { Button } from '@components/ui/button';
 import { Separator } from '@components/ui/separator';
+import { iActionContext } from '@context/ActionContext';
 import { actionsAtom } from '@jotai-atoms/actions-atom';
 import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
-import useThisLobby from '@queries/useThisLobby';
+import useThisLobby from '@queries/use-this-lobby';
 import SocketService from '@services/socket-service';
 
 interface GameLogicWrapperProps {

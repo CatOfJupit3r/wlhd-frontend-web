@@ -10,8 +10,8 @@ import { Button } from '@components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@components/ui/form';
 import { Input } from '@components/ui/input';
 import StyledLink from '@components/ui/styled-link';
-import useLogin from '@mutations/auth/useLogin';
-import useMe from '@queries/useMe';
+import useLogin from '@mutations/auth/use-login';
+import useMe from '@queries/use-me';
 import { apprf, cn } from '@utils';
 
 import { loginSchema } from './schemas';

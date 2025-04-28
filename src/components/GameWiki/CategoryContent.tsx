@@ -27,7 +27,7 @@ import {
     useLoadedSpells,
     useLoadedStatusEffects,
     useLoadedWeapons,
-} from '@queries/useLoadedGameData';
+} from '@queries/use-loaded-game-data';
 
 interface iCategoryContent {
     category: 'characters' | 'spells' | 'items' | 'weapons' | 'statusEffects' | 'areaEffects' | null;

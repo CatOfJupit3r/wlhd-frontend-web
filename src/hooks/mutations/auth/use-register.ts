@@ -1,36 +1,33 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import { toastError } from '@components/toastifications';
-import { USE_ME_QUERY_KEYS } from '@queries/useMe';
+import queryClient from '@constants/query-client';
+import { USE_ME_QUERY_KEYS } from '@queries/use-me';
 import AuthService from '@services/auth-service';
 
-const useLogin = () => {
-    const { t } = useTranslation('local', {
-        keyPrefix: 'auth',
-    });
-    const queryClient = useQueryClient();
+const useRegister = () => {
+    const { t } = useTranslation('local');
 
     const { mutate, isPending, isSuccess } = useMutation({
         mutationFn: ({ username, password }: { username: string; password: string }) => {
-            return AuthService.getInstance().signIn.username({
+            return AuthService.getInstance().signUp.email({
+                email: `${username}@example.com`,
+                name: username,
                 username,
                 password,
-                rememberMe: true,
                 fetchOptions: { throw: true },
             });
         },
         onError: (err) => {
             if (err && err instanceof AxiosError) {
                 toastError(t('error'), err.response?.data.message);
-            } else if ('error' in err && 'message' in (err.error as Record<string, string>)) {
-                toastError(t('error'), (err.error as Record<string, string>).message);
             } else if (err && err instanceof Error) {
                 toastError(t('error'), err.message);
             }
         },
-        onSuccess: async () => {
+        onSuccess: async (_) => {
             await queryClient.invalidateQueries({
                 queryKey: USE_ME_QUERY_KEYS(),
             });
@@ -44,4 +41,4 @@ const useLogin = () => {
     };
 };
 
-export default useLogin;
+export default useRegister;

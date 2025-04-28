@@ -13,7 +13,7 @@ import {
 } from '@components/ui/alert-dialog';
 import { MutationButton } from '@components/ui/button';
 import { Input } from '@components/ui/input';
-import useJoinLobbyUsingInviteCode from '@mutations/profile/useJoinLobbyUsingInviteCode';
+import useJoinLobbyUsingInviteCode from '@mutations/profile/use-join-lobby-using-invite-code';
 
 interface iJoinNewLobby {
     children?: ReactNode;
