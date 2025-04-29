@@ -1,4 +1,3 @@
-import { VITE_BACKEND_URL } from '@configuration';
 import {
     Battlefield,
     CharacterInfoFull,
@@ -13,6 +12,7 @@ import { createStore } from 'jotai';
 import { io, Socket } from 'socket.io-client';
 
 import { toastError } from '@components/toastifications';
+import { ELEVATED_RIGHTS_EVENTS, SOCKET_EVENTS } from '@constants/socket-events';
 import { actionsAtom, isYourTurnAtom } from '@jotai-atoms/actions-atom';
 import { aoeAtom, battlefieldAtom, timestampAtom } from '@jotai-atoms/battlefield-atom';
 import { gameFlowAtom, lobbyStateAtom } from '@jotai-atoms/game-lobby-meta-atom';
@@ -22,8 +22,6 @@ import {
     gameMessagesAtom,
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
-
-import { ELEVATED_RIGHTS_EVENTS, SOCKET_EVENTS } from '../constants/socket-events';
 
 // these will be used by special actions in GM Menu
 
@@ -38,7 +36,7 @@ class SocketService {
     private jotaiStore: JotaiStore;
 
     constructor(store: JotaiStore) {
-        this.socket = io(VITE_BACKEND_URL, {
+        this.socket = io({
             autoConnect: false,
             reconnection: false, // only manually reconnect
             withCredentials: true, // better-auth cookies

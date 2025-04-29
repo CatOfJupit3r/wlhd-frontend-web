@@ -1,11 +1,8 @@
-import { VITE_BACKEND_URL } from '@configuration';
 import { usernameClient } from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
 
 const DEFAULT_INSTANCE = () => {
     return createAuthClient({
-        baseURL: VITE_BACKEND_URL,
-        basePath: '/auth',
         plugins: [usernameClient()],
         fetchOptions: {
             throw: true,

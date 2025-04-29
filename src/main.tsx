@@ -54,7 +54,7 @@ const Main = () => {
             <MeResolver />
             <ReactQueryDevtools />
             <TooltipProvider>
-                <div className={'text-center'}>
+                <div>
                     <RouterProvider router={router} context={{ me: mePromise.promise, queryClient: QueryClient }} />
                 </div>
             </TooltipProvider>

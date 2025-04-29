@@ -1,4 +1,3 @@
-import { VITE_BACKEND_URL, VITE_CDN_URL } from '@configuration';
 import {
     iCharacterInLobby,
     iInviteCode,
@@ -25,6 +24,7 @@ import axios, { AxiosError } from 'axios';
 import { Resource } from 'i18next';
 import { merge } from 'lodash';
 
+import { BACKEND_PREFIX, CDN_PREFIX } from '@configuration';
 import APIHealth, { isServerUnavailableError } from '@services/api-health';
 import AuthService from '@services/auth-service';
 
@@ -33,63 +33,61 @@ const errors = {
 };
 
 const ENDPOINTS = {
-    LOGIN: `${VITE_BACKEND_URL}/login`,
-    LOGOUT: `${VITE_BACKEND_URL}/logout`,
-    REGISTER: `${VITE_BACKEND_URL}/register`,
-    REFRESH_TOKEN: `${VITE_BACKEND_URL}/token`,
-    HEALTH_CHECK: `${VITE_BACKEND_URL}/health`,
-    USER_INFO: `${VITE_BACKEND_URL}/user/profile`,
-    USER_JOINED_LOBBIES: `${VITE_BACKEND_URL}/user/joined`,
-    USE_INVITE_CODE: `${VITE_BACKEND_URL}/user/join`,
+    LOGIN: `${BACKEND_PREFIX}/login`,
+    LOGOUT: `${BACKEND_PREFIX}/logout`,
+    REGISTER: `${BACKEND_PREFIX}/register`,
+    REFRESH_TOKEN: `${BACKEND_PREFIX}/token`,
+    HEALTH_CHECK: `${BACKEND_PREFIX}/health`,
+    USER_INFO: `${BACKEND_PREFIX}/user/profile`,
+    USER_JOINED_LOBBIES: `${BACKEND_PREFIX}/user/joined`,
+    USE_INVITE_CODE: `${BACKEND_PREFIX}/user/join`,
 
-    CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/custom_translations`,
-    LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}`,
-    LOBBY_PLAYERS: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/players`,
+    CUSTOM_LOBBY_TRANSLATIONS: (lobby_id: string) => `${BACKEND_PREFIX}/lobbies/${lobby_id}/custom_translations`,
+    LOBBY_INFO: (lobby_id: string) => `${BACKEND_PREFIX}/lobbies/${lobby_id}`,
+    LOBBY_PLAYERS: (lobby_id: string) => `${BACKEND_PREFIX}/lobbies/${lobby_id}/players`,
 
-    GAME_WEAPONS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/weapons`,
-    GAME_WEAPON_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/weapons/${descriptor}`,
-    GAME_ITEMS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/items`,
-    GAME_ITEM_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/items/${descriptor}`,
-    GAME_SPELLS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/spells`,
-    GAME_SPELL_INFO: (dlc: string, descriptor: string) => `${VITE_BACKEND_URL}/game/${dlc}/spells/${descriptor}`,
-    GAME_STATUS_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/status_effects`,
+    GAME_WEAPONS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/weapons`,
+    GAME_WEAPON_INFO: (dlc: string, descriptor: string) => `${BACKEND_PREFIX}/game/${dlc}/weapons/${descriptor}`,
+    GAME_ITEMS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/items`,
+    GAME_ITEM_INFO: (dlc: string, descriptor: string) => `${BACKEND_PREFIX}/game/${dlc}/items/${descriptor}`,
+    GAME_SPELLS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/spells`,
+    GAME_SPELL_INFO: (dlc: string, descriptor: string) => `${BACKEND_PREFIX}/game/${dlc}/spells/${descriptor}`,
+    GAME_STATUS_EFFECTS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/status_effects`,
     GAME_STATUS_EFFECT_INFO: (dlc: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/game/${dlc}/status_effects/${descriptor}`,
-    GAME_AREA_EFFECTS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/area_effects`,
+        `${BACKEND_PREFIX}/game/${dlc}/status_effects/${descriptor}`,
+    GAME_AREA_EFFECTS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/area_effects`,
     GAME_AREA_EFFECT_INFO: (dlc: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/game/${dlc}/area_effects/${descriptor}`,
-    GAME_CHARACTERS: (dlc: string) => `${VITE_BACKEND_URL}/game/${dlc}/characters`,
-    GAME_CHARACTER_INFO: (dlc: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/game/${dlc}/characters/${descriptor}`,
+        `${BACKEND_PREFIX}/game/${dlc}/area_effects/${descriptor}`,
+    GAME_CHARACTERS: (dlc: string) => `${BACKEND_PREFIX}/game/${dlc}/characters`,
+    GAME_CHARACTER_INFO: (dlc: string, descriptor: string) => `${BACKEND_PREFIX}/game/${dlc}/characters/${descriptor}`,
 
     LOBBY_CHARACTER_INFO: (lobby_id: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobby_id}/characters/${descriptor}/`,
-    CREATE_LOBBY_COMBAT: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}/combats`,
-    SHORT_LOBBY_INFO: (lobby_id: string) => `${VITE_BACKEND_URL}/lobbies/${lobby_id}?short=true`,
+        `${BACKEND_PREFIX}/lobbies/${lobby_id}/characters/${descriptor}/`,
+    CREATE_LOBBY_COMBAT: (lobby_id: string) => `${BACKEND_PREFIX}/lobbies/${lobby_id}/combats`,
+    SHORT_LOBBY_INFO: (lobby_id: string) => `${BACKEND_PREFIX}/lobbies/${lobby_id}?short=true`,
     ASSIGN_PLAYER_TO_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+        `${BACKEND_PREFIX}/lobbies/${lobbyId}/characters/${descriptor}/players`,
     REMOVE_PLAYER_FROM_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}/players`,
+        `${BACKEND_PREFIX}/lobbies/${lobbyId}/characters/${descriptor}/players`,
     DELETE_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
+        `${BACKEND_PREFIX}/lobbies/${lobbyId}/characters/${descriptor}`,
     UPDATE_CHARACTER: (lobbyId: string, descriptor: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/characters/${descriptor}`,
+        `${BACKEND_PREFIX}/lobbies/${lobbyId}/characters/${descriptor}`,
     CDN_GET_TRANSLATIONS: (languages: Array<string>, dlc: string) =>
-        `${VITE_CDN_URL}/game/${dlc}/translations?languages=${languages.join(',')}`,
-    GET_USER_AVATAR: (userId: string) => `${VITE_BACKEND_URL}/user/${userId}/avatar`,
+        `${CDN_PREFIX}/game/${dlc}/translations?languages=${languages.join(',')}`,
+    GET_USER_AVATAR: (userId: string) => `${BACKEND_PREFIX}/user/${userId}/avatar`,
 
-    APPROVE_LOBBY_PLAYER: (lobbyId: string, userId: string) =>
-        `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}/approve`,
-    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/${userId}`,
-    DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites/${code}`,
-    GET_INVITE_CODES: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
-    CREATE_INVITE_CODE: (lobbyId: string) => `${VITE_BACKEND_URL}/lobbies/${lobbyId}/invites`,
+    APPROVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${BACKEND_PREFIX}/lobbies/${lobbyId}/${userId}/approve`,
+    REMOVE_LOBBY_PLAYER: (lobbyId: string, userId: string) => `${BACKEND_PREFIX}/lobbies/${lobbyId}/${userId}`,
+    DELETE_INVITE_CODE: (lobbyId: string, code: string) => `${BACKEND_PREFIX}/lobbies/${lobbyId}/invites/${code}`,
+    GET_INVITE_CODES: (lobbyId: string) => `${BACKEND_PREFIX}/lobbies/${lobbyId}/invites`,
+    CREATE_INVITE_CODE: (lobbyId: string) => `${BACKEND_PREFIX}/lobbies/${lobbyId}/invites`,
 
-    USER_STATISTICS: `${VITE_BACKEND_URL}/user/statistics?short=true`,
-    USER_CHARACTERS: `${VITE_BACKEND_URL}/user/characters`,
-    ADD_CREDENTIAL_AUTH: `${VITE_BACKEND_URL}/user/me/auth/add-credential-auth`,
-    PATCH_USER_INFO: `${VITE_BACKEND_URL}/user/me`,
-    USER_EXTRA_DATA: `${VITE_BACKEND_URL}/user/me/extra`,
+    USER_STATISTICS: `${BACKEND_PREFIX}/user/statistics?short=true`,
+    USER_CHARACTERS: `${BACKEND_PREFIX}/user/characters`,
+    ADD_CREDENTIAL_AUTH: `${BACKEND_PREFIX}/user/me/auth/add-credential-auth`,
+    PATCH_USER_INFO: `${BACKEND_PREFIX}/user/me`,
+    USER_EXTRA_DATA: `${BACKEND_PREFIX}/user/me/extra`,
 };
 
 class ApiService {
