@@ -1,15 +1,17 @@
-import axios from 'axios';
 import i18next, { Resource } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import { FALLBACK_LANGUAGE, VITE_CDN_URL } from '@configuration';
+import { FALLBACK_LANGUAGE } from '@configuration';
 import { SUPPORTED_DLCs } from '@constants/game-support';
+import ApiService from '@services/api-service';
 
 import en_US from '../locales/en_US.json';
 import ua_UK from '../locales/ua_UK.json';
 
 class TranslationService {
+    private _loaders: Array<Promise<unknown>> = [];
+
     constructor(fallbackLng: string = FALLBACK_LANGUAGE) {
         i18next
             .use(initReactI18next)
@@ -23,21 +25,31 @@ class TranslationService {
             })
             .then();
 
-        this.loadTranslations().then(
-            () => {
-                console.log('Custom translations loaded');
-            },
-            (error) => {
-                console.log('Error loading translations', error);
-            },
-        );
+        this.loadTranslations();
     }
 
-    public async loadTranslations() {
-        await Promise.all(
-            SUPPORTED_DLCs.map(async ({ descriptor: dlc }) => {
-                await this.spawnDLCTranslations(dlc);
-            }),
+    /**
+     * Used to await translations to be loaded so that the game data is not displayed before the translations are loaded
+     */
+    public async awaitTranslations() {
+        await Promise.all(this._loaders);
+    }
+
+    public loadTranslations() {
+        this._loaders = SUPPORTED_DLCs.map(async ({ descriptor: dlc }) => {
+            await this.spawnDLCTranslations(dlc);
+        });
+    }
+
+    public spawnCustomTranslations(lobbyId: string) {
+        this._loaders.push(
+            ApiService.getCustomLobbyTranslations(lobbyId)
+                .then((data) => {
+                    i18next.addResourceBundle(i18next.language, 'coordinator', data, true, true);
+                })
+                .catch((e) => {
+                    console.log(e);
+                }),
         );
     }
 
@@ -66,10 +78,9 @@ class TranslationService {
 
     private spawnDLCTranslations = async (dlc: string) => {
         try {
-            const { data: translations }: { data: Resource } = await axios.get(
-                `${VITE_CDN_URL}/game/${dlc}/translations?languages=${this.getLanguages()
-                    .map((language) => language.replace('-', '_'))
-                    .join(',')}`,
+            const translations = await ApiService.getTranslations(
+                this.getLanguages().map((language) => language.replace('-', '_')),
+                [dlc],
             );
             for (const language in translations) {
                 if (translations[language] === null) continue;

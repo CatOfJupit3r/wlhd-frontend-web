@@ -1,6 +1,5 @@
 import { createStore, Provider } from 'jotai';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import GameScreen from '@components/GameScreen/GameScreen';
 import { actionsAtom, isYourTurnAtom } from '@jotai-atoms/actions-atom';
@@ -13,13 +12,12 @@ import {
     roundAtom,
 } from '@jotai-atoms/game-screen-atom';
 import useThisLobby from '@queries/lobbies/use-this-lobby';
-import APIService from '@services/api-service';
+import TranslationService from '@services/translation-service';
 
 import example_gamestate from '../mocks/game-state.json';
 
 const GameTestPage = () => {
     const jotaiStore = useRef(createStore());
-    const { i18n } = useTranslation();
     const [loadedGameState, setLoadedGameState] = useState(false);
     const { lobbyId } = useThisLobby();
 
@@ -29,13 +27,8 @@ const GameTestPage = () => {
     }, []);
 
     const setupExampleGameState = useCallback(async () => {
-        const promises: Array<Promise<unknown>> = [];
         if (lobbyId) {
-            promises.push(
-                APIService.getCustomLobbyTranslations(lobbyId).then((data) => {
-                    i18n.addResourceBundle(i18n.language, 'coordinator', data, true, true);
-                }),
-            );
+            TranslationService.spawnCustomTranslations(lobbyId);
         }
 
         jotaiStore.current.set(battlefieldAtom, example_gamestate.battlefield.pawns);
@@ -52,7 +45,7 @@ const GameTestPage = () => {
         jotaiStore.current.set(actionsAtom, example_gamestate.actions as any);
         jotaiStore.current.set(isYourTurnAtom, true);
 
-        await Promise.all(promises);
+        await TranslationService.awaitTranslations();
 
         jotaiStore.current.set(gameFlowAtom, {
             type: 'active',
