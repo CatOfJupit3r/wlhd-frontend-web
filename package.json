@@ -113,6 +113,7 @@
         "@tanstack/eslint-plugin-router": "^1.105.0",
         "@tanstack/router-devtools": "^1.111.11",
         "@tanstack/router-plugin": "^1.112.0",
+        "@thedutchcoder/postcss-rem-to-px": "^0.0.2",
         "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "@types/jest": "^27.5.2",
         "@types/lodash": "^4.17.13",
