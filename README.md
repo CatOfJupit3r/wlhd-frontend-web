@@ -1,11 +1,12 @@
 # Walenholde Combat System — React App
 
-This repository contains React Interface for playing games of WLHD ecosystem.
+## Fork in the Road
 
-Built using React, Redux and GraphQL.
+This repository is currently an archive before WLHD TypeScript related projects were merged into 1 mono repo and currently.
 
 ## Description
 
+This repository contains React Interface for playing games of WLHD ecosystem.
 This is a passion project, created to provide a platform for playing Walenholde Combat System.
 
 WLHD is a tabletop RPG system, created by me, that is still in active development. For more detailed information, check [Learn More](#Learn-More).
